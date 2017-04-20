@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "971870516004",
+    "project_id": "openbarbell-80c31"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:971870516004:android:3bf7d461cb7e0634",
+        "android_client_info": {
+          "package_name": "com.openbarbellapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "971870516004-7njnplrj7ccc9a0e46ldbppbi74qaqpq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.openbarbellapp",
+            "certificate_hash": "a1d84ab81f89aa0da050fe83d0cfcad2982fb2f2"
+          }
+        },
+        {
+          "client_id": "971870516004-oge4ph6j8s0a4e5lbimr7dc6e22od5jc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_HoNOSKYzQVQ_I-G4gpERnteT6XEEx-4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

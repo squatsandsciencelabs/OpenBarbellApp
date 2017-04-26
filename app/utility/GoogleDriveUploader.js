@@ -22,8 +22,8 @@ export const upload = async (accessToken, name, content) => {
     // error check
     if (status !== 200) {
         let json = await response.json();
-        console.log('Error, received status ' + status + ' body ' + JSON.stringify(json))
-        throw new Err('Did not receive 200')
+        console.log('Error, received status ' + status + ' body ' + JSON.stringify(json));
+        throw new Error('Did not receive 200 for setup upload');
     }
 
     // actually upload the spreadsheet
@@ -41,7 +41,7 @@ export const upload = async (accessToken, name, content) => {
     // error check
     if (status !== 200) {
         let json = await response.json();
-        console.log('Error, received status ' + status + ' body ' + JSON.stringify(json))
-        throw new Err('Did not receive 200')
+        console.log('Error, received status ' + status + ' body ' + JSON.stringify(json));
+        throw new Error('Did not receive 200 for upload');
     }
 };

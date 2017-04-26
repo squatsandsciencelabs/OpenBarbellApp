@@ -26,11 +26,11 @@ export const exportHistoryCSV = () => (dispatch, getState) => {
 		iosClientId: config.iOSGoogleClientID,
 		webClientId: config.webGoogleClientID
 	}))
-	.then(GoogleSignin.currentUserAsync().then((user) => {
+	.then(GoogleSignin.currentUserAsync().then(async (user) => {
 		try {
 			let date = new Date();
 			let name = 'OpenBarbell Data -- Exported on ' + date.toString() + '.csv';
-			GoogleDriveUploader.upload(user.accessToken, name, 'fuck,you\nfoo,bar');
+			await GoogleDriveUploader.upload(user.accessToken, name, 'fuck,you\nfoo,bar');
 			Alert.alert('CSV uploaded to your Google Drive! Please check it out there.');
 		} catch(err) {
 			console.log("Error uploading csv file " + err);

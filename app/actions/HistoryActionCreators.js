@@ -5,7 +5,9 @@ import {
 	END_EDIT_HISTORY_SET,
 	UPDATE_HISTORY_FILTER,
 } from '../ActionTypes';
+import * as GoogleDriveUploader from '../utility/GoogleDriveUploader';
 
+import { Alert } from 'react-native'
 import { GoogleSignin } from 'react-native-google-signin';
 import config from '../config.json';
 
@@ -24,9 +26,14 @@ export const exportHistoryCSV = () => (dispatch, getState) => {
 		iosClientId: config.iOSGoogleClientID,
 		webClientId: config.webGoogleClientID
 	}))
-	.then(GoogleSignin.currentUserAsync().then((user) => {
-		console.log('USER', user);
-		console.log('access token: ' + user.accessToken);
+	.then(GoogleSignin.currentUserAsync().then(async (user) => {
+		try {
+			GoogleDriveUploader.upload(user.accessToken, 'test 2', 'fuck,you\nfoo,bar')
+			Alert.alert('CSV uploaded to your Google Drive! Please check it out there.');
+		} catch(err) {
+			console.log("Error uploading csv file " + err);
+			Alert.alert('There was an error exporting you CSV file. Please try again later.');
+		}
 	}))
 	.catch((err) => {
 		console.log("EXPORT HISTORY ERROR " + err);

@@ -28,7 +28,9 @@ export const exportHistoryCSV = () => (dispatch, getState) => {
 	}))
 	.then(GoogleSignin.currentUserAsync().then((user) => {
 		try {
-			GoogleDriveUploader.upload(user.accessToken, 'test 2', 'fuck,you\nfoo,bar')
+			let date = new Date();
+			let name = 'OpenBarbell Data -- Exported on ' + date.toString();
+			GoogleDriveUploader.upload(user.accessToken, name, 'fuck,you\nfoo,bar');
 			Alert.alert('CSV uploaded to your Google Drive! Please check it out there.');
 		} catch(err) {
 			console.log("Error uploading csv file " + err);

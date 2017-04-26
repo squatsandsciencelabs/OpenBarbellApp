@@ -18,26 +18,18 @@ export const showRemovedData = () => ({ type: UPDATE_HISTORY_FILTER, showRemoved
 export const hideRemovedData = () => ({ type: UPDATE_HISTORY_FILTER, showRemoved: false });
 
 export const exportHistoryCSV = () => (dispatch, getState) => {
-	GoogleSignin.hasPlayServices({ autoResolve: true }).then(() => {
-		GoogleSignin.configure({
-				scopes: ["https://www.googleapis.com/auth/drive"],
-				iosClientId: config.iOSGoogleClientID,
-				webClientId: config.webGoogleClientID
-		}).then(() => {
-			GoogleSignin.currentUserAsync().then((user) => {
-				console.log('USER', user);
-				console.log('access token: ' + user.accessToken);
-			}).catch((err) => {
-				// according to the docs, this should be impossible to reach
-				console.log("EXPORT HISTORY CURRENT USER ERROR " + err);
-			}).done();
-		}).catch((err) => {
-			// according to the docs, this should be impossible to reach
-			console.log("EXPORT HISTORY CONFIGURE ERROR " + err);
-		})
-	}).catch((err) => {
-		// according to the docs, this should be impossible to reach
-		console.log("EXPORT HISTORY PLAY SERVICES ERROR " + err);
-	}).done();
-
+	GoogleSignin.hasPlayServices({ autoResolve: true })
+	.then(GoogleSignin.configure({
+		scopes: ["https://www.googleapis.com/auth/drive"],
+		iosClientId: config.iOSGoogleClientID,
+		webClientId: config.webGoogleClientID
+	}))
+	.then(GoogleSignin.currentUserAsync().then((user) => {
+		console.log('USER', user);
+		console.log('access token: ' + user.accessToken);
+	}))
+	.catch((err) => {
+		console.log("EXPORT HISTORY ERROR " + err);
+	})
+	.done();
 };

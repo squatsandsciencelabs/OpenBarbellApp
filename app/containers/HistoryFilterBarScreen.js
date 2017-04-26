@@ -13,6 +13,7 @@ const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
 		showRemoved: HistoryActionCreators.showRemovedData,
         hideRemoved: HistoryActionCreators.hideRemovedData,
+		exportCSV: HistoryActionCreators.exportHistoryCSV,
 	}, dispatch);
 };
 

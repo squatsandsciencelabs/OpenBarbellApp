@@ -5,6 +5,10 @@ import { View, Text, Switch, StyleSheet, TouchableHighlight }  from 'react-nativ
 
 class HistoryFilterBar extends Component {
 
+	_onPressCSV() {
+		this.props.exportCSV();
+	}
+
 	_onPressSwitch(isSwitchOn) {
 		if (isSwitchOn) {
 			this.props.showRemoved();
@@ -14,16 +18,23 @@ class HistoryFilterBar extends Component {
 	}
 
 	render() {
+		// TODO: disable on tap
 		return (
 			<View style={styles.bar}>
-				<Text style={{color:'white'}}>Show Deleted Reps</Text>
-				<Switch
-					style={{backgroundColor: 'rgba(47, 128, 237, 1)', marginLeft: 3, marginRight: 5}}
-					value={this.props.shouldShowRemoved}
-					onValueChange={(isSwitchOn) => this._onPressSwitch(isSwitchOn)}
-					onTintColor='white'
-					thumbTintColor='lightgray'
-					tintColor='white'/>
+				<TouchableHighlight style={{justifyContent: 'center'}} onPress={ () => this._onPressCSV() } activeOpacity={1} >
+					<Text style={{color:'white', marginLeft: 5}}>Export CSV</Text>
+				</TouchableHighlight>
+
+				<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+					<Text style={{color:'white'}}>Show Deleted</Text>
+					<Switch
+						style={{backgroundColor: 'rgba(47, 128, 237, 1)', marginLeft: 3, marginRight: 5}}
+						value={this.props.shouldShowRemoved}
+						onValueChange={(isSwitchOn) => this._onPressSwitch(isSwitchOn)}
+						onTintColor='white'
+						thumbTintColor='lightgray'
+						tintColor='white'/>
+				</View>
 			</View>
 		);
 	}
@@ -33,8 +44,8 @@ const styles = StyleSheet.create({
 	bar: {
 		flex: 1,
 		flexDirection: 'row',
-		alignItems: 'center', // stretch to take full height
-		justifyContent: 'flex-end', // center text vertically
+		alignItems: 'stretch', // stretch to take full height
+		justifyContent: 'space-between', // center text vertically
 		left: 0,
 		right: 0,
 		bottom: 0,

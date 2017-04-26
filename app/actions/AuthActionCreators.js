@@ -78,6 +78,7 @@ const executeSignOut = (dispatch) => {
 	.then(() => {
 		console.log("Has play services! configuring");
 		GoogleSignin.configure({
+			scopes: ["https://www.googleapis.com/auth/drive"],
 			iosClientId: config.iOSGoogleClientID,
 			webClientId: config.webGoogleClientID
 		})

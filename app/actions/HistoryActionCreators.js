@@ -27,14 +27,22 @@ export const exportHistoryCSV = () => (dispatch, getState) => {
 		webClientId: config.webGoogleClientID
 	}))
 	.then(GoogleSignin.currentUserAsync().then(async (user) => {
-		try {
-			let date = new Date();
-			let name = 'OpenBarbell Data -- Exported on ' + date.toString() + '.csv';
-			await GoogleDriveUploader.upload(user.accessToken, name, 'fuck,you\nfoo,bar');
-			Alert.alert('CSV uploaded to your Google Drive! Please check it out there.');
-		} catch(err) {
-			console.log("Error uploading csv file " + err);
-			Alert.alert('There was an error exporting you CSV file. Please try again later.');
+		if (user === null) {
+			Alert.alert('This feature is only available for logged in users. Please sign in via Settings.');
+		} else {
+			try {
+				let date = new Date();
+				let name = 'OpenBarbell Data -- Exported on ' + date.toString() + '.csv';
+				await GoogleDriveUploader.upload(user.accessToken, name, 'fuck,you\nfoo,bar');
+				Alert.alert('CSV uploaded to your Google Drive! Please check it out there.');
+			} catch(err) {
+				console.log("Error uploading csv file " + typeof err + " " + err);
+				if (err.message == 'Insufficient Permission') { // TODO: should do typeof check but it's not working
+					Alert.alert('Please log out and log in again. This feature requires additional Google Drive permissions.');
+				} else {
+					Alert.alert('Error exporting CSV. Please try again later.');
+				}
+			}
 		}
 	}))
 	.catch((err) => {

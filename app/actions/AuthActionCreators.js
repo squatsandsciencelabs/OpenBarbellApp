@@ -23,6 +23,7 @@ export const signIn = () => (dispatch) => {
 
 		// 2. configure things
 		GoogleSignin.configure({
+			scopes: ["https://www.googleapis.com/auth/drive"],
 			iosClientId: config.iOSGoogleClientID,
 			webClientId: config.webGoogleClientID
 		}).then(() => {

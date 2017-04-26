@@ -11,62 +11,46 @@ import { Alert, Platform } from 'react-native';
 // TODO: split this large function up into smaller pieces to be more testable
 
 export const signIn = () => (dispatch) => {
-	console.log("SIGN IN ATTEMPT");
-
 	dispatch(attemptingLogin());
 
-	console.log("has play services check!");
-
-	// 1. check google play services
-	GoogleSignin.hasPlayServices({ autoResolve: true }).then(() => {
-		console.log("has!!!! attempting to configure!");
-
-		// 2. configure things
-		GoogleSignin.configure({
-			scopes: ["https://www.googleapis.com/auth/drive"],
-			iosClientId: config.iOSGoogleClientID,
-			webClientId: config.webGoogleClientID
-		}).then(() => {
-			console.log("configured! showing sign in modal now!!!");
-			// 3. show sign in modal
-			GoogleSignin.signIn()
-				.then((user) => {
-					console.log("sign in complete! attempt to login from api!");
-					// 4. send the token to the server
-					// TODO: make this another ApiActionCreator thunk instead of accessing the API directly
-					api.login(user.idToken, dispatch, (accessToken, refreshToken, revision, sets) => {
-						console.log("auth action creator now has " + accessToken + " " + refreshToken + " " + JSON.stringify(sets));
-						// 5. save all the datas
-
-						dispatch(AuthActionCreators.saveUser(refreshToken, accessToken, user.email));
-						dispatch(SetActionCreators.updateSetDataFromServer(revision, sets));
-						dispatch(finishedAttemptLogin());
-					}, (err) => {
-						// API login error, means we need to sign out of the google account as well
-						console.log('API Login Error ', err);
-						executeSignOut(dispatch);
-						dispatch(finishedAttemptLogin());
-						showGenericAlert();
-					});
-				})
-				.catch((err) => {
-					// Can happen if the internet is weird and google play services can't be accessed properly
-					// Can happen when the user just doesn't pick one
-					// Either way, the sign in failed so you do NOT have to execute a sign out
-					console.log('WRONG SIGNIN', err);
-					dispatch(finishedAttemptLogin());
-					if (err.code !== -5) { // -5 is the error for user canceling the sign in
-						showGenericAlert();
-					}
-				})
-				.done();
+	GoogleSignin.hasPlayServices({ autoResolve: true })
+	.then(GoogleSignin.configure({
+		scopes: ["https://www.googleapis.com/auth/drive"],
+		iosClientId: config.iOSGoogleClientID,
+		webClientId: config.webGoogleClientID
+	}))
+	.then(GoogleSignin.signIn().then((user) => {
+		console.log("sign in complete! attempt to login from api!");
+		// TODO: make this another ApiActionCreator thunk instead of accessing the API directly
+		api.login(user.idToken, dispatch, (accessToken, refreshToken, revision, sets) => {
+			console.log("auth action creator now has " + accessToken + " " + refreshToken + " " + JSON.stringify(sets));
+			dispatch(AuthActionCreators.saveUser(refreshToken, accessToken, user.email));
+			dispatch(SetActionCreators.updateSetDataFromServer(revision, sets));
+			dispatch(finishedAttemptLogin());
+		}, (err) => {
+			// API login error, means we need to sign out of the google account as well
+			console.log('API Login Error ', err);
+			executeSignOut(dispatch);
+			dispatch(finishedAttemptLogin());
+			showGenericAlert();
 		});
-	})
+	}).catch((err) => {
+		// Can happen if the internet is weird and google play services can't be accessed properly
+		// Can happen when the user just doesn't pick one
+		// Either way, the sign in failed so you do NOT have to execute a sign out
+		console.log('WRONG SIGNIN', err);
+		dispatch(finishedAttemptLogin());
+		if (err.code !== -5) { // -5 is the error for user canceling the sign in
+			showGenericAlert();
+		}
+	}))
 	.catch((err) => {
+		// TODO: test the play services error catch block
 		console.log("Play services error", err.code, err.message);
 		dispatch(finishedAttemptLogin());
 		alert("Play Services Error", err.mesage);
 	})
+	.done();
 };
 
 const executeSignOut = (dispatch) => {

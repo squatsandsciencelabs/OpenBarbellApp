@@ -26,7 +26,7 @@ export const exportHistoryCSV = () => (dispatch, getState) => {
 		iosClientId: config.iOSGoogleClientID,
 		webClientId: config.webGoogleClientID
 	}))
-	.then(GoogleSignin.currentUserAsync().then(async (user) => {
+	.then(GoogleSignin.currentUserAsync().then((user) => {
 		try {
 			GoogleDriveUploader.upload(user.accessToken, 'test 2', 'fuck,you\nfoo,bar')
 			Alert.alert('CSV uploaded to your Google Drive! Please check it out there.');

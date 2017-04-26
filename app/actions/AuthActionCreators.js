@@ -9,8 +9,10 @@ import { SAVE_USER, ATTEMPTING_LOGIN, FINISHED_ATTEMPT_LOGIN } from '../ActionTy
 import { Alert, Platform } from 'react-native';
 
 // TODO: split this large function up into smaller pieces to be more testable
+// TODO: consolidate google sign in code somehow
 
 export const signIn = () => (dispatch) => {
+	console.log("Attempting sign in");
 	dispatch(attemptingLogin());
 
 	GoogleSignin.hasPlayServices({ autoResolve: true })
@@ -46,7 +48,7 @@ export const signIn = () => (dispatch) => {
 	}))
 	.catch((err) => {
 		// TODO: test the play services error catch block
-		console.log("Play services error", err.code, err.message);
+		console.log("LOGIN Play services error", err.code, err.message);
 		dispatch(finishedAttemptLogin());
 		alert("Play Services Error", err.mesage);
 	})
@@ -56,45 +58,28 @@ export const signIn = () => (dispatch) => {
 const executeSignOut = (dispatch) => {
 	console.log("executing sign out");
 
-	// hack
-	// just copy pasting the setup code, ideally should have 1 location for it but going for speed right now
 	GoogleSignin.hasPlayServices({ autoResolve: true })
-	.then(() => {
-		console.log("Has play services! configuring");
-		GoogleSignin.configure({
-			scopes: ["https://www.googleapis.com/auth/drive"],
-			iosClientId: config.iOSGoogleClientID,
-			webClientId: config.webGoogleClientID
-		})
+	.then(GoogleSignin.configure({
+		scopes: ["https://www.googleapis.com/auth/drive"],
+		iosClientId: config.iOSGoogleClientID,
+		webClientId: config.webGoogleClientID
+	}))
+	.then(GoogleSignin.currentUserAsync().then((user) => {
+		// hack, need to access current user first otherwise crashes would happen
+		GoogleSignin.signOut()
 		.then(() => {
-			console.log("Finished configuring! attempting to sign out now");
-			GoogleSignin.currentUserAsync()
-			.then((user) => {
-				GoogleSignin.signOut()
-				.then(() => {
-					console.log("Signed Out");
-					dispatch(saveUser(null, null, null));
-					console.log("finished saving user");
-					// should be fine at this point...there isn't something i really need to do here
-				})
-				.catch((err) => {
-					console.log("LOGOUT SIGN OUT ERROR " + err);
-				})
-				.done();
-			})
-			.catch((err) => {
-				console.log("LOGOUT CURRENT USER ASYNC ERROR " + err);
-			})
+			console.log("Signed Out");
+			dispatch(saveUser(null, null, null));
+			console.log("finished saving user");
 		})
 		.catch((err) => {
-			// according to the docs, this should be impossible to reach
-			console.log("LOGOUT CONFIGURE ERROR " + err);
+			console.log("LOGOUT SIGN OUT ERROR " + err);
 		})
-	})
+	}))
 	.catch((err) => {
-		// according to the docs, this should be impossible to reach
-		console.log("LOGOUT PLAY SERVICES ERROR " + err);
-	});
+		// TODO: test the play services error catch block
+		console.log("LOGOUT ERROR " + err);
+	}).done();
 };
 
 export const signOut = () => (dispatch) => {

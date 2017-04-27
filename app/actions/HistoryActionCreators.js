@@ -6,6 +6,8 @@ import {
 	UPDATE_HISTORY_FILTER,
 } from '../ActionTypes';
 import * as GoogleDriveUploader from '../utility/GoogleDriveUploader';
+import * as CSVConverter from '../utility/CSVConverter';
+import { getHistorySetsChronological } from '../reducers/SetReducer';
 
 import { Alert } from 'react-native'
 import { GoogleSignin } from 'react-native-google-signin';
@@ -28,12 +30,15 @@ export const exportHistoryCSV = () => (dispatch, getState) => {
 	}))
 	.then(GoogleSignin.currentUserAsync().then(async (user) => {
 		if (user === null) {
-			Alert.alert('This feature is only available for logged in users. Please sign in via Settings.');
+			Alert.alert('This feature is only available for logged in users. Please sign in via Settings.\n\nIf you are signed in, this may be a bug. Please logout and login again.');
 		} else {
 			try {
 				let date = new Date();
 				let name = 'OpenBarbell Data -- Exported on ' + date.toString() + '.csv';
-				await GoogleDriveUploader.upload(user.accessToken, name, 'fuck,you\nfoo,bar');
+				let state = getState();
+				let sets = getHistorySetsChronological(state.sets);
+				let csv = CSVConverter.convert(sets);
+				await GoogleDriveUploader.upload(user.accessToken, name, csv);
 				Alert.alert('CSV uploaded to your Google Drive! Please check it out there.');
 			} catch(err) {
 				console.log("Error uploading csv file " + typeof err + " " + err);

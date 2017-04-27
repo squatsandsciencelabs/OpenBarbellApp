@@ -69,7 +69,7 @@ export const convert = (sets) => {
             output += RepDataMap.rangeOfMotion(rep.data) + ',';
             output += RepDataMap.peakVelocity(rep.data) + ',';
             output += RepDataMap.peakVelocityLocation(rep.data) + ',';
-            output += RepDataMap.durationOfLift(rep.data) + '\n';
+            output += (RepDataMap.durationOfLift(rep.data) / 1000000) + '\n';
         });
     }
     return output;

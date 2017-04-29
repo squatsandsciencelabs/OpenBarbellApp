@@ -196,9 +196,6 @@ const updateWorkoutRep = (state, action) => {
 	let stateChanges = {
 		workoutData: newWorkoutData
 	};
-	if (!state.setIDsToUpload.includes(setID)) {
-		stateChanges.setIDsToUpload = [...state.setIDsToUpload, setID];
-	}
 
 	return Object.assign({}, state, stateChanges);
 };

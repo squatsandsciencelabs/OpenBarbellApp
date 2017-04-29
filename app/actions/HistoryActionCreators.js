@@ -4,6 +4,7 @@ import {
 	EDIT_HISTORY_SET,
 	END_EDIT_HISTORY_SET,
 	UPDATE_HISTORY_FILTER,
+	EXPORTING_CSV
 } from '../ActionTypes';
 import * as GoogleDriveUploader from '../utility/GoogleDriveUploader';
 import * as CSVConverter from '../utility/CSVConverter';
@@ -21,6 +22,8 @@ export const showRemovedData = () => ({ type: UPDATE_HISTORY_FILTER, showRemoved
 
 export const hideRemovedData = () => ({ type: UPDATE_HISTORY_FILTER, showRemoved: false });
 
+const updateIsExportingCSV = (isExportingCSV) => ({ type: EXPORTING_CSV, isExportingCSV: isExportingCSV });
+
 export const exportHistoryCSV = () => (dispatch, getState) => {
 	GoogleSignin.hasPlayServices({ autoResolve: true })
 	.then(GoogleSignin.configure({
@@ -32,6 +35,7 @@ export const exportHistoryCSV = () => (dispatch, getState) => {
 		if (user === null) {
 			Alert.alert('This feature is only available for logged in users. Please sign in via Settings.\n\nIf you are signed in, this may be a bug. Please logout and login again.');
 		} else {
+			dispatch(updateIsExportingCSV(true));
 			try {
 				let date = new Date();
 				let name = 'OpenBarbell Data -- Exported on ' + date.toLocaleString() + '.csv';
@@ -39,6 +43,7 @@ export const exportHistoryCSV = () => (dispatch, getState) => {
 				let sets = getHistorySetsChronological(state.sets);
 				let csv = CSVConverter.convert(sets);
 				await GoogleDriveUploader.upload(user.accessToken, name, csv);
+				dispatch(updateIsExportingCSV(false));
 				Alert.alert('CSV uploaded to your Google Drive! Please check it out there.');
 			} catch(err) {
 				console.log("Error uploading csv file " + typeof err + " " + err);
@@ -47,6 +52,7 @@ export const exportHistoryCSV = () => (dispatch, getState) => {
 				} else {
 					Alert.alert('Error exporting CSV. Please try again later.');
 				}
+				dispatch(updateIsExportingCSV(false));
 			}
 		}
 	}))

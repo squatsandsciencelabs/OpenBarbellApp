@@ -1,7 +1,7 @@
 // app/components/HistoryFilterBar.js
 
 import React, {Component} from 'react';
-import { View, Text, Switch, StyleSheet, TouchableHighlight }  from 'react-native';
+import { ActivityIndicator, View, Text, Switch, StyleSheet, TouchableHighlight }  from 'react-native';
 
 class HistoryFilterBar extends Component {
 
@@ -17,13 +17,28 @@ class HistoryFilterBar extends Component {
 		}
 	}
 
-	render() {
-		// TODO: disable on tap
-		return (
-			<View style={styles.bar}>
+	_renderExportCSV() {
+		var isExportingCSV = this.props.isExportingCSV;
+		if (isExportingCSV) {
+			return (
+				<ActivityIndicator
+					style={[styles.centering, styles.gray], {marginLeft: 10}}
+					color="white"
+				/>
+			);
+		} else {
+			return (
 				<TouchableHighlight style={{justifyContent: 'center'}} onPress={ () => this._onPressCSV() } activeOpacity={1} >
 					<Text style={{color:'white', marginLeft: 5}}>Export CSV</Text>
 				</TouchableHighlight>
+			);
+		}
+	}
+
+	render() {
+		return (
+			<View style={styles.bar}>
+				{ this._renderExportCSV() }
 
 				<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
 					<Text style={{color:'white'}}>Show Deleted</Text>

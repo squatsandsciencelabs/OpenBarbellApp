@@ -4,6 +4,7 @@ import api from '../api/api';
 import { GoogleSignin } from 'react-native-google-signin';
 import * as SetActionCreators from './SetActionCreators';
 import * as AuthActionCreators from './AuthActionCreators';
+import * as SettingsActionCreators from './SettingsActionCreators';
 import config from '../config.json';
 import { SAVE_USER, ATTEMPTING_LOGIN, FINISHED_ATTEMPT_LOGIN } from '../ActionTypes';
 import { Alert, Platform } from 'react-native';
@@ -24,10 +25,12 @@ export const signIn = () => (dispatch) => {
 	.then(GoogleSignin.signIn().then((user) => {
 		console.log("sign in complete! attempt to login from api!");
 		// TODO: make this another ApiActionCreator thunk instead of accessing the API directly
+		// TODO: success code here might need to reflect sync success code as well to reduce errors
 		api.login(user.idToken, dispatch, (accessToken, refreshToken, revision, sets) => {
 			console.log("auth action creator now has " + accessToken + " " + refreshToken + " " + JSON.stringify(sets));
 			dispatch(AuthActionCreators.saveUser(refreshToken, accessToken, user.email));
 			dispatch(SetActionCreators.updateSetDataFromServer(revision, sets));
+			dispatch(SettingsActionCreators.updateSyncDate(new Date()));
 			dispatch(finishedAttemptLogin());
 		}, (err) => {
 			// API login error, means we need to sign out of the google account as well

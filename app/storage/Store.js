@@ -72,8 +72,10 @@ const loadInitialState = async (store) => {
 				let syncDate = value.settings.syncDate;
 				if (syncDate === undefined || null) {
 					syncDate = '';
+				} else {
+					syncDate = new Date(syncDate);
 				}
-				store.dispatch(SettingsActionCreators.updateSyncDate(new Date(syncDate)));
+				store.dispatch(SettingsActionCreators.updateSyncDate(syncDate));
 			}
 
 			// load previous auth data

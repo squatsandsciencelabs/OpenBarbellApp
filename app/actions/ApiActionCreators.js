@@ -36,12 +36,25 @@ export const syncData = () => (dispatch, getState) => {
 		return api.postUpdatedSetData(sets, dispatch, accessToken, refreshToken, (revision) => {
 			// success
 
+			// still logged in check
+			let state = getState();
+			if (state.auth.email === null) {
+				console.log("upload data via a sync but you've been logged out, ignore it");
+				return;
+			}
+
 			// clear the sets being uploaded
 			dispatch(SetActionCreators.clearSetsBeingUploaded());
 
 			// update the revision
 			dispatch(SetActionCreators.updateRevisionFromServer(revision));
 		}, () => {
+			// still logged in check
+			let state = getState();
+			if (state.auth.email === null) {
+				return;
+			}
+
 			// failure, add the sets being uploaded back
 			dispatch(SetActionCreators.reAddSetsToUpload());
 		});
@@ -51,8 +64,15 @@ export const syncData = () => (dispatch, getState) => {
 		console.log("syncing with revision " + revision);
 
 		return api.sync(revision, dispatch, accessToken, refreshToken, (revision, sets) => {
-			// ensure there's no local updates
 			let state = getState();
+
+			// still logged in check
+			if (state.auth.email === null) {
+				console.log("sync completed but you're logged out, ignore it");
+				return;
+			}
+
+			// ensure there's no local updates
 			if (state.sets.setIDsToUpload.length > 0 || state.sets.setIDsBeingUploaded.length > 0) {
 				console.log("Sync data came back from the server, but local changes were made in the meantime, backing out of updating server information");
 				return;

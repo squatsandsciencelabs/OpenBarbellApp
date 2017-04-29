@@ -74,6 +74,7 @@ const executeSignOut = (dispatch) => {
 			// note: if somehow the app crashes after google signout but before user signed out, can be buggy
 			console.log("Signed Out");
 			dispatch(saveUser(null, null, null));
+			dispatch(SetActionCreators.clearHistory());
 			console.log("finished saving user");
 		})
 		.catch((err) => {

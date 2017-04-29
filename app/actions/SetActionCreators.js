@@ -10,7 +10,8 @@ import {
 	RE_ADD_SETS_TO_UPLOAD,
 	CLEAR_SETS_BEING_UPLOADED,
 	UPDATE_SET_DATA_FROM_SERVER,
-	UPDATE_REVISION_FROM_SERVER
+	UPDATE_REVISION_FROM_SERVER,
+	CLEAR_HISTORY
 } from '../ActionTypes';
 import * as ApiActionCreators from './ApiActionCreators';
 import * as WorkoutActionCreators from '../actions/WorkoutActionCreators';
@@ -144,3 +145,7 @@ export const endOldWorkout = () => (dispatch, getState) => {
 		dispatch(WorkoutActionCreators.endWorkout())
 	}
 };
+
+export const clearHistory = () => ({
+	type: CLEAR_HISTORY
+});

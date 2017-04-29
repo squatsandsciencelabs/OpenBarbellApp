@@ -13,7 +13,8 @@ import {
 	CLEAR_SETS_BEING_UPLOADED,
 	RE_ADD_SETS_TO_UPLOAD,
 	UPDATE_SET_DATA_FROM_SERVER,
-	UPDATE_REVISION_FROM_SERVER
+	UPDATE_REVISION_FROM_SERVER,
+	CLEAR_HISTORY
 } from '../ActionTypes';
 import uuidV4 from 'uuid/v4';
 import DeviceInfo from 'react-native-device-info';
@@ -48,6 +49,8 @@ const SetReducer = (state = createDefaultState(), action) => {
 			return updateSetDataFromServer(state, action);
 		case UPDATE_REVISION_FROM_SERVER:
 			return updateRevisionFromServer(state, action);
+		case CLEAR_HISTORY:
+			return clearHistory(state, action);
 		default:
 			return state;
 	}
@@ -346,6 +349,17 @@ const updateSetDataFromServer = (state, action) => {
 const updateRevisionFromServer = (state, action) => {
 	return Object.assign({}, state, {
 		revision: action.revision,
+	});
+};
+
+// CLEAR_HISTORY
+
+const clearHistory = (state, action) => {
+	return Object.assign({}, state, {
+		historyData: {},
+		revision: 0,
+		setIDsToUpload: [],
+		setIDsBeingUploaded: []
 	});
 };
 

@@ -5,7 +5,6 @@ import { GoogleSignin } from 'react-native-google-signin';
 import * as SetActionCreators from './SetActionCreators';
 import * as AuthActionCreators from './AuthActionCreators';
 import * as SettingsActionCreators from './SettingsActionCreators';
-import config from '../config.json';
 import { SAVE_USER, ATTEMPTING_LOGIN, FINISHED_ATTEMPT_LOGIN } from '../ActionTypes';
 import { Alert, Platform } from 'react-native';
 
@@ -16,13 +15,7 @@ export const signIn = () => (dispatch) => {
 	console.log("Attempting sign in");
 	dispatch(attemptingLogin());
 
-	GoogleSignin.hasPlayServices({ autoResolve: true })
-	.then(GoogleSignin.configure({
-		scopes: ["https://www.googleapis.com/auth/drive"],
-		iosClientId: config.iOSGoogleClientID,
-		webClientId: config.webGoogleClientID
-	}))
-	.then(GoogleSignin.signIn().then((user) => {
+	GoogleSignin.signIn().then((user) => {
 		console.log("sign in complete! attempt to login from api!");
 		// TODO: make this another ApiActionCreator thunk instead of accessing the API directly
 		// TODO: success code here might need to reflect sync success code as well to reduce errors
@@ -48,12 +41,6 @@ export const signIn = () => (dispatch) => {
 		if (err.code !== -5) { // -5 is the error for user canceling the sign in
 			showGenericAlert();
 		}
-	}))
-	.catch((err) => {
-		// TODO: test the play services error catch block
-		console.log("LOGIN Play services error", err.code, err.message);
-		dispatch(finishedAttemptLogin());
-		alert("Play Services Error", err.mesage);
 	})
 	.done();
 };
@@ -61,13 +48,7 @@ export const signIn = () => (dispatch) => {
 const executeSignOut = (dispatch) => {
 	console.log("executing sign out");
 
-	GoogleSignin.hasPlayServices({ autoResolve: true })
-	.then(GoogleSignin.configure({
-		scopes: ["https://www.googleapis.com/auth/drive"],
-		iosClientId: config.iOSGoogleClientID,
-		webClientId: config.webGoogleClientID
-	}))
-	.then(GoogleSignin.currentUserAsync().then((user) => {
+	GoogleSignin.currentUserAsync().then((user) => {
 		// hack, need to access current user first otherwise crashes would happen
 		GoogleSignin.signOut()
 		.then(() => {
@@ -80,7 +61,7 @@ const executeSignOut = (dispatch) => {
 		.catch((err) => {
 			console.log("LOGOUT SIGN OUT ERROR " + err);
 		})
-	}))
+	})
 	.catch((err) => {
 		// TODO: test the play services error catch block
 		console.log("LOGOUT ERROR " + err);

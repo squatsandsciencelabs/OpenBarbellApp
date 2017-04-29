@@ -12,7 +12,6 @@ import { getHistorySetsChronological } from '../reducers/SetReducer';
 
 import { Alert, Linking } from 'react-native'
 import { GoogleSignin } from 'react-native-google-signin';
-import config from '../config.json';
 
 export const editHistorySet = (setID) => ({ type: EDIT_HISTORY_SET, setID: setID });
 
@@ -25,13 +24,7 @@ export const hideRemovedData = () => ({ type: UPDATE_HISTORY_FILTER, showRemoved
 const updateIsExportingCSV = (isExportingCSV) => ({ type: EXPORTING_CSV, isExportingCSV: isExportingCSV });
 
 export const exportHistoryCSV = () => (dispatch, getState) => {
-	GoogleSignin.hasPlayServices({ autoResolve: true })
-	.then(GoogleSignin.configure({
-		scopes: ["https://www.googleapis.com/auth/drive"],
-		iosClientId: config.iOSGoogleClientID,
-		webClientId: config.webGoogleClientID
-	}))
-	.then(GoogleSignin.currentUserAsync().then(async (user) => {
+	GoogleSignin.currentUserAsync().then(async (user) => {
 		if (user === null) {
 			Alert.alert('This feature is only available for logged in users. Please sign in via Settings.\n\nIf you are signed in, this may be a bug. Please logout and login again.');
 		} else {
@@ -59,7 +52,7 @@ export const exportHistoryCSV = () => (dispatch, getState) => {
 				dispatch(updateIsExportingCSV(false));
 			}
 		}
-	}))
+	})
 	.catch((err) => {
 		console.log("EXPORT HISTORY ERROR " + err);
 	})

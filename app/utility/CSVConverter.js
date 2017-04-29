@@ -1,9 +1,5 @@
 // app/utility/CSVConverter.js
 
-// TODO: rest time issues
-// TODO: workout start time needs to look correct
-// TODO: data units
-
 // TODO: split this into more functions that don't suck
 // TODO: prime candidate for unit testing
 
@@ -30,7 +26,7 @@ export const convert = (sets) => {
         // calculate workoutstarttime
         if (lastWorkout === null || lastWorkout !== set.workoutID) {
             lastWorkout = set.workoutID;
-            workoutStartTime = set.startTime;
+            workoutStartTime = new Date(set.startTime).toLocaleString();
 
             // reset vars for set count and rest time
             lastExercise = null;

@@ -43,7 +43,7 @@ class SettingsAccountPanel extends Component {
 		} else {
 			return (
 				<View style={ [SETTINGS_PANEL_STYLES.panel, { flex: 1 }] }>
-					<Text style={{color:'gray', marginBottom: 15}}>Sign in to sync data to the cloud</Text>
+					<Text style={{color:'gray', marginBottom: 15, textAlign: 'center'}}>Sign in to sync data to the cloud</Text>
 					<TouchableHighlight onPress={ () => this.props.signIn() }>
 						<View pointerEvents="none" style={{alignItems:'center'}}>
 							<GoogleSigninButton style={{width: 212, height: 48}} size={GoogleSigninButton.Size.Standard} color={GoogleSigninButton.Color.Light} />

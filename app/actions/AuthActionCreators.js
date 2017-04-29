@@ -68,6 +68,7 @@ const executeSignOut = (dispatch) => {
 		// hack, need to access current user first otherwise crashes would happen
 		GoogleSignin.signOut()
 		.then(() => {
+			// note: if somehow the app crashes after google signout but before user signed out, can be buggy
 			console.log("Signed Out");
 			dispatch(saveUser(null, null, null));
 			console.log("finished saving user");

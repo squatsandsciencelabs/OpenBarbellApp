@@ -3,6 +3,7 @@
 import api from '../api/api';
 import { getSetsToUpload } from '../reducers/SetReducer';
 import * as SetActionCreators from './SetActionCreators';
+import * as SettingsActionCreators from './SettingsActionCreators';
 
 // TODO: fix syncing bug where if you begin an upload, change the data, then the upload succeeds, it can prevent uploading of the changed data until the next time they change something
 // SOLUTION:
@@ -57,7 +58,13 @@ export const syncData = () => (dispatch, getState) => {
 				return;
 			}
 
-			dispatch(SetActionCreators.updateSetDataFromServer(revision, sets));
+			// update data
+			if (revision !== null && sets !== null) {
+				dispatch(SetActionCreators.updateSetDataFromServer(revision, sets));
+			}
+
+			// update the sync date
+			dispatch(SettingsActionCreators.updateSyncDate(new Date()));
 		});
 	}
 };

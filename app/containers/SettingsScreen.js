@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
 		email: state.auth.email,
 		isLoggingIn: state.auth.isLoggingIn,
 		endSetTimerDuration: state.settings.endSetTimerDuration,
-		syncDate: (state.settings.syncDate === undefined) ? '' : state.settings.syncDate.toLocaleString()
+		syncDate: state.settings.syncDate.toLocaleString()
 	}
 };
 

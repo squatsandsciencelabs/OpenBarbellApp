@@ -57,6 +57,7 @@ const loadInitialState = async (store) => {
 
 			// load previous settings
 			if (value.settings !== undefined) {
+				// end set timer
 				let endSetTimerDuration = value.settings.endSetTimerDuration;
 				if (endSetTimerDuration === undefined || endSetTimerDuration == null) {
 					Alert.alert(
@@ -66,6 +67,13 @@ const loadInitialState = async (store) => {
 					endSetTimerDuration = 30;
 				}
 				store.dispatch(SettingsActionCreators.updateSetTimer(endSetTimerDuration));
+
+				// sync date
+				let syncDate = value.settings.syncDate;
+				if (syncDate === undefined || null) {
+					syncDate = '';
+				}
+				store.dispatch(SettingsActionCreators.updateSyncDate(new Date(syncDate)));
 			}
 
 			// load previous auth data

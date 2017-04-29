@@ -1,7 +1,7 @@
 // app/components/SettingsAccountPanel.js
 
 import React, {Component} from 'react';
-import { Alert, TouchableHighlight, TouchableOpacity, View, Text } from 'react-native';
+import { Alert, TouchableHighlight, View, Text } from 'react-native';
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 import { SETTINGS_PANEL_STYLES } from '../styles/GlobalStyles';
 
@@ -29,9 +29,9 @@ class SettingsAccountPanel extends Component {
 					<Text style={{color:'gray', marginTop: 10}}>Last synced to the cloud:</Text>
 					<Text>{this.props.syncDate}</Text>
 					
-					<TouchableOpacity onPress={ () => this.tappedSignOut() }>
-						<Text style={[SETTINGS_PANEL_STYLES.blueButton, {width: 80, padding: 5, marginTop: 20}]}>Logout</Text>
-					</TouchableOpacity>
+					<TouchableHighlight style={{width: 100, marginTop: 20}} onPress={ () => this.tappedSignOut() }>
+						<Text style={[SETTINGS_PANEL_STYLES.blueButton, {padding: 5}]}>Logout</Text>
+					</TouchableHighlight>
 				</View>
 			);
 		} else if (this.props.isLoggingIn === true) {

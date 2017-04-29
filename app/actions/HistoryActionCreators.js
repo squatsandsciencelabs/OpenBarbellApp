@@ -10,7 +10,7 @@ import * as GoogleDriveUploader from '../utility/GoogleDriveUploader';
 import * as CSVConverter from '../utility/CSVConverter';
 import { getHistorySetsChronological } from '../reducers/SetReducer';
 
-import { Alert } from 'react-native'
+import { Alert, Linking } from 'react-native'
 import { GoogleSignin } from 'react-native-google-signin';
 import config from '../config.json';
 
@@ -42,9 +42,13 @@ export const exportHistoryCSV = () => (dispatch, getState) => {
 				let state = getState();
 				let sets = getHistorySetsChronological(state.sets);
 				let csv = CSVConverter.convert(sets);
-				await GoogleDriveUploader.upload(user.accessToken, name, csv);
-				dispatch(updateIsExportingCSV(false));
-				Alert.alert('CSV uploaded to your Google Drive! Please check it out there.');
+				console.log("google access token " + user.accessToken);
+				GoogleDriveUploader.upload(user.accessToken, name, csv, (fileID) => {
+					dispatch(updateIsExportingCSV(false));
+					Linking.openURL('https://drive.google.com/open?id=' + fileID).catch(err => {
+						Alert.alert('CSV uploaded to your Google Drive! Please check it out there.');
+					});
+				});
 			} catch(err) {
 				console.log("Error uploading csv file " + typeof err + " " + err);
 				if (err.message == 'Insufficient Permission') { // TODO: should do typeof check but it's not working

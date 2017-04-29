@@ -5,7 +5,7 @@
 
 import * as Errors from '../utility/Errors';
 
-export const upload = async (accessToken, name, content) => {
+export const upload = async (accessToken, name, content, completionHandler) => {
     // setup the upload
     let response = await fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable', {
         method: 'POST',
@@ -49,5 +49,10 @@ export const upload = async (accessToken, name, content) => {
         let json = await response.json();
         console.log('Error, received status ' + status + ' body ' + JSON.stringify(json));
         throw new Error('Did not receive 200 for upload');
+    }
+
+    if (completionHandler !== undefined) {
+        let json = await response.json();
+        completionHandler(json.id);
     }
 };

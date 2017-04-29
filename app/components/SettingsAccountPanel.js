@@ -1,11 +1,22 @@
 // app/components/SettingsAccountPanel.js
 
 import React, {Component} from 'react';
-import { TouchableHighlight, TouchableOpacity, View, Text } from 'react-native';
+import { Alert, TouchableHighlight, TouchableOpacity, View, Text } from 'react-native';
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 import { SETTINGS_PANEL_STYLES } from '../styles/GlobalStyles';
 
 class SettingsAccountPanel extends Component {
+
+	tappedSignOut() {
+		Alert.alert(
+			'Are you sure?',
+			'History data on this phone will be cleared and any changes that haven\'t been synced to the cloud will be lost.\n\nTip: Check your last sync date to see when you last synced your information.',
+			[
+				{text: 'Nevermind', onPress: null, style: 'cancel'},
+				{text: 'Logout', onPress: () => this.props.signOut() },
+			]
+		);
+	}
 
 	// NOTE: Wrapping the sign in button to prevent it from running internal code earlier than we want it to
 	render() {
@@ -18,7 +29,7 @@ class SettingsAccountPanel extends Component {
 					<Text style={{color:'gray', marginTop: 10}}>Last synced to the cloud:</Text>
 					<Text>{this.props.syncDate}</Text>
 					
-					<TouchableOpacity onPress={ () => this.props.signOut() }>
+					<TouchableOpacity onPress={ () => this.tappedSignOut() }>
 						<Text style={[SETTINGS_PANEL_STYLES.blueButton, {width: 80, padding: 5, marginTop: 20}]}>Logout</Text>
 					</TouchableOpacity>
 				</View>

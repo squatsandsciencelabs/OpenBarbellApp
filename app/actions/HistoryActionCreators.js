@@ -26,7 +26,7 @@ const updateIsExportingCSV = (isExportingCSV) => ({ type: EXPORTING_CSV, isExpor
 export const exportHistoryCSV = () => (dispatch, getState) => {
 	GoogleSignin.currentUserAsync().then(async (user) => {
 		if (user === null) {
-			Alert.alert('This feature is only available for logged in users. Please sign in via Settings.\n\nIf you are actually signed in, you need to logout and login again to access Google Drive permissions.');
+			Alert.alert('This feature is only available for logged in users. Please sign in via Settings.\n\nIf you are actually signed in, please logout and login again.');
 		} else {
 			dispatch(updateIsExportingCSV(true));
 			try {
@@ -47,7 +47,7 @@ export const exportHistoryCSV = () => (dispatch, getState) => {
 				if (err.message == 'Insufficient Permission') { // TODO: should do typeof check but it's not working
 					Alert.alert('Please log out and log in again. This feature requires additional Google Drive permissions.');
 				} else {
-					Alert.alert('Error exporting CSV. Please try again later.');
+					Alert.alert('Error exporting CSV. Please try again later.\n\nTip: Is your internet connection working?');
 				}
 				dispatch(updateIsExportingCSV(false));
 			}

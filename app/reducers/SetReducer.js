@@ -13,7 +13,8 @@ import {
 	CLEAR_SETS_BEING_UPLOADED,
 	RE_ADD_SETS_TO_UPLOAD,
 	UPDATE_SET_DATA_FROM_SERVER,
-	UPDATE_REVISION_FROM_SERVER
+	UPDATE_REVISION_FROM_SERVER,
+	CLEAR_HISTORY
 } from '../ActionTypes';
 import uuidV4 from 'uuid/v4';
 import DeviceInfo from 'react-native-device-info';
@@ -48,6 +49,8 @@ const SetReducer = (state = createDefaultState(), action) => {
 			return updateSetDataFromServer(state, action);
 		case UPDATE_REVISION_FROM_SERVER:
 			return updateRevisionFromServer(state, action);
+		case CLEAR_HISTORY:
+			return clearHistory(state, action);
 		default:
 			return state;
 	}
@@ -196,9 +199,6 @@ const updateWorkoutRep = (state, action) => {
 	let stateChanges = {
 		workoutData: newWorkoutData
 	};
-	if (!state.setIDsToUpload.includes(setID)) {
-		stateChanges.setIDsToUpload = [...state.setIDsToUpload, setID];
-	}
 
 	return Object.assign({}, state, stateChanges);
 };
@@ -352,6 +352,17 @@ const updateRevisionFromServer = (state, action) => {
 	});
 };
 
+// CLEAR_HISTORY
+
+const clearHistory = (state, action) => {
+	return Object.assign({}, state, {
+		historyData: {},
+		revision: 0,
+		setIDsToUpload: [],
+		setIDsBeingUploaded: []
+	});
+};
+
 /////////////////////////////////////////////////////////////////////////////////
 
 // Get last rep time
@@ -409,6 +420,12 @@ const dictToArray = (dictionary) => {
 export const getHistorySets = (state) => {
 	var array = dictToArray(state.historyData);
 	array.sort((set1, set2) => new Date(set2.startTime) - new Date(set1.startTime));
+	return array;
+};
+
+export const getHistorySetsChronological = (state) => {
+	var array = dictToArray(state.historyData);
+	array.sort((set1, set2) => new Date(set1.startTime) - new Date(set2.startTime));
 	return array;
 };
 

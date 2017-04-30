@@ -24,7 +24,12 @@ class SettingsTab extends Component {
                     stopDeviceScan={ this.props.stopDeviceScan }
                     connectDevice={ this.props.connectDevice }
                     disconnectDevice={ this.props.disconnectDevice }/>
-                <SettingsAccountPanel email={this.props.email} signIn={this.props.signIn} isLoggingIn={this.props.isLoggingIn} />
+                <SettingsAccountPanel
+                    email={this.props.email}
+                    signIn={this.props.signIn}
+                    signOut={this.props.signOut}
+                    syncDate={this.props.syncDate}
+                    isLoggingIn={this.props.isLoggingIn} />
                 <SettingsApplicationPanel
                     editSetTimer={ this.props.editSetTimer }
                     endEditSetTimer={ this.props.editEndEditSetTimer }

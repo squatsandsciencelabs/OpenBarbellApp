@@ -58,10 +58,12 @@ const API = {
 			refreshToken: refreshToken,
 			completionHandler: (json) => {
 				console.log("sync success with completion " + completionHandler + " json " + json);
-				if (completionHandler !== null && json !== undefined) {
-					completionHandler(json.revision, json.sets);
-				} else {
-					console.log("no sync changes!");
+				if (completionHandler !== null) {
+					if (json !== undefined) {
+						completionHandler(json.revision, json.sets);
+					} else {
+						completionHandler(null, null);
+					}
 				}
 			},
 			errorHandler: errorHandler

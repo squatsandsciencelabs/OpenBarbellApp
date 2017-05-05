@@ -8,9 +8,16 @@ import { SETTINGS_PANEL_STYLES } from '../styles/GlobalStyles';
 class SettingsAccountPanel extends Component {
 
 	tappedSignOut() {
+		var message = "";
+		if (this.props.hasChangesToSync) {
+			message = "WARNING: You have changes that haven't been synced to the cloud. Logging out will cause you to lose them.";
+		} else {
+			message = "History data on this phone will be cleared.";
+		}
+
 		Alert.alert(
 			'Are you sure?',
-			'History data on this phone will be cleared and any changes that haven\'t been synced to the cloud will be lost.\n\nTip: Check your last sync date to see when you last synced your information.',
+			message,
 			[
 				{text: 'Nevermind', onPress: null, style: 'cancel'},
 				{text: 'Logout', onPress: () => this.props.signOut() },

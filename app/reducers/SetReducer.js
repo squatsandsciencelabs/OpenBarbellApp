@@ -450,3 +450,8 @@ export const getSetsToUpload = (state) => {
 };
 
 export default SetReducer;
+
+// Has Changes To Sync
+export const hasChangesToSync = (state) => {
+	return (state.setIDsToUpload.length > 0 || state.setIDsBeingUploaded.length > 0);
+};

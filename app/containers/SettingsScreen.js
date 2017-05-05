@@ -6,6 +6,7 @@ import SettingsTab from '../components/SettingsTab';
 import * as DeviceActionCreators from '../actions/DeviceActionCreators';
 import * as AuthActionCreators from '../actions/AuthActionCreators';
 import * as SettingsActionCreators from '../actions/SettingsActionCreators';
+import * as SetReducer from '../reducers/SetReducer';
 
 const mapStateToProps = (state) => {
 	return {
@@ -15,7 +16,8 @@ const mapStateToProps = (state) => {
 		email: state.auth.email,
 		isLoggingIn: state.auth.isLoggingIn,
 		endSetTimerDuration: state.settings.endSetTimerDuration,
-		syncDate: state.settings.syncDate.toLocaleString()
+		syncDate: state.settings.syncDate.toLocaleString(),
+		hasChangesToSync: SetReducer.hasChangesToSync(state.sets)
 	}
 };
 

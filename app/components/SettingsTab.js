@@ -29,6 +29,7 @@ class SettingsTab extends Component {
                     signIn={this.props.signIn}
                     signOut={this.props.signOut}
                     syncDate={this.props.syncDate}
+                    hasChangesToSync = {this.props.hasChangesToSync}
                     isLoggingIn={this.props.isLoggingIn} />
                 <SettingsApplicationPanel
                     editSetTimer={ this.props.editSetTimer }

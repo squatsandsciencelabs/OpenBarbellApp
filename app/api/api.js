@@ -234,7 +234,7 @@ const forceLogout = (dispatch, displayError=true) => {
 		return;
 	}
 
-	console.log("force logging out witih dispatch " + dispatch);
+	console.log("force logging out with dispatch " + dispatch);
 	dispatch(AuthActionCreators.signOut());
 	if (displayError) {
 		Alert.alert("Important", "As it's been awhile since you've signed on, you've been logged out! Please login again.");

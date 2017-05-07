@@ -7,12 +7,14 @@ import * as HistoryActionCreators from '../actions/HistoryActionCreators';
 
 const mapStateToProps = (state) => ({
 	shouldShowRemoved: state.history.showRemoved,
+	isExportingCSV: state.history.isExportingCSV
 });
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
 		showRemoved: HistoryActionCreators.showRemovedData,
         hideRemoved: HistoryActionCreators.hideRemovedData,
+		exportCSV: HistoryActionCreators.exportHistoryCSV,
 	}, dispatch);
 };
 

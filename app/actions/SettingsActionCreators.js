@@ -3,7 +3,8 @@
 import {
 	SETTINGS_UPDATE_SET_TIMER,
     SETTINGS_EDIT_SET_TIMER,
-    SETTINGS_END_EDIT_SET_TIMER
+    SETTINGS_END_EDIT_SET_TIMER,
+    SETTINGS_UPDATE_SYNC_DATE
 } from '../ActionTypes';
 
 export const updateSetTimer = (duration = 30) => ({
@@ -17,4 +18,9 @@ export const editSetTimer = () => ({
 
 export const endEditSetTimer = () => ({
     type: SETTINGS_END_EDIT_SET_TIMER,    
+});
+
+export const updateSyncDate = (syncDate) => ({
+    type: SETTINGS_UPDATE_SYNC_DATE,
+    syncDate: syncDate
 });

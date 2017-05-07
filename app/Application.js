@@ -6,9 +6,13 @@ import { Provider } from 'react-redux';
 import OBDevice from './bluetooth/OBDevice';
 import ApplicationScreen from './containers/ApplicationScreen';
 import Store from './storage/Store';
+import * as GoogleSignInSetup from './utility/GoogleSignInSetup';
 
 // initialize the store
 var store = Store();
+
+// configure google sign in
+GoogleSignInSetup.configure();
 
 // start the bluetooth
 OBDevice(store);

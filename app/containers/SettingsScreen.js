@@ -6,6 +6,7 @@ import SettingsTab from '../components/SettingsTab';
 import * as DeviceActionCreators from '../actions/DeviceActionCreators';
 import * as AuthActionCreators from '../actions/AuthActionCreators';
 import * as SettingsActionCreators from '../actions/SettingsActionCreators';
+import * as SetReducer from '../reducers/SetReducer';
 
 const mapStateToProps = (state) => {
 	return {
@@ -14,7 +15,9 @@ const mapStateToProps = (state) => {
 		killSwitch: state.killSwitch,
 		email: state.auth.email,
 		isLoggingIn: state.auth.isLoggingIn,
-		endSetTimerDuration: state.settings.endSetTimerDuration
+		endSetTimerDuration: state.settings.endSetTimerDuration,
+		syncDate: state.settings.syncDate.toLocaleString(),
+		hasChangesToSync: SetReducer.hasChangesToSync(state.sets)
 	}
 };
 
@@ -25,6 +28,7 @@ const mapDispatchToProps = (dispatch) => {
 		connectDevice: DeviceActionCreators.connectDevice,
 		disconnectDevice: DeviceActionCreators.disconnectDevice,
 		signIn: AuthActionCreators.signIn,
+		signOut: AuthActionCreators.signOut,
 		editSetTimer: SettingsActionCreators.editSetTimer,
 		endEditSetTimer: SettingsActionCreators.endEditSetTimer
 	}, dispatch);

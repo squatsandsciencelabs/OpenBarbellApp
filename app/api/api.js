@@ -58,10 +58,12 @@ const API = {
 			refreshToken: refreshToken,
 			completionHandler: (json) => {
 				console.log("sync success with completion " + completionHandler + " json " + json);
-				if (completionHandler !== null && json !== undefined) {
-					completionHandler(json.revision, json.sets);
-				} else {
-					console.log("no sync changes!");
+				if (completionHandler !== null) {
+					if (json !== undefined) {
+						completionHandler(json.revision, json.sets);
+					} else {
+						completionHandler(null, null);
+					}
 				}
 			},
 			errorHandler: errorHandler
@@ -232,7 +234,7 @@ const forceLogout = (dispatch, displayError=true) => {
 		return;
 	}
 
-	console.log("force logging out witih dispatch " + dispatch);
+	console.log("force logging out with dispatch " + dispatch);
 	dispatch(AuthActionCreators.signOut());
 	if (displayError) {
 		Alert.alert("Important", "As it's been awhile since you've signed on, you've been logged out! Please login again.");

@@ -26,7 +26,7 @@ const updateIsExportingCSV = (isExportingCSV) => ({ type: EXPORTING_CSV, isExpor
 export const exportHistoryCSV = () => (dispatch, getState) => {
 	GoogleSignin.currentUserAsync().then(async (user) => {
 		if (user === null) {
-			Alert.alert('Error', 'This feature is only available for logged in users. Please sign in via Settings.\n\nIf you are actually signed in, please logout and login again.');
+			Alert.alert('Error', 'Please sign in via Settings to use this feature.\n\nTip: If you are already signed in, please logout and login again as Google permissions may have changed.');
 		} else {
 			dispatch(updateIsExportingCSV(true));
 			try {

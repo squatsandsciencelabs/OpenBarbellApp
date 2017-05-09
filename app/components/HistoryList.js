@@ -100,18 +100,18 @@ class HistoryList extends Component {
 			return (
 				<View style={{flex: 1, flexDirection: 'column'}}>
 					<View style={[styles.Shadow, {height: 1, backgroundColor: 'white', shadowRadius: 2, shadowOpacity: 1, shadowOffset: { height: 1, weight: 0 }}]}></View>
-				<TouchableHighlight onPress={ () => this._onPressRow(rowData) } activeOpacity={1}>
-					<View style={[styles.Shadow, {flexDirection:'column', justifyContent: 'flex-end', backgroundColor:'white'}]}>
-						<View style={{paddingLeft:10, paddingTop: 5, paddingBottom: 7}}>
-							<Text style={{color:rowData.row1Color}}>{rowData.row1}</Text>
-							<Text style={{color:rowData.row2Color}}>{rowData.row2}</Text>
-							<Text style={{color:rowData.row3Color}}>{rowData.row3}</Text>
+					<TouchableHighlight onPress={ () => this._onPressRow(rowData) } activeOpacity={1}>
+						<View style={[styles.Shadow, {flexDirection:'column', justifyContent: 'flex-end', backgroundColor:'white'}]}>
+							<View style={{paddingLeft:10, paddingTop: 5, paddingBottom: 7}}>
+								<Text style={{color:rowData.row1Color}}>{rowData.row1}</Text>
+								<Text style={{color:rowData.row2Color}}>{rowData.row2}</Text>
+								<Text style={{color:rowData.row3Color}}>{rowData.row3}</Text>
+							</View>
+							<View style={{ paddingLeft: 5, paddingRight:17 }}>
+								<LegendBar />
+							</View>
 						</View>
-						<View style={{ paddingLeft: 5, paddingRight:17 }}>
-							<LegendBar />
-						</View>
-					</View>
-				</TouchableHighlight>
+					</TouchableHighlight>
 				</View>
 			);
 		} else {

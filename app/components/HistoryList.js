@@ -168,7 +168,7 @@ class HistoryList extends Component {
 						stickySectionHeadersEnabled = { false }
 						renderRow={(rowData, sectionID, rowID) => this._renderRow(rowData, sectionID, rowID)}
 						renderSectionHeader={(sectionData, sectionID) => this._renderSectionHeader(sectionData, sectionID)}
-						style = {[{padding: 10}, { backgroundColor: 'rgba(0, 0, 0, 0)'}]} />
+						style = {{padding: 10, backgroundColor: 'rgba(0, 0, 0, 0)'}} />
 				</View>
 
 				<View style={{height: 50}}>

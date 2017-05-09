@@ -23,6 +23,7 @@ const getListViewModels = (sets, shouldShowRemoved) => {
 	let highlightColor = 'rgba(255, 0, 0, 0.25)';
 	let normalColor = 'black';
 	let disabledColor = 'lightgray';
+	var lastWorkoutID = null;
 
 	// build view models
 	sets.map((set) => {
@@ -42,6 +43,12 @@ const getListViewModels = (sets, shouldShowRemoved) => {
 			type: "header",
 			setID: set.setID
 		};
+		if (lastWorkoutID !== set.workoutID) {
+			lastWorkoutID = set.workoutID;
+			headerObj.workoutDate = new Date(set.startTime).toLocaleString();
+		} else {
+			headerObj.workoutDate = null;
+		}
 		if (set.exercise === null) {
 			headerObj.row1 = 'INPUT EXERCISE';
 			headerObj.row1Color = set.removed ? disabledColor : highlightColor;

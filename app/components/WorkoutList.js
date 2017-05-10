@@ -2,14 +2,6 @@
 
 import React, { Component } from 'react';
 import {
-	repNumber,
-	averageVelocity,
-	rangeOfMotion,
-	peakVelocity,
-	peakVelocityLocation,
-	durationOfLift
-} from '../utility/RepDataMap';
-import {
 	TouchableHighlight,
 	Text,
 	StyleSheet,
@@ -21,17 +13,6 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import EditWorkoutSetScreen from '../containers/EditWorkoutSetScreen';
 import WorkoutFilterBarScreen from '../containers/WorkoutFilterBarScreen';
-import {
-	WORKOUT_AVG_FILTER,
-	WORKOUT_PKV_FILTER,
-	WORKOUT_PKH_FILTER,
-	WORKOUT_ROM_FILTER,
-	WORKOUT_DUR_FILTER,
-} from '../ActionTypes';
-
-// TODO: separate logic from presentational layer
-// Data and actions should go into the workout screen
-// This includes moving _getListViewData to WorkoutScreen.js
 
 class WorkoutList extends Component {
 
@@ -45,183 +26,18 @@ class WorkoutList extends Component {
 			sectionHeaderHasChanged: this._sectionHeaderHasChanged,
 			rowHasChanged: this._rowHasChanged,
 		});
-		let { data, sectionIds } = this._getListViewData(this.props.sets, this.props.filter);
 		this.state = {
-			dataSource: dataSource.cloneWithRowsAndSections(data, sectionIds),
+			dataSource: dataSource.cloneWithRowsAndSections(props.data, props.sectionIDs),
 		};
 	}
 
 	// state changed, reset the dataSource as needed
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.sets !== this.props.sets || nextProps.filter !== this.props.filter) {
-			let { data, sectionIds } = this._getListViewData(nextProps.sets, nextProps.filter);
+		if (nextProps.data !== this.props.data || nextProps.sectionIDs !== this.props.sectionIDs || nextProps.filter !== this.props.filter) {
 			this.setState({
-				dataSource: this.state.dataSource.cloneWithRowsAndSections(data, sectionIds),
-			})
+				dataSource: this.state.dataSource.cloneWithRowsAndSections(nextProps.data, nextProps.sectionIDs),
+			});
 		}
-	}
-
-	_dataForRep(rep, filter) {
-		if (rep.removed === true) {
-			return "Removed";
-		}
-
-		if (rep.isValid === false) {
-			return "Corrupted";
-		}
-
-		let repData = rep.data;
-		switch (filter) {
-			case WORKOUT_AVG_FILTER:
-				return averageVelocity(repData);
-			case WORKOUT_PKV_FILTER:
-				return peakVelocity(repData);
-			case WORKOUT_PKH_FILTER:
-				return peakVelocityLocation(repData);
-			case WORKOUT_ROM_FILTER:
-				return rangeOfMotion(repData);
-			case WORKOUT_DUR_FILTER:
-				let duration = durationOfLift(repData)
-				if (duration) {
-					return (duration / 1000000.0).toFixed(2);
-				}else {
-					return "";
-				}
-			default:
-				return "";
-		}
-	}
-
-	_unitForRep(rep, filter) {
-		if (rep.removed === true) {
-			return "";
-		}
-
-		switch (filter) {
-			case WORKOUT_AVG_FILTER:
-				return "m/s";
-			case WORKOUT_PKV_FILTER:
-				return "m/s";
-			case WORKOUT_PKH_FILTER:
-				return "%";
-			case WORKOUT_ROM_FILTER:
-				return "mm";
-			case WORKOUT_DUR_FILTER:
-				if (durationOfLift(rep.data)) {
-					return "sec";
-				} else {
-					return "obv2 only"
-				}
-			default:
-				return "";
-		}
-	}
-
-	// converts the props into data the ListView uses
-	// not sure what better option there is
-	_getListViewData(sets, filter) {
-		let data = { };
-		let sectionIDs = [];
-		let setPosition = sets.length;
-		let disabledColor = 'lightgray';
-		let normalDarkColor = 'black';
-		let normalLightColor = 'gray';
-		let highlightColor = 'rgba(255, 0, 0, 0.25)';
-
-		sets.map((set) => {
-			//every set is a section
-			sectionIDs.push(setPosition);
-
-			//every rep is a row
-			let array = [];
-			if (set.reps.length < 4) {
-				var start = 3;
-				var dataOffset = 4-set.reps.length;
-			} else {
-				var start = set.reps.length-1;
-				var dataOffset = 0;
-			}
-			for (var i=start; i >= 0; i--) {
-				// data position
-				let dataPosition = i-dataOffset;
-
-				// define obj
-				let obj = {
-					setInfo: null,
-					data: null,
-					unit: null,
-					setID: set.setID,
-					rep: dataPosition,
-					labelColor: null,
-					dataColor: set.removed ? disabledColor : normalDarkColor,
-					unitColor: set.removed ? disabledColor : normalLightColor,
-					removed: false,
-					isLastRow: false
-				};
-
-				//add setInfo
-				switch (start-i) {
-					case 0:
-						if (set.exercise === null || set.exercise == '') {
-							obj.setInfo = 'INPUT EXERCISE';
-							obj.labelColor = set.removed ? disabledColor : highlightColor;
-						}else {
-							obj.setInfo = set.exercise;
-							obj.labelColor = set.removed ? disabledColor : normalDarkColor;
-						}
-						break;
-					case 1:
-						if (set.weight === null || set.exercise == '') {
-							obj.setInfo = 'INPUT WEIGHT';
-							obj.labelColor = set.removed ? disabledColor : highlightColor;
-						} else {
-							obj.setInfo = set.weight + " " + set.metric;
-							obj.labelColor = set.removed ? disabledColor : normalDarkColor;
-						}
-						break;
-					case 2:
-						if (set.rpe === null) {
-							obj.setInfo = 'INPUT RPE';
-							obj.labelColor = set.removed ? disabledColor : highlightColor;
-						} else {
-							obj.setInfo = set.rpe + ' RPE';
-							obj.labelColor = set.removed ? disabledColor : normalDarkColor;
-						}
-						break;
-					case start:
-						obj.isLastRow = true;
-						if (setPosition == 1) {
-							obj.setInfo = "Finish Current Set";
-						}
-						break;
-					default:
-						break;
-				}
-
-				//add data
-				if (dataPosition >= 0 && dataPosition < set.reps.length) {
-					obj.data = this._dataForRep(set.reps[dataPosition], filter);
-					obj.unit = this._unitForRep(set.reps[dataPosition], filter);
-					obj.removed = set.reps[dataPosition].removed;
-				}
-
-				//add obj
-				array.push(obj);
-			}
-
-			data[setPosition] = array;
-
-			//increment
-			setPosition--;
-		});
-
-		// hack force a starting section for end workout
-		sectionIDs.push(setPosition);
-		data[setPosition] = [ {} ];
-
-		let returnArray = sectionIDs.reverse();
-
-		return { data, returnArray };
 	}
 
 	_sectionHeaderHasChanged(s1, s2) {

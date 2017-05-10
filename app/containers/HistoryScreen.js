@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import HistoryList from '../components/HistoryList';
 import * as HistoryActionCreators from '../actions/HistoryActionCreators';
 import * as SetActionCreators from '../actions/SetActionCreators';
-import { getHistorySets } from '../reducers/SetReducer';
+import * as SetReducer from '../reducers/SetReducer';
 import { repNumber, averageVelocity, rangeOfMotion, peakVelocity, peakVelocityLocation, durationOfLift } from '../utility/RepDataMap';
 
 // NOTE: this means that every history screen accesses previous values as singletons
@@ -205,7 +205,7 @@ const mapStateToProps = (state) => {
 	if (historyData !== storedHistoryData) {
 		// data changed, redo it all
 		storedHistoryData = historyData;
-		storedHistorySets = getHistorySets(state.sets);
+		storedHistorySets = SetReducer.getHistorySetsChronological(state.sets);
 		rebuildViewModels = true;
 	} else if (shouldShowRemoved !== storedShouldShowRemoved) {
 		// toggled with no data changed, just rebiuld viewomodels

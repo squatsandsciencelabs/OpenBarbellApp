@@ -93,46 +93,68 @@ class WorkoutList extends Component {
 		}
 	}
 
-	_renderRow(rowData, sectionID, rowID) {
-		if (sectionID == 0) {
-			// end workout
-			return (
-				<TouchableHighlight onPress={ () => this._onPressEndWorkout() }>
-					<Text style={[styles.blueButton, { textAlign: 'center'}]}>End Workout</Text>
-				</TouchableHighlight>
-			);
-		} else {
-			// all other sets
+	_renderHeaderEndWorkout() {
+		// end workout
+		return (
+			<TouchableHighlight onPress={ () => this._onPressEndWorkout() }>
+				<Text style={[styles.blueButton, { textAlign: 'center'}]}>End Workout</Text>
+			</TouchableHighlight>
+		);
+	}
 
-			var button = null;
-			if (rowData.data !== null) {
-				if (rowData.removed === false) {
-					button = (
-						<TouchableHighlight onPress={ () => this._onPressRemove(rowData) } style={{padding: 5, paddingLeft: 7}} >
-							<Icon name="close" size={20} color="lightgray" style={{marginTop: 3}} />
-						</TouchableHighlight>
-					);
-				} else {
-					button = (
-						<TouchableHighlight onPress={ () => this._onPressRestore(rowData) } style={{padding: 5, paddingLeft: 7}} >
-							<Icon name="undo" size={20} color="lightgray" style={{marginTop: 3}} />
-						</TouchableHighlight>
-					);
-				}
+	_renderData(rowData, sectionID, rowID) {
+		var button = null;
+		if (rowData.data !== null) {
+			if (rowData.removed === false) {
+				button = (
+					<TouchableHighlight onPress={ () => this._onPressRemove(rowData) } style={{padding: 5, paddingLeft: 7}} >
+						<Icon name="close" size={20} color="lightgray" style={{marginTop: 3}} />
+					</TouchableHighlight>
+				);
+			} else {
+				button = (
+					<TouchableHighlight onPress={ () => this._onPressRestore(rowData) } style={{padding: 5, paddingLeft: 7}} >
+						<Icon name="undo" size={20} color="lightgray" style={{marginTop: 3}} />
+					</TouchableHighlight>
+				);
 			}
+		}
 
-			return (
-				<TouchableHighlight onPress={ () => this._onPressRow(rowData) } activeOpacity={1} >
-					<View style={{flexDirection:'row', justifyContent:'space-between', backgroundColor:'white', paddingLeft: 7, paddingBottom: 3}}>
-						{ this._renderLeftRowItems(rowData, sectionID, rowID) }
-						<View style={{flexDirection:'row'}}>
-							<Text style={[styles.rowText, {color:rowData.dataColor}]}>{rowData.data}</Text>
-							<Text style={[styles.rowText, {color:rowData.unitColor}]}> {rowData.unit}</Text>
-							{button}
-						</View>
+		return (
+			<TouchableHighlight onPress={ () => this._onPressRow(rowData) } activeOpacity={1} >
+				<View style={{flexDirection:'row', justifyContent:'space-between', backgroundColor:'white', paddingLeft: 7, paddingBottom: 3}}>
+					{ this._renderLeftRowItems(rowData, sectionID, rowID) }
+					<View style={{flexDirection:'row'}}>
+						<Text style={[styles.rowText, {color:rowData.dataColor}]}>{rowData.data}</Text>
+						<Text style={[styles.rowText, {color:rowData.unitColor}]}> {rowData.unit}</Text>
+						{button}
 					</View>
-				</TouchableHighlight>
-			);
+				</View>
+			</TouchableHighlight>
+		);
+	}
+
+	_renderFooter(rowData, sectionID, rowID) {
+		return (
+			<View style={[styles.Shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
+				<Text style={{flex: 1, textAlign: 'center', marginTop: 15, color: 'gray', marginBottom: 15}}>{ rowData.rest }</Text>
+			</View>
+		);
+	}
+
+	_renderRow(rowData, sectionID, rowID) {
+		// end workout button
+		if (sectionID == 0) {
+			return this._renderHeaderEndWorkout();
+		}
+
+		switch (rowData.type) {
+			case "data":
+				return this._renderData(rowData, sectionID, rowID);
+			case "footer":
+				return this._renderFooter(rowData, sectionID, rowID);
+			default:
+				break;
 		}
 	}
 

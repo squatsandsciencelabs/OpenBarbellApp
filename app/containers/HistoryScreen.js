@@ -151,11 +151,10 @@ const getListViewModels = (sets, shouldShowRemoved) => {
 		} else if (!set.removed) { // ignore removed sets in rest calculations
 			// add footer if valid
 			if (lastSetEndTime !== null) {
-				let restInMS = new Date(set.startTime) - new Date(lastSetEndTime)
+				let restInMS = new Date(set.startTime) - new Date(lastSetEndTime);
 				let footerObj = {
 					type: "footer",
 					rest: DateUtils.restInSentenceFormat(restInMS)
-
 				};
 				array.push(footerObj);
 			}

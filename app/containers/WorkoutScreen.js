@@ -87,11 +87,12 @@ const getListViewModels = (sets, filter) => {
 	let normalDarkColor = 'black';
 	let normalLightColor = 'gray';
 	let highlightColor = 'rgba(255, 0, 0, 0.25)';
-	var lastSetEndTime = null;
+	let lastSetEndTime = null;
 
 	sets.map((set) => {
 		// every set is a section
 		sectionIDs.push(setPosition);
+		let array = [];
 
 		// ensure that there are at least 4 rows in each set
 		// necessary for all the left side options in workout
@@ -103,10 +104,18 @@ const getListViewModels = (sets, filter) => {
 			var dataOffset = 0;
 		}
 
+		// add rest time
+		if (lastSetEndTime !== null) {
+			let restInMS = new Date(set.startTime) - new Date(lastSetEndTime);
+			let restObj = {
+				type: "footer",
+				rest: DateUtils.restInSentenceFormat(restInMS)
+			};
+			array.push(restObj);
+		}
 		lastSetEndTime = set.endTime;
 
 		// every rep is a row
-		let array = [];
 		for (var i=0; i <= start; i++) {
 			// data position
 			let dataPosition = i-dataOffset;

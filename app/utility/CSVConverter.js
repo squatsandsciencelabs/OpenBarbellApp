@@ -19,7 +19,7 @@ export const convert = (sets) => {
     var setCount = 1;
     var lastWorkout = null;
     var workoutStartTime = null;
-    var lastSetStartTime = null;
+    var lastSetEndTime = null;
     var rest = null;
 
     for (set of sets) {
@@ -30,7 +30,7 @@ export const convert = (sets) => {
 
             // reset vars for set count and rest time
             lastExercise = null;
-            lastSetStartTime = null;
+            lastSetEndTime = null;
         }
 
         // calculate setcount
@@ -42,13 +42,13 @@ export const convert = (sets) => {
         lastExercise = set.exercise;
 
         // calculate rest time
-        if (lastSetStartTime !== null) {
-            var restInMS = new Date(set.startTime).getTime() - new Date(lastSetStartTime).getTime();
+        if (lastSetEndTime !== null) {
+            var restInMS = new Date(set.startTime).getTime() - new Date(lastSetEndTime).getTime();
             rest = humanReadableRest(restInMS);
         } else {
             rest = "00:00:00";
         }
-        lastSetStartTime = set.startTime;
+        lastSetEndTime = set.endTime;
 
         // reps
         let reps = set.reps.filter((rep) => rep.removed === false && rep.isValid === true);

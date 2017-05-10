@@ -90,8 +90,8 @@ android {
         applicationId "com.openbarbellapp"
         minSdkVersion 21
         targetSdkVersion 24
-        versionCode 6
-        versionName "1.4.0"
+        versionCode 7
+        versionName "1.5.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }

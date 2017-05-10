@@ -97,12 +97,13 @@ class WorkoutList extends Component {
 		// end workout
 		return (
 			<TouchableHighlight onPress={ () => this._onPressEndWorkout() }>
-				<Text style={[styles.blueButton, { textAlign: 'center'}]}>End Workout</Text>
+				<Text style={[styles.blueButton, styles.Shadow, { textAlign: 'center'}]}>End Workout</Text>
 			</TouchableHighlight>
 		);
 	}
 
 	_renderData(rowData, sectionID, rowID) {
+		// delete or restore button
 		var button = null;
 		if (rowData.data !== null) {
 			if (rowData.removed === false) {
@@ -120,17 +121,29 @@ class WorkoutList extends Component {
 			}
 		}
 
+		// top shadow
+		var topShadow = null;
+		if (rowID === 0) {
+			console.log("fucking derp should work here");
+			topShadow = (
+				<View style={[styles.Shadow, {height: 1, backgroundColor: 'white', shadowRadius: 2, shadowOpacity: 1, shadowOffset: { height: 1, weight: 0 }}]}></View>
+			);
+		}
+
 		return (
-			<TouchableHighlight onPress={ () => this._onPressRow(rowData) } activeOpacity={1} >
-				<View style={{flexDirection:'row', justifyContent:'space-between', backgroundColor:'white', paddingLeft: 7, paddingBottom: 3}}>
-					{ this._renderLeftRowItems(rowData, sectionID, rowID) }
-					<View style={{flexDirection:'row'}}>
-						<Text style={[styles.rowText, {color:rowData.dataColor}]}>{rowData.data}</Text>
-						<Text style={[styles.rowText, {color:rowData.unitColor}]}> {rowData.unit}</Text>
-						{button}
+			<View style={{flex: 1, flexDirection: 'column'}}>
+				{topShadow}
+				<TouchableHighlight onPress={ () => this._onPressRow(rowData) } activeOpacity={1} >
+					<View style={[styles.Shadow, {flexDirection:'row', justifyContent:'space-between', backgroundColor:'white', paddingLeft: 7, paddingBottom: 3}]}>
+						{ this._renderLeftRowItems(rowData, sectionID, rowID) }
+						<View style={{flexDirection:'row'}}>
+							<Text style={[styles.rowText, {color:rowData.dataColor}]}>{rowData.data}</Text>
+							<Text style={[styles.rowText, {color:rowData.unitColor}]}> {rowData.unit}</Text>
+							{button}
+						</View>
 					</View>
-				</View>
-			</TouchableHighlight>
+				</TouchableHighlight>
+			</View>
 		);
 	}
 
@@ -159,8 +172,6 @@ class WorkoutList extends Component {
 	}
 
 	render() {
-		var { height, width } = Dimensions.get('window');
-
 		return (
 			<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'rgba(0, 0, 0, 0)' }}>
 				<View style={{ flex: 1 }}>
@@ -171,7 +182,7 @@ class WorkoutList extends Component {
 						dataSource={this.state.dataSource}
 						renderRow={(rowData, sectionID, rowID) => this._renderRow(rowData, sectionID, rowID)}
 						renderSectionHeader={(set, sectionID) => this._renderSectionHeader(set, sectionID)}
-						style = {[styles.Shadow, { backgroundColor: 'rgba(0, 0, 0, 0)'}]} />
+						style = {{ padding: 10, backgroundColor: 'rgba(0, 0, 0, 0)'}} />
 				</View>
 
 				<View style={{height: 50}}>
@@ -195,13 +206,12 @@ const styles = StyleSheet.create({
 	},
 	Shadow: {
 		shadowColor: "#000000",
-		shadowOpacity: 0.8,
+		shadowOpacity: 0.2,
 		shadowRadius: 2,
 		shadowOffset: {
-			height: 1,
+			height: 4,
 			width: 0
 		},
-		padding: 10
 	},
 	rowText: {
 		fontSize:20,

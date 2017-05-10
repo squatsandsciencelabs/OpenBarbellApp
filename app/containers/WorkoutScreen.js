@@ -105,7 +105,7 @@ const getListViewModels = (sets, filter) => {
 		}
 
 		// add rest time
-		if (lastSetEndTime !== null) {
+		if (lastSetEndTime !== null && set.reps.length > 0) {
 			let restInMS = new Date(set.startTime) - new Date(lastSetEndTime);
 			let restObj = {
 				type: "footer",

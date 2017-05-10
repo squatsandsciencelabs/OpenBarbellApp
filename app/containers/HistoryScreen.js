@@ -15,6 +15,7 @@ var storedHistoryData = null;
 var storedHistorySets = null;
 var storedShouldShowRemoved = null;
 
+// assumes chronological sets
 const getListViewModels = (sets, shouldShowRemoved) => {
 	// declare variables
 	let data = { };
@@ -24,6 +25,9 @@ const getListViewModels = (sets, shouldShowRemoved) => {
 	let normalColor = 'black';
 	let disabledColor = 'lightgray';
 	var lastWorkoutID = null;
+	var workoutStartTime = null;
+	var lastSetEndTime = null;
+	var isSameWorkout = false;
 
 	// build view models
 	sets.map((set) => {
@@ -41,13 +45,19 @@ const getListViewModels = (sets, shouldShowRemoved) => {
 		// first row is the special header
 		let headerObj = {
 			type: "header",
-			setID: set.setID
+			setID: set.setID,
+			workoutDate: null
 		};
 		if (lastWorkoutID !== set.workoutID) {
+			// set the date header to the LAST set of a workout as we will be reversing the order of elements
+			if (lastWorkoutID !== null) {
+				data[setPosition-1][0].workoutDate = new Date(workoutStartTime).toLocaleString();
+			}
 			lastWorkoutID = set.workoutID;
-			headerObj.workoutDate = new Date(set.startTime).toLocaleString();
+			workoutStartTime = set.startTime;
+			isSameWorkout = false;
 		} else {
-			headerObj.workoutDate = null;
+			isSameWorkout = true;
 		}
 		if (set.exercise === null) {
 			headerObj.row1 = 'INPUT EXERCISE';
@@ -130,6 +140,26 @@ const getListViewModels = (sets, shouldShowRemoved) => {
 			array.push(obj);
 		}
 
+		// last row is the rest footer
+		if (!isSameWorkout) {
+			// new set, reset the end time
+			lastSetEndTime = set.removed ? null : set.endTime;
+		} else if (!set.removed) { // ignore removed sets in rest calculations
+			// add footer if valid
+			if (lastSetEndTime !== null) {
+				let restInMS = new Date(set.startTime) - new Date(lastSetEndTime)
+				let footerObj = {
+					type: "footer",
+					rest: millisToMinutesAndSeconds(restInMS)
+
+				};
+				array.push(footerObj);
+			}
+
+			// update variable for calculation purposes
+			lastSetEndTime = set.endTime;
+		}
+	
 		// save the array of data
 		data[setPosition] = array;
 
@@ -137,8 +167,32 @@ const getListViewModels = (sets, shouldShowRemoved) => {
 		setPosition++;
 	});
 
+	// add final date header
+	if (setPosition > 0 && workoutStartTime !== null) {
+		data[setPosition-1][0].workoutDate = new Date(workoutStartTime).toLocaleString();
+	}
+
+	// make it descending rather than ascending order
+	var reversedData = {};
+	for (sectionID in sectionIDs) {
+		reversedData[sectionID] = data[sectionIDs.length - 1 - sectionID];
+	}
+	data = reversedData;
+
 	return { data, sectionIDs };
 }
+
+const millisToMinutesAndSeconds = (millis) => {
+	var minutes = Math.floor(millis / 60000);
+	var seconds = ((millis % 60000) / 1000).toFixed(0);
+	if (minutes > 0 && seconds > 0) {
+		return minutes + " mins, " + seconds + " secs rest";
+	} else if (minutes > 0) {
+		return minutes + " mins rest";
+	} else {
+		return seconds + " secs rest";
+	}
+};
 
 const mapStateToProps = (state) => {
 	let shouldShowRemoved = state.history.showRemoved;

@@ -114,6 +114,12 @@ class HistoryList extends Component {
 					</TouchableHighlight>
 				</View>
 			);
+		} else if (rowData.type == 'footer') {
+			return (
+				<View style={[styles.Shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
+					<Text style={{flex: 1, textAlign: 'center', marginTop: 15, color: 'gray', marginBottom: 15}}>{ rowData.rest }</Text>
+				</View>
+			)
 		} else {
 			// render data
 

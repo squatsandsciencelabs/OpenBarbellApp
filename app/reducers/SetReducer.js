@@ -419,7 +419,7 @@ const dictToArray = (dictionary) => {
 
 export const getHistorySets = (state) => {
 	var array = dictToArray(state.historyData);
-	array.sort((set1, set2) => new Date(set2.startTime) - new Date(set1.startTime));
+	array.sort((set1, set2) => new Date(set1.startTime) - new Date(set2.startTime));
 	return array;
 };
 

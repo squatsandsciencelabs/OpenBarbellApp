@@ -94,62 +94,80 @@ class HistoryList extends Component {
 		}
 	}
 
-	_renderRow(rowData, sectionID, rowID) {
-		if (rowData.type == "header") {
-			//render headers
-			return (
-				<View style={{flex: 1, flexDirection: 'column'}}>
-					<View style={[styles.Shadow, {height: 1, backgroundColor: 'white', shadowRadius: 2, shadowOpacity: 1, shadowOffset: { height: 1, weight: 0 }}]}></View>
-					<TouchableHighlight onPress={ () => this._onPressRow(rowData) } activeOpacity={1}>
-						<View style={[styles.Shadow, {flexDirection:'column', justifyContent: 'flex-end', backgroundColor:'white'}]}>
-							<View style={{paddingLeft:10, paddingTop: 5, paddingBottom: 7}}>
-								<Text style={{color:rowData.row1Color}}>{rowData.row1}</Text>
-								<Text style={{color:rowData.row2Color}}>{rowData.row2}</Text>
-								<Text style={{color:rowData.row3Color}}>{rowData.row3}</Text>
-							</View>
-							<View style={{ paddingLeft: 5, paddingRight:17 }}>
-								<LegendBar />
-							</View>
+	_renderHeader(rowData, sectionID, rowID) {
+		return (
+			<View style={{flex: 1, flexDirection: 'column'}}>
+				<View style={[styles.Shadow, {height: 1, backgroundColor: 'white', shadowRadius: 2, shadowOpacity: 1, shadowOffset: { height: 1, weight: 0 }}]}></View>
+				<TouchableHighlight onPress={ () => this._onPressRow(rowData) } activeOpacity={1}>
+					<View style={[styles.Shadow, {flexDirection:'column', justifyContent: 'flex-end', backgroundColor:'white'}]}>
+						<View style={{paddingLeft:10, paddingTop: 5, paddingBottom: 7}}>
+							<Text style={{color:rowData.row1Color}}>{rowData.row1}</Text>
+							<Text style={{color:rowData.row2Color}}>{rowData.row2}</Text>
+							<Text style={{color:rowData.row3Color}}>{rowData.row3}</Text>
 						</View>
-					</TouchableHighlight>
-				</View>
+						<View style={{ paddingLeft: 5, paddingRight:17 }}>
+							<LegendBar />
+						</View>
+					</View>
+				</TouchableHighlight>
+			</View>
+		);
+	}
+
+	_renderData(rowData, sectionID, rowID) {
+		var button = null;
+		if (rowData.removed === false) {
+			button = (
+				<TouchableHighlight onPress={ () => this._onPressRemove(rowData) }>
+					<Icon name="close" size={20} color="lightgray" style={{marginTop: 10}} />
+				</TouchableHighlight>
 			);
 		} else {
-			// render data
-
-			var button = null;
-			if (rowData.removed === false) {
-				button = (
-					<TouchableHighlight onPress={ () => this._onPressRemove(rowData) }>
-						<Icon name="close" size={20} color="lightgray" style={{marginTop: 10}} />
-					</TouchableHighlight>
-				);
-			} else {
-				button = (
-					<TouchableHighlight onPress={ () => this._onPressRestore(rowData) }>
-						<Icon name="undo" size={20} color="lightgray" style={{marginTop: 10}} />
-					</TouchableHighlight>
-				);
-			}
-
-			var dataStyle = rowData.removed ? styles.removedData : styles.data;
-			
-			return (
-				<View style={[styles.Shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
-					<TouchableHighlight style={{flex:1}} onPress={ () => this._onPressRow(rowData) } activeOpacity={1} >
-						<View style={styles.bar}>
-							<Text style={dataStyle}> { rowData.repDisplay } </Text>
-							<Text style={dataStyle}> { rowData.averageVelocity } </Text>
-							<Text style={dataStyle}> { rowData.peakVelocity } </Text>
-							<Text style={dataStyle}> { rowData.peakVelocityLocation } </Text>
-							<Text style={dataStyle}> { rowData.rangeOfMotion } </Text>
-							<Text style={dataStyle}> { rowData.duration } </Text>
-						</View>
-					</TouchableHighlight>
-
-					{button}
-				</View>
+			button = (
+				<TouchableHighlight onPress={ () => this._onPressRestore(rowData) }>
+					<Icon name="undo" size={20} color="lightgray" style={{marginTop: 10}} />
+				</TouchableHighlight>
 			);
+		}
+
+		var dataStyle = rowData.removed ? styles.removedData : styles.data;
+		
+		return (
+			<View style={[styles.Shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
+				<TouchableHighlight style={{flex:1}} onPress={ () => this._onPressRow(rowData) } activeOpacity={1} >
+					<View style={styles.bar}>
+						<Text style={dataStyle}> { rowData.repDisplay } </Text>
+						<Text style={dataStyle}> { rowData.averageVelocity } </Text>
+						<Text style={dataStyle}> { rowData.peakVelocity } </Text>
+						<Text style={dataStyle}> { rowData.peakVelocityLocation } </Text>
+						<Text style={dataStyle}> { rowData.rangeOfMotion } </Text>
+						<Text style={dataStyle}> { rowData.duration } </Text>
+					</View>
+				</TouchableHighlight>
+
+				{button}
+			</View>
+		);
+	}
+
+	_renderFooter(rowData, sectionID, rowID) {
+		return (
+			<View style={[styles.Shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
+				<Text style={{flex: 1, textAlign: 'center', marginTop: 15, color: 'gray', marginBottom: 15}}>{ rowData.rest }</Text>
+			</View>
+		);
+	}
+
+	_renderRow(rowData, sectionID, rowID) {
+		switch (rowData.type) {
+			case "header":
+				return this._renderHeader(rowData, sectionID, rowID);
+			case "data":
+				return this._renderData(rowData, sectionID, rowID);
+			case "footer":
+				return this._renderFooter(rowData, sectionID, rowID);
+			default:
+				break;
 		}
 	}
 

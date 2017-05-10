@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import HistoryList from '../components/HistoryList';
 import * as HistoryActionCreators from '../actions/HistoryActionCreators';
 import * as SetActionCreators from '../actions/SetActionCreators';
-import { getHistorySets } from '../reducers/SetReducer';
+import * as SetReducer from '../reducers/SetReducer';
+import * as DateUtils from '../utility/DateUtils';
 import { repNumber, averageVelocity, rangeOfMotion, peakVelocity, peakVelocityLocation, durationOfLift } from '../utility/RepDataMap';
 
 // NOTE: this means that every history screen accesses previous values as singletons
@@ -15,6 +16,7 @@ var storedHistoryData = null;
 var storedHistorySets = null;
 var storedShouldShowRemoved = null;
 
+// assumes chronological sets
 const getListViewModels = (sets, shouldShowRemoved) => {
 	// declare variables
 	let data = { };
@@ -24,6 +26,9 @@ const getListViewModels = (sets, shouldShowRemoved) => {
 	let normalColor = 'black';
 	let disabledColor = 'lightgray';
 	var lastWorkoutID = null;
+	var workoutStartTime = null;
+	var lastSetEndTime = null;
+	var isSameWorkout = false;
 
 	// build view models
 	sets.map((set) => {
@@ -41,13 +46,19 @@ const getListViewModels = (sets, shouldShowRemoved) => {
 		// first row is the special header
 		let headerObj = {
 			type: "header",
-			setID: set.setID
+			setID: set.setID,
+			workoutDate: null
 		};
 		if (lastWorkoutID !== set.workoutID) {
+			// set the date header to the LAST set of a workout as we will be reversing the order of elements
+			if (lastWorkoutID !== null) {
+				data[setPosition-1][0].workoutDate = new Date(workoutStartTime).toLocaleString();
+			}
 			lastWorkoutID = set.workoutID;
-			headerObj.workoutDate = new Date(set.startTime).toLocaleString();
+			workoutStartTime = set.startTime;
+			isSameWorkout = false;
 		} else {
-			headerObj.workoutDate = null;
+			isSameWorkout = true;
 		}
 		if (set.exercise === null) {
 			headerObj.row1 = 'INPUT EXERCISE';
@@ -73,18 +84,21 @@ const getListViewModels = (sets, shouldShowRemoved) => {
 		array.push(headerObj);
 
 		// every other rep is a row
-		for (let i=0; i<set.reps.length; i++) {
+		for (let i=0, repCount=0; i<set.reps.length; i++) {
 			let rep = set.reps[i];
 
 			if (shouldShowRemoved === false && rep.removed === true) {
 				continue;
 			}
 
+			// increment rep count
+			repCount++;
+
 			// obv1 properties
 			let obj = {
 				type: "data",
 				rep: i,
-				repDisplay: i+1,
+				repDisplay: repCount,
 				setID: set.setID,
 				averageVelocity: "Invalid",
 				peakVelocity: "Invalid",
@@ -130,12 +144,43 @@ const getListViewModels = (sets, shouldShowRemoved) => {
 			array.push(obj);
 		}
 
+		// last row is the rest footer
+		if (!isSameWorkout) {
+			// new set, reset the end time
+			lastSetEndTime = set.removed ? null : set.endTime;
+		} else if (!set.removed) { // ignore removed sets in rest calculations
+			// add footer if valid
+			if (lastSetEndTime !== null) {
+				let restInMS = new Date(set.startTime) - new Date(lastSetEndTime);
+				let footerObj = {
+					type: "footer",
+					rest: DateUtils.restInSentenceFormat(restInMS)
+				};
+				array.push(footerObj);
+			}
+
+			// update variable for calculation purposes
+			lastSetEndTime = set.endTime;
+		}
+	
 		// save the array of data
 		data[setPosition] = array;
 
 		//increment
 		setPosition++;
 	});
+
+	// add final date header
+	if (setPosition > 0 && workoutStartTime !== null) {
+		data[setPosition-1][0].workoutDate = new Date(workoutStartTime).toLocaleString();
+	}
+
+	// make it descending rather than ascending order
+	var reversedData = {};
+	for (sectionID in sectionIDs) {
+		reversedData[sectionID] = data[sectionIDs.length - 1 - sectionID];
+	}
+	data = reversedData;
 
 	return { data, sectionIDs };
 }
@@ -148,7 +193,7 @@ const mapStateToProps = (state) => {
 	if (historyData !== storedHistoryData) {
 		// data changed, redo it all
 		storedHistoryData = historyData;
-		storedHistorySets = getHistorySets(state.sets);
+		storedHistorySets = SetReducer.getHistorySetsChronological(state.sets);
 		rebuildViewModels = true;
 	} else if (shouldShowRemoved !== storedShouldShowRemoved) {
 		// toggled with no data changed, just rebiuld viewomodels

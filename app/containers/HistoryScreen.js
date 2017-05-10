@@ -6,6 +6,7 @@ import HistoryList from '../components/HistoryList';
 import * as HistoryActionCreators from '../actions/HistoryActionCreators';
 import * as SetActionCreators from '../actions/SetActionCreators';
 import * as SetReducer from '../reducers/SetReducer';
+import * as DateUtils from '../utility/DateUtils';
 import { repNumber, averageVelocity, rangeOfMotion, peakVelocity, peakVelocityLocation, durationOfLift } from '../utility/RepDataMap';
 
 // NOTE: this means that every history screen accesses previous values as singletons
@@ -153,7 +154,7 @@ const getListViewModels = (sets, shouldShowRemoved) => {
 				let restInMS = new Date(set.startTime) - new Date(lastSetEndTime)
 				let footerObj = {
 					type: "footer",
-					rest: millisToMinutesAndSeconds(restInMS)
+					rest: DateUtils.restInSentenceFormat(restInMS)
 
 				};
 				array.push(footerObj);
@@ -184,18 +185,6 @@ const getListViewModels = (sets, shouldShowRemoved) => {
 
 	return { data, sectionIDs };
 }
-
-const millisToMinutesAndSeconds = (millis) => {
-	var minutes = Math.floor(millis / 60000);
-	var seconds = ((millis % 60000) / 1000).toFixed(0);
-	if (minutes > 0 && seconds > 0) {
-		return minutes + " mins, " + seconds + " secs rest";
-	} else if (minutes > 0) {
-		return minutes + " mins rest";
-	} else {
-		return seconds + " secs rest";
-	}
-};
 
 const mapStateToProps = (state) => {
 	let shouldShowRemoved = state.history.showRemoved;

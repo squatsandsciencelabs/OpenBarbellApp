@@ -6,6 +6,7 @@ import WorkoutList from '../components/WorkoutList';
 import * as SetActionCreators from '../actions/SetActionCreators';
 import * as WorkoutActionCreators from '../actions/WorkoutActionCreators';
 import { getWorkoutSets } from '../reducers/SetReducer';
+import * as DateUtils from '../utility/DateUtils';
 import {
 	repNumber,
 	averageVelocity,
@@ -86,13 +87,14 @@ const getListViewModels = (sets, filter) => {
 	let normalDarkColor = 'black';
 	let normalLightColor = 'gray';
 	let highlightColor = 'rgba(255, 0, 0, 0.25)';
+	var lastSetEndTime = null;
 
 	sets.map((set) => {
-		//every set is a section
+		// every set is a section
 		sectionIDs.push(setPosition);
 
-		//every rep is a row
-		let array = [];
+		// ensure that there are at least 4 rows in each set
+		// necessary for all the left side options in workout
 		if (set.reps.length < 4) {
 			var start = 3;
 			var dataOffset = 4-set.reps.length;
@@ -100,12 +102,18 @@ const getListViewModels = (sets, filter) => {
 			var start = set.reps.length-1;
 			var dataOffset = 0;
 		}
-		for (var i=start; i >= 0; i--) {
+
+		lastSetEndTime = set.endTime;
+
+		// every rep is a row
+		let array = [];
+		for (var i=0; i <= start; i++) {
 			// data position
 			let dataPosition = i-dataOffset;
 
 			// define obj
 			let obj = {
+				type: "data",
 				setInfo: null,
 				data: null,
 				unit: null,
@@ -115,7 +123,7 @@ const getListViewModels = (sets, filter) => {
 				dataColor: set.removed ? disabledColor : normalDarkColor,
 				unitColor: set.removed ? disabledColor : normalLightColor,
 				removed: false,
-				isLastRow: false
+				isFinishSetRow: false
 			};
 
 			//add setInfo
@@ -148,7 +156,7 @@ const getListViewModels = (sets, filter) => {
 					}
 					break;
 				case start:
-					obj.isLastRow = true;
+					obj.isFinishSetRow = true;
 					if (setPosition == 1) {
 						obj.setInfo = "Finish Current Set";
 					}
@@ -168,7 +176,8 @@ const getListViewModels = (sets, filter) => {
 			array.push(obj);
 		}
 
-		data[setPosition] = array;
+		// reverse and save
+		data[setPosition] = array.reverse();
 
 		//increment
 		setPosition--;

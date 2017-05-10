@@ -80,7 +80,7 @@ class WorkoutList extends Component {
 	}
 
 	_renderLeftRowItems(rowData, sectionID, rowID) {
-		if (sectionID == 1 && rowData.isLastRow == true) {
+		if (sectionID == 1 && rowData.isFinishSetRow == true) {
 			return (
 				<TouchableHighlight onPress={ () => this._onPressNewSet() }>
 					<Text style={[styles.blueButton, { textAlign: 'center'}]}>{ rowData.setInfo }</Text>

@@ -3,6 +3,7 @@
 // TODO: split this into more functions that don't suck
 // TODO: prime candidate for unit testing
 
+import * as DateUtils from '../utility/DateUtils';
 import * as RepDataMap from '../utility/RepDataMap';
 
 // pass this the history sets as a sorted array
@@ -44,7 +45,7 @@ export const convert = (sets) => {
         // calculate rest time
         if (lastSetEndTime !== null) {
             var restInMS = new Date(set.startTime).getTime() - new Date(lastSetEndTime).getTime();
-            rest = humanReadableRest(restInMS);
+            rest = DateUtils.restInClockFormat(restInMS);
         } else {
             rest = "00:00:00";
         }
@@ -77,20 +78,4 @@ const escapeDoubleQuote = (value) => {
     } else {
         return value;
     }
-};
-
-// ASSUMES that you aren't resting for entire days or months
-// if you are, then the human readable rest will be wrong
-// taken from http://stackoverflow.com/questions/19700283/how-to-convert-time-milliseconds-to-hours-min-sec-format-in-javascript
-const humanReadableRest = (duration) => {
-    var milliseconds = parseInt((duration%1000)/100)
-        , seconds = parseInt((duration/1000)%60)
-        , minutes = parseInt((duration/(1000*60))%60)
-        , hours = parseInt((duration/(1000*60*60))%24);
-
-    hours = (hours < 10) ? "0" + hours : hours;
-    minutes = (minutes < 10) ? "0" + minutes : minutes;
-    seconds = (seconds < 10) ? "0" + seconds : seconds;
-
-    return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
 };

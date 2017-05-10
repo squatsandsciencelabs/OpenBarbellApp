@@ -83,18 +83,21 @@ const getListViewModels = (sets, shouldShowRemoved) => {
 		array.push(headerObj);
 
 		// every other rep is a row
-		for (let i=0; i<set.reps.length; i++) {
+		for (let i=0, repCount=0; i<set.reps.length; i++) {
 			let rep = set.reps[i];
 
 			if (shouldShowRemoved === false && rep.removed === true) {
 				continue;
 			}
 
+			// increment rep count
+			repCount++;
+
 			// obv1 properties
 			let obj = {
 				type: "data",
 				rep: i,
-				repDisplay: i+1,
+				repDisplay: repCount,
 				setID: set.setID,
 				averageVelocity: "Invalid",
 				peakVelocity: "Invalid",

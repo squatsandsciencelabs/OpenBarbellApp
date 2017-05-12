@@ -2,14 +2,6 @@
 
 import React, { Component } from 'react';
 import {
-	repNumber,
-	averageVelocity,
-	rangeOfMotion,
-	peakVelocity,
-	peakVelocityLocation,
-	durationOfLift
-} from '../utility/RepDataMap';
-import {
 	TouchableHighlight,
 	Text,
 	StyleSheet,
@@ -21,17 +13,6 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import EditWorkoutSetScreen from '../containers/EditWorkoutSetScreen';
 import WorkoutFilterBarScreen from '../containers/WorkoutFilterBarScreen';
-import {
-	WORKOUT_AVG_FILTER,
-	WORKOUT_PKV_FILTER,
-	WORKOUT_PKH_FILTER,
-	WORKOUT_ROM_FILTER,
-	WORKOUT_DUR_FILTER,
-} from '../ActionTypes';
-
-// TODO: separate logic from presentational layer
-// Data and actions should go into the workout screen
-// This includes moving _getListViewData to WorkoutScreen.js
 
 class WorkoutList extends Component {
 
@@ -45,183 +26,18 @@ class WorkoutList extends Component {
 			sectionHeaderHasChanged: this._sectionHeaderHasChanged,
 			rowHasChanged: this._rowHasChanged,
 		});
-		let { data, sectionIds } = this._getListViewData(this.props.sets, this.props.filter);
 		this.state = {
-			dataSource: dataSource.cloneWithRowsAndSections(data, sectionIds),
+			dataSource: dataSource.cloneWithRowsAndSections(props.data, props.sectionIDs),
 		};
 	}
 
 	// state changed, reset the dataSource as needed
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.sets !== this.props.sets || nextProps.filter !== this.props.filter) {
-			let { data, sectionIds } = this._getListViewData(nextProps.sets, nextProps.filter);
+		if (nextProps.data !== this.props.data || nextProps.sectionIDs !== this.props.sectionIDs || nextProps.filter !== this.props.filter) {
 			this.setState({
-				dataSource: this.state.dataSource.cloneWithRowsAndSections(data, sectionIds),
-			})
+				dataSource: this.state.dataSource.cloneWithRowsAndSections(nextProps.data, nextProps.sectionIDs),
+			});
 		}
-	}
-
-	_dataForRep(rep, filter) {
-		if (rep.removed === true) {
-			return "Removed";
-		}
-
-		if (rep.isValid === false) {
-			return "Corrupted";
-		}
-
-		let repData = rep.data;
-		switch (filter) {
-			case WORKOUT_AVG_FILTER:
-				return averageVelocity(repData);
-			case WORKOUT_PKV_FILTER:
-				return peakVelocity(repData);
-			case WORKOUT_PKH_FILTER:
-				return peakVelocityLocation(repData);
-			case WORKOUT_ROM_FILTER:
-				return rangeOfMotion(repData);
-			case WORKOUT_DUR_FILTER:
-				let duration = durationOfLift(repData)
-				if (duration) {
-					return (duration / 1000000.0).toFixed(2);
-				}else {
-					return "";
-				}
-			default:
-				return "";
-		}
-	}
-
-	_unitForRep(rep, filter) {
-		if (rep.removed === true) {
-			return "";
-		}
-
-		switch (filter) {
-			case WORKOUT_AVG_FILTER:
-				return "m/s";
-			case WORKOUT_PKV_FILTER:
-				return "m/s";
-			case WORKOUT_PKH_FILTER:
-				return "%";
-			case WORKOUT_ROM_FILTER:
-				return "mm";
-			case WORKOUT_DUR_FILTER:
-				if (durationOfLift(rep.data)) {
-					return "sec";
-				} else {
-					return "obv2 only"
-				}
-			default:
-				return "";
-		}
-	}
-
-	// converts the props into data the ListView uses
-	// not sure what better option there is
-	_getListViewData(sets, filter) {
-		let data = { };
-		let sectionIDs = [];
-		let setPosition = sets.length;
-		let disabledColor = 'lightgray';
-		let normalDarkColor = 'black';
-		let normalLightColor = 'gray';
-		let highlightColor = 'rgba(255, 0, 0, 0.25)';
-
-		sets.map((set) => {
-			//every set is a section
-			sectionIDs.push(setPosition);
-
-			//every rep is a row
-			let array = [];
-			if (set.reps.length < 4) {
-				var start = 3;
-				var dataOffset = 4-set.reps.length;
-			} else {
-				var start = set.reps.length-1;
-				var dataOffset = 0;
-			}
-			for (var i=start; i >= 0; i--) {
-				// data position
-				let dataPosition = i-dataOffset;
-
-				// define obj
-				let obj = {
-					setInfo: null,
-					data: null,
-					unit: null,
-					setID: set.setID,
-					rep: dataPosition,
-					labelColor: null,
-					dataColor: set.removed ? disabledColor : normalDarkColor,
-					unitColor: set.removed ? disabledColor : normalLightColor,
-					removed: false,
-					isLastRow: false
-				};
-
-				//add setInfo
-				switch (start-i) {
-					case 0:
-						if (set.exercise === null || set.exercise == '') {
-							obj.setInfo = 'INPUT EXERCISE';
-							obj.labelColor = set.removed ? disabledColor : highlightColor;
-						}else {
-							obj.setInfo = set.exercise;
-							obj.labelColor = set.removed ? disabledColor : normalDarkColor;
-						}
-						break;
-					case 1:
-						if (set.weight === null || set.exercise == '') {
-							obj.setInfo = 'INPUT WEIGHT';
-							obj.labelColor = set.removed ? disabledColor : highlightColor;
-						} else {
-							obj.setInfo = set.weight + " " + set.metric;
-							obj.labelColor = set.removed ? disabledColor : normalDarkColor;
-						}
-						break;
-					case 2:
-						if (set.rpe === null) {
-							obj.setInfo = 'INPUT RPE';
-							obj.labelColor = set.removed ? disabledColor : highlightColor;
-						} else {
-							obj.setInfo = set.rpe + ' RPE';
-							obj.labelColor = set.removed ? disabledColor : normalDarkColor;
-						}
-						break;
-					case start:
-						obj.isLastRow = true;
-						if (setPosition == 1) {
-							obj.setInfo = "Finish Current Set";
-						}
-						break;
-					default:
-						break;
-				}
-
-				//add data
-				if (dataPosition >= 0 && dataPosition < set.reps.length) {
-					obj.data = this._dataForRep(set.reps[dataPosition], filter);
-					obj.unit = this._unitForRep(set.reps[dataPosition], filter);
-					obj.removed = set.reps[dataPosition].removed;
-				}
-
-				//add obj
-				array.push(obj);
-			}
-
-			data[setPosition] = array;
-
-			//increment
-			setPosition--;
-		});
-
-		// hack force a starting section for end workout
-		sectionIDs.push(setPosition);
-		data[setPosition] = [ {} ];
-
-		let returnArray = sectionIDs.reverse();
-
-		return { data, returnArray };
 	}
 
 	_sectionHeaderHasChanged(s1, s2) {
@@ -264,7 +80,7 @@ class WorkoutList extends Component {
 	}
 
 	_renderLeftRowItems(rowData, sectionID, rowID) {
-		if (sectionID == 1 && rowData.isLastRow == true) {
+		if (sectionID == 1 && rowData.isFinishSetRow == true) {
 			return (
 				<TouchableHighlight onPress={ () => this._onPressNewSet() }>
 					<Text style={[styles.blueButton, { textAlign: 'center'}]}>{ rowData.setInfo }</Text>
@@ -277,37 +93,48 @@ class WorkoutList extends Component {
 		}
 	}
 
-	_renderRow(rowData, sectionID, rowID) {
-		if (sectionID == 0) {
-			// end workout
-			return (
-				<TouchableHighlight onPress={ () => this._onPressEndWorkout() }>
-					<Text style={[styles.blueButton, { textAlign: 'center'}]}>End Workout</Text>
-				</TouchableHighlight>
-			);
-		} else {
-			// all other sets
+	_renderHeaderEndWorkout() {
+		// end workout
+		return (
+			<TouchableHighlight onPress={ () => this._onPressEndWorkout() }>
+				<Text style={[styles.blueButton, styles.Shadow, { textAlign: 'center'}]}>End Workout</Text>
+			</TouchableHighlight>
+		);
+	}
 
-			var button = null;
-			if (rowData.data !== null) {
-				if (rowData.removed === false) {
-					button = (
-						<TouchableHighlight onPress={ () => this._onPressRemove(rowData) } style={{padding: 5, paddingLeft: 7}} >
-							<Icon name="close" size={20} color="lightgray" style={{marginTop: 3}} />
-						</TouchableHighlight>
-					);
-				} else {
-					button = (
-						<TouchableHighlight onPress={ () => this._onPressRestore(rowData) } style={{padding: 5, paddingLeft: 7}} >
-							<Icon name="undo" size={20} color="lightgray" style={{marginTop: 3}} />
-						</TouchableHighlight>
-					);
-				}
+	_renderData(rowData, sectionID, rowID) {
+		// delete or restore button
+		var button = null;
+		if (rowData.data !== null) {
+			if (rowData.removed === false) {
+				button = (
+					<TouchableHighlight onPress={ () => this._onPressRemove(rowData) } style={{padding: 5, paddingLeft: 7}} >
+						<Icon name="close" size={20} color="lightgray" style={{marginTop: 3}} />
+					</TouchableHighlight>
+				);
+			} else {
+				button = (
+					<TouchableHighlight onPress={ () => this._onPressRestore(rowData) } style={{padding: 5, paddingLeft: 7}} >
+						<Icon name="undo" size={20} color="lightgray" style={{marginTop: 3}} />
+					</TouchableHighlight>
+				);
 			}
+		}
 
-			return (
+		// top shadow
+		var topShadow = null;
+		if (rowID === 0) {
+			console.log("fucking derp should work here");
+			topShadow = (
+				<View style={[styles.Shadow, {height: 1, backgroundColor: 'white', shadowRadius: 2, shadowOpacity: 1, shadowOffset: { height: 1, weight: 0 }}]}></View>
+			);
+		}
+
+		return (
+			<View style={{flex: 1, flexDirection: 'column'}}>
+				{topShadow}
 				<TouchableHighlight onPress={ () => this._onPressRow(rowData) } activeOpacity={1} >
-					<View style={{flexDirection:'row', justifyContent:'space-between', backgroundColor:'white', paddingLeft: 7, paddingBottom: 3}}>
+					<View style={[styles.Shadow, {flexDirection:'row', justifyContent:'space-between', backgroundColor:'white', paddingLeft: 7, paddingBottom: 3}]}>
 						{ this._renderLeftRowItems(rowData, sectionID, rowID) }
 						<View style={{flexDirection:'row'}}>
 							<Text style={[styles.rowText, {color:rowData.dataColor}]}>{rowData.data}</Text>
@@ -316,13 +143,35 @@ class WorkoutList extends Component {
 						</View>
 					</View>
 				</TouchableHighlight>
-			);
+			</View>
+		);
+	}
+
+	_renderFooter(rowData, sectionID, rowID) {
+		return (
+			<View style={[styles.Shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
+				<Text style={{flex: 1, textAlign: 'center', marginTop: 15, color: 'gray', marginBottom: 15}}>{ rowData.rest }</Text>
+			</View>
+		);
+	}
+
+	_renderRow(rowData, sectionID, rowID) {
+		// end workout button
+		if (sectionID == 0) {
+			return this._renderHeaderEndWorkout();
+		}
+
+		switch (rowData.type) {
+			case "data":
+				return this._renderData(rowData, sectionID, rowID);
+			case "footer":
+				return this._renderFooter(rowData, sectionID, rowID);
+			default:
+				break;
 		}
 	}
 
 	render() {
-		var { height, width } = Dimensions.get('window');
-
 		return (
 			<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'rgba(0, 0, 0, 0)' }}>
 				<View style={{ flex: 1 }}>
@@ -333,7 +182,7 @@ class WorkoutList extends Component {
 						dataSource={this.state.dataSource}
 						renderRow={(rowData, sectionID, rowID) => this._renderRow(rowData, sectionID, rowID)}
 						renderSectionHeader={(set, sectionID) => this._renderSectionHeader(set, sectionID)}
-						style = {[styles.Shadow, { backgroundColor: 'rgba(0, 0, 0, 0)'}]} />
+						style = {{ padding: 10, backgroundColor: 'rgba(0, 0, 0, 0)'}} />
 				</View>
 
 				<View style={{height: 50}}>
@@ -357,13 +206,12 @@ const styles = StyleSheet.create({
 	},
 	Shadow: {
 		shadowColor: "#000000",
-		shadowOpacity: 0.8,
+		shadowOpacity: 0.2,
 		shadowRadius: 2,
 		shadowOffset: {
-			height: 1,
+			height: 4,
 			width: 0
 		},
-		padding: 10
 	},
 	rowText: {
 		fontSize:20,

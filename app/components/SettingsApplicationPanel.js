@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 
 import { SETTINGS_PANEL_STYLES } from '../styles/GlobalStyles';
-import { timerDurationDescription } from '../utility/TimerDurationsMap';
+import * as DateUtils from '../utility/DateUtils';
 import SettingsEndSetTimerScreen from '../containers/SettingsEndSetTimerScreen';
 
 class SettingsApplicationPanel extends Component {
@@ -33,7 +33,7 @@ class SettingsApplicationPanel extends Component {
                     <View>
                         <TouchableOpacity onPress={() => this._tappedSetTimer()}>
                             <Text style={SETTINGS_PANEL_STYLES.tappableText  }>
-                                { timerDurationDescription(this.props.endSetTimerDuration) }
+                                { DateUtils.timerDurationDescription(this.props.endSetTimerDuration) }
                             </Text>
                         </TouchableOpacity>
                     </View>

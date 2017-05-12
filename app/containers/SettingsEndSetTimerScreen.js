@@ -3,12 +3,12 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PickerModal from '../components/PickerModal';
-import { timerDurationDescription } from '../utility/TimerDurationsMap';
+import * as DateUtils from '../utility/DateUtils';
 import * as SettingsActionCreators from '../actions/SettingsActionCreators';
 
 const itemForDuration = (duration) => {
     return {
-        label: timerDurationDescription(duration),
+        label: DateUtils.timerDurationDescription(duration),
         value: duration
     };
 };

@@ -69,21 +69,37 @@ class HistoryList extends Component {
 
 	// RENDER
 
-	_renderSectionHeader(set, sectionID) {
-		return (
-			<View>
-				<View style={{backgroundColor:'rgba(0, 0, 0, 0)', height:20}}>
+	_renderSectionHeader(sectionData, sectionID) {
+		if (sectionData.length <= 0) {
+			return (
+				<View></View>
+			);
+		}
+
+		let header = sectionData[0];
+		if (header.workoutDate === null) {
+			return (
+				<View>
+					<View style={{height:20}}></View>
 				</View>
-			</View>
-		);
+			);
+		} else {
+			return (
+				<View>
+					<View style={{height:40, justifyContent: 'flex-end', marginBottom: 10, alignItems: 'center'}}>
+						<Text>{header.workoutDate}</Text>
+					</View>
+				</View>
+			);
+		}
 	}
 
-	_renderRow(rowData, sectionID, rowID) {
-		if (rowData.type == "header") {
-			//render headers
-			return (
-				<TouchableHighlight onPress={ () => this._onPressRow(rowData) } activeOpacity={1} >
-					<View style={{flexDirection:'column', justifyContent: 'flex-end', backgroundColor:'white', overflow:'hidden'}}>
+	_renderHeader(rowData, sectionID, rowID) {
+		return (
+			<View style={{flex: 1, flexDirection: 'column'}}>
+				<View style={[styles.Shadow, {height: 1, backgroundColor: 'white', shadowRadius: 2, shadowOpacity: 1, shadowOffset: { height: 1, weight: 0 }}]}></View>
+				<TouchableHighlight onPress={ () => this._onPressRow(rowData) } activeOpacity={1}>
+					<View style={[styles.Shadow, {flexDirection:'column', justifyContent: 'flex-end', backgroundColor:'white'}]}>
 						<View style={{paddingLeft:10, paddingTop: 5, paddingBottom: 7}}>
 							<Text style={{color:rowData.row1Color}}>{rowData.row1}</Text>
 							<Text style={{color:rowData.row2Color}}>{rowData.row2}</Text>
@@ -94,43 +110,64 @@ class HistoryList extends Component {
 						</View>
 					</View>
 				</TouchableHighlight>
+			</View>
+		);
+	}
+
+	_renderData(rowData, sectionID, rowID) {
+		var button = null;
+		if (rowData.removed === false) {
+			button = (
+				<TouchableHighlight onPress={ () => this._onPressRemove(rowData) }>
+					<Icon name="close" size={20} color="lightgray" style={{marginTop: 10}} />
+				</TouchableHighlight>
 			);
 		} else {
-			// render data
-
-			var button = null;
-			if (rowData.removed === false) {
-				button = (
-					<TouchableHighlight onPress={ () => this._onPressRemove(rowData) }>
-						<Icon name="close" size={20} color="lightgray" style={{marginTop: 10}} />
-					</TouchableHighlight>
-				);
-			} else {
-				button = (
-					<TouchableHighlight onPress={ () => this._onPressRestore(rowData) }>
-						<Icon name="undo" size={20} color="lightgray" style={{marginTop: 10}} />
-					</TouchableHighlight>
-				);
-			}
-
-			var dataStyle = rowData.removed ? styles.removedData : styles.data;
-			
-			return (
-				<View style={{flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}}>
-					<TouchableHighlight style={{flex:1}} onPress={ () => this._onPressRow(rowData) } activeOpacity={1} >
-						<View style={styles.bar}>
-							<Text style={dataStyle}> { rowData.repDisplay } </Text>
-							<Text style={dataStyle}> { rowData.averageVelocity } </Text>
-							<Text style={dataStyle}> { rowData.peakVelocity } </Text>
-							<Text style={dataStyle}> { rowData.peakVelocityLocation } </Text>
-							<Text style={dataStyle}> { rowData.rangeOfMotion } </Text>
-							<Text style={dataStyle}> { rowData.duration } </Text>
-						</View>
-					</TouchableHighlight>
-
-					{button}
-				</View>
+			button = (
+				<TouchableHighlight onPress={ () => this._onPressRestore(rowData) }>
+					<Icon name="undo" size={20} color="lightgray" style={{marginTop: 10}} />
+				</TouchableHighlight>
 			);
+		}
+
+		var dataStyle = rowData.removed ? styles.removedData : styles.data;
+		
+		return (
+			<View style={[styles.Shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
+				<TouchableHighlight style={{flex:1}} onPress={ () => this._onPressRow(rowData) } activeOpacity={1} >
+					<View style={styles.bar}>
+						<Text style={dataStyle}> { rowData.repDisplay } </Text>
+						<Text style={dataStyle}> { rowData.averageVelocity } </Text>
+						<Text style={dataStyle}> { rowData.peakVelocity } </Text>
+						<Text style={dataStyle}> { rowData.peakVelocityLocation } </Text>
+						<Text style={dataStyle}> { rowData.rangeOfMotion } </Text>
+						<Text style={dataStyle}> { rowData.duration } </Text>
+					</View>
+				</TouchableHighlight>
+
+				{button}
+			</View>
+		);
+	}
+
+	_renderFooter(rowData, sectionID, rowID) {
+		return (
+			<View style={[styles.Shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
+				<Text style={{flex: 1, textAlign: 'center', marginTop: 15, color: 'gray', marginBottom: 15}}>{ rowData.rest }</Text>
+			</View>
+		);
+	}
+
+	_renderRow(rowData, sectionID, rowID) {
+		switch (rowData.type) {
+			case "header":
+				return this._renderHeader(rowData, sectionID, rowID);
+			case "data":
+				return this._renderData(rowData, sectionID, rowID);
+			case "footer":
+				return this._renderFooter(rowData, sectionID, rowID);
+			default:
+				break;
 		}
 	}
 
@@ -146,9 +183,10 @@ class HistoryList extends Component {
 						pageSize = { 3 }
 						scrollRenderAheadDistance = { 3000 }
 						dataSource={this.state.dataSource}
+						stickySectionHeadersEnabled = { false }
 						renderRow={(rowData, sectionID, rowID) => this._renderRow(rowData, sectionID, rowID)}
-						renderSectionHeader={(set, sectionID) => this._renderSectionHeader(set, sectionID)}
-						style = {[styles.Shadow, { backgroundColor: 'rgba(0, 0, 0, 0)'}]} />
+						renderSectionHeader={(sectionData, sectionID) => this._renderSectionHeader(sectionData, sectionID)}
+						style = {{padding: 10, backgroundColor: 'rgba(0, 0, 0, 0)'}} />
 				</View>
 
 				<View style={{height: 50}}>
@@ -163,13 +201,12 @@ class HistoryList extends Component {
 const styles = StyleSheet.create({
 	Shadow: {
 		shadowColor: "#000000",
-		shadowOpacity: 0.8,
+		shadowOpacity: 0.2,
 		shadowRadius: 2,
 		shadowOffset: {
-			height: 1,
+			height: 4,
 			width: 0
 		},
-		padding: 10,
 	},
 	bar: {
 		flex: 1,

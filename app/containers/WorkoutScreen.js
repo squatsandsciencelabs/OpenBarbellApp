@@ -105,15 +105,18 @@ const getListViewModels = (sets, filter) => {
 		}
 
 		// add rest time
-		if (lastSetEndTime !== null && set.reps.length > 0) {
-			let restInMS = new Date(set.startTime) - new Date(lastSetEndTime);
-			let restObj = {
-				type: "footer",
-				rest: DateUtils.restInSentenceFormat(restInMS)
-			};
-			array.push(restObj);
+		if (!set.removed) {
+			if (lastSetEndTime !== null && set.reps.length > 0) {
+				let restInMS = new Date(set.startTime) - new Date(lastSetEndTime);
+				let restObj = {
+					type: "footer",
+					rest: DateUtils.restInSentenceFormat(restInMS)
+				};
+				array.push(restObj);
+			}
+
+			lastSetEndTime = set.endTime;
 		}
-		lastSetEndTime = set.endTime;
 
 		// every rep is a row
 		for (var i=0; i <= start; i++) {

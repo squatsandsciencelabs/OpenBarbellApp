@@ -12,6 +12,7 @@ import {
 	ListItem
 } from 'react-native'
 import EditHistorySetScreen from '../containers/EditHistorySetScreen';
+import EditSetHeader from './EditSetHeader';
 import SetDescription from './SetDescription';
 import SetData from './SetData';
 import SetRest from './SetRest';
@@ -44,9 +45,9 @@ class HistoryList extends Component {
 	_renderRow(item) {
 		switch (item.type) {
 			case "header":
-				return (<SetDescription item={item}
-							onPressRow={() => this.props.editHistorySet(item.setID)}
-						/>);
+				return (<View style={{marginTop: 15}}>
+<EditSetHeader />
+</View>);
 			case "data":
 				return (<SetData item={item}
 							onPressRemove={() =>this.props.removeRep(item.setID, item.rep) }
@@ -90,17 +91,5 @@ class HistoryList extends Component {
 		);
 	}
 }
-
-const styles = StyleSheet.create({
-	Shadow: {
-		shadowColor: "#000000",
-		shadowOpacity: 0.2,
-		shadowRadius: 2,
-		shadowOffset: {
-			height: 4,
-			width: 0
-		},
-	},
-});
 
 export default HistoryList

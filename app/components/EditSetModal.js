@@ -63,7 +63,7 @@ class EditSetModal extends Component {
 								onSubmitEditing={(event) => { this.refs.WeightInput.focus(); }}
 								onChangeText={(exercise) => this.setState({exercise: exercise}) }
 								value={this.state.exercise} />
-								</TouchableOpacity>
+							</TouchableOpacity>
 						</View>
 
 						<View style={styles.popupContainer}>

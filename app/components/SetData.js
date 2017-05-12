@@ -25,7 +25,7 @@ class SetData extends PureComponent {
 		var dataStyle = this.props.item.removed ? styles.removedData : styles.data;
 		
 		return (
-			<View style={[styles.Shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
+			<View style={[styles.shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
 				<TouchableHighlight style={{flex:1}} onPress={ () => this.props.onPressRow() } activeOpacity={1} >
 					<View style={styles.bar}>
 						<Text style={dataStyle}> { this.props.item.repDisplay } </Text>
@@ -45,7 +45,7 @@ class SetData extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-	Shadow: {
+	shadow: {
 		shadowColor: "#000000",
 		shadowOpacity: 0.2,
 		shadowRadius: 2,

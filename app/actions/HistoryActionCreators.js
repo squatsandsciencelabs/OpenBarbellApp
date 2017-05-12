@@ -36,7 +36,7 @@ export const exportHistoryCSV = () => (dispatch, getState) => {
 				let sets = getHistorySetsChronological(state.sets);
 				let csv = CSVConverter.convert(sets);
 				console.log("google access token " + user.accessToken);
-				GoogleDriveUploader.upload(user.accessToken, name, csv, (fileID) => {
+				await GoogleDriveUploader.upload(user.accessToken, name, csv, (fileID) => {
 					dispatch(updateIsExportingCSV(false));
 					Linking.openURL('https://drive.google.com/open?id=' + fileID).catch(err => {
 						Alert.alert('Upload Succeeded', 'CSV uploaded to your Google Drive!');

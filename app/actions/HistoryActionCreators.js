@@ -24,9 +24,16 @@ export const hideRemovedData = () => ({ type: UPDATE_HISTORY_FILTER, showRemoved
 const updateIsExportingCSV = (isExportingCSV) => ({ type: EXPORTING_CSV, isExportingCSV: isExportingCSV });
 
 export const exportHistoryCSV = () => (dispatch, getState) => {
+	// logged in check
+	let state = getState();
+	if (state.auth.email === null) {
+		Alert.alert('Sign in Required', 'Please sign in via Settings to use this feature.');
+		return;
+	}
+
 	GoogleSignin.currentUserAsync().then(async (user) => {
 		if (user === null) {
-			Alert.alert('Error', 'Please sign in via Settings to use this feature.\n\nTip: If you are already signed in, please logout and login again as Google permissions may have changed.');
+			Alert.alert('Error', 'Error exporting CSV. Please try again later.\n\nTip: Is your internet connection working?');
 		} else {
 			dispatch(updateIsExportingCSV(true));
 			try {
@@ -45,7 +52,7 @@ export const exportHistoryCSV = () => (dispatch, getState) => {
 			} catch(err) {
 				console.log("Error uploading csv file " + typeof err + " " + err);
 				if (err.message == 'Insufficient Permission') { // TODO: should do typeof check but it's not working
-					Alert.alert('Error', 'Please log out and log in again. This feature requires additional Google Drive permissions.');
+					Alert.alert('Google Drive Permissions Error', 'Please log out and log in again. This feature requires additional Google Drive permissions.');
 				} else {
 					Alert.alert('Error', 'Error exporting CSV. Please try again later.\n\nTip: Is your internet connection working?');
 				}

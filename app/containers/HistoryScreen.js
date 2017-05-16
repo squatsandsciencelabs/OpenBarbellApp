@@ -41,7 +41,7 @@ const createViewModels = (sets, shouldShowRemoved) => {
 			section = { key: new Date(workoutStartTime).toLocaleString(), data: [] };
 			sections.splice(0, 0, section); // insert at beginning
 		} else {
-			isSameWorkout = false;
+			isInitialSet = false;
 		}
 
 		// set card data

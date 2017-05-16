@@ -6,9 +6,10 @@ import {
 	Text,
 	StyleSheet,
 	View,
-	ListView,
+	SectionList,
 	ScrollView,
-	Dimensions
+	Dimensions,
+	ListItem
 } from 'react-native'
 import EditHistorySetScreen from '../containers/EditHistorySetScreen';
 import LegendBar from './LegendBar';
@@ -17,93 +18,50 @@ import HistoryFilterBarScreen from '../containers/HistoryFilterBarScreen';
 
 class HistoryList extends Component {
 
-	// DATA
+	// UPDATE
 
-	constructor(props) {
-		super(props);
-
-		// initialize the datasource
-		let	dataSource = new ListView.DataSource({
-			sectionHeaderHasChanged: this._sectionHeaderHasChanged,
-			rowHasChanged: this._rowHasChanged,
-		});
-		this.state = {
-			dataSource: dataSource.cloneWithRowsAndSections(props.data, props.sectionIDs),
-		};
-	}
-
-	// state changed, reset the dataSource as needed
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.shouldShowRemoved !== this.props.shouldShowRemoved) {
-			this.refs.listView.scrollTo({x:0, y: 0, animated: false});
-		}
-		
-		if (nextProps.data !== this.props.data || nextProps.sectionIDs !== this.props.sectionIDs || nextProps.shouldShowRemoved !== this.props.shouldShowRemoved) {
-			this.setState({
-				dataSource: this.state.dataSource.cloneWithRowsAndSections(nextProps.data, nextProps.sectionIDs),
-			});
-		}
-	}
-
-	_sectionHeaderHasChanged(s1, s2) {
-		return s1 !== s2;
-	}
-
-	_rowHasChanged(r1, r2) {
-		return r1 !== r2;
-	}
+	shouldComponentUpdate(nextProps) {
+		const differentShowRemoved = nextProps.shouldShowRemoved !== this.props.shouldShowRemoved;
+		const differentSections = nextProps.sections !== this.props.sections;
+		return differentShowRemoved || differentSections;
+    }
 
 	// ACTION
 
-	_onPressRow(rowData) {
-		this.props.editHistorySet(rowData.setID);
+	_onPressRow(item) {
+		this.props.editHistorySet(item.setID);
 	}
 
-	_onPressRemove(rowData) {
-		this.props.removeRep(rowData.setID, rowData.rep);
+	_onPressRemove(item) {
+		this.props.removeRep(item.setID, item.rep);
 	}
 
-	_onPressRestore(rowData) {
-		this.props.restoreRep(rowData.setID, rowData.rep);
+	_onPressRestore(item) {
+		this.props.restoreRep(item.setID, item.rep);
 	}
 
 	// RENDER
 
-	_renderSectionHeader(sectionData, sectionID) {
-		if (sectionData.length <= 0) {
-			return (
-				<View></View>
-			);
-		}
-
-		let header = sectionData[0];
-		if (header.workoutDate === null) {
-			return (
-				<View>
-					<View style={{height:20}}></View>
+	_renderSectionHeader(section) {
+		return (
+			<View>
+				<View style={{height:40, justifyContent: 'flex-end', marginBottom: 10, alignItems: 'center'}}>
+					<Text>{section.key}</Text>
 				</View>
-			);
-		} else {
-			return (
-				<View>
-					<View style={{height:40, justifyContent: 'flex-end', marginBottom: 10, alignItems: 'center'}}>
-						<Text>{header.workoutDate}</Text>
-					</View>
-				</View>
-			);
-		}
+			</View>
+		);
 	}
 
-	_renderHeader(rowData, sectionID, rowID) {
+	_renderHeader(item) {
 		return (
 			<View style={{flex: 1, flexDirection: 'column'}}>
 				<View style={[styles.Shadow, {height: 1, backgroundColor: 'white', shadowRadius: 2, shadowOpacity: 1, shadowOffset: { height: 1, weight: 0 }}]}></View>
-				<TouchableHighlight onPress={ () => this._onPressRow(rowData) } activeOpacity={1}>
+				<TouchableHighlight onPress={ () => this._onPressRow(item) } activeOpacity={1}>
 					<View style={[styles.Shadow, {flexDirection:'column', justifyContent: 'flex-end', backgroundColor:'white'}]}>
 						<View style={{paddingLeft:10, paddingTop: 5, paddingBottom: 7}}>
-							<Text style={{color:rowData.row1Color}}>{rowData.row1}</Text>
-							<Text style={{color:rowData.row2Color}}>{rowData.row2}</Text>
-							<Text style={{color:rowData.row3Color}}>{rowData.row3}</Text>
+							<Text style={{color:item.row1Color}}>{item.row1}</Text>
+							<Text style={{color:item.row2Color}}>{item.row2}</Text>
+							<Text style={{color:item.row3Color}}>{item.row3}</Text>
 						</View>
 						<View style={{ paddingLeft: 5, paddingRight:17 }}>
 							<LegendBar />
@@ -114,34 +72,34 @@ class HistoryList extends Component {
 		);
 	}
 
-	_renderData(rowData, sectionID, rowID) {
+	_renderData(item) {
 		var button = null;
-		if (rowData.removed === false) {
+		if (item.removed === false) {
 			button = (
-				<TouchableHighlight onPress={ () => this._onPressRemove(rowData) }>
+				<TouchableHighlight onPress={ () => this._onPressRemove(item) }>
 					<Icon name="close" size={20} color="lightgray" style={{marginTop: 10}} />
 				</TouchableHighlight>
 			);
 		} else {
 			button = (
-				<TouchableHighlight onPress={ () => this._onPressRestore(rowData) }>
+				<TouchableHighlight onPress={ () => this._onPressRestore(item) }>
 					<Icon name="undo" size={20} color="lightgray" style={{marginTop: 10}} />
 				</TouchableHighlight>
 			);
 		}
 
-		var dataStyle = rowData.removed ? styles.removedData : styles.data;
+		var dataStyle = item.removed ? styles.removedData : styles.data;
 		
 		return (
 			<View style={[styles.Shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
-				<TouchableHighlight style={{flex:1}} onPress={ () => this._onPressRow(rowData) } activeOpacity={1} >
+				<TouchableHighlight style={{flex:1}} onPress={ () => this._onPressRow(item) } activeOpacity={1} >
 					<View style={styles.bar}>
-						<Text style={dataStyle}> { rowData.repDisplay } </Text>
-						<Text style={dataStyle}> { rowData.averageVelocity } </Text>
-						<Text style={dataStyle}> { rowData.peakVelocity } </Text>
-						<Text style={dataStyle}> { rowData.peakVelocityLocation } </Text>
-						<Text style={dataStyle}> { rowData.rangeOfMotion } </Text>
-						<Text style={dataStyle}> { rowData.duration } </Text>
+						<Text style={dataStyle}> { item.repDisplay } </Text>
+						<Text style={dataStyle}> { item.averageVelocity } </Text>
+						<Text style={dataStyle}> { item.peakVelocity } </Text>
+						<Text style={dataStyle}> { item.peakVelocityLocation } </Text>
+						<Text style={dataStyle}> { item.rangeOfMotion } </Text>
+						<Text style={dataStyle}> { item.duration } </Text>
 					</View>
 				</TouchableHighlight>
 
@@ -150,22 +108,22 @@ class HistoryList extends Component {
 		);
 	}
 
-	_renderFooter(rowData, sectionID, rowID) {
+	_renderFooter(item) {
 		return (
 			<View style={[styles.Shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
-				<Text style={{flex: 1, textAlign: 'center', marginTop: 15, color: 'gray', marginBottom: 15}}>{ rowData.rest }</Text>
+				<Text style={{flex: 1, textAlign: 'center', marginTop: 15, color: 'gray', marginBottom: 15}}>{ item.rest }</Text>
 			</View>
 		);
 	}
 
-	_renderRow(rowData, sectionID, rowID) {
-		switch (rowData.type) {
+	_renderRow(item) {
+		switch (item.type) {
 			case "header":
-				return this._renderHeader(rowData, sectionID, rowID);
+				return this._renderHeader(item);
 			case "data":
-				return this._renderData(rowData, sectionID, rowID);
+				return this._renderData(item);
 			case "footer":
-				return this._renderFooter(rowData, sectionID, rowID);
+				return this._renderFooter(item);
 			default:
 				break;
 		}
@@ -176,17 +134,13 @@ class HistoryList extends Component {
 			<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'rgba(0, 0, 0, 0)' }}>
 				<View style={{ flex: 1 }}>
 					<EditHistorySetScreen />
-					<ListView
-						ref="listView"
-						enableEmptySections = { true }
-						initialListSize = { 15 }
-						pageSize = { 3 }
-						scrollRenderAheadDistance = { 3000 }
-						dataSource={this.state.dataSource}
-						stickySectionHeadersEnabled = { false }
-						renderRow={(rowData, sectionID, rowID) => this._renderRow(rowData, sectionID, rowID)}
-						renderSectionHeader={(sectionData, sectionID) => this._renderSectionHeader(sectionData, sectionID)}
-						style = {{padding: 10, backgroundColor: 'rgba(0, 0, 0, 0)'}} />
+					<SectionList
+						stickySectionHeadersEnabled={false}
+						renderItem={({item}) => this._renderRow(item)}
+						renderSectionHeader={({section}) => this._renderSectionHeader(section) }
+						sections={this.props.sections}
+						/>
+
 				</View>
 
 				<View style={{height: 50}}>

@@ -110,7 +110,7 @@ class HistoryList extends Component {
 
 	_renderFooter(item) {
 		return (
-			<View style={[styles.Shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
+			<View style={[styles.Shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white', marginBottom: 15}]}>
 				<Text style={{flex: 1, textAlign: 'center', marginTop: 15, color: 'gray', marginBottom: 15}}>{ item.rest }</Text>
 			</View>
 		);
@@ -139,6 +139,7 @@ class HistoryList extends Component {
 						renderItem={({item}) => this._renderRow(item)}
 						renderSectionHeader={({section}) => this._renderSectionHeader(section) }
 						sections={this.props.sections}
+						style = {{padding: 10, backgroundColor: 'rgba(0, 0, 0, 0)'}}
 						/>
 
 				</View>

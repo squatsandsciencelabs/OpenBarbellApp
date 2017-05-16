@@ -15,6 +15,7 @@ import EditHistorySetScreen from '../containers/EditHistorySetScreen';
 import LegendBar from './LegendBar';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import HistoryFilterBarScreen from '../containers/HistoryFilterBarScreen';
+import ListLoadingFooter from '../components/ListLoadingFooter';
 
 class HistoryList extends Component {
 
@@ -135,7 +136,9 @@ class HistoryList extends Component {
 				<View style={{ flex: 1 }}>
 					<EditHistorySetScreen />
 					<SectionList
+						initialNumToRender={13}
 						stickySectionHeadersEnabled={false}
+						ListFooterComponent={ListLoadingFooter}
 						renderItem={({item}) => this._renderRow(item)}
 						renderSectionHeader={({section}) => this._renderSectionHeader(section) }
 						sections={this.props.sections}

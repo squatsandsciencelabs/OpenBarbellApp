@@ -46,7 +46,7 @@ class HistoryList extends Component {
 	_renderSectionHeader(section) {
 		return (
 			<View>
-				<View style={{height:40, justifyContent: 'flex-end', marginBottom: 10, alignItems: 'center'}}>
+				<View style={{height:40, justifyContent: 'flex-end', alignItems: 'center'}}>
 					<Text>{section.key}</Text>
 				</View>
 			</View>
@@ -55,7 +55,7 @@ class HistoryList extends Component {
 
 	_renderHeader(item) {
 		return (
-			<View style={{flex: 1, flexDirection: 'column'}}>
+			<View style={{flex: 1, flexDirection: 'column', marginTop: 15}}>
 				<View style={[styles.Shadow, {height: 1, backgroundColor: 'white', shadowRadius: 2, shadowOpacity: 1, shadowOffset: { height: 1, weight: 0 }}]}></View>
 				<TouchableHighlight onPress={ () => this._onPressRow(item) } activeOpacity={1}>
 					<View style={[styles.Shadow, {flexDirection:'column', justifyContent: 'flex-end', backgroundColor:'white'}]}>
@@ -111,7 +111,7 @@ class HistoryList extends Component {
 
 	_renderFooter(item) {
 		return (
-			<View style={[styles.Shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white', marginBottom: 15}]}>
+			<View style={[styles.Shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
 				<Text style={{flex: 1, textAlign: 'center', marginTop: 15, color: 'gray', marginBottom: 15}}>{ item.rest }</Text>
 			</View>
 		);
@@ -131,21 +131,25 @@ class HistoryList extends Component {
 	}
 
 	render() {
+		var list = null;
+		if (this.props.sections.length > 0) {
+			list = (<SectionList
+				initialNumToRender={13}
+				stickySectionHeadersEnabled={false}
+				ListFooterComponent={HistoryLoadingFooterScreen}
+				renderItem={({item}) => this._renderRow(item)}
+				renderSectionHeader={({section}) => this._renderSectionHeader(section) }
+				sections={this.props.sections}
+				onEndReached={() => this.props.finishedLoadingHistory() }
+				style = {{padding: 10, backgroundColor: 'rgba(0, 0, 0, 0)'}}
+			/>);
+		}
+
 		return (
 			<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'rgba(0, 0, 0, 0)' }}>
 				<View style={{ flex: 1 }}>
 					<EditHistorySetScreen />
-					<SectionList
-						initialNumToRender={13}
-						stickySectionHeadersEnabled={false}
-						ListFooterComponent={HistoryLoadingFooterScreen}
-						renderItem={({item}) => this._renderRow(item)}
-						renderSectionHeader={({section}) => this._renderSectionHeader(section) }
-						sections={this.props.sections}
-						onEndReached={() => this.props.finishedLoadingHistory() }
-						style = {{padding: 10, backgroundColor: 'rgba(0, 0, 0, 0)'}}
-						/>
-
+					{list}
 				</View>
 
 				<View style={{height: 50}}>

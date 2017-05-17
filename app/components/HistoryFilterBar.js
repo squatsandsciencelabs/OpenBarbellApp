@@ -22,7 +22,7 @@ class HistoryFilterBar extends Component {
 		if (isExportingCSV) {
 			return (
 				<ActivityIndicator
-					style={[styles.centering, styles.gray, {marginLeft: 10}]}
+					style={{marginLeft: 10}}
 					color="white"
 				/>
 			);

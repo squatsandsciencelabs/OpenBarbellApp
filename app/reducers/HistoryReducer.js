@@ -3,17 +3,23 @@ import {
 	END_EDIT_HISTORY_SET,
 	UPDATE_HISTORY_FILTER,
 	EXPORTING_CSV,
+	LOADING_HISTORY
 } from '../ActionTypes';
 
 const defaultState = {
 	editing: false,
 	editingSetID: null,
 	showRemoved: false,
-	isExportingCSV: false
+	isExportingCSV: false,
+	isLoadingHistory: true
 };
 
 const HistoryReducer = (state = defaultState, action) => {
 	switch (action.type) {
+		case LOADING_HISTORY:
+			return Object.assign({}, state, {
+				isLoadingHistory: action.isLoading
+			});
 		case EDIT_HISTORY_SET:
 			return Object.assign({}, state, {
 				editing: true,

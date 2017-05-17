@@ -4,7 +4,8 @@ import {
 	EDIT_HISTORY_SET,
 	END_EDIT_HISTORY_SET,
 	UPDATE_HISTORY_FILTER,
-	EXPORTING_CSV
+	EXPORTING_CSV,
+	LOADING_HISTORY
 } from '../ActionTypes';
 import * as GoogleDriveUploader from '../utility/GoogleDriveUploader';
 import * as CSVConverter from '../utility/CSVConverter';
@@ -13,13 +14,23 @@ import { getHistorySetsChronological } from '../reducers/SetReducer';
 import { Alert, Linking } from 'react-native'
 import { GoogleSignin } from 'react-native-google-signin';
 
+export const finishedLoadingHistory = () => ({ type: LOADING_HISTORY, isLoading: false });
+
+export const showLoadingHistory = () => ({ type: LOADING_HISTORY, isLoading: true });
+
 export const editHistorySet = (setID) => ({ type: EDIT_HISTORY_SET, setID: setID });
 
 export const endEditHistorySet = () => ({ type: END_EDIT_HISTORY_SET });
 
-export const showRemovedData = () => ({ type: UPDATE_HISTORY_FILTER, showRemoved: true });
+export const showRemovedData = () => (dispatch) => {
+	dispatch({ type: UPDATE_HISTORY_FILTER, showRemoved: true });
+	dispatch(showLoadingHistory());
+};
 
-export const hideRemovedData = () => ({ type: UPDATE_HISTORY_FILTER, showRemoved: false });
+export const hideRemovedData = () => (dispatch) => {
+	dispatch({ type: UPDATE_HISTORY_FILTER, showRemoved: false });
+	dispatch(showLoadingHistory());
+}
 
 const updateIsExportingCSV = (isExportingCSV) => ({ type: EXPORTING_CSV, isExportingCSV: isExportingCSV });
 

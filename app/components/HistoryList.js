@@ -28,20 +28,6 @@ class HistoryList extends Component {
 		return differentShowRemoved || differentSections;
     }
 
-	// ACTION
-
-	_onPressRow(item) {
-		this.props.editHistorySet(item.setID);
-	}
-
-	_onPressRemove(item) {
-		this.props.removeRep(item.setID, item.rep);
-	}
-
-	_onPressRestore(item) {
-		this.props.restoreRep(item.setID, item.rep);
-	}
-
 	// RENDER
 
 	_renderSectionHeader(section) {
@@ -58,7 +44,7 @@ class HistoryList extends Component {
 		return (
 			<View style={{flex: 1, flexDirection: 'column', marginTop: 15}}>
 				<View style={[styles.Shadow, {height: 1, backgroundColor: 'white', shadowRadius: 2, shadowOpacity: 1, shadowOffset: { height: 1, weight: 0 }}]}></View>
-				<TouchableHighlight onPress={ () => this._onPressRow(item) } activeOpacity={1}>
+				<TouchableHighlight onPress={ () => this.props.editHistorySet(item.setID) } activeOpacity={1}>
 					<View style={[styles.Shadow, {flexDirection:'column', justifyContent: 'flex-end', backgroundColor:'white'}]}>
 						<View style={{paddingLeft:10, paddingTop: 5, paddingBottom: 7}}>
 							<Text style={{color:item.row1Color}}>{item.row1}</Text>
@@ -70,42 +56,6 @@ class HistoryList extends Component {
 						</View>
 					</View>
 				</TouchableHighlight>
-			</View>
-		);
-	}
-
-	_renderData(item) {
-		var button = null;
-		if (item.removed === false) {
-			button = (
-				<TouchableHighlight onPress={ () => this._onPressRemove(item) }>
-					<Icon name="close" size={20} color="lightgray" style={{marginTop: 10}} />
-				</TouchableHighlight>
-			);
-		} else {
-			button = (
-				<TouchableHighlight onPress={ () => this._onPressRestore(item) }>
-					<Icon name="undo" size={20} color="lightgray" style={{marginTop: 10}} />
-				</TouchableHighlight>
-			);
-		}
-
-		var dataStyle = item.removed ? styles.removedData : styles.data;
-		
-		return (
-			<View style={[styles.Shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
-				<TouchableHighlight style={{flex:1}} onPress={ () => this._onPressRow(item) } activeOpacity={1} >
-					<View style={styles.bar}>
-						<Text style={dataStyle}> { item.repDisplay } </Text>
-						<Text style={dataStyle}> { item.averageVelocity } </Text>
-						<Text style={dataStyle}> { item.peakVelocity } </Text>
-						<Text style={dataStyle}> { item.peakVelocityLocation } </Text>
-						<Text style={dataStyle}> { item.rangeOfMotion } </Text>
-						<Text style={dataStyle}> { item.duration } </Text>
-					</View>
-				</TouchableHighlight>
-
-				{button}
 			</View>
 		);
 	}
@@ -123,7 +73,10 @@ class HistoryList extends Component {
 			case "header":
 				return this._renderHeader(item);
 			case "data":
-				return (<SetData item={item} onPressRemove={() => this._onPressRemove(item)} onPressRestore={() => this._onPressRestore(item)} onPressRow={() => this._onPressRow(item)} />);
+				return (<SetData item={item}
+					onPressRemove={() =>this.props.removeRep(item.setID, item.rep) }
+					onPressRestore={() => this.props.restoreRep(item.setID, item.rep) }
+					onPressRow={() => this.props.editHistorySet(item.setID)} />);
 			case "footer":
 				return this._renderFooter(item);
 			default:

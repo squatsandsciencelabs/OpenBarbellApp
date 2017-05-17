@@ -227,7 +227,8 @@ const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
 		editHistorySet: HistoryActionCreators.editHistorySet,
 		removeRep: SetActionCreators.removeHistoryRep,
-		restoreRep: SetActionCreators.restoreHistoryRep
+		restoreRep: SetActionCreators.restoreHistoryRep,
+		finishedLoadingHistory: HistoryActionCreators.finishedLoadingHistory,
 	}, dispatch);
 };
 

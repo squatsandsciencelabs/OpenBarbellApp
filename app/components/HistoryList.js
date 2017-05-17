@@ -141,12 +141,12 @@ class HistoryList extends Component {
 				renderSectionHeader={({section}) => this._renderSectionHeader(section) }
 				sections={this.props.sections}
 				onEndReached={() => this.props.finishedLoadingHistory() }
-				style = {{padding: 10, backgroundColor: 'rgba(0, 0, 0, 0)'}}
+				style = {{padding: 10, backgroundColor: 'white'}}
 			/>);
 		}
 
 		return (
-			<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'rgba(0, 0, 0, 0)' }}>
+			<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
 				<View style={{ flex: 1 }}>
 					<EditHistorySetScreen />
 					{list}

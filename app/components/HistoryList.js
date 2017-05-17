@@ -12,7 +12,7 @@ import {
 	ListItem
 } from 'react-native'
 import EditHistorySetScreen from '../containers/EditHistorySetScreen';
-import LegendBar from './LegendBar';
+import SetDescription from './SetDescription';
 import SetData from './SetData';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import HistoryFilterBarScreen from '../containers/HistoryFilterBarScreen';
@@ -71,12 +71,13 @@ class HistoryList extends Component {
 	_renderRow(item) {
 		switch (item.type) {
 			case "header":
-				return this._renderHeader(item);
+				return (<SetDescription item={item} onPressRow={() => this.props.editHistorySet(item.setID)} />);
 			case "data":
 				return (<SetData item={item}
-					onPressRemove={() =>this.props.removeRep(item.setID, item.rep) }
-					onPressRestore={() => this.props.restoreRep(item.setID, item.rep) }
-					onPressRow={() => this.props.editHistorySet(item.setID)} />);
+							onPressRemove={() =>this.props.removeRep(item.setID, item.rep) }
+							onPressRestore={() => this.props.restoreRep(item.setID, item.rep) }
+							onPressRow={() => this.props.editHistorySet(item.setID)}
+						/>);
 			case "footer":
 				return this._renderFooter(item);
 			default:

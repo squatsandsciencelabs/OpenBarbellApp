@@ -9,7 +9,7 @@ class EditSetHeader extends Component {
     render() {
         return (
             <View style={{flex: 1, flexDirection: 'column'}}>
-				<View style={styles.upperShadow} />
+                <View style={styles.upperShadow} />
                     <View style={[styles.shadow, {flex: 1, flexDirection: 'column', padding: 5}]}>
                         <View style={styles.field}>
                             <TextInput

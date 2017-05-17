@@ -1,8 +1,7 @@
 // app/components/ListLoadingFooter.js
 
 import React, {PureComponent} from 'react';
-
-import { ActivityIndicator, View }  from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 
 class ListLoadingFooter extends PureComponent {
 

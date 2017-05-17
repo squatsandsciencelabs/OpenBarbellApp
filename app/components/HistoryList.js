@@ -13,6 +13,7 @@ import {
 } from 'react-native'
 import EditHistorySetScreen from '../containers/EditHistorySetScreen';
 import LegendBar from './LegendBar';
+import SetData from './SetData';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import HistoryFilterBarScreen from '../containers/HistoryFilterBarScreen';
 import HistoryLoadingFooterScreen from '../containers/HistoryLoadingFooterScreen';
@@ -122,7 +123,7 @@ class HistoryList extends Component {
 			case "header":
 				return this._renderHeader(item);
 			case "data":
-				return this._renderData(item);
+				return (<SetData item={item} onPressRemove={() => this._onPressRemove(item)} onPressRestore={() => this._onPressRestore(item)} onPressRow={() => this._onPressRow(item)} />);
 			case "footer":
 				return this._renderFooter(item);
 			default:
@@ -171,29 +172,6 @@ const styles = StyleSheet.create({
 			width: 0
 		},
 	},
-	bar: {
-		flex: 1,
-		flexDirection: 'row',
-		justifyContent: 'space-between',
-		alignItems: 'center',
-		alignSelf: 'stretch',
-		left: 0,
-		right: 0,
-		bottom: 0,
-		height: 40,
-		padding: 0,
-		paddingLeft: 5,
-		overflow: 'hidden'
-	},
-	data: {
-		width: 45,
-		textAlign: 'center'
-	},
-	removedData: {
-		width: 45,
-		textAlign: 'center',
-		color: 'lightgray'
-	}
 });
 
 export default HistoryList

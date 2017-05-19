@@ -18,6 +18,8 @@ class EditSetHeader extends Component {
         };
 	}
 
+    // KEYBOARD
+
     componentWillMount() {
         this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', () => { this._keyboardWillShow() });
         this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', () => { this._keyboardWillHide() });
@@ -39,6 +41,18 @@ class EditSetHeader extends Component {
     }
 
     _keyboardDidHide() {
+        this._save();
+    }
+
+    // SAVING
+
+    componentDidUpdate(nextProps, nextState) {
+        if (nextState.metric !== this.state.metric) {
+            this._save();
+        }
+    }
+
+    _save() {
         if (this.props.exercise !== this.state.exercise
             || this.props.weight !== this.state.weight
             || this.props.metric !== this.state.metric
@@ -48,11 +62,29 @@ class EditSetHeader extends Component {
         }
     }
 
-    setNumber() {
+    _toggleMetric() {
+        if (this.state.metric === 'kgs') {
+            this.setState({metric: 'lbs'})
+        } else if (this.state.metric === 'lbs') {
+            this.setState({metric: 'kgs'})
+        }
+    }
+
+    // RENDER
+
+    displaySetNumber() {
         if (this.state.setNumber === null || this.state.setNumber === undefined) {
             return '#1';
         }
         return '#' + this.state.setNumber;
+    }
+
+    displayMetric() {
+        if (this.state.metric === 'kgs') {
+            return "KGs";
+        } else if (this.state.metric === 'lbs') {
+            return "LBs";
+        }
     }
 
     render() {
@@ -72,7 +104,7 @@ class EditSetHeader extends Component {
                                 />
                             </View>
                             <View style={styles.fieldDetails} pointerEvents='none'>
-                                <Text style={styles.detailText}>{this.setNumber()}</Text>
+                                <Text style={styles.detailText}>{this.displaySetNumber()}</Text>
                             </View>
                         </View>
                         <View style={{flex: 1, flexDirection: 'row'}}>
@@ -87,9 +119,9 @@ class EditSetHeader extends Component {
                                     onChangeText={(weight) => this.setState({weight: weight}) }
                                 />
                                 <View style={styles.fieldDetails}>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity onPress={() => this._toggleMetric()}>
                                         <View style={{flexDirection: 'row', alignItems: 'center', }}>
-                                            <Text style={styles.detailText}>LB </Text>
+                                            <Text style={styles.detailText}>{this.displayMetric()} </Text>
                                             <Icon name="refresh" size={10} color="gray" />
                                         </View>
                                     </TouchableOpacity>

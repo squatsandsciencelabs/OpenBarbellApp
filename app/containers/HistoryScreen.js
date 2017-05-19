@@ -198,7 +198,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
-		editHistorySet: HistoryActionCreators.editHistorySet,
 		removeRep: SetActionCreators.removeHistoryRep,
 		restoreRep: SetActionCreators.restoreHistoryRep,
 		finishedLoadingHistory: HistoryActionCreators.finishedLoadingHistory,

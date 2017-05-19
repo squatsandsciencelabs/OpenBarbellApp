@@ -10,8 +10,7 @@ import {
 	ScrollView,
 	Dimensions,
 	ListItem
-} from 'react-native'
-import EditHistorySetScreen from '../containers/EditHistorySetScreen';
+} from 'react-native';
 import EditSetHeader from './EditSetHeader';
 import SetDescription from './SetDescription';
 import SetData from './SetData';
@@ -46,13 +45,14 @@ class HistoryList extends Component {
 		switch (item.type) {
 			case "header":
 				return (<View style={{marginTop: 15}}>
-<EditSetHeader />
-</View>);
+							<EditSetHeader />
+						</View>);
 			case "data":
+				// TODO: full screen view!
 				return (<SetData item={item}
 							onPressRemove={() =>this.props.removeRep(item.setID, item.rep) }
 							onPressRestore={() => this.props.restoreRep(item.setID, item.rep) }
-							onPressRow={() => this.props.editHistorySet(item.setID)}
+							onPressRow={() => console.log("this is where should display full screen view") }
 						/>);
 			case "footer":
 				return (<SetRest item={item} />);
@@ -79,7 +79,6 @@ class HistoryList extends Component {
 		return (
 			<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
 				<View style={{ flex: 1 }}>
-					<EditHistorySetScreen />
 					{list}
 				</View>
 

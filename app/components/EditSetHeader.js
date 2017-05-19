@@ -6,6 +6,12 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 class EditSetHeader extends Component {
 
+    constructor(props) {
+		super(props);
+
+		this.state = {};
+	}
+
     render() {
         return (
             <View style={{flex: 1, flexDirection: 'column'}}>
@@ -17,7 +23,9 @@ class EditSetHeader extends Component {
                                 underlineColorAndroid={'transparent'}
                                 editable = {true}
                                 maxLength = {40}
-                                defaultValue = {'Enter Exercise'}
+                                value = {this.state.exercise}
+                                placeholder="Enter Exercise"
+                                onChangeText={(exercise) => this.setState({exercise: exercise}) }
                             />
                         </View>
                         <View style={{flex: 1, flexDirection: 'row'}}>
@@ -28,7 +36,8 @@ class EditSetHeader extends Component {
                                     underlineColorAndroid={'transparent'}
                                     editable = {true}
                                     maxLength = {40}
-                                    defaultValue = {'500'}
+                                    placeholder="Enter Weight"
+                                    onChangeText={(weight) => this.setState({weight: weight}) }
                                 />
                                 <View style={styles.fieldDetails}>
                                     <TouchableOpacity>
@@ -47,7 +56,9 @@ class EditSetHeader extends Component {
                                     underlineColorAndroid={'transparent'}
                                     editable = {true}
                                     maxLength = {40}
-                                    value = {'8.5'}
+                                    placeholder="Enter RPE"
+                                    value = {this.state.rpe}
+                                    onChangeText={(rpe) => this.setState({rpe: rpe}) }
                                 />
                                 <View style={styles.fieldDetails} pointerEvents='none'>
                                     <Text style={styles.detailText}>RPE</Text>

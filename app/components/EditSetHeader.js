@@ -1,7 +1,7 @@
 // app/components/EditSetHeader.js
 
 import React, {Component} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Keyboard } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Keyboard, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class EditSetHeader extends Component {
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     fieldText: {
-        height: 30,
+        height: (Platform.OS === 'ios') ? 30 : 40,
         fontSize: 15,
         paddingRight: 30
     },

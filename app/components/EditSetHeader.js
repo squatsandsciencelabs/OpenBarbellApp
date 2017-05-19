@@ -24,6 +24,7 @@ class EditSetHeader extends Component {
                             <View style={[styles.field, {flex: 1, marginRight: 5}]}>
                                 <TextInput
                                     style={styles.fieldText}
+                                    keyboardType={'numeric'}
                                     underlineColorAndroid={'transparent'}
                                     editable = {true}
                                     maxLength = {40}
@@ -42,6 +43,7 @@ class EditSetHeader extends Component {
                             <View style={[styles.field, {flex: 1}]}>
                                 <TextInput
                                     style={styles.fieldText}
+                                    keyboardType={'numeric'}
                                     underlineColorAndroid={'transparent'}
                                     editable = {true}
                                     maxLength = {40}

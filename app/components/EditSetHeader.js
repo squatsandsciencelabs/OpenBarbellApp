@@ -83,6 +83,7 @@ class EditSetHeader extends Component {
                                     underlineColorAndroid={'transparent'}
                                     editable = {true}
                                     placeholder="Enter Weight"
+                                    value={this.state.weight}
                                     onChangeText={(weight) => this.setState({weight: weight}) }
                                 />
                                 <View style={styles.fieldDetails}>

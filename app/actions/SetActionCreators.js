@@ -61,6 +61,7 @@ export const updateHistorySet = (setID, exercise = null, weight = null, metric =
 		action.rpe = rpe;
 	}
 
+	console.log("UYODATE HISTORY SET");
 	dispatch(action);
 	dispatch(ApiActionCreators.syncData());
 };

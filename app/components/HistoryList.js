@@ -11,7 +11,7 @@ import {
 	Dimensions,
 	ListItem
 } from 'react-native';
-import EditSetHeader from './EditSetHeader';
+import EditHistorySetScreen from '../containers/EditHistorySetScreen';
 import SetDescription from './SetDescription';
 import SetData from './SetData';
 import SetRest from './SetRest';
@@ -45,7 +45,14 @@ class HistoryList extends Component {
 		switch (item.type) {
 			case "header":
 				return (<View style={{marginTop: 15}}>
-							<EditSetHeader />
+							<EditHistorySetScreen
+								setNumber={item.setNumber}
+								setID={item.setID}
+								exercise={item.exercise}
+								weight={item.weight}
+								metric={item.metric}
+								rpe={item.rpe}
+							/>
 						</View>);
 			case "data":
 				// TODO: full screen view!

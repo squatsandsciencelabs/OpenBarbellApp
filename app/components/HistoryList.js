@@ -48,6 +48,7 @@ class HistoryList extends Component {
 							<EditHistorySetScreen
 								setNumber={item.setNumber}
 								setID={item.setID}
+								removed={item.removed}
 								exercise={item.exercise}
 								weight={item.weight}
 								metric={item.metric}

@@ -14,8 +14,20 @@ class EditSetHeader extends Component {
             exercise: this.props.exercise,
             weight: this.props.weight,
             metric: this.props.metric,
-            rpe: this.props.rpe
+            rpe: this.props.rpe,
+            removed: this.props.removed
         };
+	}
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            setNumber: nextProps.setNumber,
+            exercise: nextProps.exercise,
+            weight: nextProps.weight,
+            metric: nextProps.metric,
+            rpe: nextProps.rpe,
+            removed: nextProps.removed
+        });
 	}
 
     // KEYBOARD
@@ -73,6 +85,9 @@ class EditSetHeader extends Component {
     // RENDER
 
     displaySetNumber() {
+        if (this.state.removed) {
+            return null;
+        }
         if (this.state.setNumber === null || this.state.setNumber === undefined) {
             return '#1';
         }

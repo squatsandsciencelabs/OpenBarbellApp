@@ -1,7 +1,7 @@
 // app/components/EditSetHeader.js
 
 import React, {Component} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput }  from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Keyboard } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class EditSetHeader extends Component {
@@ -9,8 +9,44 @@ class EditSetHeader extends Component {
     constructor(props) {
 		super(props);
 
-		this.state = {};
+		this.state = {
+            setNumber: this.props.setNumber,
+            exercise: this.props.exercise,
+            weight: this.props.weight,
+            metric: this.props.metric,
+            rpe: this.props.rpe
+        };
 	}
+
+    componentWillMount() {
+        this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', () => { this._keyboardWillShow() });
+        this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', () => { this._keyboardWillHide() });
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => { this._keyboardDidHide() });
+    }
+
+    componentWillUnmount() {
+        this.keyboardWillShowListener.remove();
+        this.keyboardWillHideListener.remove();
+        this.keyboardDidHideListener.remove();
+    }
+
+    _keyboardWillShow() {
+        // TODO: scroll to the appropriate position - ios only
+    }
+
+    _keyboardWillHide() {
+        // TODO: scroll to the appropriate position - ios only
+    }
+
+    _keyboardDidHide() {
+        if (this.props.exercise !== this.state.exercise
+            || this.props.weight !== this.state.weight
+            || this.props.metric !== this.state.metric
+            || this.props.rpe !== this.state.rpe) {
+            // save
+            this.props.updateSet(this.props.setID, this.state.exercise, this.state.weight, this.state.metric, this.state.rpe);
+        }
+    }
 
     setNumber() {
         if (this.state.setNumber === null || this.state.setNumber === undefined) {

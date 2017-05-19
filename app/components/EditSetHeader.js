@@ -104,7 +104,7 @@ class EditSetHeader extends Component {
 
     render() {
         return (
-            <View style={{flex: 1, flexDirection: 'column'}}>
+            <View style={{flex: 1, flexDirection: 'column', opacity: this.state.removed ? 0.3 : 1}}>
                 <View style={styles.upperShadow} />
                     <View style={[styles.shadow, {flex: 1, flexDirection: 'column', padding: 5}]}>
                         <View style={styles.field}>

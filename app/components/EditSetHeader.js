@@ -30,7 +30,6 @@ class EditSetHeader extends Component {
                                     style={styles.fieldText}
                                     underlineColorAndroid={'transparent'}
                                     editable = {true}
-                                    maxLength = {40}
                                     value = {this.state.exercise}
                                     placeholder="Enter Exercise"
                                     onChangeText={(exercise) => this.setState({exercise: exercise}) }
@@ -47,7 +46,6 @@ class EditSetHeader extends Component {
                                     keyboardType={'numeric'}
                                     underlineColorAndroid={'transparent'}
                                     editable = {true}
-                                    maxLength = {40}
                                     placeholder="Enter Weight"
                                     onChangeText={(weight) => this.setState({weight: weight}) }
                                 />
@@ -67,7 +65,6 @@ class EditSetHeader extends Component {
                                     keyboardType={'numeric'}
                                     underlineColorAndroid={'transparent'}
                                     editable = {true}
-                                    maxLength = {40}
                                     placeholder="Enter RPE"
                                     value = {this.state.rpe}
                                     onChangeText={(rpe) => this.setState({rpe: rpe}) }

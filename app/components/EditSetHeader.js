@@ -104,7 +104,8 @@ const styles = StyleSheet.create({
     },
     fieldText: {
         height: 30,
-        fontSize: 15
+        fontSize: 15,
+        paddingRight: 30
     },
     detailText: {
         color: 'gray'

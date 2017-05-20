@@ -10,7 +10,7 @@ import {
 	ScrollView,
 	Dimensions,
 	ListItem
-} from 'react-native'
+} from 'react-native';
 import EditHistorySetScreen from '../containers/EditHistorySetScreen';
 import SetDescription from './SetDescription';
 import SetData from './SetData';
@@ -44,14 +44,23 @@ class HistoryList extends Component {
 	_renderRow(item) {
 		switch (item.type) {
 			case "header":
-				return (<SetDescription item={item}
-							onPressRow={() => this.props.editHistorySet(item.setID)}
-						/>);
+				return (<View style={{marginTop: 15}}>
+							<EditHistorySetScreen
+								setNumber={item.setNumber}
+								setID={item.setID}
+								removed={item.removed}
+								exercise={item.exercise}
+								weight={item.weight}
+								metric={item.metric}
+								rpe={item.rpe}
+							/>
+						</View>);
 			case "data":
+				// TODO: full screen view!
 				return (<SetData item={item}
 							onPressRemove={() =>this.props.removeRep(item.setID, item.rep) }
 							onPressRestore={() => this.props.restoreRep(item.setID, item.rep) }
-							onPressRow={() => this.props.editHistorySet(item.setID)}
+							onPressRow={() => console.log("this is where should display full screen view") }
 						/>);
 			case "footer":
 				return (<SetRest item={item} />);
@@ -78,7 +87,6 @@ class HistoryList extends Component {
 		return (
 			<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
 				<View style={{ flex: 1 }}>
-					<EditHistorySetScreen />
 					{list}
 				</View>
 
@@ -90,17 +98,5 @@ class HistoryList extends Component {
 		);
 	}
 }
-
-const styles = StyleSheet.create({
-	Shadow: {
-		shadowColor: "#000000",
-		shadowOpacity: 0.2,
-		shadowRadius: 2,
-		shadowOffset: {
-			height: 4,
-			width: 0
-		},
-	},
-});
 
 export default HistoryList

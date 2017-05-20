@@ -21,6 +21,8 @@ const createViewModels = (sets, shouldShowRemoved) => {
 	let sections = []; // the return value
 	let section = null; // contains the actual data
 	let lastWorkoutID = null; // to help calculate sections
+	let lastExerciseName = null; // to help calculate set numbers
+	let setNumber = 1; // set number to display
 	let workoutStartTime = null; // to help calculate rest time and display section header
 	let lastSetEndTime = null; // to help calculate rest time
 	let isInitialSet = false; // to help determine when to display rest time
@@ -48,7 +50,18 @@ const createViewModels = (sets, shouldShowRemoved) => {
 		let array = [0, 0];
 
 		// card header
-		array.push(createHeaderViewModel(set));
+		if (isInitialSet) {
+			lastExerciseName = null;
+			setNumber = 1;
+		} else if (!set.removed) {
+			if (lastExerciseName !== null && lastExerciseName === set.exercise) {
+				setNumber++;
+			} else {
+				setNumber = 1;
+			}
+		}
+		array.push(createHeaderViewModel(set, setNumber));
+		lastExerciseName = set.exercise;
 
 		// reps
 		Array.prototype.push.apply(array, createRowViewModels(set, shouldShowRemoved));
@@ -75,43 +88,17 @@ const createViewModels = (sets, shouldShowRemoved) => {
 	return sections;
 }
 
-const createHeaderViewModel = (set) => {
-	const highlightColor = 'rgba(255, 0, 0, 0.25)';
-	const normalColor = 'black';
-	const disabledColor = 'lightgray';
-
-	let headerVM = {
-		type: 'header',
-		key: set.setID+'header',
-		setID: set.setID
-	};
-
-	if (set.exercise === null) {
-		headerVM.row1 = 'INPUT EXERCISE';
-		headerVM.row1Color = set.removed ? disabledColor : highlightColor;
-	} else {
-		headerVM.row1 = set.exercise;
-		headerVM.row1Color = set.removed ? disabledColor : normalColor;
-	}
-
-	if (set.weight === null) {
-		headerVM.row2 = 'INPUT WEIGHT';
-		headerVM.row2Color = set.removed ? disabledColor : highlightColor;
-	} else {
-		headerVM.row2 = set.weight + ' ' + set.metric;
-		headerVM.row2Color = set.removed ? disabledColor : normalColor;
-	}
-
-	if (set.rpe === null) {
-		headerVM.row3 = 'INPUT RPE';
-		headerVM.row3Color = set.removed ? disabledColor : highlightColor;
-	} else {
-		headerVM.row3 = set.rpe + ' RPE';
-		headerVM.row3Color = set.removed ? disabledColor : normalColor;
-	}
-
-	return headerVM;
-};
+const createHeaderViewModel = (set, setNumber) => ({
+	type: 'header',
+	key: set.setID+'header',
+	setID: set.setID,
+	removed: set.removed,
+	setNumber: setNumber,
+	exercise: set.exercise,
+	weight: set.weight,
+	metric: set.metric,
+	rpe: set.rpe
+});
 
 const createRowViewModels = (set, shouldShowRemoved) => {
 	let array = [];
@@ -225,7 +212,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
-		editHistorySet: HistoryActionCreators.editHistorySet,
 		removeRep: SetActionCreators.removeHistoryRep,
 		restoreRep: SetActionCreators.restoreHistoryRep,
 		finishedLoadingHistory: HistoryActionCreators.finishedLoadingHistory,

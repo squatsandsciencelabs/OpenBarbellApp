@@ -423,21 +423,6 @@ export const getHistorySetsChronological = (state) => {
 	return array;
 };
 
-// Get Edit History Set
-
-export const getEditHistorySet = (state, setID) => {
-	var dictionary = state.historyData;
-	for (var property in dictionary) {
-		if (dictionary.hasOwnProperty(property)) {
-			let set = dictionary[property];
-			if (set.setID === setID) {
-				return set;
-			}
-		}
-	}
-	return null;
-};
-
 // Get Sets To Upload
 export const getSetsToUpload = (state) => {
 	return state.setIDsToUpload.map( setID => state.historyData[setID] );

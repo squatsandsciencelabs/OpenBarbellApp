@@ -7,7 +7,7 @@ class SetRest extends PureComponent {
 
     render() {
         return (
-			<View style={[styles.Shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
+			<View style={[styles.shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
 				<Text style={{flex: 1, textAlign: 'center', marginTop: 15, color: 'gray', marginBottom: 15}}>{ this.props.item.rest }</Text>
 			</View>
 		);
@@ -16,7 +16,7 @@ class SetRest extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    Shadow: {
+    shadow: {
 		shadowColor: "#000000",
 		shadowOpacity: 0.2,
 		shadowRadius: 2,

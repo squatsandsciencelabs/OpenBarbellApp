@@ -3,6 +3,7 @@
 import React, {Component} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Keyboard, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Autocomplete from 'react-native-autocomplete-input';
 
 class EditSetHeader extends Component {
 
@@ -103,19 +104,25 @@ class EditSetHeader extends Component {
     }
 
     render() {
+        var data = [];
+
         return (
             <View style={{flex: 1, flexDirection: 'column', opacity: this.state.removed ? 0.3 : 1}}>
                 <View style={styles.upperShadow} />
                     <View style={[styles.shadow, {flex: 1, flexDirection: 'column', padding: 5}]}>
                         <View style={styles.field}>
                             <View>
-                                <TextInput
+                                <Autocomplete
                                     style={styles.fieldText}
-                                    underlineColorAndroid={'transparent'}
-                                    editable = {true}
-                                    value = {this.state.exercise}
-                                    placeholder="Enter Exercise"
-                                    onChangeText={(exercise) => this.setState({exercise: exercise}) }
+                                    inputContainerStyle = {{borderWidth: 0}}
+                                    data={data}
+                                    defaultValue={this.state.exercise}
+                                    onChangeText={text => this.setState({ exercise: text })}
+                                    renderItem={data => (
+                                        <TouchableOpacity onPress={() => this.setState({ exercise: data })}>
+                                            <Text>{data}</Text>
+                                        </TouchableOpacity>
+                                    )}
                                 />
                             </View>
                             <View style={styles.fieldDetails} pointerEvents='none'>
@@ -159,9 +166,11 @@ class EditSetHeader extends Component {
                             </View>
                         </View>
 
-                        <View style={[styles.field, {flex: 1}]}>
-                            <View style={{height: 30, justifyContent: 'center'}}>
-                                <Text>Tags</Text>
+                        <View>
+                            <View style={[styles.field, {flex: 1}]}>
+                                <View style={{height: 30, justifyContent: 'center'}}>
+                                    <Text>Tags</Text>
+                                </View>
                             </View>
                         </View>
                     </View>
@@ -178,6 +187,7 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         borderRadius: 3,
         marginBottom: 5,
+        zIndex: 2
     },
     fieldDetails: {
         position: 'absolute',

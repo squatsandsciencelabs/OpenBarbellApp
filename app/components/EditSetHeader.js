@@ -1,5 +1,9 @@
 // app/components/EditSetHeader.js
 
+// NOTE: this is one of the places where I'm using internal state rather than redux global state
+// reason for doing so is because this intended to be used multiple times in a giant listview
+// it's therefore easier to keep the state attached to the component rather than build a giant array in redux
+
 import React, {Component} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Keyboard, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -16,7 +20,9 @@ class EditSetHeader extends Component {
             weight: this.props.weight,
             metric: this.props.metric,
             rpe: this.props.rpe,
-            removed: this.props.removed
+            removed: this.props.removed,
+            editingExercise: false,
+            suggestions: []
         };
 	}
 
@@ -55,6 +61,15 @@ class EditSetHeader extends Component {
 
     _keyboardDidHide() {
         this._save();
+    }
+
+    // ACTIONS
+
+    _onChangeExerciseText(input) {
+        this.setState({
+            exercise: input,
+            suggestions: this.props.generateSuggestions(input)
+        });
     }
 
     // SAVING
@@ -105,6 +120,10 @@ class EditSetHeader extends Component {
 
     render() {
         var data = [];
+        // TODO: make this work properly when it's first tapped, somehow the boolean doesn't update in time
+        if (this.state.editingExercise) {
+            data = this.state.suggestions;
+        }
 
         return (
             <View style={{flex: 1, flexDirection: 'column', opacity: this.state.removed ? 0.3 : 1}}>
@@ -117,7 +136,9 @@ class EditSetHeader extends Component {
                                     inputContainerStyle = {{borderWidth: 0}}
                                     data={data}
                                     defaultValue={this.state.exercise}
-                                    onChangeText={text => this.setState({ exercise: text })}
+                                    onChangeText={text => this._onChangeExerciseText(text)}
+                                    onEndEditing={ () => this.setState({editingExercise: false}) }
+                                    onFocus={ () => this.setState({editingExercise: true}) }
                                     renderItem={data => (
                                         <TouchableOpacity onPress={() => this.setState({ exercise: data })}>
                                             <Text>{data}</Text>

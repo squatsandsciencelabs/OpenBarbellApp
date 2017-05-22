@@ -9,6 +9,7 @@ import HistoryReducer from './HistoryReducer';
 import KillSwitchReducer from './KillSwitchReducer';
 import AuthReducer from './AuthReducer';
 import SettingsReducer from './SettingsReducer';
+import SuggestionsReducer from './SuggestionsReducer';
 
 export default reducers = combineReducers({
 	sets: SetReducer,
@@ -18,5 +19,6 @@ export default reducers = combineReducers({
 	history: HistoryReducer,
 	killSwitch: KillSwitchReducer,
 	auth: AuthReducer,
+	suggestions: SuggestionsReducer,
 	settings: SettingsReducer,
 });

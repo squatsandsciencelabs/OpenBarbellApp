@@ -428,9 +428,9 @@ export const getSetsToUpload = (state) => {
 	return state.setIDsToUpload.map( setID => state.historyData[setID] );
 };
 
-export default SetReducer;
-
 // Has Changes To Sync
 export const hasChangesToSync = (state) => {
 	return (state.setIDsToUpload.length > 0 || state.setIDsBeingUploaded.length > 0);
 };
+
+export default SetReducer;

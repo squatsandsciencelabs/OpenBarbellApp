@@ -73,6 +73,8 @@ class HistoryList extends Component {
 		var list = null;
 		if (this.props.sections.length > 0) {
 			list = (<SectionList
+				keyboardDismissMode='on-drag'
+				keyboardShouldPersistTaps='always'
 				initialNumToRender={13}
 				stickySectionHeadersEnabled={false}
 				ListFooterComponent={HistoryLoadingFooterScreen}

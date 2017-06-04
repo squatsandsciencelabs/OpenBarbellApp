@@ -125,6 +125,9 @@ class EditSetHeader extends Component {
             data = this.state.suggestions;
         }
 
+        // I both need this to close it, but also can't cuz itp revents tapping
+        // onEndEditing={ () => this.setState({editingExercise: false}) }
+
         return (
             <View style={{flex: 1, flexDirection: 'column', opacity: this.state.removed ? 0.3 : 1}}>
                 <View style={styles.upperShadow} />
@@ -137,12 +140,13 @@ class EditSetHeader extends Component {
                                 data={data}
                                 value={this.state.exercise}
                                 onChangeText={text => this._onChangeExerciseText(text)}
-                                onEndEditing={ () => this.setState({editingExercise: false}) }
                                 onFocus={ () => this._onChangeExerciseText(this.state.exercise) }
                                 renderItem={data => (
+                                    <View style={{zIndex: 1}}>
                                     <TouchableOpacity onPress={() => this.setState({ exercise: data })}>
                                         <Text>{data}</Text>
                                     </TouchableOpacity>
+                                    </View>
                                 )}
                             />
                         </View>

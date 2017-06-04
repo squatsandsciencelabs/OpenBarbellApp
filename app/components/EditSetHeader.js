@@ -68,7 +68,8 @@ class EditSetHeader extends Component {
     _onChangeExerciseText(input) {
         this.setState({
             exercise: input,
-            suggestions: this.props.generateSuggestions(input)
+            suggestions: this.props.generateSuggestions(input),
+            editingExercise: true
         });
     }
 
@@ -135,10 +136,10 @@ class EditSetHeader extends Component {
                                     style={styles.fieldText}
                                     inputContainerStyle = {{borderWidth: 0}}
                                     data={data}
-                                    defaultValue={this.state.exercise}
+                                    value={this.state.exercise}
                                     onChangeText={text => this._onChangeExerciseText(text)}
                                     onEndEditing={ () => this.setState({editingExercise: false}) }
-                                    onFocus={ () => this.setState({editingExercise: true}) }
+                                    onFocus={ () => this._onChangeExerciseText(this.state.exercise) }
                                     renderItem={data => (
                                         <TouchableOpacity onPress={() => this.setState({ exercise: data })}>
                                             <Text>{data}</Text>

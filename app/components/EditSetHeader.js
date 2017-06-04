@@ -121,7 +121,6 @@ class EditSetHeader extends Component {
 
     render() {
         var data = [];
-        // TODO: make this work properly when it's first tapped, somehow the boolean doesn't update in time
         if (this.state.editingExercise) {
             data = this.state.suggestions;
         }

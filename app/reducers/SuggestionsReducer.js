@@ -21,12 +21,12 @@ const SuggestionsReducer = (state = createDefaultState(), action) => {
 // TODO: Remove this default and instead connect the update suggestions model
 const createDefaultState = () => ({
     exerciseModel: {
-        'squat' : 100,
-        'bench': 100,
-        'deadlift': 100,
-        'sumo deadlift' : 3,
-        'back squat' : 30,
-        'front squat' : 20,
+        'squat' : {suggestion: 'Squat', seed: 100},
+        'bench': {suggestion: 'Bench', seed: 100},
+        'deadlift': {suggestion: 'Deadlift', seed: 100},
+        'sumo deadlift' : {suggestion: 'Sumo Deadlift', seed: 3},
+        'back squat' : {suggestion: 'Back Squat', seed: 30},
+        'front squat' : {suggestion: 'Front Squat', seed: 20},
     },
 });
 
@@ -43,16 +43,17 @@ const generateAutocompleteExerciseModel = (historyData) => {
 
 	// generate dictionary with counts
 	sets.map((set) => {
-		if (dictionary[set.exercise] === undefined) {
-			dictionary[set.exercise] = 0;
+		let lowercaseExercise = set.exercise.toLowerCase();
+		if (dictionary[lowercaseExercise] === undefined) {
+			dictionary[lowercaseExercise] = { suggestion: set.exercise, seed: 0 };
 		} else {
-			dictionary[set.exercise] = dictionary[set.exercise] + 1;
+			dictionary[lowercaseExercise] = { suggestion: set.exercise, seed: dictionary[lowercaseExercise].seed + 1};
 		}
 	});
 
 	// ignore anything less than 2 count
 	for (var property in dictionary) {
-		if (dictionary.hasOwnProperty(property) && dictionary[property] > 2) {
+		if (dictionary.hasOwnProperty(property) && dictionary[property].seed > 1) {
 			model[property] = dictionary[property];
 		}
 	}
@@ -63,20 +64,23 @@ const generateAutocompleteExerciseModel = (historyData) => {
 
 export const generateSuggestions = (input, model) => {
     // lowercase comparisons
-    input = input.toLowerCase();
+	var lowercaseInput = '';
+	if (input !== null) {
+		lowercaseInput = input.toLowerCase();
+	}
 
 	// declare variables
 	let matches = [];
 
 	// get all matches
 	for (var property in model) {
-		if (model.hasOwnProperty(property) && property.indexOf(input) !== -1) {
-			matches.push({suggestion: property, count: model[property]});
+		if (model.hasOwnProperty(property) && property.indexOf(lowercaseInput) !== -1) {
+			matches.push(model[property]);
 		}
 	}
 
 	// sort
-	matches.sort((match1, match2) => match2.count - match1.count);
+	matches.sort((match1, match2) => match2.seed - match1.seed);
 
 	// return top 10
 	if (matches.length > 10) {

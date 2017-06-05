@@ -125,29 +125,28 @@ class EditSetHeader extends Component {
             data = this.state.suggestions;
         }
 
-        // I both need this to close it, but also can't cuz itp revents tapping
+        // I both need this to close it, but also can't cuz it prevents tapping
         // onEndEditing={ () => this.setState({editingExercise: false}) }
 
         return (
             <View style={{flex: 1, flexDirection: 'column', opacity: this.state.removed ? 0.3 : 1}}>
+                <Autocomplete
+                    style={styles.exerciseText}
+                    inputContainerStyle = {{borderWidth: 0, height: 40}}
+                    containerStyle={styles.autocompleteContainer}
+                    data={data}
+                    value={this.state.exercise}
+                    onChangeText={text => this._onChangeExerciseText(text)}
+                    onFocus={ () => this._onChangeExerciseText(this.state.exercise) }
+                    renderItem={text => (
+                        <TouchableOpacity onPress={() => this._onChangeExerciseText(text)}>
+                            <Text>{text}</Text>
+                        </TouchableOpacity>
+                    )}
+                />
                 <View style={styles.upperShadow} />
                 <View style={[styles.shadow, {flex: 1, flexDirection: 'column', padding: 5}]}>
                     <View style={styles.field}>
-                        <View>
-                            <Autocomplete
-                                style={styles.fieldText}
-                                inputContainerStyle = {{borderWidth: 0}}
-                                data={data}
-                                value={this.state.exercise}
-                                onChangeText={text => this._onChangeExerciseText(text)}
-                                onFocus={ () => this._onChangeExerciseText(this.state.exercise) }
-                                renderItem={text => (
-                                    <TouchableOpacity onPress={() => this._onChangeExerciseText(text)}>
-                                        <Text>{text}</Text>
-                                    </TouchableOpacity>
-                                )}
-                            />
-                        </View>
                         <View style={styles.fieldDetails} pointerEvents='none'>
                             <Text style={styles.detailText}>{this.displaySetNumber()}</Text>
                         </View>
@@ -204,13 +203,22 @@ class EditSetHeader extends Component {
 }
 
 const styles = StyleSheet.create({
+    autocompleteContainer: {
+        flex: 1,
+        left: 0,
+        position: 'absolute',
+        right: 0,
+        top: 0,
+        zIndex: 1,
+    },
     field: {
         backgroundColor: 'rgba(239, 239, 239, 1)',
         borderColor: 'rgba(239, 239, 239, 1)',
         borderWidth: 3,
         borderRadius: 3,
         marginBottom: 5,
-        zIndex: 2
+        zIndex: 2,
+        height: (Platform.OS === 'ios') ? 30 : 40,
     },
     fieldDetails: {
         position: 'absolute',
@@ -221,6 +229,13 @@ const styles = StyleSheet.create({
     },
     fieldText: {
         height: (Platform.OS === 'ios') ? 30 : 40,
+        fontSize: 15,
+        paddingRight: 30
+    },
+    exerciseText: {
+        height: (Platform.OS === 'ios') ? 30 : 40,
+        marginTop: (Platform.OS === 'ios') ? 8 : 5,
+        marginLeft: (Platform.OS === 'ios') ? 8 : 8,
         fontSize: 15,
         paddingRight: 30
     },

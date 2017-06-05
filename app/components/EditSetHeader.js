@@ -195,14 +195,6 @@ class EditSetHeader extends Component {
 }
 
 const styles = StyleSheet.create({
-    autocompleteContainer: {
-        flex: 1,
-        left: 0,
-        position: 'absolute',
-        right: 0,
-        top: 0,
-        zIndex: 1,
-    },
     field: {
         backgroundColor: 'rgba(239, 239, 239, 1)',
         borderColor: 'rgba(239, 239, 239, 1)',

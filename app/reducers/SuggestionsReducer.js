@@ -86,6 +86,11 @@ export const generateSuggestions = (input, model) => {
 	// just the suggestions
 	matches = matches.map((match) => match.suggestion);
 
+	// remove if it's exactly equal
+	if (matches.length > 0 && matches[0] === input) {
+		matches.shift();
+	}
+
 	// return
 	return matches;
 };

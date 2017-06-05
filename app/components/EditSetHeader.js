@@ -141,12 +141,10 @@ class EditSetHeader extends Component {
                                 value={this.state.exercise}
                                 onChangeText={text => this._onChangeExerciseText(text)}
                                 onFocus={ () => this._onChangeExerciseText(this.state.exercise) }
-                                renderItem={data => (
-                                    <View style={{zIndex: 1}}>
-                                    <TouchableOpacity onPress={() => this.setState({ exercise: data })}>
-                                        <Text>{data}</Text>
+                                renderItem={text => (
+                                    <TouchableOpacity onPress={() => this._onChangeExerciseText(text)}>
+                                        <Text>{text}</Text>
                                     </TouchableOpacity>
-                                    </View>
                                 )}
                             />
                         </View>

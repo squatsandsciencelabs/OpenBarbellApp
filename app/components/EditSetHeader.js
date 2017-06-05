@@ -7,7 +7,6 @@
 import React, {Component} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Keyboard, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import Autocomplete from 'react-native-autocomplete-input';
 
 class EditSetHeader extends Component {
 
@@ -65,6 +64,7 @@ class EditSetHeader extends Component {
 
     // ACTIONS
 
+    // TODO: connect suggestions
     _onChangeExerciseText(input) {
         this.setState({
             exercise: input,
@@ -120,33 +120,25 @@ class EditSetHeader extends Component {
     }
 
     render() {
+        // TODO: connect suggestions, right now removing it
         var data = [];
         if (this.state.editingExercise) {
             data = this.state.suggestions;
         }
 
-        // I both need this to close it, but also can't cuz it prevents tapping
-        // onEndEditing={ () => this.setState({editingExercise: false}) }
-
         return (
             <View style={{flex: 1, flexDirection: 'column', opacity: this.state.removed ? 0.3 : 1}}>
-                <Autocomplete
-                    style={styles.exerciseText}
-                    inputContainerStyle = {{borderWidth: 0, height: 40}}
-                    containerStyle={styles.autocompleteContainer}
-                    data={data}
-                    value={this.state.exercise}
-                    onChangeText={text => this._onChangeExerciseText(text)}
-                    onFocus={ () => this._onChangeExerciseText(this.state.exercise) }
-                    renderItem={text => (
-                        <TouchableOpacity onPress={() => this._onChangeExerciseText(text)}>
-                            <Text>{text}</Text>
-                        </TouchableOpacity>
-                    )}
-                />
                 <View style={styles.upperShadow} />
                 <View style={[styles.shadow, {flex: 1, flexDirection: 'column', padding: 5}]}>
                     <View style={styles.field}>
+                        <TextInput
+                            style={styles.fieldText}
+                            underlineColorAndroid={'transparent'}
+                            editable = {true}
+                            placeholder="Enter Exercise"
+                            value={this.state.exercise}
+                            onChangeText={(exercise) => this.setState({exercise: exercise}) }
+                        />
                         <View style={styles.fieldDetails} pointerEvents='none'>
                             <Text style={styles.detailText}>{this.displaySetNumber()}</Text>
                         </View>

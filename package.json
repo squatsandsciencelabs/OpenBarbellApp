@@ -10,7 +10,6 @@
     "lodash": "4.17.4",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
-    "react-native-autocomplete-input": "3.2.1",
     "react-native-background-timer": "1.0.0",
     "react-native-device-info": "0.10.2",
     "react-native-google-signin": "0.10.0",

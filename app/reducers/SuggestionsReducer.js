@@ -25,17 +25,28 @@ const createDefaultState = () => ({
         'bench': {suggestion: 'Bench', seed: 100},
         'deadlift': {suggestion: 'Deadlift', seed: 100},
         'sumo deadlift' : {suggestion: 'Sumo Deadlift', seed: 3},
-        'back squat' : {suggestion: 'Back Squat', seed: 30},
-        'front squat' : {suggestion: 'Front Squat', seed: 20},
+        'back squat' : {suggestion: 'Back Squat', seed: 2},
+        'front squat' : {suggestion: 'Front Squat', seed: 2},
     },
 });
+
+// TODO: consider moving this to a utility class as logic is duplicated from set reducer
+const dictToArray = (dictionary) => {
+	var array = [];
+	for (var property in dictionary) {
+		if (dictionary.hasOwnProperty(property)) {
+			array.push(dictionary[property]);
+		}
+	}
+	return array;
+};
 
 // TODO: do this once on launch and store it in the reducer instead
 // for now leaving it here for simplicity
 const generateAutocompleteExerciseModel = (historyData) => {
 	// declare vars
-	let dictionary = {};
-	let model = {};
+	let dictionary = createDefaultState().exerciseModel;
+	let model = createDefaultState().exerciseModel;
 	let sets = dictToArray(historyData);
 
 	// ignore nulls
@@ -45,7 +56,7 @@ const generateAutocompleteExerciseModel = (historyData) => {
 	sets.map((set) => {
 		let lowercaseExercise = set.exercise.toLowerCase();
 		if (dictionary[lowercaseExercise] === undefined) {
-			dictionary[lowercaseExercise] = { suggestion: set.exercise, seed: 0 };
+			dictionary[lowercaseExercise] = { suggestion: set.exercise, seed: 1 };
 		} else {
 			dictionary[lowercaseExercise] = { suggestion: set.exercise, seed: dictionary[lowercaseExercise].seed + 1};
 		}
@@ -57,7 +68,7 @@ const generateAutocompleteExerciseModel = (historyData) => {
 			model[property] = dictionary[property];
 		}
 	}
-
+	
 	// return
 	return model;
 };

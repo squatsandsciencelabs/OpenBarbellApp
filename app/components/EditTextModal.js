@@ -20,6 +20,14 @@ class EditTextModal extends Component {
 		this.state = { exercise: this.props.exercise };
 	}
 
+    componentWillReceiveProps(nextProps) {
+        let exercise = this.props.exercise;
+        if (exercise === null || exercise === undefined) {
+            exercise = '';
+        }
+        this._onChangeExerciseText(exercise);
+	}
+
     // ACTIONS
 
     // TODO: connect suggestions
@@ -29,8 +37,7 @@ class EditTextModal extends Component {
         console.log(JSON.stringify(suggestionsVM));
         this.setState({
             exercise: input,
-            suggestions: suggestionsVM,
-            editingExercise: true
+            suggestions: suggestionsVM
         });
     }
 

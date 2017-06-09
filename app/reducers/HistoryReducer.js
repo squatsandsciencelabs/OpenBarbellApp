@@ -1,13 +1,13 @@
 import {
 	UPDATE_HISTORY_FILTER,
 	EXPORTING_CSV,
-	LOADING_HISTORY
+	LOADING_HISTORY,
 } from '../ActionTypes';
 
 const defaultState = {
 	showRemoved: false,
 	isExportingCSV: false,
-	isLoadingHistory: true
+	isLoadingHistory: true,
 };
 
 const HistoryReducer = (state = defaultState, action) => {

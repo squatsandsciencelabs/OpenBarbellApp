@@ -19,6 +19,9 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import HistoryFilterBarScreen from '../containers/HistoryFilterBarScreen';
 import HistoryLoadingFooterScreen from '../containers/HistoryLoadingFooterScreen';
 
+// TODO: replace this with a screen once it's ready
+import EditTextModal from './EditTextModal';
+
 class HistoryList extends Component {
 
 	// UPDATE
@@ -88,6 +91,8 @@ class HistoryList extends Component {
 
 		return (
 			<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
+				<EditTextModal />
+
 				<View style={{ flex: 1 }}>
 					{list}
 				</View>

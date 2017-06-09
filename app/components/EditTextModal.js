@@ -89,9 +89,11 @@ class EditTextModal extends Component {
 
     _renderRow(item) {
         return (
-            <View style={[{backgroundColor: 'white', height: 50, justifyContent: 'center'}, styles.rowShadow]}>
-                <Text style={{marginHorizontal: 10}}>{item.key}</Text>
-            </View>
+            <TouchableHighlight onPress={() => this._onChangeExerciseText(item.key)}>
+                <View style={[{backgroundColor: 'white', height: 50, justifyContent: 'center'}, styles.rowShadow]}>
+                    <Text style={{marginHorizontal: 10}}>{item.key}</Text>
+                </View>
+            </TouchableHighlight>
         );
     }
 

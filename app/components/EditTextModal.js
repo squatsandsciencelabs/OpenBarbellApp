@@ -17,20 +17,36 @@ class EditTextModal extends Component {
     constructor(props) {
 		super(props);
 
-		this.state = { exercise: 'fuck' };
+		this.state = { exercise: this.props.exercise };
 	}
+
+    // ACTIONS
+
+    // TODO: connect suggestions
+    _onChangeExerciseText(input) {
+        let suggestions = this.props.generateSuggestions(input);
+        let suggestionsVM = suggestions.map((suggestion) => { return {key: suggestion}} );
+        console.log(JSON.stringify(suggestionsVM));
+        this.setState({
+            exercise: input,
+            suggestions: suggestionsVM,
+            editingExercise: true
+        });
+    }
+
+    // RENDER
 
     // TODO: grab the blue color for cancel from a global stylesheet
     _renderNavigation() {
         return (
             <View style={{height: 60, alignItems: 'center'}}>
                 <View style={{position: 'absolute', left: 10, top: 30}}>
-                    <TouchableHighlight>
+                    <TouchableHighlight onPress={() => this.props.closeModal()}>
                         <Text style={[styles.boldFont, {color: 'rgba(47, 128, 237, 1)'}]}>Cancel</Text>
                     </TouchableHighlight>
                 </View>
                 <View style={{top: 30}}>
-                    <Text style={styles.boldFont}>{this.props.title}Hello</Text>
+                    <Text style={styles.boldFont}>{this.props.title}</Text>
                 </View>
             </View>
         )
@@ -49,14 +65,15 @@ class EditTextModal extends Component {
                     editable = {true}
                     placeholder="Enter Exercise"
                     value={this.state.exercise}
-                    onChangeText={(exercise) => this.setState({exercise: exercise}) }
+                    onChangeText={(exercise) => this._onChangeExerciseText(exercise) }
                 />
             </View>
         )
     }
 
     _renderList() {
-        let data = [{title: 'Title Text', key: 'item1'}, {title: 'Title Text', key: 'item2'}, {title: 'Title Text', key: 'item3'}];
+        let data = this.state.suggestions;
+
         return (
             <FlatList
                 style = {{padding: 10}}
@@ -73,7 +90,7 @@ class EditTextModal extends Component {
     _renderRow(item) {
         return (
             <View style={[{backgroundColor: 'white', height: 50, justifyContent: 'center'}, styles.rowShadow]}>
-                <Text style={{marginHorizontal: 10}}>{item.title}</Text>
+                <Text style={{marginHorizontal: 10}}>{item.key}</Text>
             </View>
         );
     }

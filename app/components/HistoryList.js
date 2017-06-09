@@ -18,9 +18,7 @@ import SetRest from './SetRest';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import HistoryFilterBarScreen from '../containers/HistoryFilterBarScreen';
 import HistoryLoadingFooterScreen from '../containers/HistoryLoadingFooterScreen';
-
-// TODO: replace this with a screen once it's ready
-import EditTextModal from './EditTextModal';
+import EditHistoryExerciseScreen from '../containers/EditHistoryExerciseScreen';
 
 class HistoryList extends Component {
 
@@ -91,7 +89,7 @@ class HistoryList extends Component {
 
 		return (
 			<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
-				<EditTextModal />
+				<EditHistoryExerciseScreen />
 
 				<View style={{ flex: 1 }}>
 					{list}

@@ -5,7 +5,7 @@
 // it's therefore easier to keep the state attached to the component rather than build a giant array in redux
 
 import React, {Component} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Keyboard, Platform } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Keyboard, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class EditSetHeader extends Component {
@@ -60,17 +60,6 @@ class EditSetHeader extends Component {
 
     _keyboardDidHide() {
         this._save();
-    }
-
-    // ACTIONS
-
-    // TODO: connect suggestions
-    _onChangeExerciseText(input) {
-        this.setState({
-            exercise: input,
-            suggestions: this.props.generateSuggestions(input),
-            editingExercise: true
-        });
     }
 
     // SAVING
@@ -131,14 +120,9 @@ class EditSetHeader extends Component {
                 <View style={styles.upperShadow} />
                 <View style={[styles.shadow, {flex: 1, flexDirection: 'column', padding: 5}]}>
                     <View style={styles.field}>
-                        <TextInput
-                            style={styles.fieldText}
-                            underlineColorAndroid={'transparent'}
-                            editable = {true}
-                            placeholder="Enter Exercise"
-                            value={this.state.exercise}
-                            onChangeText={(exercise) => this.setState({exercise: exercise}) }
-                        />
+                        <TouchableHighlight onPress={() => this.props.editExercise()}>
+                            <Text style={styles.exerciseText}>{this.state.exercise}</Text>
+                        </TouchableHighlight>
                         <View style={styles.fieldDetails} pointerEvents='none'>
                             <Text style={styles.detailText}>{this.displaySetNumber()}</Text>
                         </View>

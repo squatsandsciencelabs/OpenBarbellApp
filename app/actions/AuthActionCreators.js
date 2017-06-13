@@ -5,6 +5,7 @@ import { GoogleSignin } from 'react-native-google-signin';
 import * as SetActionCreators from './SetActionCreators';
 import * as AuthActionCreators from './AuthActionCreators';
 import * as SettingsActionCreators from './SettingsActionCreators';
+import * as SuggestionsActionCreators from '../actions/SuggestionsActionCreators';
 import { SAVE_USER, ATTEMPTING_LOGIN, FINISHED_ATTEMPT_LOGIN } from '../ActionTypes';
 import { Alert, Platform } from 'react-native';
 
@@ -24,6 +25,7 @@ export const signIn = () => (dispatch) => {
 			dispatch(AuthActionCreators.saveUser(refreshToken, accessToken, user.email));
 			dispatch(SetActionCreators.updateSetDataFromServer(revision, sets));
 			dispatch(SettingsActionCreators.updateSyncDate(new Date()));
+			dispatch(SuggestionsActionCreators.updateExerciseSuggestionsModel());
 			dispatch(finishedAttemptLogin());
 		}, (err) => {
 			// API login error, means we need to sign out of the google account as well
@@ -56,6 +58,7 @@ const executeSignOut = (dispatch) => {
 			console.log("Signed Out");
 			dispatch(saveUser(null, null, null));
 			dispatch(SetActionCreators.clearHistory());
+			dispatch(SuggestionsActionCreators.updateExerciseSuggestionsModel());
 			console.log("finished saving user");
 		})
 		.catch((err) => {

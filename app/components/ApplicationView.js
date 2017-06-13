@@ -51,7 +51,12 @@ class ApplicationView extends Component {
 			);
 		} else {
 			return (
-				<ScrollableTabView style={{marginTop: 20}} renderTabBar={() => <DefaultTabBar />} initialPage={ 2 } onChangeTab={ () => { this.props.onChangeTab() } }>
+				<ScrollableTabView
+					style={{marginTop: 20}}
+					contentProps={{ keyboardShouldPersistTaps: 'always', keyboardDismissMode: 'on-drag' }}
+					renderTabBar={() => <DefaultTabBar />}
+					initialPage={ 2 }
+					onChangeTab={ () => { this.props.onChangeTab() } }>
 					<View style={styles.tabView} tabLabel='WORKOUT'>
 						<WorkoutScreen />
 					</View>

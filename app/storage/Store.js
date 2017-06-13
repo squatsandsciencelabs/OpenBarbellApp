@@ -10,6 +10,7 @@ import { LOAD_PERSISTED_SET_DATA } from '../ActionTypes';
 import * as SetActionCreators from '../actions/SetActionCreators';
 import * as AuthActionCreators from '../actions/AuthActionCreators';
 import * as SettingsActionCreators from '../actions/SettingsActionCreators';
+import * as SuggestionsActionCreators from '../actions/SuggestionsActionCreators';
 
 const key = '@OpenBarbellPersistedStore'
 
@@ -96,6 +97,9 @@ const loadInitialState = async (store) => {
 				store.dispatch(AuthActionCreators.saveUser(refreshToken, accessToken, email));
 			}
 			store.dispatch(AuthActionCreators.finishedAttemptLogin());
+
+			// load suggestions
+			store.dispatch(SuggestionsActionCreators.updateExerciseSuggestionsModel());
 		}
 		addSaveListener(store);
 	} catch (err) {

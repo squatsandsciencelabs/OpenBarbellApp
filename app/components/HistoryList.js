@@ -18,6 +18,7 @@ import SetRest from './SetRest';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import HistoryFilterBarScreen from '../containers/HistoryFilterBarScreen';
 import HistoryLoadingFooterScreen from '../containers/HistoryLoadingFooterScreen';
+import EditHistoryExerciseScreen from '../containers/EditHistoryExerciseScreen';
 
 class HistoryList extends Component {
 
@@ -73,6 +74,8 @@ class HistoryList extends Component {
 		var list = null;
 		if (this.props.sections.length > 0) {
 			list = (<SectionList
+				keyboardDismissMode='on-drag'
+				keyboardShouldPersistTaps='always'
 				initialNumToRender={13}
 				stickySectionHeadersEnabled={false}
 				ListFooterComponent={HistoryLoadingFooterScreen}
@@ -86,6 +89,8 @@ class HistoryList extends Component {
 
 		return (
 			<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
+				<EditHistoryExerciseScreen />
+
 				<View style={{ flex: 1 }}>
 					{list}
 				</View>

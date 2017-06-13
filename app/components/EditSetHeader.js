@@ -1,7 +1,11 @@
 // app/components/EditSetHeader.js
 
+// NOTE: this is one of the places where I'm using internal state rather than redux global state
+// reason for doing so is because this intended to be used multiple times in a giant listview
+// it's therefore easier to keep the state attached to the component rather than build a giant array in redux
+
 import React, {Component} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Keyboard, Platform } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Keyboard, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class EditSetHeader extends Component {
@@ -15,7 +19,9 @@ class EditSetHeader extends Component {
             weight: this.props.weight,
             metric: this.props.metric,
             rpe: this.props.rpe,
-            removed: this.props.removed
+            removed: this.props.removed,
+            editingExercise: false,
+            suggestions: []
         };
 	}
 
@@ -84,7 +90,14 @@ class EditSetHeader extends Component {
 
     // RENDER
 
-    displaySetNumber() {
+    _displayExercise() {
+        if (this.state.exercise === null || this.state.exercise === '') {
+            return (<Text style={[styles.exerciseText, styles.placeholderText]}>Enter Exercise</Text>);
+        }
+        return (<Text style={styles.exerciseText}>{this.state.exercise}</Text>);
+    }
+
+    _displaySetNumber() {
         if (this.state.removed) {
             return null;
         }
@@ -94,7 +107,7 @@ class EditSetHeader extends Component {
         return '#' + this.state.setNumber;
     }
 
-    displayMetric() {
+    _displayMetric() {
         if (this.state.metric === 'kgs') {
             return "KGs";
         } else if (this.state.metric === 'lbs') {
@@ -106,65 +119,62 @@ class EditSetHeader extends Component {
         return (
             <View style={{flex: 1, flexDirection: 'column', opacity: this.state.removed ? 0.3 : 1}}>
                 <View style={styles.upperShadow} />
-                    <View style={[styles.shadow, {flex: 1, flexDirection: 'column', padding: 5}]}>
-                        <View style={styles.field}>
-                            <View>
-                                <TextInput
-                                    style={styles.fieldText}
-                                    underlineColorAndroid={'transparent'}
-                                    editable = {true}
-                                    value = {this.state.exercise}
-                                    placeholder="Enter Exercise"
-                                    onChangeText={(exercise) => this.setState({exercise: exercise}) }
-                                />
+                <View style={[styles.shadow, {flex: 1, flexDirection: 'column', padding: 5}]}>
+                    <View style={styles.field}>
+                        <TouchableHighlight onPress={() => this.props.editExercise(this.props.setID, this.state.exercise)}>
+                            {this._displayExercise()}
+                        </TouchableHighlight>
+                        <View style={styles.fieldDetails} pointerEvents='none'>
+                            <Text style={styles.detailText}>{this._displaySetNumber()}</Text>
+                        </View>
+                    </View>
+                    <View style={{flex: 1, flexDirection: 'row'}}>
+                        <View style={[styles.field, {flex: 1, marginRight: 5}]}>
+                            <TextInput
+                                style={styles.fieldText}
+                                keyboardType={'numeric'}
+                                underlineColorAndroid={'transparent'}
+                                editable = {true}
+                                placeholder="Enter Weight"
+                                placeholderTextColor={'lightgray'}
+                                value={this.state.weight}
+                                onChangeText={(weight) => this.setState({weight: weight}) }
+                            />
+                            <View style={styles.fieldDetails}>
+                                <TouchableOpacity onPress={() => this._toggleMetric()}>
+                                    <View style={{flexDirection: 'row', alignItems: 'center', }}>
+                                        <Text style={styles.detailText}>{this._displayMetric()} </Text>
+                                        <Icon name="refresh" size={10} color="gray" />
+                                    </View>
+                                </TouchableOpacity>
                             </View>
+                        </View>
+
+                        <View style={[styles.field, {flex: 1}]}>
+                            <TextInput
+                                style={styles.fieldText}
+                                keyboardType={'numeric'}
+                                underlineColorAndroid={'transparent'}
+                                editable = {true}
+                                placeholder="Enter RPE"
+                                placeholderTextColor={'lightgray'}
+                                value = {this.state.rpe}
+                                onChangeText={(rpe) => this.setState({rpe: rpe}) }
+                            />
                             <View style={styles.fieldDetails} pointerEvents='none'>
-                                <Text style={styles.detailText}>{this.displaySetNumber()}</Text>
+                                <Text style={styles.detailText}>RPE</Text>
                             </View>
                         </View>
-                        <View style={{flex: 1, flexDirection: 'row'}}>
-                            <View style={[styles.field, {flex: 1, marginRight: 5}]}>
-                                <TextInput
-                                    style={styles.fieldText}
-                                    keyboardType={'numeric'}
-                                    underlineColorAndroid={'transparent'}
-                                    editable = {true}
-                                    placeholder="Enter Weight"
-                                    value={this.state.weight}
-                                    onChangeText={(weight) => this.setState({weight: weight}) }
-                                />
-                                <View style={styles.fieldDetails}>
-                                    <TouchableOpacity onPress={() => this._toggleMetric()}>
-                                        <View style={{flexDirection: 'row', alignItems: 'center', }}>
-                                            <Text style={styles.detailText}>{this.displayMetric()} </Text>
-                                            <Icon name="refresh" size={10} color="gray" />
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
+                    </View>
 
-                            <View style={[styles.field, {flex: 1}]}>
-                                <TextInput
-                                    style={styles.fieldText}
-                                    keyboardType={'numeric'}
-                                    underlineColorAndroid={'transparent'}
-                                    editable = {true}
-                                    placeholder="Enter RPE"
-                                    value = {this.state.rpe}
-                                    onChangeText={(rpe) => this.setState({rpe: rpe}) }
-                                />
-                                <View style={styles.fieldDetails} pointerEvents='none'>
-                                    <Text style={styles.detailText}>RPE</Text>
-                                </View>
-                            </View>
-                        </View>
-
+                    <View>
                         <View style={[styles.field, {flex: 1}]}>
                             <View style={{height: 30, justifyContent: 'center'}}>
                                 <Text>Tags</Text>
                             </View>
                         </View>
                     </View>
+                </View>
             </View>
         );
     }
@@ -178,6 +188,8 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         borderRadius: 3,
         marginBottom: 5,
+        zIndex: 2,
+        height: (Platform.OS === 'ios') ? 30 : 40,
     },
     fieldDetails: {
         position: 'absolute',
@@ -190,6 +202,17 @@ const styles = StyleSheet.create({
         height: (Platform.OS === 'ios') ? 30 : 40,
         fontSize: 15,
         paddingRight: 30
+    },
+    exerciseText: {
+        height: (Platform.OS === 'ios') ? 30 : 40,
+        marginTop: (Platform.OS === 'ios') ? 5 : 8,
+        marginLeft: (Platform.OS === 'ios') ? 0 : 4,
+        fontSize: 15,
+        paddingRight: 30,
+        color: 'black'
+    },
+    placeholderText: {
+        color: 'lightgray'
     },
     detailText: {
         color: 'gray'

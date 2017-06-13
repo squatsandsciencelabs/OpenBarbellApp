@@ -4,10 +4,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import EditSetHeader from '../components/EditSetHeader';
 import * as SetActionCreators from '../actions/SetActionCreators';
+import * as HistoryActionCreators from '../actions/HistoryActionCreators';
+import * as SuggestionsReducer from '../reducers/SuggestionsReducer';
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
 		updateSet: SetActionCreators.updateHistorySet,
+		editExercise: HistoryActionCreators.beginEditHistoryExerciseName,
 	}, dispatch);
 };
 

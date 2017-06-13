@@ -17,28 +17,32 @@ class EditTextModal extends Component {
     constructor(props) {
 		super(props);
 
-		this.state = { exercise: this.props.exercise };
+		this.state = { text: this.props.text };
 	}
 
     componentWillReceiveProps(nextProps) {
-        let exercise = this.props.exercise;
-        if (exercise === null || exercise === undefined) {
-            exercise = '';
+        let text = nextProps.text;
+        if (text === null || text === undefined) {
+            text = '';
         }
-        this._onChangeExerciseText(exercise);
+        this._onChangeText(text);
 	}
 
     // ACTIONS
 
-    // TODO: connect suggestions
-    _onChangeExerciseText(input) {
+    _onChangeText(input) {
         let suggestions = this.props.generateSuggestions(input);
         let suggestionsVM = suggestions.map((suggestion) => { return {key: suggestion}} );
         console.log(JSON.stringify(suggestionsVM));
         this.setState({
-            exercise: input,
+            text: input,
             suggestions: suggestionsVM
         });
+    }
+
+    _tappedDone() {
+        this.props.closeModal();
+        this.props.updateSet(this.props.setID, this.state.text);
     }
 
     // RENDER
@@ -47,13 +51,23 @@ class EditTextModal extends Component {
     _renderNavigation() {
         return (
             <View style={{height: 60, alignItems: 'center'}}>
-                <View style={{position: 'absolute', left: 10, top: 30}}>
+                <View style={{position: 'absolute', left: 0, top: 0}}>
                     <TouchableHighlight onPress={() => this.props.closeModal()}>
-                        <Text style={[styles.boldFont, {color: 'rgba(47, 128, 237, 1)'}]}>Cancel</Text>
+                        <View style={{paddingTop: 30, paddingRight: 10, paddingBottom: 10, paddingLeft: 10}}>
+                            <Text style={[styles.boldFont, {color: 'rgba(47, 128, 237, 1)'}]}>Cancel</Text>
+                        </View>
                     </TouchableHighlight>
                 </View>
                 <View style={{top: 30}}>
                     <Text style={styles.boldFont}>{this.props.title}</Text>
+                </View>
+
+                <View style={{position: 'absolute', right: 0, top: 0}}>
+                    <TouchableHighlight onPress={() => this._tappedDone() }>
+                        <View style={{paddingTop: 30, paddingRight: 10, paddingBottom: 10, paddingLeft: 10}}>
+                            <Text style={[styles.boldFont, {color: 'rgba(47, 128, 237, 1)'}]}>Done</Text>
+                        </View>
+                    </TouchableHighlight>
                 </View>
             </View>
         )
@@ -70,9 +84,10 @@ class EditTextModal extends Component {
                     style={[{height: 35, margin: 10}, styles.boldFont]}
                     underlineColorAndroid={'transparent'}
                     editable = {true}
-                    placeholder="Enter Exercise"
-                    value={this.state.exercise}
-                    onChangeText={(exercise) => this._onChangeExerciseText(exercise) }
+                    autoFocus={true}
+                    placeholder={this.props.placeholder}
+                    value={this.state.text}
+                    onChangeText={(text) => this._onChangeText(text) }
                 />
             </View>
         )
@@ -96,7 +111,7 @@ class EditTextModal extends Component {
 
     _renderRow(item) {
         return (
-            <TouchableHighlight onPress={() => this._onChangeExerciseText(item.key)}>
+            <TouchableHighlight onPress={() => this._onChangeText(item.key)}>
                 <View style={[{backgroundColor: 'white', height: 50, justifyContent: 'center'}, styles.rowShadow]}>
                     <Text style={{marginHorizontal: 10}}>{item.key}</Text>
                 </View>
@@ -116,7 +131,7 @@ class EditTextModal extends Component {
     // TODO: move 242 gray from global stylesheet
     render() {
         return (
-            <Modal visible={this.props.modalShowing}>
+            <Modal visible={this.props.modalShowing} animationType='fade'>
                 <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'rgba(242, 242, 242, 1)'}}>
                     {this._renderNavigation()}
                     {this._renderHeader()}

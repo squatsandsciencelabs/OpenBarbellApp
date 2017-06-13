@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import EditTextModal from '../components/EditTextModal';
 import * as SetActionCreators from '../actions/SetActionCreators';
-import * as SuggestionsActionCreators from '../actions/SuggestionsActionCreators';
+import * as HistoryActionCreators from '../actions/HistoryActionCreators';
 import * as SuggestionsReducer from '../reducers/SuggestionsReducer';
 
 const mapStateToProps = (state) => {
@@ -13,15 +13,18 @@ const mapStateToProps = (state) => {
 	
 	return {
         title: 'Edit Exercise',
+		placeholder: 'Enter Exercise',
+		text: state.history.editingExercise,
+		setID: state.history.editingSetID,
 		generateSuggestions: (input) => { return SuggestionsReducer.generateSuggestions(input, model) },
-        modalShowing: state.suggestions.isEditingHistoryExerciseName
+        modalShowing: state.history.editingSetID !== null
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
 		updateSet: SetActionCreators.updateHistorySet,
-        closeModal: SuggestionsActionCreators.endEditHistoryExerciseName,
+        closeModal: HistoryActionCreators.endEditHistoryExerciseName,
 	}, dispatch);
 };
 

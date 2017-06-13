@@ -1,16 +1,13 @@
 // app/reducers/SuggestionsReducer
 
 import {
-	UPDATE_EXERCISE_SUGGESTIONS_MODEL,
-	EDIT_HISTORY_EXERCISE_NAME
+	UPDATE_EXERCISE_SUGGESTIONS_MODEL
 } from '../ActionTypes';
 
 const SuggestionsReducer = (state = createDefaultState(), action) => {
     switch (action.type) {
         case UPDATE_EXERCISE_SUGGESTIONS_MODEL:
             return Object.assign({}, state, {exerciseModel: generateAutocompleteExerciseModel(action.historyData)});
-		case EDIT_HISTORY_EXERCISE_NAME:
-            return Object.assign({}, state, {isEditingHistoryExerciseName: action.isEditing});
         default:
             return state;
     }
@@ -26,7 +23,6 @@ const createDefaultState = () => ({
         'back squat' : {suggestion: 'Back Squat', seed: 2},
         'front squat' : {suggestion: 'Front Squat', seed: 2},
     },
-	isEditingHistoryExerciseName: false,
 });
 
 // TODO: consider moving this to a utility class as logic is duplicated from set reducer

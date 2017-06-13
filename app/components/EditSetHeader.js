@@ -109,18 +109,12 @@ class EditSetHeader extends Component {
     }
 
     render() {
-        // TODO: connect suggestions, right now removing it
-        var data = [];
-        if (this.state.editingExercise) {
-            data = this.state.suggestions;
-        }
-
         return (
             <View style={{flex: 1, flexDirection: 'column', opacity: this.state.removed ? 0.3 : 1}}>
                 <View style={styles.upperShadow} />
                 <View style={[styles.shadow, {flex: 1, flexDirection: 'column', padding: 5}]}>
                     <View style={styles.field}>
-                        <TouchableHighlight onPress={() => this.props.editExercise()}>
+                        <TouchableHighlight onPress={() => this.props.editExercise(this.props.setID, this.state.exercise)}>
                             <Text style={styles.exerciseText}>{this.state.exercise}</Text>
                         </TouchableHighlight>
                         <View style={styles.fieldDetails} pointerEvents='none'>
@@ -202,10 +196,11 @@ const styles = StyleSheet.create({
     },
     exerciseText: {
         height: (Platform.OS === 'ios') ? 30 : 40,
-        marginTop: (Platform.OS === 'ios') ? 8 : 5,
-        marginLeft: (Platform.OS === 'ios') ? 8 : 8,
+        marginTop: (Platform.OS === 'ios') ? 5 : 8,
+        marginLeft: (Platform.OS === 'ios') ? 0 : 4,
         fontSize: 15,
-        paddingRight: 30
+        paddingRight: 30,
+        color: 'black'
     },
     detailText: {
         color: 'gray'

@@ -333,7 +333,9 @@ const reAddSetsToUpload = (state, action) => {
 const updateSetDataFromServer = (state, action) => {
 	let newHistoryData = {};
 	for (set of action.sets) {
-		newHistoryData[set.setID] = set;
+		if (set.setID !== null) { // hack check against a bug that showed up in the development database
+			newHistoryData[set.setID] = set;
+		}
 	}
 
 	return Object.assign({}, state, {

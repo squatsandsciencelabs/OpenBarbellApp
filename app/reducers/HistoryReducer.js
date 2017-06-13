@@ -2,12 +2,15 @@ import {
 	UPDATE_HISTORY_FILTER,
 	EXPORTING_CSV,
 	LOADING_HISTORY,
+	EDIT_HISTORY_EXERCISE_NAME
 } from '../ActionTypes';
 
 const defaultState = {
 	showRemoved: false,
 	isExportingCSV: false,
 	isLoadingHistory: true,
+	editingExercise: '',
+	editingSetID: null
 };
 
 const HistoryReducer = (state = defaultState, action) => {
@@ -23,6 +26,11 @@ const HistoryReducer = (state = defaultState, action) => {
 		case EXPORTING_CSV:
 			return Object.assign({}, state, {
 				isExportingCSV: action.isExportingCSV
+			});
+		case EDIT_HISTORY_EXERCISE_NAME:
+			return Object.assign({}, state, {
+				editingSetID: action.setID,
+				editingExercise: action.exercise
 			});
 		default:
 			return state;

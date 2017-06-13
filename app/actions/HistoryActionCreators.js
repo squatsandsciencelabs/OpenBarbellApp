@@ -3,7 +3,8 @@
 import {
 	UPDATE_HISTORY_FILTER,
 	EXPORTING_CSV,
-	LOADING_HISTORY
+	LOADING_HISTORY,
+	EDIT_HISTORY_EXERCISE_NAME
 } from '../ActionTypes';
 import * as GoogleDriveUploader from '../utility/GoogleDriveUploader';
 import * as CSVConverter from '../utility/CSVConverter';
@@ -70,3 +71,15 @@ export const exportHistoryCSV = () => (dispatch, getState) => {
 	})
 	.done();
 };
+
+export const beginEditHistoryExerciseName = (setID, exercise) => ({
+    type: EDIT_HISTORY_EXERCISE_NAME,
+    setID: setID,
+	exercise: exercise
+});
+
+export const endEditHistoryExerciseName = () => ({
+    type: EDIT_HISTORY_EXERCISE_NAME,
+    exercise: '',
+	setID: null
+});

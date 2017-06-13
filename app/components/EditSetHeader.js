@@ -90,7 +90,14 @@ class EditSetHeader extends Component {
 
     // RENDER
 
-    displaySetNumber() {
+    _displayExercise() {
+        if (this.state.exercise === null || this.state.exercise === '') {
+            return (<Text style={[styles.exerciseText, styles.placeholderText]}>Enter Exercise</Text>);
+        }
+        return (<Text style={styles.exerciseText}>{this.state.exercise}</Text>);
+    }
+
+    _displaySetNumber() {
         if (this.state.removed) {
             return null;
         }
@@ -100,7 +107,7 @@ class EditSetHeader extends Component {
         return '#' + this.state.setNumber;
     }
 
-    displayMetric() {
+    _displayMetric() {
         if (this.state.metric === 'kgs') {
             return "KGs";
         } else if (this.state.metric === 'lbs') {
@@ -115,10 +122,10 @@ class EditSetHeader extends Component {
                 <View style={[styles.shadow, {flex: 1, flexDirection: 'column', padding: 5}]}>
                     <View style={styles.field}>
                         <TouchableHighlight onPress={() => this.props.editExercise(this.props.setID, this.state.exercise)}>
-                            <Text style={styles.exerciseText}>{this.state.exercise}</Text>
+                            {this._displayExercise()}
                         </TouchableHighlight>
                         <View style={styles.fieldDetails} pointerEvents='none'>
-                            <Text style={styles.detailText}>{this.displaySetNumber()}</Text>
+                            <Text style={styles.detailText}>{this._displaySetNumber()}</Text>
                         </View>
                     </View>
                     <View style={{flex: 1, flexDirection: 'row'}}>
@@ -129,13 +136,14 @@ class EditSetHeader extends Component {
                                 underlineColorAndroid={'transparent'}
                                 editable = {true}
                                 placeholder="Enter Weight"
+                                placeholderTextColor={'lightgray'}
                                 value={this.state.weight}
                                 onChangeText={(weight) => this.setState({weight: weight}) }
                             />
                             <View style={styles.fieldDetails}>
                                 <TouchableOpacity onPress={() => this._toggleMetric()}>
                                     <View style={{flexDirection: 'row', alignItems: 'center', }}>
-                                        <Text style={styles.detailText}>{this.displayMetric()} </Text>
+                                        <Text style={styles.detailText}>{this._displayMetric()} </Text>
                                         <Icon name="refresh" size={10} color="gray" />
                                     </View>
                                 </TouchableOpacity>
@@ -149,6 +157,7 @@ class EditSetHeader extends Component {
                                 underlineColorAndroid={'transparent'}
                                 editable = {true}
                                 placeholder="Enter RPE"
+                                placeholderTextColor={'lightgray'}
                                 value = {this.state.rpe}
                                 onChangeText={(rpe) => this.setState({rpe: rpe}) }
                             />
@@ -201,6 +210,9 @@ const styles = StyleSheet.create({
         fontSize: 15,
         paddingRight: 30,
         color: 'black'
+    },
+    placeholderText: {
+        color: 'lightgray'
     },
     detailText: {
         color: 'gray'

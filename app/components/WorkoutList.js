@@ -45,15 +45,14 @@ class WorkoutList extends Component {
 	}
 
 	_renderSectionFooter(section) {
-		console.log("rendering section footer!");
 		if (section.key === 0) {
-			return null;
-		} else {
 			return (
 				<TouchableHighlight onPress={ () => this.props.endSet() }>
 					<Text style={[styles.blueButton, styles.Shadow, { textAlign: 'center'}]}>Finish Current Set</Text>
 				</TouchableHighlight>
 			);
+		} else {
+			return null;
 		}
 	}
 

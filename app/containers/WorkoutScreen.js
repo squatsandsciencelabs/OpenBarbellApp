@@ -19,26 +19,19 @@ import {
 // assumes chronological sets
 const createViewModels = (sets) => {
 	// declare variables
-	let sections = []; // the return value
-	let section = null; // contains the actual data
+	let section = { key: 1, data: [] }; // contains the actual data
+	let sections = [section]; // the return value
 	let lastExerciseName = null; // to help calculate set numbers
 	let setNumber = 1; // set number to display
 	let lastSetEndTime = null; // to help calculate rest time
-	let isInitialSet = null; // to help determine when to display rest time and split up the sections properly
-
-	// ignore empty or removed sets
-	var sets = sets.filter((set) => set.reps.length > 0);
+	let isInitialSet = true; // to help determine when to display rest time and split up the sections properly
+	let count = 0;
 
 	// build view models
 	sets.map((set) => {
-		if (isInitialSet === null) {
-			// first section
-			isInitialSet = true;
-			section = { key: 1, data: [] };
-			sections.splice(0, 0, section); // insert at beginning
-		} else if (isInitialSet === true) {
-			// second section
-			isInitialSet = false;
+		// last section check, splitting the "current set" out for footer purposes
+		// TODO: depending on design for "finish current set", can put all the data in one section instead
+		if (count === sets.length-1) {
 			section = { key: 0, data: [] };
 			sections.splice(0, 0, section); // insert at beginning
 		}
@@ -69,7 +62,7 @@ const createViewModels = (sets) => {
 			lastSetEndTime = set.removed ? null : set.endTime;
 		} else if (!set.removed) { // ignore removed sets in rest calculations
 			// add footer if valid
-			if (lastSetEndTime !== null) {
+			if (lastSetEndTime !== null && set.startTime > lastSetEndTime) {
 				array.push(createFooterVM(set, lastSetEndTime));
 			}
 
@@ -79,6 +72,10 @@ const createViewModels = (sets) => {
 
 		// insert set card data
 		Array.prototype.splice.apply(section.data, array);
+
+		// increment and reset
+		isInitialSet = false;
+		count++;
 	});
 
 	// return

@@ -4,11 +4,7 @@ import {
 	EDIT_WORKOUT_SET,
 	END_EDIT_WORKOUT_SET,
 	END_WORKOUT,
-	WORKOUT_AVG_FILTER,
-	WORKOUT_PKV_FILTER,
-	WORKOUT_PKH_FILTER,
-	WORKOUT_ROM_FILTER,
-	WORKOUT_DUR_FILTER,
+	EDIT_WORKOUT_EXERCISE_NAME,
 } from '../ActionTypes';
 import * as ApiActionCreators from '../actions/ApiActionCreators';
 
@@ -26,8 +22,14 @@ export const endWorkout = () => (dispatch, getState) => {
 	}
 };
 
-export const filterAVGWorkout = () => ({ type: WORKOUT_AVG_FILTER });
-export const filterPKVWorkout = () => ({ type: WORKOUT_PKV_FILTER });
-export const filterPKHWorkout = () => ({ type: WORKOUT_PKH_FILTER });
-export const filterROMWorkout = () => ({ type: WORKOUT_ROM_FILTER });
-export const filterDURWorkout = () => ({ type: WORKOUT_DUR_FILTER });
+export const beginEditWorkoutExerciseName = (setID, exercise) => ({
+    type: EDIT_WORKOUT_EXERCISE_NAME,
+    setID: setID,
+	exercise: exercise
+});
+
+export const endEditWorkoutExerciseName = () => ({
+    type: EDIT_WORKOUT_EXERCISE_NAME,
+    exercise: '',
+	setID: null
+});

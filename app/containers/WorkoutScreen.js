@@ -15,203 +15,168 @@ import {
 	peakVelocityLocation,
 	durationOfLift
 } from '../utility/RepDataMap';
-import {
-	WORKOUT_AVG_FILTER,
-	WORKOUT_PKV_FILTER,
-	WORKOUT_PKH_FILTER,
-	WORKOUT_ROM_FILTER,
-	WORKOUT_DUR_FILTER,
-} from '../ActionTypes';
 
-const dataForRep = (rep, filter) => {
-	if (rep.removed === true) {
-		return "Removed";
-	}
+// assumes chronological sets
+const createViewModels = (sets) => {
+	// declare variables
+	let sections = []; // the return value
+	let section = null; // contains the actual data
+	let lastExerciseName = null; // to help calculate set numbers
+	let setNumber = 1; // set number to display
+	let lastSetEndTime = null; // to help calculate rest time
+	let isInitialSet = null; // to help determine when to display rest time and split up the sections properly
 
-	if (rep.isValid === false) {
-		return "Corrupted";
-	}
+	// ignore empty or removed sets
+	var sets = sets.filter((set) => set.reps.length > 0);
 
-	let repData = rep.data;
-	switch (filter) {
-		case WORKOUT_AVG_FILTER:
-			return averageVelocity(repData);
-		case WORKOUT_PKV_FILTER:
-			return peakVelocity(repData);
-		case WORKOUT_PKH_FILTER:
-			return peakVelocityLocation(repData);
-		case WORKOUT_ROM_FILTER:
-			return rangeOfMotion(repData);
-		case WORKOUT_DUR_FILTER:
-			let duration = durationOfLift(repData)
-			if (duration) {
-				return (duration / 1000000.0).toFixed(2);
-			}else {
-				return "";
-			}
-		default:
-			return "";
-	}
-};
-
-const unitForRep = (rep, filter) => {
-	if (rep.removed === true) {
-		return "";
-	}
-
-	switch (filter) {
-		case WORKOUT_AVG_FILTER:
-			return "m/s";
-		case WORKOUT_PKV_FILTER:
-			return "m/s";
-		case WORKOUT_PKH_FILTER:
-			return "%";
-		case WORKOUT_ROM_FILTER:
-			return "mm";
-		case WORKOUT_DUR_FILTER:
-			if (durationOfLift(rep.data)) {
-				return "sec";
-			} else {
-				return "obv2 only"
-			}
-		default:
-			return "";
-	}
-};
-
-const getListViewModels = (sets, filter) => {
-	let data = { };
-	let sectionIDs = [];
-	let setPosition = sets.length;
-	let disabledColor = 'lightgray';
-	let normalDarkColor = 'black';
-	let normalLightColor = 'gray';
-	let highlightColor = 'rgba(255, 0, 0, 0.25)';
-	let lastSetEndTime = null;
-
+	// build view models
 	sets.map((set) => {
-		// every set is a section
-		sectionIDs.push(setPosition);
-		let array = [];
-
-		// ensure that there are at least 4 rows in each set
-		// necessary for all the left side options in workout
-		if (set.reps.length < 4) {
-			var start = 3;
-			var dataOffset = 4-set.reps.length;
-		} else {
-			var start = set.reps.length-1;
-			var dataOffset = 0;
+		if (isInitialSet === null) {
+			// first section
+			isInitialSet = true;
+			section = { key: 1, data: [] };
+			sections.splice(0, 0, section); // insert at beginning
+		} else if (isInitialSet === true) {
+			// second section
+			isInitialSet = false;
+			section = { key: 0, data: [] };
+			sections.splice(0, 0, section); // insert at beginning
 		}
 
-		// add rest time
-		if (!set.removed) {
-			if (lastSetEndTime !== null && set.reps.length > 0) {
-				let restInMS = new Date(set.startTime) - new Date(lastSetEndTime);
-				let restObj = {
-					type: "footer",
-					rest: DateUtils.restInSentenceFormat(restInMS)
-				};
-				array.push(restObj);
+		// set card data
+		let array = [0, 0];
+
+		// card header
+		if (isInitialSet) {
+			lastExerciseName = null;
+			setNumber = 1;
+		} else if (!set.removed) {
+			if (lastExerciseName !== null && lastExerciseName === set.exercise) {
+				setNumber++;
+			} else {
+				setNumber = 1;
+			}
+		}
+		array.push(createHeaderViewModel(set, setNumber));
+		lastExerciseName = set.exercise;
+
+		// reps
+		Array.prototype.push.apply(array, createRowViewModels(set));
+
+		// rest footer
+		if (isInitialSet) {
+			// new set, reset the end time
+			lastSetEndTime = set.removed ? null : set.endTime;
+		} else if (!set.removed) { // ignore removed sets in rest calculations
+			// add footer if valid
+			if (lastSetEndTime !== null) {
+				array.push(createFooterVM(set, lastSetEndTime));
 			}
 
+			// update variable for calculation purposes
 			lastSetEndTime = set.endTime;
 		}
 
-		// every rep is a row
-		for (var i=0; i <= start; i++) {
-			// data position
-			let dataPosition = i-dataOffset;
-
-			// define obj
-			let obj = {
-				type: "data",
-				setInfo: null,
-				data: null,
-				unit: null,
-				setID: set.setID,
-				rep: dataPosition,
-				labelColor: null,
-				dataColor: set.removed ? disabledColor : normalDarkColor,
-				unitColor: set.removed ? disabledColor : normalLightColor,
-				removed: false,
-				isFinishSetRow: false
-			};
-
-			//add setInfo
-			switch (start-i) {
-				case 0:
-					if (set.exercise === null || set.exercise == '') {
-						obj.setInfo = 'INPUT EXERCISE';
-						obj.labelColor = set.removed ? disabledColor : highlightColor;
-					}else {
-						obj.setInfo = set.exercise;
-						obj.labelColor = set.removed ? disabledColor : normalDarkColor;
-					}
-					break;
-				case 1:
-					if (set.weight === null || set.exercise == '') {
-						obj.setInfo = 'INPUT WEIGHT';
-						obj.labelColor = set.removed ? disabledColor : highlightColor;
-					} else {
-						obj.setInfo = set.weight + " " + set.metric;
-						obj.labelColor = set.removed ? disabledColor : normalDarkColor;
-					}
-					break;
-				case 2:
-					if (set.rpe === null) {
-						obj.setInfo = 'INPUT RPE';
-						obj.labelColor = set.removed ? disabledColor : highlightColor;
-					} else {
-						obj.setInfo = set.rpe + ' RPE';
-						obj.labelColor = set.removed ? disabledColor : normalDarkColor;
-					}
-					break;
-				case start:
-					obj.isFinishSetRow = true;
-					if (setPosition == 1) {
-						obj.setInfo = "Finish Current Set";
-					}
-					break;
-				default:
-					break;
-			}
-
-			//add data
-			if (dataPosition >= 0 && dataPosition < set.reps.length) {
-				obj.data = dataForRep(set.reps[dataPosition], filter);
-				obj.unit = unitForRep(set.reps[dataPosition], filter);
-				obj.removed = set.reps[dataPosition].removed;
-			}
-
-			//add obj
-			array.push(obj);
-		}
-
-		// reverse and save
-		data[setPosition] = array.reverse();
-
-		//increment
-		setPosition--;
+		// insert set card data
+		Array.prototype.splice.apply(section.data, array);
 	});
 
-	// hack force a starting section for end workout
-	sectionIDs.push(setPosition);
-	data[setPosition] = [ {} ];
+	// return
+	return sections;
+}
 
-	let returnArray = sectionIDs.reverse();
+const createHeaderViewModel = (set, setNumber) => ({
+	type: 'header',
+	key: set.setID+'header',
+	setID: set.setID,
+	removed: set.removed,
+	setNumber: setNumber,
+	exercise: set.exercise,
+	weight: set.weight,
+	metric: set.metric,
+	rpe: set.rpe
+});
 
-	return { data, returnArray };
+const createRowViewModels = (set) => {
+	let array = [];
+
+	for (let i=0, repCount=0; i<set.reps.length; i++) {
+		// get rep
+		let rep = set.reps[i];
+
+		// increment rep count
+		repCount++;
+
+		// obv1 properties
+		let vm = {
+			type: "data",
+			rep: i,
+			repDisplay: repCount,
+			setID: set.setID,
+			averageVelocity: "Invalid",
+			peakVelocity: "Invalid",
+			peakVelocityLocation: "Invalid",
+			rangeOfMotion: "Invalid",
+			duration: "Invalid",
+			removed: rep.removed,
+			key: set.setID+i,
+		};
+
+		// update data if valid
+		if (rep.isValid == true) {
+			let repData = rep.data;
+
+			let avgVel = averageVelocity(repData);
+			if (avgVel !== null) {
+				vm.averageVelocity = avgVel;
+			}
+
+			let peakVel = peakVelocity(repData);
+			if (peakVel !== null) {
+				vm.peakVelocity = peakVel;
+			}
+
+			let peakVelLoc = peakVelocityLocation(repData);
+			if (peakVelLoc !== null) {
+				vm.peakVelocityLocation = peakVelLoc;
+			}
+
+			let rom = rangeOfMotion(repData);
+			if (rom !== null) {
+				vm.rangeOfMotion = rom;
+			}
+
+			// obv2 properties
+			let duration = durationOfLift(repData)
+			if (duration !== null) {
+				vm.duration = (duration / 1000000.0).toFixed(2);
+			} else {
+				vm.duration = "obv2 only";
+			}
+		}
+
+		//add obj
+		array.splice(0, 0, vm); // insert at beginning
+	}
+
+	// return
+	return array;
+};
+
+const createFooterVM = (set, lastSetEndTime) => {
+	let restInMS = new Date(set.startTime) - new Date(lastSetEndTime);
+	let footerVM = {
+		type: "footer",
+		rest: DateUtils.restInSentenceFormat(restInMS),
+		key: set.setID + 'rest'
+	};
+	return footerVM;
 };
 
 const mapStateToProps = (state) => {
-	let filter = state.workout.filter;
 	let sets = getWorkoutSets(state.sets);
-	let { data, sectionIDs} = getListViewModels(sets, filter);
 	return {
-		data: data,
-		sectionIDs: sectionIDs,
-		filter: filter
+		sections: createViewModels(sets)
 	}
 };
 

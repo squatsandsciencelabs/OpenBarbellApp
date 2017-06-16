@@ -17,7 +17,6 @@ import SetDescription from './SetDescription';
 import SetData from './SetData';
 import SetRest from './SetRest';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import WorkoutFilterBarScreen from '../containers/WorkoutFilterBarScreen';
 
 class WorkoutList extends Component {
 

@@ -6,191 +6,111 @@ import {
 	Text,
 	StyleSheet,
 	View,
-	ListView,
+	SectionList,
 	ScrollView,
-	Dimensions
+	Dimensions,
+	ListItem
 } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome';
 import EditWorkoutSetScreen from '../containers/EditWorkoutSetScreen';
-import WorkoutFilterBarScreen from '../containers/WorkoutFilterBarScreen';
+import EditWorkoutExerciseScreen from '../containers/EditWorkoutExerciseScreen';
+import SetDescription from './SetDescription';
+import SetData from './SetData';
+import SetRest from './SetRest';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class WorkoutList extends Component {
 
-	// DATA
+	// UPDATE
 
-	constructor(props) {
-		super(props);
-
-		// initialize the datasource
-		let	dataSource = new ListView.DataSource({
-			sectionHeaderHasChanged: this._sectionHeaderHasChanged,
-			rowHasChanged: this._rowHasChanged,
-		});
-		this.state = {
-			dataSource: dataSource.cloneWithRowsAndSections(props.data, props.sectionIDs),
-		};
-	}
-
-	// state changed, reset the dataSource as needed
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.data !== this.props.data || nextProps.sectionIDs !== this.props.sectionIDs || nextProps.filter !== this.props.filter) {
-			this.setState({
-				dataSource: this.state.dataSource.cloneWithRowsAndSections(nextProps.data, nextProps.sectionIDs),
-			});
-		}
-	}
-
-	_sectionHeaderHasChanged(s1, s2) {
-		return s1 !== s2;
-	}
-
-	_rowHasChanged(r1, r2) {
-		return r1 !== r2;
-	}
-
-	// ACTION
-
-	_onPressNewSet() {
-		this.props.endSet();
-	}
-
-	_onPressRow(rowData) {
-		this.props.editWorkoutSet(rowData.setID);
-	}
-
-	_onPressRemove(rowData) {
-		this.props.removeRep(rowData.setID, rowData.rep);
-	}
-
-	_onPressRestore(rowData) {
-		this.props.restoreRep(rowData.setID, rowData.rep);
-	}
-
-	_onPressEndWorkout() {
-		this.props.endWorkout();
-	}
+	shouldComponentUpdate(nextProps) {
+		const differentShowRemoved = nextProps.shouldShowRemoved !== this.props.shouldShowRemoved;
+		const differentSections = nextProps.sections !== this.props.sections;
+		return differentShowRemoved || differentSections;
+    }
 
 	// RENDER
 
-	_renderSectionHeader(set, sectionID) {
-		return (
-			<View style={{height:20}}>
-			</View>
-		);
-	}
-
-	_renderLeftRowItems(rowData, sectionID, rowID) {
-		if (sectionID == 1 && rowData.isFinishSetRow == true) {
+	_renderSectionHeader(section) {
+		if (section.key === 0) {
+			// end workout
 			return (
-				<TouchableHighlight onPress={ () => this._onPressNewSet() }>
-					<Text style={[styles.blueButton, { textAlign: 'center'}]}>{ rowData.setInfo }</Text>
+				<TouchableHighlight onPress={ () => this.props.endWorkout() }>
+					<Text style={[styles.blueButton, styles.Shadow, { textAlign: 'center'}]}>End Workout</Text>
 				</TouchableHighlight>
 			);
 		} else {
+			return null;
+		}
+	}
+
+	_renderSectionFooter(section) {
+		if (section.key === 0) {
 			return (
-				<Text style={[styles.sectionHeaderText, {color:rowData.labelColor}]}>{ rowData.setInfo }</Text>
-			);
-		}
-	}
-
-	_renderHeaderEndWorkout() {
-		// end workout
-		return (
-			<TouchableHighlight onPress={ () => this._onPressEndWorkout() }>
-				<Text style={[styles.blueButton, styles.Shadow, { textAlign: 'center'}]}>End Workout</Text>
-			</TouchableHighlight>
-		);
-	}
-
-	_renderData(rowData, sectionID, rowID) {
-		// delete or restore button
-		var button = null;
-		if (rowData.data !== null) {
-			if (rowData.removed === false) {
-				button = (
-					<TouchableHighlight onPress={ () => this._onPressRemove(rowData) } style={{padding: 5, paddingLeft: 7}} >
-						<Icon name="close" size={20} color="lightgray" style={{marginTop: 3}} />
-					</TouchableHighlight>
-				);
-			} else {
-				button = (
-					<TouchableHighlight onPress={ () => this._onPressRestore(rowData) } style={{padding: 5, paddingLeft: 7}} >
-						<Icon name="undo" size={20} color="lightgray" style={{marginTop: 3}} />
-					</TouchableHighlight>
-				);
-			}
-		}
-
-		// top shadow
-		var topShadow = null;
-		if (rowID === 0) {
-			console.log("fucking derp should work here");
-			topShadow = (
-				<View style={[styles.Shadow, {height: 1, backgroundColor: 'white', shadowRadius: 2, shadowOpacity: 1, shadowOffset: { height: 1, weight: 0 }}]}></View>
-			);
-		}
-
-		return (
-			<View style={{flex: 1, flexDirection: 'column'}}>
-				{topShadow}
-				<TouchableHighlight onPress={ () => this._onPressRow(rowData) } activeOpacity={1} >
-					<View style={[styles.Shadow, {flexDirection:'row', justifyContent:'space-between', backgroundColor:'white', paddingLeft: 7, paddingBottom: 3}]}>
-						{ this._renderLeftRowItems(rowData, sectionID, rowID) }
-						<View style={{flexDirection:'row'}}>
-							<Text style={[styles.rowText, {color:rowData.dataColor}]}>{rowData.data}</Text>
-							<Text style={[styles.rowText, {color:rowData.unitColor}]}> {rowData.unit}</Text>
-							{button}
-						</View>
-					</View>
+				<TouchableHighlight onPress={ () => this.props.endSet() }>
+					<Text style={[styles.blueButton, styles.Shadow, { textAlign: 'center'}]}>Finish Current Set</Text>
 				</TouchableHighlight>
-			</View>
-		);
-	}
-
-	_renderFooter(rowData, sectionID, rowID) {
-		return (
-			<View style={[styles.Shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
-				<Text style={{flex: 1, textAlign: 'center', marginTop: 15, color: 'gray', marginBottom: 15}}>{ rowData.rest }</Text>
-			</View>
-		);
-	}
-
-	_renderRow(rowData, sectionID, rowID) {
-		// end workout button
-		if (sectionID == 0) {
-			return this._renderHeaderEndWorkout();
+			);
+		} else {
+			return null;
 		}
+	}
 
-		switch (rowData.type) {
+	_renderRow(item) {
+		switch (item.type) {
+			case "header":
+				return (<View style={{marginTop: 15}}>
+							<EditWorkoutSetScreen
+								setNumber={item.setNumber}
+								setID={item.setID}
+								removed={item.removed}
+								exercise={item.exercise}
+								weight={item.weight}
+								metric={item.metric}
+								rpe={item.rpe}
+							/>
+						</View>);
 			case "data":
-				return this._renderData(rowData, sectionID, rowID);
+				// TODO: full screen view!
+				return (<SetData item={item}
+							onPressRemove={() =>this.props.removeRep(item.setID, item.rep) }
+							onPressRestore={() => this.props.restoreRep(item.setID, item.rep) }
+							onPressRow={() => console.log("this is where should display full screen view") }
+						/>);
 			case "footer":
-				return this._renderFooter(rowData, sectionID, rowID);
+				return (<SetRest item={item} />);
 			default:
 				break;
 		}
 	}
 
 	render() {
+		var list = null;
+		if (this.props.sections.length > 0) {
+			list = (<SectionList
+				keyboardDismissMode='on-drag'
+				keyboardShouldPersistTaps='always'
+				initialNumToRender={13}
+				stickySectionHeadersEnabled={false}
+				renderItem={({item}) => this._renderRow(item)}
+				renderSectionHeader={({section}) => this._renderSectionHeader(section) }
+				renderSectionFooter={({section}) => this._renderSectionFooter(section) }
+				sections={this.props.sections}
+				style = {{padding: 10, backgroundColor: 'white'}}
+			/>);
+		}
+
 		return (
-			<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'rgba(0, 0, 0, 0)' }}>
+			<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
+				<EditWorkoutExerciseScreen />
+
 				<View style={{ flex: 1 }}>
-					<EditWorkoutSetScreen />
-					<ListView
-						ref="listView"
-						enableEmptySections = { true }
-						dataSource={this.state.dataSource}
-						renderRow={(rowData, sectionID, rowID) => this._renderRow(rowData, sectionID, rowID)}
-						renderSectionHeader={(set, sectionID) => this._renderSectionHeader(set, sectionID)}
-						style = {{ padding: 10, backgroundColor: 'rgba(0, 0, 0, 0)'}} />
+					{list}
 				</View>
 
-				<View style={{height: 50}}>
-					<WorkoutFilterBarScreen />
-				</View>
 			</View>
 		);
 	}
+
 }
 //NOTE: currently container names reference the React Native flexDirection which imo is confusing
 const styles = StyleSheet.create({

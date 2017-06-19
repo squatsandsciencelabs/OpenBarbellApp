@@ -1,32 +1,28 @@
 // app/reducers/WorkoutReducer.js
 
 import {
-	EDIT_WORKOUT_SET,
-	END_EDIT_WORKOUT_SET,
-	EDIT_WORKOUT_EXERCISE_NAME
+	EDIT_WORKOUT_EXERCISE_NAME,
+	EDIT_WORKOUT_TAGS,
 } from '../ActionTypes';
 
 const defaultState = {
-	editing: false,
-	editingSetID: null,
+	editingExerciseSetID: null,
 	editingExercise: '',
+	editingTagsSetID: null,
+	editingTags: [],
 };
 
 const WorkoutReducer = (state = defaultState, action) => {
 	switch (action.type) {
-		case EDIT_WORKOUT_SET:
-			return Object.assign({}, state, {
-				editing: true,
-				editingSetID: action.editingSetID,
-			});
-		case END_EDIT_WORKOUT_SET:
-			return Object.assign({}, state, {
-				editing: false
-			});
 		case EDIT_WORKOUT_EXERCISE_NAME:
 			return Object.assign({}, state, {
-				editingSetID: action.setID,
+				editingExerciseSetID: action.setID,
 				editingExercise: action.exercise
+			});
+		case EDIT_WORKOUT_TAGS:
+			return Object.assign({}, state, {
+				editingTagsSetID: action.setID,
+				editingTags: action.tags
 			});
 		default:
 			return state;

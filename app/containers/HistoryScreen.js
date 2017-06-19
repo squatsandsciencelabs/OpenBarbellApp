@@ -95,6 +95,7 @@ const createHeaderViewModel = (set, setNumber) => ({
 	removed: set.removed,
 	setNumber: setNumber,
 	exercise: set.exercise,
+	tags: set.tags,
 	weight: set.weight,
 	metric: set.metric,
 	rpe: set.rpe

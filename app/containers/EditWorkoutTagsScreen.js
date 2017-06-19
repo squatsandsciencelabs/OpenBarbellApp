@@ -1,4 +1,4 @@
-// app/containers/EditWorkoutExerciseScreen.js
+// app/containers/EditWorkoutTagsScreen.js
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -9,28 +9,28 @@ import * as SuggestionsReducer from '../reducers/SuggestionsReducer';
 
 const mapStateToProps = (state) => {
 	// save the model
-	let model = state.suggestions.exerciseModel;
+	let model = state.suggestions.tagsModel;
 	
 	return {
-        title: 'Edit Exercise',
-		placeholder: 'Enter Exercise',
-		text: state.workout.editingExercise,
-		setID: state.workout.editingExerciseSetID,
+        title: 'Edit Tags',
+		placeholder: 'Enter Tag',
+		text: '',
+		setID: state.workout.editingTagsSetID,
 		generateSuggestions: (input) => { return SuggestionsReducer.generateSuggestions(input, model) },
-        modalShowing: state.workout.editingExerciseSetID !== null
+        modalShowing: state.workout.editingTagsSetID !== null
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
 		updateSet: SetActionCreators.updateWorkoutSet,
-        closeModal: WorkoutActionCreators.endEditWorkoutExerciseName,
+        closeModal: WorkoutActionCreators.endEditWorkoutTags,
 	}, dispatch);
 };
 
-const EditWorkoutExerciseScreen = connect(
+const EditWorkoutTagsScreen = connect(
 	mapStateToProps,
 	mapDispatchToProps
 )(EditTextModal);
 
-export default EditWorkoutExerciseScreen;
+export default EditWorkoutTagsScreen;

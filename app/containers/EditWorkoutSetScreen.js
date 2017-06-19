@@ -10,6 +10,7 @@ const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
 		updateSet: SetActionCreators.updateWorkoutSet,
 		editExercise: WorkoutActionCreators.beginEditWorkoutExerciseName,
+		editTags: WorkoutActionCreators.beginEditWorkoutTags,
 	}, dispatch);
 };
 

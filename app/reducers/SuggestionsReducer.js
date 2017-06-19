@@ -1,19 +1,21 @@
 // app/reducers/SuggestionsReducer
 
 import {
-	UPDATE_EXERCISE_SUGGESTIONS_MODEL
+	UPDATE_EXERCISE_SUGGESTIONS_MODEL,
+	UPDATE_TAG_SUGGESTIONS_MODEL
 } from '../ActionTypes';
 
 const SuggestionsReducer = (state = createDefaultState(), action) => {
     switch (action.type) {
         case UPDATE_EXERCISE_SUGGESTIONS_MODEL:
             return Object.assign({}, state, {exerciseModel: generateAutocompleteExerciseModel(action.historyData)});
+        case UPDATE_TAG_SUGGESTIONS_MODEL:
+            return Object.assign({}, state, {tagsModel: generateAutocompleteTagsModel(action.historyData)});
         default:
             return state;
     }
 };
 
-// TODO: Remove this default and instead connect the update suggestions model
 const createDefaultState = () => ({
     exerciseModel: {
         'squat' : {suggestion: 'Squat', seed: 100},
@@ -23,6 +25,10 @@ const createDefaultState = () => ({
         'back squat' : {suggestion: 'Back Squat', seed: 2},
         'front squat' : {suggestion: 'Front Squat', seed: 2},
     },
+	tagsModel: {
+		'belt' : {suggestion: 'Belt', seed: 100},
+		'high bar' : {suggestion: 'High Bar', seed: 100},
+	}
 });
 
 // TODO: consider moving this to a utility class as logic is duplicated from set reducer
@@ -61,6 +67,30 @@ const generateAutocompleteExerciseModel = (historyData) => {
 			model[property] = dictionary[property];
 		}
 	}
+	
+	// return
+	return model;
+};
+
+const generateAutocompleteTagsModel = (historyData) => {
+	// declare vars
+	let model = createDefaultState().tagsModel;
+	let sets = dictToArray(historyData);
+
+	// ignore undefined / nulls / empties
+	sets = sets.filter((set) => set.tags !== undefined && set.tags !== null && set.tags.length > 0);
+
+	// generate dictionary with counts
+	sets.map((set) => {
+		set.tags.map((tag) => {
+			let lowercaseTag = tag.toLowerCase();
+			if (model[lowercaseTag] === undefined) {
+				model[lowercaseTag] = { suggestion: tag, seed: 1 };
+			} else {
+				model[lowercaseTag] = { suggestion: tag, seed: model[lowercaseTag].seed + 1};
+			}
+		});
+	});
 	
 	// return
 	return model;

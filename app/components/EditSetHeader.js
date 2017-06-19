@@ -16,6 +16,7 @@ class EditSetHeader extends Component {
 		this.state = {
             setNumber: this.props.setNumber,
             exercise: this.props.exercise,
+            tags: this.props.tags,
             weight: this.props.weight,
             metric: this.props.metric,
             rpe: this.props.rpe,
@@ -29,6 +30,7 @@ class EditSetHeader extends Component {
         this.setState({
             setNumber: nextProps.setNumber,
             exercise: nextProps.exercise,
+            tags: nextProps.tags,
             weight: nextProps.weight,
             metric: nextProps.metric,
             rpe: nextProps.rpe,
@@ -70,6 +72,7 @@ class EditSetHeader extends Component {
         }
     }
 
+    // TODO: save tags
     _save() {
         if (this.props.exercise !== this.state.exercise
             || this.props.weight !== this.state.weight
@@ -95,6 +98,15 @@ class EditSetHeader extends Component {
             return (<Text style={[styles.exerciseText, styles.placeholderText]}>Enter Exercise</Text>);
         }
         return (<Text style={styles.exerciseText}>{this.state.exercise}</Text>);
+    }
+
+    // TODO: rename exerciseText into something generic if this is going to use it
+    // TODO: display tags as pills
+    _displayTags() {
+        if (this.state.tags === undefined || this.state.tags === null || this.state.tags.length === 0) {
+            return (<Text style={[styles.exerciseText, styles.placeholderText]}>Enter Tags</Text>);
+        }
+        return (<Text style={styles.exerciseText}>{this.state.tags}</Text>);
     }
 
     _displaySetNumber() {
@@ -169,9 +181,9 @@ class EditSetHeader extends Component {
 
                     <View>
                         <View style={[styles.field, {flex: 1}]}>
-                            <View style={{height: 30, justifyContent: 'center'}}>
-                                <Text>Tags</Text>
-                            </View>
+                            <TouchableHighlight onPress={() => this.props.editTags(this.props.setID, this.state.tags)}>
+                                {this._displayTags()}
+                            </TouchableHighlight>
                         </View>
                     </View>
                 </View>

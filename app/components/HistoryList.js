@@ -19,6 +19,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import HistoryFilterBarScreen from '../containers/HistoryFilterBarScreen';
 import HistoryLoadingFooterScreen from '../containers/HistoryLoadingFooterScreen';
 import EditHistoryExerciseScreen from '../containers/EditHistoryExerciseScreen';
+import EditHistoryTagsScreen from '../containers/EditHistoryTagsScreen';
 
 class HistoryList extends Component {
 
@@ -51,6 +52,7 @@ class HistoryList extends Component {
 								setID={item.setID}
 								removed={item.removed}
 								exercise={item.exercise}
+								tags={item.tags}
 								weight={item.weight}
 								metric={item.metric}
 								rpe={item.rpe}
@@ -90,6 +92,7 @@ class HistoryList extends Component {
 		return (
 			<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
 				<EditHistoryExerciseScreen />
+				<EditHistoryTagsScreen />
 
 				<View style={{ flex: 1 }}>
 					{list}

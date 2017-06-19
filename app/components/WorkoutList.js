@@ -13,6 +13,7 @@ import {
 } from 'react-native'
 import EditWorkoutSetScreen from '../containers/EditWorkoutSetScreen';
 import EditWorkoutExerciseScreen from '../containers/EditWorkoutExerciseScreen';
+import EditWorkoutTagsScreen from '../containers/EditWorkoutTagsScreen';
 import SetDescription from './SetDescription';
 import SetData from './SetData';
 import SetRest from './SetRest';
@@ -64,6 +65,7 @@ class WorkoutList extends Component {
 								setID={item.setID}
 								removed={item.removed}
 								exercise={item.exercise}
+								tags={item.tags}
 								weight={item.weight}
 								metric={item.metric}
 								rpe={item.rpe}
@@ -102,6 +104,7 @@ class WorkoutList extends Component {
 		return (
 			<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
 				<EditWorkoutExerciseScreen />
+				<EditWorkoutTagsScreen />
 
 				<View style={{ flex: 1 }}>
 					{list}

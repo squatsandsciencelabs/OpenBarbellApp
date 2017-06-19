@@ -1,36 +1,36 @@
-// app/containers/EditWorkoutExerciseScreen.js
+// app/containers/EditHistoryTagsScreen.js
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import EditTextModal from '../components/EditTextModal';
 import * as SetActionCreators from '../actions/SetActionCreators';
-import * as WorkoutActionCreators from '../actions/WorkoutActionCreators';
+import * as HistoryActionCreators from '../actions/HistoryActionCreators';
 import * as SuggestionsReducer from '../reducers/SuggestionsReducer';
 
 const mapStateToProps = (state) => {
 	// save the model
-	let model = state.suggestions.exerciseModel;
+	let model = state.suggestions.tagsModel;
 	
 	return {
-        title: 'Edit Exercise',
-		placeholder: 'Enter Exercise',
-		text: state.workout.editingExercise,
-		setID: state.workout.editingExerciseSetID,
+        title: 'Edit Tags',
+		placeholder: 'Enter Tag',
+		text: '',
+		setID: state.history.editingTagsSetID,
 		generateSuggestions: (input) => { return SuggestionsReducer.generateSuggestions(input, model) },
-        modalShowing: state.workout.editingExerciseSetID !== null
+        modalShowing: state.history.editingTagsSetID !== null
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
-		updateSet: SetActionCreators.updateWorkoutSet,
-        closeModal: WorkoutActionCreators.endEditWorkoutExerciseName,
+		updateSet: SetActionCreators.updateHistorySet,
+        closeModal: HistoryActionCreators.endEditHistoryTags,
 	}, dispatch);
 };
 
-const EditWorkoutExerciseScreen = connect(
+const EditHistoryTagsScreen = connect(
 	mapStateToProps,
 	mapDispatchToProps
 )(EditTextModal);
 
-export default EditWorkoutExerciseScreen;
+export default EditHistoryTagsScreen;

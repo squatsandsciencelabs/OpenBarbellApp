@@ -10,6 +10,7 @@ const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
 		updateSet: SetActionCreators.updateHistorySet,
 		editExercise: HistoryActionCreators.beginEditHistoryExerciseName,
+		editTags: HistoryActionCreators.beginEditHistoryTags,
 	}, dispatch);
 };
 

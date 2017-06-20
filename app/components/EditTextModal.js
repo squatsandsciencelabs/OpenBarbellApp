@@ -17,7 +17,7 @@ class EditTextModal extends Component {
     constructor(props) {
 		super(props);
 
-		this.state = { text: this.props.text };
+		this.state = { text: this.props.text, inputs: [] };
 	}
 
     componentWillReceiveProps(nextProps) {
@@ -31,18 +31,36 @@ class EditTextModal extends Component {
     // ACTIONS
 
     _onChangeText(input) {
+        if (this.props.multipleInput && input.slice(-1) === '\n') {
+            // enter tapped in multiline mode, update accordingly
+            var inputs = [...this.state.inputs, this.state.text];
+            input = '';
+        } else {
+            // normal
+            var inputs = this.state.inputs;
+        }
+
         let suggestions = this.props.generateSuggestions(input);
         let suggestionsVM = suggestions.map((suggestion) => { return {key: suggestion}} );
         console.log(JSON.stringify(suggestionsVM));
         this.setState({
             text: input,
-            suggestions: suggestionsVM
+            suggestions: suggestionsVM,
+            inputs: inputs
         });
     }
 
     _tappedDone() {
         this.props.closeModal();
         this.props.updateSet(this.props.setID, this.state.text);
+    }
+
+    _onSubmit() {
+        if (this.props.multipleInput) {
+            
+        } else {
+            this._tappedDone();
+        }
     }
 
     // RENDER
@@ -78,6 +96,12 @@ class EditTextModal extends Component {
     }
 
     _renderTextField() {
+        if (this.props.multipleInput) {
+            var returnKeyType = 'next';
+        } else {
+            var returnKeyType = 'done';
+        }
+
         return (
             <View style={[{height: 50, marginHorizontal: 10, backgroundColor: 'white'}, styles.shadow]}>
                 <TextInput
@@ -86,7 +110,10 @@ class EditTextModal extends Component {
                     editable = {true}
                     autoFocus={true}
                     placeholder={this.props.placeholder}
+                    returnKeyType={returnKeyType}
                     value={this.state.text}
+                    multiline={this.props.multipleInput}
+                    onSubmitEditing = {() => this._tappedDone()}
                     onChangeText={(text) => this._onChangeText(text) }
                 />
             </View>

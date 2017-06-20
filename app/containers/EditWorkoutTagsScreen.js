@@ -15,6 +15,7 @@ const mapStateToProps = (state) => {
         title: 'Edit Tags',
 		placeholder: 'Enter Tag',
 		text: '',
+		multipleInput: false,
 		setID: state.workout.editingTagsSetID,
 		generateSuggestions: (input) => { return SuggestionsReducer.generateSuggestions(input, model) },
         modalShowing: state.workout.editingTagsSetID !== null

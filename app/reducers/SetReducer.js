@@ -188,6 +188,9 @@ const updateHistorySetTags = (state, action) => {
 	stateChanges.historyData = Object.assign({}, historyData, {
 		[setID]: newSet
 	});
+	if (!state.setIDsToUpload.includes(setID)) {
+		stateChanges.setIDsToUpload = [...state.setIDsToUpload, setID];
+	}
 
 	return Object.assign({}, state, stateChanges);
 };

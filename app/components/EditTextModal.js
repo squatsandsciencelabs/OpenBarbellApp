@@ -24,8 +24,10 @@ class EditTextModal extends Component {
 	}
 
     componentWillReceiveProps(nextProps) {
-        // clear inputs
-        if (this.props.modalShowing !== nextProps.modalShowing) {
+        // inputs
+        if (nextProps.inputs !== undefined) {
+            this.setState({inputs: [...nextProps.inputs]});
+        } else {
             this.setState({inputs: []});
         }
 

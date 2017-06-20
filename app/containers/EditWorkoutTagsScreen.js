@@ -17,6 +17,7 @@ const mapStateToProps = (state) => {
 		text: '',
 		multipleInput: true,
 		setID: state.workout.editingTagsSetID,
+		inputs: state.workout.editingTags,
 		generateSuggestions: (input) => { return SuggestionsReducer.generateSuggestions(input, model) },
         modalShowing: state.workout.editingTagsSetID !== null
 	};

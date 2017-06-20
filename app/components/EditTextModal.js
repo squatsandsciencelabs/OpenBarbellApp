@@ -21,6 +21,12 @@ class EditTextModal extends Component {
 	}
 
     componentWillReceiveProps(nextProps) {
+        // clear inputs
+        if (this.props.modalShowing !== nextProps.modalShowing) {
+            this.setState({inputs: []});
+        }
+
+        // set text
         let text = nextProps.text;
         if (text === null || text === undefined) {
             text = '';
@@ -33,11 +39,10 @@ class EditTextModal extends Component {
     _onChangeText(input) {
         if (this.props.multipleInput && input.slice(-1) === '\n') {
             // enter tapped in multiline mode, update accordingly
-            var inputs = [...this.state.inputs, this.state.text];
+            this.setState({
+                inputs: [...this.state.inputs, this.state.text]
+            });
             input = '';
-        } else {
-            // normal
-            var inputs = this.state.inputs;
         }
 
         let suggestions = this.props.generateSuggestions(input);
@@ -46,7 +51,6 @@ class EditTextModal extends Component {
         this.setState({
             text: input,
             suggestions: suggestionsVM,
-            inputs: inputs
         });
     }
 
@@ -92,7 +96,22 @@ class EditTextModal extends Component {
     }
 
     _renderHeader() {
+        if (!this.props.multipleInput) {
+            return;
+        }
 
+        console.log("inputs " + this.state.inputs);
+
+        var pills = [];
+        this.state.inputs.map((input) => {
+            pills.push(<Text>{input}</Text>);
+        });
+
+        return (
+            <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+                {pills}
+            </View>
+        );
     }
 
     _renderTextField() {

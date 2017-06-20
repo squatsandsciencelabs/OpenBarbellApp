@@ -72,6 +72,14 @@ class EditTextModal extends Component {
         this.props.closeModal();
     }
 
+    _tappedPill(index) {
+        let inputsCopy = [...this.state.inputs];
+        inputsCopy.splice(index, 1);
+        this.setState({
+            inputs: inputsCopy
+        });
+    }
+
     // RENDER
 
     // TODO: grab the blue color for cancel from a global stylesheet
@@ -109,7 +117,12 @@ class EditTextModal extends Component {
 
         var pills = [];
         this.state.inputs.map((input) => {
-            pills.push(<Text>{input}</Text>);
+            let position = pills.length;
+            pills.push(
+                <TouchableHighlight key={position} onPress={() => this._tappedPill(position) }>
+                    <Text>{input}</Text>
+                </TouchableHighlight>
+            );
         });
 
         return (

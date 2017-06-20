@@ -63,6 +63,16 @@ class EditTextModal extends Component {
         });
     }
 
+    _tappedRow(input) {
+        if (this.props.multipleInput) {
+            this.setState({
+                inputs: [...this.state.inputs, input]
+            });
+        } else {
+            this._onChangeText(input);
+        }
+    }
+
     _tappedDone() {
         if (this.props.multipleInput) {
             this.props.updateSetMultiple(this.state.setID, this.state.inputs);
@@ -175,7 +185,7 @@ class EditTextModal extends Component {
 
     _renderRow(item) {
         return (
-            <TouchableHighlight onPress={() => this._onChangeText(item.key)}>
+            <TouchableHighlight onPress={() => this._tappedRow(item.key)}>
                 <View style={[{backgroundColor: 'white', height: 50, justifyContent: 'center'}, styles.rowShadow]}>
                     <Text style={{marginHorizontal: 10}}>{item.key}</Text>
                 </View>

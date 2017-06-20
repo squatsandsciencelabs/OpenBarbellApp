@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
-		updateSet: SetActionCreators.updateWorkoutSet,
+		updateSetSingle: SetActionCreators.updateWorkoutSet,
         closeModal: WorkoutActionCreators.endEditWorkoutExerciseName,
 	}, dispatch);
 };

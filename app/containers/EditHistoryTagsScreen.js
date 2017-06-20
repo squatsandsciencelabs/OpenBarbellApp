@@ -24,7 +24,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
-		updateSetSingle: SetActionCreators.updateHistorySet,
 		updateSetMultiple: SetActionCreators.updateHistorySetTags,
         closeModal: HistoryActionCreators.endEditHistoryTags,
 	}, dispatch);

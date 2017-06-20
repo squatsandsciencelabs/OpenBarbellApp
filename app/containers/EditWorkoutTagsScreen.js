@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
         title: 'Edit Tags',
 		placeholder: 'Enter Tag',
 		text: '',
-		multipleInput: false,
+		multipleInput: true,
 		setID: state.workout.editingTagsSetID,
 		generateSuggestions: (input) => { return SuggestionsReducer.generateSuggestions(input, model) },
         modalShowing: state.workout.editingTagsSetID !== null
@@ -24,7 +24,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
-		updateSetSingle: SetActionCreators.updateWorkoutSet,
 		updateSetMultiple: SetActionCreators.updateWorkoutSetTags,
         closeModal: WorkoutActionCreators.endEditWorkoutTags,
 	}, dispatch);

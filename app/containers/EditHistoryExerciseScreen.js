@@ -23,7 +23,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
-		updateSet: SetActionCreators.updateHistorySet,
+		updateSetSingle: SetActionCreators.updateHistorySet,
         closeModal: HistoryActionCreators.endEditHistoryExerciseName,
 	}, dispatch);
 };

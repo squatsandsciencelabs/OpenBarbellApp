@@ -2,7 +2,9 @@
 
 import {
 	UPDATE_WORKOUT_SET,
+	UPDATE_WORKOUT_SET_TAGS,
 	UPDATE_HISTORY_SET,
+	UPDATE_HISTORY_SET_TAGS,
 	ADD_REP_DATA,
 	UPDATE_WORKOUT_REP,
 	UPDATE_HISTORY_REP,
@@ -14,7 +16,7 @@ import {
 	RE_ADD_SETS_TO_UPLOAD,
 	UPDATE_SET_DATA_FROM_SERVER,
 	UPDATE_REVISION_FROM_SERVER,
-	CLEAR_HISTORY
+	CLEAR_HISTORY,
 } from '../ActionTypes';
 import uuidV4 from 'uuid/v4';
 import DeviceInfo from 'react-native-device-info';
@@ -24,8 +26,12 @@ const SetReducer = (state = createDefaultState(), action) => {
 	switch (action.type) {
 		case UPDATE_WORKOUT_SET:
 			return updateWorkoutSet(state, action);
+		case UPDATE_WORKOUT_SET_TAGS:
+			return updateWorkoutSetTags(state, action);
 		case UPDATE_HISTORY_SET:
 			return updateHistorySet(state, action);
+		case UPDATE_HISTORY_SET_TAGS:
+			return updateHistorySetTags(state, action);
 		case ADD_REP_DATA:
 			return addRepData(state, action);
 		case UPDATE_WORKOUT_REP:
@@ -88,7 +94,6 @@ const createDefaultState = () => {
 // NOTE - using one slice to copy, then altering, as the spread operator + slice was buggy and deletes rows
 const updateWorkoutSet = (state, action) => {
 	let newWorkoutData = state.workoutData.slice(0);
-
 	let setIndex = newWorkoutData.findIndex( set => set.setID === action.setID );
 	let set = newWorkoutData[setIndex];
 
@@ -106,6 +111,23 @@ const updateWorkoutSet = (state, action) => {
 		changes.rpe = action.rpe;
 	}
 
+	newWorkoutData[setIndex] = Object.assign({}, set, changes);
+
+	return Object.assign({}, state, {
+		workoutData: newWorkoutData
+	});
+};
+
+// UPDATE_WORKOUT_SET_TAGS
+
+const updateWorkoutSetTags = (state, action) => {
+	let newWorkoutData = state.workoutData.slice(0);
+	let setIndex = newWorkoutData.findIndex( set => set.setID === action.setID );
+	let set = newWorkoutData[setIndex];
+
+	let changes = {
+		tags: [...action.tags]
+	};
 	newWorkoutData[setIndex] = Object.assign({}, set, changes);
 
 	return Object.assign({}, state, {
@@ -144,6 +166,28 @@ const updateHistorySet = (state, action) => {
 	if (!state.setIDsToUpload.includes(setID)) {
 		stateChanges.setIDsToUpload = [...state.setIDsToUpload, setID];
 	}
+
+	return Object.assign({}, state, stateChanges);
+};
+
+// UPDATE_HISTORY_SET_TAGS
+
+const updateHistorySetTags = (state, action) => {
+	let setID = action.setID;
+	let historyData = state.historyData;
+	let set = historyData[setID];
+
+	// new set
+	let setChanges = {
+		tags: [...action.tags]
+	};
+	let newSet = Object.assign({}, set, setChanges);
+
+	// state changes
+	let stateChanges = {};
+	stateChanges.historyData = Object.assign({}, historyData, {
+		[setID]: newSet
+	});
 
 	return Object.assign({}, state, stateChanges);
 };

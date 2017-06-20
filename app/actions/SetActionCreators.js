@@ -2,7 +2,9 @@
 
 import {
 	UPDATE_WORKOUT_SET,
+	UPDATE_WORKOUT_SET_TAGS,
 	UPDATE_HISTORY_SET,
+	UPDATE_HISTORY_SET_TAGS,
 	UPDATE_WORKOUT_REP,
 	UPDATE_HISTORY_REP,
 	END_SET,
@@ -41,6 +43,16 @@ export const updateWorkoutSet = (setID, exercise = null, weight = null, metric =
 	return action;
 };
 
+export const updateWorkoutSetTags = (setID, tags = []) => (dispatch) => {
+	var action = {
+		type: UPDATE_WORKOUT_SET_TAGS,
+		setID: setID,
+		tags: tags
+	};
+	dispatch(action);
+	dispatch(ApiActionCreators.syncData());
+};
+
 export const updateHistorySet = (setID, exercise = null, weight = null, metric = null, rpe = null) => (dispatch) => {
 	var action = {
 		type: UPDATE_HISTORY_SET
@@ -61,6 +73,16 @@ export const updateHistorySet = (setID, exercise = null, weight = null, metric =
 		action.rpe = rpe;
 	}
 
+	dispatch(action);
+	dispatch(ApiActionCreators.syncData());
+};
+
+export const updateHistorySetTags = (setID, tags = []) => (dispatch) => {
+	var action = {
+		type: UPDATE_HISTORY_SET_TAGS,
+		setID: setID,
+		tags: tags
+	};
 	dispatch(action);
 	dispatch(ApiActionCreators.syncData());
 };

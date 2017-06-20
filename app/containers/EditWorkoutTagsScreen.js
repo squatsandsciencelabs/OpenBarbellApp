@@ -24,7 +24,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
-		updateSet: SetActionCreators.updateWorkoutSet,
+		updateSetSingle: SetActionCreators.updateWorkoutSet,
+		updateSetMultiple: SetActionCreators.updateWorkoutSetTags,
         closeModal: WorkoutActionCreators.endEditWorkoutTags,
 	}, dispatch);
 };

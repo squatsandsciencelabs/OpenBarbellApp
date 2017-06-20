@@ -17,13 +17,21 @@ class EditTextModal extends Component {
     constructor(props) {
 		super(props);
 
-		this.state = { text: this.props.text, inputs: [] };
+		this.state = {
+            text: this.props.text,
+            inputs: [],
+        };
 	}
 
     componentWillReceiveProps(nextProps) {
         // clear inputs
         if (this.props.modalShowing !== nextProps.modalShowing) {
             this.setState({inputs: []});
+        }
+
+        // save set id
+        if (nextProps.setID !== null) {
+            this.setState({setID: nextProps.setID});
         }
 
         // set text
@@ -47,7 +55,6 @@ class EditTextModal extends Component {
 
         let suggestions = this.props.generateSuggestions(input);
         let suggestionsVM = suggestions.map((suggestion) => { return {key: suggestion}} );
-        console.log(JSON.stringify(suggestionsVM));
         this.setState({
             text: input,
             suggestions: suggestionsVM,
@@ -55,16 +62,12 @@ class EditTextModal extends Component {
     }
 
     _tappedDone() {
-        this.props.closeModal();
-        this.props.updateSet(this.props.setID, this.state.text);
-    }
-
-    _onSubmit() {
         if (this.props.multipleInput) {
-            
+            this.props.updateSetMultiple(this.state.setID, this.state.inputs);
         } else {
-            this._tappedDone();
+            this.props.updateSetSingle(this.state.setID, this.state.text);
         }
+        this.props.closeModal();
     }
 
     // RENDER
@@ -95,12 +98,12 @@ class EditTextModal extends Component {
         )
     }
 
+    // TODO: display tags as pills
+    // TODO: remove tag options
     _renderHeader() {
         if (!this.props.multipleInput) {
             return;
         }
-
-        console.log("inputs " + this.state.inputs);
 
         var pills = [];
         this.state.inputs.map((input) => {

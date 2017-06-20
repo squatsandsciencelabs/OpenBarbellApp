@@ -106,7 +106,13 @@ class EditSetHeader extends Component {
         if (this.state.tags === undefined || this.state.tags === null || this.state.tags.length === 0) {
             return (<Text style={[styles.exerciseText, styles.placeholderText]}>Enter Tags</Text>);
         }
-        return (<Text style={styles.exerciseText}>{this.state.tags}</Text>);
+
+        var pills = [];
+        this.state.tags.map((tag) => {
+            pills.push(<Text>{tag}</Text>);
+        });
+
+        return (<Text style={styles.exerciseText}>{pills}</Text>);
     }
 
     _displaySetNumber() {

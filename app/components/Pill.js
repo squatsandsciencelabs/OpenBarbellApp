@@ -11,8 +11,10 @@ class Pill extends PureComponent {
 
     render() {
         return (
-            <View style={styles.pill} ref='COMMON_THREAD_ROW'>
-                <Text style={styles.pillText}>{this.props.text}</Text>
+            <View {...this.props}>
+                <View style={styles.pill} ref='COMMON_THREAD_ROW'>
+                    <Text style={styles.pillText}>{this.props.text}</Text>
+                </View>
             </View>
         );
     }

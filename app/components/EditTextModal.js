@@ -169,9 +169,7 @@ class EditTextModal extends Component {
             let text = input;
             pills.push(
                 <TouchableHighlight key={position} onPress={() => this._tappedPill(position) }>
-                    <View style={{marginRight: 5, marginBottom: 3}}>
-                        <Pill text={text} />
-                    </View>
+                    <Pill text={text} style={{paddingRight: 5, paddingBottom: 3}} />
                 </TouchableHighlight>
             );
         });

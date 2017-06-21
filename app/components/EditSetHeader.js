@@ -7,6 +7,7 @@
 import React, {Component} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Keyboard, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Pill from './Pill';
 
 class EditSetHeader extends Component {
 
@@ -72,13 +73,11 @@ class EditSetHeader extends Component {
         }
     }
 
-    // TODO: save tags
     _save() {
         if (this.props.exercise !== this.state.exercise
             || this.props.weight !== this.state.weight
             || this.props.metric !== this.state.metric
             || this.props.rpe !== this.state.rpe) {
-            // save
             this.props.updateSet(this.props.setID, this.state.exercise, this.state.weight, this.state.metric, this.state.rpe);
         }
     }
@@ -100,19 +99,22 @@ class EditSetHeader extends Component {
         return (<Text style={styles.exerciseText}>{this.state.exercise}</Text>);
     }
 
-    // TODO: rename exerciseText into something generic if this is going to use it
-    // TODO: display tags as pills
     _displayTags() {
         if (this.state.tags === undefined || this.state.tags === null || this.state.tags.length === 0) {
             return (<Text style={[styles.exerciseText, styles.placeholderText]}>Enter Tags</Text>);
         }
 
         var pills = [];
+        let position = 0;
         this.state.tags.map((tag) => {
-            pills.push(<Text>{tag}</Text>);
+            let key = position;
+            pills.push(
+                <Pill key={key} text={tag} style={{paddingRight: 5, paddingBottom: 3}} />
+            );
+            position++;
         });
 
-        return (<Text style={styles.exerciseText}>{pills}</Text>);
+        return (<View style={styles.tagField}>{pills}</View>);
     }
 
     _displaySetNumber() {
@@ -207,7 +209,7 @@ const styles = StyleSheet.create({
         borderRadius: 3,
         marginBottom: 5,
         zIndex: 2,
-        height: (Platform.OS === 'ios') ? 30 : 40,
+        minHeight: (Platform.OS === 'ios') ? 30 : 40,
     },
     fieldDetails: {
         position: 'absolute',
@@ -228,6 +230,13 @@ const styles = StyleSheet.create({
         fontSize: 15,
         paddingRight: 30,
         color: 'black'
+    },
+    tagField: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        minHeight: (Platform.OS === 'ios') ? 30 : 40,
+        paddingLeft: 2,
+        paddingRight: 0,
     },
     placeholderText: {
         color: 'lightgray'

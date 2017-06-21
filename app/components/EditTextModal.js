@@ -126,6 +126,15 @@ class EditTextModal extends Component {
         this.props.closeModal();
     }
 
+    _tappedEnter() {
+        if (this.props.multipleInput) {
+            // this is android only, iOS instead uses the \n check in onChangeText
+            this._addNewPill(this.state.text, true);
+        } else {
+            this._tappedDone();
+        }
+    }
+
     _tappedPill(index) {
         this._removePill(index);
     }
@@ -199,7 +208,7 @@ class EditTextModal extends Component {
                     returnKeyType={returnKeyType}
                     value={this.state.text}
                     multiline={this.props.multipleInput}
-                    onSubmitEditing = {() => this._tappedDone()}
+                    onSubmitEditing = {() => this._tappedEnter()}
                     onChangeText={(text) => this._onChangeText(text) }
                 />
             </View>

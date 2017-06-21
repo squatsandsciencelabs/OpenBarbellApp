@@ -96,19 +96,20 @@ const generateAutocompleteTagsModel = (historyData) => {
 	return model;
 };
 
-export const generateSuggestions = (input, model) => {
+export const generateSuggestions = (model, input, ignore = []) => {
     // lowercase comparisons
 	var lowercaseInput = '';
 	if (input !== null) {
 		lowercaseInput = input.toLowerCase();
 	}
+	ignore = ignore.map((value) => value.toLowerCase());
 
 	// declare variables
 	let matches = [];
 
 	// get all matches
 	for (var property in model) {
-		if (model.hasOwnProperty(property) && property.indexOf(lowercaseInput) !== -1) {
+		if (model.hasOwnProperty(property) && !ignore.includes(property) && property.indexOf(lowercaseInput) !== -1) {
 			matches.push(model[property]);
 		}
 	}

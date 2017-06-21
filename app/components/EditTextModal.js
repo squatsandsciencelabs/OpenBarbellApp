@@ -26,10 +26,11 @@ class EditTextModal extends Component {
     componentWillReceiveProps(nextProps) {
         // inputs
         if (nextProps.inputs !== undefined) {
-            this.setState({inputs: [...nextProps.inputs]});
+            var inputs = [...nextProps.inputs];
         } else {
-            this.setState({inputs: []});
+            var inputs = [];
         }
+        this.setState({inputs: inputs});
 
         // save set id
         if (nextProps.setID !== null) {
@@ -41,33 +42,55 @@ class EditTextModal extends Component {
         if (text === null || text === undefined) {
             text = '';
         }
-        this._onChangeText(text);
+        this._updateText(text);
+
+        // update suggestions
+        this._updateSuggestions(text, inputs);
 	}
+
+    // HELPERS
+
+    _addNewPill(input) {
+        let inputs = [...this.state.inputs, input];
+        this.setState({
+            inputs: inputs
+        });
+        this._updateSuggestions(this.state.text, inputs);
+    }
+
+    _updateSuggestions(input=this.state.text, inputs=this.state.inputs) {
+        let suggestions = this.props.generateSuggestions(input, inputs);
+        let suggestionsVM = suggestions.map((suggestion) => { return {key: suggestion}} );
+        this.setState({
+            suggestions: suggestionsVM,
+        });
+    }
+
+    _updateText(input) {
+        this.setState({
+            text: input,
+        });
+        this._updateSuggestions(input);
+    }
 
     // ACTIONS
 
     _onChangeText(input) {
         if (this.props.multipleInput && input.slice(-1) === '\n') {
             // enter tapped in multiline mode, update accordingly
+            this._addNewPill(this.state.text);
             this.setState({
-                inputs: [...this.state.inputs, this.state.text]
+                text: '',
             });
-            input = '';
+        } else {
+            // update the text
+            this._updateText(input);
         }
-
-        let suggestions = this.props.generateSuggestions(input);
-        let suggestionsVM = suggestions.map((suggestion) => { return {key: suggestion}} );
-        this.setState({
-            text: input,
-            suggestions: suggestionsVM,
-        });
     }
 
     _tappedRow(input) {
         if (this.props.multipleInput) {
-            this.setState({
-                inputs: [...this.state.inputs, input]
-            });
+            this._addNewPill(input);
         } else {
             this._onChangeText(input);
         }
@@ -88,6 +111,7 @@ class EditTextModal extends Component {
         this.setState({
             inputs: inputsCopy
         });
+        this._updateSuggestions(this.state.text, inputsCopy);
     }
 
     // RENDER

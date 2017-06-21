@@ -10,7 +10,7 @@ import * as SuggestionsReducer from '../reducers/SuggestionsReducer';
 const mapStateToProps = (state) => {
 	// save the model
 	let model = state.suggestions.tagsModel;
-	
+
 	return {
         title: 'Edit Tags',
 		placeholder: 'Enter Tag',
@@ -18,7 +18,7 @@ const mapStateToProps = (state) => {
 		multipleInput: true,
 		setID: state.history.editingTagsSetID,
 		inputs: state.history.editingTags,
-		generateSuggestions: (input) => { return SuggestionsReducer.generateSuggestions(input, model) },
+		generateSuggestions: (input, ignore) => { return SuggestionsReducer.generateSuggestions(model, input, ignore) },
         modalShowing: state.history.editingTagsSetID !== null
 	};
 };

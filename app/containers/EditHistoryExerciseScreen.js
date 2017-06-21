@@ -16,7 +16,7 @@ const mapStateToProps = (state) => {
 		placeholder: 'Enter Exercise',
 		text: state.history.editingExercise,
 		setID: state.history.editingExerciseSetID,
-		generateSuggestions: (input) => { return SuggestionsReducer.generateSuggestions(input, model) },
+		generateSuggestions: (input) => { return SuggestionsReducer.generateSuggestions(model, input) },
         modalShowing: state.history.editingExerciseSetID !== null
 	};
 };

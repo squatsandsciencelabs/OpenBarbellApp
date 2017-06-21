@@ -225,8 +225,8 @@ const styles = StyleSheet.create({
     },
     exerciseText: {
         height: (Platform.OS === 'ios') ? 30 : 40,
-        marginTop: (Platform.OS === 'ios') ? 5 : 8,
-        marginLeft: (Platform.OS === 'ios') ? 0 : 4,
+        paddingTop: (Platform.OS === 'ios') ? 6 : 8,
+        paddingLeft: (Platform.OS === 'ios') ? 0 : 4,
         fontSize: 15,
         paddingRight: 30,
         color: 'black'

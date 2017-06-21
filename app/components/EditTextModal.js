@@ -50,12 +50,42 @@ class EditTextModal extends Component {
 
     // HELPERS
 
-    _addNewPill(input) {
+    _addNewPill(input, resetText=false) {
+        // valid check
+        if (this.state.inputs.includes(input)) {
+            return;
+        }
+
+        if (resetText) {
+            var text = '';
+            this.setState({
+                text: text,
+            });
+        } else {
+            var text = this.state.text;
+        }
+
         let inputs = [...this.state.inputs, input];
         this.setState({
             inputs: inputs
         });
-        this._updateSuggestions(this.state.text, inputs);
+        this._updateSuggestions(text, inputs);
+    }
+
+    _removePill(index) {
+        let inputsCopy = [...this.state.inputs];
+        inputsCopy.splice(index, 1);
+        this.setState({
+            inputs: inputsCopy
+        });
+        this._updateSuggestions(this.state.text, inputsCopy);
+    }
+
+    _updateText(input) {
+        this.setState({
+            text: input,
+        });
+        this._updateSuggestions(input);
     }
 
     _updateSuggestions(input=this.state.text, inputs=this.state.inputs) {
@@ -66,22 +96,12 @@ class EditTextModal extends Component {
         });
     }
 
-    _updateText(input) {
-        this.setState({
-            text: input,
-        });
-        this._updateSuggestions(input);
-    }
-
     // ACTIONS
 
     _onChangeText(input) {
         if (this.props.multipleInput && input.slice(-1) === '\n') {
             // enter tapped in multiline mode, update accordingly
-            this._addNewPill(this.state.text);
-            this.setState({
-                text: '',
-            });
+            this._addNewPill(this.state.text, true);
         } else {
             // update the text
             this._updateText(input);
@@ -106,12 +126,7 @@ class EditTextModal extends Component {
     }
 
     _tappedPill(index) {
-        let inputsCopy = [...this.state.inputs];
-        inputsCopy.splice(index, 1);
-        this.setState({
-            inputs: inputsCopy
-        });
-        this._updateSuggestions(this.state.text, inputsCopy);
+        this._removePill(index);
     }
 
     // RENDER

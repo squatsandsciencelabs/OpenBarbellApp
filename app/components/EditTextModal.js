@@ -11,6 +11,7 @@ import {
 	StyleSheet,
     FlatList
 }  from 'react-native';
+import Pill from './Pill';
 
 class EditTextModal extends Component {
 
@@ -157,8 +158,6 @@ class EditTextModal extends Component {
         )
     }
 
-    // TODO: display tags as pills
-    // TODO: remove tag options
     _renderHeader() {
         if (!this.props.multipleInput) {
             return;
@@ -167,15 +166,18 @@ class EditTextModal extends Component {
         var pills = [];
         this.state.inputs.map((input) => {
             let position = pills.length;
+            let text = input;
             pills.push(
                 <TouchableHighlight key={position} onPress={() => this._tappedPill(position) }>
-                    <Text>{input}</Text>
+                    <View style={{marginRight: 5, marginBottom: 3}}>
+                        <Pill text={text} />
+                    </View>
                 </TouchableHighlight>
             );
         });
 
         return (
-            <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+            <View style={{flexDirection: 'row', flexWrap: 'wrap', paddingLeft: 10, paddingRight: 5}}>
                 {pills}
             </View>
         );

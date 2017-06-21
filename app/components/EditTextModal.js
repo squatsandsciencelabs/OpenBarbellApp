@@ -11,38 +11,132 @@ import {
 	StyleSheet,
     FlatList
 }  from 'react-native';
+import Pill from './Pill';
 
 class EditTextModal extends Component {
 
     constructor(props) {
 		super(props);
 
-		this.state = { text: this.props.text };
+		this.state = {
+            text: this.props.text,
+            inputs: [],
+        };
 	}
 
     componentWillReceiveProps(nextProps) {
+        // inputs
+        if (nextProps.inputs !== undefined) {
+            var inputs = [...nextProps.inputs];
+        } else {
+            var inputs = [];
+        }
+        this.setState({inputs: inputs});
+
+        // save set id
+        if (nextProps.setID !== null) {
+            this.setState({setID: nextProps.setID});
+        }
+
+        // set text
         let text = nextProps.text;
         if (text === null || text === undefined) {
             text = '';
         }
-        this._onChangeText(text);
+        this._updateText(text);
+
+        // update suggestions
+        this._updateSuggestions(text, inputs);
 	}
+
+    // HELPERS
+
+    _addNewPill(input, resetText=false) {
+        // valid check
+        if (this.state.inputs.includes(input)) {
+            return;
+        }
+
+        if (resetText) {
+            var text = '';
+            this.setState({
+                text: text,
+            });
+        } else {
+            var text = this.state.text;
+        }
+
+        let inputs = [...this.state.inputs, input];
+        this.setState({
+            inputs: inputs
+        });
+        this._updateSuggestions(text, inputs);
+    }
+
+    _removePill(index) {
+        let inputsCopy = [...this.state.inputs];
+        inputsCopy.splice(index, 1);
+        this.setState({
+            inputs: inputsCopy
+        });
+        this._updateSuggestions(this.state.text, inputsCopy);
+    }
+
+    _updateText(input) {
+        this.setState({
+            text: input,
+        });
+        this._updateSuggestions(input);
+    }
+
+    _updateSuggestions(input=this.state.text, inputs=this.state.inputs) {
+        let suggestions = this.props.generateSuggestions(input, inputs);
+        let suggestionsVM = suggestions.map((suggestion) => { return {key: suggestion}} );
+        this.setState({
+            suggestions: suggestionsVM,
+        });
+    }
 
     // ACTIONS
 
     _onChangeText(input) {
-        let suggestions = this.props.generateSuggestions(input);
-        let suggestionsVM = suggestions.map((suggestion) => { return {key: suggestion}} );
-        console.log(JSON.stringify(suggestionsVM));
-        this.setState({
-            text: input,
-            suggestions: suggestionsVM
-        });
+        if (this.props.multipleInput && input.slice(-1) === '\n') {
+            // enter tapped in multiline mode, update accordingly
+            this._addNewPill(this.state.text, true);
+        } else {
+            // update the text
+            this._updateText(input);
+        }
+    }
+
+    _tappedRow(input) {
+        if (this.props.multipleInput) {
+            this._addNewPill(input);
+        } else {
+            this._onChangeText(input);
+        }
     }
 
     _tappedDone() {
+        if (this.props.multipleInput) {
+            this.props.updateSetMultiple(this.state.setID, this.state.inputs);
+        } else {
+            this.props.updateSetSingle(this.state.setID, this.state.text);
+        }
         this.props.closeModal();
-        this.props.updateSet(this.props.setID, this.state.text);
+    }
+
+    _tappedEnter() {
+        if (this.props.multipleInput) {
+            // this is android only, iOS instead uses the \n check in onChangeText
+            this._addNewPill(this.state.text, true);
+        } else {
+            this._tappedDone();
+        }
+    }
+
+    _tappedPill(index) {
+        this._removePill(index);
     }
 
     // RENDER
@@ -74,10 +168,35 @@ class EditTextModal extends Component {
     }
 
     _renderHeader() {
+        if (!this.props.multipleInput) {
+            return;
+        }
 
+        var pills = [];
+        this.state.inputs.map((input) => {
+            let position = pills.length;
+            let text = input;
+            pills.push(
+                <TouchableHighlight key={position} onPress={() => this._tappedPill(position) }>
+                    <Pill text={text} style={{paddingRight: 5, paddingBottom: 3}} />
+                </TouchableHighlight>
+            );
+        });
+
+        return (
+            <View style={{flexDirection: 'row', flexWrap: 'wrap', paddingLeft: 10, paddingRight: 5}}>
+                {pills}
+            </View>
+        );
     }
 
     _renderTextField() {
+        if (this.props.multipleInput) {
+            var returnKeyType = 'next';
+        } else {
+            var returnKeyType = 'done';
+        }
+
         return (
             <View style={[{height: 50, marginHorizontal: 10, backgroundColor: 'white'}, styles.shadow]}>
                 <TextInput
@@ -86,7 +205,10 @@ class EditTextModal extends Component {
                     editable = {true}
                     autoFocus={true}
                     placeholder={this.props.placeholder}
+                    returnKeyType={returnKeyType}
                     value={this.state.text}
+                    multiline={this.props.multipleInput}
+                    onSubmitEditing = {() => this._tappedEnter()}
                     onChangeText={(text) => this._onChangeText(text) }
                 />
             </View>
@@ -111,7 +233,7 @@ class EditTextModal extends Component {
 
     _renderRow(item) {
         return (
-            <TouchableHighlight onPress={() => this._onChangeText(item.key)}>
+            <TouchableHighlight onPress={() => this._tappedRow(item.key)}>
                 <View style={[{backgroundColor: 'white', height: 50, justifyContent: 'center'}, styles.rowShadow]}>
                     <Text style={{marginHorizontal: 10}}>{item.key}</Text>
                 </View>

@@ -1,16 +1,11 @@
 // app/actions/WorkoutActionCreators.js
 
 import {
-	EDIT_WORKOUT_SET,
-	END_EDIT_WORKOUT_SET,
 	END_WORKOUT,
 	EDIT_WORKOUT_EXERCISE_NAME,
+	EDIT_WORKOUT_TAGS
 } from '../ActionTypes';
 import * as ApiActionCreators from '../actions/ApiActionCreators';
-
-export const editWorkoutSet = (setID) => ({ type: EDIT_WORKOUT_SET, editingSetID: setID });
-
-export const endEditWorkoutSet = () => ({ type: END_EDIT_WORKOUT_SET });
 
 export const endWorkout = () => (dispatch, getState) => {
 	var state = getState();
@@ -31,5 +26,17 @@ export const beginEditWorkoutExerciseName = (setID, exercise) => ({
 export const endEditWorkoutExerciseName = () => ({
     type: EDIT_WORKOUT_EXERCISE_NAME,
     exercise: '',
+	setID: null
+});
+
+export const beginEditWorkoutTags = (setID, tags) => ({
+    type: EDIT_WORKOUT_TAGS,
+    setID: setID,
+	tags: tags
+});
+
+export const endEditWorkoutTags = () => ({
+    type: EDIT_WORKOUT_TAGS,
+    tags: [],
 	setID: null
 });

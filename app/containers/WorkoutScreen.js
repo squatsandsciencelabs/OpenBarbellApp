@@ -89,6 +89,7 @@ const createHeaderViewModel = (set, setNumber) => ({
 	removed: set.removed,
 	setNumber: setNumber,
 	exercise: set.exercise,
+	tags: set.tags,
 	weight: set.weight,
 	metric: set.metric,
 	rpe: set.rpe
@@ -180,7 +181,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
 		endSet: SetActionCreators.endSet,
-		editWorkoutSet: WorkoutActionCreators.editWorkoutSet,
 		endWorkout: WorkoutActionCreators.endWorkout,
 		removeRep: SetActionCreators.removeWorkoutRep,
 		restoreRep: SetActionCreators.restoreWorkoutRep

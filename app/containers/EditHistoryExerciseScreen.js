@@ -15,15 +15,15 @@ const mapStateToProps = (state) => {
         title: 'Edit Exercise',
 		placeholder: 'Enter Exercise',
 		text: state.history.editingExercise,
-		setID: state.history.editingSetID,
-		generateSuggestions: (input) => { return SuggestionsReducer.generateSuggestions(input, model) },
-        modalShowing: state.history.editingSetID !== null
+		setID: state.history.editingExerciseSetID,
+		generateSuggestions: (input) => { return SuggestionsReducer.generateSuggestions(model, input) },
+        modalShowing: state.history.editingExerciseSetID !== null
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return bindActionCreators({
-		updateSet: SetActionCreators.updateHistorySet,
+		updateSetSingle: SetActionCreators.updateHistorySet,
         closeModal: HistoryActionCreators.endEditHistoryExerciseName,
 	}, dispatch);
 };

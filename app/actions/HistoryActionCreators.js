@@ -4,7 +4,8 @@ import {
 	UPDATE_HISTORY_FILTER,
 	EXPORTING_CSV,
 	LOADING_HISTORY,
-	EDIT_HISTORY_EXERCISE_NAME
+	EDIT_HISTORY_EXERCISE_NAME,
+	EDIT_HISTORY_TAGS
 } from '../ActionTypes';
 import * as GoogleDriveUploader from '../utility/GoogleDriveUploader';
 import * as CSVConverter from '../utility/CSVConverter';
@@ -81,5 +82,17 @@ export const beginEditHistoryExerciseName = (setID, exercise) => ({
 export const endEditHistoryExerciseName = () => ({
     type: EDIT_HISTORY_EXERCISE_NAME,
     exercise: '',
+	setID: null
+});
+
+export const beginEditHistoryTags = (setID, tags) => ({
+    type: EDIT_HISTORY_TAGS,
+    setID: setID,
+	tags: tags
+});
+
+export const endEditHistoryTags = () => ({
+    type: EDIT_HISTORY_TAGS,
+    tags: [],
 	setID: null
 });

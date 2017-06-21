@@ -7,6 +7,7 @@
 import React, {Component} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Keyboard, Platform } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Pill from './Pill';
 
 class EditSetHeader extends Component {
 
@@ -16,6 +17,7 @@ class EditSetHeader extends Component {
 		this.state = {
             setNumber: this.props.setNumber,
             exercise: this.props.exercise,
+            tags: this.props.tags,
             weight: this.props.weight,
             metric: this.props.metric,
             rpe: this.props.rpe,
@@ -29,6 +31,7 @@ class EditSetHeader extends Component {
         this.setState({
             setNumber: nextProps.setNumber,
             exercise: nextProps.exercise,
+            tags: nextProps.tags,
             weight: nextProps.weight,
             metric: nextProps.metric,
             rpe: nextProps.rpe,
@@ -75,7 +78,6 @@ class EditSetHeader extends Component {
             || this.props.weight !== this.state.weight
             || this.props.metric !== this.state.metric
             || this.props.rpe !== this.state.rpe) {
-            // save
             this.props.updateSet(this.props.setID, this.state.exercise, this.state.weight, this.state.metric, this.state.rpe);
         }
     }
@@ -95,6 +97,24 @@ class EditSetHeader extends Component {
             return (<Text style={[styles.exerciseText, styles.placeholderText]}>Enter Exercise</Text>);
         }
         return (<Text style={styles.exerciseText}>{this.state.exercise}</Text>);
+    }
+
+    _displayTags() {
+        if (this.state.tags === undefined || this.state.tags === null || this.state.tags.length === 0) {
+            return (<Text style={[styles.exerciseText, styles.placeholderText]}>Enter Tags</Text>);
+        }
+
+        var pills = [];
+        let position = 0;
+        this.state.tags.map((tag) => {
+            let key = position;
+            pills.push(
+                <Pill key={key} text={tag} style={{paddingRight: 5, paddingBottom: 3}} />
+            );
+            position++;
+        });
+
+        return (<View style={styles.tagField}>{pills}</View>);
     }
 
     _displaySetNumber() {
@@ -169,9 +189,9 @@ class EditSetHeader extends Component {
 
                     <View>
                         <View style={[styles.field, {flex: 1}]}>
-                            <View style={{height: 30, justifyContent: 'center'}}>
-                                <Text>Tags</Text>
-                            </View>
+                            <TouchableHighlight onPress={() => this.props.editTags(this.props.setID, this.state.tags)}>
+                                {this._displayTags()}
+                            </TouchableHighlight>
                         </View>
                     </View>
                 </View>
@@ -189,7 +209,7 @@ const styles = StyleSheet.create({
         borderRadius: 3,
         marginBottom: 5,
         zIndex: 2,
-        height: (Platform.OS === 'ios') ? 30 : 40,
+        minHeight: (Platform.OS === 'ios') ? 30 : 40,
     },
     fieldDetails: {
         position: 'absolute',
@@ -205,11 +225,18 @@ const styles = StyleSheet.create({
     },
     exerciseText: {
         height: (Platform.OS === 'ios') ? 30 : 40,
-        marginTop: (Platform.OS === 'ios') ? 5 : 8,
-        marginLeft: (Platform.OS === 'ios') ? 0 : 4,
+        paddingTop: (Platform.OS === 'ios') ? 6 : 8,
+        paddingLeft: (Platform.OS === 'ios') ? 0 : 4,
         fontSize: 15,
         paddingRight: 30,
         color: 'black'
+    },
+    tagField: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        minHeight: (Platform.OS === 'ios') ? 30 : 40,
+        paddingLeft: 2,
+        paddingRight: 0,
     },
     placeholderText: {
         color: 'lightgray'

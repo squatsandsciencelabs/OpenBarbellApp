@@ -100,6 +100,7 @@ const loadInitialState = async (store) => {
 
 			// load suggestions
 			store.dispatch(SuggestionsActionCreators.updateExerciseSuggestionsModel());
+			store.dispatch(SuggestionsActionCreators.updateTagsSuggestionsModel());
 		}
 		addSaveListener(store);
 	} catch (err) {

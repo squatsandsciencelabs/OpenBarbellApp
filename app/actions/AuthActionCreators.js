@@ -26,6 +26,7 @@ export const signIn = () => (dispatch) => {
 			dispatch(SetActionCreators.updateSetDataFromServer(revision, sets));
 			dispatch(SettingsActionCreators.updateSyncDate(new Date()));
 			dispatch(SuggestionsActionCreators.updateExerciseSuggestionsModel());
+			dispatch(SuggestionsActionCreators.updateTagsSuggestionsModel());
 			dispatch(finishedAttemptLogin());
 		}, (err) => {
 			// API login error, means we need to sign out of the google account as well
@@ -59,6 +60,7 @@ const executeSignOut = (dispatch) => {
 			dispatch(saveUser(null, null, null));
 			dispatch(SetActionCreators.clearHistory());
 			dispatch(SuggestionsActionCreators.updateExerciseSuggestionsModel());
+			dispatch(SuggestionsActionCreators.updateTagsSuggestionsModel());
 			console.log("finished saving user");
 		})
 		.catch((err) => {

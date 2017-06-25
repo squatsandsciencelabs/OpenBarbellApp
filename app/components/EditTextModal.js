@@ -113,7 +113,10 @@ class EditTextModal extends Component {
         if (this.props.multipleInput) {
             this._addNewPill(input);
         } else {
-            this._onChangeText(input);
+            // TODO: find a way to not repeat _tappedDone logic
+            // NOTE: This is repeating _tappedDone logic because setState doesn't update immediately
+            this.props.updateSetSingle(this.state.setID, input);
+            this.props.closeModal();
         }
     }
 

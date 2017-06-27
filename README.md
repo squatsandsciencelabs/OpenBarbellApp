@@ -6,6 +6,8 @@
 * create android/local.properties and point it at your Android SDK `sdk.dir = /Users/SquatsAndScience/Library/Android/sdk`
 * set up provisioning profiles in xcode
 
+NOTE: If you have problems installing, there might be issues with React Native 0.45.1 where you might have to downgrade the package.json to 0.44, npm install, then upgrade to 0.45.1, then npm install. See https://github.com/facebook/react-native/issues/7308
+
 # RUNNING IT
 
 * react-native run-ios

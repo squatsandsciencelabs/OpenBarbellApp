@@ -72,9 +72,14 @@ const loadInitialState = async (store) => {
 				// sync date
 				let syncDate = value.settings.syncDate;
 				if (syncDate === undefined || null) {
+					// it's empty, default to empty string
 					syncDate = '';
-				} else {
+				} else if (typeof syncDate === 'string') {
+					// it's a string - aka it was saved properly, try parsing it into a date
 					syncDate = new Date(syncDate);
+				} else {
+					// failsafe, unknown object type, just make it an empty string
+					syncDate = '';
 				}
 				store.dispatch(SettingsActionCreators.updateSyncDate(syncDate));
 			}

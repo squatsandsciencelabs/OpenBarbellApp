@@ -26,7 +26,7 @@
 
 #include <objc/message.h>
 
-#import "RFduinoManager.h"
+#import "RfduinoManager.h"
 
 #import "RFduino.h"
 

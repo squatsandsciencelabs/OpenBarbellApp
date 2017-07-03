@@ -7,7 +7,7 @@
 //
 
 #import "RFDuinoLib.h"
-#import "RFduinoManager.h"
+#import "RfduinoManager.h"
 #import "RFduino.h"
 #import "RFduino+Dictionary.h"
 #import <CoreBluetooth/CoreBluetooth.h>

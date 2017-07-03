@@ -277,6 +277,8 @@ static CBUUID *service_uuid;
 
 - (void)centralManagerDidUpdateState:(CBCentralManager *)aCentral
 {
+    // TODO: the state is deprecated, update it such that the app can support both iOS9 and iOS10
+    // see https://forums.developer.apple.com/thread/51222
     NSLog(@"central manager state = %ld", [central state]);
     
     bool success = [self isBluetoothLESupported];

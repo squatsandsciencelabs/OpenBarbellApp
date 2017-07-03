@@ -26,7 +26,7 @@
 
 #include <objc/message.h>
 
-#import "RFduinoManager.h"
+#import "RfduinoManager.h"
 
 #import "RFduino.h"
 
@@ -49,11 +49,12 @@ static CBUUID *service_uuid;
 
 + (RFduinoManager *)sharedRFduinoManager
 {
-    static RFduinoManager *rfduinoManager;
-    if (! rfduinoManager) {
-        rfduinoManager = [[RFduinoManager alloc] init];
-    }
-    return rfduinoManager;
+  static RFduinoManager *rfduinoManager;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    rfduinoManager = [[RFduinoManager alloc] init];
+  });
+  return rfduinoManager;
 }
 
 - (id)init
@@ -276,11 +277,18 @@ static CBUUID *service_uuid;
 
 - (void)centralManagerDidUpdateState:(CBCentralManager *)aCentral
 {
+    // TODO: the state is deprecated, update it such that the app can support both iOS9 and iOS10
+    // see https://forums.developer.apple.com/thread/51222
     NSLog(@"central manager state = %ld", [central state]);
     
     bool success = [self isBluetoothLESupported];
     if (success) {
         [self startScan];
+    }
+  
+    if ([delegate respondsToSelector:@selector(didUpdateBluetoothState:)]) {
+        BOOL isBluetoothOn = (central.state != CBCentralManagerStatePoweredOn);
+        [delegate didUpdateBluetoothState:isBluetoothOn];
     }
 }
 

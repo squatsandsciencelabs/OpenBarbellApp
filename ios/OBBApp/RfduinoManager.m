@@ -49,11 +49,12 @@ static CBUUID *service_uuid;
 
 + (RFduinoManager *)sharedRFduinoManager
 {
-    static RFduinoManager *rfduinoManager;
-    if (! rfduinoManager) {
-        rfduinoManager = [[RFduinoManager alloc] init];
-    }
-    return rfduinoManager;
+  static RFduinoManager *rfduinoManager;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    rfduinoManager = [[RFduinoManager alloc] init];
+  });
+  return rfduinoManager;
 }
 
 - (id)init

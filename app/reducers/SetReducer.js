@@ -205,6 +205,8 @@ const addRepData = (state, action) => {
 		removed: false,
 		hardware: Platform.OS,
 		appVersion: DeviceInfo.getVersion(),
+		deviceName: action.deviceName,
+		deviceIdentifier: action.deviceIdentifier,
 		data: [...action.data]
 	};
 

@@ -85,11 +85,15 @@ export const connectedToDevice = (name, identifier) => ({
 
 // DATA
 
-export const receivedLiftData = (isValid, data) => (dispatch) => {
+export const receivedLiftData = (isValid, data) => (dispatch, getState) => {
+    var state = getState();
+
     dispatch({
         type: ADD_REP_DATA,
         isValid: isValid,
-        data: data
+        data: data,
+        deviceName: state.connectedDevice.deviceName,
+        deviceIdentifier: state.connectedDevice.deviceIdentifier,
     });
 
     dispatch(TimerActionCreators.startEndSetTimer());

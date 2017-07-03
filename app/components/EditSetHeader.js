@@ -42,23 +42,11 @@ class EditSetHeader extends Component {
     // KEYBOARD
 
     componentWillMount() {
-        this.keyboardWillShowListener = Keyboard.addListener('keyboardWillShow', () => { this._keyboardWillShow() });
-        this.keyboardWillHideListener = Keyboard.addListener('keyboardWillHide', () => { this._keyboardWillHide() });
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => { this._keyboardDidHide() });
     }
 
     componentWillUnmount() {
-        this.keyboardWillShowListener.remove();
-        this.keyboardWillHideListener.remove();
         this.keyboardDidHideListener.remove();
-    }
-
-    _keyboardWillShow() {
-        // TODO: scroll to the appropriate position - ios only
-    }
-
-    _keyboardWillHide() {
-        // TODO: scroll to the appropriate position - ios only
     }
 
     _keyboardDidHide() {
@@ -158,6 +146,7 @@ class EditSetHeader extends Component {
                                 placeholder="Enter Weight"
                                 placeholderTextColor={'lightgray'}
                                 value={this.state.weight}
+                                onFocus={() => this.props.onFocus() }
                                 onChangeText={(weight) => this.setState({weight: weight}) }
                             />
                             <View style={styles.fieldDetails}>
@@ -179,6 +168,7 @@ class EditSetHeader extends Component {
                                 placeholder="Enter RPE"
                                 placeholderTextColor={'lightgray'}
                                 value = {this.state.rpe}
+                                onFocus={() => this.props.onFocus() }
                                 onChangeText={(rpe) => this.setState({rpe: rpe}) }
                             />
                             <View style={styles.fieldDetails} pointerEvents='none'>

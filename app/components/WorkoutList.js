@@ -56,7 +56,7 @@ class WorkoutList extends Component {
 		}
 	}
 
-	_renderRow(item) {
+	_renderRow(section, index, item) {
 		switch (item.type) {
 			case "header":
 				return (<View style={{marginTop: 15}}>
@@ -69,6 +69,9 @@ class WorkoutList extends Component {
 								weight={item.weight}
 								metric={item.metric}
 								rpe={item.rpe}
+								onFocus={() => {
+									this.sectionList.scrollToLocation({sectionIndex: section.position, itemIndex: index});
+								}}
 							/>
 						</View>);
 			case "data":
@@ -89,11 +92,12 @@ class WorkoutList extends Component {
 		var list = null;
 		if (this.props.sections.length > 0) {
 			list = (<SectionList
+				ref={(ref) => { this.sectionList = ref; }}
 				keyboardDismissMode='on-drag'
 				keyboardShouldPersistTaps='always'
 				initialNumToRender={13}
 				stickySectionHeadersEnabled={false}
-				renderItem={({item}) => this._renderRow(item)}
+				renderItem={({section, index, item}) => this._renderRow(section, index, item)}
 				renderSectionHeader={({section}) => this._renderSectionHeader(section) }
 				renderSectionFooter={({section}) => this._renderSectionFooter(section) }
 				sections={this.props.sections}

@@ -40,7 +40,7 @@ const createViewModels = (sets, shouldShowRemoved) => {
 			isInitialSet = true;
 
 			// create section
-			section = { key: new Date(workoutStartTime).toLocaleString(), data: [] };
+			section = { key: new Date(workoutStartTime).toLocaleString(), data: [], position: -1 };
 			sections.splice(0, 0, section); // insert at beginning
 		} else {
 			isInitialSet = false;
@@ -83,6 +83,11 @@ const createViewModels = (sets, shouldShowRemoved) => {
 		// insert set card data
 		Array.prototype.splice.apply(section.data, array);
 	});
+
+	// add positions
+	for (var i = 0; i < sections.length; i++) {
+		sections[i].position = i;
+	}
 
 	// return
 	return sections;

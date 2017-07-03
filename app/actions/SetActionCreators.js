@@ -153,10 +153,13 @@ export const endOldWorkout = () => (dispatch, getState) => {
 	// get end time
 	var state = getState();
 	var endTime = lastRepTime(state.sets)
-	if(endTime === null) {
-		return
+	if (endTime === null) {
+		return;
+	} else if (Object.prototype.toString.call(endTime) === '[object Date]') {
+		var endDate = endTime;
+	} else {
+		var endDate = new Date(endTime);
 	}
-	var endDate = new Date(endTime)
 
 	var currentDate = new Date()
 	var timeDifference = Math.abs(currentDate - endDate);

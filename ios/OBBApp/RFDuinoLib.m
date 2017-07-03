@@ -12,10 +12,9 @@
 #import "RFduino+Dictionary.h"
 #import <CoreBluetooth/CoreBluetooth.h>
 
-@interface RFDuinoLib () <RFduinoManagerDelegate, RFduinoDelegate, CBCentralManagerDelegate>
+@interface RFDuinoLib () <RFduinoManagerDelegate, RFduinoDelegate>
 @property (nonatomic, strong) RFduinoManager *manager;
 @property (nonatomic, strong) RFduino *connectedRFduino;
-@property (nonatomic, strong) CBCentralManager *bluetoothManager;
 @property (nonatomic, strong) NSMutableDictionary <NSString *, RFduino *> *rfduinos;
 @end
 
@@ -27,7 +26,6 @@ RCT_EXPORT_METHOD(start)
 {
   self.rfduinos = [NSMutableDictionary new];
   self.manager = [RFduinoManager sharedRFduinoManager];
-  self.bluetoothManager = [[CBCentralManager alloc] initWithDelegate:self queue:dispatch_get_main_queue()];
   self.manager.delegate = self;
 }
 
@@ -91,8 +89,17 @@ RCT_EXPORT_METHOD(disconnectDevice)
   rfduino.delegate = nil;
   [self sendEventWithName:@"Disconnected" body:[rfduino toDictionary]];
 }
+
 - (void)shouldDisplayAlertTitled:(NSString *)title messageBody:(NSString *)body {
   [self sendEventWithName:@"Message" body:@{@"text":body}];
+}
+
+- (void)didUpdateBluetoothState:(BOOL)isBluetoothOn {
+  if (isBluetoothOn) {
+    [self sendEventWithName:@"BluetoothOff" body:nil];
+  } else {
+    [self sendEventWithName:@"Disconnected" body:nil];
+  }
 }
 
 #pragma mark - RFduino delegate functions
@@ -108,16 +115,6 @@ RCT_EXPORT_METHOD(disconnectDevice)
   
   NSLog(@"%@ received data %@ %f sending data %@", self, data, z, stringData);
   [self sendEventWithName:@"Data" body:stringData];
-}
-
-#pragma mark - Bluetooth delegate functions
-
-- (void)centralManagerDidUpdateState:(CBCentralManager *)central {
-  if (central.state != CBCentralManagerStatePoweredOn) {
-    [self sendEventWithName:@"BluetoothOff" body:nil];
-  }else {
-    [self sendEventWithName:@"Disconnected" body:nil];
-  }
 }
 
 @end

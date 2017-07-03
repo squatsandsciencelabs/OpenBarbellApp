@@ -283,6 +283,11 @@ static CBUUID *service_uuid;
     if (success) {
         [self startScan];
     }
+  
+    if ([delegate respondsToSelector:@selector(didUpdateBluetoothState:)]) {
+        BOOL isBluetoothOn = (central.state != CBCentralManagerStatePoweredOn);
+        [delegate didUpdateBluetoothState:isBluetoothOn];
+    }
 }
 
 #pragma mark - Rfduino methods

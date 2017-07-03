@@ -34,6 +34,7 @@
 
 @optional
 
+- (void)didUpdateBluetoothState:(BOOL)isBluetoothOn;
 - (void)didUpdateDiscoveredRFduino:(RFduino *)rfduino;
 
 - (void)didConnectRFduino:(RFduino *)rfduino;

@@ -43,9 +43,11 @@ class HistoryList extends Component {
 		);
 	}
 
-	_renderRow(item) {
+	_renderRow(section, index, item) {
 		switch (item.type) {
 			case "header":
+				// note: on focus will avoid the Redux store for simplicity and just do it through the callback function
+				// technically an action to scroll should be application state and therefore should go through the global store
 				return (<View style={{marginTop: 15}}>
 							<EditHistorySetScreen
 								setNumber={item.setNumber}
@@ -56,6 +58,9 @@ class HistoryList extends Component {
 								weight={item.weight}
 								metric={item.metric}
 								rpe={item.rpe}
+								onFocus={() => {
+									this.sectionList.scrollToLocation({sectionIndex: section.position, itemIndex: index});
+								}}
 							/>
 						</View>);
 			case "data":
@@ -76,12 +81,13 @@ class HistoryList extends Component {
 		var list = null;
 		if (this.props.sections.length > 0) {
 			list = (<SectionList
+				ref={(ref) => { this.sectionList = ref; }}
 				keyboardDismissMode='on-drag'
 				keyboardShouldPersistTaps='always'
 				initialNumToRender={13}
 				stickySectionHeadersEnabled={false}
 				ListFooterComponent={HistoryLoadingFooterScreen}
-				renderItem={({item}) => this._renderRow(item)}
+				renderItem={({item, index, section}) => this._renderRow(section, index, item)}
 				renderSectionHeader={({section}) => this._renderSectionHeader(section) }
 				sections={this.props.sections}
 				onEndReached={() => this.props.finishedLoadingHistory() }

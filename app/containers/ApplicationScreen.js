@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import ApplicationView from '../components/ApplicationView';
 import * as ApiActionCreators from '../actions/ApiActionCreators';
 import * as SetActionCreators from '../actions/SetActionCreators';
+import { Keyboard } from 'react-native';
 
 const mapStateToProps = (state) => ({
     killSwitch: state.killSwitch,
@@ -15,6 +16,7 @@ const mapDispatchToProps = (dispatch) => {
 		onChangeTab: () => (dispatch) => {
 			dispatch(ApiActionCreators.syncData());
 			dispatch(SetActionCreators.endOldWorkout());
+			Keyboard.dismiss();
 		},
 		onMount: ApiActionCreators.syncData
 	}, dispatch);

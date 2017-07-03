@@ -19,15 +19,15 @@ class SettingsDevicePanel extends Component {
                     connectDevice={ this.props.connectDevice }/>;
             case 'CONNECTING':
                 return <SettingsDevicePanelConnecting
-                    device={ this.props.connectedDevice.device }
+                    device={ this.props.connectedDevice.deviceName }
                     disconnectDevice={ this.props.disconnectDevice }/>;
             case 'CONNECTED':
                 return <SettingsDevicePanelConnected
-                    device={ this.props.connectedDevice.device }
+                    device={ this.props.connectedDevice.deviceName }
                     disconnectDevice={ this.props.disconnectDevice }/>;
             case 'DISCONNECTING':
                 return <SettingsDevicePanelDisconnecting
-                    device={ this.props.connectedDevice.device }/>;
+                    device={ this.props.connectedDevice.deviceName }/>;
         }
     }
 

@@ -2,6 +2,7 @@ package com.openbarbellapp;
 
 import android.app.Application;
 
+import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.facebook.react.ReactApplication;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
               new MainReactPackage(),
             new RNDeviceInfo(),
             new VectorIconsPackage(),
+            new RCTCameraPackage(),
               new BackgroundTimerPackage(),
               new RNGoogleSigninPackage(),
               new RFDuinoServicePackage());

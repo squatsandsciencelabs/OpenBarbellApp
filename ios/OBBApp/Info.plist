@@ -98,5 +98,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+	<string>OpenBarbell would like to record videos of your lifts</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>OpenBarbell would like to save recorded videos to your Photos library</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>OpenBarbell would like to record audio when recording videos of your lifts</string>
 </dict>
 </plist>

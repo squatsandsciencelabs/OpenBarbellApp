@@ -20,6 +20,7 @@ import HistoryFilterBarScreen from '../containers/HistoryFilterBarScreen';
 import HistoryLoadingFooterScreen from '../containers/HistoryLoadingFooterScreen';
 import EditHistoryExerciseScreen from '../containers/EditHistoryExerciseScreen';
 import EditHistoryTagsScreen from '../containers/EditHistoryTagsScreen';
+import UserLoggedOutPanel from '../components/UserLoggedOutPanel';
 
 class HistoryList extends Component {
 
@@ -94,22 +95,30 @@ class HistoryList extends Component {
 				style = {{padding: 10, backgroundColor: 'white'}}
 			/>);
 		}
+		if (this.props.email !== undefined && this.props.email !== null) {
+			return (
+				<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
+					<EditHistoryExerciseScreen />
+					<EditHistoryTagsScreen />
 
-		return (
-			<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
-				<EditHistoryExerciseScreen />
-				<EditHistoryTagsScreen />
+					<View style={{ flex: 1 }}>
+						{list}
+					</View>
 
-				<View style={{ flex: 1 }}>
-					{list}
+					<View style={{height: 50}}>
+						<HistoryFilterBarScreen />
+					</View>
+
 				</View>
-
-				<View style={{height: 50}}>
-					<HistoryFilterBarScreen />
+			);
+		} else {
+			return (
+				<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
+					<UserLoggedOutPanel />
+					{/* <Text>Only users that are logged in can see history.</Text> */}
 				</View>
-
-			</View>
-		);
+			)
+		}
 	}
 }
 

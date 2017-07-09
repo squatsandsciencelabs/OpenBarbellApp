@@ -211,6 +211,7 @@ const mapStateToProps = (state) => {
 	}
 
 	return {
+		email: state.auth.email,
 		sections: storedSections,
 		shouldShowRemoved: shouldShowRemoved
 	};

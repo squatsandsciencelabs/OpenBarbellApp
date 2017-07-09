@@ -8,7 +8,7 @@ import { SETTINGS_PANEL_STYLES } from '../styles/GlobalStyles';
 
 class UserLoggedOutPanel extends Component {
   render() {
-    let subtitle = this.props.subtitle;
+    let subtitle = this.props.subtitle
     return (
       <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
         <View>
@@ -18,7 +18,7 @@ class UserLoggedOutPanel extends Component {
       </View>
       <View style={{paddingTop:8}}>
         <Text style={ SETTINGS_PANEL_STYLES.subtitleText }>
-          The access the history screen, go to settings and log in with a Google account.
+          { subtitle }
         </Text>
       </View>
       </View>

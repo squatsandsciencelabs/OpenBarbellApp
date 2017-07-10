@@ -8,6 +8,7 @@
   "dependencies": {
     "babel-plugin-transform-remove-console": "6.8.1",
     "react-native-camera": "0.9.4",
+    "react-native-video": "1.0.0",
     "lodash": "4.17.4",
     "react": "16.0.0-alpha.12",
     "react-native": "0.45.1",

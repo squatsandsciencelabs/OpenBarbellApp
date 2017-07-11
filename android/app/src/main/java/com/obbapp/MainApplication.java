@@ -2,6 +2,7 @@ package com.openbarbellapp;
 
 import android.app.Application;
 
+import com.rnfs.RNFSPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.facebook.react.ReactApplication;
@@ -34,6 +35,7 @@ public class MainApplication extends Application implements ReactApplication {
             new VectorIconsPackage(),
             new RCTCameraPackage(),
             new ReactVideoPackage(),
+            new RNFSPackage(),
               new BackgroundTimerPackage(),
               new RNGoogleSigninPackage(),
               new RFDuinoServicePackage());

@@ -146,6 +146,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-fs')
     compile project(':react-native-video')
     compile project(':react-native-camera')
     compile(project(':react-native-device-info')){

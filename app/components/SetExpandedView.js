@@ -14,7 +14,7 @@ class SetExpandedView extends PureComponent {
 
     _renderRow(item) {
         return (
-            <View style={{flex: 1, flexDirection: 'row', width: 2000, backgroundColor: 'red'}}>
+            <View style={{flex: 1, flexDirection: 'row', width: 2000, height:200, backgroundColor: 'red'}}>
                 <View>
                     <Text style={{marginHorizontal: 10}}>1{item.key}</Text>
                 </View>

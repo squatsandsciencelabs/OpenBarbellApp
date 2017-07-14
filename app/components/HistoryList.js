@@ -114,8 +114,9 @@ class HistoryList extends Component {
 		} else {
 			return (
 				<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
+					<ScrollView>
 					<UserLoggedOutPanel subtitle='The access the history screen, go to settings and log in with a Google account.'/>
-					{/* <Text>Only users that are logged in can see history.</Text> */}
+				</ScrollView>
 				</View>
 			)
 		}

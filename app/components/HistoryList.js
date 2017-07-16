@@ -20,6 +20,7 @@ import HistoryFilterBarScreen from '../containers/HistoryFilterBarScreen';
 import HistoryLoadingFooterScreen from '../containers/HistoryLoadingFooterScreen';
 import EditHistoryExerciseScreen from '../containers/EditHistoryExerciseScreen';
 import EditHistoryTagsScreen from '../containers/EditHistoryTagsScreen';
+import HistorySetExpandedScreen from '../containers/HistorySetExpandedScreen';
 
 class HistoryList extends Component {
 
@@ -64,11 +65,10 @@ class HistoryList extends Component {
 							/>
 						</View>);
 			case "data":
-				// TODO: full screen view!
 				return (<SetData item={item}
 							onPressRemove={() =>this.props.removeRep(item.setID, item.rep) }
 							onPressRestore={() => this.props.restoreRep(item.setID, item.rep) }
-							onPressRow={() => console.log("this is where should display full screen view") }
+							onPressRow={() => this.props.viewExpandedSet(item.setID) }
 						/>);
 			case "footer":
 				return (<SetRest item={item} />);
@@ -99,6 +99,7 @@ class HistoryList extends Component {
 			<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
 				<EditHistoryExerciseScreen />
 				<EditHistoryTagsScreen />
+				<HistorySetExpandedScreen />
 
 				<View style={{ flex: 1 }}>
 					{list}

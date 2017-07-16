@@ -221,6 +221,7 @@ const mapDispatchToProps = (dispatch) => {
 		removeRep: SetActionCreators.removeHistoryRep,
 		restoreRep: SetActionCreators.restoreHistoryRep,
 		finishedLoadingHistory: HistoryActionCreators.finishedLoadingHistory,
+		viewExpandedSet: HistoryActionCreators.beginViewExpandedSet
 	}, dispatch);
 };
 

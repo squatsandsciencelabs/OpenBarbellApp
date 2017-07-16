@@ -101,7 +101,7 @@ class SetExpandedView extends PureComponent {
             <Modal
                     animationType={"slide"}
                     transparent={true}
-                    visible={true} >
+                    visible={this.props.visible} >
 
                     <ScrollView horizontal={true} style={{flex: 1, flexDirection: 'row'}}>
 

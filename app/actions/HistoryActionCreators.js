@@ -5,7 +5,8 @@ import {
 	EXPORTING_CSV,
 	LOADING_HISTORY,
 	EDIT_HISTORY_EXERCISE_NAME,
-	EDIT_HISTORY_TAGS
+	EDIT_HISTORY_TAGS,
+	EXPANDED_HISTORY_SET
 } from '../ActionTypes';
 import * as GoogleDriveUploader from '../utility/GoogleDriveUploader';
 import * as CSVConverter from '../utility/CSVConverter';
@@ -94,5 +95,15 @@ export const beginEditHistoryTags = (setID, tags) => ({
 export const endEditHistoryTags = () => ({
     type: EDIT_HISTORY_TAGS,
     tags: [],
+	setID: null
+});
+
+export const beginViewExpandedSet = (setID) => ({
+    type: EXPANDED_HISTORY_SET,
+    setID: setID,
+});
+
+export const endViewExpandedSet = () => ({
+    type: EXPANDED_HISTORY_SET,
 	setID: null
 });

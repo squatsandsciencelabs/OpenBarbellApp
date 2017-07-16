@@ -191,7 +191,8 @@ const mapDispatchToProps = (dispatch) => {
 		endSet: SetActionCreators.endSet,
 		endWorkout: WorkoutActionCreators.endWorkout,
 		removeRep: SetActionCreators.removeWorkoutRep,
-		restoreRep: SetActionCreators.restoreWorkoutRep
+		restoreRep: SetActionCreators.restoreWorkoutRep,
+		viewExpandedSet: WorkoutActionCreators.beginViewExpandedSet,
 	}, dispatch);
 };
 

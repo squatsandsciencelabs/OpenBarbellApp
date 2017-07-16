@@ -12,7 +12,6 @@ import {
 	ListItem
 } from 'react-native';
 import EditHistorySetScreen from '../containers/EditHistorySetScreen';
-import SetDescription from './SetDescription';
 import SetData from './SetData';
 import SetRest from './SetRest';
 import Icon from 'react-native-vector-icons/FontAwesome';

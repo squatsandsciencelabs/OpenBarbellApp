@@ -14,7 +14,6 @@ import {
 import EditWorkoutSetScreen from '../containers/EditWorkoutSetScreen';
 import EditWorkoutExerciseScreen from '../containers/EditWorkoutExerciseScreen';
 import EditWorkoutTagsScreen from '../containers/EditWorkoutTagsScreen';
-import SetDescription from './SetDescription';
 import SetData from './SetData';
 import SetRest from './SetRest';
 import Icon from 'react-native-vector-icons/FontAwesome';

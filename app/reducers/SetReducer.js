@@ -448,9 +448,9 @@ export const getWorkoutSets = (state) => {
 	return state.workoutData;
 };
 
-// Get Edit Workout Set
+// Get Expanded Workout Set
 
-export const getEditWorkoutSet = (state, setID) => {
+export const getExpandedWorkoutSet = (state, setID) => {
 	return state.workoutData.find( set => set.setID == setID );
 };
 
@@ -472,6 +472,21 @@ export const getHistorySetsChronological = (state) => {
 	var array = dictToArray(state.historyData);
 	array.sort((set1, set2) => new Date(set1.startTime) - new Date(set2.startTime));
 	return array;
+};
+
+// Get Expanded History Set
+
+export const getExpandedHistorySet = (state, setID) => {
+	var dictionary = state.historyData;
+	for (var property in dictionary) {
+		if (dictionary.hasOwnProperty(property)) {
+			let set = dictionary[property];
+			if (set.setID === setID) {
+				return set;
+			}
+		}
+	}
+	return null;
 };
 
 // Get Sets To Upload

@@ -14,6 +14,7 @@ import {
 import EditWorkoutSetScreen from '../containers/EditWorkoutSetScreen';
 import EditWorkoutExerciseScreen from '../containers/EditWorkoutExerciseScreen';
 import EditWorkoutTagsScreen from '../containers/EditWorkoutTagsScreen';
+import SetDataLabelRow from './SetDataLabelRow';
 import SetData from './SetData';
 import SetRest from './SetRest';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -73,6 +74,10 @@ class WorkoutList extends Component {
 								}}
 							/>
 						</View>);
+			case "subheader":
+				return (
+					<SetDataLabelRow />
+				);
 			case "data":
 				// TODO: full screen view!
 				return (<SetData item={item}

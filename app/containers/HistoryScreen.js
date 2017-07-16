@@ -61,6 +61,7 @@ const createViewModels = (sets, shouldShowRemoved) => {
 			}
 		}
 		array.push(createHeaderViewModel(set, setNumber));
+		array.push({type: "subheader", key: set.setID+"subheader"});
 		lastExerciseName = set.exercise;
 
 		// reps

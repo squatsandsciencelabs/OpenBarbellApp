@@ -1,6 +1,7 @@
 // app/components/SetExpandedView.js
 
 // TODO: variable columns, for now just hardcode them
+// TODO: make the grid views float over everything instead of making it piece of piece
 
 import React, {PureComponent} from 'react';
 import {
@@ -86,7 +87,6 @@ class SetExpandedView extends PureComponent {
                     animationType={"fade"}
                     transparent={true}
                     visible={this.props.visible} >
-
                     <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'white'}}>
                         {this._renderHeader()}
                         <ScrollView horizontal={true} style={{flex: 1, flexDirection: 'row'}}>
@@ -136,6 +136,5 @@ const styles = StyleSheet.create({
 		},
 	},
 });
-
 
 export default SetExpandedView;

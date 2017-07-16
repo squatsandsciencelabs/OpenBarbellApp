@@ -9,7 +9,7 @@ import * as RepDataMap from '../utility/RepDataMap';
 
 const mapStateToProps = (state) => {
 	if (state.workout.expandedSetID !== null) {
-		var set = SetReducer.getExpandedWorkoutSet(state.sets, state.history.expandedSetID);
+		var set = SetReducer.getExpandedWorkoutSet(state.sets, state.workout.expandedSetID);
 		var repNum = 0;
 		var vms = set.reps.map((rep) => {
 			repNum++;

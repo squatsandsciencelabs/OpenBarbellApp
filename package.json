@@ -10,6 +10,8 @@
     "react-native-camera": "0.9.4",
     "react-native-video": "1.0.0",
     "react-native-fs": "2.3.3",
+    "react-native-google-analytics-bridge": "5.2.1",
+    "react-native-mixpanel": "0.0.15",
     "lodash": "4.17.4",
     "react": "^16.0.0-alpha.6",
     "react-native": "0.45.1",
@@ -27,5 +29,5 @@
     "android": {
       "mainFilePath": "src/main/java/com/obbapp/MainApplication.java"
     }
-  },
+  }
 }

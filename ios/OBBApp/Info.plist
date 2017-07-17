@@ -68,7 +68,7 @@
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>OpenBarbell would like to find and connect to your OpenBarbell device via bluetooth</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>

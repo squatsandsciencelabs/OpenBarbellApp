@@ -4,6 +4,7 @@
 * git clone https://github.com/squatsandsciencelabs/OpenBarbellApp.git
 * npm install
 * create android/local.properties and point it at your Android SDK `sdk.dir = /Users/SquatsAndScience/Library/Android/sdk`
+* `cd ios && carthage update` to install MixPanel
 * set up provisioning profiles in xcode
 
 NOTE: If you have problems installing, there might be issues with React Native 0.45.1 where you might have to downgrade the package.json to 0.44, npm install, then upgrade to 0.45.1, then npm install. See https://github.com/facebook/react-native/issues/7308 You may also have to clear any local cache, for example deleting the Derived Data folder for iOS.

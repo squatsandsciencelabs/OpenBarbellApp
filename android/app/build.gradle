@@ -90,15 +90,15 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "23.0.1"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.openbarbellapp"
         minSdkVersion 21
-        targetSdkVersion 24
+        targetSdkVersion 25
         versionCode 9
-        versionName "1.5.2"
+        versionName "1.5.4"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -146,6 +146,9 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-fs')
+    compile project(':react-native-video')
+    compile project(':react-native-camera')
     compile(project(':react-native-device-info')){
         exclude group: "com.google.android.gms" // very important
     }

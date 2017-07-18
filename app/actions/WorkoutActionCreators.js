@@ -3,7 +3,8 @@
 import {
 	END_WORKOUT,
 	EDIT_WORKOUT_EXERCISE_NAME,
-	EDIT_WORKOUT_TAGS
+	EDIT_WORKOUT_TAGS,
+	EXPANDED_WORKOUT_SET
 } from '../ActionTypes';
 import * as ApiActionCreators from '../actions/ApiActionCreators';
 
@@ -38,5 +39,15 @@ export const beginEditWorkoutTags = (setID, tags) => ({
 export const endEditWorkoutTags = () => ({
     type: EDIT_WORKOUT_TAGS,
     tags: [],
+	setID: null
+});
+
+export const beginViewExpandedSet = (setID) => ({
+    type: EXPANDED_WORKOUT_SET,
+    setID: setID,
+});
+
+export const endViewExpandedSet = () => ({
+    type: EXPANDED_WORKOUT_SET,
 	setID: null
 });

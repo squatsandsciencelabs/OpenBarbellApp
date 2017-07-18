@@ -61,6 +61,7 @@ const createViewModels = (sets, shouldShowRemoved) => {
 			}
 		}
 		array.push(createHeaderViewModel(set, setNumber));
+		array.push({type: "subheader", key: set.setID+"subheader"});
 		lastExerciseName = set.exercise;
 
 		// reps
@@ -222,6 +223,7 @@ const mapDispatchToProps = (dispatch) => {
 		removeRep: SetActionCreators.removeHistoryRep,
 		restoreRep: SetActionCreators.restoreHistoryRep,
 		finishedLoadingHistory: HistoryActionCreators.finishedLoadingHistory,
+		viewExpandedSet: HistoryActionCreators.beginViewExpandedSet
 	}, dispatch);
 };
 

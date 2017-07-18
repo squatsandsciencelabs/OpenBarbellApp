@@ -3,6 +3,7 @@
 import {
 	EDIT_WORKOUT_EXERCISE_NAME,
 	EDIT_WORKOUT_TAGS,
+	EXPANDED_WORKOUT_SET
 } from '../ActionTypes';
 
 const defaultState = {
@@ -10,6 +11,7 @@ const defaultState = {
 	editingExercise: '',
 	editingTagsSetID: null,
 	editingTags: [],
+	expandedSetID: null,
 };
 
 const WorkoutReducer = (state = defaultState, action) => {
@@ -23,6 +25,10 @@ const WorkoutReducer = (state = defaultState, action) => {
 			return Object.assign({}, state, {
 				editingTagsSetID: action.setID,
 				editingTags: action.tags
+			});
+		case EXPANDED_WORKOUT_SET:
+			return Object.assign({}, state, {
+				expandedSetID: action.setID,
 			});
 		default:
 			return state;

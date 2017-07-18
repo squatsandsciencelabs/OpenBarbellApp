@@ -3,7 +3,8 @@ import {
 	EXPORTING_CSV,
 	LOADING_HISTORY,
 	EDIT_HISTORY_EXERCISE_NAME,
-	EDIT_HISTORY_TAGS
+	EDIT_HISTORY_TAGS,
+	EXPANDED_HISTORY_SET
 } from '../ActionTypes';
 
 const defaultState = {
@@ -13,7 +14,8 @@ const defaultState = {
 	editingExercise: '',
 	editingExerciseSetID: null,
 	editingTags: [],
-	editingTagsSetID: null
+	editingTagsSetID: null,
+	expandedSetID: null,
 };
 
 const HistoryReducer = (state = defaultState, action) => {
@@ -39,6 +41,10 @@ const HistoryReducer = (state = defaultState, action) => {
 			return Object.assign({}, state, {
 				editingTagsSetID: action.setID,
 				editingTags: action.tags
+			});
+		case EXPANDED_HISTORY_SET:
+			return Object.assign({}, state, {
+				expandedSetID: action.setID,
 			});
 		default:
 			return state;

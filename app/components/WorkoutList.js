@@ -14,7 +14,8 @@ import {
 import EditWorkoutSetScreen from '../containers/EditWorkoutSetScreen';
 import EditWorkoutExerciseScreen from '../containers/EditWorkoutExerciseScreen';
 import EditWorkoutTagsScreen from '../containers/EditWorkoutTagsScreen';
-import SetDescription from './SetDescription';
+import WorkoutSetExpandedScreen from '../containers/WorkoutSetExpandedScreen';
+import SetDataLabelRow from './SetDataLabelRow';
 import SetData from './SetData';
 import SetRest from './SetRest';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -74,12 +75,16 @@ class WorkoutList extends Component {
 								}}
 							/>
 						</View>);
+			case "subheader":
+				return (
+					<SetDataLabelRow />
+				);
 			case "data":
 				// TODO: full screen view!
 				return (<SetData item={item}
 							onPressRemove={() =>this.props.removeRep(item.setID, item.rep) }
 							onPressRestore={() => this.props.restoreRep(item.setID, item.rep) }
-							onPressRow={() => console.log("this is where should display full screen view") }
+							onPressRow={() => this.props.viewExpandedSet(item.setID) }
 						/>);
 			case "footer":
 				return (<SetRest item={item} />);
@@ -109,6 +114,7 @@ class WorkoutList extends Component {
 			<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
 				<EditWorkoutExerciseScreen />
 				<EditWorkoutTagsScreen />
+				<WorkoutSetExpandedScreen />
 
 				<View style={{ flex: 1 }}>
 					{list}

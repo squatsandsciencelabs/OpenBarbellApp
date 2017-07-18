@@ -51,6 +51,9 @@ const createViewModels = (sets) => {
 			}
 		}
 		array.push(createHeaderViewModel(set, setNumber));
+		if (set.reps.length > 0) {
+			array.push({type: "subheader", key: set.setID+"subheader"});
+		}
 		lastExerciseName = set.exercise;
 
 		// reps
@@ -188,7 +191,8 @@ const mapDispatchToProps = (dispatch) => {
 		endSet: SetActionCreators.endSet,
 		endWorkout: WorkoutActionCreators.endWorkout,
 		removeRep: SetActionCreators.removeWorkoutRep,
-		restoreRep: SetActionCreators.restoreWorkoutRep
+		restoreRep: SetActionCreators.restoreWorkoutRep,
+		viewExpandedSet: WorkoutActionCreators.beginViewExpandedSet,
 	}, dispatch);
 };
 

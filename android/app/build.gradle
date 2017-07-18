@@ -146,6 +146,10 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-mixpanel')
+    compile(project(':react-native-google-analytics-bridge')){
+        exclude group: "com.google.android.gms" // very important
+    }
     compile project(':react-native-fs')
     compile project(':react-native-video')
     compile project(':react-native-camera')
@@ -162,6 +166,7 @@ dependencies {
     }
     compile 'com.google.android.gms:play-services-auth:9.2.1'
     compile 'com.google.android.gms:play-services-gcm:9.2.1'
+    compile 'com.google.android.gms:play-services-analytics:9.2.1'
 }
 
 // Run this once to be able to run the application with BUCK

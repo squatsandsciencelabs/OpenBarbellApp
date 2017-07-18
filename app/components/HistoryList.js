@@ -104,7 +104,7 @@ class HistoryList extends Component {
 				<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
 					<EditHistoryExerciseScreen />
 					<EditHistoryTagsScreen />
-          <HistorySetExpandedScreen />
+					<HistorySetExpandedScreen />
 
 					<View style={{ flex: 1 }}>
 						{list}

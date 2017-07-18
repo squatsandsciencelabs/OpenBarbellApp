@@ -27,6 +27,10 @@ export const SETTINGS_PANEL_STYLES = StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10
     },
+    subtitleText: {
+        fontSize: 14,
+        textAlign: 'center'
+    },
     headerText: {
         fontSize: 16,
         textAlign: 'center'

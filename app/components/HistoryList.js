@@ -20,6 +20,7 @@ import HistoryFilterBarScreen from '../containers/HistoryFilterBarScreen';
 import HistoryLoadingFooterScreen from '../containers/HistoryLoadingFooterScreen';
 import EditHistoryExerciseScreen from '../containers/EditHistoryExerciseScreen';
 import EditHistoryTagsScreen from '../containers/EditHistoryTagsScreen';
+import UserLoggedOutPanel from '../components/UserLoggedOutPanel';
 import HistorySetExpandedScreen from '../containers/HistorySetExpandedScreen';
 
 class HistoryList extends Component {
@@ -98,23 +99,32 @@ class HistoryList extends Component {
 				style = {{padding: 10, backgroundColor: 'white'}}
 			/>);
 		}
+		if (this.props.email !== undefined && this.props.email !== null) {
+			return (
+				<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
+					<EditHistoryExerciseScreen />
+					<EditHistoryTagsScreen />
+          <HistorySetExpandedScreen />
 
-		return (
-			<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
-				<EditHistoryExerciseScreen />
-				<EditHistoryTagsScreen />
-				<HistorySetExpandedScreen />
+					<View style={{ flex: 1 }}>
+						{list}
+					</View>
 
-				<View style={{ flex: 1 }}>
-					{list}
+					<View style={{height: 50}}>
+						<HistoryFilterBarScreen />
+					</View>
+
 				</View>
-
-				<View style={{height: 50}}>
-					<HistoryFilterBarScreen />
+			);
+		} else {
+			return (
+				<View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
+					<ScrollView>
+					<UserLoggedOutPanel subtitle='The access the history screen, go to settings and log in with a Google account.'/>
+				</ScrollView>
 				</View>
-
-			</View>
-		);
+			)
+		}
 	}
 }
 

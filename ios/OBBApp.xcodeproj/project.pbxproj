@@ -63,7 +63,7 @@
 		C303FDDB1E18B9520082B098 /* GoogleSymbolUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C303FDD41E18B9520082B098 /* GoogleSymbolUtilities.framework */; };
 		C303FDDC1E18B9520082B098 /* GoogleUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C303FDD51E18B9520082B098 /* GoogleUtilities.framework */; };
 		C307DCFA1EA4496A00C9A644 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C307DCF71EA4495600C9A644 /* libRCTAnimation.a */; };
-		C307DCFB1EA4498C00C9A644 /* libRCTAnimation-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C307DCF91EA4495600C9A644 /* libRCTAnimation-tvOS.a */; };
+		C307DCFB1EA4498C00C9A644 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C307DCF91EA4495600C9A644 /* libRCTAnimation.a */; };
 		C36289A61E19C042006AD50C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C36289A51E19C042006AD50C /* GoogleService-Info.plist */; };
 		C46689670C80442E96CB4B32 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C610E925F0CC4E6692CB892B /* SystemConfiguration.framework */; };
 		D84B96E3F00742CA914C2E89 /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9B90CB4DAC458597DFCC86 /* libRNGoogleSignin.a */; };
@@ -245,6 +245,13 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		B27465F71F24F56E00E81250 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7F14D424D87146F9BF9074F7 /* RNBackgroundTimer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 641926921ECB4257009CF731;
+			remoteInfo = "RNBackgroundTimer-tvOS";
+		};
 		C303FDCC1E18B9440082B098 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DA20305B939A46369AC0C75A /* RNGoogleSignin.xcodeproj */;
@@ -403,7 +410,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C307DCFB1EA4498C00C9A644 /* libRCTAnimation-tvOS.a in Frameworks */,
+				C307DCFB1EA4498C00C9A644 /* libRCTAnimation.a in Frameworks */,
 				2D02E4C91E0B4AEC006451C7 /* libReact.a in Frameworks */,
 				2D02E4C31E0B4AEC006451C7 /* libRCTImage-tvOS.a in Frameworks */,
 				2D02E4C41E0B4AEC006451C7 /* libRCTLinking-tvOS.a in Frameworks */,
@@ -608,6 +615,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				B10B36731DA691B00007E30E /* Frameworks */,
 				69635CA1731042548CC9FDCD /* Resources */,
+				B27465DB1F24F56A00E81250 /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -636,6 +644,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B27465DB1F24F56A00E81250 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				1F9B90CB4DAC458597DFCC86 /* libRNGoogleSignin.a */,
+				61E446441C234E1D9249D86E /* libRNBackgroundTimer.a */,
+				D6B5276D013842688AEC8C6A /* libRNVectorIcons.a */,
+				1816764483CC4019ABB022D3 /* libRNDeviceInfo.a */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		C303FDBF1E18B9440082B098 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -662,7 +681,7 @@
 			isa = PBXGroup;
 			children = (
 				C307DCF71EA4495600C9A644 /* libRCTAnimation.a */,
-				C307DCF91EA4495600C9A644 /* libRCTAnimation-tvOS.a */,
+				C307DCF91EA4495600C9A644 /* libRCTAnimation.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -671,6 +690,7 @@
 			isa = PBXGroup;
 			children = (
 				C38029D31E70B74600A54DC3 /* libRNBackgroundTimer.a */,
+				B27465F81F24F56E00E81250 /* libRNBackgroundTimer.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -777,10 +797,12 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 283D978R86;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = 283D978R86;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -1030,6 +1052,13 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		B27465F81F24F56E00E81250 /* libRNBackgroundTimer.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNBackgroundTimer.a;
+			remoteRef = B27465F71F24F56E00E81250 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		C303FDCD1E18B9440082B098 /* libRNGoogleSignin.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1044,10 +1073,10 @@
 			remoteRef = C307DCF61EA4495600C9A644 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C307DCF91EA4495600C9A644 /* libRCTAnimation-tvOS.a */ = {
+		C307DCF91EA4495600C9A644 /* libRCTAnimation.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "libRCTAnimation-tvOS.a";
+			path = libRCTAnimation.a;
 			remoteRef = C307DCF81EA4495600C9A644 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1223,7 +1252,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 283D978R86;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1258,7 +1287,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 283D978R86;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
@@ -1290,7 +1319,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 283D978R86;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GoogleSdk",
@@ -1326,7 +1355,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 283D978R86;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/GoogleSdk",

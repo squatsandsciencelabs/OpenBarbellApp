@@ -9,7 +9,8 @@ import {
 	SectionList,
 	ScrollView,
 	Dimensions,
-	ListItem
+	ListItem,
+	Alert
 } from 'react-native'
 import EditWorkoutSetScreen from '../containers/EditWorkoutSetScreen';
 import EditWorkoutExerciseScreen from '../containers/EditWorkoutExerciseScreen';
@@ -35,22 +36,21 @@ class WorkoutList extends Component {
 		if (section.key === 0) {
 			// end workout
 			return (
-				//ALBERT arrow syntax should be a decision tree
-				<TouchableHighlight onPress={ () =>
-
-					//ALBERT if user not logged in trigger alert
-				// 
-				// 	Alert.alert(
-  			// 	"You're not logged in!",
-  			// 	"Your data will not be saved unless you're logged in!", [
-				// 		{text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
-				// 		{text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-				// 		{text: 'OK', onPress: () => console.log('OK Pressed')},
-				// 	],
-				// 	{ cancelable: false }
-				// )
-
-					this.props.endWorkout() }>
+				<TouchableHighlight onPress={ () => {
+					if (this.props.email !== undefined && this.props.email !== null) {
+						//if user is logged in
+						this.props.endWorkout()
+				} else {
+					Alert.alert(
+						"Are you sure?",
+						"Your workout will not be saved unless you are signed in. You can do that under the settings tab.", [
+							{text: 'Nevermind', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+							{text: 'End my workout anyways.', onPress: () => this.props.endWorkout()},
+						],
+						{ cancelable: false }
+					)
+				}
+			}}>
 
 					<Text style={[styles.blueButton, styles.Shadow, { textAlign: 'center'}]}>End Workout</Text>
 				</TouchableHighlight>

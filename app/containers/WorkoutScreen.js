@@ -179,7 +179,8 @@ const createFooterVM = (set, lastSetEndTime) => {
 const mapStateToProps = (state) => {
 	let sets = getWorkoutSets(state.sets);
 	return {
-		sections: createViewModels(sets)
+		sections: createViewModels(sets),
+		email: state.auth.email
 	}
 };
 

@@ -7,6 +7,7 @@ import {
 } from '../ActionTypes';
 import * as ApiActionCreators from '../actions/ApiActionCreators';
 
+// ALBERT - button click starts here
 export const endWorkout = () => (dispatch, getState) => {
 	var state = getState();
 	var workoutData = state.sets.workoutData;

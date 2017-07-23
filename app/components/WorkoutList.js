@@ -35,7 +35,23 @@ class WorkoutList extends Component {
 		if (section.key === 0) {
 			// end workout
 			return (
-				<TouchableHighlight onPress={ () => this.props.endWorkout() }>
+				//ALBERT arrow syntax should be a decision tree
+				<TouchableHighlight onPress={ () =>
+
+					//ALBERT if user not logged in trigger alert
+				// 
+				// 	Alert.alert(
+  			// 	"You're not logged in!",
+  			// 	"Your data will not be saved unless you're logged in!", [
+				// 		{text: 'Ask me later', onPress: () => console.log('Ask me later pressed')},
+				// 		{text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+				// 		{text: 'OK', onPress: () => console.log('OK Pressed')},
+				// 	],
+				// 	{ cancelable: false }
+				// )
+
+					this.props.endWorkout() }>
+
 					<Text style={[styles.blueButton, styles.Shadow, { textAlign: 'center'}]}>End Workout</Text>
 				</TouchableHighlight>
 			);

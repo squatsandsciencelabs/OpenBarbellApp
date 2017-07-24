@@ -29,5 +29,8 @@
     "android": {
       "mainFilePath": "src/main/java/com/obbapp/MainApplication.java"
     }
+  },
+  "devDependencies": {
+    "reactotron-react-native": "^1.12.1"
   }
 }

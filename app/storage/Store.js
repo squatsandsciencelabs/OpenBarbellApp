@@ -1,6 +1,6 @@
 // app/storage/Store.js
 
-import { createStore }  from 'redux';
+import Reactotron from 'reactotron-react-native'
 import reducers from '../reducers/Reducers';
 import middlewares from '../middlewares/Middlewares';
 import throttle from 'lodash/throttle';
@@ -16,7 +16,7 @@ const key = '@OpenBarbellPersistedStore'
 
 export default initializeStore = () => {
 	// create the store
-	let store = createStore(reducers, middlewares);
+	let store = Reactotron.createStore(reducers, middlewares);
 
 	// load previous
 	loadInitialState(store);

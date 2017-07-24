@@ -7,6 +7,7 @@ import OBDevice from './bluetooth/OBDevice';
 import ApplicationScreen from './containers/ApplicationScreen';
 import Store from './storage/Store';
 import * as GoogleSignInSetup from './utility/GoogleSignInSetup';
+import './utility/ReactotronConfig'
 
 // initialize the store
 var store = Store();

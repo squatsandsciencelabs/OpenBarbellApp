@@ -17,7 +17,6 @@ import {
 } from 'app/ActionTypes';
 
 import * as ApiActionCreators from './ApiActionCreators';
-import * as WorkoutActionCreators from './WorkoutActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
 
@@ -149,28 +148,6 @@ export const updateRevisionFromServer = (revision) => ({
     type: UPDATE_REVISION_FROM_SERVER,
     revision: revision
 });
-
-export const endOldWorkout = () => (dispatch, getState) => {
-    // get end time
-    var state = getState();
-    var endTime = SetsSelectors.lastRepTime(state.sets)
-    if (endTime === null) {
-        return;
-    } else if (Object.prototype.toString.call(endTime) === '[object Date]') {
-        var endDate = endTime;
-    } else {
-        var endDate = new Date(endTime);
-    }
-
-    var currentDate = new Date()
-    var timeDifference = Math.abs(currentDate - endDate);
-    Reactotron.log("TTime difference is " + timeDifference + " comparing " + endDate + " against " + currentDate + " with config timer " + OpenBarbellConfig.endWorkoutTimer);
-
-    if (timeDifference >= config.endWorkoutTimer) {
-        alert("Ending workout! You can find your last workout on the History screen.");
-        dispatch(WorkoutActionCreators.endWorkout())
-    }
-};
 
 export const clearHistory = () => ({
     type: CLEAR_HISTORY

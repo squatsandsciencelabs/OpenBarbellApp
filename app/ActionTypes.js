@@ -1,5 +1,3 @@
-// app/ActionTypes.js
-
 // scanning
 export const START_DEVICE_SCAN = 'START_DEVICE_SCAN';
 export const STOP_DEVICE_SCAN = 'STOP_DEVICE_SCAN';

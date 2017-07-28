@@ -1,13 +1,13 @@
-// app/Application.js
-
 import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
 import { Provider } from 'react-redux';
-import OBDevice from './bluetooth/OBDevice';
-import ApplicationScreen from './containers/ApplicationScreen';
-import Store from './storage/Store';
-import * as GoogleSignInSetup from './utility/GoogleSignInSetup';
-import './utility/ReactotronConfig'
+
+import Bluetooth from 'app/services/Bluetooth';
+import Store from 'app/redux/Store';
+import * as GoogleSignInSetup from 'app/services/GoogleSignInSetup';
+import 'app/configs/ReactotronConfig'
+import ApplicationScreen from 'app/features/application/ApplicationScreen';
+import { fetchVersion } from 'app/redux/shared_actions/KillSwitchActionCreators';
 
 // initialize the store
 var store = Store();
@@ -16,10 +16,9 @@ var store = Store();
 GoogleSignInSetup.configure();
 
 // start the bluetooth
-OBDevice(store);
+Bluetooth(store);
 
 // check the kill switch
-import { fetchVersion } from './actions/KillSwitchActionCreators';
 store.dispatch(fetchVersion());
 
 // render

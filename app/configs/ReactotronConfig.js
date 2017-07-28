@@ -5,3 +5,5 @@ Reactotron
   .configure({name: 'OpenBarbell'}) // controls connection & communication settings
   .use(reactotronRedux()) // add all built-in react native plugins
   .connect() // let's connect!
+
+console.tron = Reactotron

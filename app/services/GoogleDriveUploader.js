@@ -1,7 +1,6 @@
 // TODO: tweak this so setting up upload is separate from actually uploading
 // Also split it up so resume is doable
 
-import Reactotron from 'reactotron-react-native';
 import * as Errors from 'app/utility/Errors';
 
 export const upload = async (accessToken, name, content, completionHandler) => {
@@ -26,7 +25,7 @@ export const upload = async (accessToken, name, content, completionHandler) => {
     // error check
     if (status !== 200) {
         let json = await response.json();
-        Reactotron.log('Error, received status ' + status + ' body ' + JSON.stringify(json));
+        console.tron.log('Error, received status ' + status + ' body ' + JSON.stringify(json));
         if (status === 403 && json.error !== undefined && json.error.message === 'Insufficient Permission') {
             throw new Errors.PermissionsError('Insufficient Permission')
         } else {
@@ -48,7 +47,7 @@ export const upload = async (accessToken, name, content, completionHandler) => {
 
     // error check
     if (status !== 200) {
-        Reactotron.log('Error, received status ' + status + ' response ' + response);
+        console.tron.log('Error, received status ' + status + ' response ' + response);
         throw new Error('Did not receive 200 for upload');
     }
 

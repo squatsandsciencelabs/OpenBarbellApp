@@ -1,7 +1,7 @@
-import Reactotron from 'reactotron-react-native';
 import throttle from 'lodash/throttle';
 import { Alert, AsyncStorage } from 'react-native';
 import { enableBatching } from 'redux-batched-actions';
+import Reactotron from 'reactotron-react-native';
 
 import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
 import reducers from 'app/redux/reducers/Reducers';
@@ -36,7 +36,7 @@ const saveState = async (state) => {
     } catch (err) {
         // TODO: See when this would actually happen, is it possible?
         // Possibly display an error message across the app
-        Reactotron.log("error saving state " + err);
+        console.tron.log("error saving state " + err);
     }
 };
 
@@ -98,7 +98,7 @@ const loadInitialState = async (store) => {
                 if (email === undefined) {
                     email = null;
                 }
-                Reactotron.log("loading previous " + refreshToken + " " + accessToken + " " + email);
+                console.tron.log("loading previous " + refreshToken + " " + accessToken + " " + email);
                 store.dispatch(AuthActionCreators.saveUser(refreshToken, accessToken, email));
             }
             store.dispatch(AuthActionCreators.finishedAttemptLogin());
@@ -109,7 +109,7 @@ const loadInitialState = async (store) => {
         }
         addSaveListener(store);
     } catch (err) {
-        Reactotron.log("error load initial state " + err);
+        console.tron.log("error load initial state " + err);
         // TODO: See when this would actually happen, is it possible?
         // Possibly display an error message across the app
     }

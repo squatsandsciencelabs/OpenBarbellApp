@@ -1,4 +1,3 @@
-import Reactotron from 'reactotron-react-native';
 import { batchActions } from 'redux-batched-actions';
 import { Keyboard } from 'react-native';
 
@@ -27,7 +26,7 @@ const endOldWorkout = () => (dispatch, getState) => {
 
     var currentDate = new Date()
     var timeDifference = Math.abs(currentDate - endDate);
-    Reactotron.log("Time difference is " + timeDifference + " comparing " + endDate + " against " + currentDate + " with config timer " + OpenBarbellConfig.endWorkoutTimer);
+    console.tron.log("Time difference is " + timeDifference + " comparing " + endDate + " against " + currentDate + " with config timer " + OpenBarbellConfig.endWorkoutTimer);
 
     if (timeDifference >= config.endWorkoutTimer) {
         alert("Ending workout! You can find your last workout on the History screen.");

@@ -1,4 +1,3 @@
-import Reactotron from 'reactotron-react-native';
 import { Alert, Platform } from 'react-native';
 import { GoogleSignin } from 'react-native-google-signin';
 
@@ -19,11 +18,11 @@ export const signIn = () => (dispatch) => {
     dispatch(attemptingLogin());
 
     GoogleSignin.signIn().then((user) => {
-        Reactotron.log("sign in complete! attempt to login from api!");
+        console.tron.log("sign in complete! attempt to login from api!");
         // TODO: make this another ApiActionCreator thunk instead of accessing the API directly
         // TODO: success code here might need to reflect sync success code as well to reduce errors
         API.login(user.idToken, dispatch, (accessToken, refreshToken, revision, sets) => {
-            Reactotron.log("auth action creator now has " + accessToken + " " + refreshToken + " " + JSON.stringify(sets));
+            console.tron.log("auth action creator now has " + accessToken + " " + refreshToken + " " + JSON.stringify(sets));
             dispatch(AuthActionCreators.saveUser(refreshToken, accessToken, user.email));
             dispatch(SetActionCreators.updateSetDataFromServer(revision, sets));
             dispatch(SettingsActionCreators.updateSyncDate(new Date()));
@@ -32,7 +31,7 @@ export const signIn = () => (dispatch) => {
             dispatch(finishedAttemptLogin());
         }, (err) => {
             // API login error, means we need to sign out of the google account as well
-            Reactotron.log('API Login Error ', err);
+            console.tron.log('API Login Error ', err);
             executeSignOut(dispatch);
             dispatch(finishedAttemptLogin());
             showGenericAlert();
@@ -41,7 +40,7 @@ export const signIn = () => (dispatch) => {
         // Can happen if the internet is weird and google play services can't be accessed properly
         // Can happen when the user just doesn't pick one
         // Either way, the sign in failed so you do NOT have to execute a sign out
-        Reactotron.log('WRONG SIGNIN', err);
+        console.tron.log('WRONG SIGNIN', err);
         dispatch(finishedAttemptLogin());
         if (err.code !== -5) { // -5 is the error for user canceling the sign in
             showGenericAlert();
@@ -56,20 +55,20 @@ const executeSignOut = (dispatch) => {
         GoogleSignin.signOut()
         .then(() => {
             // note: if somehow the app crashes after google signout but before user signed out, can be buggy
-            Reactotron.log("Signed Out");
+            console.tron.log("Signed Out");
             dispatch(saveUser(null, null, null));
             dispatch(SetActionCreators.clearHistory());
             dispatch(SuggestionsActionCreators.updateExerciseSuggestionsModel());
             dispatch(SuggestionsActionCreators.updateTagsSuggestionsModel());
-            Reactotron.log("finished saving user");
+            console.tron.log("finished saving user");
         })
         .catch((err) => {
-            Reactotron.log("LOGOUT SIGN OUT ERROR " + err);
+            console.tron.log("LOGOUT SIGN OUT ERROR " + err);
         })
     })
     .catch((err) => {
         // TODO: test the play services error catch block
-        Reactotron.log("LOGOUT ERROR " + err);
+        console.tron.log("LOGOUT ERROR " + err);
     }).done();
 };
 

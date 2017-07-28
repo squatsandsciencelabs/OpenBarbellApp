@@ -1,5 +1,3 @@
-import Reactotron from 'reactotron-react-native';
-
 const map = {
     repNumberPosition : 1,
     averageVelocityPosition : 2,
@@ -49,19 +47,19 @@ export const durationOfLift = (repData) => {
 
 export const isValidData = (repData) => {
     let initialFlag = parseData(repData, 0);
-    Reactotron.log("initial flag is " + initialFlag);
+    console.tron.log("initial flag is " + initialFlag);
 
     if (initialFlag == -1234) {
         // v1 bulk data flag check
         let bulkDataTransmissionFlag = parseData(repData, 6)
-        Reactotron.log("bulk data flag check at 6 " + bulkDataTransmissionFlag);
+        console.tron.log("bulk data flag check at 6 " + bulkDataTransmissionFlag);
         if (bulkDataTransmissionFlag == -9999) {
             return true;
         }
     }else if (initialFlag == -2345) {
         // v2 bulk data flag check
         let bulkDataTransmissionFlag = parseData(repData, 18)
-        Reactotron.log("bulk data flag check at 18 " + bulkDataTransmissionFlag);
+        console.tron.log("bulk data flag check at 18 " + bulkDataTransmissionFlag);
         if (bulkDataTransmissionFlag == -9999) {
             return true;
         }

@@ -1,5 +1,3 @@
-import Reactotron from 'reactotron-react-native';
-
 import {
     UPDATE_WORKOUT_SET,
     UPDATE_WORKOUT_SET_TAGS,

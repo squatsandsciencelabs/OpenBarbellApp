@@ -9,7 +9,6 @@ import {
     Dimensions,
     Alert
 } from 'react-native';
-import Reactotron from 'reactotron-react-native';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 
 import WorkoutScreen from 'app/features/workout/WorkoutScreen';
@@ -75,8 +74,8 @@ class ApplicationView extends Component {
                 "Application Outdated",
                 'Update to latest?',
                 [
-                    {text: 'Later', onPress: () => Reactotron.log('\'Later\' pressed')},
-                    {text: 'Update', onPress: () => Reactotron.log('\'Update\' Pressed')}
+                    {text: 'Later', onPress: () => console.tron.log('\'Later\' pressed')},
+                    {text: 'Update', onPress: () => console.tron.log('\'Update\' Pressed')}
                 ]
             );
         }

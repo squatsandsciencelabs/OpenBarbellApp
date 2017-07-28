@@ -1,5 +1,3 @@
-import Reactotron from 'reactotron-react-native';
-
 import API from 'app/services/API';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as SetActionCreators from './SetActionCreators';
@@ -17,12 +15,12 @@ export const syncData = () => (dispatch, getState) => {
     let state = getState();
 
     if (state.auth.email === undefined || state.auth.email === null) {
-        Reactotron.log("Not logged in, backing out of sync");
+        console.tron.log("Not logged in, backing out of sync");
         return;
     }
 
     if (state.sets.setIDsBeingUploaded.length > 0) {
-        Reactotron.log("still uploading, ignore upload");
+        console.tron.log("still uploading, ignore upload");
         return;
     }
 
@@ -39,7 +37,7 @@ export const syncData = () => (dispatch, getState) => {
             // still logged in check
             let state = getState();
             if (state.auth.email === null) {
-                Reactotron.log("upload data via a sync but you've been logged out, ignore it");
+                console.tron.log("upload data via a sync but you've been logged out, ignore it");
                 return;
             }
 
@@ -61,20 +59,20 @@ export const syncData = () => (dispatch, getState) => {
     } else {
         // download
         let revision = state.sets.revision;
-        Reactotron.log("syncing with revision " + revision);
+        console.tron.log("syncing with revision " + revision);
 
         return API.sync(revision, dispatch, accessToken, refreshToken, (revision, sets) => {
             let state = getState();
 
             // still logged in check
             if (state.auth.email === null) {
-                Reactotron.log("sync completed but you're logged out, ignore it");
+                console.tron.log("sync completed but you're logged out, ignore it");
                 return;
             }
 
             // ensure there's no local updates
             if (state.sets.setIDsToUpload.length > 0 || state.sets.setIDsBeingUploaded.length > 0) {
-                Reactotron.log("Sync data came back from the server, but local changes were made in the meantime, backing out of updating server information");
+                console.tron.log("Sync data came back from the server, but local changes were made in the meantime, backing out of updating server information");
                 return;
             }
 

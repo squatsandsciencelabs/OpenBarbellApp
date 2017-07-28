@@ -1,6 +1,5 @@
 import { Alert, Linking } from 'react-native';
 import { GoogleSignin } from 'react-native-google-signin';
-import Reactotron from 'reactotron-react-native';
 
 import {
     UPDATE_HISTORY_FILTER,
@@ -50,7 +49,7 @@ export const exportHistoryCSV = () => (dispatch, getState) => {
                 let state = getState();
                 let sets = SetsSelectors.getHistorySetsChronological(state.sets);
                 let csv = CSVConverter.convert(sets);
-                Reactotron.log("google access token " + user.accessToken);
+                console.tron.log("google access token " + user.accessToken);
                 await GoogleDriveUploader.upload(user.accessToken, name, csv, (fileID) => {
                     dispatch(updateIsExportingCSV(false));
                     Linking.openURL('https://drive.google.com/open?id=' + fileID).catch(err => {
@@ -58,7 +57,7 @@ export const exportHistoryCSV = () => (dispatch, getState) => {
                     });
                 });
             } catch(err) {
-                Reactotron.log("Error uploading csv file " + typeof err + " " + err);
+                console.tron.log("Error uploading csv file " + typeof err + " " + err);
                 if (err.message == 'Insufficient Permission') { // TODO: should do typeof check but it's not working
                     Alert.alert('Google Drive Permissions Error', 'Please log out and log in again. This feature requires additional Google Drive permissions.');
                 } else {
@@ -69,7 +68,7 @@ export const exportHistoryCSV = () => (dispatch, getState) => {
         }
     })
     .catch((err) => {
-        Reactotron.log("EXPORT HISTORY ERROR " + err);
+        console.tron.log("EXPORT HISTORY ERROR " + err);
     })
     .done();
 };

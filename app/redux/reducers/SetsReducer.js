@@ -19,7 +19,6 @@ import {
 import uuidV4 from 'uuid/v4';
 import DeviceInfo from 'react-native-device-info';
 import { Platform } from 'react-native';
-import Reactotron from 'reactotron-react-native';
 
 const SetsReducer = (state = createDefaultState(), action) => {
     switch (action.type) {
@@ -335,7 +334,7 @@ const endWorkout = (state, action) => {
             workoutSetIDs.push(setID);
             historyChanges[setID] = set;
         } else {
-            Reactotron.log("end working -> ignoring empty set");
+            console.tron.log("end working -> ignoring empty set");
         }
     }
 

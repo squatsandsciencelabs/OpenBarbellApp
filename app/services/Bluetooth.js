@@ -15,7 +15,6 @@ import {
     ADD_REP_DATA
 } from 'app/ActionTypes';
 
-import Reactotron from 'reactotron-react-native';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
 import * as DeviceActionCreators from 'app/redux/shared_actions/DeviceActionCreators';
 
@@ -59,13 +58,13 @@ export default function (store) {
 
     // data
     Emitter.addListener('Data', (data) => {
-        Reactotron.log("REACT NATIVE LAYER -> RECEIVED DATA " + data);
+        console.tron.log("REACT NATIVE LAYER -> RECEIVED DATA " + data);
 
         // invalid rep data
         if (data == -1234 || data == -2345) {
             if (queuedDataIsCorrupted(repData)) {
-                Reactotron.log("FOUND BAD DATA B4 START FLAG, logging it as an invalid rep now!");
-                Reactotron.log(JSON.stringify(repData));
+                console.tron.log("FOUND BAD DATA B4 START FLAG, logging it as an invalid rep now!");
+                console.tron.log(JSON.stringify(repData));
                 store.dispatch(DeviceActionCreators.receivedLiftData(RepDataMap.isValidData(repData), repData));
             }
             resetRep();

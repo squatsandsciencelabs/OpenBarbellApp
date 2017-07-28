@@ -3,7 +3,6 @@
 // TODO: check that the server response is WHAT IS EXPECTED instead of assuming it'll always be correct, server CAN and WILL blow up
 
 import { Alert } from 'react-native';
-import Reactotron from 'reactotron-react-native';
 
 import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
@@ -53,7 +52,7 @@ const API = {
             accessToken: accessToken,
             refreshToken: refreshToken,
             completionHandler: (json) => {
-                Reactotron.log("sync success " + json);
+                console.tron.log("sync success " + json);
                 if (completionHandler !== null) {
                     if (json !== undefined) {
                         completionHandler(json.revision, json.sets);
@@ -72,7 +71,7 @@ const executeAuthenticatedRequest = (request) => {
     if (requestContainsParameters(request, parameters)) {
         executeRequest(request);
     } else {
-        Reactotron.log("authenticated request is missing parameters, attempting now to force logout assuming dispatch exists " + JSON.stringify(request));
+        console.tron.log("authenticated request is missing parameters, attempting now to force logout assuming dispatch exists " + JSON.stringify(request));
         forceLogout(request.dispatch, false);
     }
 };
@@ -82,7 +81,7 @@ const executeUnauthenticatedRequest = (request) => {
     if (requestContainsParameters(request, parameters)) {
         executeRequest(request);
     } else {
-        Reactotron.log("normal request is missing parameters " + JSON.stringify(request));
+        console.tron.log("normal request is missing parameters " + JSON.stringify(request));
     }
 };
 
@@ -97,7 +96,7 @@ const requestContainsParameters = (request, parameters) => {
 };
 
 const executeRequest = async (request) => {
-    Reactotron.log("Executing request " + JSON.stringify(request));
+    console.tron.log("Executing request " + JSON.stringify(request));
 
     // build up the properties
     var authorizedRequest = false;
@@ -120,21 +119,21 @@ const executeRequest = async (request) => {
 
         switch(true) {
             case (status === 401):
-                Reactotron.log("401!");
+                console.tron.log("401!");
                 if (authorizedRequest === true) {
-                    Reactotron.log("401 on authorized call, checking for refresh token with req " + JSON.stringify(request));
+                    console.tron.log("401 on authorized call, checking for refresh token with req " + JSON.stringify(request));
                     if (request.refreshToken !== undefined && request.refreshToken !== null) {
-                        Reactotron.log("attempting to execute token req");
+                        console.tron.log("attempting to execute token req");
                         // hit the token endpoint and then try again
                         executeTokenRequest(request);
                     } else {
-                        Reactotron.log("no refresh token, bail out");
+                        console.tron.log("no refresh token, bail out");
                         // you don't have a refresh token, logout
                         forceLogout(request.dispatch);
                     }
                 } else if (request.endpoint === 'token') {
                     // refresh token failed
-                    Reactotron.log("if token endpoint failed, bail out and force logout");
+                    console.tron.log("if token endpoint failed, bail out and force logout");
                     forceLogout(request.dispatch);
                 } else {
                     // generic, this error might happen on login fail and such
@@ -145,30 +144,30 @@ const executeRequest = async (request) => {
                 try {
                     // attempt to get json
                     let json = await response.json();
-                    Reactotron.log("200! completion handler is " + request.completionHandler + " response is " + JSON.stringify(json));
+                    console.tron.log("200! completion handler is " + request.completionHandler + " response is " + JSON.stringify(json));
 
                     // success!
                     if (request.completionHandler !== null) {
-                        Reactotron.log("success, pasing to completion handler with json");
+                        console.tron.log("success, pasing to completion handler with json");
                         request.completionHandler(json);
                     }
                 } catch (err) {
                     // success, this particular request has no JSON
-                    Reactotron.log("200 with err " + err.message + " completion handler is " + request.completionHandler + " response is not JSON parsable");
+                    console.tron.log("200 with err " + err.message + " completion handler is " + request.completionHandler + " response is not JSON parsable");
 
                     // success!
                     if (request.completionHandler !== null) {
-                        Reactotron.log("success, pasing to copmletion handler with no json");
+                        console.tron.log("success, pasing to copmletion handler with no json");
                         request.completionHandler();
                     }
                 }
                 break;
             default:
-                Reactotron.log("Not 401 or in the 200s, blah");
+                console.tron.log("Not 401 or in the 200s, blah");
                 throw new Error("Oops, something went wrong it's not 200 it's " + status);
         }
     } catch (err) {
-        Reactotron.log("Error with request " + JSON.stringify(request) + " error: " + err);
+        console.tron.log("Error with request " + JSON.stringify(request) + " error: " + err);
         if (request.errorHandler !== null) {
             request.errorHandler(err);
         }
@@ -176,9 +175,9 @@ const executeRequest = async (request) => {
 };
 
 const executeTokenRequest = (failedRequest) => {
-    Reactotron.log("in execute token req, fail req is " + JSON.stringify(failedRequest));
+    console.tron.log("in execute token req, fail req is " + JSON.stringify(failedRequest));
     if (failedRequest.refreshToken === undefined || failedRequest.refreshToken === null) {
-        Reactotron.log("Cannot ask for new token, there's no refresh token " + JSON.stringify(failedRequest));
+        console.tron.log("Cannot ask for new token, there's no refresh token " + JSON.stringify(failedRequest));
         if (request.errorHandler !== null) {
             request.errorHandler(new Error("Missing refresh token"));
         }
@@ -189,7 +188,7 @@ const executeTokenRequest = (failedRequest) => {
 };
 
 const tokenRequest = (failedRequest) => {
-    Reactotron.log("token request created for " + JSON.stringify(failedRequest));
+    console.tron.log("token request created for " + JSON.stringify(failedRequest));
     let request = {
         endpoint: 'token',
         method: 'POST',
@@ -210,7 +209,7 @@ const tokenRequest = (failedRequest) => {
             // TODO: figure out what to do on server error with token
             // something went wrong with the token, should I force logout? not sure as what if it's a 500?
             // feels bad if it's a server bug, server bug shouldn't forcibly log you out IMO
-            Reactotron.log("Error with obtaining new token: " + err);
+            console.tron.log("Error with obtaining new token: " + err);
             if (failedRequest.errorHandler !== null) {
                 failedRequest.errorHandler(err);
             }
@@ -222,7 +221,7 @@ const tokenRequest = (failedRequest) => {
 
 const forceLogout = (dispatch, displayError=true) => {
     if (dispatch === undefined || dispatch === null) {
-        Reactotron.log("Force logout FAILED because dispatch doesn't exist");
+        console.tron.log("Force logout FAILED because dispatch doesn't exist");
         return;
     }
 

@@ -16,7 +16,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Pill from 'app/shared_features/pill/Pill';
 
-class EditSetHeader extends Component {
+class SetForm extends Component {
 
     constructor(props) {
         super(props);
@@ -263,4 +263,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default EditSetHeader;
+export default SetForm;

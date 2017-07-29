@@ -1,11 +1,11 @@
 import {
-    UPDATE_WORKOUT_SET,
-    UPDATE_WORKOUT_SET_TAGS,
-    UPDATE_HISTORY_SET,
-    UPDATE_HISTORY_SET_TAGS,
+    SAVE_WORKOUT_SET,
+    SAVE_WORKOUT_SET_TAGS,
+    SAVE_HISTORY_SET,
+    SAVE_HISTORY_SET_TAGS,
     ADD_REP_DATA,
-    UPDATE_WORKOUT_REP,
-    UPDATE_HISTORY_REP,
+    SAVE_WORKOUT_REP,
+    SAVE_HISTORY_REP,
     END_SET,
     LOAD_PERSISTED_SET_DATA,
     END_WORKOUT,
@@ -19,24 +19,23 @@ import {
 import uuidV4 from 'uuid/v4';
 import DeviceInfo from 'react-native-device-info';
 import { Platform } from 'react-native';
-import Reactotron from 'reactotron-react-native';
 
 const SetsReducer = (state = createDefaultState(), action) => {
     switch (action.type) {
-        case UPDATE_WORKOUT_SET:
-            return updateWorkoutSet(state, action);
-        case UPDATE_WORKOUT_SET_TAGS:
-            return updateWorkoutSetTags(state, action);
-        case UPDATE_HISTORY_SET:
-            return updateHistorySet(state, action);
-        case UPDATE_HISTORY_SET_TAGS:
-            return updateHistorySetTags(state, action);
+        case SAVE_WORKOUT_SET:
+            return saveWorkoutSet(state, action);
+        case SAVE_WORKOUT_SET_TAGS:
+            return saveWorkoutSetTags(state, action);
+        case SAVE_HISTORY_SET:
+            return saveHistorySet(state, action);
+        case SAVE_HISTORY_SET_TAGS:
+            return saveHistorySetTags(state, action);
         case ADD_REP_DATA:
             return addRepData(state, action);
-        case UPDATE_WORKOUT_REP:
-            return updateWorkoutRep(state, action);
-        case UPDATE_HISTORY_REP:
-            return updateHistoryRep(state, action);
+        case SAVE_WORKOUT_REP:
+            return saveWorkoutRep(state, action);
+        case SAVE_HISTORY_REP:
+            return saveHistoryRep(state, action);
         case END_SET:
             return endSet(state, action);
         case LOAD_PERSISTED_SET_DATA:
@@ -88,10 +87,10 @@ const createDefaultState = () => {
     };
 };
 
-// UPDATE_WORKOUT_SET
+// SAVE_WORKOUT_SET
 
 // NOTE - using one slice to copy, then altering, as the spread operator + slice was buggy and deletes rows
-const updateWorkoutSet = (state, action) => {
+const saveWorkoutSet = (state, action) => {
     let newWorkoutData = state.workoutData.slice(0);
     let setIndex = newWorkoutData.findIndex( set => set.setID === action.setID );
     let set = newWorkoutData[setIndex];
@@ -117,9 +116,9 @@ const updateWorkoutSet = (state, action) => {
     });
 };
 
-// UPDATE_WORKOUT_SET_TAGS
+// SAVE_WORKOUT_SET_TAGS
 
-const updateWorkoutSetTags = (state, action) => {
+const saveWorkoutSetTags = (state, action) => {
     let newWorkoutData = state.workoutData.slice(0);
     let setIndex = newWorkoutData.findIndex( set => set.setID === action.setID );
     let set = newWorkoutData[setIndex];
@@ -134,9 +133,9 @@ const updateWorkoutSetTags = (state, action) => {
     });
 };
 
-// UPDATE_HISTORY_SET
+// SAVE_HISTORY_SET
 
-const updateHistorySet = (state, action) => {
+const saveHistorySet = (state, action) => {
     let setID = action.setID;
     let historyData = state.historyData;
     let set = historyData[setID];
@@ -169,9 +168,9 @@ const updateHistorySet = (state, action) => {
     return Object.assign({}, state, stateChanges);
 };
 
-// UPDATE_HISTORY_SET_TAGS
+// SAVE_HISTORY_SET_TAGS
 
-const updateHistorySetTags = (state, action) => {
+const saveHistorySetTags = (state, action) => {
     let setID = action.setID;
     let historyData = state.historyData;
     let set = historyData[setID];
@@ -229,9 +228,9 @@ const addRepData = (state, action) => {
     });
 };
 
-// UPDATE_WORKOUT_REP
+// SAVE_WORKOUT_REP
 
-const updateWorkoutRep = (state, action) => {
+const saveWorkoutRep = (state, action) => {
     // copy workout data
     let newWorkoutData = state.workoutData.slice(0);
 
@@ -251,9 +250,9 @@ const updateWorkoutRep = (state, action) => {
     return Object.assign({}, state, stateChanges);
 };
 
-// UPDATE_HISTORY_REP
+// SAVE_HISTORY_REP
 
-const updateHistoryRep = (state, action) => {
+const saveHistoryRep = (state, action) => {
     // define vars
     let setID = action.setID;
     let historyData = state.historyData;
@@ -335,7 +334,7 @@ const endWorkout = (state, action) => {
             workoutSetIDs.push(setID);
             historyChanges[setID] = set;
         } else {
-            Reactotron.log("end working -> ignoring empty set");
+            console.tron.log("end working -> ignoring empty set");
         }
     }
 

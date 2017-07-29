@@ -79,11 +79,10 @@ class WorkoutList extends Component {
                     <SetDataLabelRow />
                 );
             case "data":
-                // TODO: full screen view!
                 return (<SetDataRow item={item}
                             onPressRemove={() =>this.props.removeRep(item.setID, item.rep) }
                             onPressRestore={() => this.props.restoreRep(item.setID, item.rep) }
-                            onPressRow={() => this.props.viewExpandedSet(item.setID) }
+                            onPressRow={() => this.props.tapCard(item.setID) }
                         />);
             case "footer":
                 return (<SetRestRow item={item} />);

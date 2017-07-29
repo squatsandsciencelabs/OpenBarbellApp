@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as HistoryActionCreators from 'app/redux/shared_actions/HistoryActionCreators';
+import * as Actions from './HistorySetExpandedActions';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
 import SetExpandedView from 'app/shared_features/expanded_set/SetExpandedView';
@@ -44,7 +44,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        closeModal: HistoryActionCreators.endViewExpandedSet,
+        closeModal: Actions.dismissExpanded,
     }, dispatch);
 };
  

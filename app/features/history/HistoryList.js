@@ -74,7 +74,7 @@ class HistoryList extends Component {
                 return (<SetDataRow item={item}
                             onPressRemove={() =>this.props.removeRep(item.setID, item.rep) }
                             onPressRestore={() => this.props.restoreRep(item.setID, item.rep) }
-                            onPressRow={() => this.props.viewExpandedSet(item.setID) }
+                            onPressRow={() => this.props.tapCard(item.setID) }
                         />);
             case "footer":
                 return (<SetRestRow item={item} />);
@@ -96,7 +96,7 @@ class HistoryList extends Component {
                 renderItem={({item, index, section}) => this._renderRow(section, index, item)}
                 renderSectionHeader={({section}) => this._renderSectionHeader(section) }
                 sections={this.props.sections}
-                onEndReached={() => this.props.finishedLoadingHistory() }
+                onEndReached={() => this.props.finishLoading() }
                 style = {{padding: 10, backgroundColor: 'white'}}
             />);
         }

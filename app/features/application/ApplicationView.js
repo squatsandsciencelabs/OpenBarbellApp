@@ -9,17 +9,16 @@ import {
     Dimensions,
     Alert
 } from 'react-native';
-import Reactotron from 'reactotron-react-native';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 
 import WorkoutScreen from 'app/features/workout/WorkoutScreen';
-import SettingsScreen from 'app/features/settings/SettingsScreen';
+import SettingsTab from 'app/features/settings/SettingsTab';
 import HistoryScreen from 'app/features/history/HistoryScreen';
 
 class ApplicationView extends Component {
 
     componentDidMount() {
-        this.props.onMount();
+        this.props.load();
         this._checkIfOutdated();
     }
 
@@ -53,7 +52,7 @@ class ApplicationView extends Component {
                     contentProps={{ keyboardShouldPersistTaps: 'always', keyboardDismissMode: 'on-drag' }}
                     renderTabBar={() => <DefaultTabBar />}
                     initialPage={ 2 }
-                    onChangeTab={ () => { this.props.onChangeTab() } }>
+                    onChangeTab={ () => { this.props.changeTab() } }>
                     <View style={styles.tabView} tabLabel='WORKOUT'>
                         <WorkoutScreen />
                     </View>
@@ -61,7 +60,7 @@ class ApplicationView extends Component {
                         <HistoryScreen />
                     </View>
                     <ScrollView style={styles.tabView} tabLabel='SETTINGS'>
-                        <SettingsScreen />
+                        <SettingsTab />
                     </ScrollView>
 
                 </ScrollableTabView>
@@ -75,8 +74,8 @@ class ApplicationView extends Component {
                 "Application Outdated",
                 'Update to latest?',
                 [
-                    {text: 'Later', onPress: () => Reactotron.log('\'Later\' pressed')},
-                    {text: 'Update', onPress: () => Reactotron.log('\'Update\' Pressed')}
+                    {text: 'Later', onPress: () => console.tron.log('\'Later\' pressed')},
+                    {text: 'Update', onPress: () => console.tron.log('\'Update\' Pressed')}
                 ]
             );
         }

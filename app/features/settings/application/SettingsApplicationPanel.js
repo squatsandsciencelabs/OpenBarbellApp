@@ -16,7 +16,7 @@ class SettingsApplicationPanel extends Component {
     // ACTIONS
 
     _tappedSetTimer() {
-        this.props.editSetTimer()
+        this.props.tapEndSetTimer()
     }
 
     // RENDER

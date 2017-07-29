@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import HistoryFilterBar from './HistoryFilterBar';
-import * as HistoryActionCreators from 'app/redux/shared_actions/HistoryActionCreators';
+import * as Actions from './HistoryFilterBarActions';
 
 const mapStateToProps = (state) => ({
     shouldShowRemoved: state.history.showRemoved,
@@ -11,9 +11,9 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        showRemoved: HistoryActionCreators.showRemovedData,
-        hideRemoved: HistoryActionCreators.hideRemovedData,
-        exportCSV: HistoryActionCreators.exportHistoryCSV,
+        showRemoved: Actions.showRemovedData,
+        hideRemoved: Actions.hideRemovedData,
+        exportCSV: Actions.exportCSV,
     }, dispatch);
 };
 

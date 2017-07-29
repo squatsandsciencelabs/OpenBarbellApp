@@ -3,11 +3,10 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as HistoryActionCreators from 'app/redux/shared_actions/HistoryActionCreators';
-import * as SetActionCreators from 'app/redux/shared_actions/SetActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as DateUtils from 'app/utility/transforms/DateUtils';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
+import * as Actions from './HistoryActions';
 import HistoryList from './HistoryList';
 
 // NOTE: this means that every history screen accesses previous values as singletons
@@ -221,10 +220,10 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        removeRep: SetActionCreators.removeHistoryRep,
-        restoreRep: SetActionCreators.restoreHistoryRep,
-        finishedLoadingHistory: HistoryActionCreators.finishedLoadingHistory,
-        viewExpandedSet: HistoryActionCreators.beginViewExpandedSet
+        removeRep: Actions.removeRep,
+        restoreRep: Actions.restoreRep,
+        finishLoading: Actions.finishLoading,
+        tapCard: Actions.presentExpanded
     }, dispatch);
 };
 

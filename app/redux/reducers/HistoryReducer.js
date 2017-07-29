@@ -2,16 +2,19 @@ import {
     UPDATE_HISTORY_FILTER,
     EXPORTING_CSV,
     LOADING_HISTORY,
-    EDIT_HISTORY_EXERCISE_NAME,
-    EDIT_HISTORY_TAGS,
-    EXPANDED_HISTORY_SET
+    PRESENT_HISTORY_EXERCISE,
+    PRESENT_HISTORY_TAGS,
+    PRESENT_HISTORY_EXPANDED,
+    DISMISS_HISTORY_EXERCISE,
+    DISMISS_HISTORY_TAGS,
+    DISMISS_HISTORY_EXPANDED
 } from 'app/ActionTypes';
 
 const defaultState = {
     showRemoved: false,
     isExportingCSV: false,
     isLoadingHistory: true,
-    editingExercise: '',
+    editingExerciseName: '',
     editingExerciseSetID: null,
     editingTags: [],
     editingTagsSetID: null,
@@ -32,19 +35,33 @@ const HistoryReducer = (state = defaultState, action) => {
             return Object.assign({}, state, {
                 isExportingCSV: action.isExportingCSV
             });
-        case EDIT_HISTORY_EXERCISE_NAME:
+        case PRESENT_HISTORY_EXERCISE:
             return Object.assign({}, state, {
                 editingExerciseSetID: action.setID,
-                editingExercise: action.exercise
+                editingExerciseName: action.exercise
             });
-        case EDIT_HISTORY_TAGS:
+        case PRESENT_HISTORY_TAGS:
             return Object.assign({}, state, {
                 editingTagsSetID: action.setID,
                 editingTags: action.tags
             });
-        case EXPANDED_HISTORY_SET:
+        case PRESENT_HISTORY_EXPANDED:
             return Object.assign({}, state, {
                 expandedSetID: action.setID,
+            });
+        case DISMISS_HISTORY_EXERCISE:
+            return Object.assign({}, state, {
+                editingExerciseSetID: null,
+                editingExerciseName: ''
+            });
+        case DISMISS_HISTORY_TAGS:
+            return Object.assign({}, state, {
+                editingTagsSetID: null,
+                editingTags: []
+            });
+        case DISMISS_HISTORY_EXPANDED:
+            return Object.assign({}, state, {
+                expandedSetID: null,
             });
         default:
             return state;

@@ -1,12 +1,12 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import WorkoutList from './WorkoutList';
-import * as SetActionCreators from 'app/redux/shared_actions/SetActionCreators';
-import * as WorkoutActionCreators from 'app/redux/shared_actions/WorkoutActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as DateUtils from 'app/utility/transforms/DateUtils';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
+
+import WorkoutList from './WorkoutList';
+import * as Actions from './WorkoutActions';
 
 // assumes chronological sets
 const createViewModels = (sets) => {
@@ -180,11 +180,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        endSet: SetActionCreators.endSet,
-        endWorkout: WorkoutActionCreators.endWorkout,
-        removeRep: SetActionCreators.removeWorkoutRep,
-        restoreRep: SetActionCreators.restoreWorkoutRep,
-        viewExpandedSet: WorkoutActionCreators.beginViewExpandedSet,
+        endSet: Actions.endSet,
+        endWorkout: Actions.endWorkout,
+        removeRep: Actions.removeRep,
+        restoreRep: Actions.restoreRep,
+        tapCard: Actions.presentExpanded,
     }, dispatch);
 };
 

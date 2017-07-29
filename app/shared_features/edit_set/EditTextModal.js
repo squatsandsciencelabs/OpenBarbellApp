@@ -114,16 +114,16 @@ class EditTextModal extends Component {
         } else {
             // TODO: find a way to not repeat _tappedDone logic
             // NOTE: This is repeating _tappedDone logic because setState doesn't update immediately
-            this.props.updateSetSingle(this.state.setID, input);
+            this.props.saveSetSingleInput(this.state.setID, input);
             this.props.closeModal();
         }
     }
 
     _tappedDone() {
         if (this.props.multipleInput) {
-            this.props.updateSetMultiple(this.state.setID, this.state.inputs);
+            this.props.saveSetMultipleInput(this.state.setID, this.state.inputs);
         } else {
-            this.props.updateSetSingle(this.state.setID, this.state.text);
+            this.props.saveSetSingleInput(this.state.setID, this.state.text);
         }
         this.props.closeModal();
     }

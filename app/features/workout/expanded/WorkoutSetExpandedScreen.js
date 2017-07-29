@@ -2,9 +2,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import SetExpandedView from 'app/shared_features/expanded_set/SetExpandedView';
-import * as WorkoutActionCreators from 'app/redux/shared_actions/WorkoutActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
+import * as Actions from './WorkoutSetExpandedActions';
 
 const mapStateToProps = (state) => {
     if (state.workout.expandedSetID !== null) {
@@ -44,7 +44,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        closeModal: WorkoutActionCreators.endViewExpandedSet,
+        closeModal: Actions.dismissExpanded,
     }, dispatch);
 };
  

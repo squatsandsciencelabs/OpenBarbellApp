@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import PickerModal from 'app/shared_features/picker/PickerModal';
 import * as DateUtils from 'app/utility/transforms/DateUtils';
-import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsActionCreators';
+import * as Actions from './SettingsEndSetTimerActions';
 
 const itemForDuration = (duration) => {
     return {
@@ -26,8 +26,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        selectValue: SettingsActionCreators.updateSetTimer,
-        closeModal: SettingsActionCreators.endEditSetTimer
+        selectValue: Actions.saveEndSetTimer,
+        closeModal: Actions.dismissEndSetTimer
     }, dispatch);
 };
 

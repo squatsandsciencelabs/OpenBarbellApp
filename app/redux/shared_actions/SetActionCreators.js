@@ -1,12 +1,6 @@
-import Reactotron from 'reactotron-react-native';
-
 import {
-    UPDATE_WORKOUT_SET,
-    UPDATE_WORKOUT_SET_TAGS,
-    UPDATE_HISTORY_SET,
-    UPDATE_HISTORY_SET_TAGS,
-    UPDATE_WORKOUT_REP,
-    UPDATE_HISTORY_REP,
+    SAVE_WORKOUT_SET,
+    SAVE_HISTORY_SET,
     END_SET,
     BEGIN_UPLOADING_SETS,
     RE_ADD_SETS_TO_UPLOAD,
@@ -17,13 +11,11 @@ import {
 } from 'app/ActionTypes';
 
 import * as ApiActionCreators from './ApiActionCreators';
-import * as WorkoutActionCreators from './WorkoutActionCreators';
-import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
 
-export const updateWorkoutSet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {
+export const saveWorkoutSet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {
     var action  = {
-        type: UPDATE_WORKOUT_SET
+        type: SAVE_WORKOUT_SET
     };
 
     action.setID = setID;
@@ -44,19 +36,9 @@ export const updateWorkoutSet = (setID, exercise = null, weight = null, metric =
     return action;
 };
 
-export const updateWorkoutSetTags = (setID, tags = []) => (dispatch) => {
+export const saveHistorySet = (setID, exercise = null, weight = null, metric = null, rpe = null) => (dispatch) => {
     var action = {
-        type: UPDATE_WORKOUT_SET_TAGS,
-        setID: setID,
-        tags: tags
-    };
-    dispatch(action);
-    dispatch(ApiActionCreators.syncData());
-};
-
-export const updateHistorySet = (setID, exercise = null, weight = null, metric = null, rpe = null) => (dispatch) => {
-    var action = {
-        type: UPDATE_HISTORY_SET
+        type: SAVE_HISTORY_SET
     };
 
     action.setID = setID;
@@ -75,50 +57,6 @@ export const updateHistorySet = (setID, exercise = null, weight = null, metric =
     }
 
     dispatch(action);
-    dispatch(ApiActionCreators.syncData());
-};
-
-export const updateHistorySetTags = (setID, tags = []) => (dispatch) => {
-    var action = {
-        type: UPDATE_HISTORY_SET_TAGS,
-        setID: setID,
-        tags: tags
-    };
-    dispatch(action);
-    dispatch(ApiActionCreators.syncData());
-};
-
-export const removeWorkoutRep = (setID, repIndex) => ({
-    type: UPDATE_WORKOUT_REP,
-    setID: setID,
-    repIndex: repIndex,
-    removed: true
-});
-
-export const restoreWorkoutRep = (setID, repIndex) => ({
-    type: UPDATE_WORKOUT_REP,
-    setID: setID,
-    repIndex: repIndex,
-    removed: false
-});
-
-export const removeHistoryRep = (setID, repIndex) => (dispatch) => {
-    dispatch({
-        type: UPDATE_HISTORY_REP,
-        setID: setID,
-        repIndex: repIndex,
-        removed: true
-    });
-    dispatch(ApiActionCreators.syncData());
-};
-
-export const restoreHistoryRep = (setID, repIndex) => (dispatch) => {
-    dispatch({
-        type: UPDATE_HISTORY_REP,
-        setID: setID,
-        repIndex: repIndex,
-        removed: false
-    });
     dispatch(ApiActionCreators.syncData());
 };
 
@@ -149,28 +87,6 @@ export const updateRevisionFromServer = (revision) => ({
     type: UPDATE_REVISION_FROM_SERVER,
     revision: revision
 });
-
-export const endOldWorkout = () => (dispatch, getState) => {
-    // get end time
-    var state = getState();
-    var endTime = SetsSelectors.lastRepTime(state.sets)
-    if (endTime === null) {
-        return;
-    } else if (Object.prototype.toString.call(endTime) === '[object Date]') {
-        var endDate = endTime;
-    } else {
-        var endDate = new Date(endTime);
-    }
-
-    var currentDate = new Date()
-    var timeDifference = Math.abs(currentDate - endDate);
-    Reactotron.log("TTime difference is " + timeDifference + " comparing " + endDate + " against " + currentDate + " with config timer " + OpenBarbellConfig.endWorkoutTimer);
-
-    if (timeDifference >= config.endWorkoutTimer) {
-        alert("Ending workout! You can find your last workout on the History screen.");
-        dispatch(WorkoutActionCreators.endWorkout())
-    }
-};
 
 export const clearHistory = () => ({
     type: CLEAR_HISTORY

@@ -1,4 +1,3 @@
-import Reactotron from 'reactotron-react-native';
 import BackgroundTimer from 'react-native-background-timer';
 import * as SetActionCreators from './SetActionCreators';
 
@@ -15,9 +14,9 @@ export const startEndSetTimer = () => (dispatch, getState) => {
     } else {
         duration = durationInSeconds * 1000;
         timer = BackgroundTimer.setTimeout(() => {
-            Reactotron.log("End set timer executed with duration " + duration + "! time to end set");
+            console.tron.log("End set timer executed with duration " + duration + "! time to end set");
             dispatch(SetActionCreators.endSet());
         }, duration);
     }
-    Reactotron.log("New end set timer is now " + timer);
+    console.tron.log("New end set timer is now " + timer);
 };

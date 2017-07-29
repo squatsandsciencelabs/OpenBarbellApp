@@ -82,7 +82,7 @@ export const syncData = () => (dispatch, getState) => {
             }
 
             // update the sync date
-            dispatch(SettingsActionCreators.updateSyncDate(new Date()));
+            dispatch(SettingsActionCreators.saveSyncDate(new Date()));
         });
     }
 };

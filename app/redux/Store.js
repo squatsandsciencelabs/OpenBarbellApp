@@ -66,7 +66,7 @@ const loadInitialState = async (store) => {
                     );
                     endSetTimerDuration = 30;
                 }
-                store.dispatch(SettingsActionCreators.updateSetTimer(endSetTimerDuration));
+                store.dispatch(SettingsActionCreators.saveEndSetTimer(endSetTimerDuration));
 
                 // sync date
                 let syncDate = value.settings.syncDate;
@@ -80,7 +80,7 @@ const loadInitialState = async (store) => {
                     // failsafe, unknown object type, just make it an empty string
                     syncDate = '';
                 }
-                store.dispatch(SettingsActionCreators.updateSyncDate(syncDate));
+                store.dispatch(SettingsActionCreators.saveSyncDate(syncDate));
             }
 
             // load previous auth data

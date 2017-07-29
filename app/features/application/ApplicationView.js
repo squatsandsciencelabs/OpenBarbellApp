@@ -12,7 +12,7 @@ import {
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 
 import WorkoutScreen from 'app/features/workout/WorkoutScreen';
-import SettingsScreen from 'app/features/settings/SettingsScreen';
+import SettingsTab from 'app/features/settings/SettingsTab';
 import HistoryScreen from 'app/features/history/HistoryScreen';
 
 class ApplicationView extends Component {
@@ -60,7 +60,7 @@ class ApplicationView extends Component {
                         <HistoryScreen />
                     </View>
                     <ScrollView style={styles.tabView} tabLabel='SETTINGS'>
-                        <SettingsScreen />
+                        <SettingsTab />
                     </ScrollView>
 
                 </ScrollableTabView>

@@ -1,15 +1,17 @@
+// TODO: Refactor this so that the panels are screens rather than passing props manually
+
 import React, { Component } from 'react';
 
-import SettingsDevicePanelBluetoothOff from './SettingsDevicePanelBluetoothOff';
-import SettingsDevicePanelDisconnected from './SettingsDevicePanelDisconnected';
-import SettingsDevicePanelConnecting from './SettingsDevicePanelConnecting';
-import SettingsDevicePanelConnected from './SettingsDevicePanelConnected';
-import SettingsDevicePanelDisconnecting from './SettingsDevicePanelDisconnecting';
+import SettingsDevicePanelBluetoothOff from './panels/SettingsDevicePanelBluetoothOff';
+import SettingsDevicePanelDisconnected from './panels/SettingsDevicePanelDisconnected';
+import SettingsDevicePanelConnecting from './panels/SettingsDevicePanelConnecting';
+import SettingsDevicePanelConnected from './panels/SettingsDevicePanelConnected';
+import SettingsDevicePanelDisconnecting from './panels/SettingsDevicePanelDisconnecting';
 
 class SettingsDevicePanel extends Component {
 
     render() {
-        switch ( this.props.connectedDevice.status ) {
+        switch ( this.props.deviceStatus ) {
             case 'BLUETOOTH_OFF':
                 return <SettingsDevicePanelBluetoothOff />;
             case 'DISCONNECTED':
@@ -20,15 +22,15 @@ class SettingsDevicePanel extends Component {
                     connectDevice={ this.props.connectDevice }/>;
             case 'CONNECTING':
                 return <SettingsDevicePanelConnecting
-                    device={ this.props.connectedDevice.deviceName }
+                    device={ this.props.deviceName }
                     disconnectDevice={ this.props.disconnectDevice }/>;
             case 'CONNECTED':
                 return <SettingsDevicePanelConnected
-                    device={ this.props.connectedDevice.deviceName }
+                    device={ this.props.deviceName }
                     disconnectDevice={ this.props.disconnectDevice }/>;
             case 'DISCONNECTING':
                 return <SettingsDevicePanelDisconnecting
-                    device={ this.props.connectedDevice.deviceName }/>;
+                    device={ this.props.deviceName }/>;
         }
     }
 

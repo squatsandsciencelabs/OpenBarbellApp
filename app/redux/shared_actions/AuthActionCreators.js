@@ -8,7 +8,6 @@ import {
 } from 'app/ActionTypes';
 import API from 'app/services/API';
 import * as SetActionCreators from './SetActionCreators';
-import * as AuthActionCreators from './AuthActionCreators';
 import * as SettingsActionCreators from './SettingsActionCreators';
 import * as SuggestionsActionCreators from './SuggestionsActionCreators';
 
@@ -23,9 +22,9 @@ export const signIn = () => (dispatch) => {
         // TODO: success code here might need to reflect sync success code as well to reduce errors
         API.login(user.idToken, dispatch, (accessToken, refreshToken, revision, sets) => {
             console.tron.log("auth action creator now has " + accessToken + " " + refreshToken + " " + JSON.stringify(sets));
-            dispatch(AuthActionCreators.saveUser(refreshToken, accessToken, user.email));
+            dispatch(saveUser(refreshToken, accessToken, user.email));
             dispatch(SetActionCreators.updateSetDataFromServer(revision, sets));
-            dispatch(SettingsActionCreators.updateSyncDate(new Date()));
+            dispatch(SettingsActionCreators.saveSyncDate(new Date()));
             dispatch(SuggestionsActionCreators.updateExerciseSuggestionsModel());
             dispatch(SuggestionsActionCreators.updateTagsSuggestionsModel());
             dispatch(finishedAttemptLogin());

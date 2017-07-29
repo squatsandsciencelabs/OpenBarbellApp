@@ -1,10 +1,9 @@
+// These exist in shared because the Bluetooth service needs access to them
+// Services do not have "Actions" they're directly associated with, so they use the shared creator
+
 import { NativeModules } from 'react-native';
 
 import {
-    CONNECT_DEVICE,
-    DISCONNECT_DEVICE,
-    START_DEVICE_SCAN,
-    STOP_DEVICE_SCAN,
     FOUND_DEVICE,
     BLUETOOTH_OFF,
     DISCONNECTED_FROM_DEVICE,
@@ -18,46 +17,11 @@ const RFDuinoLib = NativeModules.RFDuinoLib;
 
 // SCANNING
 
-export const startDeviceScan = () => {
-    RFDuinoLib.startScan();
-
-    return {
-        type: START_DEVICE_SCAN
-    };
-};
-
-export const stopDeviceScan = () => {
-    RFDuinoLib.stopScan();
-
-    return {
-        type: STOP_DEVICE_SCAN
-    };
-};
-
 export const foundDevice = (name, identifier) => ({
     type: FOUND_DEVICE,
     device: name,
     deviceIdentifier: identifier
 });
-
-// CONNECTION
-
-export const connectDevice = (device) => {
-    RFDuinoLib.connectDevice(device);
-
-    return {
-        type: CONNECT_DEVICE,
-        device: device
-    };
-};
-
-export const disconnectDevice = () => {
-    RFDuinoLib.disconnectDevice();
-
-    return {
-        type: DISCONNECT_DEVICE
-    };
-};
 
 // DEVICE STATUS
 

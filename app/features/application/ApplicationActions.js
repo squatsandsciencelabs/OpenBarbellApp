@@ -1,14 +1,12 @@
-import { batchActions } from 'redux-batched-actions';
 import { Keyboard } from 'react-native';
 
 import * as WorkoutActionCreators from 'app/redux/shared_actions/WorkoutActionCreators';
 import * as ApiActionCreators from 'app/redux/shared_actions/ApiActionCreators';
+import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
 export const onChangeTab = () => (dispatch) => {
-    dispatch(batchActions([
-        ApiActionCreators.syncData(),
-        endOldWorkout()
-    ]));
+    dispatch(ApiActionCreators.syncData());
+    dispatch(endOldWorkout());
     Keyboard.dismiss();
 };
 

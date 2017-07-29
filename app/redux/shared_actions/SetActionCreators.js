@@ -15,7 +15,6 @@ import {
 } from 'app/ActionTypes';
 
 import * as ApiActionCreators from './ApiActionCreators';
-import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
 
 export const updateWorkoutSet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {

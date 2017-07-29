@@ -1,6 +1,5 @@
 import throttle from 'lodash/throttle';
 import { Alert, AsyncStorage } from 'react-native';
-import { enableBatching } from 'redux-batched-actions';
 import Reactotron from 'reactotron-react-native';
 
 import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
@@ -16,7 +15,7 @@ const key = '@OpenBarbellPersistedStore'
 
 export default initializeStore = () => {
     // create the store
-    let store = Reactotron.createStore(enableBatching(reducers), middlewares);
+    let store = Reactotron.createStore(reducers, middlewares);
 
     // load previous
     loadInitialState(store);

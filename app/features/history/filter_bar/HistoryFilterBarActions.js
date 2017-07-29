@@ -3,34 +3,24 @@ import { GoogleSignin } from 'react-native-google-signin';
 
 import {
     UPDATE_HISTORY_FILTER,
-    EXPORTING_CSV,
-    LOADING_HISTORY,
-    EDIT_HISTORY_EXERCISE_NAME,
-    EDIT_HISTORY_TAGS,
-    EXPANDED_HISTORY_SET
+    EXPORTING_CSV
 } from 'app/ActionTypes';
 
 import * as GoogleDriveUploader from 'app/services/GoogleDriveUploader';
 import * as CSVConverter from 'app/utility/transforms/CSVConverter';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
-export const finishedLoadingHistory = () => ({ type: LOADING_HISTORY, isLoading: false });
+export const showRemovedData = () => ({
+    type: UPDATE_HISTORY_FILTER,
+    showRemoved: true
+});
 
-export const showLoadingHistory = () => ({ type: LOADING_HISTORY, isLoading: true });
+export const hideRemovedData = () => ({
+    type: UPDATE_HISTORY_FILTER,
+    showRemoved: false
+});
 
-export const showRemovedData = () => (dispatch) => {
-    dispatch({ type: UPDATE_HISTORY_FILTER, showRemoved: true });
-    dispatch(showLoadingHistory());
-};
-
-export const hideRemovedData = () => (dispatch) => {
-    dispatch({ type: UPDATE_HISTORY_FILTER, showRemoved: false });
-    dispatch(showLoadingHistory());
-}
-
-const updateIsExportingCSV = (isExportingCSV) => ({ type: EXPORTING_CSV, isExportingCSV: isExportingCSV });
-
-export const exportHistoryCSV = () => (dispatch, getState) => {
+export const exportCSV = () => (dispatch, getState) => {
     // logged in check
     let state = getState();
     if (state.auth.email === null) {
@@ -73,36 +63,5 @@ export const exportHistoryCSV = () => (dispatch, getState) => {
     .done();
 };
 
-export const beginEditHistoryExerciseName = (setID, exercise) => ({
-    type: EDIT_HISTORY_EXERCISE_NAME,
-    setID: setID,
-    exercise: exercise
-});
+const updateIsExportingCSV = (isExportingCSV) => ({ type: EXPORTING_CSV, isExportingCSV: isExportingCSV });
 
-export const endEditHistoryExerciseName = () => ({
-    type: EDIT_HISTORY_EXERCISE_NAME,
-    exercise: '',
-    setID: null
-});
-
-export const beginEditHistoryTags = (setID, tags) => ({
-    type: EDIT_HISTORY_TAGS,
-    setID: setID,
-    tags: tags
-});
-
-export const endEditHistoryTags = () => ({
-    type: EDIT_HISTORY_TAGS,
-    tags: [],
-    setID: null
-});
-
-export const beginViewExpandedSet = (setID) => ({
-    type: EXPANDED_HISTORY_SET,
-    setID: setID,
-});
-
-export const endViewExpandedSet = () => ({
-    type: EXPANDED_HISTORY_SET,
-    setID: null
-});

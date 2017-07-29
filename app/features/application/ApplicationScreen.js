@@ -1,8 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import * as ApiActionCreators from 'app/redux/shared_actions/ApiActionCreators';
-import * as ApplicationActions from './ApplicationActions';
+import * as Actions from './ApplicationActions';
 import ApplicationView from './ApplicationView';
 
 const mapStateToProps = (state) => ({
@@ -11,8 +10,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        onChangeTab: ApplicationActions.onChangeTab,
-        onMount: ApiActionCreators.syncData
+        changeTab: Actions.changeTab,
+        load: Actions.load
     }, dispatch);
 };
 

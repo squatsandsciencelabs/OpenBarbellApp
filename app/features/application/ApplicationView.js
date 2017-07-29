@@ -18,7 +18,7 @@ import HistoryScreen from 'app/features/history/HistoryScreen';
 class ApplicationView extends Component {
 
     componentDidMount() {
-        this.props.onMount();
+        this.props.load();
         this._checkIfOutdated();
     }
 
@@ -52,7 +52,7 @@ class ApplicationView extends Component {
                     contentProps={{ keyboardShouldPersistTaps: 'always', keyboardDismissMode: 'on-drag' }}
                     renderTabBar={() => <DefaultTabBar />}
                     initialPage={ 2 }
-                    onChangeTab={ () => { this.props.onChangeTab() } }>
+                    onChangeTab={ () => { this.props.changeTab() } }>
                     <View style={styles.tabView} tabLabel='WORKOUT'>
                         <WorkoutScreen />
                     </View>

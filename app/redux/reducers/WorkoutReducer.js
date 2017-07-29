@@ -1,12 +1,15 @@
 import {
-    EDIT_WORKOUT_EXERCISE_NAME,
-    EDIT_WORKOUT_TAGS,
-    EXPANDED_WORKOUT_SET
+    PRESENT_WORKOUT_EXERCISE,
+    PRESENT_WORKOUT_TAGS,
+    PRESENT_WORKOUT_EXPANDED,
+    DISMISS_WORKOUT_EXERCISE,
+    DISMISS_WORKOUT_TAGS,
+    DISMISS_WORKOUT_EXPANDED
 } from 'app/ActionTypes';
 
 const defaultState = {
     editingExerciseSetID: null,
-    editingExercise: '',
+    editingExerciseName: '',
     editingTagsSetID: null,
     editingTags: [],
     expandedSetID: null,
@@ -14,19 +17,33 @@ const defaultState = {
 
 const WorkoutReducer = (state = defaultState, action) => {
     switch (action.type) {
-        case EDIT_WORKOUT_EXERCISE_NAME:
+        case PRESENT_WORKOUT_EXERCISE:
             return Object.assign({}, state, {
                 editingExerciseSetID: action.setID,
-                editingExercise: action.exercise
+                editingExerciseName: action.exercise
             });
-        case EDIT_WORKOUT_TAGS:
+        case DISMISS_WORKOUT_EXERCISE:
+            return Object.assign({}, state, {
+                editingExerciseSetID: null,
+                editingExerciseName: ''
+            });
+        case PRESENT_WORKOUT_TAGS:
             return Object.assign({}, state, {
                 editingTagsSetID: action.setID,
                 editingTags: action.tags
             });
-        case EXPANDED_WORKOUT_SET:
+        case DISMISS_WORKOUT_TAGS:
+            return Object.assign({}, state, {
+                editingTagsSetID: null,
+                editingTags: []
+            });
+        case PRESENT_WORKOUT_EXPANDED:
             return Object.assign({}, state, {
                 expandedSetID: action.setID,
+            });
+        case DISMISS_WORKOUT_EXPANDED:
+            return Object.assign({}, state, {
+                expandedSetID: null,
             });
         default:
             return state;

@@ -2,9 +2,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import EditTextModal from 'app/shared_features/edit_set/EditTextModal';
-import * as SetActionCreators from 'app/redux/shared_actions/SetActionCreators';
-import * as HistoryActionCreators from 'app/redux/shared_actions/HistoryActionCreators';
 import * as SuggestionsSelector from 'app/redux/selectors/SuggestionsSelectors';
+import * as Actions from './EditHistoryExerciseActions';
 
 const mapStateToProps = (state) => {
     // save the model
@@ -13,7 +12,7 @@ const mapStateToProps = (state) => {
     return {
         title: 'Edit Exercise',
         placeholder: 'Enter Exercise',
-        text: state.history.editingExercise,
+        text: state.history.editingExerciseName,
         setID: state.history.editingExerciseSetID,
         generateSuggestions: (input) => { return SuggestionsSelector.generateSuggestions(model, input) },
         modalShowing: state.history.editingExerciseSetID !== null
@@ -22,8 +21,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        updateSetSingle: SetActionCreators.updateHistorySet,
-        closeModal: HistoryActionCreators.endEditHistoryExerciseName,
+        saveSetSingleInput: Actions.saveExerciseName,
+        closeModal: Actions.dismissExercise,
     }, dispatch);
 };
 

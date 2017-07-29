@@ -4,7 +4,11 @@ import * as WorkoutActionCreators from 'app/redux/shared_actions/WorkoutActionCr
 import * as ApiActionCreators from 'app/redux/shared_actions/ApiActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
-export const onChangeTab = () => (dispatch) => {
+export const load = () => {
+    return ApiActionCreators.syncData();
+};
+
+export const changeTab = () => (dispatch) => {
     dispatch(ApiActionCreators.syncData());
     dispatch(endOldWorkout());
     Keyboard.dismiss();

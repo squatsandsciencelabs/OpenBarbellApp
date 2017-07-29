@@ -73,7 +73,7 @@ class SetForm extends Component {
             || this.props.weight !== this.state.weight
             || this.props.metric !== this.state.metric
             || this.props.rpe !== this.state.rpe) {
-            this.props.updateSet(this.props.setID, this.state.exercise, this.state.weight, this.state.metric, this.state.rpe);
+            this.props.saveSet(this.props.setID, this.state.exercise, this.state.weight, this.state.metric, this.state.rpe);
         }
     }
 
@@ -136,7 +136,7 @@ class SetForm extends Component {
                 <View style={styles.upperShadow} />
                 <View style={[styles.shadow, {flex: 1, flexDirection: 'column', padding: 5}]}>
                     <View style={styles.field}>
-                        <TouchableHighlight onPress={() => this.props.editExercise(this.props.setID, this.state.exercise)}>
+                        <TouchableHighlight onPress={() => this.props.tapExercise(this.props.setID, this.state.exercise)}>
                             {this._displayExercise()}
                         </TouchableHighlight>
                         <View style={styles.fieldDetails} pointerEvents='none'>
@@ -186,7 +186,7 @@ class SetForm extends Component {
 
                     <View>
                         <View style={[styles.field, {flex: 1}]}>
-                            <TouchableHighlight onPress={() => this.props.editTags(this.props.setID, this.state.tags)}>
+                            <TouchableHighlight onPress={() => this.props.tapTags(this.props.setID, this.state.tags)}>
                                 {this._displayTags()}
                             </TouchableHighlight>
                         </View>

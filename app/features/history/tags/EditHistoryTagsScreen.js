@@ -2,9 +2,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import EditTextModal from 'app/shared_features/edit_set/EditTextModal';
-import * as SetActionCreators from 'app/redux/shared_actions/SetActionCreators';
-import * as HistoryActionCreators from 'app/redux/shared_actions/HistoryActionCreators';
 import * as SuggestionsSelectors from 'app/redux/selectors/SuggestionsSelectors';
+import * as Actions from './EditHistoryTagsActions';
 
 const mapStateToProps = (state) => {
     // save the model
@@ -24,8 +23,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        updateSetMultiple: SetActionCreators.updateHistorySetTags,
-        closeModal: HistoryActionCreators.endEditHistoryTags,
+        saveSetMultipleInput: Actions.saveTags,
+        closeModal: Actions.dismissTags,
     }, dispatch);
 };
 

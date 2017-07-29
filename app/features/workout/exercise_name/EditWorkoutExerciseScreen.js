@@ -2,9 +2,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import EditTextModal from 'app/shared_features/edit_set/EditTextModal';
-import * as SetActionCreators from 'app/redux/shared_actions/SetActionCreators';
-import * as WorkoutActionCreators from 'app/redux/shared_actions/WorkoutActionCreators';
 import * as SuggestionsSelectors from 'app/redux/selectors/SuggestionsSelectors';
+import * as Actions from './EditWorkoutExerciseActions';
 
 const mapStateToProps = (state) => {
     // save the model
@@ -13,7 +12,7 @@ const mapStateToProps = (state) => {
     return {
         title: 'Edit Exercise',
         placeholder: 'Enter Exercise',
-        text: state.workout.editingExercise,
+        text: state.workout.editingExerciseName,
         setID: state.workout.editingExerciseSetID,
         generateSuggestions: (input) => { return SuggestionsSelectors.generateSuggestions(model, input) },
         modalShowing: state.workout.editingExerciseSetID !== null
@@ -22,8 +21,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        updateSetSingle: SetActionCreators.updateWorkoutSet,
-        closeModal: WorkoutActionCreators.endEditWorkoutExerciseName,
+        saveSetSingleInput: Actions.saveExerciseName,
+        closeModal: Actions.dismissExercise,
     }, dispatch);
 };
 

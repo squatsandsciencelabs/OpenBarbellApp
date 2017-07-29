@@ -1,10 +1,6 @@
 import {
-    UPDATE_WORKOUT_SET,
-    UPDATE_WORKOUT_SET_TAGS,
-    UPDATE_HISTORY_SET,
-    UPDATE_HISTORY_SET_TAGS,
-    UPDATE_WORKOUT_REP,
-    UPDATE_HISTORY_REP,
+    SAVE_WORKOUT_SET,
+    SAVE_HISTORY_SET,
     END_SET,
     BEGIN_UPLOADING_SETS,
     RE_ADD_SETS_TO_UPLOAD,
@@ -17,9 +13,9 @@ import {
 import * as ApiActionCreators from './ApiActionCreators';
 import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
 
-export const updateWorkoutSet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {
+export const saveWorkoutSet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {
     var action  = {
-        type: UPDATE_WORKOUT_SET
+        type: SAVE_WORKOUT_SET
     };
 
     action.setID = setID;
@@ -40,19 +36,9 @@ export const updateWorkoutSet = (setID, exercise = null, weight = null, metric =
     return action;
 };
 
-export const updateWorkoutSetTags = (setID, tags = []) => (dispatch) => {
+export const saveHistorySet = (setID, exercise = null, weight = null, metric = null, rpe = null) => (dispatch) => {
     var action = {
-        type: UPDATE_WORKOUT_SET_TAGS,
-        setID: setID,
-        tags: tags
-    };
-    dispatch(action);
-    dispatch(ApiActionCreators.syncData());
-};
-
-export const updateHistorySet = (setID, exercise = null, weight = null, metric = null, rpe = null) => (dispatch) => {
-    var action = {
-        type: UPDATE_HISTORY_SET
+        type: SAVE_HISTORY_SET
     };
 
     action.setID = setID;
@@ -71,50 +57,6 @@ export const updateHistorySet = (setID, exercise = null, weight = null, metric =
     }
 
     dispatch(action);
-    dispatch(ApiActionCreators.syncData());
-};
-
-export const updateHistorySetTags = (setID, tags = []) => (dispatch) => {
-    var action = {
-        type: UPDATE_HISTORY_SET_TAGS,
-        setID: setID,
-        tags: tags
-    };
-    dispatch(action);
-    dispatch(ApiActionCreators.syncData());
-};
-
-export const removeWorkoutRep = (setID, repIndex) => ({
-    type: UPDATE_WORKOUT_REP,
-    setID: setID,
-    repIndex: repIndex,
-    removed: true
-});
-
-export const restoreWorkoutRep = (setID, repIndex) => ({
-    type: UPDATE_WORKOUT_REP,
-    setID: setID,
-    repIndex: repIndex,
-    removed: false
-});
-
-export const removeHistoryRep = (setID, repIndex) => (dispatch) => {
-    dispatch({
-        type: UPDATE_HISTORY_REP,
-        setID: setID,
-        repIndex: repIndex,
-        removed: true
-    });
-    dispatch(ApiActionCreators.syncData());
-};
-
-export const restoreHistoryRep = (setID, repIndex) => (dispatch) => {
-    dispatch({
-        type: UPDATE_HISTORY_REP,
-        setID: setID,
-        repIndex: repIndex,
-        removed: false
-    });
     dispatch(ApiActionCreators.syncData());
 };
 

@@ -2,14 +2,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import SetForm from 'app/shared_features/set_card/SetForm';
-import * as SetActionCreators from 'app/redux/shared_actions/SetActionCreators';
-import * as HistoryActionCreators from 'app/redux/shared_actions/HistoryActionCreators';
+import * as Actions from './EditHistorySetFormActions';
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        updateSet: SetActionCreators.updateHistorySet,
-        editExercise: HistoryActionCreators.beginEditHistoryExerciseName,
-        editTags: HistoryActionCreators.beginEditHistoryTags,
+        saveSet: Actions.saveSet,
+        tapExercise: Actions.presentExercise,
+        tapTags: Actions.presentTags,
     }, dispatch);
 };
 

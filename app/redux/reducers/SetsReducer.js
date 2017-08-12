@@ -14,7 +14,8 @@ import {
     RE_ADD_SETS_TO_UPLOAD,
     UPDATE_SET_DATA_FROM_SERVER,
     UPDATE_REVISION_FROM_SERVER,
-    CLEAR_HISTORY,
+    LOGIN_SUCCESS,
+    LOGOUT
 } from 'app/ActionTypes';
 import uuidV4 from 'uuid/v4';
 import DeviceInfo from 'react-native-device-info';
@@ -50,10 +51,11 @@ const SetsReducer = (state = createDefaultState(), action) => {
         case RE_ADD_SETS_TO_UPLOAD:
             return reAddSetsToUpload(state, action);
         case UPDATE_SET_DATA_FROM_SERVER:
+        case LOGIN_SUCCESS:        
             return updateSetDataFromServer(state, action);
         case UPDATE_REVISION_FROM_SERVER:
             return updateRevisionFromServer(state, action);
-        case CLEAR_HISTORY:
+        case LOGOUT:
             return clearHistory(state, action);
         default:
             return state;
@@ -378,6 +380,12 @@ const reAddSetsToUpload = (state, action) => {
 // UPDATE_SET_DATA_FROM_SERVER
 
 const updateSetDataFromServer = (state, action) => {
+    // TODO: remove this valid check once redux-persist is in play
+    // valid check
+    if (action.sets === null || action.sets === undefined || action.revision === null || action.revision === undefined) {
+        return state;
+    }
+
     let newHistoryData = {};
     for (set of action.sets) {
         if (set.setID !== null) { // hack check against a bug that showed up in the development database

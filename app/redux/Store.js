@@ -1,27 +1,48 @@
+// TODO: refactor the store to use redux-persist, will clean it up greatly
+// TODO: kill switch should not be a middleware, make it into an action / saga
+
 import throttle from 'lodash/throttle';
 import { Alert, AsyncStorage } from 'react-native';
 import Reactotron from 'reactotron-react-native';
 
+// middleware imports
+import { applyMiddleware }  from 'redux';
+import thunk from 'redux-thunk';
+import KillSwitchMiddleware from 'app/redux/middlewares/KillSwitchMiddleware';
+import createSagaMiddleware from 'redux-saga';
+import Sagas from 'app/redux/sagas/Sagas';
+
+// persisted store imports
 import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
 import reducers from 'app/redux/reducers/Reducers';
-import middlewares from 'app/redux/middlewares/Middlewares';
 import { LOAD_PERSISTED_SET_DATA } from 'app/ActionTypes';
 import * as SetActionCreators from 'app/redux/shared_actions/SetActionCreators';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
 import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsActionCreators';
 import * as SuggestionsActionCreators from 'app/redux/shared_actions/SuggestionsActionCreators';
+const key = '@OpenBarbellPersistedStore';
 
-const key = '@OpenBarbellPersistedStore'
+// TODO: remove saga monitor from production, same way should remove console.tron from production
+const sagaMonitor = Reactotron.createSagaMonitor();
+const sagaMiddleware = createSagaMiddleware({sagaMonitor});
+const middlewares = applyMiddleware(
+    thunk,
+    KillSwitchMiddleware,
+    sagaMiddleware
+);
 
 export default initializeStore = () => {
     // create the store
     let store = Reactotron.createStore(reducers, middlewares);
 
+    // run sagas
+    sagaMiddleware.run(Sagas);
+    
     // load previous
     loadInitialState(store);
 
     return store;
-}
+};
 
 // Persisted State
 // Because react native pushes us to use async storage, yet needs the state to be created at the start...
@@ -56,6 +77,7 @@ const loadInitialState = async (store) => {
             }
 
             // load previous settings
+            var syncDate = null;
             if (value.settings !== undefined) {
                 // end set timer
                 let endSetTimerDuration = value.settings.endSetTimerDuration;
@@ -69,7 +91,7 @@ const loadInitialState = async (store) => {
                 store.dispatch(SettingsActionCreators.saveEndSetTimer(endSetTimerDuration));
 
                 // sync date
-                let syncDate = value.settings.syncDate;
+                syncDate = value.settings.syncDate;
                 if (syncDate === undefined || null) {
                     // it's empty, default to empty string
                     syncDate = '';
@@ -97,14 +119,9 @@ const loadInitialState = async (store) => {
                 if (email === undefined) {
                     email = null;
                 }
-                console.tron.log("loading previous " + refreshToken + " " + accessToken + " " + email);
-                store.dispatch(AuthActionCreators.saveUser(refreshToken, accessToken, email));
+                console.tron.log("loading previous " + refreshToken + " " + accessToken + " " + email + " " + syncDate);
+                store.dispatch(AuthActionCreators.loginSucceeded(refreshToken, accessToken, email, syncDate));
             }
-            store.dispatch(AuthActionCreators.finishedAttemptLogin());
-
-            // load suggestions
-            store.dispatch(SuggestionsActionCreators.updateExerciseSuggestionsModel());
-            store.dispatch(SuggestionsActionCreators.updateTagsSuggestionsModel());
         }
         addSaveListener(store);
     } catch (err) {
@@ -112,7 +129,7 @@ const loadInitialState = async (store) => {
         // TODO: See when this would actually happen, is it possible?
         // Possibly display an error message across the app
     }
-}
+};
 
 const addSaveListener = (store) => {
     store.subscribe(throttle(() => {
@@ -123,4 +140,4 @@ const addSaveListener = (store) => {
             settings: state.settings
         });
     }, OpenBarbellConfig.storageThrottle));
-}
+};

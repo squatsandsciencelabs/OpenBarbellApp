@@ -1,17 +1,20 @@
 import {
     SAVE_USER,
-    ATTEMPTING_LOGIN,
-    FINISHED_ATTEMPT_LOGIN
+    LOGIN_REQUEST,
+    LOGIN_SUCCESS,
+    LOGOUT
 } from 'app/ActionTypes';
 
 const AuthReducer = (state = createDefaultState(), action) => {
     switch (action.type) {
         case SAVE_USER:
             return saveUser(state, action);
-        case ATTEMPTING_LOGIN:
-            return attemptingLogin(state, action);
-        case FINISHED_ATTEMPT_LOGIN:
-            return finishedAttemptLogin(state, action);
+        case LOGIN_REQUEST:
+            return loginRequest(state, action);
+        case LOGIN_SUCCESS:
+            return loginSuccess(state, action);
+        case LOGOUT:
+            return logout(state, action);
         default:
             return state;
     }
@@ -37,15 +40,27 @@ const saveUser = (state, action) => {
     return Object.assign({}, state, changes);
 };
 
-const attemptingLogin = (state, action) => {
+const loginRequest = (state, action) => {
     return Object.assign({}, state, {
         isLoggingIn: true
     });
 };
 
-const finishedAttemptLogin = (state, action) => {
+const loginSuccess = (state, action) => {
     return Object.assign({}, state, {
-        isLoggingIn: false
+        isLoggingIn: false,
+        accessToken: action.accessToken,
+        refreshToken: action.refreshToken,
+        email: action.email
+    });
+};
+
+const logout = (state, action) => {
+    return Object.assign({}, state, {
+        isLoggingIn: false,
+        accessToken: null,
+        refreshToken: null,
+        email: null
     });
 };
 

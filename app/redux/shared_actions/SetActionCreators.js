@@ -7,7 +7,6 @@ import {
     CLEAR_SETS_BEING_UPLOADED,
     UPDATE_SET_DATA_FROM_SERVER,
     UPDATE_REVISION_FROM_SERVER,
-    CLEAR_HISTORY
 } from 'app/ActionTypes';
 
 import * as ApiActionCreators from './ApiActionCreators';
@@ -86,8 +85,4 @@ export const updateSetDataFromServer = (revision, sets) => ({
 export const updateRevisionFromServer = (revision) => ({
     type: UPDATE_REVISION_FROM_SERVER,
     revision: revision
-});
-
-export const clearHistory = () => ({
-    type: CLEAR_HISTORY
 });

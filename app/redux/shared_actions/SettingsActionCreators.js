@@ -10,6 +10,7 @@ export const saveEndSetTimer = (duration = 30) => ({
     endSetTimerDuration: duration
 });
 
+// TODO: Remove this once redux-persist is in place
 export const saveSyncDate = (syncDate) => ({
     type: SAVE_SYNC_DATE,
     syncDate: syncDate

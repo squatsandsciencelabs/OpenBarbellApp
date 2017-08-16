@@ -1,12 +1,8 @@
 // TODO: is it worth ensuring there's only 1 request happening at a time, and to buffer them?
 // TODO: If simultaneous requests are allowed, MAKE SURE YOU WAIT IF A NEW TOKEN IS BEING ACCESSED TO REDUCE THE NUMBER OF CALLS
-// TODO: check that the server response is WHAT IS EXPECTED instead of assuming it'll always be correct, server CAN and WILL blow up
-
-// TODO: test that the logout message actually shows up
+// TODO: check that the server response is WHAT IS EXPECTED instead of assuming it'll always be correct, server CAN and WILL blow up, right now undefined can crash the app
 
 // IMPORTANT NOTE: All errors returned are actually Redux actions
-
-import { Alert } from 'react-native';
 
 import {
     LOGOUT,

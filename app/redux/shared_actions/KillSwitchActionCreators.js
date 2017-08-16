@@ -7,30 +7,20 @@ import {
     VERSION_UNAVAILABLE
 } from 'app/ActionTypes';
 
-export const fetchVersion = () => {
-    return {
-        type: FETCH_VERSION
-    };
-};
+export const fetchVersion = () => ( {type: FETCH_VERSION });
 
-export const versionOk = (currentVersion) => {
-    return {
-        type: VERSION_OK,
-        currentVersion: currentVersion
-    };
-};
+export const versionOk = (currentVersion) => ({
+    type: VERSION_OK,
+    currentVersion: currentVersion
+});
 
-export const versionKilled = (currentVersion, fetchedVersion) => {
-    return {
-        type: VERSION_KILLED,
-        currentVersion: currentVersion,
-        fetchedVersion: fetchedVersion
-    };
-};
+export const versionKilled = (currentVersion, fetchedVersion) => ({
+    type: VERSION_KILLED,
+    currentVersion: currentVersion,
+    fetchedVersion: fetchedVersion
+});
 
-export const versionUnavailable = (currentVersion) => {
-    return {
-        type: VERSION_UNAVAILABLE,
-        currentVersion: currentVersion
-    };
-};
+export const versionUnavailable = (currentVersion) => ({
+    type: VERSION_UNAVAILABLE,
+    currentVersion: currentVersion
+});

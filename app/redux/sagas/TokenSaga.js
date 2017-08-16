@@ -1,3 +1,7 @@
+// TODO: code this to eventually do it based on a timing
+// like if it has been X amount of time pass, then do it
+// right now it's coded to happen only once on startup
+
 import { take, select, put, call } from 'redux-saga/effects';
 
 import {

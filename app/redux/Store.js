@@ -8,7 +8,6 @@ import Reactotron from 'reactotron-react-native';
 // middleware imports
 import { applyMiddleware }  from 'redux';
 import thunk from 'redux-thunk';
-import KillSwitchMiddleware from 'app/redux/middlewares/KillSwitchMiddleware';
 import createSagaMiddleware from 'redux-saga';
 import Sagas from 'app/redux/sagas/Sagas';
 
@@ -27,7 +26,6 @@ const sagaMonitor = Reactotron.createSagaMonitor();
 const sagaMiddleware = createSagaMiddleware({sagaMonitor});
 const middlewares = applyMiddleware(
     thunk,
-    KillSwitchMiddleware,
     sagaMiddleware
 );
 
@@ -122,8 +120,6 @@ const loadInitialState = async (store) => {
                 store.dispatch(AuthActionCreators.loginSucceeded(refreshToken, accessToken, email, syncDate));
             }
         }
-
-        store.dispatch(AuthActionCreators.obtainNewTokens());        
 
         addSaveListener(store);
     } catch (err) {

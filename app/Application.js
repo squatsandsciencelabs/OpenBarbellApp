@@ -9,7 +9,8 @@ import Bluetooth from 'app/services/Bluetooth';
 import Store from 'app/redux/Store';
 import * as GoogleSignInSetup from 'app/services/GoogleSignInSetup';
 import ApplicationScreen from 'app/features/application/ApplicationScreen';
-import { fetchVersion } from 'app/redux/shared_actions/KillSwitchActionCreators';
+import * as KillSwitchActionCreators from 'app/redux/shared_actions/KillSwitchActionCreators';
+import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
 
 // initialize the store
 var store = Store();
@@ -20,8 +21,11 @@ GoogleSignInSetup.configure();
 // start the bluetooth
 Bluetooth(store);
 
+// obtain new tokens
+store.dispatch(AuthActionCreators.obtainNewTokens());        
+
 // check the kill switch
-store.dispatch(fetchVersion());
+store.dispatch(KillSwitchActionCreators.fetchVersion());
 
 // render
 class OBBApp extends Component {

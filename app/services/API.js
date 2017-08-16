@@ -1,9 +1,13 @@
 // TODO: is it worth ensuring there's only 1 request happening at a time, and to buffer them?
 // TODO: If simultaneous requests are allowed, MAKE SURE YOU WAIT IF A NEW TOKEN IS BEING ACCESSED TO REDUCE THE NUMBER OF CALLS
-// TODO: check that the server response is WHAT IS EXPECTED instead of assuming it'll always be correct, server CAN and WILL blow up
+// TODO: check that the server response is WHAT IS EXPECTED instead of assuming it'll always be correct, server CAN and WILL blow up, right now undefined can crash the app
 
-import { Alert } from 'react-native';
+// IMPORTANT NOTE: All errors returned are actually Redux actions
 
+import {
+    LOGOUT,
+    
+} from 'app/ActionTypes';
 import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
 
@@ -11,224 +15,119 @@ import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators
 // otherwise, rely on the completion handler so the action creator thunk that calls thie API can appropriately handle the action
 const API = {
 
-    postUpdatedSetData: (sets, dispatch, accessToken, refreshToken, completionHandler=null, errorHandler=null) => {
-        executeAuthenticatedRequest({
-            endpoint: 'sets',
-            method: 'POST',
-            body: sets,
-            dispatch: dispatch,
-            accessToken: accessToken,
-            refreshToken: refreshToken,
-            completionHandler: (json) => {
-                if (completionHandler !== null && json !== undefined && json !== null) {
-                    completionHandler(json.revision);
-                }
-            },
-            errorHandler: errorHandler
+    postUpdatedSetData: (sets, accessToken) => {
+        return new Promise((resolve, reject) => {
+            executeRequest('POST', 'sets', sets, accessToken)
+            .then((json) => {
+                resolve(json);
+            }).catch((error) => {
+                // TODO: check if this will work, I'm assuming that the error will always be an action
+                reject(error);
+            });
         });
     },
 
-    login: (googleToken, dispatch, completionHandler=null, errorHandler=null) => {
-        executeUnauthenticatedRequest({
-            endpoint: 'login',
-            method: 'POST',
-            body: { token: googleToken },
-            dispatch: dispatch,
-            completionHandler: (json) => {
-                if (completionHandler !== null) {
-                    completionHandler(json.accessToken, json.refreshToken, json.revision, json.sets);
-                }
-            },
-            errorHandler: errorHandler
+    login: (googleToken) => {
+        return new Promise((resolve, reject) => {
+            executeRequest('POST', 'login', { token: googleToken })
+            .then((json) => {
+                resolve(json);
+            }).catch((error) => {
+                // TODO: check if this will work, I'm assuming that the error will always be an action
+                reject(error);
+            });
         });
     },
 
-    sync: (revision, dispatch, accessToken, refreshToken, completionHandler=null, errorHandler=null) => {
-        executeAuthenticatedRequest({
-            endpoint: 'sync',
-            method: 'POST',
-            body: { revision: revision },
-            dispatch: dispatch,
-            accessToken: accessToken,
-            refreshToken: refreshToken,
-            completionHandler: (json) => {
+    sync: (revision, accessToken) => {
+        console.tron.log("sync with rev " + revision);
+        return new Promise((resolve, reject) => {
+            executeRequest('POST', 'sync', { revision: revision }, accessToken)
+            .then((json) => {
+                // TODO: see if need undefined checks
                 console.tron.log("sync success " + json);
-                if (completionHandler !== null) {
-                    if (json !== undefined) {
-                        completionHandler(json.revision, json.sets);
-                    } else {
-                        completionHandler(null, null);
-                    }
-                }
-            },
-            errorHandler: errorHandler
+                resolve(json);
+            }).catch((error) => {
+                // TODO: check if this will work, I'm assuming that the error will always be an action
+                reject(error);
+            });
+        });
+    },
+
+    obtainNewTokens: (refreshToken) => {
+        return new Promise((resolve, reject) => {
+            if (refreshToken === null || refreshToken === undefined) {
+                // no refresh token, force logout
+                reject(AuthActionCreators.logout(true));
+            } else {
+                executeRequest('POST', 'token', { refreshToken: refreshToken })
+                .then((json) => {
+                    resolve(json);
+                }).catch((error) => {
+                    // TODO: check if this will work, I'm assuming that the error will always be an action
+                    reject(error);
+                });
+            }
         });
     }
 };
 
-const executeAuthenticatedRequest = (request) => {
-    let parameters = ['endpoint', 'method', 'body', 'dispatch', 'accessToken', 'refreshToken'];
-    if (requestContainsParameters(request, parameters)) {
-        executeRequest(request);
-    } else {
-        console.tron.log("authenticated request is missing parameters, attempting now to force logout assuming dispatch exists " + JSON.stringify(request));
-        forceLogout(request.dispatch, false);
-    }
-};
+const executeRequest = (method, endpoint, body, accessToken=null) => {
+    return new Promise(async (resolve, reject) => {
+        console.tron.log("Executing request " + method + " " + endpoint + " " + JSON.stringify(body) + " " + accessToken);
 
-const executeUnauthenticatedRequest = (request) => {
-    let parameters = ['endpoint', 'method', 'body', 'dispatch'];
-    if (requestContainsParameters(request, parameters)) {
-        executeRequest(request);
-    } else {
-        console.tron.log("normal request is missing parameters " + JSON.stringify(request));
-    }
-};
-
-const requestContainsParameters = (request, parameters) => {
-    for (let parameter of parameters) {
-        if (request[parameter] === undefined || request[parameter] === null) {
-            return false;
+        // build up the properties
+        var authorizedRequest = false;
+        let requestProperties = {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(body)
+        };
+        if (accessToken !== undefined && accessToken !== null) {
+            requestProperties.headers['Authorization'] = 'Bearer ' + accessToken;
+            authorizedRequest = true;
         }
-    }
 
-    return true;
-};
+        try {
+            let response = await fetch(OpenBarbellConfig.baseURL + endpoint, requestProperties);
+            let status = await response.status;
 
-const executeRequest = async (request) => {
-    console.tron.log("Executing request " + JSON.stringify(request));
-
-    // build up the properties
-    var authorizedRequest = false;
-    let requestProperties = {
-        method: request.method,
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify(request.body)
-    };
-    if (request.accessToken !== undefined && request.accessToken !== null) {
-        requestProperties.headers['Authorization'] = 'Bearer ' + request.accessToken;
-        authorizedRequest = true;
-    }
-
-    try {
-        let response = await fetch(OpenBarbellConfig.baseURL + request.endpoint, requestProperties);
-        let status = await response.status;
-
-        switch(true) {
-            case (status === 401):
-                console.tron.log("401!");
-                if (authorizedRequest === true) {
-                    console.tron.log("401 on authorized call, checking for refresh token with req " + JSON.stringify(request));
-                    if (request.refreshToken !== undefined && request.refreshToken !== null) {
-                        console.tron.log("attempting to execute token req");
-                        // hit the token endpoint and then try again
-                        executeTokenRequest(request);
+            switch(true) {
+                case (status === 401):
+                    console.tron.log("401!");
+                    if (authorizedRequest === true) {
+                        console.tron.log("401 on authorized call to " + endpoint + " should logout");
+                        reject(AuthActionCreators.logout(true));
                     } else {
-                        console.tron.log("no refresh token, bail out");
-                        // you don't have a refresh token, logout
-                        forceLogout(request.dispatch);
+                        reject({type: "401"});
                     }
-                } else if (request.endpoint === 'token') {
-                    // refresh token failed
-                    console.tron.log("if token endpoint failed, bail out and force logout");
-                    forceLogout(request.dispatch);
-                } else {
-                    // generic, this error might happen on login fail and such
-                    throw new Error("Oops, something went wrong");
-                }
-                break;
-            case (status >= 200 && status < 300):
-                try {
-                    // attempt to get json
-                    let json = await response.json();
-                    console.tron.log("200! completion handler is " + request.completionHandler + " response is " + JSON.stringify(json));
+                    break;
+                case (status >= 200 && status < 300):
+                    try {
+                        // attempt to get json
+                        let json = await response.json();
+                        console.tron.log("200! response is " + JSON.stringify(json));
+                        resolve(json);
+                    } catch (err) {
+                        // success, this particular request has no JSON
+                        console.tron.log("200 with err " + err.message + " response is not JSON parsable");
 
-                    // success!
-                    if (request.completionHandler !== null) {
-                        console.tron.log("success, pasing to completion handler with json");
-                        request.completionHandler(json);
+                        // success!
+                        resolve();
                     }
-                } catch (err) {
-                    // success, this particular request has no JSON
-                    console.tron.log("200 with err " + err.message + " completion handler is " + request.completionHandler + " response is not JSON parsable");
-
-                    // success!
-                    if (request.completionHandler !== null) {
-                        console.tron.log("success, pasing to copmletion handler with no json");
-                        request.completionHandler();
-                    }
-                }
-                break;
-            default:
-                console.tron.log("Not 401 or in the 200s, blah");
-                throw new Error("Oops, something went wrong it's not 200 it's " + status);
-        }
-    } catch (err) {
-        console.tron.log("Error with request " + JSON.stringify(request) + " error: " + err);
-        if (request.errorHandler !== null) {
-            request.errorHandler(err);
-        }
-    }
-};
-
-const executeTokenRequest = (failedRequest) => {
-    console.tron.log("in execute token req, fail req is " + JSON.stringify(failedRequest));
-    if (failedRequest.refreshToken === undefined || failedRequest.refreshToken === null) {
-        console.tron.log("Cannot ask for new token, there's no refresh token " + JSON.stringify(failedRequest));
-        if (request.errorHandler !== null) {
-            request.errorHandler(new Error("Missing refresh token"));
-        }
-    } else {
-        // attempt it
-        executeRequest(tokenRequest(failedRequest));
-    }
-};
-
-const tokenRequest = (failedRequest) => {
-    console.tron.log("token request created for " + JSON.stringify(failedRequest));
-    let request = {
-        endpoint: 'token',
-        method: 'POST',
-        dispatch: failedRequest.dispatch,
-        body: { 'refreshToken': failedRequest.refreshToken },
-        completionHandler: (json) => {
-            // save the tokens
-            let accessToken = json.accessToken;
-            let refreshToken = json.refreshToken;
-            failedRequest.dispatch(AuthActionCreators.saveUser(refreshToken, accessToken));
-
-            // execute previous request
-            failedRequest.accessToken = accessToken;
-            failedRequest.refreshToken = refreshToken;
-            executeRequest(failedRequest);
-        },
-        errorHandler: (err) => {
-            // TODO: figure out what to do on server error with token
-            // something went wrong with the token, should I force logout? not sure as what if it's a 500?
-            // feels bad if it's a server bug, server bug shouldn't forcibly log you out IMO
-            console.tron.log("Error with obtaining new token: " + err);
-            if (failedRequest.errorHandler !== null) {
-                failedRequest.errorHandler(err);
+                    break;
+                default:
+                    console.tron.log("Not 401 or in the 200s, blah");
+                    reject({type:"Oops, something went wrong it's not 200 it's " + status});
             }
+        } catch (err) {
+            console.tron.log("Error with request " + endpoint + " error: " + err);
+            reject({type:err.toString()}); // TODO: ensure this error toString actually works and doesn't fail
         }
-    };
-
-    return request;
-};
-
-const forceLogout = (dispatch, displayError=true) => {
-    if (dispatch === undefined || dispatch === null) {
-        console.tron.log("Force logout FAILED because dispatch doesn't exist");
-        return;
-    }
-
-    dispatch(AuthActionCreators.signOut());
-    if (displayError) {
-        Alert.alert("Important", "As it's been awhile since you've signed on, you've been logged out! Please login again.");
-    }
+    });
 };
 
 export default API;

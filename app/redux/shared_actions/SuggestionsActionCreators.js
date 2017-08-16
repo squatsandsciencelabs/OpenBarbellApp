@@ -1,22 +1,12 @@
 import {
-    UPDATE_EXERCISE_SUGGESTIONS_MODEL,
-    UPDATE_TAG_SUGGESTIONS_MODEL,
+    UPDATE_SUGGESTIONS
 } from 'app/ActionTypes';
 
-export const updateExerciseSuggestionsModel = () => (dispatch, getState) => {
+export const updateSuggestions = () => (dispatch, getState) => {
     let state = getState();
 
     dispatch({
-        type: UPDATE_EXERCISE_SUGGESTIONS_MODEL,
-        historyData: state.sets.historyData
-    });
-};
-
-export const updateTagsSuggestionsModel = () => (dispatch, getState) => {
-    let state = getState();
-
-    dispatch({
-        type: UPDATE_TAG_SUGGESTIONS_MODEL,
+        type: UPDATE_SUGGESTIONS,
         historyData: state.sets.historyData
     });
 };

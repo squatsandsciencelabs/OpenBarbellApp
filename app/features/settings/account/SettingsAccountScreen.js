@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
         email: state.auth.email,
         isLoggingIn: state.auth.isLoggingIn,
         syncDate: state.settings.syncDate.toLocaleString(),
-        hasChangesToSync: SetsSelectors.hasChangesToSync(state.sets)
+        hasChangesToSync: SetsSelectors.hasChangesToSync(state)
     }
 };
 

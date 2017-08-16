@@ -1,14 +1,14 @@
 import {
-    UPDATE_EXERCISE_SUGGESTIONS_MODEL,
-    UPDATE_TAG_SUGGESTIONS_MODEL
+    UPDATE_SUGGESTIONS,
 } from 'app/ActionTypes';
 
 const SuggestionsReducer = (state = createDefaultState(), action) => {
     switch (action.type) {
-        case UPDATE_EXERCISE_SUGGESTIONS_MODEL:
-            return Object.assign({}, state, {exerciseModel: generateAutocompleteExerciseModel(action.historyData)});
-        case UPDATE_TAG_SUGGESTIONS_MODEL:
-            return Object.assign({}, state, {tagsModel: generateAutocompleteTagsModel(action.historyData)});
+        case UPDATE_SUGGESTIONS:
+            return Object.assign({}, state, {
+                exerciseModel: generateAutocompleteExerciseModel(action.historyData),
+                tagsModel: generateAutocompleteTagsModel(action.historyData),
+            });
         default:
             return state;
     }

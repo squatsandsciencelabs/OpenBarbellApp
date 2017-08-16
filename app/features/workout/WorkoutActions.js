@@ -3,7 +3,7 @@ import {
     SAVE_WORKOUT_REP
 } from 'app/ActionTypes';
 import * as ApiActionCreators from 'app/redux/shared_actions/ApiActionCreators';
-import * as SetActionCreators from 'app/redux/shared_actions/SetActionCreators';
+import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as WorkoutActionCreators from 'app/redux/shared_actions/WorkoutActionCreators';
 
 export const presentExpanded = (setID) => ({
@@ -36,5 +36,5 @@ export const endWorkout = () => {
 };
 
 export const endSet = () => {
-    return SetActionCreators.endSet();
+    return SetsActionCreators.endSet();
 };

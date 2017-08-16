@@ -2,7 +2,7 @@ import {
     PRESENT_HISTORY_EXERCISE,
     PRESENT_HISTORY_TAGS
 } from 'app/ActionTypes';
-import * as SetActionCreators from 'app/redux/shared_actions/SetActionCreators';
+import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 
 export const presentExercise = (setID, exercise) => ({
     type: PRESENT_HISTORY_EXERCISE,
@@ -17,5 +17,5 @@ export const presentTags = (setID, tags) => ({
 });
 
 export const saveSet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {
-    return SetActionCreators.saveHistorySet(setID, exercise, weight, metric, rpe);
+    return SetsActionCreators.saveHistorySet(setID, exercise, weight, metric, rpe);
 };

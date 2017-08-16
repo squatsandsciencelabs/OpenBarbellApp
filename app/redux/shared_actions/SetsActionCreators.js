@@ -4,10 +4,9 @@ import {
     END_SET,
     BEGIN_UPLOADING_SETS,
     RE_ADD_SETS_TO_UPLOAD,
-    CLEAR_SETS_BEING_UPLOADED,
     UPDATE_SET_DATA_FROM_SERVER,
-    UPDATE_REVISION_FROM_SERVER,
-    CLEAR_HISTORY
+    FINISH_UPLOADING_SETS,
+    FAILED_UPLOAD_SETS
 } from 'app/ActionTypes';
 
 import * as ApiActionCreators from './ApiActionCreators';
@@ -73,21 +72,17 @@ export const endSet = () => (dispatch, getState) => {
 
 export const beginUploadingSets = () => ({ type: BEGIN_UPLOADING_SETS });
 
-export const clearSetsBeingUploaded = () => ({ type: CLEAR_SETS_BEING_UPLOADED });
-
-export const reAddSetsToUpload = () => ({ type: RE_ADD_SETS_TO_UPLOAD });
-
-export const updateSetDataFromServer = (revision, sets) => ({
+export const updateSetDataFromServer = (revision, sets=null, syncDate=new Date()) => ({
     type: UPDATE_SET_DATA_FROM_SERVER,
     sets: sets,
+    revision: revision,
+    syncDate: syncDate
+});
+
+
+export const finishedUploadingSets = (revision) => ({
+    type: FINISH_UPLOADING_SETS,
     revision: revision
 });
 
-export const updateRevisionFromServer = (revision) => ({
-    type: UPDATE_REVISION_FROM_SERVER,
-    revision: revision
-});
-
-export const clearHistory = () => ({
-    type: CLEAR_HISTORY
-});
+export const failedUploadSets = () => ({ type: FAILED_UPLOAD_SETS });

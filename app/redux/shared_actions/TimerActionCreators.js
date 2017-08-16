@@ -1,5 +1,5 @@
 import BackgroundTimer from 'react-native-background-timer';
-import * as SetActionCreators from './SetActionCreators';
+import * as SetsActionCreators from './SetsActionCreators';
 
 var timer = null;
 
@@ -15,7 +15,7 @@ export const startEndSetTimer = () => (dispatch, getState) => {
         duration = durationInSeconds * 1000;
         timer = BackgroundTimer.setTimeout(() => {
             console.tron.log("End set timer executed with duration " + duration + "! time to end set");
-            dispatch(SetActionCreators.endSet());
+            dispatch(SetsActionCreators.endSet());
         }, duration);
     }
     console.tron.log("New end set timer is now " + timer);

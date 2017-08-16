@@ -10,11 +10,11 @@ import {
     LOAD_PERSISTED_SET_DATA,
     END_WORKOUT,
     BEGIN_UPLOADING_SETS,
-    CLEAR_SETS_BEING_UPLOADED,
-    RE_ADD_SETS_TO_UPLOAD,
+    FAILED_UPLOAD_SETS,
     UPDATE_SET_DATA_FROM_SERVER,
-    UPDATE_REVISION_FROM_SERVER,
-    CLEAR_HISTORY,
+    FINISH_UPLOADING_SETS,
+    LOGIN_SUCCESS,
+    LOGOUT
 } from 'app/ActionTypes';
 import uuidV4 from 'uuid/v4';
 import DeviceInfo from 'react-native-device-info';
@@ -45,16 +45,15 @@ const SetsReducer = (state = createDefaultState(), action) => {
             return endWorkout(state, action);
         case BEGIN_UPLOADING_SETS:
             return beginUploadingSets(state, action);
-        case CLEAR_SETS_BEING_UPLOADED:
-            return clearSetsBeingUploaded(state, action);
-        case RE_ADD_SETS_TO_UPLOAD:
-            return reAddSetsToUpload(state, action);
+        case FAILED_UPLOAD_SETS:
+            return failedUploadSets(state, action);
         case UPDATE_SET_DATA_FROM_SERVER:
+        case LOGIN_SUCCESS:        
             return updateSetDataFromServer(state, action);
-        case UPDATE_REVISION_FROM_SERVER:
-            return updateRevisionFromServer(state, action);
-        case CLEAR_HISTORY:
+        case LOGOUT:
             return clearHistory(state, action);
+        case FINISH_UPLOADING_SETS:
+            return finishUploadingSets(state, action);
         default:
             return state;
     }
@@ -358,17 +357,9 @@ const beginUploadingSets = (state, action) => {
     });
 };
 
-// CLEAR_SETS_BEING_UPLOADED
+// FAILED_UPLOAD_SETS
 
-const clearSetsBeingUploaded = (state, action) => {
-    return Object.assign({}, state, {
-        setIDsBeingUploaded: []
-    });
-};
-
-// RE_ADD_SETS_TO_UPLOAD
-
-const reAddSetsToUpload = (state, action) => {
+const failedUploadSets = (state, action) => {
     return Object.assign({}, state, {
         setIDsToUpload: [...state.setIDsToUpload, ...state.setIDsBeingUploaded],
         setIDsBeingUploaded: [],
@@ -378,6 +369,11 @@ const reAddSetsToUpload = (state, action) => {
 // UPDATE_SET_DATA_FROM_SERVER
 
 const updateSetDataFromServer = (state, action) => {
+    // valid check
+    if (action.sets === null || action.sets === undefined || action.revision === null || action.revision === undefined) {
+        return state;
+    }
+
     let newHistoryData = {};
     for (set of action.sets) {
         if (set.setID !== null) { // hack check against a bug that showed up in the development database
@@ -388,16 +384,7 @@ const updateSetDataFromServer = (state, action) => {
     return Object.assign({}, state, {
         historyData: newHistoryData,
         revision: action.revision,
-        setIDsToUpload: [],
         setIDsBeingUploaded: []
-    });
-};
-
-// UPDATE_REVISION_FROM_SERVER
-
-const updateRevisionFromServer = (state, action) => {
-    return Object.assign({}, state, {
-        revision: action.revision,
     });
 };
 
@@ -409,6 +396,16 @@ const clearHistory = (state, action) => {
         revision: 0,
         setIDsToUpload: [],
         setIDsBeingUploaded: []
+    });
+};
+
+// FINISH_UPLOADING_SETS
+
+// this clears the sets being uploaded and updates the revision
+const finishUploadingSets = (state, action) => {
+    return Object.assign({}, state, {
+        setIDsBeingUploaded: [],
+        revision: action.revision
     });
 };
 

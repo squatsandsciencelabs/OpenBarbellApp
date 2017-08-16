@@ -10,7 +10,6 @@ import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 
 const SyncSaga = function * SyncSaga() {
-    console.tron.log("sync saga");
     while (true) {
         // sync
         const task = yield fork(executeSync);        
@@ -22,8 +21,6 @@ const SyncSaga = function * SyncSaga() {
 };
 
 function* executeSync() {
-    console.tron.log("execute sync!");
-
     while (true) {
         yield take(SYNC_REQUEST);
 
@@ -40,8 +37,6 @@ function* executeSync() {
 
 // pushes updates to the server if needed
 function* pushUpdates() {
-    console.tron.log("execute push updates!");
-
     // valid check
     const sets = yield select(SetsSelectors.getSetsToUpload);
     if (sets.length <= 0) {
@@ -87,10 +82,6 @@ function* pullUpdates() {
             yield put(error);
         }
         console.tron.log(JSON.stringify(error));
-    } finally {
-        if (yield cancelled()) {
-            console.tron.log("Pull Updates cancelled");
-        }
     }
 }
 

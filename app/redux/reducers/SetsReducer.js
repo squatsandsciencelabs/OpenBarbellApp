@@ -384,7 +384,6 @@ const updateSetDataFromServer = (state, action) => {
     return Object.assign({}, state, {
         historyData: newHistoryData,
         revision: action.revision,
-        setIDsToUpload: [],
         setIDsBeingUploaded: []
     });
 };

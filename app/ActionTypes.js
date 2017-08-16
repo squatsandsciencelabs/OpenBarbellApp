@@ -14,13 +14,12 @@ export const CONNECTED_TO_DEVICE = 'CONNECTED_TO_DEVICE';
 export const ADD_REP_DATA = 'ADD_REP_DATA';
 export const DISCONNECT_DEVICE = 'DISCONNECT_DEVICE';
 
-// api
-export const UPLOAD_SETS = 'UPLOAD_SETS';
-
 // auth
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGOUT = 'LOGOUT';
+export const SAVE_TOKENS = 'SAVE_TOKENS';
+export const OBTAIN_NEW_TOKENS = 'OBTAIN_NEW_TOKENS';
 
 // sets
 export const SAVE_WORKOUT_SET = 'SAVE_WORKOUT_SET';
@@ -66,7 +65,6 @@ export const DISMISS_HISTORY_EXPANDED = 'DISMISS_HISTORY_EXPANDED';
 export const SAVE_END_SET_TIMER = 'SAVE_END_SET_TIMER';
 export const PRESENT_END_SET_TIMER = 'PRESENT_END_SET_TIMER';
 export const DISMISS_END_SET_TIMER = 'DISMISS_END_SET_TIMER';
-export const SAVE_SYNC_DATE = 'SAVE_SYNC_DATE';
 
 // kill switch
 export const FETCH_VERSION = 'FETCH_VERSION';

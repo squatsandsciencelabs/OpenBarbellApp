@@ -58,7 +58,7 @@ const API = {
         });
     },
 
-    refreshToken: (refreshToken) => {
+    obtainNewTokens: (refreshToken) => {
         return new Promise((resolve, reject) => {
             if (refreshToken === null || refreshToken === undefined) {
                 // no refresh token, force logout

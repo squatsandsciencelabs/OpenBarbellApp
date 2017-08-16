@@ -1,5 +1,5 @@
 import {
-    SAVE_USER,
+    SAVE_TOKENS,
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGOUT
@@ -7,8 +7,8 @@ import {
 
 const AuthReducer = (state = createDefaultState(), action) => {
     switch (action.type) {
-        case SAVE_USER:
-            return saveUser(state, action);
+        case SAVE_TOKENS:
+            return saveTokens(state, action);
         case LOGIN_REQUEST:
             return loginRequest(state, action);
         case LOGIN_SUCCESS:
@@ -27,15 +27,11 @@ const createDefaultState = () => ({
     isLoggingIn: false
 });
 
-const saveUser = (state, action) => {
+const saveTokens = (state, action) => {
     let changes = {
         accessToken: action.accessToken,
         refreshToken: action.refreshToken
     };
-
-    if (action.email !== undefined) {
-        changes.email = action.email;
-    }
 
     return Object.assign({}, state, changes);
 };

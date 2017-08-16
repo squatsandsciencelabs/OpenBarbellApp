@@ -1,5 +1,10 @@
 import { Alert } from 'react-native';
-import { LOGIN_SUCCESS, LOGOUT } from 'app/ActionTypes';
+import {
+    LOGIN_SUCCESS,
+    LOGOUT,
+    OBTAIN_NEW_TOKENS,
+    SAVE_TOKENS
+} from 'app/ActionTypes';
 
 export const loginSucceeded = (accessToken, refreshToken, email, date = new Date(), revision = null, sets = null) => ({
     type: LOGIN_SUCCESS,
@@ -18,3 +23,11 @@ export const logout = (showMessage = false) => {
 
     return { type: LOGOUT };
 };
+
+export const obtainNewTokens = () => ({type: OBTAIN_NEW_TOKENS});
+
+export const saveTokens = (accessToken, refreshToken) => ({
+    type: SAVE_TOKENS,
+    accessToken: accessToken,
+    refreshToken: refreshToken
+});

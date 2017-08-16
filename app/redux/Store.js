@@ -122,6 +122,9 @@ const loadInitialState = async (store) => {
                 store.dispatch(AuthActionCreators.loginSucceeded(refreshToken, accessToken, email, syncDate));
             }
         }
+
+        store.dispatch(AuthActionCreators.obtainNewTokens());        
+
         addSaveListener(store);
     } catch (err) {
         console.tron.log("error load initial state " + err);

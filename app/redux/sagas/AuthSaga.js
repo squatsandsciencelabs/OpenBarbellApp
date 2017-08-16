@@ -1,5 +1,3 @@
-// TODO: fix bug where first logout can sometimes cause the next sign in to auto sign in
-// Almost certainly it's because it's waiting for LOGIN_REQUEST first, and that hasn't executed yet
 // This scheme was built on the assumption that users log in EACH TIME manually, and that's patently untrue
 
 import { take, call, put, cancelled, cancel, fork, apply } from 'redux-saga/effects';
@@ -11,7 +9,7 @@ import {
     LOGOUT,
 } from 'app/ActionTypes';
 
-import API from 'app/services/API'
+import API from 'app/services/API';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
 
 const AuthSaga = function * AuthSaga() {
@@ -20,10 +18,8 @@ const AuthSaga = function * AuthSaga() {
         const task = yield fork(executeLogin);
 
         // logout
-        const action = yield take(LOGOUT);
-        if (action.type === LOGOUT) {
-            yield cancel(task);
-        }
+        yield take(LOGOUT);
+        yield cancel(task);
         try {
             const user = yield apply(GoogleSignin, GoogleSignin.currentUserAsync);
             yield apply(GoogleSignin, GoogleSignin.signOut);
@@ -48,6 +44,7 @@ function* executeLogin() {
         if (yield cancelled()) {
             // TODO: Fix double logout on errors
             // Login Error causes a logout, which will cause a cancel of login, which then causes a second logout
+            // not a big deal as it's an edge case, but would be nice to fix
             yield put(AuthActionCreators.logout());
         }
     }

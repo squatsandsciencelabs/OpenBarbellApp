@@ -10,10 +10,9 @@ import {
     LOAD_PERSISTED_SET_DATA,
     END_WORKOUT,
     BEGIN_UPLOADING_SETS,
-    CLEAR_SETS_BEING_UPLOADED,
-    RE_ADD_SETS_TO_UPLOAD,
+    FAILED_UPLOAD_SETS,
     UPDATE_SET_DATA_FROM_SERVER,
-    UPDATE_REVISION_FROM_SERVER,
+    FINISH_UPLOADING_SETS,
     LOGIN_SUCCESS,
     LOGOUT
 } from 'app/ActionTypes';
@@ -46,17 +45,15 @@ const SetsReducer = (state = createDefaultState(), action) => {
             return endWorkout(state, action);
         case BEGIN_UPLOADING_SETS:
             return beginUploadingSets(state, action);
-        case CLEAR_SETS_BEING_UPLOADED:
-            return clearSetsBeingUploaded(state, action);
-        case RE_ADD_SETS_TO_UPLOAD:
-            return reAddSetsToUpload(state, action);
+        case FAILED_UPLOAD_SETS:
+            return failedUploadSets(state, action);
         case UPDATE_SET_DATA_FROM_SERVER:
         case LOGIN_SUCCESS:        
             return updateSetDataFromServer(state, action);
-        case UPDATE_REVISION_FROM_SERVER:
-            return updateRevisionFromServer(state, action);
         case LOGOUT:
             return clearHistory(state, action);
+        case FINISH_UPLOADING_SETS:
+            return finishUploadingSets(state, action);
         default:
             return state;
     }
@@ -360,17 +357,9 @@ const beginUploadingSets = (state, action) => {
     });
 };
 
-// CLEAR_SETS_BEING_UPLOADED
+// FAILED_UPLOAD_SETS
 
-const clearSetsBeingUploaded = (state, action) => {
-    return Object.assign({}, state, {
-        setIDsBeingUploaded: []
-    });
-};
-
-// RE_ADD_SETS_TO_UPLOAD
-
-const reAddSetsToUpload = (state, action) => {
+const failedUploadSets = (state, action) => {
     return Object.assign({}, state, {
         setIDsToUpload: [...state.setIDsToUpload, ...state.setIDsBeingUploaded],
         setIDsBeingUploaded: [],
@@ -380,7 +369,6 @@ const reAddSetsToUpload = (state, action) => {
 // UPDATE_SET_DATA_FROM_SERVER
 
 const updateSetDataFromServer = (state, action) => {
-    // TODO: remove this valid check once redux-persist is in play
     // valid check
     if (action.sets === null || action.sets === undefined || action.revision === null || action.revision === undefined) {
         return state;
@@ -401,14 +389,6 @@ const updateSetDataFromServer = (state, action) => {
     });
 };
 
-// UPDATE_REVISION_FROM_SERVER
-
-const updateRevisionFromServer = (state, action) => {
-    return Object.assign({}, state, {
-        revision: action.revision,
-    });
-};
-
 // CLEAR_HISTORY
 
 const clearHistory = (state, action) => {
@@ -417,6 +397,16 @@ const clearHistory = (state, action) => {
         revision: 0,
         setIDsToUpload: [],
         setIDsBeingUploaded: []
+    });
+};
+
+// FINISH_UPLOADING_SETS
+
+// this clears the sets being uploaded and updates the revision
+const finishUploadingSets = (state, action) => {
+    return Object.assign({}, state, {
+        setIDsBeingUploaded: [],
+        revision: action.revision
     });
 };
 

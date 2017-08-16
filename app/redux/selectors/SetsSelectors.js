@@ -1,3 +1,13 @@
+// TODO: refactor so that selectors are aware of the entire state path
+// reason being that, the callers shouldn't know to make this state.sets
+// right now only a few of them use the stateRoot
+
+const stateRoot = (state) => state.sets;
+
+// Get revision
+
+export const getRevision = (state) => stateRoot(state).revision;
+
 // Get last rep time
 
 export const lastRepTime = (state) => {
@@ -73,10 +83,15 @@ export const getExpandedHistorySet = (state, setID) => {
 
 // Get Sets To Upload
 export const getSetsToUpload = (state) => {
-    return state.setIDsToUpload.map( setID => state.historyData[setID] );
+    const root = stateRoot(state);
+    return root.setIDsToUpload.map( setID => root.historyData[setID] );
 };
+
+// Get is uploading
+export const getIsUploading = (state) => stateRoot(state).setIDsBeingUploaded.length > 0;
 
 // Has Changes To Sync
 export const hasChangesToSync = (state) => {
-    return (state.setIDsToUpload.length > 0 || state.setIDsBeingUploaded.length > 0);
+    const root = stateRoot(state);
+    return (root.setIDsToUpload.length > 0 || root.setIDsBeingUploaded.length > 0);
 };

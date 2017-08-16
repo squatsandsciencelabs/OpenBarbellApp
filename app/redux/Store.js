@@ -16,7 +16,7 @@ import Sagas from 'app/redux/sagas/Sagas';
 import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
 import reducers from 'app/redux/reducers/Reducers';
 import { LOAD_PERSISTED_SET_DATA } from 'app/ActionTypes';
-import * as SetActionCreators from 'app/redux/shared_actions/SetActionCreators';
+import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
 import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsActionCreators';
 import * as SuggestionsActionCreators from 'app/redux/shared_actions/SuggestionsActionCreators';
@@ -73,7 +73,7 @@ const loadInitialState = async (store) => {
                 });
 
                 // on failed uploading sets
-                store.dispatch(SetActionCreators.reAddSetsToUpload());
+                store.dispatch(SetsActionCreators.failedUploadSets());
             }
 
             // load previous settings
@@ -90,7 +90,7 @@ const loadInitialState = async (store) => {
                 }
                 store.dispatch(SettingsActionCreators.saveEndSetTimer(endSetTimerDuration));
 
-                // sync date
+                // sync date - set on login succeeded
                 syncDate = value.settings.syncDate;
                 if (syncDate === undefined || null) {
                     // it's empty, default to empty string
@@ -102,7 +102,6 @@ const loadInitialState = async (store) => {
                     // failsafe, unknown object type, just make it an empty string
                     syncDate = '';
                 }
-                store.dispatch(SettingsActionCreators.saveSyncDate(syncDate));
             }
 
             // load previous auth data

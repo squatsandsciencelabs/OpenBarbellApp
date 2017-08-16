@@ -3,7 +3,8 @@ import {
     PRESENT_END_SET_TIMER,
     DISMISS_END_SET_TIMER,
     SAVE_SYNC_DATE,
-    LOGIN_SUCCESS
+    LOGIN_SUCCESS,
+    UPDATE_SET_DATA_FROM_SERVER
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -27,7 +28,8 @@ const SettingsReducer = (state = defaultState, action) => {
                 editingEndSetTimer: false,
             });
         case SAVE_SYNC_DATE:
-        case LOGIN_SUCCESS:        
+        case UPDATE_SET_DATA_FROM_SERVER:
+        case LOGIN_SUCCESS:
             return Object.assign({}, state, {
                 syncDate: action.syncDate
             });

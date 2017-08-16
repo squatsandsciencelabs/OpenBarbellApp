@@ -21,10 +21,9 @@ const API = {
 
     postUpdatedSetData: (sets, accessToken) => {
         return new Promise((resolve, reject) => {
-            executeRequest('POST', 'sets', sets)
+            executeRequest('POST', 'sets', sets, accessToken)
             .then((json) => {
-                // TODO: see if need undefined or null checks, gotta test it
-                resolve(json.revision);
+                resolve(json);
             }).catch((error) => {
                 // TODO: check if this will work, I'm assuming that the error will always be an action
                 reject(error);
@@ -45,8 +44,9 @@ const API = {
     },
 
     sync: (revision, accessToken) => {
+        console.tron.log("sync with rev " + revision);
         return new Promise((resolve, reject) => {
-            executeRequest('POST', 'sync', { revision: revision })
+            executeRequest('POST', 'sync', { revision: revision }, accessToken)
             .then((json) => {
                 // TODO: see if need undefined checks
                 console.tron.log("sync success " + json);

@@ -1,7 +1,10 @@
-import API from 'app/services/API';
-import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
-import * as SetActionCreators from './SetActionCreators';
-import * as SettingsActionCreators from './SettingsActionCreators';
+// import API from 'app/services/API';
+// import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
+// import * as SetActionCreators from './SetActionCreators';
+// import * as SettingsActionCreators from './SettingsActionCreators';
+import {
+    SYNC_REQUEST
+} from 'app/ActionTypes';
 
 // TODO: fix syncing bug where if you begin an upload, change the data, then the upload succeeds, it can prevent uploading of the changed data until the next time they change something
 // SOLUTION:
@@ -11,6 +14,10 @@ import * as SettingsActionCreators from './SettingsActionCreators';
 // - then on failure, move those IDs back to the original field of to uploads
 
 // expects the store's base state
+
+export const syncData = () => ({type: SYNC_REQUEST});
+
+/*
 export const syncData = () => (dispatch, getState) => {
     let state = getState();
 
@@ -30,7 +37,7 @@ export const syncData = () => (dispatch, getState) => {
 
     if (sets.length > 0) {
         // upload
-        dispatch(SetActionCreators.beginUploadingSets());
+        dispatch(SetsActionCreators.beginUploadingSets());
         return API.postUpdatedSetData(sets, dispatch, accessToken, refreshToken, (revision) => {
             // success
 
@@ -42,10 +49,10 @@ export const syncData = () => (dispatch, getState) => {
             }
 
             // clear the sets being uploaded
-            dispatch(SetActionCreators.clearSetsBeingUploaded());
+            dispatch(SetsActionCreators.clearSetsBeingUploaded());
 
             // update the revision
-            dispatch(SetActionCreators.updateRevisionFromServer(revision));
+            dispatch(SetsActionCreators.updateRevisionFromServer(revision));
         }, () => {
             // still logged in check
             let state = getState();
@@ -54,7 +61,7 @@ export const syncData = () => (dispatch, getState) => {
             }
 
             // failure, add the sets being uploaded back
-            dispatch(SetActionCreators.reAddSetsToUpload());
+            dispatch(SetsActionCreators.reAddSetsToUpload());
         });
     } else {
         // download
@@ -78,7 +85,7 @@ export const syncData = () => (dispatch, getState) => {
 
             // update data
             if (revision !== null && sets !== null) {
-                dispatch(SetActionCreators.updateSetDataFromServer(revision, sets));
+                dispatch(SetsActionCreators.updateSetDataFromServer(revision, sets));
             }
 
             // update the sync date
@@ -86,3 +93,4 @@ export const syncData = () => (dispatch, getState) => {
         });
     }
 };
+*/

@@ -1,7 +1,7 @@
 {
     "storageThrottle" : 1000,
     "baseURL" : "https://obbstaging.herokuapp.com/v1/",
-    "killSwitchURL" : "https://obbserver.herokuapp.com/killswitch",
+    "killSwitchURL" : "https://obbstaging.herokuapp.com/killswitch",
     "iOSGoogleClientID" : "971870516004-v99k5kfv281dqjla2jvoavuj2grpvec0.apps.googleusercontent.com",
     "webGoogleClientID" : "971870516004-oge4ph6j8s0a4e5lbimr7dc6e22od5jc.apps.googleusercontent.com",
     "endWorkoutTimer" : 3600000

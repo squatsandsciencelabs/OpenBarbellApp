@@ -9,7 +9,7 @@ The codebase is undergoing a major refactor. This README will be updated once th
 * npm install
 * create android/local.properties and point it at your Android SDK `sdk.dir = /Users/SquatsAndScience/Library/Android/sdk`
 * `cd ios && carthage update` to install MixPanel
-* set up provisioning profiles in xcode 
+* set up provisioning profiles in XCode 
 
 # RUNNING IT
 
@@ -18,8 +18,19 @@ The codebase is undergoing a major refactor. This README will be updated once th
 
 # DEBUGGING TIPS
 
-* Install Reactotron https://github.com/infinitered/reactotron/blob/master/docs/installing.md which will allow you to sniff network requests and see the state of the Redux store. It is also suggested to use Reactotron logs instead of console.logs.
+* Install Reactotron https://github.com/infinitered/reactotron/blob/master/docs/installing.md which will allow you to sniff network requests and see the state of the Redux store.
 * Optionally, use VSCode with React Native extensions https://github.com/Microsoft/vscode-react-native as when set up properly you have breakpoints.
+
+# CODEBASE PRACTICES
+
+* Follow the feature folder structure. Features include components, containers, and action creators.
+* As a real of thumb, use Sagas for async operations. Try to keep Thunks when you need data from the store.
+* Unit tests have not been added yet, but tests should go in a separate `Tests` folder.
+* Generally, aim for fewer actions to reduce the number of dispatches and rerenders for performance purposes. One action can be set up such that multiple reducers will react to it.
+* Actions should all have an Action Creator. Reason being, it makes it clear where all of them are in the app and it simplifies analytics.
+* Action naming convention wise, use present and dismiss for popups, save for saving permanently to the store, and update for changes to the store that won't persist
+* Use selectors rather than manually access sub properties of the state. For example, instead of doing state.auth.accessToken, use the AuthSelector's getAccessToken. Each of these selectors should start from the root state. In other words, always pass in the root state to the selector, not `state.sets`
+* It may be possible to use selector caching via the reselect library to speed up the History screen, which is very slow right now.
 
 # IMPORTANT NOTES
 
@@ -29,12 +40,4 @@ Be careful when using react-native link. It duplicates imports for the React Nat
 
 For Android, run it on device rather than the emulator. Bluetooth requirements cause issues.
 
-# MISC
-
 Unit tests have not been added yet; they are on the roadmap.
-
-The codebase will likely move away from Thunks and towards Sagas for side effects.
-
-It is also possible that the codebase will be refactored in the near future to use the Ignite CLI https://github.com/infinitered/ignite.
-
-Vscode debugging is not working for real devices. After upgrading to 0.42.3, it doesn't seem to even build to the device. This is a work in progress.

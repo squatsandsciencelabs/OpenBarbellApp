@@ -1,7 +1,3 @@
-# WARNING: MAJOR REFACTOR IN PROGRESS
-
-The codebase is undergoing a major refactor. This README will be updated once the refactor is complete.
-
 # INSTALLATION
 
 * install react (https://facebook.github.io/react-native/docs/getting-started.html)

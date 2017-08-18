@@ -67,8 +67,8 @@ const createSet = (setNumber = 1) => ({
     weight: null,
     metric: 'kgs',
     rpe: null,
-    startTime: null,
-    endTime: null,
+    // startTime: null, // LEGACY - use rep time instead
+    // endTime: null, // LEGACY - use rep time instead
     removed: false,
     reps : []
 });
@@ -204,6 +204,7 @@ const addRepData = (state, action) => {
         appVersion: DeviceInfo.getVersion(),
         deviceName: action.deviceName,
         deviceIdentifier: action.deviceIdentifier,
+        time: action.time,
         data: [...action.data]
     };
 
@@ -211,10 +212,6 @@ const addRepData = (state, action) => {
         reps: [...set.reps, rep ],
         removed: false
     };
-    if (set.reps.length === 0) {
-        setChanges.startTime = new Date();
-    }
-    setChanges.endTime = new Date();
 
     let newSet = Object.assign({}, set, setChanges);
     let newWorkoutData = [

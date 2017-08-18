@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as DateUtils from 'app/utility/transforms/DateUtils';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
+import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 import * as Actions from './HistoryActions';
 import HistoryList from './HistoryList';
 
@@ -36,7 +37,7 @@ const createViewModels = (sets, shouldShowRemoved) => {
         if (lastWorkoutID !== set.workoutID) {
             // set vars
             lastWorkoutID = set.workoutID;
-            workoutStartTime = set.startTime;
+            workoutStartTime = SetTimeCalculator.startTime(set);
             isInitialSet = true;
 
             // create section
@@ -70,7 +71,7 @@ const createViewModels = (sets, shouldShowRemoved) => {
         // rest footer
         if (isInitialSet) {
             // new set, reset the end time
-            lastSetEndTime = set.removed ? null : set.endTime;
+            lastSetEndTime = set.removed ? null : SetTimeCalculator.endTime(set);
         } else if (!set.removed) { // ignore removed sets in rest calculations
             // add footer if valid
             if (lastSetEndTime !== null) {
@@ -78,7 +79,7 @@ const createViewModels = (sets, shouldShowRemoved) => {
             }
 
             // update variable for calculation purposes
-            lastSetEndTime = set.endTime;
+            lastSetEndTime = SetTimeCalculator.endTime(set);
         }
 
         // insert set card data
@@ -179,7 +180,7 @@ const createRowViewModels = (set, shouldShowRemoved) => {
 };
 
 const createFooterVM = (set, lastSetEndTime) => {
-    let restInMS = new Date(set.startTime) - new Date(lastSetEndTime);
+    let restInMS = new Date(SetTimeCalculator.startTime(set)) - new Date(lastSetEndTime);
     let footerVM = {
         type: "footer",
         rest: DateUtils.restInSentenceFormat(restInMS),

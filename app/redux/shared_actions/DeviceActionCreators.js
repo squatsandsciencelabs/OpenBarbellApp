@@ -47,7 +47,7 @@ export const connectedToDevice = (name, identifier) => ({
 
 // DATA
 
-export const receivedLiftData = (isValid, data) => (dispatch, getState) => {
+export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, getState) => {
     var state = getState();
 
     dispatch({
@@ -56,6 +56,7 @@ export const receivedLiftData = (isValid, data) => (dispatch, getState) => {
         data: data,
         deviceName: state.connectedDevice.deviceName,
         deviceIdentifier: state.connectedDevice.deviceIdentifier,
+        time: time
     });
 
     dispatch(TimerActionCreators.startEndSetTimer());

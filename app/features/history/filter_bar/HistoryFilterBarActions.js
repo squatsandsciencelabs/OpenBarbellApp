@@ -20,6 +20,7 @@ export const hideRemovedData = () => ({
     showRemoved: false
 });
 
+// TODO: refactor this into a saga
 export const exportCSV = () => (dispatch, getState) => {
     // logged in check
     let state = getState();

@@ -19,6 +19,16 @@ export const timerDurationDescription = (duration) => {
     }
 };
 
+export const getDate = (date) => {
+    if (date === null) {
+        return null;
+    } else if (Object.prototype.toString.call(date) === '[object Date]') {
+        return date;
+    } else {
+        return new Date(date);
+    }
+};
+
 // ASSUMES that you aren't resting for entire days or months
 // if you are, then the human readable rest will be wrong
 // taken from http://stackoverflow.com/questions/19700283/how-to-convert-time-milliseconds-to-hours-min-sec-format-in-javascript

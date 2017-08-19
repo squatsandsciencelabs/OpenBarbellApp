@@ -15,6 +15,7 @@ import Bluetooth from 'app/services/Bluetooth';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as KillSwitchActionCreators from 'app/redux/shared_actions/KillSwitchActionCreators';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
+import * as StoreActionCreators from 'app/redux/shared_actions/StoreActionCreators';
 
 // TODO: remove saga monitor from production, same way should remove console.tron from production
 const sagaMonitor = Reactotron.createSagaMonitor();
@@ -45,15 +46,15 @@ export default initializeStore = () => {
 
             // start the bluetooth
             Bluetooth(store);
-
-            //obtain new tokens
-            store.dispatch(AuthActionCreators.obtainNewTokens());
             
             // on startup, always "fail" it so syncing variables go back into the queue to be synced
             store.dispatch(SetsActionCreators.failedUploadSets());
 
             // check the kill switch
             store.dispatch(KillSwitchActionCreators.fetchVersion());
+
+            //obtain new tokens
+            store.dispatch(StoreActionCreators.storeInitialized());
         }
     );
 

@@ -8,11 +8,8 @@ export const dismissTags = () => ({
     type: DISMISS_HISTORY_TAGS
 });
 
-export const saveTags = (setID, tags = []) => (dispatch) => {
-    dispatch({
-        type: SAVE_HISTORY_SET_TAGS,
-        setID: setID,
-        tags: tags
-    });
-    dispatch(ApiActionCreators.syncData());
-};
+export const saveTags = (setID, tags = []) => ({
+    type: SAVE_HISTORY_SET_TAGS,
+    setID: setID,
+    tags: tags
+});

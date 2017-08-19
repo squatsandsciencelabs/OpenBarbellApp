@@ -5,6 +5,7 @@ import TokenSaga from './TokenSaga';
 import AuthSaga from './AuthSaga';
 import SuggestionsSaga from './SuggestionsSaga';
 import SyncSaga from './SyncSaga';
+import EndOldWorkoutSaga from './EndOldWorkoutSaga';
 
 const Sagas = function* Sagas() {
     yield all([
@@ -12,7 +13,8 @@ const Sagas = function* Sagas() {
         call(TokenSaga),
         call(AuthSaga),
         call(SuggestionsSaga),
-        call(SyncSaga)
+        call(SyncSaga),
+        call(EndOldWorkoutSaga),
     ]);
 };
 

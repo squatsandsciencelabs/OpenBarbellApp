@@ -10,8 +10,11 @@ export const getRevision = (state) => stateRoot(state).revision;
 
 // Get last rep time
 
+// TODO: fix bug here because I'm no longer using set's end and start time
+// apparently I used it for more than just rest timer fml
+
 export const lastRepTime = (state) => {
-    var workoutData = state.workoutData;
+    var workoutData = stateRoot(state).workoutData;
     if (workoutData.length <= 0) {
         return null;
     }
@@ -23,7 +26,7 @@ export const lastRepTime = (state) => {
     }
 
     // check the previous set for end time
-    if (state.workoutData.length > 1) {
+    if (workoutData.length > 1) {
         var previousSet = workoutData[workoutData.length-2];
         if (previousSet.endTime !== null) {
             return previousSet.endTime;

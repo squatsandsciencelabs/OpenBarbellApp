@@ -1,12 +1,8 @@
-// TODO: code this to eventually do it based on a timing
-// like if it has been X amount of time pass, then do it
-// right now it's coded to happen only once on startup
-
 import { takeEvery, select, put, call, all } from 'redux-saga/effects';
 
 import {
     CHANGED_TAB,
-    OBTAIN_NEW_TOKENS
+    STORE_INITIALIZED
 } from 'app/ActionTypes';
 
 import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
@@ -14,11 +10,12 @@ import API from 'app/services/API';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
 import * as ApiActionCreators from 'app/redux/shared_actions/ApiActionCreators';
+import * as DateUtils from 'app/utility/transforms/DateUtils';
 
 const TokenSaga = function * TokenSaga() {
     yield all([
         takeEvery(CHANGED_TAB, obtainNewTokens),
-        takeEvery(OBTAIN_NEW_TOKENS, obtainNewTokens)        
+        takeEvery(STORE_INITIALIZED, obtainNewTokens)        
     ]);
 };
 
@@ -31,8 +28,8 @@ function* obtainNewTokens() {
     }
 
     // check should refresh
-    const lastRefreshDateString = yield select(AuthSelectors.getLastRefreshDate);
-    let lastRefreshDate = new Date(lastRefreshDateString);
+    var lastRefreshDate = yield select(AuthSelectors.getLastRefreshDate);
+    lastRefreshDate = DateUtils.getDate(lastRefreshDate);
     if (!shouldRequestNewToken(lastRefreshDate)) {
         console.tron.log("hasn't been long enough to refresh " + lastRefreshDate + " " + OpenBarbellConfig.obtainTokenTimer + " vs " + Math.abs(new Date() - lastRefreshDate));
     } else {
@@ -48,6 +45,7 @@ function* obtainNewTokens() {
         }
     }
 
+    // sync
     yield put(ApiActionCreators.syncData());    
 }
 

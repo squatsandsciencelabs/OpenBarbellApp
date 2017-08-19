@@ -110,7 +110,9 @@ class EditTextModal extends Component {
 
     _tappedRow(input) {
         if (this.props.multipleInput) {
-            this._addNewPill(input);
+            this._addNewPill(input, true);
+            // TODO: once this uses the redux store rather than local state, clear it there
+
         } else {
             // TODO: find a way to not repeat _tappedDone logic
             // NOTE: This is repeating _tappedDone logic because setState doesn't update immediately

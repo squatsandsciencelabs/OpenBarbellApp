@@ -1,12 +1,12 @@
 import {
-    DISMISS_END_SET_TIMER
+    DISMISS_END_SET_TIMER,
+    SAVE_END_SET_TIMER
 } from 'app/ActionTypes';
 
-import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsActionCreators';
-
-export const saveEndSetTimer = (duration = 30) => {
-    return SettingsActionCreators.saveEndSetTimer(duration);
-};
+export const saveEndSetTimer = (duration = 30) => ({    
+    type: SAVE_END_SET_TIMER,
+    endSetTimerDuration: duration
+});
 
 export const dismissEndSetTimer = () => ({
     type: DISMISS_END_SET_TIMER,    

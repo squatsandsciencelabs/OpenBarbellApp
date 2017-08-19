@@ -26,22 +26,27 @@ class SetForm extends Component {
             exercise: this.props.exercise,
             tags: this.props.tags,
             weight: this.props.weight,
+            didChangeWeight: false,
             metric: this.props.metric,
             rpe: this.props.rpe,
+            didChangeRPE: false,
             removed: this.props.removed,
             editingExercise: false,
             suggestions: []
         };
     }
 
+    // this uses didChange flags to prevent overwriting of values while you're still typing while still allowing sync to update it
     componentWillReceiveProps(nextProps) {
         this.setState({
             setNumber: nextProps.setNumber,
             exercise: nextProps.exercise,
             tags: nextProps.tags,
-            weight: nextProps.weight,
+            weight: this.state.didChangeWeight ? this.state.weight : nextProps.weight,
+            didChangeWeight: false,
             metric: nextProps.metric,
-            rpe: nextProps.rpe,
+            rpe: this.state.didChangeRPE ? this.state.rpe : nextProps.rpe,
+            didChangeRPE: false,
             removed: nextProps.removed
         });
     }
@@ -58,6 +63,20 @@ class SetForm extends Component {
 
     _keyboardDidHide() {
         this._save();
+    }
+
+    _onChangeWeight(weight) {
+        this.setState({
+            weight: weight,
+            didChangeWeight: true
+        });
+    }
+
+    _onChangeRPE(rpe) {
+        this.setState({
+            rpe: rpe,
+            didChangeRPE: true
+        });
     }
 
     // SAVING
@@ -154,7 +173,7 @@ class SetForm extends Component {
                                 placeholderTextColor={'lightgray'}
                                 value={this.state.weight}
                                 onFocus={() => this.props.onFocus() }
-                                onChangeText={(weight) => this.setState({weight: weight}) }
+                                onChangeText={(weight) => this._onChangeWeight(weight) }
                             />
                             <View style={styles.fieldDetails}>
                                 <TouchableOpacity onPress={() => this._toggleMetric()}>
@@ -176,7 +195,7 @@ class SetForm extends Component {
                                 placeholderTextColor={'lightgray'}
                                 value = {this.state.rpe}
                                 onFocus={() => this.props.onFocus() }
-                                onChangeText={(rpe) => this.setState({rpe: rpe}) }
+                                onChangeText={(rpe) => this._onChangeRPE(rpe) }
                             />
                             <View style={styles.fieldDetails} pointerEvents='none'>
                                 <Text style={styles.detailText}>RPE</Text>

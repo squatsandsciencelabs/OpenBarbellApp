@@ -44,13 +44,13 @@ export default initializeStore = () => {
             GoogleSignInSetup.configure();
 
             // start the bluetooth
-            Bluetooth(store);                        
+            Bluetooth(store);
+
+            //obtain new tokens
+            store.dispatch(AuthActionCreators.obtainNewTokens());
             
             // on startup, always "fail" it so syncing variables go back into the queue to be synced
             store.dispatch(SetsActionCreators.failedUploadSets());
-
-            // obtain new tokens
-            store.dispatch(AuthActionCreators.obtainNewTokens());        
 
             // check the kill switch
             store.dispatch(KillSwitchActionCreators.fetchVersion());

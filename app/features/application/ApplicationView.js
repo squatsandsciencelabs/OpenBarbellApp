@@ -18,7 +18,6 @@ import HistoryScreen from 'app/features/history/HistoryScreen';
 class ApplicationView extends Component {
 
     componentDidMount() {
-        this.props.load();
         this._checkIfOutdated();
     }
 

@@ -1,5 +1,5 @@
 import { Platform } from 'react-native';
-import { take, select, put, call, apply } from 'redux-saga/effects';
+import { take, put, call, apply } from 'redux-saga/effects';
 import semver from 'semver';
 import DeviceInfo from 'react-native-device-info';
 

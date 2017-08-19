@@ -1,3 +1,5 @@
+// TODO: refactor this into a saga
+
 import BackgroundTimer from 'react-native-background-timer';
 import * as SetsActionCreators from './SetsActionCreators';
 

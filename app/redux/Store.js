@@ -10,6 +10,7 @@ import Sagas from 'app/redux/sagas/Sagas';
 
 // persisted store imports
 import reducers from 'app/redux/reducers/Reducers';
+import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 
 // TODO: remove saga monitor from production, same way should remove console.tron from production
 const sagaMonitor = Reactotron.createSagaMonitor();
@@ -34,7 +35,10 @@ export default initializeStore = () => {
             'auth',
             'settings',
             'sets'
-        ]}
+        ]}, () => {
+            // on startup, always "fail" it so syncing variables go back into the queue to be synced
+            store.dispatch(SetsActionCreators.failedUploadSets());
+        }
     );
 
     // clear old legacy DB

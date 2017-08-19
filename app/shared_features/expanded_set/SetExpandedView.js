@@ -51,11 +51,12 @@ class SetExpandedView extends PureComponent {
     _renderRow(item) {
         var data = [];
         let count = 0;
+        let textStyle = item.removed ? styles.disabled : null;
         for (num of item.values) {
             count++;
             data.push(
                 <View key={item.key+" " +count} style={{flexDirection: "row"}}>
-                    <View style={styles.number}><Text>{num}</Text></View>
+                    <View style={styles.number}><Text style={textStyle}>{num}</Text></View>
                     <View style={styles.verticalBorder} />
                 </View>
             );
@@ -109,6 +110,9 @@ const styles = StyleSheet.create({
     headerLabel: {
         width: 80,
         alignItems: 'center'
+    },
+    disabled: {
+        color: 'lightgray'
     },
     number: {
         height: 44,

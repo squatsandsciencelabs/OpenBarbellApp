@@ -34,16 +34,11 @@ export default initializeStore = () => {
             'auth',
             'settings',
             'sets'
-        ]}, () => {
-        // TODO: migrate the default values :)
-        // if (endSetTimerDuration === undefined || endSetTimerDuration == null) {
-        //     Alert.alert(
-        //         "Update",
-        //         "After 30 seconds, your current set will automatically be ended in preparation for your next set. You can change this in Settings.",
-        //     );
-        //     endSetTimerDuration = 30;
-        // }
-    });
+        ]}
+    );
+
+    // clear old legacy DB
+    AsyncStorage.removeItem('@OpenBarbellPersistedStore');
 
     return store;
 };

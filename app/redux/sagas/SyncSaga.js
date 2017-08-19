@@ -2,7 +2,8 @@ import { take, call, select, put, fork, cancelled, cancel } from 'redux-saga/eff
 
 import {
     LOGOUT,
-    SYNC_REQUEST
+    SYNC_REQUEST,
+    CHANGED_TAB
 } from 'app/ActionTypes';
 import API from 'app/services/API';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
@@ -22,7 +23,7 @@ const SyncSaga = function * SyncSaga() {
 
 function* executeSync() {
     while (true) {
-        yield take(SYNC_REQUEST);
+        yield take([SYNC_REQUEST, CHANGED_TAB]);
 
         // login check - do not need to check is uploading as relying on the cancel instead
         const isLoggedIn = yield select(AuthSelectors.getIsLoggedIn);    

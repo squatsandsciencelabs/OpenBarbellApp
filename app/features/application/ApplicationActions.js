@@ -1,19 +1,21 @@
 import { Keyboard } from 'react-native';
 
+import {
+    CHANGED_TAB
+} from 'app/ActionTypes';
+
 import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
 import * as WorkoutActionCreators from 'app/redux/shared_actions/WorkoutActionCreators';
 import * as ApiActionCreators from 'app/redux/shared_actions/ApiActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
-export const load = () => {
-    return ApiActionCreators.syncData();
+export const changeTab = () => {
+    Keyboard.dismiss();    
+    return { type: CHANGED_TAB };
 };
 
-export const changeTab = () => (dispatch) => {
-    dispatch(ApiActionCreators.syncData());
-    dispatch(endOldWorkout());
-    Keyboard.dismiss();
-};
+// TODO: refactor end old workout into a saga
+// dispatch(endOldWorkout());
 
 const endOldWorkout = () => (dispatch, getState) => {
     // get end time

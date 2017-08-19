@@ -23,6 +23,7 @@ const AuthReducer = (state = createDefaultState(), action) => {
 const createDefaultState = () => ({
     accessToken: null,
     refreshToken: null,
+    lastRefreshDate: null,
     email: null,
     isLoggingIn: false
 });
@@ -30,7 +31,8 @@ const createDefaultState = () => ({
 const saveTokens = (state, action) => {
     let changes = {
         accessToken: action.accessToken,
-        refreshToken: action.refreshToken
+        refreshToken: action.refreshToken,
+        lastRefreshDate: action.lastRefreshDate
     };
 
     return Object.assign({}, state, changes);

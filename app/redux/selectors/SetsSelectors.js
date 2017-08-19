@@ -1,6 +1,7 @@
 // TODO: refactor so that selectors are aware of the entire state path
 // reason being that, the callers shouldn't know to make this state.sets
 // right now only a few of them use the stateRoot
+import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 
 const stateRoot = (state) => state.sets;
 
@@ -10,23 +11,31 @@ export const getRevision = (state) => stateRoot(state).revision;
 
 // Get last rep time
 
+// TODO: fix bug here because I'm no longer using set's end and start time
+// apparently I used it for more than just rest timer fml
+
 export const lastRepTime = (state) => {
-    var workoutData = state.workoutData;
+    // check if there's workout data
+    var workoutData = stateRoot(state).workoutData;
     if (workoutData.length <= 0) {
         return null;
     }
 
     // check the current set for end time
     var currentSet = workoutData[workoutData.length-1];
-    if (currentSet.endTime !== null) {
-        return currentSet.endTime;
+    var endTime = SetTimeCalculator.endTime(currentSet);
+    if (endTime !== null) {
+        return endTime;
     }
 
-    // check the previous set for end time
-    if (state.workoutData.length > 1) {
-        var previousSet = workoutData[workoutData.length-2];
-        if (previousSet.endTime !== null) {
-            return previousSet.endTime;
+    // check previous sets for end time
+    if (workoutData.length > 1) {
+        for (var i=workoutData.length-2; i>=0; i--) {
+            var previousSet = workoutData[i];
+            var endTime = SetTimeCalculator.endTime(previousSet);            
+            if (endTime !== null) {
+                return endTime;
+            }
         }
     }
 

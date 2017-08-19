@@ -3,7 +3,7 @@ import {
     LOGIN_SUCCESS,
     LOGOUT,
     SAVE_TOKENS,
-    OBTAIN_NEW_TOKENS
+    TOKENS_READY
 } from 'app/ActionTypes';
 
 export const loginSucceeded = (accessToken, refreshToken, email, date = new Date(), revision = null, sets = null) => ({
@@ -31,4 +31,4 @@ export const saveTokens = (accessToken, refreshToken, lastRefreshDate) => ({
     lastRefreshDate: lastRefreshDate
 });
 
-export const obtainNewTokens = () => ({ type: OBTAIN_NEW_TOKENS });
+export const tokensReady = () => ({ type: TOKENS_READY });

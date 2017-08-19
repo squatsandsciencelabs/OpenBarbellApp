@@ -2,8 +2,15 @@ import { take, call, select, put, fork, cancelled, cancel } from 'redux-saga/eff
 
 import {
     LOGOUT,
-    SYNC_REQUEST,
-    CHANGED_TAB
+    TOKENS_READY,
+    CHANGED_TAB,
+    END_WORKOUT,
+    SAVE_WORKOUT_REP,
+    SAVE_HISTORY_REP,
+    SAVE_WORKOUT_SET_TAGS,
+    SAVE_HISTORY_SET_TAGS,
+    SAVE_WORKOUT_SET,
+    SAVE_HISTORY_SET,
 } from 'app/ActionTypes';
 import API from 'app/services/API';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
@@ -23,7 +30,17 @@ const SyncSaga = function * SyncSaga() {
 
 function* executeSync() {
     while (true) {
-        yield take([SYNC_REQUEST, CHANGED_TAB]);
+        yield take([
+            TOKENS_READY,
+            CHANGED_TAB,
+            END_WORKOUT,
+            SAVE_WORKOUT_SET,
+            SAVE_HISTORY_SET,
+            SAVE_WORKOUT_REP,
+            SAVE_HISTORY_REP,
+            SAVE_WORKOUT_SET_TAGS,
+            SAVE_HISTORY_SET_TAGS
+        ]);
 
         // login check - do not need to check is uploading as relying on the cancel instead
         const isLoggedIn = yield select(AuthSelectors.getIsLoggedIn);    

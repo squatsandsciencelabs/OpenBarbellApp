@@ -19,7 +19,7 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGOUT = 'LOGOUT';
 export const SAVE_TOKENS = 'SAVE_TOKENS';
-export const OBTAIN_NEW_TOKENS = 'OBTAIN_NEW_TOKENS';
+export const TOKENS_READY = 'TOKENS_READY';
 
 // sets
 export const SAVE_WORKOUT_SET = 'SAVE_WORKOUT_SET';
@@ -36,11 +36,11 @@ export const UPDATE_SET_DATA_FROM_SERVER = 'UPDATE_SET_DATA_FROM_SERVER';
 export const FINISH_UPLOADING_SETS = 'FINISH_UPLOADING_SETS';
 export const FAILED_UPLOAD_SETS = 'FAILED_UPLOAD_SETS';
 
+// store
+export const STORE_INITIALIZED = 'STORE_INITIALIZED';
+
 // tab
 export const CHANGED_TAB = 'CHANGED_TAB';
-
-// sync
-export const SYNC_REQUEST = 'SYNC_REQUEST';
 
 // suggestions
 export const UPDATE_SUGGESTIONS = 'UPDATE_SUGGESTIONS';

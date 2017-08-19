@@ -2,7 +2,6 @@ import {
     PRESENT_WORKOUT_EXPANDED,
     SAVE_WORKOUT_REP
 } from 'app/ActionTypes';
-import * as ApiActionCreators from 'app/redux/shared_actions/ApiActionCreators';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as WorkoutActionCreators from 'app/redux/shared_actions/WorkoutActionCreators';
 
@@ -11,25 +10,19 @@ export const presentExpanded = (setID) => ({
     setID: setID
 });
 
-export const removeRep = (setID, repIndex) => (dispatch) => {
-    dispatch({
-        type: SAVE_WORKOUT_REP,
-        setID: setID,
-        repIndex: repIndex,
-        removed: true
-    });
-    dispatch(ApiActionCreators.syncData());
-};
+export const removeRep = (setID, repIndex) => ({
+    type: SAVE_WORKOUT_REP,
+    setID: setID,
+    repIndex: repIndex,
+    removed: true
+});
 
-export const restoreRep = (setID, repIndex) => (dispatch) => {
-    dispatch({
-        type: SAVE_WORKOUT_REP,
-        setID: setID,
-        repIndex: repIndex,
-        removed: false
-    });
-    dispatch(ApiActionCreators.syncData());
-};
+export const restoreRep = (setID, repIndex) => ({
+    type: SAVE_WORKOUT_REP,
+    setID: setID,
+    repIndex: repIndex,
+    removed: false
+});
 
 export const endWorkout = () => {
     return WorkoutActionCreators.endWorkout();

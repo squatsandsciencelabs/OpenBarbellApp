@@ -9,9 +9,6 @@ import {
     FAILED_UPLOAD_SETS
 } from 'app/ActionTypes';
 
-import * as ApiActionCreators from './ApiActionCreators';
-import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
-
 export const saveWorkoutSet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {
     var action  = {
         type: SAVE_WORKOUT_SET

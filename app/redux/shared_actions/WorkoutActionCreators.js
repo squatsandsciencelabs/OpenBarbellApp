@@ -1,6 +1,5 @@
 // This exists in shared actions because the timer can also end the workout
 
-import * as ApiActionCreators from './ApiActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import { END_WORKOUT } from 'app/ActionTypes';
 

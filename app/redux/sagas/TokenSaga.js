@@ -9,7 +9,6 @@ import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
 import API from 'app/services/API';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
-import * as ApiActionCreators from 'app/redux/shared_actions/ApiActionCreators';
 import * as DateUtils from 'app/utility/transforms/DateUtils';
 
 const TokenSaga = function * TokenSaga() {
@@ -45,8 +44,8 @@ function* obtainNewTokens() {
         }
     }
 
-    // sync
-    yield put(ApiActionCreators.syncData());    
+    // ready
+    yield put(AuthActionCreators.tokensReady());
 }
 
 const shouldRequestNewToken = (lastRefreshDate) => lastRefreshDate === null || Math.abs(new Date() - lastRefreshDate) > OpenBarbellConfig.obtainTokenTimer;

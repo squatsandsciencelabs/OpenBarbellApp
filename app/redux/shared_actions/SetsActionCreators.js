@@ -35,7 +35,7 @@ export const saveWorkoutSet = (setID, exercise = null, weight = null, metric = n
     return action;
 };
 
-export const saveHistorySet = (setID, exercise = null, weight = null, metric = null, rpe = null) => (dispatch) => {
+export const saveHistorySet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {
     var action = {
         type: SAVE_HISTORY_SET
     };
@@ -55,8 +55,7 @@ export const saveHistorySet = (setID, exercise = null, weight = null, metric = n
         action.rpe = rpe;
     }
 
-    dispatch(action);
-    dispatch(ApiActionCreators.syncData());
+    return action;
 };
 
 export const endSet = () => (dispatch, getState) => {

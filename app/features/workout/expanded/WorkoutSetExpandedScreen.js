@@ -10,7 +10,8 @@ const mapStateToProps = (state) => {
     if (state.workout.expandedSetID !== null) {
         var set = SetsSelectors.getExpandedWorkoutSet(state.sets, state.workout.expandedSetID);
         var repNum = 0;
-        var vms = set.reps.map((rep) => {
+        var reps = set.reps.filter((rep) => !rep.removed);
+        var vms = reps.map((rep) => {
             repNum++;
             let data = rep.data;
 

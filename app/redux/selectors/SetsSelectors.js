@@ -69,7 +69,7 @@ export const getHistorySetsChronological = (state) => {
 // Get Expanded History Set
 
 export const getExpandedHistorySet = (state, setID) => {
-    var dictionary = state.historyData;
+    var dictionary = stateRoot(state).historyData;
     for (var property in dictionary) {
         if (dictionary.hasOwnProperty(property)) {
             let set = dictionary[property];

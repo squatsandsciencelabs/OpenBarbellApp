@@ -1,3 +1,4 @@
+// TODO: refactor this into a saga
 // TODO: tweak this so setting up upload is separate from actually uploading
 // Also split it up so resume is doable
 

@@ -10,7 +10,7 @@ export const startTime = (set) => {
             return validReps[0].time;
         } else {
             console.tron.log("start time calculation failed for " + set);
-            return new Date(); // temporary date
+            return null;
         }
     } else {
         // legacy time of set itself
@@ -26,7 +26,7 @@ export const endTime = (set) => {
             return validReps[validReps.length-1].time;
         } else {
             console.tron.log("end time calculation failed for " + set);
-            return new Date(); // temporary date
+            return null;
         }
     } else {
         // legacy time of set itself

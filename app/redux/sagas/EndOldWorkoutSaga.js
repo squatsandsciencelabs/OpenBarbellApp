@@ -1,4 +1,4 @@
-import { takeEvery, select, put, all } from 'redux-saga/effects';
+import { takeEvery, select, put, call, all } from 'redux-saga/effects';
 import { Alert } from 'react-native';
 
 import {
@@ -34,8 +34,8 @@ function* endOldWorkout() {
 
     // error
     if (timeDifference >= OpenBarbellConfig.endWorkoutTimer) {
-        Alert.alert("Ending workout! You can find your last workout on the History screen.");
-        yield put(WorkoutActionCreators.endWorkout());
+        yield call(Alert.alert, "Ending workout! You can find your last workout on the History screen.");
+        yield put(WorkoutActionCreators.autoEndWorkout());
     }
 };
 

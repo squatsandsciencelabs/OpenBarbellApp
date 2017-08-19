@@ -11,3 +11,5 @@ export const endWorkout = () => (dispatch, getState) => {
         dispatch({ type: END_WORKOUT });
     }
 };
+
+export const autoEndWorkout = () => ({ type: END_WORKOUT });

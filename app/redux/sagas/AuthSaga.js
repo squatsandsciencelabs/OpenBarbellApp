@@ -36,6 +36,7 @@ function* executeLogin() {
         let json = yield call(API.login, user.idToken);
         yield put(AuthActionCreators.loginSucceeded(json.accessToken, json.refreshToken, user.email, new Date(), json.revision, json.sets));
     } catch(error) {
+        console.tron.log("ERROR " + error);
         if (error.code !== -5) { // -5 is when the user cancels the sign in
             showGenericAlert();
         }

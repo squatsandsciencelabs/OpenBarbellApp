@@ -5,9 +5,17 @@ import { Provider } from 'react-redux';
 import 'app/configs/ReactotronConfig';
 import Store from 'app/redux/Store';
 import ApplicationScreen from 'app/features/application/ApplicationScreen';
+import * as GoogleSignInSetup from 'app/services/GoogleSignInSetup';
+import Bluetooth from 'app/services/Bluetooth';
 
 // initialize the store
 var store = Store();
+
+// configure google sign in
+GoogleSignInSetup.configure();
+
+// start the bluetooth
+Bluetooth(store);
 
 // render
 class OBBApp extends Component {

@@ -10,8 +10,6 @@ import Sagas from 'app/redux/sagas/Sagas';
 import reducers from 'app/redux/reducers/Reducers';
 
 // startup imports
-import * as GoogleSignInSetup from 'app/services/GoogleSignInSetup';
-import Bluetooth from 'app/services/Bluetooth';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as KillSwitchActionCreators from 'app/redux/shared_actions/KillSwitchActionCreators';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
@@ -41,12 +39,6 @@ export default initializeStore = () => {
             'settings',
             'sets'
         ]}, () => {
-            // configure google sign in
-            GoogleSignInSetup.configure();
-
-            // start the bluetooth
-            Bluetooth(store);
-            
             // on startup, always "fail" it so syncing variables go back into the queue to be synced
             store.dispatch(SetsActionCreators.failedUploadSets());
 

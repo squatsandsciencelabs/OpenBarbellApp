@@ -10,6 +10,7 @@ import {
 const defaultState = {
     editingExerciseSetID: null,
     editingExerciseName: '',
+    editingExerciseBias: null,
     editingTagsSetID: null,
     editingTags: [],
     expandedSetID: null,
@@ -20,7 +21,8 @@ const WorkoutReducer = (state = defaultState, action) => {
         case PRESENT_WORKOUT_EXERCISE:
             return Object.assign({}, state, {
                 editingExerciseSetID: action.setID,
-                editingExerciseName: action.exercise
+                editingExerciseName: action.exercise,
+                editingExerciseBias: action.bias
             });
         case DISMISS_WORKOUT_EXERCISE:
             return Object.assign({}, state, {

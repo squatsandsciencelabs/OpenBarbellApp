@@ -43,7 +43,7 @@ const createViewModels = (sets) => {
                 setNumber = 1;
             }
         }
-        array.push(createHeaderViewModel(set, setNumber));
+        array.push(createHeaderViewModel(set, setNumber, lastExerciseName));
         if (set.reps.length > 0) {
             array.push({type: "subheader", key: set.setID+"subheader"});
         }
@@ -83,7 +83,7 @@ const createViewModels = (sets) => {
     return sections;
 }
 
-const createHeaderViewModel = (set, setNumber) => ({
+const createHeaderViewModel = (set, setNumber, bias=null) => ({
     type: 'header',
     key: set.setID+'header',
     setID: set.setID,
@@ -93,7 +93,8 @@ const createHeaderViewModel = (set, setNumber) => ({
     tags: set.tags,
     weight: set.weight,
     metric: set.metric,
-    rpe: set.rpe
+    rpe: set.rpe,
+    bias: bias
 });
 
 const createRowViewModels = (set) => {

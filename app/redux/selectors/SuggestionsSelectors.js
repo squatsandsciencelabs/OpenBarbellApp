@@ -1,10 +1,27 @@
-export const generateSuggestions = (model, input, ignore = []) => {
+const stateRoot = (state) => state.suggestions;
+
+const exerciseNameModel = (state) => stateRoot(state).exerciseModel;
+
+const tagsModel = (state) => stateRoot(state).tagsModel;
+
+export const generateExerciseNameSuggestions = (state, input, bias = null) => {
+    return generateSuggestions(exerciseNameModel(state), input, bias);
+};
+
+export const generateTagsSuggestions = (state, input, ignore = []) => {
+    return generateSuggestions(tagsModel(state), input, null, ignore);
+};
+
+const generateSuggestions = (model, input, bias, ignore = []) => {
     // lowercase comparisons
     var lowercaseInput = '';
     if (input !== null) {
         lowercaseInput = input.toLowerCase();
     }
     ignore = ignore.map((value) => value.toLowerCase());
+    if (bias !== null) {
+        bias = bias.toLowerCase();
+    }
 
     // declare variables
     let matches = [];
@@ -12,7 +29,15 @@ export const generateSuggestions = (model, input, ignore = []) => {
     // get all matches
     for (var property in model) {
         if (model.hasOwnProperty(property) && !ignore.includes(property) && property.indexOf(lowercaseInput) !== -1) {
-            matches.push(model[property]);
+            if (property === bias) {
+                //bias
+                var suggestion = Object.assign({}, model[property]);
+                suggestion.seed = 99999999999;
+            } else {
+                // non bias
+                var suggestion = model[property];
+            }
+            matches.push(suggestion);
         }
     }
 

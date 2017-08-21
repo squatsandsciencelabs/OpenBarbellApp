@@ -1,3 +1,5 @@
+// TODO: consider splitting this component into two different ones rather than using if statements everywhere
+
 import React, {Component} from 'react';
 import {
     View,
@@ -42,10 +44,10 @@ class EditTextModal extends Component {
         if (text === null || text === undefined) {
             text = '';
         }
-        this._updateText(text);
+        this._updateText(text, nextProps.bias);
 
         // update suggestions
-        this._updateSuggestions(text, inputs);
+        this._updateSuggestions(text, inputs, nextProps.bias);
     }
 
     // HELPERS
@@ -81,15 +83,19 @@ class EditTextModal extends Component {
         this._updateSuggestions(this.state.text, inputsCopy);
     }
 
-    _updateText(input) {
+    _updateText(input, bias=this.props.bias) {
         this.setState({
             text: input,
         });
-        this._updateSuggestions(input);
+        this._updateSuggestions(input, bias);
     }
 
-    _updateSuggestions(input=this.state.text, inputs=this.state.inputs) {
-        let suggestions = this.props.generateSuggestions(input, inputs);
+    _updateSuggestions(input=this.state.text, inputs=this.state.inputs, bias=null) {
+        if (this.props.multipleInput) {
+            var suggestions = this.props.generateMultipleInputSuggestions(input, inputs);
+        } else {
+            var suggestions = this.props.generateSingleInputSuggestions(input, bias);
+        }
         let suggestionsVM = suggestions.map((suggestion) => { return {key: suggestion}} );
         this.setState({
             suggestions: suggestionsVM,

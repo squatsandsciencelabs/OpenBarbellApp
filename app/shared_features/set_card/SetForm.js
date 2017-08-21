@@ -155,7 +155,7 @@ class SetForm extends Component {
                 <View style={styles.upperShadow} />
                 <View style={[styles.shadow, {flex: 1, flexDirection: 'column', padding: 5}]}>
                     <View style={styles.field}>
-                        <TouchableHighlight onPress={() => this.props.tapExercise(this.props.setID, this.state.exercise)}>
+                        <TouchableHighlight onPress={() => this.props.tapExercise(this.props.setID, this.state.exercise, this.props.bias)}>
                             {this._displayExercise()}
                         </TouchableHighlight>
                         <View style={styles.fieldDetails} pointerEvents='none'>

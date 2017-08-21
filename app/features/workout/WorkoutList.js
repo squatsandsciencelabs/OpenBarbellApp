@@ -20,7 +20,7 @@ import SetDataRow from 'app/shared_features/set_card/SetDataRow';
 import SetRestRow from 'app/shared_features/set_card/SetRestRow';
 
 class WorkoutList extends Component {
-
+    
     // UPDATE
 
     shouldComponentUpdate(nextProps) {
@@ -69,7 +69,6 @@ class WorkoutList extends Component {
                                 weight={item.weight}
                                 metric={item.metric}
                                 rpe={item.rpe}
-                                bias={item.bias}
                                 onFocus={() => {
                                     this.sectionList.scrollToLocation({sectionIndex: section.position, itemIndex: index});
                                 }}

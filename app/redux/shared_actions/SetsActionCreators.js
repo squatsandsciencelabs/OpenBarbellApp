@@ -1,6 +1,7 @@
 import {
     SAVE_WORKOUT_SET,
     SAVE_HISTORY_SET,
+    SET_DEFAULT_METRIC,
     END_SET,
     BEGIN_UPLOADING_SETS,
     RE_ADD_SETS_TO_UPLOAD,
@@ -9,6 +10,15 @@ import {
     FAILED_UPLOAD_SETS
 } from 'app/ActionTypes';
 
+export const getDefaultMetric = () => (dispatch, getState) => {
+    var state = getState();
+    var defaultMetric = state.settings.defaultMetric;
+
+    dispatch({ 
+        type: SET_DEFAULT_METRIC, 
+        defaultMetric: defaultMetric
+    });
+}
 export const saveWorkoutSet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {
     var action  = {
         type: SAVE_WORKOUT_SET

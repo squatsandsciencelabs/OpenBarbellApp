@@ -2,22 +2,19 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import EditTextModal from 'app/shared_features/edit_set/EditTextModal';
+import * as WorkoutSelectors from 'app/redux/selectors/WorkoutSelectors';
 import * as SuggestionsSelectors from 'app/redux/selectors/SuggestionsSelectors';
 import * as Actions from './EditWorkoutExerciseActions';
 
-const mapStateToProps = (state) => {
-    // save the model
-    let model = state.suggestions.exerciseModel;
-    
-    return {
-        title: 'Edit Exercise',
-        placeholder: 'Enter Exercise',
-        text: state.workout.editingExerciseName,
-        setID: state.workout.editingExerciseSetID,
-        generateSuggestions: (input) => { return SuggestionsSelectors.generateSuggestions(model, input) },
-        modalShowing: state.workout.editingExerciseSetID !== null
-    };
-};
+const mapStateToProps = (state) => ({
+    title: 'Edit Exercise',
+    placeholder: 'Enter Exercise',
+    text: WorkoutSelectors.getEditingExerciseName(state),
+    setID: WorkoutSelectors.getEditingExerciseSetID(state),
+    bias: WorkoutSelectors.getEditingExerciseBias(state),
+    generateSingleInputSuggestions: (input, bias) => { return SuggestionsSelectors.generateExerciseNameSuggestions(state, input, bias) },
+    modalShowing: state.workout.editingExerciseSetID !== null
+});
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({

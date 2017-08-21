@@ -4,10 +4,11 @@ import {
 } from 'app/ActionTypes';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 
-export const presentExercise = (setID, exercise) => ({
+export const presentExercise = (setID, exercise, bias) => ({
     type: PRESENT_WORKOUT_EXERCISE,
     setID: setID,
-    exercise: exercise
+    exercise: exercise,
+    bias: bias
 });
 
 export const presentTags = (setID, tags) => ({

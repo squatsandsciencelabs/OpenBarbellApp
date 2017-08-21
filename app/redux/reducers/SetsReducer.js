@@ -98,12 +98,8 @@ const setDefaultMetric = (state, action) => {
     let setIndex = newWorkoutData.findIndex( set => set.setID === latestSet.setID );
     let set = newWorkoutData[setIndex];
 
-    let changes = {};
-
-    if ('metric' in action) {
-        changes.metric = action.defaultMetric;
-    }
-
+    let changes = { metric: action.defaultMetric };
+    
     newWorkoutData[setIndex] = Object.assign({}, set, changes);
 
     return Object.assign({}, state, {

@@ -27,3 +27,4 @@ const SettingsMetric = connect(
 )(PickerModal);
 
 export default SettingsMetric;
+

@@ -37,7 +37,7 @@ class WorkoutList extends Component {
             return (
                 <View style={styles.button}>
                     <TouchableOpacity onPress={ () => this.props.endSet() }>
-                        <Text style={styles.buttonText}>Finish Working Set</Text>
+                        <Text style={styles.buttonText}>Add New Set</Text>
                     </TouchableOpacity>
                 </View>
             );

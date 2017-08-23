@@ -149,67 +149,92 @@ class SetForm extends Component {
         }
     }
 
+    _renderExercise() {
+        return (
+            <View style={styles.field}>
+                <TouchableHighlight onPress={() => this.props.tapExercise(this.props.setID, this.state.exercise, this.props.bias)}>
+                    {this._displayExercise()}
+                </TouchableHighlight>
+                <View style={styles.fieldDetails} pointerEvents='none'>
+                    <Text style={styles.detailText}>{this._displaySetNumber()}</Text>
+                </View>
+            </View>
+        );
+    }
+
+    _renderWeight() {
+        return (
+            <View style={[styles.field, {flex: 1, marginRight: 5}]}>
+                <TextInput
+                    style={styles.fieldText}
+                    keyboardType={'numeric'}
+                    underlineColorAndroid={'transparent'}
+                    editable = {true}
+                    placeholder="Enter Weight"
+                    placeholderTextColor={'lightgray'}
+                    value={this.state.weight}
+                    onFocus={() => this.props.onFocus() }
+                    onChangeText={(weight) => this._onChangeWeight(weight) }
+                />
+                <View style={styles.fieldDetails}>
+                    <TouchableOpacity onPress={() => this._toggleMetric()}>
+                        <View style={{flexDirection: 'row', alignItems: 'center', }}>
+                            <Text style={styles.detailText}>{this._displayMetric()} </Text>
+                            <Icon name="refresh" size={10} color="gray" />
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        );
+    }
+
+    _renderRPE() {
+        return (
+            <View style={[styles.field, {flex: 1}]}>
+                <TextInput
+                    style={styles.fieldText}
+                    keyboardType={'numeric'}
+                    underlineColorAndroid={'transparent'}
+                    editable = {true}
+                    placeholder="Enter RPE"
+                    placeholderTextColor={'lightgray'}
+                    value = {this.state.rpe}
+                    onFocus={() => this.props.onFocus() }
+                    onChangeText={(rpe) => this._onChangeRPE(rpe) }
+                />
+                <View style={styles.fieldDetails} pointerEvents='none'>
+                    <Text style={styles.detailText}>RPE</Text>
+                </View>
+            </View>
+        );
+    }
+
+    _renderTags() {
+        return (
+            <View>
+                <View style={[styles.field, {flex: 1}]}>
+                    <TouchableHighlight onPress={() => this.props.tapTags(this.props.setID, this.state.tags)}>
+                        {this._displayTags()}
+                    </TouchableHighlight>
+                </View>
+            </View>
+        );
+    }
+
     render() {
         return (
             <View style={{flex: 1, flexDirection: 'column', opacity: this.state.removed ? 0.3 : 1}}>
                 <View style={styles.upperShadow} />
                 <View style={[styles.shadow, {flex: 1, flexDirection: 'column', padding: 5}]}>
-                    <View style={styles.field}>
-                        <TouchableHighlight onPress={() => this.props.tapExercise(this.props.setID, this.state.exercise, this.props.bias)}>
-                            {this._displayExercise()}
-                        </TouchableHighlight>
-                        <View style={styles.fieldDetails} pointerEvents='none'>
-                            <Text style={styles.detailText}>{this._displaySetNumber()}</Text>
-                        </View>
-                    </View>
-                    <View style={{flex: 1, flexDirection: 'row'}}>
-                        <View style={[styles.field, {flex: 1, marginRight: 5}]}>
-                            <TextInput
-                                style={styles.fieldText}
-                                keyboardType={'numeric'}
-                                underlineColorAndroid={'transparent'}
-                                editable = {true}
-                                placeholder="Enter Weight"
-                                placeholderTextColor={'lightgray'}
-                                value={this.state.weight}
-                                onFocus={() => this.props.onFocus() }
-                                onChangeText={(weight) => this._onChangeWeight(weight) }
-                            />
-                            <View style={styles.fieldDetails}>
-                                <TouchableOpacity onPress={() => this._toggleMetric()}>
-                                    <View style={{flexDirection: 'row', alignItems: 'center', }}>
-                                        <Text style={styles.detailText}>{this._displayMetric()} </Text>
-                                        <Icon name="refresh" size={10} color="gray" />
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-
-                        <View style={[styles.field, {flex: 1}]}>
-                            <TextInput
-                                style={styles.fieldText}
-                                keyboardType={'numeric'}
-                                underlineColorAndroid={'transparent'}
-                                editable = {true}
-                                placeholder="Enter RPE"
-                                placeholderTextColor={'lightgray'}
-                                value = {this.state.rpe}
-                                onFocus={() => this.props.onFocus() }
-                                onChangeText={(rpe) => this._onChangeRPE(rpe) }
-                            />
-                            <View style={styles.fieldDetails} pointerEvents='none'>
-                                <Text style={styles.detailText}>RPE</Text>
-                            </View>
-                        </View>
-                    </View>
-
                     <View>
-                        <View style={[styles.field, {flex: 1}]}>
-                            <TouchableHighlight onPress={() => this.props.tapTags(this.props.setID, this.state.tags)}>
-                                {this._displayTags()}
-                            </TouchableHighlight>
+                        { this._renderExercise() }
+                        <View style={{flex: 1, flexDirection: 'row'}}>
+                            { this._renderWeight() }
+                            { this._renderRPE() }
                         </View>
                     </View>
+
+                    { this._renderTags() }
                 </View>
             </View>
         );

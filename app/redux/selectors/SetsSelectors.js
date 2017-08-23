@@ -46,7 +46,7 @@ export const lastRepTime = (state) => {
 // Get Workout Sets
 
 export const getWorkoutSets = (state) => {
-    return state.workoutData;
+    return stateRoot(state).workoutData;
 };
 
 // Get Expanded Workout Set

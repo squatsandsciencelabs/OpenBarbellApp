@@ -174,7 +174,7 @@ const createFooterVM = (set, lastSetEndTime) => {
 };
 
 const mapStateToProps = (state) => {
-    let sets = SetsSelectors.getWorkoutSets(state.sets);
+    let sets = SetsSelectors.getWorkoutSets(state);
     return {
         sections: createViewModels(sets)
     }

@@ -61,7 +61,7 @@ export default function (store) {
         console.tron.log("REACT NATIVE LAYER -> RECEIVED DATA " + data);
 
         // invalid rep data
-        if (data == -1234 || data == -2345) {
+        if (data == -1234 || data == -2345 || data == -3456) {
             if (queuedDataIsCorrupted(repData)) {
                 console.tron.log("FOUND BAD DATA B4 START FLAG, logging it as an invalid rep now!");
                 console.tron.log(JSON.stringify(repData));
@@ -98,6 +98,9 @@ const queuedDataIsCorrupted = (repData) => {
 
     // only 1, corrupted if it's NOT a start flag
     if (repData.length == 1) {
+        if (repData[0] == -3456) {
+            return false;
+        }
         if (repData[0] == -2345) {
             return false;
         }

@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
             repNum++;
             let data = rep.data;
 
-            var duration = RepDataMap.durationOfLift(data)
+            var duration = RepDataMap.durationOfLift(data);
             if (duration !== null) {
                 duration = (duration / 1000000.0).toFixed(2);
             } else {

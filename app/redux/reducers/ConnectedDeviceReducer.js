@@ -7,7 +7,13 @@ import {
     CONNECTED_TO_DEVICE
 } from 'app/ActionTypes';
 
-const ConnectedDeviceReducer = ( state = { status: 'DISCONNECTED', deviceName: null, deviceIdentifier: null }, action) => {
+const defaultState = {
+    status: 'DISCONNECTED',
+    deviceName: null,
+    deviceIdentifier: null
+};
+
+const ConnectedDeviceReducer = ( state = defaultState, action) => {
     switch (action.type) {
         case CONNECT_DEVICE:
             return Object.assign({}, state, {

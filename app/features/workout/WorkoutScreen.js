@@ -183,7 +183,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         endSet: Actions.endSet,
-        endWorkout: Actions.endWorkout,
         removeRep: Actions.removeRep,
         restoreRep: Actions.restoreRep,
         tapCard: Actions.presentExpanded,

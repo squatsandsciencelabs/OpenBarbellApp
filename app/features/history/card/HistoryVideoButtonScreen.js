@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import VideoButton from 'app/shared_features/set_card/VideoButton';
-import * as Actions from './EditWorkoutSetFormActions';
+import * as Actions from './EditHistorySetFormActions';
 
 // TODO: add video here
 const mapStateToProps = (state) => ({
@@ -16,9 +16,9 @@ const mapDispatchToProps = (dispatch) => {
     }, dispatch);
 };
 
-const WorkoutVideoButtonScreen = connect(
+const HistoryVideoButtonScreen = connect(
     mapStateToProps,
     mapDispatchToProps
 )(VideoButton);
 
-export default WorkoutVideoButtonScreen;
+export default HistoryVideoButtonScreen;

@@ -19,6 +19,7 @@ import WorkoutSetExpandedScreen from './expanded/WorkoutSetExpandedScreen';
 import SetDataLabelRow from 'app/shared_features/set_card/SetDataLabelRow';
 import SetDataRow from 'app/shared_features/set_card/SetDataRow';
 import SetRestRow from 'app/shared_features/set_card/SetRestRow';
+import WorkoutVideoButtonScreen from './card/WorkoutVideoButtonScreen';
 
 class WorkoutList extends Component {
 
@@ -62,6 +63,15 @@ class WorkoutList extends Component {
                                 bias={item.bias}
                                 onFocus={() => {
                                     this.sectionList.scrollToLocation({sectionIndex: section.position, itemIndex: index});
+                                }}
+                                renderDetailComponent={()=> {
+                                    if (item.videoFileURL !== null && item.videoFileURL !== undefined) {
+                                        return (<WorkoutVideoButtonScreen setID={item.setID} mode='watch' videoFileURL={item.videoFileURL} />);
+                                    } else if (section.position === 0) {
+                                        return (<WorkoutVideoButtonScreen setID={item.setID} mode='record' />);
+                                    } else {
+                                        return (<WorkoutVideoButtonScreen setID={item.setID} mode='commentary' />);
+                                    }
                                 }}
                             />
                         </View>);

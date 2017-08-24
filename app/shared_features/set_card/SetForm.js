@@ -170,7 +170,7 @@ class SetForm extends Component {
                     keyboardType={'numeric'}
                     underlineColorAndroid={'transparent'}
                     editable = {true}
-                    placeholder="Enter Weight"
+                    placeholder="Enter"
                     placeholderTextColor={'lightgray'}
                     value={this.state.weight}
                     onFocus={() => this.props.onFocus() }
@@ -196,7 +196,7 @@ class SetForm extends Component {
                     keyboardType={'numeric'}
                     underlineColorAndroid={'transparent'}
                     editable = {true}
-                    placeholder="Enter RPE"
+                    placeholder="Enter"
                     placeholderTextColor={'lightgray'}
                     value = {this.state.rpe}
                     onFocus={() => this.props.onFocus() }
@@ -211,12 +211,10 @@ class SetForm extends Component {
 
     _renderTags() {
         return (
-            <View>
-                <View style={[styles.field, {flex: 1}]}>
-                    <TouchableHighlight onPress={() => this.props.tapTags(this.props.setID, this.state.tags)}>
-                        {this._displayTags()}
-                    </TouchableHighlight>
-                </View>
+            <View style={[styles.field, {flex: 1}]}>
+                <TouchableHighlight onPress={() => this.props.tapTags(this.props.setID, this.state.tags)}>
+                    {this._displayTags()}
+                </TouchableHighlight>
             </View>
         );
     }
@@ -226,15 +224,19 @@ class SetForm extends Component {
             <View style={{flex: 1, flexDirection: 'column', opacity: this.state.removed ? 0.3 : 1}}>
                 <View style={styles.upperShadow} />
                 <View style={[styles.shadow, {flex: 1, flexDirection: 'column', padding: 5}]}>
-                    <View>
-                        { this._renderExercise() }
-                        <View style={{flex: 1, flexDirection: 'row'}}>
-                            { this._renderWeight() }
-                            { this._renderRPE() }
+                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                        <View style={{flex: 1}}>
+                            { this._renderExercise() }
+                            <View style={{flex: 1, flexDirection: 'row'}}>
+                                { this._renderWeight() }
+                                { this._renderRPE() }
+                            </View>
                         </View>
+
+                        <View>{ this.props.renderDetailComponent() }</View>
                     </View>
 
-                    { this._renderTags() }
+                    <View>{ this._renderTags() }</View>
                 </View>
             </View>
         );

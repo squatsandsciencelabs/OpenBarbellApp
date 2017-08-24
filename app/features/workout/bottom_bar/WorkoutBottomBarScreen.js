@@ -9,7 +9,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        endWorkout: Actions.endWorkout
     }, dispatch);
 };
 

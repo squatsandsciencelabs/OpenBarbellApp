@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-    TouchableHighlight,
+    TouchableOpacity,
     Text,
     StyleSheet,
     View,
@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import WorkoutBottomBarScreen from './bottom_bar/WorkoutBottomBarScreen';
 import EditWorkoutSetFormScreen from './card/EditWorkoutSetFormScreen';
 import EditWorkoutExerciseScreen from './exercise_name/EditWorkoutExerciseScreen';
 import EditWorkoutTagsScreen from './tags/EditWorkoutTagsScreen';
@@ -18,6 +19,8 @@ import WorkoutSetExpandedScreen from './expanded/WorkoutSetExpandedScreen';
 import SetDataLabelRow from 'app/shared_features/set_card/SetDataLabelRow';
 import SetDataRow from 'app/shared_features/set_card/SetDataRow';
 import SetRestRow from 'app/shared_features/set_card/SetRestRow';
+import WorkoutVideoButtonScreen from './card/WorkoutVideoButtonScreen';
+import WorkoutRecordVideoScreen from './camera/WorkoutRecordVideoScreen';
 
 class WorkoutList extends Component {
 
@@ -33,23 +36,12 @@ class WorkoutList extends Component {
 
     _renderSectionHeader(section) {
         if (section.key === 0) {
-            // end workout
             return (
-                <TouchableHighlight onPress={ () => this.props.endWorkout() }>
-                    <Text style={[styles.blueButton, styles.Shadow, { textAlign: 'center'}]}>End Workout</Text>
-                </TouchableHighlight>
-            );
-        } else {
-            return null;
-        }
-    }
-
-    _renderSectionFooter(section) {
-        if (section.key === 0) {
-            return (
-                <TouchableHighlight onPress={ () => this.props.endSet() }>
-                    <Text style={[styles.blueButton, styles.Shadow, { textAlign: 'center'}]}>Finish Current Set</Text>
-                </TouchableHighlight>
+                <View style={styles.button}>
+                    <TouchableOpacity onPress={ () => this.props.endSet() }>
+                        <Text style={styles.buttonText}>Add New Set</Text>
+                    </TouchableOpacity>
+                </View>
             );
         } else {
             return null;
@@ -71,6 +63,15 @@ class WorkoutList extends Component {
                                 rpe={item.rpe}
                                 onFocus={() => {
                                     this.sectionList.scrollToLocation({sectionIndex: section.position, itemIndex: index});
+                                }}
+                                renderDetailComponent={()=> {
+                                    if (item.videoFileURL !== null && item.videoFileURL !== undefined) {
+                                        return (<WorkoutVideoButtonScreen setID={item.setID} mode='watch' videoFileURL={item.videoFileURL} />);
+                                    } else if (section.position === 0) {
+                                        return (<WorkoutVideoButtonScreen setID={item.setID} mode='record' />);
+                                    } else {
+                                        return (<WorkoutVideoButtonScreen setID={item.setID} mode='commentary' />);
+                                    }
                                 }}
                             />
                         </View>);
@@ -102,7 +103,6 @@ class WorkoutList extends Component {
                 stickySectionHeadersEnabled={false}
                 renderItem={({section, index, item}) => this._renderRow(section, index, item)}
                 renderSectionHeader={({section}) => this._renderSectionHeader(section) }
-                renderSectionFooter={({section}) => this._renderSectionFooter(section) }
                 sections={this.props.sections}
                 style = {{padding: 10, backgroundColor: 'white'}}
             />);
@@ -113,9 +113,14 @@ class WorkoutList extends Component {
                 <EditWorkoutExerciseScreen />
                 <EditWorkoutTagsScreen />
                 <WorkoutSetExpandedScreen />
+                <WorkoutRecordVideoScreen />
 
                 <View style={{ flex: 1 }}>
                     {list}
+                </View>
+
+                <View style={{height: 50}}>
+                    <WorkoutBottomBarScreen />
                 </View>
 
             </View>
@@ -130,10 +135,16 @@ const styles = StyleSheet.create({
         fontSize: 16,
         left: 0,
     },
-    blueButton: {
+    button: {
         backgroundColor: 'rgba(47, 128, 237, 1)',
+        borderColor: 'rgba(47, 128, 237, 1)',        
+        borderWidth: 5,
+        borderRadius: 15,
+    },
+    buttonText: {
         color: 'white',
-        padding: 5
+        padding: 5,
+        textAlign: 'center'
     },
     Shadow: {
         shadowColor: "#000000",

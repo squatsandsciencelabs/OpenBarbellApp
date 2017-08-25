@@ -4,7 +4,11 @@ import {
     PRESENT_WORKOUT_EXPANDED,
     DISMISS_WORKOUT_EXERCISE,
     DISMISS_WORKOUT_TAGS,
-    DISMISS_WORKOUT_EXPANDED
+    DISMISS_WORKOUT_EXPANDED,
+    PRESENT_WORKOUT_RECORD_VIDEO,
+    DISMISS_WORKOUT_RECORD_VIDEO,
+    START_RECORDING_WORKOUT,
+    STOP_RECORDING_WORKOUT
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -14,6 +18,8 @@ const defaultState = {
     editingTagsSetID: null,
     editingTags: [],
     expandedSetID: null,
+    recordingSetID: null,
+    isRecording: false
 };
 
 const WorkoutReducer = (state = defaultState, action) => {
@@ -46,6 +52,22 @@ const WorkoutReducer = (state = defaultState, action) => {
         case DISMISS_WORKOUT_EXPANDED:
             return Object.assign({}, state, {
                 expandedSetID: null,
+            });
+        case PRESENT_WORKOUT_RECORD_VIDEO:
+            return Object.assign({}, state, {
+                recordingSetID: action.setID,
+            });
+        case DISMISS_WORKOUT_RECORD_VIDEO:
+            return Object.assign({}, state, {
+                recordingSetID: null,
+            });
+        case START_RECORDING_WORKOUT:
+            return Object.assign({}, state, {
+                isRecording: true
+            });
+        case STOP_RECORDING_WORKOUT:
+            return Object.assign({}, state, {
+                isRecording: false,
             });
         default:
             return state;

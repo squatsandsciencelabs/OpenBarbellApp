@@ -23,6 +23,8 @@ import HistorySetExpandedScreen from './expanded/HistorySetExpandedScreen';
 import SetDataLabelRow from 'app/shared_features/set_card/SetDataLabelRow';
 import SetDataRow from 'app/shared_features/set_card/SetDataRow';
 import SetRestRow from 'app/shared_features/set_card/SetRestRow';
+import HistoryVideoButtonScreen from './card/HistoryVideoButtonScreen';
+import HistoryRecordVideoScreen from './camera/HistoryRecordVideoScreen';
 
 class HistoryList extends Component {
 
@@ -63,6 +65,13 @@ class HistoryList extends Component {
                                 rpe={item.rpe}
                                 onFocus={() => {
                                     this.sectionList.scrollToLocation({sectionIndex: section.position, itemIndex: index});
+                                }}
+                                renderDetailComponent={()=> {
+                                    if (item.videoFileURL !== null && item.videoFileURL !== undefined) {
+                                        return (<HistoryVideoButtonScreen setID={item.setID} mode='watch' videoFileURL={item.videoFileURL} />);
+                                    } else {
+                                        return (<HistoryVideoButtonScreen setID={item.setID} mode='commentary' />);
+                                    }
                                 }}
                             />
                         </View>);
@@ -106,6 +115,7 @@ class HistoryList extends Component {
                     <EditHistoryExerciseScreen />
                     <EditHistoryTagsScreen />
                     <HistorySetExpandedScreen />
+                    <HistoryRecordVideoScreen />
 
                     <View style={{ flex: 1 }}>
                         {list}

@@ -11,6 +11,7 @@ import {
     SAVE_HISTORY_SET_TAGS,
     SAVE_WORKOUT_SET,
     SAVE_HISTORY_SET,
+    SAVE_HISTORY_VIDEO
 } from 'app/ActionTypes';
 import API from 'app/services/API';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
@@ -39,7 +40,8 @@ function* executeSync() {
             SAVE_WORKOUT_REP,
             SAVE_HISTORY_REP,
             SAVE_WORKOUT_SET_TAGS,
-            SAVE_HISTORY_SET_TAGS
+            SAVE_HISTORY_SET_TAGS,
+            SAVE_HISTORY_VIDEO
         ]);
 
         // login check - do not need to check is uploading as relying on the cancel instead

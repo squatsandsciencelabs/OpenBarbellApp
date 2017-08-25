@@ -105,7 +105,8 @@ const createHeaderViewModel = (set, setNumber) => ({
     tags: set.tags,
     weight: set.weight,
     metric: set.metric,
-    rpe: set.rpe
+    rpe: set.rpe,
+    videoFileURL: set.videoFileURL
 });
 
 const createRowViewModels = (set, shouldShowRemoved) => {

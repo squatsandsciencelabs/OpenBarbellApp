@@ -176,8 +176,7 @@ const createFooterVM = (set, lastSetEndTime) => {
 };
 
 const mapStateToProps = (state) => {
-    let sets = SetsSelectors.getWorkoutSets(state.sets);
-
+    let sets = SetsSelectors.getWorkoutSets(state);
     return {
         sections: createViewModels(sets)
     }
@@ -186,7 +185,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         endSet: Actions.endSet,
-        endWorkout: Actions.endWorkout,
         removeRep: Actions.removeRep,
         restoreRep: Actions.restoreRep,
         tapCard: Actions.presentExpanded,

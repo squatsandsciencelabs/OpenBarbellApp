@@ -1,9 +1,9 @@
 import { AsyncStorage } from 'react-native';
-import Reactotron from 'reactotron-react-native';
 import {persistStore, autoRehydrate} from 'redux-persist'
+import Reactotron from 'reactotron-react-native';
 
 // store imports
-import { compose, applyMiddleware }  from 'redux';
+import { compose, createStore, applyMiddleware }  from 'redux';
 import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 import Sagas from 'app/redux/sagas/Sagas';
@@ -15,18 +15,28 @@ import * as KillSwitchActionCreators from 'app/redux/shared_actions/KillSwitchAc
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
 import * as StoreActionCreators from 'app/redux/shared_actions/StoreActionCreators';
 
-// TODO: remove saga monitor from production, same way should remove console.tron from production
-const sagaMonitor = Reactotron.createSagaMonitor();
-const sagaMiddleware = createSagaMiddleware({sagaMonitor});
-const middlewares = applyMiddleware(
-    thunk,
-    sagaMiddleware
-);
-const enhancers = compose(middlewares, autoRehydrate());
-
 export default initializeStore = () => {
     // create the store
-    let store = Reactotron.createStore(reducers, enhancers);
+    if (__DEV__) {
+        // reactotron development mode
+        const sagaMonitor = Reactotron.createSagaMonitor();
+        var sagaMiddleware = createSagaMiddleware({sagaMonitor});
+        const middlewares = applyMiddleware(
+            thunk,
+            sagaMiddleware
+        );
+        const enhancers = compose(middlewares, autoRehydrate());        
+        var store = Reactotron.createStore(reducers, enhancers);
+    } else {
+        // release mode
+        var sagaMiddleware = createSagaMiddleware();
+        const middlewares = applyMiddleware(
+            thunk,
+            sagaMiddleware
+        );
+        const enhancers = compose(middlewares, autoRehydrate());        
+        var store = createStore(reducers, enhancers);
+    }
 
     // run sagas
     sagaMiddleware.run(Sagas);

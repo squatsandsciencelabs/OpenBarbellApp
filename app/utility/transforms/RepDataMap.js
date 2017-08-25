@@ -4,7 +4,8 @@ const map = {
     rangeOfMotionPosition: 3,
     peakVelocityPosition: 4,
     peakVelocityLocationPosition: 5,
-    durationOfLiftPosition: 7, //OBV2 only
+    peakAccelerationPosition: 6, //OBV3 only, OBV2 has a -2121 flag   
+    durationOfLiftPosition: 7, //OBV2 and OBV3only
 };
 
 const parseData = (repData, position) => {
@@ -37,8 +38,16 @@ export const peakVelocity = (repData) => parseData(repData, map.peakVelocityPosi
 
 export const peakVelocityLocation = (repData) => parseData(repData, map.peakVelocityLocationPosition);
 
+export const peakAcceleration = (repData) => {
+    const startFlag = parseData(repData, 0);
+    if (startFlag === -1234 || startFlag === -2345) {
+        return null;
+    }
+
+    return parseData(repData, map.peakAccelerationPosition);
+};
 export const durationOfLift = (repData) => {
-    if (parseData(repData, 0) == -1234) {
+    if (parseData(repData, 0) === -1234) {
         return null;
     }
 
@@ -49,17 +58,24 @@ export const isValidData = (repData) => {
     let initialFlag = parseData(repData, 0);
     console.tron.log("initial flag is " + initialFlag);
 
-    if (initialFlag == -1234) {
-        // v1 bulk data flag check
-        let bulkDataTransmissionFlag = parseData(repData, 6)
-        console.tron.log("bulk data flag check at 6 " + bulkDataTransmissionFlag);
+    if (initialFlag == -3456) {
+        // v3 bulk data flag check
+        const bulkDataTransmissionFlag = parseData(repData, 21);
+        console.tron.log("bulk data flag check at 21 " + bulkDataTransmissionFlag);
         if (bulkDataTransmissionFlag == -9999) {
             return true;
         }
-    }else if (initialFlag == -2345) {
+    } else if (initialFlag == -2345) {
         // v2 bulk data flag check
-        let bulkDataTransmissionFlag = parseData(repData, 18)
+        const bulkDataTransmissionFlag = parseData(repData, 18);
         console.tron.log("bulk data flag check at 18 " + bulkDataTransmissionFlag);
+        if (bulkDataTransmissionFlag == -9999) {
+            return true;
+        }
+    } else if (initialFlag == -1234) {
+        // v1 bulk data flag check
+        const bulkDataTransmissionFlag = parseData(repData, 6);
+        console.tron.log("bulk data flag check at 6 " + bulkDataTransmissionFlag);
         if (bulkDataTransmissionFlag == -9999) {
             return true;
         }

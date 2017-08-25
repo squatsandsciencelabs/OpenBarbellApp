@@ -10,7 +10,7 @@ import * as Actions from './WorkoutActions';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 
 // assumes chronological sets
-const createViewModels = (sets, metricSetting) => {
+const createViewModels = (sets) => {
     // declare variables
     let section = { key: 1, data: [] }; // contains the actual data
     let sections = [section]; // the return value
@@ -19,7 +19,6 @@ const createViewModels = (sets, metricSetting) => {
     let lastSetEndTime = null; // to help calculate rest time
     let isInitialSet = true; // to help determine when to display rest time and split up the sections properly
     let count = 0;
-    let metric = metricSetting;
 
     // build view models
     sets.map((set) => {
@@ -45,7 +44,7 @@ const createViewModels = (sets, metricSetting) => {
                 setNumber = 1;
             }
         }
-        array.push(createHeaderViewModel(set, setNumber, metric));
+        array.push(createHeaderViewModel(set, setNumber));
         if (set.reps.length > 0) {
             array.push({type: "subheader", key: set.setID+"subheader"});
         }
@@ -85,7 +84,7 @@ const createViewModels = (sets, metricSetting) => {
     return sections;
 }
 
-const createHeaderViewModel = (set, setNumber, metric) => ({
+const createHeaderViewModel = (set, setNumber, bias=null) => ({
     type: 'header',
     key: set.setID+'header',
     setID: set.setID,
@@ -177,19 +176,10 @@ const createFooterVM = (set, lastSetEndTime) => {
 };
 
 const mapStateToProps = (state) => {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    let sets = SetsSelectors.getWorkoutSets(state);
-=======
     let sets = SetsSelectors.getWorkoutSets(state.sets);
-    let metricSetting = state.settings.defaultMetric;
 
->>>>>>> parent of 2945173... semicolons
-=======
-    let sets = SetsSelectors.getWorkoutSets(state);
->>>>>>> 386f91387dc03c272259fbbfc31b4ba2caee0d29
     return {
-        sections: createViewModels(sets, metricSetting)
+        sections: createViewModels(sets)
     }
 };
 

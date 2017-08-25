@@ -3,12 +3,21 @@ import {
     View,
     Text,
     StyleSheet,
-    Image,
     TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Video from 'react-native-video';
 
 class VideoButton extends Component {
+
+    _tappedWatchVideo() {
+        this.props.tappedWatch(this.props.setID);
+
+        // TODO: make the full video mode go through actions rather than append like this
+        this.player.seek(0);
+        this.player.paused = false;
+        this.player.presentFullscreenPlayer();
+    }
 
     render() {
         switch (this.props.mode) {
@@ -33,10 +42,18 @@ class VideoButton extends Component {
                     </TouchableOpacity>
                 );
             case 'watch':
-                // TODO: try making this a video and see if the preview works by default
+                // TODO: see if can make this a true image preview instead of a full video
                 return (
-                    <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this.props.tappedWatch(this.props.setID) }>
-                        <Image source={{ uri: this.props.videoURL }} />
+                    <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo() }>
+                        <Video
+                            ref={(ref) => {
+                                this.player = ref
+                            }}
+                            style={[{flex:1, flexDirection:'column'}, styles.button, styles.blackButton]}
+                            source={{uri: this.props.videoFileURL}}
+                            paused={true}
+                            repeat={true}
+                        />
                     </TouchableOpacity>
                 );
             default:
@@ -67,6 +84,10 @@ const styles = StyleSheet.create({
     graybutton: {
         backgroundColor: 'rgba(239, 239, 239, 1)',
         borderColor: 'rgba(239, 239, 239, 1)',
+    },
+    blackbutton: {
+        backgroundColor: 'black',
+        borderColor: 'black',
     },
     whiteText: {
         color: 'white',

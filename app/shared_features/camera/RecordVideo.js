@@ -23,7 +23,8 @@ class RecordVideo extends Component {
 
     _record() {
         this.camera.capture({
-            mode: Camera.constants.CaptureMode.video
+            mode: Camera.constants.CaptureMode.video,
+            audio: true
         }).then((data) => {
             this.props.saveVideo(this.props.setID, data.path);
             this.props.closeModal();
@@ -65,6 +66,7 @@ class RecordVideo extends Component {
                     ref={(cam) => {this.camera = cam}}
                     style={{flex: 1}}
                     aspect={Camera.constants.Aspect.fill}>
+
                     <View style={styles.cancelButton}>
                         <TouchableOpacity onPress={()=>this.props.closeModal()}>
                             <Text style={styles.cancelText}>Cancel</Text>
@@ -74,6 +76,7 @@ class RecordVideo extends Component {
                     <View style={{position: 'absolute', bottom: 50, left: 0, right: 0, alignItems: 'center'}}>
                         { this._renderActionButton() }
                     </View>
+
                 </Camera>
             </Modal>
         );

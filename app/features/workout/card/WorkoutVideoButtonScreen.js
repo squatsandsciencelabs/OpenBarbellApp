@@ -4,10 +4,6 @@ import { connect } from 'react-redux';
 import VideoButton from 'app/shared_features/set_card/VideoButton';
 import * as Actions from './EditWorkoutSetFormActions';
 
-// TODO: add video here
-const mapStateToProps = (state) => ({
-});
-
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         tappedRecord: Actions.presentRecordVideo,
@@ -17,7 +13,7 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 const WorkoutVideoButtonScreen = connect(
-    mapStateToProps,
+    null,
     mapDispatchToProps
 )(VideoButton);
 

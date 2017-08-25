@@ -23,7 +23,8 @@ export const saveSet = (setID, exercise = null, weight = null, metric = null, rp
 };
 
 export const presentRecordVideo = (setID) => ({
-    type: PRESENT_HISTORY_RECORD_VIDEO
+    type: PRESENT_HISTORY_RECORD_VIDEO,
+    setID: setID
 });
 
 export const presentWatchVideo = (setID) => ({

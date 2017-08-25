@@ -6,11 +6,13 @@ import * as Actions from './SettingsApplicationActions';
 
 const mapStateToProps = (state) => ({
     endSetTimerDuration: state.settings.endSetTimerDuration,
+    defaultMetric: state.settings.defaultMetric,
 });
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         tapEndSetTimer: Actions.presentEndSetTimer,
+        tapSetDefaultMetric: Actions.presentSetMetric,
     }, dispatch);
 };
 

@@ -61,7 +61,6 @@ class WorkoutList extends Component {
                                 weight={item.weight}
                                 metric={item.metric}
                                 rpe={item.rpe}
-                                bias={item.bias}
                                 onFocus={() => {
                                     this.sectionList.scrollToLocation({sectionIndex: section.position, itemIndex: index});
                                 }}
@@ -127,8 +126,8 @@ class WorkoutList extends Component {
             </View>
         );
     }
-
 }
+
 //NOTE: currently container names reference the React Native flexDirection which imo is confusing
 const styles = StyleSheet.create({
     sectionHeaderText: {

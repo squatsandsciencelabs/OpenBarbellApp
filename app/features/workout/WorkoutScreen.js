@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as DateUtils from 'app/utility/transforms/DateUtils';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
-import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 
 import WorkoutList from './WorkoutList';
 import * as Actions from './WorkoutActions';
+import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 
 // assumes chronological sets
-const createViewModels = (sets) => {
+const createViewModels = (sets, metricSetting) => {
     // declare variables
     let section = { key: 1, data: [] }; // contains the actual data
     let sections = [section]; // the return value
@@ -19,6 +19,7 @@ const createViewModels = (sets) => {
     let lastSetEndTime = null; // to help calculate rest time
     let isInitialSet = true; // to help determine when to display rest time and split up the sections properly
     let count = 0;
+    let metric = metricSetting;
 
     // build view models
     sets.map((set) => {
@@ -36,6 +37,7 @@ const createViewModels = (sets) => {
         if (isInitialSet) {
             lastExerciseName = null;
             setNumber = 1;
+
         } else if (!set.removed) {
             if (lastExerciseName !== null && lastExerciseName === set.exercise) {
                 setNumber++;
@@ -43,7 +45,7 @@ const createViewModels = (sets) => {
                 setNumber = 1;
             }
         }
-        array.push(createHeaderViewModel(set, setNumber, lastExerciseName));
+        array.push(createHeaderViewModel(set, setNumber, metric));
         if (set.reps.length > 0) {
             array.push({type: "subheader", key: set.setID+"subheader"});
         }
@@ -55,15 +57,15 @@ const createViewModels = (sets) => {
         // rest footer
         if (isInitialSet) {
             // new set, reset the end time
-            lastSetEndTime = set.removed ? null : SetTimeCalculator.endTime(set);
+            lastSetEndTime = set.removed ? null : set.endTime;
         } else if (!set.removed) { // ignore removed sets in rest calculations
             // add footer if valid
-            if (lastSetEndTime !== null && SetTimeCalculator.startTime(set) > lastSetEndTime) {
+            if (lastSetEndTime !== null && set.startTime > lastSetEndTime) {
                 array.push(createFooterVM(set, lastSetEndTime));
             }
 
             // update variable for calculation purposes
-            lastSetEndTime = SetTimeCalculator.endTime(set);
+            lastSetEndTime = set.endTime;
         }
 
         // insert set card data
@@ -83,7 +85,7 @@ const createViewModels = (sets) => {
     return sections;
 }
 
-const createHeaderViewModel = (set, setNumber, bias=null) => ({
+const createHeaderViewModel = (set, setNumber, metric) => ({
     type: 'header',
     key: set.setID+'header',
     setID: set.setID,
@@ -165,7 +167,7 @@ const createRowViewModels = (set) => {
 };
 
 const createFooterVM = (set, lastSetEndTime) => {
-    let restInMS = new Date(SetTimeCalculator.startTime(set)) - new Date(lastSetEndTime);
+    let restInMS = new Date(set.startTime) - new Date(lastSetEndTime);
     let footerVM = {
         type: "footer",
         rest: DateUtils.restInSentenceFormat(restInMS),
@@ -177,7 +179,7 @@ const createFooterVM = (set, lastSetEndTime) => {
 const mapStateToProps = (state) => {
     let sets = SetsSelectors.getWorkoutSets(state);
     return {
-        sections: createViewModels(sets)
+        sections: createViewModels(sets, metricSetting)
     }
 };
 
@@ -187,6 +189,7 @@ const mapDispatchToProps = (dispatch) => {
         removeRep: Actions.removeRep,
         restoreRep: Actions.restoreRep,
         tapCard: Actions.presentExpanded,
+        getDefaultMetric: SetsActionCreators.getDefaultMetric,
     }, dispatch);
 };
 

@@ -5,10 +5,20 @@ import {
 	SET_DEFAULT_METRIC
 } from 'app/ActionTypes';
 
-export const setDefaultMetric = (metric = 'kgs') => ({
-	type: SET_DEFAULT_METRIC,
-	defaultMetric: metric
-});
+import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
+
+export const setDefaultMetric = (metric = 'kgs') => (dispatch, getState) => {
+    var state = getState();
+    var set = state.sets.workoutData;
+    var setID = set[set.length - 1].setID;
+    var setNumber = set[set.length - 1].setNumber;
+
+    dispatch({ 
+        type: SET_DEFAULT_METRIC, 
+        defaultMetric: metric,
+        setID: setID
+    });
+}
 
 export const saveEndSetTimer = (duration = 30) => ({
     type: SAVE_END_SET_TIMER,

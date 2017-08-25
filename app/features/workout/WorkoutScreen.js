@@ -175,9 +175,13 @@ const createFooterVM = (set, lastSetEndTime) => {
 };
 
 const mapStateToProps = (state) => {
+<<<<<<< HEAD
+    let sets = SetsSelectors.getWorkoutSets(state);
+=======
     let sets = SetsSelectors.getWorkoutSets(state.sets);
     let metricSetting = state.settings.defaultMetric;
 
+>>>>>>> parent of 2945173... semicolons
     return {
         sections: createViewModels(sets, metricSetting)
     }
@@ -190,7 +194,7 @@ const mapDispatchToProps = (dispatch) => {
         removeRep: Actions.removeRep,
         restoreRep: Actions.restoreRep,
         tapCard: Actions.presentExpanded,
-        getDefaultMetric: SetsActionCreators.getDefaultMetric,
+        getDefaultMetric: SetsActionCreators.getDefaultMetric
     }, dispatch);
 };
 

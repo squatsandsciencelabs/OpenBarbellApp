@@ -76,8 +76,8 @@ const createSet = (setNumber = 1, metric = "kgs") => ({
     reps : []
 });
 
-const createDefaultState = (setNumber = 1, metric = 'kgs') => {
-    let set = createSet(setNumber, metric);
+const createDefaultState = () => {
+    let set = createSet();
     let setID = set.setID;
 
     return {
@@ -92,20 +92,24 @@ const createDefaultState = (setNumber = 1, metric = 'kgs') => {
 // Set default metric
 
 const setDefaultMetric = (state, action) => {
-    console.log(action.defaultMetric + " from the sets reducer")
     let newWorkoutData = state.workoutData.slice(0);
-    let latestSet = newWorkoutData.slice(-1).pop()
-    let setIndex = newWorkoutData.findIndex( set => set.setID === latestSet.setID );
+    let latestSet = newWorkoutData[newWorkoutData.length - 1];
+    let setIndex = newWorkoutData.findIndex( set => set.setID === action.setID );
     let set = newWorkoutData[setIndex];
 
-    let changes = { metric: action.defaultMetric };
+    let changes = {};
+    
+    if (!set.exercise && !set.weight && !set.rpe) {
+        changes.metric = action.defaultMetric;
+    }
     
     newWorkoutData[setIndex] = Object.assign({}, set, changes);
-
+    
     return Object.assign({}, state, {
         workoutData: newWorkoutData
     });
 }
+
 
 // SAVE_WORKOUT_SET
 
@@ -325,7 +329,7 @@ const setWithUpdatedRep = (set, repIndex, removed) => {
 const endSet = (state, action) => {
     let workoutData = state.workoutData;
     let currentSet = workoutData[workoutData.length-1];
-    let newWorkoutData = [ ...workoutData, createSet(currentSet.setNumber+1) ];
+    let newWorkoutData = [ ...workoutData, createSet(currentSet.setNumber+1, action.defaultMetric) ];
 
     return Object.assign({}, state, {
         workoutData: newWorkoutData

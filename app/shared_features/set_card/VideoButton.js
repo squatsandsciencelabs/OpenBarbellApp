@@ -3,7 +3,9 @@ import {
     View,
     Text,
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity,
+    Image,
+    Platform
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Video from 'react-native-video';
@@ -43,19 +45,27 @@ class VideoButton extends Component {
                 );
             case 'watch':
                 // TODO: see if can make this a true image preview instead of a full video
-                return (
-                    <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo() }>
-                        <Video
-                            ref={(ref) => {
-                                this.player = ref
-                            }}
+                if (Platform.OS === 'ios') {
+                    return (
+                        <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo() }>
+                            <Video
+                                ref={(ref) => {
+                                    this.player = ref
+                                }}
+                                style={[{flex:1, flexDirection:'column'}, styles.button, styles.blackButton]}
+                                source={{uri: this.props.videoFileURL}}
+                                paused={true}
+                                repeat={true}
+                            />
+                        </TouchableOpacity>
+                    );
+                } else {
+                    return (
+                        <Image
                             style={[{flex:1, flexDirection:'column'}, styles.button, styles.blackButton]}
-                            source={{uri: this.props.videoFileURL}}
-                            paused={true}
-                            repeat={true}
-                        />
-                    </TouchableOpacity>
-                );
+                            source={{uri: this.props.videoFileURL}} />
+                    );
+                }
             default:
                 console.tron.log("video button props failed with mode " + this.props.mode);
                 return null;

@@ -177,9 +177,6 @@ const createFooterVM = (set, lastSetEndTime) => {
 };
 
 const mapStateToProps = (state) => {
-    let sets = SetsSelectors.getWorkoutSets(state.sets);
-    let metricSetting = state.settings.defaultMetric;
-
     let sets = SetsSelectors.getWorkoutSets(state);
     return {
         sections: createViewModels(sets, metricSetting)

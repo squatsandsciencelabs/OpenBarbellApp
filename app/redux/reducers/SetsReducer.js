@@ -1,5 +1,5 @@
 import {
-    SET_DEFAULT_METRIC,
+    SAVE_DEFAULT_METRIC,
     SAVE_WORKOUT_SET,
     SAVE_WORKOUT_SET_TAGS,
     SAVE_HISTORY_SET,
@@ -25,8 +25,8 @@ import { Platform } from 'react-native';
 
 const SetsReducer = (state = createDefaultState(), action) => {
     switch (action.type) {
-        case SET_DEFAULT_METRIC: 
-            return setDefaultMetric(state, action);        
+        case SAVE_DEFAULT_METRIC: 
+            return saveDefaultMetric(state, action);        
         case SAVE_WORKOUT_SET:
             return saveWorkoutSet(state, action);
         case SAVE_WORKOUT_SET_TAGS:
@@ -99,7 +99,7 @@ const createDefaultState = () => {
 
 // Set default metric
 
-const setDefaultMetric = (state, action) => {
+const saveDefaultMetric = (state, action) => {
     let newWorkoutData = state.workoutData.slice(0);
     let latestSet = newWorkoutData[newWorkoutData.length - 1];
     let setIndex = newWorkoutData.findIndex( set => set.setID === action.setID );
@@ -107,6 +107,7 @@ const setDefaultMetric = (state, action) => {
 
     let changes = {};
     
+    // Check if set is empty before allowing metric to change
     if (!set.exercise && !set.weight && !set.rpe && !set.tags && !set.reps && !set.tags && !set.videoFileURL) {
         changes.metric = action.defaultMetric;
     }

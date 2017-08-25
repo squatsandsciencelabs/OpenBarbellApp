@@ -1,6 +1,6 @@
 import {
     PRESENT_END_SET_TIMER,
-    EDIT_DEFAULT_METRIC
+    PRESENT_DEFAULT_METRIC
 } from 'app/ActionTypes';
 
 
@@ -10,8 +10,5 @@ export const presentEndSetTimer = () => ({
 
 
 export const presentSetMetric = () => ({
-	type: EDIT_DEFAULT_METRIC
+	type: PRESENT_DEFAULT_METRIC
 });
-
-
-

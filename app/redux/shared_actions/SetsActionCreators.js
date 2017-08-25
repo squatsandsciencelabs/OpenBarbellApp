@@ -1,7 +1,7 @@
 import {
     SAVE_WORKOUT_SET,
     SAVE_HISTORY_SET,
-    SET_DEFAULT_METRIC,
+    SAVE_DEFAULT_METRIC,
     END_SET,
     BEGIN_UPLOADING_SETS,
     RE_ADD_SETS_TO_UPLOAD,
@@ -16,7 +16,7 @@ export const getDefaultMetric = () => (dispatch, getState) => {
     var defaultMetric = state.settings.defaultMetric;
 
     dispatch({ 
-        type: SET_DEFAULT_METRIC, 
+        type: SAVE_DEFAULT_METRIC, 
         defaultMetric: defaultMetric
     });
 }
@@ -95,5 +95,3 @@ export const finishedUploadingSets = (revision) => ({
 });
 
 export const failedUploadSets = () => ({ type: FAILED_UPLOAD_SETS });
-
-

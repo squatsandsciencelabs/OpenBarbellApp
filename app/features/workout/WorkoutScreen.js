@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as DateUtils from 'app/utility/transforms/DateUtils';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
+import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 
 import WorkoutList from './WorkoutList';
 import * as Actions from './WorkoutActions';
@@ -44,7 +45,7 @@ const createViewModels = (sets) => {
                 setNumber = 1;
             }
         }
-        array.push(createHeaderViewModel(set, setNumber));
+        array.push(createHeaderViewModel(set, setNumber, lastExerciseName));
         if (set.reps.length > 0) {
             array.push({type: "subheader", key: set.setID+"subheader"});
         }

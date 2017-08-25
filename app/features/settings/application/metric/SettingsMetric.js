@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import PickerModal from 'app/shared_features/picker/PickerModal';
 import * as Actions from './SettingsMetricActions';
 
-
 const mapStateToProps = (state) => ({
-    modalShowing: state.settings.editingDefaultMetric,
+    isModalShowing: state.settings.editingDefaultMetric,
     items: [
         {label: 'kgs', value: 'kgs'},
         {label: 'lbs', value: 'lbs'}

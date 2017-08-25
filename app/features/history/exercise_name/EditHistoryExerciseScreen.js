@@ -11,7 +11,7 @@ const mapStateToProps = (state) => ({
     text: state.history.editingExerciseName,
     setID: state.history.editingExerciseSetID,
     generateSingleInputSuggestions: (input) => { return SuggestionsSelectors.generateExerciseNameSuggestions(state, input) },
-    modalShowing: state.history.editingExerciseSetID !== null
+    isModalShowing: state.history.editingExerciseSetID !== null
 });
 
 const mapDispatchToProps = (dispatch) => {

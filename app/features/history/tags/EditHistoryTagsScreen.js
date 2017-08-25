@@ -13,7 +13,7 @@ const mapStateToProps = (state) => ({
     setID: state.history.editingTagsSetID,
     inputs: state.history.editingTags,
     generateMultipleInputSuggestions: (input, ignore) => { return SuggestionsSelectors.generateTagsSuggestions(state, input, ignore) },
-    modalShowing: state.history.editingTagsSetID !== null
+    isModalShowing: state.history.editingTagsSetID !== null
 });
 
 const mapDispatchToProps = (dispatch) => {

@@ -6,7 +6,7 @@ import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsAction
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 
 export const saveDefaultMetricSetting = (metric = 'kgs') => {
-    return SettingsActionCreators.setDefaultMetric(metric);
+    return SettingsActionCreators.saveDefaultMetric(metric);
 };
 
 export const dismissDefaultMetricSetter = () => ({

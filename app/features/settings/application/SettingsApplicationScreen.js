@@ -12,7 +12,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         tapEndSetTimer: Actions.presentEndSetTimer,
-        tapSetDefaultMetric: Actions.presentSetMetric,
+        tapSaveDefaultMetric: Actions.presentSetMetric,
     }, dispatch);
 };
 

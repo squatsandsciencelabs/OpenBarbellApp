@@ -2,18 +2,18 @@
 
 import { 
 	SAVE_END_SET_TIMER, 
-	SET_DEFAULT_METRIC
+	SAVE_DEFAULT_METRIC
 } from 'app/ActionTypes';
 
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
-export const setDefaultMetric = (metric = 'kgs') => (dispatch, getState) => {
+export const saveDefaultMetric = (metric = 'kgs') => (dispatch, getState) => {
     var state = getState();
     var set = state.sets.workoutData;
     var setID = set[set.length - 1].setID;
 
     dispatch({ 
-        type: SET_DEFAULT_METRIC, 
+        type: SAVE_DEFAULT_METRIC, 
         defaultMetric: metric,
         setID: setID
     });

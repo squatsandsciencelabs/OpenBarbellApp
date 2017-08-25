@@ -13,7 +13,7 @@ const itemForDuration = (duration) => {
 };
 
 const mapStateToProps = (state) => ({
-    modalShowing: state.settings.editingEndSetTimer,
+    isModalShowing: state.settings.editingEndSetTimer,
     items: [
         itemForDuration(0),
         itemForDuration(30),

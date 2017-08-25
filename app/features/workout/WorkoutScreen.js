@@ -95,7 +95,9 @@ const createHeaderViewModel = (set, setNumber, metric) => ({
     tags: set.tags,
     weight: set.weight,
     metric: set.metric,
-    rpe: set.rpe
+    rpe: set.rpe,
+    bias: bias,
+    videoFileURL: set.videoFileURL
 });
 
 const createRowViewModels = (set) => {
@@ -176,12 +178,16 @@ const createFooterVM = (set, lastSetEndTime) => {
 
 const mapStateToProps = (state) => {
 <<<<<<< HEAD
+<<<<<<< HEAD
     let sets = SetsSelectors.getWorkoutSets(state);
 =======
     let sets = SetsSelectors.getWorkoutSets(state.sets);
     let metricSetting = state.settings.defaultMetric;
 
 >>>>>>> parent of 2945173... semicolons
+=======
+    let sets = SetsSelectors.getWorkoutSets(state);
+>>>>>>> 386f91387dc03c272259fbbfc31b4ba2caee0d29
     return {
         sections: createViewModels(sets, metricSetting)
     }

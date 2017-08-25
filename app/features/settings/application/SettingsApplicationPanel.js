@@ -29,7 +29,6 @@ class SettingsApplicationPanel extends Component {
     render() {
         if (Platform.OS === 'ios') {
             return (
-                <View>
                     <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
                         <View>
                             <Text style={ SETTINGS_PANEL_STYLES.headerText }>
@@ -39,13 +38,11 @@ class SettingsApplicationPanel extends Component {
                         <View>
                             <TouchableOpacity onPress={() => this._tappedSetTimer()}>
                                 <Text style={SETTINGS_PANEL_STYLES.tappableText  }>
-                                    { DateUtils.timerDurationDescription(this.props.endSetTimerDuration) }
+                                    { DateUtils.timerDurationDescription(this.props.endSetTimerDuration) }{"\n"}
                                 </Text>
                             </TouchableOpacity>
                         </View>
                         <SettingsEndSetTimerScreen />
-                    </View>
-                    <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
                         <View>
                             <Text style={ SETTINGS_PANEL_STYLES.headerText }>
                                 Set default metric
@@ -58,9 +55,8 @@ class SettingsApplicationPanel extends Component {
                                 </Text>
                             </TouchableOpacity>
                         </View>
-                        <SettingsMetric />
-                    </View>                    
-                </View>
+                        <SettingsMetric />                        
+                    </View>
             );
         } else {
             return (
@@ -70,7 +66,7 @@ class SettingsApplicationPanel extends Component {
                             Time to start new set
                         </Text>
                     </View>
-                    <SettingsMetric />
+                    <SettingsEndSetTimerScreen />
                 </View>
             );
         }

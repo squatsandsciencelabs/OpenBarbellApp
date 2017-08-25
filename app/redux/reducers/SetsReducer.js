@@ -108,7 +108,8 @@ const setDefaultMetric = (state, action) => {
     return Object.assign({}, state, {
         workoutData: newWorkoutData
     });
-}
+};
+
 
 
 // SAVE_WORKOUT_SET

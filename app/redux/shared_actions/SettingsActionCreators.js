@@ -16,7 +16,12 @@ export const setDefaultMetric = (metric = 'kgs') => (dispatch, getState) => {
     dispatch({ 
         type: SET_DEFAULT_METRIC, 
         defaultMetric: metric,
+<<<<<<< HEAD
         setID: setID
+=======
+        setID: setID,
+        setNumber: setNumber
+>>>>>>> 386f91387dc03c272259fbbfc31b4ba2caee0d29
     });
 }
 

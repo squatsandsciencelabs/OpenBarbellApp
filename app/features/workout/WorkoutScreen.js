@@ -95,7 +95,9 @@ const createHeaderViewModel = (set, setNumber, metric) => ({
     tags: set.tags,
     weight: set.weight,
     metric: set.metric,
-    rpe: set.rpe
+    rpe: set.rpe,
+    bias: bias,
+    videoFileURL: set.videoFileURL
 });
 
 const createRowViewModels = (set) => {
@@ -178,6 +180,7 @@ const mapStateToProps = (state) => {
     let sets = SetsSelectors.getWorkoutSets(state.sets);
     let metricSetting = state.settings.defaultMetric;
 
+    let sets = SetsSelectors.getWorkoutSets(state);
     return {
         sections: createViewModels(sets, metricSetting)
     }

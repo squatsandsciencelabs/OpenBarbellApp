@@ -11,17 +11,11 @@ export const setDefaultMetric = (metric = 'kgs') => (dispatch, getState) => {
     var state = getState();
     var set = state.sets.workoutData;
     var setID = set[set.length - 1].setID;
-    var setNumber = set[set.length - 1].setNumber;
 
     dispatch({ 
         type: SET_DEFAULT_METRIC, 
         defaultMetric: metric,
-<<<<<<< HEAD
         setID: setID
-=======
-        setID: setID,
-        setNumber: setNumber
->>>>>>> 386f91387dc03c272259fbbfc31b4ba2caee0d29
     });
 }
 

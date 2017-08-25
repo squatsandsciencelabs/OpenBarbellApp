@@ -18,8 +18,9 @@ export const dismissRecording = () => ({
     type: DISMISS_HISTORY_RECORD_VIDEO
 });
 
-export const saveVideo = (setID, videoFileURL) => ({
+export const saveVideo = (setID, videoFileURL, videoType) => ({
     type: SAVE_HISTORY_VIDEO,
     setID: setID,
-    videoFileURL: videoFileURL
+    videoFileURL: videoFileURL,
+    videoType: videoType    
 })

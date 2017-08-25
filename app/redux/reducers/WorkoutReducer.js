@@ -19,6 +19,7 @@ const defaultState = {
     editingTags: [],
     expandedSetID: null,
     recordingSetID: null,
+    recordingVideoType: null,
     isRecording: false
 };
 
@@ -56,10 +57,13 @@ const WorkoutReducer = (state = defaultState, action) => {
         case PRESENT_WORKOUT_RECORD_VIDEO:
             return Object.assign({}, state, {
                 recordingSetID: action.setID,
+                recordingVideoType: action.isCommentary ? 'commentary' : 'lift',
+                isRecording: false
             });
         case DISMISS_WORKOUT_RECORD_VIDEO:
             return Object.assign({}, state, {
                 recordingSetID: null,
+                isRecording: false                
             });
         case START_RECORDING_WORKOUT:
             return Object.assign({}, state, {
@@ -67,7 +71,7 @@ const WorkoutReducer = (state = defaultState, action) => {
             });
         case STOP_RECORDING_WORKOUT:
             return Object.assign({}, state, {
-                isRecording: false,
+                isRecording: false
             });
         default:
             return state;

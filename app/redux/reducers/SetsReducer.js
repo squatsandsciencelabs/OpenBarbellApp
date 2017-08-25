@@ -80,6 +80,7 @@ const createSet = (setNumber = 1, metric = "kgs") => ({
     // endTime: null, // LEGACY - use rep time instead
     removed: false,
     reps : [],
+    tags: [],
     videoFileURL: null
 });
 
@@ -106,7 +107,7 @@ const setDefaultMetric = (state, action) => {
 
     let changes = {};
     
-    if (!set.exercise && !set.weight && !set.rpe) {
+    if (!set.exercise && !set.weight && !set.rpe && !set.tags && !set.reps && !set.tags && !set.videoFileURL) {
         changes.metric = action.defaultMetric;
     }
     

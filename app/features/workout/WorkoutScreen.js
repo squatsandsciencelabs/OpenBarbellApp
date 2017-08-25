@@ -190,7 +190,7 @@ const mapDispatchToProps = (dispatch) => {
         removeRep: Actions.removeRep,
         restoreRep: Actions.restoreRep,
         tapCard: Actions.presentExpanded,
-        getDefaultMetric: SetsActionCreators.getDefaultMetric,
+        getDefaultMetric: SetsActionCreators.getDefaultMetric
     }, dispatch);
 };
 

@@ -24,6 +24,7 @@ import SetDataLabelRow from 'app/shared_features/set_card/SetDataLabelRow';
 import SetDataRow from 'app/shared_features/set_card/SetDataRow';
 import SetRestRow from 'app/shared_features/set_card/SetRestRow';
 import HistoryVideoButtonScreen from './card/HistoryVideoButtonScreen';
+import HistoryRecordVideoScreen from './camera/HistoryRecordVideoScreen';
 
 class HistoryList extends Component {
 
@@ -114,6 +115,7 @@ class HistoryList extends Component {
                     <EditHistoryExerciseScreen />
                     <EditHistoryTagsScreen />
                     <HistorySetExpandedScreen />
+                    <HistoryRecordVideoScreen />
 
                     <View style={{ flex: 1 }}>
                         {list}

@@ -7,7 +7,11 @@ import {
     PRESENT_HISTORY_EXPANDED,
     DISMISS_HISTORY_EXERCISE,
     DISMISS_HISTORY_TAGS,
-    DISMISS_HISTORY_EXPANDED
+    DISMISS_HISTORY_EXPANDED,
+    PRESENT_HISTORY_RECORD_VIDEO,
+    DISMISS_HISTORY_RECORD_VIDEO,
+    START_RECORDING_HISTORY,
+    STOP_RECORDING_HISTORY
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -19,6 +23,8 @@ const defaultState = {
     editingTags: [],
     editingTagsSetID: null,
     expandedSetID: null,
+    videoSetID: null,
+    isRecording: false
 };
 
 const HistoryReducer = (state = defaultState, action) => {
@@ -62,6 +68,22 @@ const HistoryReducer = (state = defaultState, action) => {
         case DISMISS_HISTORY_EXPANDED:
             return Object.assign({}, state, {
                 expandedSetID: null,
+            });
+        case PRESENT_HISTORY_RECORD_VIDEO:
+            return Object.assign({}, state, {
+                videoSetID: action.setID,
+            });
+        case DISMISS_HISTORY_RECORD_VIDEO:
+            return Object.assign({}, state, {
+                videoSetID: null,
+            });
+        case START_RECORDING_HISTORY:
+            return Object.assign({}, state, {
+                isRecording: true
+            });
+        case STOP_RECORDING_HISTORY:
+            return Object.assign({}, state, {
+                isRecording: false,
             });
         default:
             return state;

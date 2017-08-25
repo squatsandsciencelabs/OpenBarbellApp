@@ -23,7 +23,7 @@ const defaultState = {
     editingTags: [],
     editingTagsSetID: null,
     expandedSetID: null,
-    videoSetID: null,
+    recordingSetID: null,
     isRecording: false
 };
 
@@ -71,11 +71,11 @@ const HistoryReducer = (state = defaultState, action) => {
             });
         case PRESENT_HISTORY_RECORD_VIDEO:
             return Object.assign({}, state, {
-                videoSetID: action.setID,
+                recordingSetID: action.setID,
             });
         case DISMISS_HISTORY_RECORD_VIDEO:
             return Object.assign({}, state, {
-                videoSetID: null,
+                recordingSetID: null,
             });
         case START_RECORDING_HISTORY:
             return Object.assign({}, state, {

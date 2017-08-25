@@ -4,11 +4,40 @@ import {
     Text,
     TouchableOpacity,
     Modal,
-    StyleSheet
+    StyleSheet,
+    Alert
 }  from 'react-native';
 import Camera from 'react-native-camera';
 
 class RecordVideo extends Component {
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.isRecording !== this.props.isRecording) {
+            if (nextProps.isRecording) {
+                this._record();
+            } else {
+                this._stopRecording();
+            }
+        }
+    }
+
+    _record() {
+        this.camera.capture({
+            mode: Camera.constants.CaptureMode.video
+        }).then((data) => {
+            this.props.saveVideo(this.props.setID, data.path);
+            this.props.closeModal();
+            // TODO: share options can be here, but for now just finish
+        }).catch((err) => {
+            console.tron.log("ERROR " + err);
+            Alert.alert('There was an issue saving your video. Please try again');
+        });
+    }
+
+    _stopRecording() {
+        this.camera.stopCapture();
+    }
+
     _renderActionButton() {
         if (this.props.isRecording) {
             return (
@@ -35,8 +64,7 @@ class RecordVideo extends Component {
                 <Camera
                     ref={(cam) => {this.camera = cam}}
                     style={{flex: 1}}
-                    aspect={Camera.constants.Aspect.fill}
-                    captureMode={Camera.constants.CaptureMode.video}>
+                    aspect={Camera.constants.Aspect.fill}>
                     <View style={styles.cancelButton}>
                         <TouchableOpacity onPress={()=>this.props.closeModal()}>
                             <Text style={styles.cancelText}>Cancel</Text>

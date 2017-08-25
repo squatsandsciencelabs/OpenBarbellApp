@@ -1,7 +1,8 @@
 import {
     START_RECORDING_HISTORY,
     STOP_RECORDING_HISTORY,
-    DISMISS_HISTORY_RECORD_VIDEO
+    DISMISS_HISTORY_RECORD_VIDEO,
+    SAVE_HISTORY_VIDEO
 } from 'app/ActionTypes';
 
 export const startRecording = (setID) => ({
@@ -16,3 +17,9 @@ export const stopRecording = () => ({
 export const dismissRecording = () => ({
     type: DISMISS_HISTORY_RECORD_VIDEO
 });
+
+export const saveVideo = (setID, videoFileURL) => ({
+    type: SAVE_HISTORY_VIDEO,
+    setID: setID,
+    videoFileURL: videoFileURL
+})

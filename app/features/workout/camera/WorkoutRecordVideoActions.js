@@ -1,7 +1,8 @@
 import {
     START_RECORDING_WORKOUT,
     STOP_RECORDING_WORKOUT,
-    DISMISS_WORKOUT_RECORD_VIDEO
+    DISMISS_WORKOUT_RECORD_VIDEO,
+    SAVE_WORKOUT_VIDEO
 } from 'app/ActionTypes';
 
 export const startRecording = (setID) => ({
@@ -16,3 +17,9 @@ export const stopRecording = () => ({
 export const dismissRecording = () => ({
     type: DISMISS_WORKOUT_RECORD_VIDEO
 });
+
+export const saveVideo = (setID, videoFileURL) => ({
+    type: SAVE_WORKOUT_VIDEO,
+    setID: setID,
+    videoFileURL: videoFileURL
+})

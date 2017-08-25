@@ -9,11 +9,12 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class VideoButton extends Component {
+
     render() {
         switch (this.props.mode) {
             case 'record':
                 return (
-                    <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this.props.tappedRecord() }>
+                    <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this.props.tappedRecord(this.props.setID) }>
                         <View style={[{flex:1, flexDirection:'column'}, styles.button, styles.greenButton]}>
                             <Icon name="camera" size={20} color='white' style={{marginTop: 10, marginBottom: 5}} />
                             <Text style={styles.whiteText}>Record</Text>
@@ -23,7 +24,7 @@ class VideoButton extends Component {
                 );
             case 'commentary':
                 return (
-                    <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this.props.tappedCommentary() }>
+                    <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this.props.tappedCommentary(this.props.setID) }>
                         <View style={[{flex:1, flexDirection:'column'}, styles.button, styles.graybutton]}>
                             <Icon name="camera" size={20} color='gray' style={{marginTop: 10, marginBottom: 5}} />
                             <Text style={styles.grayText}>Add</Text>
@@ -34,7 +35,7 @@ class VideoButton extends Component {
             case 'watch':
                 // TODO: try making this a video and see if the preview works by default
                 return (
-                    <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this.props.tappedWatch() }>
+                    <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this.props.tappedWatch(this.props.setID) }>
                         <Image source={{ uri: this.props.videoURL }} />
                     </TouchableOpacity>
                 );

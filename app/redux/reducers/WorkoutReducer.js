@@ -18,7 +18,7 @@ const defaultState = {
     editingTagsSetID: null,
     editingTags: [],
     expandedSetID: null,
-    videoSetID: null,
+    recordingSetID: null,
     isRecording: false
 };
 
@@ -55,11 +55,11 @@ const WorkoutReducer = (state = defaultState, action) => {
             });
         case PRESENT_WORKOUT_RECORD_VIDEO:
             return Object.assign({}, state, {
-                videoSetID: action.setID,
+                recordingSetID: action.setID,
             });
         case DISMISS_WORKOUT_RECORD_VIDEO:
             return Object.assign({}, state, {
-                videoSetID: null,
+                recordingSetID: null,
             });
         case START_RECORDING_WORKOUT:
             return Object.assign({}, state, {

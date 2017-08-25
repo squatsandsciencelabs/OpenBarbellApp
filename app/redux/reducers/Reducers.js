@@ -18,5 +18,5 @@ export default reducers = combineReducers({
     killSwitch: KillSwitchReducer,
     auth: AuthReducer,
     suggestions: SuggestionsReducer,
-    settings: SettingsReducer,
+    settings: SettingsReducer
 });

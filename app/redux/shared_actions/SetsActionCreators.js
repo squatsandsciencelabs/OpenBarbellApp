@@ -9,6 +9,7 @@ import {
     FINISH_UPLOADING_SETS,
     FAILED_UPLOAD_SETS
 } from 'app/ActionTypes';
+import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
 export const getDefaultMetric = () => (dispatch, getState) => {
     var state = getState();
@@ -68,10 +69,12 @@ export const saveHistorySet = (setID, exercise = null, weight = null, metric = n
 export const endSet = () => (dispatch, getState) => {
     var state = getState();
     var workoutData = state.sets.workoutData;
+    var defaultMetric = state.settings.defaultMetric;
 
     if (!(workoutData.length > 0 && workoutData[workoutData.length-1].reps.length === 0)) {
         dispatch({
-            type: END_SET
+            type: END_SET,
+            defaultMetric: defaultMetric
         });
     }
 };

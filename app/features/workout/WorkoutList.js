@@ -20,7 +20,7 @@ import SetDataRow from 'app/shared_features/set_card/SetDataRow';
 import SetRestRow from 'app/shared_features/set_card/SetRestRow';
 
 class WorkoutList extends Component {
-    
+
     // UPDATE
 
     shouldComponentUpdate(nextProps) {
@@ -121,8 +121,8 @@ class WorkoutList extends Component {
             </View>
         );
     }
-
 }
+
 //NOTE: currently container names reference the React Native flexDirection which imo is confusing
 const styles = StyleSheet.create({
     sectionHeaderText: {

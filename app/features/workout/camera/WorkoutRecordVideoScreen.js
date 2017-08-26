@@ -7,6 +7,7 @@ import * as WorkoutSelectors from 'app/redux/selectors/WorkoutSelectors';
 
 const mapStateToProps = (state) => ({
     setID: WorkoutSelectors.getRecordingSetID(state),
+    videoType: WorkoutSelectors.getRecordingVideoType(state),
     isModalShowing: WorkoutSelectors.getIsCameraVisible(state),
     isRecording: WorkoutSelectors.getIsRecording(state),
 });

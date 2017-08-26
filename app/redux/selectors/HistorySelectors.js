@@ -6,6 +6,8 @@ export const getShowRemoved = (state) => stateRoot(state).showRemoved;
 
 export const getIsRecording = (state) => stateRoot(state).isRecording;
 
+export const getRecordingVideoType = (state) => stateRoot(state).recordingVideoType;
+
 export const getIsCameraVisible = (state) => stateRoot(state).recordingSetID !== null;
 
 export const getRecordingSetID = (state) => stateRoot(state).recordingSetID;

@@ -6,7 +6,8 @@ import * as Actions from './HistoryRecordVideoActions';
 import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 
 const mapStateToProps = (state) => ({
-    setID: HistorySelectors.getRecordingSetID(state),    
+    setID: HistorySelectors.getRecordingSetID(state),
+    videoType: HistorySelectors.getRecordingVideoType(state),
     isModalShowing: HistorySelectors.getIsCameraVisible(state),
     isRecording: HistorySelectors.getIsRecording(state),
 });

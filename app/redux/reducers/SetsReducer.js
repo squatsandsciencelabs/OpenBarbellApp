@@ -81,7 +81,8 @@ const createSet = (setNumber = 1, metric = "kgs") => ({
     removed: false,
     reps : [],
     tags: [],
-    videoFileURL: null
+    videoFileURL: null,
+    videoType: null
 });
 
 const createDefaultState = () => {
@@ -351,7 +352,10 @@ const saveWorkoutVideo = (state, action) => {
     let setIndex = newWorkoutData.findIndex( set => set.setID === action.setID );
     let set = newWorkoutData[setIndex];
 
-    newWorkoutData[setIndex] = Object.assign({}, set, { videoFileURL: action.videoFileURL });
+    newWorkoutData[setIndex] = Object.assign({}, set, {
+        videoFileURL: action.videoFileURL,
+        videoType: action.videoType        
+    });
     return Object.assign({}, state, {
         workoutData: newWorkoutData
     });
@@ -364,7 +368,10 @@ const saveHistoryVideo = (state, action) => {
     let historyData = state.historyData;
     let set = historyData[setID];
 
-    let newSet = Object.assign({}, set, { videoFileURL: action.videoFileURL });
+    let newSet = Object.assign({}, set, {
+        videoFileURL: action.videoFileURL,
+        videoType: action.videoType
+    });
     
     // state changes
     let stateChanges = {};

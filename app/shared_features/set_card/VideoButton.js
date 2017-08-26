@@ -45,6 +45,7 @@ class VideoButton extends Component {
                 );
             case 'watch':
                 // TODO: see if can make this a true image preview instead of a full video
+                // probably requires RCTCameraRoll
                 if (Platform.OS === 'ios') {
                     return (
                         <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo() }>

@@ -97,7 +97,8 @@ const createHeaderViewModel = (set, setNumber, bias=null) => ({
     metric: set.metric,
     rpe: set.rpe,
     bias: bias,
-    videoFileURL: set.videoFileURL
+    videoFileURL: set.videoFileURL,
+    videoType: set.videoType
 });
 
 const createRowViewModels = (set) => {

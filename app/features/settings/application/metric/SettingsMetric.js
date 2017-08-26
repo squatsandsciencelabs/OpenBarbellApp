@@ -3,14 +3,15 @@ import { connect } from 'react-redux';
 
 import PickerModal from 'app/shared_features/picker/PickerModal';
 import * as Actions from './SettingsMetricActions';
+import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 
 const mapStateToProps = (state) => ({
-    isModalShowing: state.settings.isEditingDefaultMetric,
+    isModalShowing: SettingsSelectors.getIsEditingDefaultMetric(state),
     items: [
         {label: 'kgs', value: 'kgs'},
         {label: 'lbs', value: 'lbs'}
     ],
-    selectedValue: state.settings.defaultMetric
+    selectedValue: SettingsSelectors.getDefaultMetric(state)
 });
 
 const mapDispatchToProps = (dispatch) => {

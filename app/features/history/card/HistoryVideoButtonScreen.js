@@ -7,7 +7,7 @@ import * as Actions from './EditHistorySetFormActions';
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         tappedRecord: Actions.presentRecordVideo,
-        tappedCommentary: Actions.presentRecordVideo,
+        tappedCommentary: Actions.presentRecordCommentary,
         tappedWatch: Actions.presentWatchVideo
     }, dispatch);
 };

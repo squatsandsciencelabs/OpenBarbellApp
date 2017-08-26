@@ -8,6 +8,7 @@ import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 
 import WorkoutList from './WorkoutList';
 import * as Actions from './WorkoutActions';
+import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 
 // assumes chronological sets
 const createViewModels = (sets) => {
@@ -36,6 +37,7 @@ const createViewModels = (sets) => {
         if (isInitialSet) {
             lastExerciseName = null;
             setNumber = 1;
+
         } else if (!set.removed) {
             if (lastExerciseName !== null && lastExerciseName === set.exercise) {
                 setNumber++;
@@ -187,6 +189,7 @@ const mapDispatchToProps = (dispatch) => {
         removeRep: Actions.removeRep,
         restoreRep: Actions.restoreRep,
         tapCard: Actions.presentExpanded,
+        getDefaultMetric: SetsActionCreators.getDefaultMetric
     }, dispatch);
 };
 

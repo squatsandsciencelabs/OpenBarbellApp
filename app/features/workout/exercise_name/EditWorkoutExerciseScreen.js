@@ -13,7 +13,7 @@ const mapStateToProps = (state) => ({
     setID: WorkoutSelectors.getEditingExerciseSetID(state),
     bias: WorkoutSelectors.getEditingExerciseBias(state),
     generateSingleInputSuggestions: (input, bias) => { return SuggestionsSelectors.generateExerciseNameSuggestions(state, input, bias) },
-    modalShowing: state.workout.editingExerciseSetID !== null
+    isModalShowing: state.workout.editingExerciseSetID !== null
 });
 
 const mapDispatchToProps = (dispatch) => {

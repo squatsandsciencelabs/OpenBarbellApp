@@ -1,4 +1,5 @@
 import {
+    SAVE_DEFAULT_METRIC,
     SAVE_WORKOUT_SET,
     SAVE_WORKOUT_SET_TAGS,
     SAVE_HISTORY_SET,
@@ -24,6 +25,8 @@ import { Platform } from 'react-native';
 
 const SetsReducer = (state = createDefaultState(), action) => {
     switch (action.type) {
+        case SAVE_DEFAULT_METRIC: 
+            return saveDefaultMetric(state, action);        
         case SAVE_WORKOUT_SET:
             return saveWorkoutSet(state, action);
         case SAVE_WORKOUT_SET_TAGS:
@@ -65,18 +68,19 @@ const SetsReducer = (state = createDefaultState(), action) => {
     }
 };
 
-const createSet = (setNumber = 1) => ({
+const createSet = (setNumber = 1, metric = "kgs") => ({
     exercise: null,
     setNumber: setNumber,
     setID: uuidV4(),
     workoutID: null, // to be set on ending workout
     weight: null,
-    metric: 'kgs',
+    metric: metric,
     rpe: null,
     // startTime: null, // LEGACY - use rep time instead
     // endTime: null, // LEGACY - use rep time instead
     removed: false,
     reps : [],
+    tags: [],
     videoFileURL: null
 });
 
@@ -91,6 +95,28 @@ const createDefaultState = () => {
         setIDsBeingUploaded: [],
         revision: 0
     };
+};
+
+// Set default metric
+
+const saveDefaultMetric = (state, action) => {
+    let newWorkoutData = state.workoutData.slice(0);
+    let latestSet = newWorkoutData[newWorkoutData.length - 1];
+    let setIndex = newWorkoutData.findIndex( set => set.setID === action.setID );
+    let set = newWorkoutData[setIndex];
+
+    let changes = {};
+    
+    // Check if set is empty before allowing metric to change
+    if (!set.exercise && !set.weight && !set.rpe && (set.reps !== null && set.reps !== undefined && set.reps.length === 0) && (set.tags !== null && set.tags !== undefined && set.tags.length === 0) && !set.videoFileURL) {
+        changes.metric = action.defaultMetric;
+    }
+    
+    newWorkoutData[setIndex] = Object.assign({}, set, changes);
+    
+    return Object.assign({}, state, {
+        workoutData: newWorkoutData
+    });
 };
 
 // SAVE_WORKOUT_SET
@@ -311,7 +337,7 @@ const setWithUpdatedRep = (set, repIndex, removed) => {
 const endSet = (state, action) => {
     let workoutData = state.workoutData;
     let currentSet = workoutData[workoutData.length-1];
-    let newWorkoutData = [ ...workoutData, createSet(currentSet.setNumber+1) ];
+    let newWorkoutData = [ ...workoutData, createSet(currentSet.setNumber+1, action.defaultMetric) ];
 
     return Object.assign({}, state, {
         workoutData: newWorkoutData

@@ -127,8 +127,8 @@ class WorkoutList extends Component {
             </View>
         );
     }
-
 }
+
 //NOTE: currently container names reference the React Native flexDirection which imo is confusing
 const styles = StyleSheet.create({
     sectionHeaderText: {

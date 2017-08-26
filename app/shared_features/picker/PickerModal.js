@@ -18,6 +18,7 @@ class PickerModal extends Component {
     }
 
     _close() {
+        console.tron.log("attempting to close picker modal");
         this.props.closeModal();
     }
 
@@ -33,7 +34,7 @@ class PickerModal extends Component {
                 <Modal
                     animationType={"slide"}
                     transparent={true}
-                    visible={this.props.modalShowing} >
+                    visible={this.props.isModalShowing} >
 
                     <View style={{flex:1, backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'flex-end' }}>
                         <TouchableOpacity style={{flex:1}} onPress={() => this._close()}>

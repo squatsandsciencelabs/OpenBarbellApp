@@ -261,7 +261,7 @@ class EditTextModal extends Component {
     // TODO: move 242 gray from global stylesheet
     render() {
         return (
-            <Modal visible={this.props.modalShowing} animationType='fade'>
+            <Modal visible={this.props.isModalShowing} animationType='fade'>
                 <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'rgba(242, 242, 242, 1)'}}>
                     {this._renderNavigation()}
                     {this._renderHeader()}

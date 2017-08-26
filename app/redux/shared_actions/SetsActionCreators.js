@@ -1,6 +1,7 @@
 import {
     SAVE_WORKOUT_SET,
     SAVE_HISTORY_SET,
+    SAVE_DEFAULT_METRIC,
     END_SET,
     BEGIN_UPLOADING_SETS,
     RE_ADD_SETS_TO_UPLOAD,
@@ -8,7 +9,17 @@ import {
     FINISH_UPLOADING_SETS,
     FAILED_UPLOAD_SETS
 } from 'app/ActionTypes';
+import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
+export const getDefaultMetric = () => (dispatch, getState) => {
+    var state = getState();
+    var defaultMetric = state.settings.defaultMetric;
+
+    dispatch({ 
+        type: SAVE_DEFAULT_METRIC, 
+        defaultMetric: defaultMetric
+    });
+}
 export const saveWorkoutSet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {
     var action  = {
         type: SAVE_WORKOUT_SET
@@ -58,10 +69,12 @@ export const saveHistorySet = (setID, exercise = null, weight = null, metric = n
 export const endSet = () => (dispatch, getState) => {
     var state = getState();
     var workoutData = state.sets.workoutData;
+    var defaultMetric = state.settings.defaultMetric;
 
     if (!(workoutData.length > 0 && workoutData[workoutData.length-1].reps.length === 0)) {
         dispatch({
-            type: END_SET
+            type: END_SET,
+            defaultMetric: defaultMetric
         });
     }
 };

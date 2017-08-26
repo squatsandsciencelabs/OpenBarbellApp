@@ -13,7 +13,7 @@ const mapStateToProps = (state) => ({
     setID: state.workout.editingTagsSetID,
     inputs: state.workout.editingTags,
     generateMultipleInputSuggestions: (input, ignore) => { return SuggestionsSelectors.generateTagsSuggestions(state, input, ignore) },
-    modalShowing: state.workout.editingTagsSetID !== null
+    isModalShowing: state.workout.editingTagsSetID !== null
 });
 
 const mapDispatchToProps = (dispatch) => {

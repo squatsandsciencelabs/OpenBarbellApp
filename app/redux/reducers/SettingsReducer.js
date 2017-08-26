@@ -6,12 +6,12 @@ import {
     UPDATE_SET_DATA_FROM_SERVER,
     SAVE_DEFAULT_METRIC,
     PRESENT_DEFAULT_METRIC,
-    DISMISS_SET_METRIC
+    DISMISS_DEFAULT_METRIC
 } from 'app/ActionTypes';
 
 const defaultState = {
     defaultMetric: 'kgs',
-    iseditingDefaultMetric: false,
+    isEditingDefaultMetric: false,
     endSetTimerDuration: 30,
     editingEndSetTimer: false,
     syncDate: '',
@@ -25,11 +25,11 @@ const SettingsReducer = (state = defaultState, action) => {
             });
         case PRESENT_DEFAULT_METRIC:
             return Object.assign({}, state, {
-                iseditingDefaultMetric: true,
+                isEditingDefaultMetric: true,
             }); 
-        case DISMISS_SET_METRIC:
+        case DISMISS_DEFAULT_METRIC:
             return Object.assign({}, state, {
-                iseditingDefaultMetric: false,
+                isEditingDefaultMetric: false,
             });                        
         case SAVE_END_SET_TIMER:
             return Object.assign({}, state, {

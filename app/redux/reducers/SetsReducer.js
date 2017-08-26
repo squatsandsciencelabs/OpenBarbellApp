@@ -108,7 +108,7 @@ const saveDefaultMetric = (state, action) => {
     let changes = {};
     
     // Check if set is empty before allowing metric to change
-    if (!set.exercise && !set.weight && !set.rpe && !set.tags && !set.reps && !set.tags && !set.videoFileURL) {
+    if (!set.exercise && !set.weight && !set.rpe && (set.reps && set.reps.length > 0) && (set.tags && set.reps.tags > 0) && !set.videoFileURL) {
         changes.metric = action.defaultMetric;
     }
     

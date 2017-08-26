@@ -1,5 +1,5 @@
 import {
-    DISMISS_SET_METRIC
+    DISMISS_DEFAULT_METRIC
 } from 'app/ActionTypes';
 
 import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsActionCreators';
@@ -10,5 +10,5 @@ export const saveDefaultMetricSetting = (metric = 'kgs') => {
 };
 
 export const dismissDefaultMetricSetter = () => ({
-    type: DISMISS_SET_METRIC,    
+    type: DISMISS_DEFAULT_METRIC,    
 });

@@ -20,7 +20,7 @@ class SettingsApplicationPanel extends Component {
         this.props.tapEndSetTimer()
     }
 
-    _tappedSaveMetric() {
+    _tapDefaultMetric() {
         this.props.tapSaveDefaultMetric()
     }
 
@@ -49,7 +49,7 @@ class SettingsApplicationPanel extends Component {
                             </Text>
                         </View>
                         <View>
-                            <TouchableOpacity onPress={() => this._tappedSaveMetric()}>
+                            <TouchableOpacity onPress={() => this._tapDefaultMetric()}>
                                 <Text style={SETTINGS_PANEL_STYLES.tappableText}>
                                   {this.props.defaultMetric}
                                 </Text>

@@ -5,7 +5,7 @@ import PickerModal from 'app/shared_features/picker/PickerModal';
 import * as Actions from './SettingsMetricActions';
 
 const mapStateToProps = (state) => ({
-    isModalShowing: state.settings.editingDefaultMetric,
+    isModalShowing: state.settings.isEditingDefaultMetric,
     items: [
         {label: 'kgs', value: 'kgs'},
         {label: 'lbs', value: 'lbs'}
@@ -26,4 +26,3 @@ const SettingsMetric = connect(
 )(PickerModal);
 
 export default SettingsMetric;
-

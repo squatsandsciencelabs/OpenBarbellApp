@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as DateUtils from 'app/utility/transforms/DateUtils';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
+import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 
 import WorkoutList from './WorkoutList';
 import * as Actions from './WorkoutActions';
@@ -44,7 +45,7 @@ const createViewModels = (sets) => {
                 setNumber = 1;
             }
         }
-        array.push(createHeaderViewModel(set, setNumber));
+        array.push(createHeaderViewModel(set, setNumber, lastExerciseName));
         if (set.reps.length > 0) {
             array.push({type: "subheader", key: set.setID+"subheader"});
         }
@@ -56,10 +57,10 @@ const createViewModels = (sets) => {
         // rest footer
         if (isInitialSet) {
             // new set, reset the end time
-            lastSetEndTime = set.removed ? null : set.endTime;
+            lastSetEndTime = set.removed ? null : SetTimeCalculator.endTime(set);
         } else if (!set.removed) { // ignore removed sets in rest calculations
             // add footer if valid
-            if (lastSetEndTime !== null && set.startTime > lastSetEndTime) {
+            if (lastSetEndTime !== null && SetTimeCalculator.startTime(set) > lastSetEndTime) {
                 array.push(createFooterVM(set, lastSetEndTime));
             }
 
@@ -167,7 +168,7 @@ const createRowViewModels = (set) => {
 };
 
 const createFooterVM = (set, lastSetEndTime) => {
-    let restInMS = new Date(set.startTime) - new Date(lastSetEndTime);
+    let restInMS = new Date(SetTimeCalculator.startTime(set)) - new Date(lastSetEndTime);
     let footerVM = {
         type: "footer",
         rest: DateUtils.restInSentenceFormat(restInMS),

@@ -11,7 +11,7 @@ const mapStateToProps = (state) => ({
         {label: 'kgs', value: 'kgs'},
         {label: 'lbs', value: 'lbs'}
     ],
-    selectedValue: SettingsSelectors.getDefaultMetric(state)
+    selectedValue: SettingsSelectors.getDefaultMetric(state);
 });
 
 const mapDispatchToProps = (dispatch) => {

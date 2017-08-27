@@ -13,7 +13,8 @@ import {
     START_RECORDING_HISTORY,
     STOP_RECORDING_HISTORY,
     PRESENT_HISTORY_VIDEO_PLAYER,
-    DISMISS_HISTORY_VIDEO_PLAYER
+    DISMISS_HISTORY_VIDEO_PLAYER,
+    DELETE_HISTORY_VIDEO
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -97,6 +98,7 @@ const HistoryReducer = (state = defaultState, action) => {
                 watchFileURL: action.videoFileURL
             });
         case DISMISS_HISTORY_VIDEO_PLAYER:
+        case DELETE_HISTORY_VIDEO:        
             return Object.assign({}, state, {
                 watchSetID: null,
                 watchFileURL: null

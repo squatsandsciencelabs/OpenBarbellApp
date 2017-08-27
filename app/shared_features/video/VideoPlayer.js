@@ -1,3 +1,6 @@
+// TODO: consider using react native video controls, which is already installed
+// doing custom for now as some of the controls aren't working, specifically pause / play and I can't hide the full screen button
+
 import React, {Component} from 'react';
 import {
     View,
@@ -22,11 +25,19 @@ class VideoPlayer extends Component {
                     source={{uri: this.props.video}}
                     paused={false}
                     repeat={true}
-                >
-                        <TouchableOpacity onPress={()=>this.props.closeModal()}>
-                            <Text style={styles.cancelText}>Cancel</Text>
-                        </TouchableOpacity>
-                </Video>
+                />
+
+                <View style={styles.cancelButton}>
+                    <TouchableOpacity onPress={()=>this.props.closeModal()}>
+                        <Text style={styles.cancelText}>Cancel</Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.deleteButton}>
+                    <TouchableOpacity onPress={()=>this.props.deleteVideo(this.props.setID)}>
+                        <Text style={styles.deleteText}>Delete</Text>
+                    </TouchableOpacity>
+                </View>
             </Modal>
         );
     }
@@ -35,19 +46,31 @@ class VideoPlayer extends Component {
 
 const styles = StyleSheet.create({
     cancelButton: {
-        paddingTop: 30,
-        paddingLeft: 20,
-        backgroundColor: 'rgba(0,0,0,0)',
+        position: 'absolute',
+        left: 20,
+        top: 30,
+        backgroundColor: 'rgba(0,0,0,0)'
     },
     cancelText: {
-        paddingTop: 30,
-        paddingLeft: 20,
-        backgroundColor: 'rgba(0,0,0,0)',
         color: 'black',
         fontWeight: 'bold',
         width: 50,
-        height: 30
-    }
+        height: 30,
+        backgroundColor: 'rgba(0,0,0,0)'        
+    },
+    deleteButton: {
+        position: 'absolute',
+        right: 20,
+        top: 30,
+        backgroundColor: 'rgba(0,0,0,0)'
+    },
+    deleteText: {
+        color: 'red',
+        fontWeight: 'bold',
+        width: 50,
+        height: 30,
+        backgroundColor: 'rgba(0,0,0,0)'        
+    },
 });
 
 export default VideoPlayer;

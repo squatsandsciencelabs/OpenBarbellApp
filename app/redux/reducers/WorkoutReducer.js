@@ -11,7 +11,8 @@ import {
     STOP_RECORDING_WORKOUT,
     PRESENT_WORKOUT_VIDEO_PLAYER,
     DISMISS_WORKOUT_VIDEO_PLAYER,
-    DELETE_WORKOUT_VIDEO
+    DELETE_WORKOUT_VIDEO,
+    SAVE_WORKOUT_VIDEO
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -65,10 +66,12 @@ const WorkoutReducer = (state = defaultState, action) => {
                 recordingVideoType: action.isCommentary ? 'commentary' : 'lift',
                 isRecording: false
             });
+        case SAVE_WORKOUT_VIDEO:
         case DISMISS_WORKOUT_VIDEO_RECORDER:
             return Object.assign({}, state, {
                 recordingSetID: null,
-                isRecording: false                
+                recordingVideoType: null,
+                isRecording: false
             });
         case START_RECORDING_WORKOUT:
             return Object.assign({}, state, {

@@ -27,7 +27,6 @@ class VideoRecorder extends Component {
             audio: true
         }).then((data) => {
             this.props.saveVideo(this.props.setID, data.path, this.props.videoType);
-            this.props.closeModal();
             // TODO: share options can be here, but for now just finish
         }).catch((err) => {
             console.tron.log("ERROR " + err);

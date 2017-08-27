@@ -5,10 +5,12 @@ import {
     DISMISS_WORKOUT_EXERCISE,
     DISMISS_WORKOUT_TAGS,
     DISMISS_WORKOUT_EXPANDED,
-    PRESENT_WORKOUT_RECORD_VIDEO,
-    DISMISS_WORKOUT_RECORD_VIDEO,
+    PRESENT_WORKOUT_VIDEO_RECORDER,
+    DISMISS_WORKOUT_VIDEO_RECORDER,
     START_RECORDING_WORKOUT,
-    STOP_RECORDING_WORKOUT
+    STOP_RECORDING_WORKOUT,
+    PRESENT_WORKOUT_VIDEO_PLAYER,
+    DISMISS_WORKOUT_VIDEO_PLAYER
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -20,7 +22,9 @@ const defaultState = {
     expandedSetID: null,
     recordingSetID: null,
     recordingVideoType: null,
-    isRecording: false
+    isRecording: false,
+    watchSetID: null,
+    watchFileURL: null
 };
 
 const WorkoutReducer = (state = defaultState, action) => {
@@ -54,13 +58,13 @@ const WorkoutReducer = (state = defaultState, action) => {
             return Object.assign({}, state, {
                 expandedSetID: null,
             });
-        case PRESENT_WORKOUT_RECORD_VIDEO:
+        case PRESENT_WORKOUT_VIDEO_RECORDER:
             return Object.assign({}, state, {
                 recordingSetID: action.setID,
                 recordingVideoType: action.isCommentary ? 'commentary' : 'lift',
                 isRecording: false
             });
-        case DISMISS_WORKOUT_RECORD_VIDEO:
+        case DISMISS_WORKOUT_VIDEO_RECORDER:
             return Object.assign({}, state, {
                 recordingSetID: null,
                 isRecording: false                
@@ -72,6 +76,16 @@ const WorkoutReducer = (state = defaultState, action) => {
         case STOP_RECORDING_WORKOUT:
             return Object.assign({}, state, {
                 isRecording: false
+            });
+        case PRESENT_WORKOUT_VIDEO_PLAYER:
+            return Object.assign({}, state, {
+                watchSetID: action.setID,
+                watchFileURL: action.videoFileURL
+            });
+        case DISMISS_WORKOUT_VIDEO_PLAYER:
+            return Object.assign({}, state, {
+                watchSetID: null,
+                watchFileURL: null
             });
         default:
             return state;

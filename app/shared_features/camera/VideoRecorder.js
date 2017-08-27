@@ -9,7 +9,7 @@ import {
 }  from 'react-native';
 import Camera from 'react-native-camera';
 
-class RecordVideo extends Component {
+class VideoRecorder extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.isRecording !== this.props.isRecording) {
@@ -114,4 +114,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default RecordVideo;
+export default VideoRecorder;

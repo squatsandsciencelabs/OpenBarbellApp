@@ -1,26 +1,26 @@
 import {
-    START_RECORDING_WORKOUT,
-    STOP_RECORDING_WORKOUT,
-    DISMISS_WORKOUT_RECORD_VIDEO,
-    SAVE_WORKOUT_VIDEO
+    START_RECORDING_HISTORY,
+    STOP_RECORDING_HISTORY,
+    DISMISS_HISTORY_VIDEO_RECORDER,
+    SAVE_HISTORY_VIDEO
 } from 'app/ActionTypes';
 
 export const startRecording = (setID) => ({
-    type: START_RECORDING_WORKOUT,
+    type: START_RECORDING_HISTORY,
     setID: setID
 });
 
 export const stopRecording = () => ({
-    type: STOP_RECORDING_WORKOUT
+    type: STOP_RECORDING_HISTORY
 });
 
 export const dismissRecording = () => ({
-    type: DISMISS_WORKOUT_RECORD_VIDEO
+    type: DISMISS_HISTORY_VIDEO_RECORDER
 });
 
 export const saveVideo = (setID, videoFileURL, videoType) => ({
-    type: SAVE_WORKOUT_VIDEO,
+    type: SAVE_HISTORY_VIDEO,
     setID: setID,
     videoFileURL: videoFileURL,
-    videoType: videoType
+    videoType: videoType    
 })

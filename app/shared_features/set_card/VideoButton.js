@@ -13,12 +13,7 @@ import Video from 'react-native-video';
 class VideoButton extends Component {
 
     _tappedWatchVideo() {
-        this.props.tappedWatch(this.props.setID);
-
-        // TODO: make the full video mode go through actions rather than append like this
-        this.player.seek(0);
-        this.player.paused = false;
-        this.player.presentFullscreenPlayer();
+        this.props.tappedWatch(this.props.setID, this.props.videoFileURL);
     }
 
     render() {
@@ -48,23 +43,25 @@ class VideoButton extends Component {
                 // probably requires RCTCameraRoll
                 if (Platform.OS === 'ios') {
                     return (
-                        <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo() }>
-                            <Video
-                                ref={(ref) => {
-                                    this.player = ref
-                                }}
-                                style={[{flex:1, flexDirection:'column'}, styles.button, styles.blackButton]}
-                                source={{uri: this.props.videoFileURL}}
-                                paused={true}
-                                repeat={true}
-                            />
+                        <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo(this.props.setID, this.props.videoFileURL) }>
+                        <Video
+                            ref={(ref) => {
+                                this.player = ref
+                            }}
+                            style={[{flex:1, flexDirection:'column'}, styles.button, styles.blackButton]}
+                            source={{uri: this.props.videoFileURL}}
+                            paused={true}
+                            repeat={true}
+                        />
                         </TouchableOpacity>
                     );
                 } else {
                     return (
-                        <Image
-                            style={[{flex:1, flexDirection:'column'}, styles.button, styles.blackButton]}
-                            source={{uri: this.props.videoFileURL}} />
+                        <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo() }>                        
+                            <Image
+                                style={[{flex:1, flexDirection:'column'}, styles.button, styles.blackButton]}
+                                source={{uri: this.props.videoFileURL}} />
+                        </TouchableOpacity>
                     );
                 }
             default:
@@ -75,11 +72,6 @@ class VideoButton extends Component {
 }
 
 const styles = StyleSheet.create({
-    sectionHeaderText: {
-        fontFamily: 'AvenirNext-Medium',
-        fontSize: 16,
-        left: 0,
-    },
     button: {
         width: 77,
         height: 77,
@@ -105,19 +97,6 @@ const styles = StyleSheet.create({
     },
     grayText: {
         color: 'gray'
-    },
-    Shadow: {
-        shadowColor: "#000000",
-        shadowOpacity: 0.2,
-        shadowRadius: 2,
-        shadowOffset: {
-            height: 4,
-            width: 0
-        },
-    },
-    rowText: {
-        fontSize:20,
-        paddingTop:5,
     },
 });
 

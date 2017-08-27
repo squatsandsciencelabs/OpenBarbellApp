@@ -8,10 +8,14 @@ import {
     DISMISS_HISTORY_EXERCISE,
     DISMISS_HISTORY_TAGS,
     DISMISS_HISTORY_EXPANDED,
-    PRESENT_HISTORY_RECORD_VIDEO,
-    DISMISS_HISTORY_RECORD_VIDEO,
+    PRESENT_HISTORY_VIDEO_RECORDER,
+    DISMISS_HISTORY_VIDEO_RECORDER,
     START_RECORDING_HISTORY,
-    STOP_RECORDING_HISTORY
+    STOP_RECORDING_HISTORY,
+    PRESENT_HISTORY_VIDEO_PLAYER,
+    DISMISS_HISTORY_VIDEO_PLAYER,
+    DELETE_HISTORY_VIDEO,
+    SAVE_HISTORY_VIDEO
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -25,7 +29,9 @@ const defaultState = {
     expandedSetID: null,
     recordingSetID: null,
     recordingVideoType: null,
-    isRecording: false
+    isRecording: false,
+    watchSetID: null,
+    watchFileURL: null
 };
 
 const HistoryReducer = (state = defaultState, action) => {
@@ -70,14 +76,17 @@ const HistoryReducer = (state = defaultState, action) => {
             return Object.assign({}, state, {
                 expandedSetID: null,
             });
-        case PRESENT_HISTORY_RECORD_VIDEO:
+        case PRESENT_HISTORY_VIDEO_RECORDER:
             return Object.assign({}, state, {
                 recordingSetID: action.setID,
                 recordingVideoType: action.isCommentary ? 'commentary' : 'lift'
             });
-        case DISMISS_HISTORY_RECORD_VIDEO:
+        case SAVE_HISTORY_VIDEO:
+        case DISMISS_HISTORY_VIDEO_RECORDER:
             return Object.assign({}, state, {
                 recordingSetID: null,
+                recordingVideoType: null,
+                isRecording: false
             });
         case START_RECORDING_HISTORY:
             return Object.assign({}, state, {
@@ -86,6 +95,17 @@ const HistoryReducer = (state = defaultState, action) => {
         case STOP_RECORDING_HISTORY:
             return Object.assign({}, state, {
                 isRecording: false,
+            });
+        case PRESENT_HISTORY_VIDEO_PLAYER:
+            return Object.assign({}, state, {
+                watchSetID: action.setID,
+                watchFileURL: action.videoFileURL
+            });
+        case DISMISS_HISTORY_VIDEO_PLAYER:
+        case DELETE_HISTORY_VIDEO:        
+            return Object.assign({}, state, {
+                watchSetID: null,
+                watchFileURL: null
             });
         default:
             return state;

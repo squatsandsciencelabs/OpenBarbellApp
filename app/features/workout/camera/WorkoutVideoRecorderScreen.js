@@ -1,8 +1,8 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import RecordVideo from 'app/shared_features/camera/RecordVideo';
-import * as Actions from './WorkoutRecordVideoActions';
+import VideoRecorder from 'app/shared_features/camera/VideoRecorder';
+import * as Actions from './WorkoutVideoRecorderActions';
 import * as WorkoutSelectors from 'app/redux/selectors/WorkoutSelectors';
 
 const mapStateToProps = (state) => ({
@@ -21,9 +21,9 @@ const mapDispatchToProps = (dispatch) => {
     }, dispatch);
 };
 
-const WorkoutRecordVideoScreen = connect(
+const WorkoutVideoRecorderScreen = connect(
     mapStateToProps,
     mapDispatchToProps
-)(RecordVideo);
+)(VideoRecorder);
 
-export default WorkoutRecordVideoScreen;
+export default WorkoutVideoRecorderScreen;

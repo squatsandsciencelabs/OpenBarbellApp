@@ -10,6 +10,8 @@ import {
     END_SET,
     SAVE_WORKOUT_VIDEO,
     SAVE_HISTORY_VIDEO,
+    DELETE_WORKOUT_VIDEO,
+    DELETE_HISTORY_VIDEO,
     LOAD_PERSISTED_SET_DATA,
     END_WORKOUT,
     BEGIN_UPLOADING_SETS,
@@ -47,6 +49,10 @@ const SetsReducer = (state = createDefaultState(), action) => {
             return saveWorkoutVideo(state, action);
         case SAVE_HISTORY_VIDEO:
             return saveHistoryVideo(state, action);
+        case DELETE_WORKOUT_VIDEO:
+            return deleteWorkoutVideo(state, action);
+        case DELETE_HISTORY_VIDEO:
+            return deleteHistoryVideo(state, action);
         case LOAD_PERSISTED_SET_DATA:
             return loadPersistedSetData(state, action);
         // NOTE: it feels weird to have end workout here, but ending a workout affects the SETS not the workout itself, so the set reducer needs to handle it
@@ -384,6 +390,46 @@ const saveHistoryVideo = (state, action) => {
 
     return Object.assign({}, state, stateChanges);
 };
+
+// DELETE_WORKOUT_VIDEO
+
+const deleteWorkoutVideo = (state, action) => {
+    let newWorkoutData = state.workoutData.slice(0);
+    let setIndex = newWorkoutData.findIndex( set => set.setID === action.setID );
+    let set = newWorkoutData[setIndex];
+
+    newWorkoutData[setIndex] = Object.assign({}, set, {
+        videoFileURL: null,
+        videoType: null        
+    });
+    return Object.assign({}, state, {
+        workoutData: newWorkoutData
+    });
+}    
+
+// DELETE_HISTORY_VIDEO
+
+const deleteHistoryVideo = (state, action) => {
+    let setID = action.setID;
+    let historyData = state.historyData;
+    let set = historyData[setID];
+
+    let newSet = Object.assign({}, set, {
+        videoFileURL: null,
+        videoType: null
+    });
+
+    // state changes
+    let stateChanges = {};
+    stateChanges.historyData = Object.assign({}, historyData, {
+        [setID]: newSet
+    });
+    if (!state.setIDsToUpload.includes(setID)) {
+        stateChanges.setIDsToUpload = [...state.setIDsToUpload, setID];
+    }
+
+    return Object.assign({}, state, stateChanges);
+}    
 
 // LOAD_PERSISTED_SET_DATA
 

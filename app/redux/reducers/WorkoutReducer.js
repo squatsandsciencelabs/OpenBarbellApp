@@ -10,7 +10,8 @@ import {
     START_RECORDING_WORKOUT,
     STOP_RECORDING_WORKOUT,
     PRESENT_WORKOUT_VIDEO_PLAYER,
-    DISMISS_WORKOUT_VIDEO_PLAYER
+    DISMISS_WORKOUT_VIDEO_PLAYER,
+    DELETE_WORKOUT_VIDEO
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -82,6 +83,7 @@ const WorkoutReducer = (state = defaultState, action) => {
                 watchSetID: action.setID,
                 watchFileURL: action.videoFileURL
             });
+        case DELETE_WORKOUT_VIDEO:            
         case DISMISS_WORKOUT_VIDEO_PLAYER:
             return Object.assign({}, state, {
                 watchSetID: null,

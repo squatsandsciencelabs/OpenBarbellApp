@@ -14,11 +14,6 @@ class VideoButton extends Component {
 
     _tappedWatchVideo() {
         this.props.tappedWatch(this.props.setID, this.props.videoFileURL);
-
-        // TODO: make the full video mode go through actions rather than append like this
-        // this.player.seek(0);
-        // this.player.paused = false;
-        // this.player.presentFullscreenPlayer();
     }
 
     render() {
@@ -47,19 +42,6 @@ class VideoButton extends Component {
                 // TODO: see if can make this a true image preview instead of a full video
                 // probably requires RCTCameraRoll
                 if (Platform.OS === 'ios') {
-                    // return (
-                        // <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo() }>
-                        //     <Video
-                        //         ref={(ref) => {
-                        //             this.player = ref
-                        //         }}
-                        //         style={[{flex:1, flexDirection:'column'}, styles.button, styles.blackButton]}
-                        //         source={{uri: this.props.videoFileURL}}
-                        //         paused={true}
-                        //         repeat={true}
-                        //     />
-                        // </TouchableOpacity>
-                    // );
                     return (
                         <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo(this.props.setID, this.props.videoFileURL) }>
                         <Video

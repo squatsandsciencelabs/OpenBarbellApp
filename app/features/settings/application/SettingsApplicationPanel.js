@@ -21,7 +21,7 @@ class SettingsApplicationPanel extends Component {
     }
 
     _tapDefaultMetric() {
-        this.props.tapSaveDefaultMetric()
+        this.props.tapDefaultMetric()
     }
 
     // RENDER

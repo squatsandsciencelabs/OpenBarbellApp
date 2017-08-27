@@ -14,7 +14,8 @@ import {
     STOP_RECORDING_HISTORY,
     PRESENT_HISTORY_VIDEO_PLAYER,
     DISMISS_HISTORY_VIDEO_PLAYER,
-    DELETE_HISTORY_VIDEO
+    DELETE_HISTORY_VIDEO,
+    SAVE_HISTORY_VIDEO
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -80,9 +81,12 @@ const HistoryReducer = (state = defaultState, action) => {
                 recordingSetID: action.setID,
                 recordingVideoType: action.isCommentary ? 'commentary' : 'lift'
             });
+        case SAVE_HISTORY_VIDEO:
         case DISMISS_HISTORY_VIDEO_RECORDER:
             return Object.assign({}, state, {
                 recordingSetID: null,
+                recordingVideoType: null,
+                isRecording: false
             });
         case START_RECORDING_HISTORY:
             return Object.assign({}, state, {

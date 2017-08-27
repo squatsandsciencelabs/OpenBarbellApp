@@ -1,8 +1,8 @@
 import {
     PRESENT_WORKOUT_EXERCISE,
     PRESENT_WORKOUT_TAGS,
-    PRESENT_WORKOUT_RECORD_VIDEO,
-    PRESENT_WORKOUT_WATCH_VIDEO
+    PRESENT_WORKOUT_VIDEO_RECORDER,
+    PRESENT_WORKOUT_VIDEO_PLAYER
 } from 'app/ActionTypes';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 
@@ -24,17 +24,19 @@ export const saveSet = (setID, exercise = null, weight = null, metric = null, rp
 };
 
 export const presentRecordVideo = (setID) => ({
-    type: PRESENT_WORKOUT_RECORD_VIDEO,
+    type: PRESENT_WORKOUT_VIDEO_RECORDER,
     setID: setID,
     isCommentary: false
 });
 
 export const presentRecordCommentary = (setID) => ({
-    type: PRESENT_WORKOUT_RECORD_VIDEO,
+    type: PRESENT_WORKOUT_VIDEO_RECORDER,
     setID: setID,
     isCommentary: true
 });
 
-export const presentWatchVideo = (setID) => ({
-    type: PRESENT_WORKOUT_WATCH_VIDEO,
+export const presentWatchVideo = (setID, videoFileURL) => ({
+    type: PRESENT_WORKOUT_VIDEO_PLAYER,
+    setID: setID,
+    videoFileURL: videoFileURL
 });

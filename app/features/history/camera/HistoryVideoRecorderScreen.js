@@ -1,8 +1,8 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import RecordVideo from 'app/shared_features/camera/RecordVideo';
-import * as Actions from './HistoryRecordVideoActions';
+import VideoRecorder from 'app/shared_features/camera/VideoRecorder';
+import * as Actions from './HistoryVideoRecorderActions';
 import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 
 const mapStateToProps = (state) => ({
@@ -21,9 +21,9 @@ const mapDispatchToProps = (dispatch) => {
     }, dispatch);
 };
 
-const HistoryRecordVideoScreen = connect(
+const HistoryVideoRecorderScreen = connect(
     mapStateToProps,
     mapDispatchToProps
-)(RecordVideo);
+)(VideoRecorder);
 
-export default HistoryRecordVideoScreen;
+export default HistoryVideoRecorderScreen;

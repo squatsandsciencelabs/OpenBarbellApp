@@ -20,7 +20,8 @@ import SetDataLabelRow from 'app/shared_features/set_card/SetDataLabelRow';
 import SetDataRow from 'app/shared_features/set_card/SetDataRow';
 import SetRestRow from 'app/shared_features/set_card/SetRestRow';
 import WorkoutVideoButtonScreen from './card/WorkoutVideoButtonScreen';
-import WorkoutRecordVideoScreen from './camera/WorkoutRecordVideoScreen';
+import WorkoutVideoRecorderScreen from './camera/WorkoutVideoRecorderScreen';
+import WorkoutVideoPlayerScreen from './video/WorkoutVideoPlayerScreen';
 
 class WorkoutList extends Component {
 
@@ -114,7 +115,8 @@ class WorkoutList extends Component {
                 <EditWorkoutExerciseScreen />
                 <EditWorkoutTagsScreen />
                 <WorkoutSetExpandedScreen />
-                <WorkoutRecordVideoScreen />
+                <WorkoutVideoRecorderScreen />
+                <WorkoutVideoPlayerScreen />
 
                 <View style={{ flex: 1 }}>
                     {list}

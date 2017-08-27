@@ -65,7 +65,7 @@ const createViewModels = (sets) => {
             }
 
             // update variable for calculation purposes
-            lastSetEndTime = set.endTime;
+            lastSetEndTime = SetTimeCalculator.endTime(set);
         }
 
         // insert set card data

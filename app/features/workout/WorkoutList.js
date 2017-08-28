@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import ConnectedDeviceStatusScreen from './device_status/ConnectedDeviceStatusScreen';
 import WorkoutBottomBarScreen from './bottom_bar/WorkoutBottomBarScreen';
 import EditWorkoutSetFormScreen from './card/EditWorkoutSetFormScreen';
 import EditWorkoutExerciseScreen from './exercise_name/EditWorkoutExerciseScreen';
@@ -124,6 +125,9 @@ class WorkoutList extends Component {
 
                 <View style={{height: 50}}>
                     <WorkoutBottomBarScreen />
+                </View>
+                <View style={{height: 50}}>
+                    <ConnectedDeviceStatusScreen />
                 </View>
 
             </View>

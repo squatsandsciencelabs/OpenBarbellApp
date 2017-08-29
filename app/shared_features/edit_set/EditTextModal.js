@@ -218,6 +218,7 @@ class EditTextModal extends Component {
                     multiline={this.props.multipleInput}
                     onSubmitEditing = {() => this._tappedEnter()}
                     onChangeText={(text) => this._onChangeText(text) }
+                    clearButtonMode = {'while-editing'}
                 />
             </View>
         )

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
     TouchableOpacity,
+    TouchableWithoutFeedback,
     Text,
     StyleSheet,
     View,
@@ -36,14 +37,28 @@ class WorkoutList extends Component {
     // RENDER
 
     _renderSectionHeader(section) {
+        let sets = this.props.sets;
+        let currentSetIndex = (this.props.sets.length) - 1;
+        let set = sets[currentSetIndex];
+
         if (section.key === 0) {
-            return (
-                <View style={styles.button}>
-                    <TouchableOpacity onPress={ () => this.props.endSet() }>
-                        <Text style={styles.buttonText}>START NEW SET</Text>
-                    </TouchableOpacity>
-                </View>
-            );
+            if (!set.exercise && !set.weight && !set.rpe && (set.reps !== null && set.reps !== undefined && set.reps.length === 0) && (set.tags !== null && set.tags !== undefined && set.tags.length === 0) && !set.videoFileURL) {
+                return (
+                    <View style={styles.disabledButton}>
+                        <TouchableWithoutFeedback>
+                            <View><Text style={styles.buttonText}>START NEW SET</Text></View>
+                        </TouchableWithoutFeedback>
+                    </View>
+                );                
+            } else {
+                return (
+                    <View style={styles.button}>
+                        <TouchableOpacity onPress={ () => this.props.endSet() }>
+                            <Text style={styles.buttonText}>START NEW SET</Text>
+                        </TouchableOpacity>
+                    </View>
+                );
+            }
         } else {
             return null;
         }
@@ -142,6 +157,13 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(47, 128, 237, 1)',        
         borderWidth: 5,
         borderRadius: 15,
+    },
+    disabledButton: {
+        backgroundColor: 'rgba(47, 128, 237, 1)',
+        borderColor: 'rgba(47, 128, 237, 1)',        
+        borderWidth: 5,
+        borderRadius: 15,
+        opacity: 0.3
     },
     buttonText: {
         color: 'white',

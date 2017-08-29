@@ -7,7 +7,7 @@ import {
     StyleSheet,
     TouchableHighlight
 } from 'react-native';
-import ConnectedDeviceStatus from './device_status/ConnectedDeviceStatus';
+import ConnectedDeviceStatusScreen from './device_status/ConnectedDeviceStatusScreen';
 
 class WorkoutBottomBar extends Component {
 
@@ -26,9 +26,9 @@ class WorkoutBottomBar extends Component {
         return (
             <View style={styles.bar}>
                 { this._renderDevice() }
-                <ConnectedDeviceStatus />
+                <ConnectedDeviceStatusScreen />
                 <TouchableHighlight style={{justifyContent: 'center'}} onPress={ () => this._onPressEndWorkout() } activeOpacity={1} >
-                    <Text style={styles.buttonText}>End Workout</Text>
+                    <Text style={styles.buttonText}>FINISH WORKOUT</Text>
                 </TouchableHighlight>
             </View>
         );

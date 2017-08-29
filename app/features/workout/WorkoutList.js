@@ -40,7 +40,7 @@ class WorkoutList extends Component {
             return (
                 <View style={styles.button}>
                     <TouchableOpacity onPress={ () => this.props.endSet() }>
-                        <Text style={styles.buttonText}>Add New Set</Text>
+                        <Text style={styles.buttonText}>START NEW SET</Text>
                     </TouchableOpacity>
                 </View>
             );
@@ -125,7 +125,6 @@ class WorkoutList extends Component {
                 <View style={{height: 50}}>
                     <WorkoutBottomBarScreen />
                 </View>
-
             </View>
         );
     }

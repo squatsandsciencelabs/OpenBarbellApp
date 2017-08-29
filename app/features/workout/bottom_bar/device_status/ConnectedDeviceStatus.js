@@ -12,9 +12,9 @@ class ConnectedDeviceStatus extends Component {
 
     render() {
         if (this.props.deviceStatus === 'CONNECTED') {
-            return <View style={styles.statusBar}><Image source={require('app/appearance/images/icon_connected.png')} /><Text style={styles.textStyle}> {this.props.deviceName} </Text></View>
+            return <View style={styles.statusBar}><Image style={styles.imageStyle} source={require('app/appearance/images/icon_connected.png')} /><Text style={styles.textStyle}> {this.props.deviceName} </Text></View>
         } else {
-            return <View style={styles.statusBar}><Image source={require('app/appearance/images/icon_disconnected.png')} /><Text style={styles.textStyle}> Not Connected</Text></View>
+            return <View style={styles.statusBar}><Image style={styles.imageStyle} source={require('app/appearance/images/icon_disconnected.png')} /><Text style={styles.textStyle}> Not Connected</Text></View>
         }
     }
 }
@@ -28,7 +28,10 @@ const styles = StyleSheet.create({
         paddingLeft: 5
     },
     textStyle: {
-        color: 'white',
+        color: 'white'
+    },
+    imageStyle: {
+        tintColor: 'white'
     }
 });
 

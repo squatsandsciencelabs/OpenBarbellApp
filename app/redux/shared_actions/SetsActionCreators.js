@@ -69,9 +69,10 @@ export const saveHistorySet = (setID, exercise = null, weight = null, metric = n
 export const endSet = () => (dispatch, getState) => {
     var state = getState();
     var workoutData = state.sets.workoutData;
+    var set = workoutData[workoutData.length - 1];
     var defaultMetric = state.settings.defaultMetric;
 
-    if (!(workoutData.length > 0 && workoutData[workoutData.length-1].reps.length === 0)) {
+    if (!set.reps.length === 0 || set.exercise || set.weight || set.rpe || set.tags.length > 0 || set.videoFileURL) {
         dispatch({
             type: END_SET,
             defaultMetric: defaultMetric

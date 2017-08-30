@@ -4,7 +4,6 @@
 * git clone https://github.com/squatsandsciencelabs/OpenBarbellApp.git
 * npm install
 * create android/local.properties and point it at your Android SDK `sdk.dir = /Users/SquatsAndScience/Library/Android/sdk`
-* `cd ios && carthage update` to install MixPanel
 * set up provisioning profiles in XCode 
 
 # RUNNING IT

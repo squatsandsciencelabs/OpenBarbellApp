@@ -146,10 +146,6 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-mixpanel')
-    compile(project(':react-native-google-analytics-bridge')){
-        exclude group: "com.google.android.gms" // very important
-    }
     compile project(':react-native-fs')
     compile project(':react-native-video')
     compile project(':react-native-camera')

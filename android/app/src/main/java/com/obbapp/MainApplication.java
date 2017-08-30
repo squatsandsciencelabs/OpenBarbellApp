@@ -6,10 +6,8 @@ import com.rnfs.RNFSPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.facebook.react.ReactApplication;
-import com.kevinejohn.RNMixpanel.RNMixpanel;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
-import com.idehub.GoogleAnalyticsBridge.GoogleAnalyticsBridgePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactInstanceManager; // note, may not be needed, theoretically removed in upgrade from 0.39.2 to 0.42.3
 import com.facebook.react.ReactNativeHost;
@@ -33,10 +31,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
               new MainReactPackage(),
-            new RNMixpanel(),
             new RNGoogleSigninPackage(),
             new RNDeviceInfo(),
-            new GoogleAnalyticsBridgePackage(),
             new VectorIconsPackage(),
             new RCTCameraPackage(),
             new ReactVideoPackage(),

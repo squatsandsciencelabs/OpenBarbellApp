@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
     TouchableOpacity,
-    TouchableWithoutFeedback,
     Text,
     StyleSheet,
     View,
@@ -41,13 +40,12 @@ class WorkoutList extends Component {
         let currentSetIndex = (this.props.sets.length) - 1;
         let set = sets[currentSetIndex];
 
+        // if there is no set data show disabled add set button
         if (section.key === 0) {
             if (!set.exercise && !set.weight && !set.rpe && (set.reps !== null && set.reps !== undefined && set.reps.length === 0) && (set.tags !== null && set.tags !== undefined && set.tags.length === 0) && !set.videoFileURL) {
                 return (
                     <View style={styles.disabledButton}>
-                        <TouchableWithoutFeedback>
-                            <View><Text style={styles.buttonText}>START NEW SET</Text></View>
-                        </TouchableWithoutFeedback>
+                        <Text style={styles.buttonText}>START NEW SET</Text>
                     </View>
                 );                
             } else {

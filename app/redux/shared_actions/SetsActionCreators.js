@@ -72,7 +72,8 @@ export const endSet = () => (dispatch, getState) => {
     var set = workoutData[workoutData.length - 1];
     var defaultMetric = state.settings.defaultMetric;
 
-    if (!set.reps.length === 0 || set.exercise || set.weight || set.rpe || set.tags.length > 0 || set.videoFileURL) {
+    // check if set form has any data
+    if (set.reps.length >= 0 || set.exercise || set.weight || set.rpe || set.tags.length > 0 || set.videoFileURL) {
         dispatch({
             type: END_SET,
             defaultMetric: defaultMetric

@@ -7,7 +7,7 @@ export const endWorkout = () => (dispatch, getState) => {
     var state = getState();
     var workoutData = SetsSelectors.getWorkoutSets(state);
 
-    if (workoutData.length > 0 && workoutData[0].reps.length > 0) {
+    if (workoutData.length > 0 && workoutData[0].reps.length >= 0) {
         dispatch({ type: END_WORKOUT });
     }
 };

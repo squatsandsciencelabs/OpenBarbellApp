@@ -10,6 +10,7 @@ import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
 import * as WorkoutActionCreators from 'app/redux/shared_actions/WorkoutActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as DateUtils from 'app/utility/transforms/DateUtils';
+import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 
 const EndOldWorkoutSaga = function * EndOldWorkoutSaga() {
     yield all([
@@ -32,8 +33,9 @@ function* endOldWorkout() {
     var timeDifference = Math.abs(currentTime - endTime);
     console.tron.log("Time difference is " + timeDifference + " comparing " + endTime + " against " + currentTime + " with config timer " + OpenBarbellConfig.endWorkoutTimer);
 
+    const isLoggedIn = yield select(AuthSelectors.getIsLoggedIn);    
     // error
-    if (timeDifference >= OpenBarbellConfig.endWorkoutTimer) {
+    if (timeDifference >= OpenBarbellConfig.endWorkoutTimer && isLoggedIn) {
         yield call(Alert.alert, "Ending workout! You can find your last workout on the History screen.");
         yield put(WorkoutActionCreators.autoEndWorkout());
     }

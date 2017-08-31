@@ -17,26 +17,29 @@ class VideoPlayer extends Component {
 
         return (
             <Modal visible={this.props.isModalShowing} animationType='fade'>
-                <Video
-                    ref={(ref) => {
-                        this.player = ref
-                    }}
-                    style={[{flex:1, flexDirection:'column'}, styles.button, styles.blackButton]}
-                    source={{uri: this.props.video}}
-                    paused={false}
-                    repeat={true}
-                />
+                <View style={[{flex: 1}, styles.container]}>
+                    <Video
+                        ref={(ref) => {
+                            this.player = ref
+                        }}
+                        style={[{flex:1}, styles.button, styles.blackButton]}
+                        source={{uri: this.props.video}}
+                        paused={false}
+                        resizeMode="contain"
+                        repeat={true}
+                    />
 
-                <View style={styles.cancelButton}>
-                    <TouchableOpacity onPress={()=>this.props.closeModal()}>
-                        <Text style={styles.cancelText}>Cancel</Text>
-                    </TouchableOpacity>
-                </View>
+                    <View style={styles.cancelButton}>
+                        <TouchableOpacity onPress={()=>this.props.closeModal()}>
+                            <Text style={styles.cancelText}>Cancel</Text>
+                        </TouchableOpacity>
+                    </View>
 
-                <View style={styles.deleteButton}>
-                    <TouchableOpacity onPress={()=>this.props.deleteVideo(this.props.setID)}>
-                        <Text style={styles.deleteText}>Delete</Text>
-                    </TouchableOpacity>
+                    <View style={styles.deleteButton}>
+                        <TouchableOpacity onPress={()=>this.props.deleteVideo(this.props.setID)}>
+                            <Text style={styles.deleteText}>Delete</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </Modal>
         );
@@ -45,6 +48,9 @@ class VideoPlayer extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: 'black'
+    },
     cancelButton: {
         position: 'absolute',
         left: 20,

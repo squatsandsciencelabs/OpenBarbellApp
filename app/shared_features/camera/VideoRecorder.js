@@ -8,6 +8,7 @@ import {
     Alert
 }  from 'react-native';
 import Camera from 'react-native-camera';
+import KeepAwake from 'react-native-keep-awake';
 
 class VideoRecorder extends Component {
 
@@ -58,10 +59,10 @@ class VideoRecorder extends Component {
         }
     }
 
-    render() {
-        return (
-            <Modal visible={this.props.isModalShowing} animationType='fade'>
-                <View style={[{flex: 1}, styles.container]}>
+    _renderCamera() {
+        if (this.props.isModalShowing) {
+            return (
+                <View style={[{flex: 1}, styles.container]}>                
                     <Camera
                         ref={(cam) => {this.camera = cam}}
                         style={{flex: 1}}
@@ -78,7 +79,18 @@ class VideoRecorder extends Component {
                         </View>
 
                     </Camera>
+                    <KeepAwake />
                 </View>
+            );
+        } else {
+            return null;
+        }
+    }
+
+    render() {
+        return (
+            <Modal visible={this.props.isModalShowing} animationType='fade'>
+                { this._renderCamera() }
             </Modal>
         );
     }

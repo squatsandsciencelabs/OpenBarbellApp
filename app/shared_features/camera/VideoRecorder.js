@@ -61,28 +61,33 @@ class VideoRecorder extends Component {
     render() {
         return (
             <Modal visible={this.props.isModalShowing} animationType='fade'>
-                <Camera
-                    ref={(cam) => {this.camera = cam}}
-                    style={{flex: 1}}
-                    aspect={Camera.constants.Aspect.fill}>
+                <View style={[{flex: 1}, styles.container]}>
+                    <Camera
+                        ref={(cam) => {this.camera = cam}}
+                        style={{flex: 1}}
+                        aspect={Camera.constants.Aspect.fit}>
 
-                    <View style={styles.cancelButton}>
-                        <TouchableOpacity onPress={()=>this.props.closeModal()}>
-                            <Text style={styles.cancelText}>Cancel</Text>
-                        </TouchableOpacity>
-                    </View>
+                        <View style={styles.cancelButton}>
+                            <TouchableOpacity onPress={()=>this.props.closeModal()}>
+                                <Text style={styles.cancelText}>Cancel</Text>
+                            </TouchableOpacity>
+                        </View>
 
-                    <View style={{position: 'absolute', bottom: 50, left: 0, right: 0, alignItems: 'center'}}>
-                        { this._renderActionButton() }
-                    </View>
+                        <View style={{position: 'absolute', bottom: 50, left: 0, right: 0, alignItems: 'center'}}>
+                            { this._renderActionButton() }
+                        </View>
 
-                </Camera>
+                    </Camera>
+                </View>
             </Modal>
         );
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        backgroundColor: 'black'
+    },
     actionButton: {
         width: 70,
         height: 70,

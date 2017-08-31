@@ -49,6 +49,19 @@ export const getWorkoutSets = (state) => {
     return stateRoot(state).workoutData;
 };
 
+// Check Workout Sets
+
+export const checkWorkoutSets = (state) => {
+    const workoutData = stateRoot(state).workoutData;
+    const set = workoutData[workoutData.length - 1];
+
+    if (workoutData.length >= 2 || (workoutData.length === 1 && set.exercise && set.weight && set.rpe && set.tags.length > 0 && set.videoURL )) {
+        return true
+    } else {
+        return false;
+    }
+}
+
 // Get Expanded Workout Set
 
 export const getExpandedWorkoutSet = (state, setID) => {

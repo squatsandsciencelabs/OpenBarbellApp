@@ -10,7 +10,7 @@ import {
 import ConnectedDeviceStatusScreen from './device_status/ConnectedDeviceStatusScreen';
 
 class WorkoutBottomBar extends Component {
-
+    
     _onPressEndWorkout() {
         this.props.endWorkout();
     }

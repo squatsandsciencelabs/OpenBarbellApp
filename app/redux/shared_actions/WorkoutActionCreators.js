@@ -5,9 +5,9 @@ import { END_WORKOUT } from 'app/ActionTypes';
 
 export const endWorkout = () => (dispatch, getState) => {
     var state = getState();
-    var workoutData = SetsSelectors.getWorkoutSets(state);
+    var checkWorkoutData = SetsSelectors.checkWorkoutSets(state)
 
-    if (workoutData.length > 0 && workoutData[0].reps.length >= 0) {
+    if (checkWorkoutData === true) {
         dispatch({ type: END_WORKOUT });
     }
 };

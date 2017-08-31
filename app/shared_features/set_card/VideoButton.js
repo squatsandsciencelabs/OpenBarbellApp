@@ -44,15 +44,17 @@ class VideoButton extends Component {
                 if (Platform.OS === 'ios') {
                     return (
                         <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo(this.props.setID, this.props.videoFileURL) }>
-                        <Video
-                            ref={(ref) => {
-                                this.player = ref
-                            }}
-                            style={[{flex:1, flexDirection:'column'}, styles.button, styles.blackButton]}
-                            source={{uri: this.props.videoFileURL}}
-                            paused={true}
-                            repeat={true}
-                        />
+                            <View style={[{flex: 1}, styles.button, styles.blackbutton]}>
+                                <Video
+                                    ref={(ref) => {
+                                        this.player = ref
+                                    }}
+                                    style={styles.button}
+                                    source={{uri: this.props.videoFileURL}}
+                                    paused={true}
+                                    repeat={true}
+                                />
+                            </View>
                         </TouchableOpacity>
                     );
                 } else {

@@ -48,6 +48,9 @@ class ApplicationView extends Component {
             return (
                 <ScrollableTabView
                     style={{marginTop: 20}}
+                    tabBarBackgroundColor={"#333333"}
+                    tabBarTextStyle={{color: 'white'}}
+                    tabBarUnderlineStyle={{backgroundColor: "#e76161"}}
                     contentProps={{ keyboardShouldPersistTaps: 'always', keyboardDismissMode: 'on-drag' }}
                     renderTabBar={() => <DefaultTabBar />}
                     initialPage={ 2 }

@@ -51,11 +51,11 @@ export const getWorkoutSets = (state) => {
 
 // Check Workout Sets
 
-export const checkWorkoutSets = (state) => {
+export const getIsWorkingSetEmpty = (state) => {
     const workoutData = stateRoot(state).workoutData;
     const set = workoutData[workoutData.length - 1];
 
-    if (workoutData.length >= 2 || (workoutData.length === 1 && set.exercise && set.weight && set.rpe && set.tags.length > 0 && set.videoURL )) {
+    if (workoutData.length >= 2 || (workoutData.length >= 1 && set.exercise && set.weight && set.rpe && set.tags.length > 0 && set.videoURL )) {
         return true
     } else {
         return false;

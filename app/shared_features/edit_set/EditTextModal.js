@@ -128,12 +128,11 @@ class EditTextModal extends Component {
     _tappedDone() {
         if (this.props.multipleInput) {
             if (this.state.text) {
-                let newInput = [...this.state.inputs, this.state.text];
-                this.props.saveSetMultipleInput(this.state.setID, newInput);
+                var inputs = [...this.state.inputs, this.state.text];
             } else {
-                let newInput = [this.state.text, ...this.state.inputs];
-                this.props.saveSetMultipleInput(this.state.setID, this.state.input);              
+                var inputs = this.state.inputs;
             }
+            this.props.saveSetMultipleInput(this.state.setID, inputs);            
         } else {
             this.props.saveSetSingleInput(this.state.setID, this.state.text);
         }

@@ -7,7 +7,7 @@ export const endWorkout = () => (dispatch, getState) => {
     var state = getState();
     var getIsWorkingSetEmpty = SetsSelectors.getIsWorkingSetEmpty(state)
 
-    if (getIsWorkingSetEmpty === true) {
+    if (getIsWorkingSetEmpty) {
         dispatch({ type: END_WORKOUT });
     }
 };

@@ -7,9 +7,13 @@ import Store from 'app/redux/Store';
 import ApplicationScreen from 'app/features/application/ApplicationScreen';
 import * as GoogleSignInSetup from 'app/services/GoogleSignInSetup';
 import Bluetooth from 'app/services/Bluetooth';
+import Permissions from 'app/services/Permissions';
 
 // initialize the store
 var store = Store();
+
+// request permissions
+Permissions();
 
 // configure google sign in
 GoogleSignInSetup.configure();

@@ -65,10 +65,6 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>OpenBarbell would like to find and connect to your OpenBarbell device via bluetooth</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>
@@ -98,11 +94,17 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>OpenBarbell would like to find and connect to your OpenBarbell device via bluetooth</string>
 	<key>NSCameraUsageDescription</key>
 	<string>OpenBarbell would like to record videos of your lifts</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>OpenBarbell would like to save recorded videos to your Photos library</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>OpenBarbell would like to record audio when recording videos of your lifts</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>OpenBarbell would like to access your current location</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>OpenBarbell would like to access your calendar</string>
 </dict>
 </plist>

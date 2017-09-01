@@ -67,27 +67,37 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 20,
         top: 30,
-        backgroundColor: 'rgba(0,0,0,0)'
+        width: 100,
+        backgroundColor: '#333333',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 8
     },
     cancelText: {
-        color: 'black',
+        color: 'white',
         fontWeight: 'bold',
         width: 50,
         height: 30,
-        backgroundColor: 'rgba(0,0,0,0)'        
+        paddingTop: 5,
+        textAlign: 'center'
     },
     deleteButton: {
         position: 'absolute',
         right: 20,
         top: 30,
-        backgroundColor: 'rgba(0,0,0,0)'
+        width: 100,
+        backgroundColor: 'red',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 8
     },
     deleteText: {
-        color: 'red',
+        color: 'white',
         fontWeight: 'bold',
         width: 50,
         height: 30,
-        backgroundColor: 'rgba(0,0,0,0)'        
+        paddingTop: 5,
+        textAlign: 'center'
     },
 });
 

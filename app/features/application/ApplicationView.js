@@ -8,7 +8,8 @@ import {
     ListView,
     ScrollView,
     Dimensions,
-    Alert
+    Alert,
+    Platform
 } from 'react-native';
 import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
 
@@ -47,13 +48,13 @@ class ApplicationView extends Component {
             );
         } else {
             return (
-                <View style={{flex:1, backgroundColor: 'black'}}>
+                <View style={[{flex: 1}, styles.container]}>
                     <StatusBar
                         backgroundColor="black"
                         barStyle="light-content"
                     />
                     <ScrollableTabView
-                        style={{marginTop: 20, flex: 1}}
+                        style={[styles.tabViewContainer, {flex: 1}]}
                         tabBarBackgroundColor={"#333333"}
                         tabBarTextStyle={{color: 'white'}}
                         tabBarUnderlineStyle={{backgroundColor: "#e76161"}}
@@ -97,6 +98,12 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 0,
         backgroundColor: 'white'
+    },
+    container: {
+        backgroundColor: 'black'
+    },
+    tabViewContainer: {
+        marginTop: (Platform.OS === 'ios') ? 20 : 0
     }
 });
 

@@ -10,6 +10,7 @@ import {
 import SettingsDeviceScreen from './device/SettingsDeviceScreen';
 import SettingsAccountScreen from './account/SettingsAccountScreen';
 import SettingsApplicationScreen from './application/SettingsApplicationScreen';
+import SettingsFeedbackScreen from './feedback/SettingsFeedbackPanel';
 
 class SettingsTab extends Component {
 
@@ -19,6 +20,7 @@ class SettingsTab extends Component {
                 <SettingsDeviceScreen />
                 <SettingsApplicationScreen />
                 <SettingsAccountScreen />
+                <SettingsFeedbackScreen />
             </View>
         );
     }

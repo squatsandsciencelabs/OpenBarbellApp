@@ -5,11 +5,11 @@ import {
     TouchableOpacity,
     Modal,
     StyleSheet,
-    Alert
+    Alert,
+    Platform
 }  from 'react-native';
 import Camera from 'react-native-camera';
 import KeepAwake from 'react-native-keep-awake';
-import BackgroundTimer from 'react-native-background-timer';
 
 class VideoRecorder extends Component {
 
@@ -37,12 +37,14 @@ class VideoRecorder extends Component {
     }
 
     _stopRecording() {
-        this.props.tappedStop();
-
-        // TODO: remove background timer hack, this was necessary to prevent weird behavior when ending too quickly
-        BackgroundTimer.setTimeout(() => {
+        if (Platform.OS === 'ios') {
+            // TODO: remove timer hack, this was necessary to prevent weird behavior when ending too quickly
+            setTimeout(() => {
+                this.camera.stopCapture();
+            }, 1000);
+        } else {
             this.camera.stopCapture();
-        }, 2000);
+        }
     }
 
     _renderActionButton() {

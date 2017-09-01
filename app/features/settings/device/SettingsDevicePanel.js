@@ -31,6 +31,9 @@ class SettingsDevicePanel extends Component {
             case 'DISCONNECTING':
                 return <SettingsDevicePanelDisconnecting
                     device={ this.props.deviceName }/>;
+            case 'RECONNECTING':
+                // TODO: reconnecting screen
+                return null;
         }
     }
 

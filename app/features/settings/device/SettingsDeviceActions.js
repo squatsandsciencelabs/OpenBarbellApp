@@ -1,13 +1,12 @@
 import { NativeModules } from 'react-native';
 
 import {
-    CONNECT_DEVICE,
-    DISCONNECT_DEVICE,
     START_DEVICE_SCAN,
     STOP_DEVICE_SCAN,
 } from 'app/ActionTypes';
 
 const RFDuinoLib = NativeModules.RFDuinoLib;
+import * as DeviceActionCreators from 'app/redux/shared_actions/DeviceActionCreators';
 
 export const startDeviceScan = () => {
     RFDuinoLib.startScan();
@@ -26,18 +25,9 @@ export const stopDeviceScan = () => {
 };
 
 export const connectDevice = (device) => {
-    RFDuinoLib.connectDevice(device);
-
-    return {
-        type: CONNECT_DEVICE,
-        device: device
-    };
+    return DeviceActionCreators.connectDevice(device);
 };
 
 export const disconnectDevice = () => {
-    RFDuinoLib.disconnectDevice();
-
-    return {
-        type: DISCONNECT_DEVICE
-    };
+    return DeviceActionCreators.disconnectDevice();
 };

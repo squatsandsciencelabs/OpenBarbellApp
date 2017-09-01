@@ -23,6 +23,22 @@ class VideoRecorder extends Component {
         }
     }
 
+    componentWillUnmount() {
+        if (this.timer) {
+            clearTimeout(this.timer);
+        }
+    }
+
+    // actions
+
+    _closeModal() {
+        if (!this.timer) {
+            this.props.closeModal();
+        }
+    }
+
+    // record
+
     _record() {
         this.camera.capture({
             mode: Camera.constants.CaptureMode.video,
@@ -39,13 +55,15 @@ class VideoRecorder extends Component {
     _stopRecording() {
         if (Platform.OS === 'ios') {
             // TODO: remove timer hack, this was necessary to prevent weird behavior when ending too quickly
-            setTimeout(() => {
+            this.timer = setTimeout(() => {
                 this.camera.stopCapture();
             }, 1000);
         } else {
             this.camera.stopCapture();
         }
     }
+
+    // render
 
     _renderActionButton() {
         if (this.props.isSaving) {
@@ -83,7 +101,7 @@ class VideoRecorder extends Component {
                         aspect={Camera.constants.Aspect.fit}>
 
                         <View style={styles.cancelButton}>
-                            <TouchableOpacity onPress={()=>this.props.closeModal()}>
+                            <TouchableOpacity onPress={()=>this._closeModal()}>
                                 <Text style={styles.cancelText}>Cancel</Text>
                             </TouchableOpacity>
                         </View>

@@ -31,7 +31,7 @@ class VideoButton extends Component {
             case 'commentary':
                 return (
                     <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this.props.tappedCommentary(this.props.setID) }>
-                        <View style={[{flex:1, flexDirection:'column'}, styles.button, styles.graybutton]}>
+                        <View style={[{flex:1, flexDirection:'column'}, styles.button, styles.grayButton]}>
                             <Icon name="camera" size={20} color='gray' style={{marginTop: 10, marginBottom: 5}} />
                             <Text style={styles.grayText}>Add</Text>
                             <Text style={styles.grayText}>Video Log</Text>
@@ -44,7 +44,7 @@ class VideoButton extends Component {
                 if (Platform.OS === 'ios') {
                     return (
                         <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo(this.props.setID, this.props.videoFileURL) }>
-                            <View style={[{flex: 1}, styles.button, styles.blackbutton]}>
+                            <View style={[{flex: 1}, styles.button, styles.blackButton]}>
                                 <Video
                                     ref={(ref) => {
                                         this.player = ref
@@ -86,11 +86,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'green',
         borderColor: 'green',
     },
-    graybutton: {
+    grayButton: {
         backgroundColor: 'rgba(239, 239, 239, 1)',
         borderColor: 'rgba(239, 239, 239, 1)',
     },
-    blackbutton: {
+    blackButton: {
         backgroundColor: 'black',
         borderColor: 'black',
     },

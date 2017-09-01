@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {
     TouchableHighlight,
     Text,
+    StatusBar,
     StyleSheet,
     View,
     ListView,
@@ -46,26 +47,32 @@ class ApplicationView extends Component {
             );
         } else {
             return (
-                <ScrollableTabView
-                    style={{marginTop: 20}}
-                    tabBarBackgroundColor={"#333333"}
-                    tabBarTextStyle={{color: 'white'}}
-                    tabBarUnderlineStyle={{backgroundColor: "#e76161"}}
-                    contentProps={{ keyboardShouldPersistTaps: 'always', keyboardDismissMode: 'on-drag' }}
-                    renderTabBar={() => <DefaultTabBar />}
-                    initialPage={ 2 }
-                    onChangeTab={ () => { this.props.changeTab() } }>
-                    <View style={styles.tabView} tabLabel='WORKOUT'>
-                        <WorkoutScreen />
-                    </View>
-                    <View style={styles.tabView} tabLabel='HISTORY'>
-                        <HistoryScreen />
-                    </View>
-                    <ScrollView style={styles.tabView} tabLabel='SETTINGS'>
-                        <SettingsTab />
-                    </ScrollView>
+                <View style={{flex:1, backgroundColor: 'black'}}>
+                    <StatusBar
+                        backgroundColor="black"
+                        barStyle="light-content"
+                    />
+                    <ScrollableTabView
+                        style={{marginTop: 20, flex: 1}}
+                        tabBarBackgroundColor={"#333333"}
+                        tabBarTextStyle={{color: 'white'}}
+                        tabBarUnderlineStyle={{backgroundColor: "#e76161"}}
+                        contentProps={{ keyboardShouldPersistTaps: 'always', keyboardDismissMode: 'on-drag' }}
+                        renderTabBar={() => <DefaultTabBar />}
+                        initialPage={ 2 }
+                        onChangeTab={ () => { this.props.changeTab() } }>
+                        <View style={styles.tabView} tabLabel='WORKOUT'>
+                            <WorkoutScreen />
+                        </View>
+                        <View style={styles.tabView} tabLabel='HISTORY'>
+                            <HistoryScreen />
+                        </View>
+                        <ScrollView style={styles.tabView} tabLabel='SETTINGS'>
+                            <SettingsTab />
+                        </ScrollView>
 
-                </ScrollableTabView>
+                    </ScrollableTabView>
+                </View>
             );
         }
     }
@@ -89,7 +96,7 @@ const styles = StyleSheet.create({
     tabView: {
         flex: 1,
         padding: 0,
-        backgroundColor: 'rgba(0,0,0,0.01)'
+        backgroundColor: 'white'
     }
 });
 

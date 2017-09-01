@@ -31,12 +31,10 @@ class SettingsApplicationPanel extends Component {
             return (
                     <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
                         <View>
-                            <Text style={ SETTINGS_PANEL_STYLES.headerText }>
-                                Time to start new set
-                            </Text>
-                        </View>
-                        <View>
                             <TouchableOpacity onPress={() => this._tappedSetTimer()}>
+                                <Text style={ SETTINGS_PANEL_STYLES.headerText }>
+                                    Time to start new set
+                                </Text>
                                 <Text style={SETTINGS_PANEL_STYLES.tappableText  }>
                                     { DateUtils.timerDurationDescription(this.props.endSetTimerDuration) }{"\n"}
                                 </Text>
@@ -44,12 +42,10 @@ class SettingsApplicationPanel extends Component {
                         </View>
                         <SettingsEndSetTimerScreen />
                         <View>
-                            <Text style={ SETTINGS_PANEL_STYLES.headerText }>
-                                Set default metric
-                            </Text>
-                        </View>
-                        <View>
                             <TouchableOpacity onPress={() => this._tapDefaultMetric()}>
+                                <Text style={ SETTINGS_PANEL_STYLES.headerText }>
+                                    Set default metric
+                                </Text>                              
                                 <Text style={SETTINGS_PANEL_STYLES.tappableText}>
                                   {this.props.defaultMetric}
                                 </Text>

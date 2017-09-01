@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
         },
     },
     horizontalBorder: {
-        backgroundColor: 'lightgray',
+        backgroundColor: 'white',
         opacity: 0.5,
         height: 1,
     },

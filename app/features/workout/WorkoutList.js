@@ -22,6 +22,7 @@ import SetRestRow from 'app/shared_features/set_card/SetRestRow';
 import WorkoutVideoButtonScreen from './card/WorkoutVideoButtonScreen';
 import WorkoutVideoRecorderScreen from './camera/WorkoutVideoRecorderScreen';
 import WorkoutVideoPlayerScreen from './video/WorkoutVideoPlayerScreen';
+import ListLoadingFooter from '../history/loading/ListLoadingFooter';
 
 class WorkoutList extends Component {
 
@@ -62,10 +63,16 @@ class WorkoutList extends Component {
         }
     }
 
+    _renderSectionFooter(section) {
+        if (section.key !== 0) {
+            return <ListLoadingFooter />
+        }
+    }
+
     _renderRow(section, index, item) {
         switch (item.type) {
             case "header":
-                return (<View style={{marginTop: 15}}>
+                return (<View style={{marginTop: 15, backgroundColor: 'white'}}>
                             <EditWorkoutSetFormScreen
                                 setNumber={item.setNumber}
                                 setID={item.setID}
@@ -117,9 +124,10 @@ class WorkoutList extends Component {
                 initialNumToRender={13}
                 stickySectionHeadersEnabled={false}
                 renderItem={({section, index, item}) => this._renderRow(section, index, item)}
-                renderSectionHeader={({section}) => this._renderSectionHeader(section) }
+                renderSectionHeader={({section}) => this._renderSectionHeader(section)}
+                renderSectionFooter={({section}) => this._renderSectionFooter(section)}
                 sections={this.props.sections}
-                style = {{padding: 10, backgroundColor: 'white'}}
+                style = {{padding: 10, backgroundColor: '#f2f2f2'}}
             />);
         }
 

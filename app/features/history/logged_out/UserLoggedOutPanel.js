@@ -10,7 +10,7 @@ class UserLoggedOutPanel extends Component {
     render() {
         let subtitle = this.props.subtitle
         return (
-            <View style={ { flexDirection: 'column', margin:20 } }>
+            <View style={ { flex: 1, flexDirection: 'column', marginTop: 225, margin: 20 } }>
                 <View>
                     <Text style={ SETTINGS_PANEL_STYLES.headerText }>
                         Sorry, this feature is not available.

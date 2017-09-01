@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     tabView: {
         flex: 1,
         padding: 0,
-        backgroundColor: 'white'
+        backgroundColor: '#f2f2f2'
     },
     container: {
         backgroundColor: 'black'

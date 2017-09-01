@@ -48,6 +48,7 @@ public class RFDuinoServiceModule extends ReactContextBaseJavaModule implements 
     // scanning
     private static final String REACT_EVENT_FOUND = "Found";
     private static final String REACT_EVENT_PARAM_NAME = "name";
+    private static final String REACT_EVENT_PARAM_IDENTIFIER = "identifier";
     // connections status
     private static final String REACT_EVENT_DEVICE_BLUETOOTH_OFF = "BluetoothOff";
     private static final String REACT_EVENT_DEVICE_DISCONNECTED = "Disconnected";
@@ -188,7 +189,7 @@ public class RFDuinoServiceModule extends ReactContextBaseJavaModule implements 
     public void startScan() {
         if (scanningForDevices) return;
 
-        devices.clear();
+        // devices.clear();
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             if (bluetoothLeScanner != null) {
@@ -245,10 +246,10 @@ public class RFDuinoServiceModule extends ReactContextBaseJavaModule implements 
         if (device != null && device.getName() != null && !device.getName().isEmpty()) {
             String deviceName = device.getName();
             // only send the 'Found' event if it's a unique device for this scan
-            if (!devices.containsKey(deviceName)) {
+            // if (!devices.containsKey(deviceName)) {
                 devices.put(deviceName, device);
-                sendDeviceReactEvent(REACT_EVENT_FOUND, deviceName);
-            }
+                sendDeviceReactEvent(REACT_EVENT_FOUND, deviceName, device.getAddress());
+            // }
         }
     }
 
@@ -312,6 +313,9 @@ public class RFDuinoServiceModule extends ReactContextBaseJavaModule implements 
      */
     @ReactMethod
     public void connectDevice(String deviceName) {
+        // just in case
+        disconnectDevice();
+
         targetDevice = devices.get(deviceName);
 
         // start connecting to target device
@@ -391,28 +395,35 @@ public class RFDuinoServiceModule extends ReactContextBaseJavaModule implements 
     private void sendDeviceStateReactEvent() {
         switch (state) {
             case STATE_BLUETOOTH_OFF:
-                sendDeviceReactEvent(REACT_EVENT_DEVICE_BLUETOOTH_OFF, null);
+                sendDeviceReactEvent(REACT_EVENT_DEVICE_BLUETOOTH_OFF, null, null);
                 break;
             case STATE_DISCONNECTED:
-                sendDeviceReactEvent(REACT_EVENT_DEVICE_DISCONNECTED, null);
+                if (targetDevice != null) {
+                    sendDeviceReactEvent(REACT_EVENT_DEVICE_DISCONNECTED, targetDevice.getName(), targetDevice.getAddress());
+                } else {
+                    sendDeviceReactEvent(REACT_EVENT_DEVICE_DISCONNECTED, null, null);
+                }
                 break;
             case STATE_CONNECTING:
                 if (targetDevice != null) {
-                    sendDeviceReactEvent(REACT_EVENT_DEVICE_CONNECTING, targetDevice.getName());
+                    sendDeviceReactEvent(REACT_EVENT_DEVICE_CONNECTING, targetDevice.getName(), targetDevice.getAddress());
                 }
                 break;
             case STATE_CONNECTED:
                 if (targetDevice != null) {
-                    sendDeviceReactEvent(REACT_EVENT_DEVICE_CONNECTED, targetDevice.getName());
+                    sendDeviceReactEvent(REACT_EVENT_DEVICE_CONNECTED, targetDevice.getName(), targetDevice.getAddress());
                 }
                 break;
         }
     }
 
-    private void sendDeviceReactEvent(String eventName, String deviceName) {
+    private void sendDeviceReactEvent(String eventName, String deviceName, String deviceIdentifier) {
         WritableMap params = Arguments.createMap();
         if (deviceName != null) {
             params.putString(REACT_EVENT_PARAM_NAME, deviceName);
+        }
+        if (deviceIdentifier != null) {
+            params.putString(REACT_EVENT_PARAM_IDENTIFIER, deviceIdentifier);
         }
         getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit(eventName, params);

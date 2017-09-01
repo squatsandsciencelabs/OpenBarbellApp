@@ -21,12 +21,6 @@ class SettingsDevicePanelConnecting extends Component {
                 <View style={ SETTINGS_PANEL_STYLES.content }>
                     <Image source={require('app/appearance/images/icon_bluetooth_connecting.png')} />
                 </View>
-                <View style={ SETTINGS_PANEL_STYLES.footer }>
-                    <Text style={ SETTINGS_PANEL_STYLES.footerCancelText }
-                          onPress={ () => this.props.disconnectDevice() }>
-                        CANCEL
-                    </Text>
-                </View>
             </View>
         );
     }

@@ -4,7 +4,8 @@ import {
     BLUETOOTH_OFF,
     DISCONNECTED_FROM_DEVICE,
     CONNECTING_TO_DEVICE,
-    CONNECTED_TO_DEVICE
+    CONNECTED_TO_DEVICE,
+    RECONNECTING_TO_DEVICE
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -22,10 +23,13 @@ const ConnectedDeviceReducer = ( state = defaultState, action) => {
                 deviceIdentifier: action.deviceIdentifier
             });
         case DISCONNECT_DEVICE:
+            // TODO: confirm if there's an issue here with disconnecting from the device
+            // It's possible that the disconnect fails and removing the device name and identifier here could cause an issue
+            // For now, setting to null on disconnect to differentiate between manual disconnect and other disconnects
             return Object.assign({}, state, {
                 status: 'DISCONNECTING',
-                deviceName: state.deviceName,
-                deviceIdentifier: action.deviceIdentifier
+                deviceName: null,
+                deviceIdentifier: null
             });
         case BLUETOOTH_OFF:
             return Object.assign({}, state, {
@@ -48,6 +52,12 @@ const ConnectedDeviceReducer = ( state = defaultState, action) => {
         case CONNECTED_TO_DEVICE:
             return Object.assign({}, state, {
                 status: 'CONNECTED',
+                deviceName: action.deviceName,
+                deviceIdentifier: action.deviceIdentifier
+            });
+        case RECONNECTING_TO_DEVICE:
+            return Object.assign({}, state, {
+                status: 'RECONNECTING',
                 deviceName: action.deviceName,
                 deviceIdentifier: action.deviceIdentifier
             });

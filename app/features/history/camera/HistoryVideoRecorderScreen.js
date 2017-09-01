@@ -10,6 +10,7 @@ const mapStateToProps = (state) => ({
     videoType: HistorySelectors.getRecordingVideoType(state),
     isModalShowing: HistorySelectors.getIsCameraVisible(state),
     isRecording: HistorySelectors.getIsRecording(state),
+    isSaving: HistorySelectors.getIsSavingVideo(state)    
 });
 
 const mapDispatchToProps = (dispatch) => {

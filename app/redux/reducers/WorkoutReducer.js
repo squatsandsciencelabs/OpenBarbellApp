@@ -25,8 +25,9 @@ const defaultState = {
     recordingSetID: null,
     recordingVideoType: null,
     isRecording: false,
+    isSavingVideo: false,
     watchSetID: null,
-    watchFileURL: null
+    watchFileURL: null,
 };
 
 const WorkoutReducer = (state = defaultState, action) => {
@@ -64,14 +65,16 @@ const WorkoutReducer = (state = defaultState, action) => {
             return Object.assign({}, state, {
                 recordingSetID: action.setID,
                 recordingVideoType: action.isCommentary ? 'commentary' : 'lift',
-                isRecording: false
+                isRecording: false,
+                isSavingVideo: false                
             });
         case SAVE_WORKOUT_VIDEO:
         case DISMISS_WORKOUT_VIDEO_RECORDER:
             return Object.assign({}, state, {
                 recordingSetID: null,
                 recordingVideoType: null,
-                isRecording: false
+                isRecording: false,
+                isSavingVideo: false                
             });
         case START_RECORDING_WORKOUT:
             return Object.assign({}, state, {
@@ -79,7 +82,8 @@ const WorkoutReducer = (state = defaultState, action) => {
             });
         case STOP_RECORDING_WORKOUT:
             return Object.assign({}, state, {
-                isRecording: false
+                isRecording: false,
+                isSavingVideo: true
             });
         case PRESENT_WORKOUT_VIDEO_PLAYER:
             return Object.assign({}, state, {

@@ -30,8 +30,9 @@ const defaultState = {
     recordingSetID: null,
     recordingVideoType: null,
     isRecording: false,
+    isSavingVideo: false,    
     watchSetID: null,
-    watchFileURL: null
+    watchFileURL: null,
 };
 
 const HistoryReducer = (state = defaultState, action) => {
@@ -79,14 +80,17 @@ const HistoryReducer = (state = defaultState, action) => {
         case PRESENT_HISTORY_VIDEO_RECORDER:
             return Object.assign({}, state, {
                 recordingSetID: action.setID,
-                recordingVideoType: action.isCommentary ? 'commentary' : 'lift'
+                recordingVideoType: action.isCommentary ? 'commentary' : 'lift',
+                isRecording: false,                
+                isSavingVideo: false                
             });
         case SAVE_HISTORY_VIDEO:
         case DISMISS_HISTORY_VIDEO_RECORDER:
             return Object.assign({}, state, {
                 recordingSetID: null,
                 recordingVideoType: null,
-                isRecording: false
+                isRecording: false,
+                isSavingVideo: false
             });
         case START_RECORDING_HISTORY:
             return Object.assign({}, state, {
@@ -95,6 +99,7 @@ const HistoryReducer = (state = defaultState, action) => {
         case STOP_RECORDING_HISTORY:
             return Object.assign({}, state, {
                 isRecording: false,
+                isSavingVideo: true                
             });
         case PRESENT_HISTORY_VIDEO_PLAYER:
             return Object.assign({}, state, {

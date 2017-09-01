@@ -26,6 +26,7 @@ class VideoRecorder extends Component {
     componentWillUnmount() {
         if (this.timer) {
             clearTimeout(this.timer);
+            this.timer = nil;
         }
     }
 
@@ -57,6 +58,8 @@ class VideoRecorder extends Component {
             // TODO: remove timer hack, this was necessary to prevent weird behavior when ending too quickly
             this.timer = setTimeout(() => {
                 this.camera.stopCapture();
+                clearTimeout(this.timer);
+                this.timer = null;    
             }, 1000);
         } else {
             this.camera.stopCapture();

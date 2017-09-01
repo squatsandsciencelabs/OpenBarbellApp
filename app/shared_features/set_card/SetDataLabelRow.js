@@ -9,7 +9,7 @@ class SetDataLabelRow extends PureComponent {
 
     render() {
         return (
-            <View style={[{flexDirection: 'column', alignItems: 'stretch', paddingTop: 5}, styles.shadow]}>
+            <View style={[{flexDirection: 'column', alignItems: 'stretch', paddingTop: 5}, styles.shadow, styles.container]}>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                     <View style={styles.headerLabel}><Text style={styles.text}>REP</Text></View>
                     <View style={styles.headerLabel}><Text style={styles.text}>AVG</Text></View>
@@ -41,6 +41,9 @@ const styles = StyleSheet.create({
     text: {
         color: 'lightgray'
     },
+    container: {
+        backgroundColor: 'white'
+    },
     shadow: {
         shadowColor: "#000000",
         shadowOpacity: 0.2,
@@ -51,7 +54,7 @@ const styles = StyleSheet.create({
         },
     },
     horizontalBorder: {
-        backgroundColor: 'white',
+        backgroundColor: 'lightgray',
         opacity: 0.5,
         height: 1,
     },

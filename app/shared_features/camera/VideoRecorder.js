@@ -101,9 +101,11 @@ class VideoRecorder extends Component {
                         aspect={Camera.constants.Aspect.fit}>
 
                         <View style={styles.cancelButton}>
+                            <View>
                             <TouchableOpacity onPress={()=>this._closeModal()}>
-                                <Text style={styles.cancelText}>Cancel</Text>
+                                <View><Text style={styles.cancelText}>Cancel</Text></View>
                             </TouchableOpacity>
+                            </View>
                         </View>
 
                         <View style={{position: 'absolute', bottom: 50, left: 0, right: 0, alignItems: 'center'}}>
@@ -153,15 +155,21 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     cancelButton: {
-        paddingTop: 30,
-        paddingLeft: 20,
-        backgroundColor: 'rgba(0,0,0,0)',
+        marginTop: 30,
+        marginLeft: 20,
+        width: 100,
+        backgroundColor: '#333333',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 8
     },
     cancelText: {
-        color: 'black',
+        color: 'white',
         fontWeight: 'bold',
         width: 50,
-        height: 30
+        height: 30,
+        paddingTop: 5,
+        textAlign: 'center'
     }
 });
 

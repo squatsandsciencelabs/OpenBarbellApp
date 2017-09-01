@@ -14,6 +14,8 @@ export const getIsCameraVisible = (state) => stateRoot(state).recordingSetID !==
 
 export const getRecordingSetID = (state) => stateRoot(state).recordingSetID;
 
+export const getIsSavingVideo = (state) => stateRoot(state).isSavingVideo;
+
 // video player
 
 export const getWatchSetID = (state) => stateRoot(state).watchSetID;

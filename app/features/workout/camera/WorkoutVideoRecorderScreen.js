@@ -10,6 +10,7 @@ const mapStateToProps = (state) => ({
     videoType: WorkoutSelectors.getRecordingVideoType(state),
     isModalShowing: WorkoutSelectors.getIsCameraVisible(state),
     isRecording: WorkoutSelectors.getIsRecording(state),
+    isSaving: WorkoutSelectors.getIsSavingVideo(state)
 });
 
 const mapDispatchToProps = (dispatch) => {

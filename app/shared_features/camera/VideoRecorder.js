@@ -9,6 +9,7 @@ import {
 }  from 'react-native';
 import Camera from 'react-native-camera';
 import KeepAwake from 'react-native-keep-awake';
+import BackgroundTimer from 'react-native-background-timer';
 
 class VideoRecorder extends Component {
 
@@ -36,11 +37,22 @@ class VideoRecorder extends Component {
     }
 
     _stopRecording() {
-        this.camera.stopCapture();
+        this.props.tappedStop();
+
+        // TODO: remove background timer hack, this was necessary to prevent weird behavior when ending too quickly
+        BackgroundTimer.setTimeout(() => {
+            this.camera.stopCapture();
+        }, 2000);
     }
 
     _renderActionButton() {
-        if (this.props.isRecording) {
+        if (this.props.isSaving) {
+            return (
+                <View style={[styles.actionButton, styles.savingButton]}>
+                    <Text style={styles.buttonText}>SAVING</Text>
+                </View>
+            );
+        } else if (this.props.isRecording) {
             return (
                 <TouchableOpacity onPress={()=>this.props.tappedStop()}>
                     <View style={[styles.actionButton, styles.stopButton]}>
@@ -112,6 +124,9 @@ const styles = StyleSheet.create({
     },
     stopButton: {
         backgroundColor: 'red',
+    },
+    savingButton: {
+        backgroundColor: 'darkgray'
     },
     buttonText: {
         color: 'white',

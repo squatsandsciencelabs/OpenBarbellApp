@@ -9,7 +9,6 @@ export const startTime = (set) => {
         if (validReps.length > 0) {
             return validReps[0].time;
         } else {
-            console.tron.log("start time calculation failed for " + set);
             return null;
         }
     } else {
@@ -25,7 +24,6 @@ export const endTime = (set) => {
         if (validReps.length > 0) {
             return validReps[validReps.length-1].time;
         } else {
-            console.tron.log("end time calculation failed for " + set);
             return null;
         }
     } else {

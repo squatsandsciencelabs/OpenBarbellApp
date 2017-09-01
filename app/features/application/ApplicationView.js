@@ -47,14 +47,23 @@ class ApplicationView extends Component {
                 </View>
             );
         } else {
+            if (Platform.OS === 'ios') {
+                var statusBarBG = (
+                    <View style={[{width: 9001}, styles.statusBar]}></View>
+                );
+            } else {
+                var statusBarBG = null;
+            }
+
             return (
                 <View style={[{flex: 1}, styles.container]}>
                     <StatusBar
                         backgroundColor="black"
                         barStyle="light-content"
                     />
+                    { statusBarBG }
                     <ScrollableTabView
-                        style={[styles.tabViewContainer, {flex: 1}]}
+                        style={{flex: 1}}
                         tabBarBackgroundColor={"#333333"}
                         tabBarTextStyle={{color: 'white'}}
                         tabBarUnderlineStyle={{backgroundColor: "#e76161"}}
@@ -100,10 +109,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#f2f2f2'
     },
     container: {
-        backgroundColor: 'black'
+        backgroundColor: '#f2f2f2'
     },
-    tabViewContainer: {
-        marginTop: (Platform.OS === 'ios') ? 20 : 0
+    statusBar: {
+        height: 20,
+        backgroundColor: 'black'
     }
 });
 

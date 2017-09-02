@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Alert, TouchableHighlight, View, Text } from 'react-native';
+import { Alert, TouchableOpacity, View, Text } from 'react-native';
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 
@@ -34,9 +34,9 @@ class SettingsAccountPanel extends Component {
                     <Text style={{color:'gray', marginTop: 10}}>Last synced to the cloud:</Text>
                     <Text>{this.props.syncDate}</Text>
                     
-                    <TouchableHighlight style={{width: 100, marginTop: 20}} onPress={ () => this.tappedSignOut() }>
+                    <TouchableOpacity style={{width: 100, marginTop: 20}} onPress={ () => this.tappedSignOut() }>
                         <Text style={[SETTINGS_PANEL_STYLES.blueButton, {padding: 5}]}>Logout</Text>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </View>
             );
         } else if (this.props.isLoggingIn === true) {
@@ -49,11 +49,11 @@ class SettingsAccountPanel extends Component {
             return (
                 <View style={ [SETTINGS_PANEL_STYLES.panel, { flex: 1 }] }>
                     <Text style={{color:'gray', marginBottom: 15, textAlign: 'center'}}>Sign in to sync data to the cloud</Text>
-                    <TouchableHighlight onPress={ () => this.props.signIn() }>
+                    <TouchableOpacity onPress={ () => this.props.signIn() }>
                         <View pointerEvents="none" style={{alignItems:'center'}}>
                             <GoogleSigninButton style={{width: 212, height: 48}} size={GoogleSigninButton.Size.Standard} color={GoogleSigninButton.Color.Light} />
                         </View>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </View>
             );
         }

@@ -53,7 +53,7 @@ class PickerModal extends Component {
         } else {
             return (
                 <Picker
-                    style={{backgroundColor: 'white', color: 'blue'}}
+                    style={{backgroundColor: 'lightgray', color: 'blue', flex: 1}}
                     selectedValue={this.props.selectedValue}
                     onValueChange={(value) => this._onValueChange(value)}>
                     { this._renderItems() }
@@ -65,7 +65,7 @@ class PickerModal extends Component {
     _renderItems() {
         var count = 0;
         return this.props.items.map(function (item) {
-            return <Picker.Item key={count++} label={item.label} value={item.value} />;
+            return (<Picker.Item key={count++} label={item.label} value={item.value} />);
         });
     }
 }

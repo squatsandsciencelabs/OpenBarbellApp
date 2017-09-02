@@ -9,6 +9,7 @@ import * as RepDataMap from 'app/utility/transforms/RepDataMap';
 import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 import * as Actions from './HistoryActions';
 import HistoryList from './HistoryList';
+import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 
 // NOTE: this means that every history screen accesses previous values as singletons
 var storedSections = null; // the actual data
@@ -28,11 +29,16 @@ const createViewModels = (sets, shouldShowRemoved) => {
     let lastSetEndTime = null; // to help calculate rest time
     let isInitialSet = false; // to help determine when to display rest time
 
-    // ignore empty or removed sets
-    var sets = sets.filter((set) => set.reps.length > 0 && (shouldShowRemoved || !set.removed));
-
     // build view models
-    sets.map((set) => {
+    for (let i=0; i<sets.length; i++) {
+        // get set
+        let set = sets[i];
+
+        // ignore completely empty set
+        if (!shouldShowRemoved && SetEmptyCheck.isEmpty(set)) {
+            continue;
+        }
+        
         // every workout is a section
         if (lastWorkoutID !== set.workoutID) {
             // set vars
@@ -62,7 +68,9 @@ const createViewModels = (sets, shouldShowRemoved) => {
             }
         }
         array.push(createHeaderViewModel(set, setNumber));
-        array.push({type: "subheader", key: set.setID+"subheader"});
+        if (!SetEmptyCheck.hasEmptyReps(set)) {
+            array.push({type: "subheader", key: set.setID+"subheader"});
+        }
         lastExerciseName = set.exercise;
 
         // reps
@@ -84,7 +92,7 @@ const createViewModels = (sets, shouldShowRemoved) => {
 
         // insert set card data
         Array.prototype.splice.apply(section.data, array);
-    });
+    }
 
     // add positions
     for (var i = 0; i < sections.length; i++) {

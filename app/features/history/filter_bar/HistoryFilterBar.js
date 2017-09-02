@@ -5,7 +5,7 @@ import {
     Text,
     Switch,
     StyleSheet,
-    TouchableHighlight
+    TouchableOpacity
 } from 'react-native';
 
 class HistoryFilterBar extends Component {
@@ -33,9 +33,9 @@ class HistoryFilterBar extends Component {
             );
         } else {
             return (
-                <TouchableHighlight style={{justifyContent: 'center'}} onPress={ () => this._onPressCSV() } activeOpacity={1} >
+                <TouchableOpacity style={{justifyContent: 'center'}} onPress={ () => this._onPressCSV() } >
                     <Text style={{color:'white', marginLeft: 5}}>Export CSV</Text>
-                </TouchableHighlight>
+                </TouchableOpacity>
             );
         }
     }

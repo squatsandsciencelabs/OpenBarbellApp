@@ -2,26 +2,34 @@ import React, {PureComponent} from 'react';
 import {
     View,
     StyleSheet,
-    TouchableHighlight,
+    TouchableOpacity,
     Text
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class SetDataRow extends PureComponent {
 
+    _onPressRow() {
+        // full screen mode
+        // this.props.onPressRow();
+
+        // temp just toggle remove
+        if (this.props.item.removed) {
+            this.props.onPressRestore();
+        } else {
+            this.props.onPressRemove();
+        }
+    }
+
     render() {
         var button = null;
-        if (this.props.item.removed === false) {
+        if (!this.props.item.removed) {
             button = (
-                <TouchableHighlight onPress={ () => this.props.onPressRemove() }>
-                    <Icon name="close" size={20} color="lightgray" style={{marginTop: 10}} />
-                </TouchableHighlight>
+                <Icon name="close" size={20} color="lightgray" style={{marginTop: -1, marginRight: 3}} />
             );
         } else {
             button = (
-                <TouchableHighlight onPress={ () => this.props.onPressRestore() }>
-                    <Icon name="undo" size={20} color="lightgray" style={{marginTop: 10}} />
-                </TouchableHighlight>
+                <Icon name="undo" size={20} color="lightgray" style={{marginTop: -1, marginRight: 3}} />
             );
         }
 
@@ -29,7 +37,7 @@ class SetDataRow extends PureComponent {
         
         return (
             <View style={[styles.shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
-                <TouchableHighlight style={{flex:1}} onPress={ () => this.props.onPressRow() } activeOpacity={1} >
+                <TouchableOpacity style={{flex:1}} onPress={ () => this._onPressRow() } >
                     <View style={styles.bar}>
                         <Text style={dataStyle}> { this.props.item.repDisplay } </Text>
                         <Text style={dataStyle}> { this.props.item.averageVelocity } </Text>
@@ -37,10 +45,9 @@ class SetDataRow extends PureComponent {
                         <Text style={dataStyle}> { this.props.item.peakVelocityLocation } </Text>
                         <Text style={dataStyle}> { this.props.item.rangeOfMotion } </Text>
                         <Text style={dataStyle}> { this.props.item.duration } </Text>
+                        {button}
                     </View>
-                </TouchableHighlight>
-
-                {button}
+                </TouchableOpacity>
             </View>
         );
     }

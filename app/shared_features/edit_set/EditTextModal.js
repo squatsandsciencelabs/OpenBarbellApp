@@ -157,8 +157,16 @@ class EditTextModal extends Component {
 
     // TODO: grab the blue color for cancel from a global stylesheet
     _renderNavigation() {
+        if (Platform.OS === 'ios') {
+            var statusBar = (<View style={{height: 20, width: 9001, backgroundColor: 'black'}}></View>);
+        } else {
+            var statusBar = null;
+        }
+
         return (
             <View style={styles.container}>
+                { statusBar }
+
                 <View style={{position: 'absolute', left: 0, top: 0}}>
                     <TouchableOpacity onPress={() => this.props.closeModal()}>
                         <View style={styles.nav}>
@@ -167,7 +175,7 @@ class EditTextModal extends Component {
                     </TouchableOpacity>
                 </View>
 
-                <View style={styles.nav}>
+                <View style={{paddingTop: 10}}>
                     <Text style={styles.boldFont}>{this.props.title}</Text>
                 </View>
 

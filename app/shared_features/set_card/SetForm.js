@@ -152,7 +152,7 @@ class SetForm extends Component {
     _renderExercise() {
         return (
             <View style={styles.field}>
-                <TouchableHighlight onPress={() => this.props.tapExercise(this.props.setID, this.state.exercise, this.props.bias)}>
+                <TouchableHighlight onPress={() => this.props.tapExercise(this.props.setID, this.state.exercise, this.props.bias)} underlayColor='lightgray'>
                     {this._displayExercise()}
                 </TouchableHighlight>
                 <View style={styles.fieldDetails} pointerEvents='none'>
@@ -212,7 +212,7 @@ class SetForm extends Component {
     _renderTags() {
         return (
             <View style={[styles.field, {flex: 1}]}>
-                <TouchableHighlight onPress={() => this.props.tapTags(this.props.setID, this.state.tags)}>
+                <TouchableHighlight onPress={() => this.props.tapTags(this.props.setID, this.state.tags)} underlayColor='lightgray'>
                     {this._displayTags()}
                 </TouchableHighlight>
             </View>
@@ -285,7 +285,8 @@ const styles = StyleSheet.create({
         color: 'lightgray'
     },
     detailText: {
-        color: 'gray'
+        color: 'gray',
+        backgroundColor: 'rgba(0, 0, 0, 0)'
     },
     upperShadow: {
         shadowColor: "#000000",

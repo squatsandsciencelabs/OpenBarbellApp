@@ -159,22 +159,22 @@ class EditTextModal extends Component {
         return (
             <View style={{height: 60, alignItems: 'center'}}>
                 <View style={{position: 'absolute', left: 0, top: 0}}>
-                    <TouchableHighlight onPress={() => this.props.closeModal()}>
+                    <TouchableOpacity onPress={() => this.props.closeModal()}>
                         <View style={{paddingTop: 30, paddingRight: 10, paddingBottom: 10, paddingLeft: 10}}>
                             <Text style={[styles.boldFont, {color: 'rgba(47, 128, 237, 1)'}]}>Cancel</Text>
                         </View>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </View>
                 <View style={{top: 30}}>
                     <Text style={styles.boldFont}>{this.props.title}</Text>
                 </View>
 
                 <View style={{position: 'absolute', right: 0, top: 0}}>
-                    <TouchableHighlight onPress={() => this._tappedDone() }>
+                    <TouchableOpacity onPress={() => this._tappedDone() }>
                         <View style={{paddingTop: 30, paddingRight: 10, paddingBottom: 10, paddingLeft: 10}}>
                             <Text style={[styles.boldFont, {color: 'rgba(47, 128, 237, 1)'}]}>Done</Text>
                         </View>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                 </View>
             </View>
         )

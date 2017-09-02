@@ -82,6 +82,7 @@ const createSet = (setNumber = 1, metric = "kgs") => ({
     weight: null,
     metric: metric,
     rpe: null,
+    initialStartTime: null, // time of first edit, used to calculate times for sets with no reps
     // startTime: null, // LEGACY - use rep time instead
     // endTime: null, // LEGACY - use rep time instead
     removed: false,
@@ -147,6 +148,9 @@ const saveWorkoutSet = (state, action) => {
     if ('rpe' in action) {
         changes.rpe = action.rpe;
     }
+    if (!set.initialStartTime) {
+        changes.initialStartTime = new Date();
+    }
 
     newWorkoutData[setIndex] = Object.assign({}, set, changes);
 
@@ -165,6 +169,9 @@ const saveWorkoutSetTags = (state, action) => {
     let changes = {
         tags: [...action.tags]
     };
+    if (!set.initialStartTime) {
+        changes.initialStartTime = new Date();
+    }
     newWorkoutData[setIndex] = Object.assign({}, set, changes);
 
     return Object.assign({}, state, {
@@ -252,6 +259,9 @@ const addRepData = (state, action) => {
         reps: [...set.reps, rep ],
         removed: false
     };
+    if (!set.initialStartTime) {
+        setChanges.initialStartTime = new Date();
+    }
 
     let newSet = Object.assign({}, set, setChanges);
     let newWorkoutData = [

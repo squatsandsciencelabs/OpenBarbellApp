@@ -8,6 +8,8 @@ export const startTime = (set) => {
         let validReps = set.reps.filter((rep) => !rep.removed && rep.isValid);        
         if (validReps.length > 0) {
             return validReps[0].time;
+        } else if (set.initialStartTime !== undefined) {
+            return set.initialStartTime;
         } else {
             return null;
         }

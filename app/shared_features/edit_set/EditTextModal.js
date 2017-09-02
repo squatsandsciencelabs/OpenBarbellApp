@@ -55,7 +55,7 @@ class EditTextModal extends Component {
 
     _addNewPill(input, resetText=false) {
         // valid check
-        if (this.state.inputs.includes(input)) {
+        if (this.state.inputs.includes(input) || input == '') {
             return;
         }
 
@@ -175,7 +175,7 @@ class EditTextModal extends Component {
                     </TouchableOpacity>
                 </View>
 
-                <View style={{paddingTop: 10}}>
+                <View style={styles.navTitle}>
                     <Text style={styles.boldFont}>{this.props.title}</Text>
                 </View>
 
@@ -200,14 +200,14 @@ class EditTextModal extends Component {
             let position = pills.length;
             let text = input;
             pills.push(
-                <TouchableHighlight key={position} onPress={() => this._tappedPill(position) }>
+                <TouchableOpacity key={position} onPress={() => this._tappedPill(position) }>
                     <Pill text={text} style={{paddingRight: 5, paddingBottom: 3}} />
-                </TouchableHighlight>
+                </TouchableOpacity>
             );
         });
 
         return (
-            <View style={{flexDirection: 'row', flexWrap: 'wrap', paddingLeft: 10, paddingRight: 5}}>
+            <View style={{flexDirection: 'row', flexWrap: 'wrap', paddingLeft: 10, paddingRight: 5, marginBottom: 5}}>
                 {pills}
             </View>
         );
@@ -216,25 +216,44 @@ class EditTextModal extends Component {
     _renderTextField() {
         if (this.props.multipleInput) {
             var returnKeyType = 'go';
+            if (this.state.inputs.includes(this.state.text) || this.state.text == '') {
+                var button = (
+                    <View style={[{width: 50, height: 50, marginRight: 10}, styles.addButton, styles.disabled]}>
+                        <Text style={styles.addText}>Add</Text>
+                    </View>
+                );
+            } else {
+                var button = (
+                    <TouchableOpacity onPress={() => this._tappedEnter()}>
+                        <View style={[{width: 50, height: 50, marginRight: 10}, styles.addButton]}>
+                            <Text style={styles.addText}>Add</Text>
+                        </View>
+                    </TouchableOpacity>
+                );
+            }
         } else {
             var returnKeyType = 'done';
+            var button = null;
         }
 
         return (
-            <View style={[{height: 50, marginHorizontal: 10, backgroundColor: 'white'}, styles.shadow]}>
-                <TextInput
-                    style={[{height: 35, margin: 10}, styles.boldFont]}
-                    underlineColorAndroid={'transparent'}
-                    editable = {true}
-                    autoFocus={true}
-                    placeholder={this.props.placeholder}
-                    returnKeyType={returnKeyType}
-                    value={this.state.text}
-                    multiline={this.props.multipleInput}
-                    onSubmitEditing = {() => this._tappedEnter()}
-                    onChangeText={(text) => this._onChangeText(text) }
-                    clearButtonMode = {'while-editing'}
-                />
+            <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
+                <View style={[{flex: 1, height: 50, marginHorizontal: 10, backgroundColor: 'white'}, styles.shadow]}>
+                    <TextInput
+                        style={[{height: 35, margin: 10}, styles.boldFont]}
+                        underlineColorAndroid={'transparent'}
+                        editable = {true}
+                        autoFocus={true}
+                        placeholder={this.props.placeholder}
+                        returnKeyType={returnKeyType}
+                        value={this.state.text}
+                        multiline={this.props.multipleInput}
+                        onSubmitEditing = {() => this._tappedEnter()}
+                        onChangeText={(text) => this._onChangeText(text) }
+                        clearButtonMode = {'while-editing'}
+                    />
+                </View>
+                {button}
             </View>
         )
     }
@@ -292,14 +311,29 @@ class EditTextModal extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        height: Platform.OS === 'ios' ? 60 : 40,
+        height: Platform.OS === 'ios' ? 70 : 50,
         alignItems: 'center'
     },
     nav: {
-        paddingTop: Platform.OS === 'ios' ? 30 : 10,
+        paddingTop: Platform.OS === 'ios' ? 35 : 15,
         paddingRight: 10,
         paddingBottom: 10,
         paddingLeft: 10
+    },
+    navTitle: {
+        paddingTop: 15,
+    },
+    addButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(47, 128, 237, 1)',
+        borderRadius: 5
+    },
+    disabled: {
+        opacity: 0.3
+    },
+    addText: {
+        color: 'white'
     },
     shadow: {
         shadowColor: "#000000",

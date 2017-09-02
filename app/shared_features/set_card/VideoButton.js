@@ -75,8 +75,8 @@ class VideoButton extends Component {
 
 const styles = StyleSheet.create({
     button: {
-        width: 77,
-        height: 77,
+        width: Platform.OS === 'ios' ? 77 : 97,
+        height: Platform.OS === 'ios' ? 77 : 97,
         alignItems: 'center',
         justifyContent: 'center',
         borderWidth: 5,

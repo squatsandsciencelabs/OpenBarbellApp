@@ -9,7 +9,8 @@ import {
     TouchableOpacity,
     Modal,
     StyleSheet,
-    FlatList
+    FlatList,
+    Platform
 }  from 'react-native';
 
 import Pill from 'app/shared_features/pill/Pill';
@@ -157,21 +158,22 @@ class EditTextModal extends Component {
     // TODO: grab the blue color for cancel from a global stylesheet
     _renderNavigation() {
         return (
-            <View style={{height: 60, alignItems: 'center'}}>
+            <View style={styles.container}>
                 <View style={{position: 'absolute', left: 0, top: 0}}>
                     <TouchableOpacity onPress={() => this.props.closeModal()}>
-                        <View style={{paddingTop: 30, paddingRight: 10, paddingBottom: 10, paddingLeft: 10}}>
+                        <View style={styles.nav}>
                             <Text style={[styles.boldFont, {color: 'rgba(47, 128, 237, 1)'}]}>Cancel</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
-                <View style={{top: 30}}>
+
+                <View style={styles.nav}>
                     <Text style={styles.boldFont}>{this.props.title}</Text>
                 </View>
 
                 <View style={{position: 'absolute', right: 0, top: 0}}>
                     <TouchableOpacity onPress={() => this._tappedDone() }>
-                        <View style={{paddingTop: 30, paddingRight: 10, paddingBottom: 10, paddingLeft: 10}}>
+                        <View style={styles.nav}>
                             <Text style={[styles.boldFont, {color: 'rgba(47, 128, 237, 1)'}]}>Done</Text>
                         </View>
                     </TouchableOpacity>
@@ -281,6 +283,16 @@ class EditTextModal extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        height: Platform.OS === 'ios' ? 60 : 40,
+        alignItems: 'center'
+    },
+    nav: {
+        paddingTop: Platform.OS === 'ios' ? 30 : 10,
+        paddingRight: 10,
+        paddingBottom: 10,
+        paddingLeft: 10
+    },
     shadow: {
         shadowColor: "#000000",
         shadowOpacity: 0.2,

@@ -29,30 +29,30 @@ class SettingsApplicationPanel extends Component {
     render() {
         if (Platform.OS === 'ios') {
             return (
-                    <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
-                        <View>
-                            <TouchableOpacity onPress={() => this._tappedSetTimer()}>
-                                <Text style={ SETTINGS_PANEL_STYLES.headerText }>
-                                    Time to start new set
-                                </Text>
-                                <Text style={SETTINGS_PANEL_STYLES.tappableText  }>
-                                    { DateUtils.timerDurationDescription(this.props.endSetTimerDuration) }{"\n"}
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                        <SettingsEndSetTimerScreen />
-                        <View>
-                            <TouchableOpacity onPress={() => this._tapDefaultMetric()}>
-                                <Text style={ SETTINGS_PANEL_STYLES.headerText }>
-                                    Set default metric
-                                </Text>                              
-                                <Text style={SETTINGS_PANEL_STYLES.tappableText}>
-                                  {this.props.defaultMetric}
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
-                        <SettingsMetric />                        
+                <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
+                    <View>
+                        <TouchableOpacity onPress={() => this._tappedSetTimer()}>
+                            <Text style={ SETTINGS_PANEL_STYLES.headerText }>
+                                Time to start new set
+                            </Text>
+                            <Text style={SETTINGS_PANEL_STYLES.tappableText  }>
+                                { DateUtils.timerDurationDescription(this.props.endSetTimerDuration) }{"\n"}
+                            </Text>
+                        </TouchableOpacity>
                     </View>
+                    <SettingsEndSetTimerScreen />
+                    <View>
+                        <TouchableOpacity onPress={() => this._tapDefaultMetric()}>
+                            <Text style={ SETTINGS_PANEL_STYLES.headerText }>
+                                Set default metric
+                            </Text>
+                            <Text style={SETTINGS_PANEL_STYLES.tappableText}>
+                                {this.props.defaultMetric}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <SettingsMetric />
+                </View>
             );
         } else {
             return (
@@ -63,12 +63,12 @@ class SettingsApplicationPanel extends Component {
                         </Text>
                     </View>
                     <SettingsEndSetTimerScreen />
-                    <View>
+                    <View style={{marginTop: 10}}>
                         <Text style={ SETTINGS_PANEL_STYLES.headerText }>
                             Set default metric
                         </Text>
                     </View>
-                    <SettingsMetric />                                            
+                    <SettingsMetric />
                 </View>
             );
         }

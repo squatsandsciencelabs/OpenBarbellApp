@@ -207,7 +207,7 @@ class EditTextModal extends Component {
 
     _renderTextField() {
         if (this.props.multipleInput) {
-            var returnKeyType = 'next';
+            var returnKeyType = 'go';
         } else {
             var returnKeyType = 'done';
         }

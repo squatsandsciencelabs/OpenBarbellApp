@@ -444,14 +444,10 @@ const endWorkout = (state, action) => {
     var historyChanges = {};
     var workoutID = uuidV4();
     for (set of state.workoutData) {
-        if (set.reps.length > 0) {
-            let setID = set.setID;
-            set.workoutID = workoutID;
-            workoutSetIDs.push(setID);
-            historyChanges[setID] = set;
-        } else {
-            console.tron.log("end working -> ignoring empty set");
-        }
+        let setID = set.setID;
+        set.workoutID = workoutID;
+        workoutSetIDs.push(setID);
+        historyChanges[setID] = set;
     }
 
     let newSetIDsToUpload = [...state.setIDsToUpload, ...workoutSetIDs];

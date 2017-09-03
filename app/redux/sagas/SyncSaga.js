@@ -65,10 +65,11 @@ function* pushUpdates() {
         yield put(SetsActionCreators.beginUploadingSets());
         try {
             // upload
+            const initialRevision = yield select(SetsSelectors.getRevision);            
             const accessToken = yield select(AuthSelectors.getAccessToken);
             const json = yield call(API.postUpdatedSetData, sets, accessToken);
             yield put(SetsActionCreators.finishedUploadingSets(json.revision));
-            yield call(pullUpdates);
+            yield call(pullUpdates, initialRevision);
         } catch(error) {
             // error
             yield put(SetsActionCreators.failedUploadSets());
@@ -86,9 +87,15 @@ function* pushUpdates() {
 }
 
 // pull updates from the server
-function* pullUpdates() {
-    const revision = yield select(SetsSelectors.getRevision);
+function* pullUpdates(previousRevision=null) {
+    var revision = yield select(SetsSelectors.getRevision);    
     const accessToken = yield select(AuthSelectors.getAccessToken);
+
+    // check how many changes occured since
+    if (previousRevision !== null && revision - previousRevision > 1) {
+        console.tron.log("You just synced but the revision difference is too large, enforce a new sync");
+        revision = previousRevision;
+    }
 
     try {
         // sync

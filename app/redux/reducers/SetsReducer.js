@@ -63,8 +63,9 @@ const SetsReducer = (state = createDefaultState(), action) => {
         case FAILED_UPLOAD_SETS:
             return failedUploadSets(state, action);
         case UPDATE_SET_DATA_FROM_SERVER:
+            return updateSetDataFromServer(state, action);        
         case LOGIN_SUCCESS:        
-            return updateSetDataFromServer(state, action);
+            return loginSuccess(state, action);
         case LOGOUT:
             return clearHistory(state, action);
         case FINISH_UPLOADING_SETS:
@@ -508,6 +509,17 @@ const updateSetDataFromServer = (state, action) => {
         historyData: newHistoryData,
         revision: action.revision,
         setIDsBeingUploaded: []
+    });
+};
+
+// LOGIN_SUCCESS
+
+const loginSuccess = (state, action) => {
+    const newState = updateSetDataFromServer(state, action);
+    return Object.assign({}, newState, {
+        revision: action.revision,
+        setIDsBeingUploaded: [],
+        setIDsToUpload: []
     });
 };
 

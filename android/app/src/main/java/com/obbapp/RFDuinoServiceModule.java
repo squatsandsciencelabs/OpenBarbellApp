@@ -331,6 +331,7 @@ public class RFDuinoServiceModule extends ReactContextBaseJavaModule implements 
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
+            Log.i(TAG, "On service connected " + name);
             rfduinoService = ((RFDuinoService.LocalBinder) service).getService();
 
             if ((!rfduinoService.initService()) || !(rfduinoService.connectTargetDevice(targetDevice.getAddress()))) {
@@ -341,6 +342,7 @@ public class RFDuinoServiceModule extends ReactContextBaseJavaModule implements 
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
+            Log.i(TAG, "On service disconnected " + name);
             rfduinoService = null;
             downgradeState(STATE_DISCONNECTED);
         }
@@ -353,8 +355,15 @@ public class RFDuinoServiceModule extends ReactContextBaseJavaModule implements 
     @ReactMethod
     public void disconnectDevice() {
         if (rfduinoService != null) {
+            Log.i(TAG, "Found service, disconnecting!");
             rfduinoService.disconnectTargetDevice();
             getReactApplicationContext().unbindService(rfduinoServiceConnection);
+
+            // cannot guarantee that onServiceDisconnected will run every time, so set it to null here
+            // there is a fear that this can cause multiple services to run
+            rfduinoService = null;
+        } else {
+            Log.i(TAG, "No service to disconnect found!");
         }
         downgradeState(STATE_DISCONNECTED);
     }

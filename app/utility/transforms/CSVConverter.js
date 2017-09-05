@@ -8,7 +8,7 @@ import * as RepDataMap from 'app/utility/transforms/RepDataMap';
 // aka SetReducer's getHistorySets convenience function
 export const convert = (sets) => {
     // output
-    var output = "Exercise,Set,Rep,Weight,Metric,Set RPE,Workout Start Time,Rest Time,Avg Velocity (m/s),Range of Motion (mm),Peak Velocity (m/s),Peak Velocity Location (%),Duration of rep (sec)\n";
+    var output = "Exercise,Set,Rep,Weight,Metric,Set RPE,Tags,Workout Start Time,Rest Time,Avg Velocity (m/s),Range of Motion (mm),Peak Velocity (m/s),Peak Velocity Location (%),Duration of rep (sec)\n";
 
     // filter removed sets
     sets = sets.filter((set) => set.removed === false);
@@ -51,6 +51,8 @@ export const convert = (sets) => {
 
         // reps
         let reps = set.reps.filter((rep) => rep.removed === false && rep.isValid === true);
+        let tags = set.tags.join();
+
         reps.forEach((rep, index, array) => {
             output += escapeDoubleQuote(set.exercise) + ',';
             output += setCount + ',';
@@ -58,6 +60,7 @@ export const convert = (sets) => {
             output += escapeDoubleQuote(set.weight) + ',';
             output += escapeDoubleQuote(set.metric) + ',';
             output += escapeDoubleQuote(set.rpe) + ',';
+            output += escapeDoubleQuote(tags) + ',';
             output += escapeDoubleQuote(workoutStartTime) + ',';
             output += escapeDoubleQuote(rest) + ',';
             output += RepDataMap.averageVelocity(rep.data) + ',';

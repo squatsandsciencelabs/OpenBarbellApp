@@ -14,10 +14,10 @@ export const endWorkout = () => (dispatch, getState) => {
     } else if(!isLoggedIn) {
         Alert.alert(
             'Heads up!',
-            "You are not logged in, the data from this workout will be lost,\nPlease sign in under settings to save your data",
+            "You are not logged in, the data from this workout will be lost,\nPlease sign in under settings to save your data to the cloud",
             [
               {text: 'Continue', onPress: () => dispatch({ type: END_WORKOUT })},
-              {text: 'Quit', style: 'cancel'},,
+              {text: 'Nevermind', style: 'cancel'},,
             ],
             { cancelable: false }
           )                    

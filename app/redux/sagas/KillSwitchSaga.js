@@ -23,7 +23,7 @@ const KillSwitchSaga = function * KillSwitchSaga() {
             yield put(KillSwitchActionCreators.versionOk(currentVersion));
         }
     } catch (error) {
-        yield put(KillSwitchActionCreators.versionUnavailable(currentVersion));
+        yield put(KillSwitchActionCreators.versionUnavailable());
     }
 };
 

@@ -1,6 +1,7 @@
 import { AsyncStorage } from 'react-native';
 import {persistStore, autoRehydrate} from 'redux-persist'
 import Reactotron from 'reactotron-react-native';
+import { createFilter } from 'redux-persist-transform-filter';
 
 // store imports
 import { compose, createStore, applyMiddleware }  from 'redux';
@@ -44,10 +45,18 @@ export default initializeStore = () => {
     // load previous
     persistStore(store, { 
         storage: AsyncStorage,
-        whitelist: [
-            'auth',
-            'settings',
-            'sets'
+        blacklist: [
+            'scannedDevices',
+            'connectedDevice',
+            'workout',
+            'history',
+            'killSwitch',
+            'suggestions',
+        ],
+        // note, everything in sets is to be persisted so not blacklisting or transforming them
+        transforms: [
+            createFilter('auth', ['accessToken', 'refreshToken', 'lastRefreshDate', 'email']),
+            createFilter('settings', ['defaultMetric', 'endSetTimerDuration', 'syncDate',])
         ]}, () => {
             // on startup, always "fail" it so syncing variables go back into the queue to be synced
             store.dispatch(SetsActionCreators.failedUploadSets());

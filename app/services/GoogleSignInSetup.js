@@ -1,5 +1,6 @@
 import { GoogleSignin } from 'react-native-google-signin';
 import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
+import { Alert } from 'react-native';
 
 export const configure = () => {
     GoogleSignin.hasPlayServices({ autoResolve: true })

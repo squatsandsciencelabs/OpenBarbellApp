@@ -13,7 +13,7 @@ const defaultState = {
     defaultMetric: 'kgs',
     isEditingDefaultMetric: false,
     endSetTimerDuration: 30,
-    editingEndSetTimer: false,
+    isEditingEndSetTimer: false,
     syncDate: '',
 };
 
@@ -37,11 +37,11 @@ const SettingsReducer = (state = defaultState, action) => {
             });
         case PRESENT_END_SET_TIMER:
             return Object.assign({}, state, {
-                editingEndSetTimer: true,
+                isEditingEndSetTimer: true,
             });
         case DISMISS_END_SET_TIMER:
             return Object.assign({}, state, {
-                editingEndSetTimer: false,
+                isEditingEndSetTimer: false,
             });
         case UPDATE_SET_DATA_FROM_SERVER:
         case LOGIN_SUCCESS:

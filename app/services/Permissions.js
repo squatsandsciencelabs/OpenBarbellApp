@@ -4,10 +4,13 @@
 // TODO: Permissions alert wrapper so don't lose the first iOS permission request
 
 import Permissions from 'react-native-permissions';
+import { Platform } from 'react-native';
 
 export default function() {
     Permissions.request('photo');
     Permissions.request('camera');
     Permissions.request('microphone');
-    Permissions.request('storage');
+    if (Platform.OS !== 'ios') {        
+        Permissions.request('storage');
+    }
 };

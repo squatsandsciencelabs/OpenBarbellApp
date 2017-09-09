@@ -45,10 +45,7 @@ export default initializeStore = () => {
     persistStore(store, { 
         storage: AsyncStorage,
         whitelist: [
-            'auth.accessToken',
-            'auth.refreshToken',
-            'auth.lastRefreshDate',
-            'auth.email',
+            'auth',
             'settings',
             'sets'
         ]}, () => {

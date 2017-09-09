@@ -10,7 +10,7 @@ export const configure = () => {
     }))
     .catch((err) => {
         console.tron.log("Fail config google sign in: " + err.message);
-        alert("Unfortuantely configuring Google Sign In has failed. Try restarting the app to access Cloud features.");
+        Alert.alert('Configuration Error', "Unfortunately configuring Google Sign In has failed. Try restarting the app to access Cloud features.");
     })
     .done();
 };

@@ -5,5 +5,5 @@
     "iOSGoogleClientID" : "971870516004-v99k5kfv281dqjla2jvoavuj2grpvec0.apps.googleusercontent.com",
     "webGoogleClientID" : "971870516004-oge4ph6j8s0a4e5lbimr7dc6e22od5jc.apps.googleusercontent.com",
     "endWorkoutTimer" : 3600000,
-    "obtainTokenTimer": 1800000
+    "obtainTokenTimer": 1209600000
 }

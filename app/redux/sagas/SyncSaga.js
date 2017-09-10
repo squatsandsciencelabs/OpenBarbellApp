@@ -17,6 +17,7 @@ import API from 'app/services/API';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
+import Validator from 'app/utility/transforms/Validator';
 
 const SyncSaga = function * SyncSaga() {
     while (true) {
@@ -67,7 +68,10 @@ function* pushUpdates() {
             // upload
             const initialRevision = yield select(SetsSelectors.getRevision);            
             const accessToken = yield select(AuthSelectors.getAccessToken);
-            const json = yield call(API.postUpdatedSetData, sets, accessToken);
+            const lastRefreshDate = yield select(AuthSelectors.getLastRefreshDate);            
+            const validator = new Validator(accessToken, lastRefreshDate);
+           
+            const json = yield call(API.postUpdatedSetData, sets, validator);
             yield put(SetsActionCreators.finishedUploadingSets(json.revision));
             yield call(pullUpdates, initialRevision);
         } catch(error) {
@@ -90,6 +94,8 @@ function* pushUpdates() {
 function* pullUpdates(previousRevision=null) {
     var revision = yield select(SetsSelectors.getRevision);    
     const accessToken = yield select(AuthSelectors.getAccessToken);
+    const lastRefreshDate = yield select(AuthSelectors.getLastRefreshDate);
+    const validator = new Validator(accessToken, lastRefreshDate);
 
     // check how many changes occured since
     if (previousRevision !== null && revision - previousRevision > 1) {
@@ -99,7 +105,7 @@ function* pullUpdates(previousRevision=null) {
 
     try {
         // sync
-        const json = yield call(API.sync, revision, accessToken);
+        const json = yield call(API.sync, revision, validator);
         if (json !== undefined) {
             yield put(SetsActionCreators.updateSetDataFromServer(json.revision, json.sets));
         }

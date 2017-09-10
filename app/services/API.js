@@ -13,15 +13,20 @@ import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators
 // otherwise, rely on the completion handler so the action creator thunk that calls thie API can appropriately handle the action
 const API = {
 
-    postUpdatedSetData: (sets, accessToken) => {
+    postUpdatedSetData: (sets, validator) => {
         return new Promise((resolve, reject) => {
-            executeRequest('POST', 'sets', sets, accessToken)
-            .then((json) => {
-                resolve(json);
-            }).catch((error) => {
-                // TODO: check if this will work, I'm assuming that the error will always be an action
-                reject(error);
-            });
+            if (validator.isValid) {
+                executeRequest('POST', 'sets', sets, validator.accessToken)
+                .then((json) => {
+                    resolve(json);
+                }).catch((error) => {
+                    // TODO: check if this will work, I'm assuming that the error will always be an action
+                    reject(error);
+                });
+            } 
+            else {
+                reject(new Error("has not been atleast two weeks"));
+            }
         });
     },
 
@@ -37,18 +42,23 @@ const API = {
         });
     },
 
-    sync: (revision, accessToken) => {
+    sync: (revision, validator) => {
         console.tron.log("sync with rev " + revision);
         return new Promise((resolve, reject) => {
-            executeRequest('POST', 'sync', { revision: revision }, accessToken)
-            .then((json) => {
-                // TODO: see if need undefined checks
-                console.tron.log("sync success " + json);
-                resolve(json);
-            }).catch((error) => {
-                // TODO: check if this will work, I'm assuming that the error will always be an action
-                reject(error);
-            });
+            if (validator.isValid) {
+                executeRequest('POST', 'sync', { revision: revision }, validator.accessToken)
+                .then((json) => {
+                    // TODO: see if need undefined checks
+                    console.tron.log("sync success " + json);
+                    resolve(json);
+                }).catch((error) => {
+                    // TODO: check if this will work, I'm assuming that the error will always be an action
+                    reject(error);
+                });
+            } 
+            else {
+                reject(new Error('has not been atleast two weeks'))
+            }
         });
     },
 

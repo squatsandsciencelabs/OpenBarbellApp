@@ -68,7 +68,7 @@ function* pushUpdates() {
             // upload
             const initialRevision = yield select(SetsSelectors.getRevision);            
             const accessToken = yield select(AuthSelectors.getAccessToken);
-            const lastRefreshDate = yield select(AuthSelectors.getLastRefreshDate);            
+            const lastRefreshDate = yield select(AuthSelectors.getLastRefreshDate);
             const validator = new Validator(accessToken, lastRefreshDate);
            
             const json = yield call(API.postUpdatedSetData, sets, validator);

@@ -33,6 +33,13 @@ const createViewModels = (sets, shouldShowRemoved) => {
     for (let i=0; i<sets.length; i++) {
         // get set
         let set = sets[i];
+        let rpe = String(sets[i].rpe);
+
+        if (set.rpe) {
+            set.rpe = rpe;
+        } else {
+            set.rpe = "";
+        }
 
         // ignore completely empty set
         if (!shouldShowRemoved && SetEmptyCheck.isEmpty(set)) {

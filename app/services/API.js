@@ -23,8 +23,7 @@ const API = {
                     // TODO: check if this will work, I'm assuming that the error will always be an action
                     reject(error);
                 });
-            } 
-            else {
+            } else {
                 reject(new Error("has not been atleast two weeks"));
             }
         });
@@ -55,8 +54,7 @@ const API = {
                     // TODO: check if this will work, I'm assuming that the error will always be an action
                     reject(error);
                 });
-            } 
-            else {
+            } else {
                 reject(new Error('has not been atleast two weeks'))
             }
         });

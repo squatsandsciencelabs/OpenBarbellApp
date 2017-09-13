@@ -9,6 +9,10 @@ const mapDispatchToProps = (dispatch) => {
         saveSet: Actions.saveSet,
         tapExercise: Actions.presentExercise,
         tapTags: Actions.presentTags,
+        tapRPE: Actions.editRPE,
+        tapWeight: Actions.editWeight,
+        dismissRPE: Actions.dismissRPE,
+        dismissWeight: Actions.dismissWeight,
     }, dispatch);
 };
 

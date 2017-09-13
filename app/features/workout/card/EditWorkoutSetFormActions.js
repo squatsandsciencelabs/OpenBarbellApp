@@ -1,8 +1,12 @@
 import {
     PRESENT_WORKOUT_EXERCISE,
     PRESENT_WORKOUT_TAGS,
+    START_EDITING_RPE,
+    START_EDITING_WEIGHT,
     PRESENT_WORKOUT_VIDEO_RECORDER,
-    PRESENT_WORKOUT_VIDEO_PLAYER
+    PRESENT_WORKOUT_VIDEO_PLAYER,
+    DISMISS_EDITING_RPE,
+    DISMISS_EDITING_WEIGHT,
 } from 'app/ActionTypes';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 
@@ -11,6 +15,22 @@ export const presentExercise = (setID, exercise, bias) => ({
     setID: setID,
     exercise: exercise,
     bias: bias
+});
+
+export const editRPE = () => ({
+    type: START_EDITING_RPE
+});
+
+export const editWeight = () => ({
+    type: START_EDITING_WEIGHT
+});
+
+export const dismissRPE = () => ({
+    type: DISMISS_EDITING_RPE
+});
+
+export const dismissWeight = () => ({
+    type: DISMISS_EDITING_WEIGHT
 });
 
 export const presentTags = (setID, tags) => ({

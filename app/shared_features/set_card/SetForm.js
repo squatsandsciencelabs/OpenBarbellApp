@@ -173,6 +173,8 @@ class SetForm extends Component {
                     placeholder="Enter"
                     placeholderTextColor={'lightgray'}
                     value={this.state.weight}
+                    onPress={() => this.props.editWeight()}
+                    onEndEditing={() => this.props.dismissWeight()}
                     onFocus={() => this.props.onFocus() }
                     onChangeText={(weight) => this._onChangeWeight(weight) }
                 />
@@ -197,6 +199,8 @@ class SetForm extends Component {
                     underlineColorAndroid={'transparent'}
                     editable = {true}
                     placeholder="Enter"
+                    onPress={() => this.props.editRPE()}
+                    onEndEditing={() => this.props.dismissRPE()}
                     placeholderTextColor={'lightgray'}
                     value = {this.state.rpe}
                     onFocus={() => this.props.onFocus() }

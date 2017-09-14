@@ -1,5 +1,7 @@
 const stateRoot = (state) => state.workout;
 
+export const getIsEditing = (state) => stateRoot(state).isEditing;
+
 export const getEditingExerciseName = (state) => stateRoot(state).editingExerciseName;
 
 export const getEditingExerciseSetID = (state) => stateRoot(state).editingExerciseSetID;

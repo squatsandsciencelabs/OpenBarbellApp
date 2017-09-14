@@ -13,9 +13,9 @@ import KeepAwake from 'react-native-keep-awake';
 
 class VideoRecorder extends Component {
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.isRecording !== this.props.isRecording) {
-            if (nextProps.isRecording) {
+    componentDidUpdate(prevProps) {
+        if (prevProps.isRecording !== this.props.isRecording) {
+            if (this.props.isRecording) {
                 this._record();
             } else {
                 this._stopRecording();
@@ -45,7 +45,9 @@ class VideoRecorder extends Component {
             mode: Camera.constants.CaptureMode.video,
             audio: true
         }).then((data) => {
-            this.props.saveVideo(this.props.setID, data.path, this.props.videoType);
+            if (this.props.setID) {
+                this.props.saveVideo(this.props.setID, data.path, this.props.videoType);
+            }
             // TODO: share options can be here, but for now just finish
         }).catch((err) => {
             console.tron.log("ERROR " + err);
@@ -54,6 +56,11 @@ class VideoRecorder extends Component {
     }
 
     _stopRecording() {
+        // cancelled a recording
+        if (!this.props.isModalShowing) {
+            return;
+        }
+
         if (Platform.OS === 'ios') {
             // TODO: remove timer hack, this was necessary to prevent weird behavior when ending too quickly
             this.timer = setTimeout(() => {

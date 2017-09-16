@@ -52,7 +52,11 @@ export const convert = (sets) => {
 
         // reps
         let reps = set.reps.filter((rep) => rep.removed === false && rep.isValid === true);
-        let tags = set.tags.join();
+        if (set.tags) {
+            var tags = set.tags.join();
+        } else {
+            var tags = '';
+        }
 
         reps.forEach((rep, index, array) => {
             output += escapeDoubleQuote(set.exercise) + ',';

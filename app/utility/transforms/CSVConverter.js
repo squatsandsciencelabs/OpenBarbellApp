@@ -3,6 +3,7 @@
 
 import * as DateUtils from 'app/utility/transforms/DateUtils';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
+import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 
 // pass this the history sets as a sorted array
 // aka SetReducer's getHistorySets convenience function
@@ -11,7 +12,7 @@ export const convert = (sets) => {
     var output = "Exercise,Set,Rep,Weight,Metric,Set RPE,Tags,Workout Start Time,Rest Time,Avg Velocity (m/s),Range of Motion (mm),Peak Velocity (m/s),Peak Velocity Location (%),Duration of rep (sec)\n";
 
     // filter removed sets
-    sets = sets.filter((set) => set.removed === false);
+    sets = sets.filter((set) => set.removed === false && set.reps.length > 0);
 
     // vars for calculation
     var lastExercise = null;
@@ -25,8 +26,7 @@ export const convert = (sets) => {
         // calculate workoutstarttime
         if (lastWorkout === null || lastWorkout !== set.workoutID) {
             lastWorkout = set.workoutID;
-            workoutStartTime = new Date(set.startTime).toLocaleString();
-
+            workoutStartTime = new Date(SetTimeCalculator.startTime(set)).toLocaleString();
             // reset vars for set count and rest time
             lastExercise = null;
             lastSetEndTime = null;
@@ -42,12 +42,13 @@ export const convert = (sets) => {
 
         // calculate rest time
         if (lastSetEndTime !== null) {
-            var restInMS = new Date(set.startTime).getTime() - new Date(lastSetEndTime).getTime();
+            var restInMS = new Date(SetTimeCalculator.startTime(set)).getTime() - new Date(lastSetEndTime).getTime();
             rest = DateUtils.restInClockFormat(restInMS);
+            console.tron.log(rest);
         } else {
             rest = "00:00:00";
         }
-        lastSetEndTime = set.endTime;
+        lastSetEndTime = SetTimeCalculator.endTime(set);
 
         // reps
         let reps = set.reps.filter((rep) => rep.removed === false && rep.isValid === true);

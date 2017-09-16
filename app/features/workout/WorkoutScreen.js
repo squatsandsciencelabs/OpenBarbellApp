@@ -58,7 +58,7 @@ const createViewModels = (sets) => {
         if (isInitialSet) {
             // new set, reset the end time
             lastSetEndTime = set.removed ? null : SetTimeCalculator.endTime(set);
-        } else if (!set.removed) { // ignore removed sets in rest calculations
+        } else if (!set.removed && set.reps.length > 0) { // ignore removed sets in rest calculations
             // add footer if valid
             if (lastSetEndTime !== null && SetTimeCalculator.startTime(set) > lastSetEndTime) {
                 array.push(createFooterVM(set, lastSetEndTime));

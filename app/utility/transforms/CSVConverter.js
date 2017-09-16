@@ -44,7 +44,6 @@ export const convert = (sets) => {
         if (lastSetEndTime !== null) {
             var restInMS = new Date(SetTimeCalculator.startTime(set)).getTime() - new Date(lastSetEndTime).getTime();
             rest = DateUtils.restInClockFormat(restInMS);
-            console.tron.log(rest);
         } else {
             rest = "00:00:00";
         }

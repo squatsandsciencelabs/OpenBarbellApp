@@ -1,4 +1,5 @@
-// TODO: refactor this into a saga
+// TODO: refactor logic so it isn't as convoluted and repeats code less
+// For example, make pause functionality part of the background timer library itself instead
 
 import BackgroundTimer from 'react-native-background-timer';
 import * as SetsActionCreators from './SetsActionCreators';
@@ -6,7 +7,8 @@ import * as WorkoutSelectors from 'app/redux/selectors/WorkoutSelectors';
 import {
     PAUSE_END_SET_TIMER,
     RESUME_END_SET_TIMER,
-    START_END_SET_TIMER
+    START_END_SET_TIMER,
+    STOP_END_SET_TIMER
 } from 'app/ActionTypes';
 
 var timer = null;
@@ -86,4 +88,15 @@ export const pauseEndSetTimer = () => (dispatch) => {
     console.tron.log("Pause timer, time elapsed " + timeElapsed + " time remaining " + timeRemaining);
 
     dispatch({type: PAUSE_END_SET_TIMER});
+};
+
+export const stopEndSetTimer = () =>  {
+    BackgroundTimer.clearTimeout(timer);
+    timer = null;
+    isPaused = false;
+    timeRemaining = null;
+
+    return {
+        type: STOP_END_SET_TIMER
+    }
 };

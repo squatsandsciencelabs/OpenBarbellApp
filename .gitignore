@@ -22,6 +22,9 @@ DerivedData
 *.xcuserstate
 project.xcworkspace
 
+# Pods
+Pods/
+
 # Android/IJ
 #
 *.iml
@@ -65,3 +68,4 @@ android/keystores/debug.keystore
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
+

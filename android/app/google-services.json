@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "971870516004",
-    "project_id": "openbarbell-80c31"
+    "firebase_url": "https://openbarbell-80c31.firebaseio.com",
+    "project_id": "openbarbell-80c31",
+    "storage_bucket": "openbarbell-80c31.appspot.com"
   },
   "client": [
     {
@@ -12,6 +14,10 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "971870516004-el9e6ihhlnv6od4l9n8kgdtsjvgla0je.apps.googleusercontent.com",
+          "client_type": 3
+        },
         {
           "client_id": "971870516004-7njnplrj7ccc9a0e46ldbppbi74qaqpq.apps.googleusercontent.com",
           "client_type": 1,
@@ -35,11 +41,23 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "971870516004-v99k5kfv281dqjla2jvoavuj2grpvec0.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.openbarbellapp"
+              }
+            },
+            {
+              "client_id": "971870516004-el9e6ihhlnv6od4l9n8kgdtsjvgla0je.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

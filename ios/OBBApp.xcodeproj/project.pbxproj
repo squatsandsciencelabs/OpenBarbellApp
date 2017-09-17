@@ -39,6 +39,7 @@
 		2D1377AE45F14706AE40B3D5 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88897DD73C9144EDACA3A4F6 /* AddressBook.framework */; };
 		2DCD954D1E0B4F2C00145EB5 /* OBBAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* OBBAppTests.m */; };
 		2E10E0FB3651437C8E959D5B /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 62C533EFFCF544B4A40DAC01 /* libRNFetchBlob.a */; };
+		2E1B7A20210D27AB671CCD4A /* libPods-OBBApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEA9D13AC15C4A69A7ED7145 /* libPods-OBBApp.a */; };
 		4EE86596B1094A4A9B220AA4 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 860E88265B3941A7B15E38AD /* MaterialCommunityIcons.ttf */; };
 		58E6AC2E5C7F49EC82B26004 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A96B5A2A7E3E44198AE0121F /* SafariServices.framework */; };
 		6088382EDB0B4D2189301E8C /* libRNBackgroundTimer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 61E446441C234E1D9249D86E /* libRNBackgroundTimer.a */; };
@@ -51,8 +52,10 @@
 		8B80C14439B4485EB8E9B8DA /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2AD3CB0B7FE042FC9EABB99D /* FontAwesome.ttf */; };
 		96958C31505C41F49BB3731A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A7B4BF6C0E14454B858E6F99 /* CoreData.framework */; };
 		9C38A60F14364D3486924A60 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 33E94DFFA0CF49A0A6EAB52C /* Ionicons.ttf */; };
+		9DE2F6D77C83490F397728FC /* libPods-OBBAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EFB008E08DBB574455FF928B /* libPods-OBBAppTests.a */; };
 		A03EF14E0C55464DB8BBC31C /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 20C8EE022F6E42529232F026 /* libz.tbd */; };
 		A771B96C20A44138AE9FE22E /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1816764483CC4019ABB022D3 /* libRNDeviceInfo.a */; };
+		AD25168316973A621D7EFB1C /* libPods-OBBApp-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301458F472C60BDF6D0A9683 /* libPods-OBBApp-tvOSTests.a */; };
 		B10B36751DA691B10007E30E /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10B36741DA691B10007E30E /* CoreBluetooth.framework */; };
 		B1DD074E1D7FFD9000C937C9 /* RFduino.m in Sources */ = {isa = PBXBuildFile; fileRef = B1DD07451D7FFD9000C937C9 /* RFduino.m */; };
 		B1DD074F1D7FFD9000C937C9 /* RFduino+Dictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = B1DD07471D7FFD9000C937C9 /* RFduino+Dictionary.m */; };
@@ -60,6 +63,7 @@
 		B1DD07511D7FFD9000C937C9 /* RfduinoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B1DD074C1D7FFD9000C937C9 /* RfduinoManager.m */; };
 		B5943E8D516744F69DA93EC6 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 255492D405FA4A42A0D7F330 /* Foundation.ttf */; };
 		B668F28E278E48F5BBDBCA0E /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D9184F6766AB4F18B7E56FDC /* Zocial.ttf */; };
+		B9BAC4653C89A7BF0BECBBAF /* libPods-OBBApp-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3723931E4C54F36262CABD47 /* libPods-OBBApp-tvOS.a */; };
 		BB99F32589884FD8B0346950 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D571E491595046DFA9FA12B4 /* libRCTCamera.a */; };
 		C303FDD61E18B9520082B098 /* GoogleAppUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C303FDCF1E18B9520082B098 /* GoogleAppUtilities.framework */; };
 		C303FDD71E18B9520082B098 /* GoogleAuthUtilities.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C303FDD01E18B9520082B098 /* GoogleAuthUtilities.framework */; };
@@ -432,10 +436,16 @@
 		2C3545785A404AB4981448A6 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* OBBApp-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "OBBApp-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* OBBApp-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "OBBApp-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		301458F472C60BDF6D0A9683 /* libPods-OBBApp-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OBBApp-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		33E94DFFA0CF49A0A6EAB52C /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		34E62E7B4F3D25071E951D65 /* Pods-OBBAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OBBAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OBBAppTests/Pods-OBBAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		35043C8A2CDA3EDD23010D41 /* Pods-OBBApp-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OBBApp-tvOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-OBBApp-tvOS/Pods-OBBApp-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		369EE494638B4CDFAB407589 /* KCKeepAwake.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = KCKeepAwake.xcodeproj; path = "../node_modules/react-native-keep-awake/ios/KCKeepAwake.xcodeproj"; sourceTree = "<group>"; };
+		36D60B0DD70C3D9E9805D23E /* Pods-OBBApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OBBApp-tvOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OBBApp-tvOSTests/Pods-OBBApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		3723931E4C54F36262CABD47 /* libPods-OBBApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OBBApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		37D84A684F2C444C9352BA4E /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePermissions.xcodeproj; path = "../node_modules/react-native-permissions/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; };
 		39ED46B3D82F408896857355 /* libRCTVideo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTVideo.a; sourceTree = "<group>"; };
+		4DE54ECB1DCDF2BC2041761E /* Pods-OBBApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OBBApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-OBBApp/Pods-OBBApp.release.xcconfig"; sourceTree = "<group>"; };
 		61E446441C234E1D9249D86E /* libRNBackgroundTimer.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNBackgroundTimer.a; sourceTree = "<group>"; };
 		62C533EFFCF544B4A40DAC01 /* libRNFetchBlob.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFetchBlob.a; sourceTree = "<group>"; };
 		6763ECB662F641C1BA08C2D5 /* libRNFS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFS.a; sourceTree = "<group>"; };
@@ -448,9 +458,12 @@
 		855F349217A44F3A9F1849F7 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		860E88265B3941A7B15E38AD /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		88897DD73C9144EDACA3A4F6 /* AddressBook.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		91C0D0096572EA6A4C4EF0D3 /* Pods-OBBApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OBBApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OBBApp/Pods-OBBApp.debug.xcconfig"; sourceTree = "<group>"; };
+		A1F1DA517043DE4003344F21 /* Pods-OBBApp-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OBBApp-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-OBBApp-tvOSTests/Pods-OBBApp-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		A7B4BF6C0E14454B858E6F99 /* CoreData.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		A96B5A2A7E3E44198AE0121F /* SafariServices.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		AACDF1B864DB469C8639673F /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
+		ACAB483D1590E0FA8A5933F1 /* Pods-OBBApp-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OBBApp-tvOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OBBApp-tvOS/Pods-OBBApp-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
 		B10B36741DA691B10007E30E /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		B1DD07441D7FFD9000C937C9 /* RFduino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RFduino.h; path = OBBApp/RFduino.h; sourceTree = "<group>"; };
 		B1DD07451D7FFD9000C937C9 /* RFduino.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RFduino.m; path = OBBApp/RFduino.m; sourceTree = "<group>"; };
@@ -473,10 +486,13 @@
 		C307DCF11EA4495600C9A644 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		C36289A51E19C042006AD50C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C610E925F0CC4E6692CB892B /* SystemConfiguration.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		CEA9D13AC15C4A69A7ED7145 /* libPods-OBBApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OBBApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D571E491595046DFA9FA12B4 /* libRCTCamera.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTCamera.a; sourceTree = "<group>"; };
 		D6B5276D013842688AEC8C6A /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		D9184F6766AB4F18B7E56FDC /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		DA20305B939A46369AC0C75A /* RNGoogleSignin.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNGoogleSignin.xcodeproj; path = "../node_modules/react-native-google-signin/ios/RNGoogleSignin.xcodeproj"; sourceTree = "<group>"; };
+		EA95AAEE29F5A30ED77A3FDD /* Pods-OBBAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OBBAppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-OBBAppTests/Pods-OBBAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		EFB008E08DBB574455FF928B /* libPods-OBBAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OBBAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2C2677A0A8D438E99D2305B /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/react-native-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
 		F77F85E44979417AAF74B866 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		FD55FB29855F4512974ADA32 /* RNDeviceInfo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNDeviceInfo.xcodeproj; path = "../node_modules/react-native-device-info/RNDeviceInfo.xcodeproj"; sourceTree = "<group>"; };
@@ -488,6 +504,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
+				9DE2F6D77C83490F397728FC /* libPods-OBBAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +546,7 @@
 				D577A397DA444933A2D5E661 /* libKCKeepAwake.a in Frameworks */,
 				E155817BEF884A2FB2FC4D28 /* libReactNativePermissions.a in Frameworks */,
 				2E10E0FB3651437C8E959D5B /* libRNFetchBlob.a in Frameworks */,
+				2E1B7A20210D27AB671CCD4A /* libPods-OBBApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,6 +562,7 @@
 				2D02E4C61E0B4AEC006451C7 /* libRCTSettings-tvOS.a in Frameworks */,
 				2D02E4C71E0B4AEC006451C7 /* libRCTText-tvOS.a in Frameworks */,
 				2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */,
+				B9BAC4653C89A7BF0BECBBAF /* libPods-OBBApp-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -551,6 +570,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD25168316973A621D7EFB1C /* libPods-OBBApp-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,6 +634,21 @@
 				00E356F11AD99517003FC87E /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		09DE03CCB537D8EBEA1EF636 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				91C0D0096572EA6A4C4EF0D3 /* Pods-OBBApp.debug.xcconfig */,
+				4DE54ECB1DCDF2BC2041761E /* Pods-OBBApp.release.xcconfig */,
+				ACAB483D1590E0FA8A5933F1 /* Pods-OBBApp-tvOS.debug.xcconfig */,
+				35043C8A2CDA3EDD23010D41 /* Pods-OBBApp-tvOS.release.xcconfig */,
+				36D60B0DD70C3D9E9805D23E /* Pods-OBBApp-tvOSTests.debug.xcconfig */,
+				A1F1DA517043DE4003344F21 /* Pods-OBBApp-tvOSTests.release.xcconfig */,
+				34E62E7B4F3D25071E951D65 /* Pods-OBBAppTests.debug.xcconfig */,
+				EA95AAEE29F5A30ED77A3FDD /* Pods-OBBAppTests.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		139105B71AF99BAD00B5F7CC /* Products */ = {
@@ -751,6 +786,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				B10B36731DA691B00007E30E /* Frameworks */,
 				69635CA1731042548CC9FDCD /* Resources */,
+				09DE03CCB537D8EBEA1EF636 /* Pods */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -777,6 +813,10 @@
 				88897DD73C9144EDACA3A4F6 /* AddressBook.framework */,
 				A7B4BF6C0E14454B858E6F99 /* CoreData.framework */,
 				F77F85E44979417AAF74B866 /* libsqlite3.0.tbd */,
+				CEA9D13AC15C4A69A7ED7145 /* libPods-OBBApp.a */,
+				3723931E4C54F36262CABD47 /* libPods-OBBApp-tvOS.a */,
+				301458F472C60BDF6D0A9683 /* libPods-OBBApp-tvOSTests.a */,
+				EFB008E08DBB574455FF928B /* libPods-OBBAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -894,9 +934,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "OBBAppTests" */;
 			buildPhases = (
+				1AEADC7D6B0A8E2A47B73028 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
+				2F2A5D670DA4EC4A66BB7FED /* [CP] Embed Pods Frameworks */,
+				A243F43DFE7A26DC1C5BFE6B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -912,11 +955,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "OBBApp" */;
 			buildPhases = (
+				9242A7BB96D2D81D89E9567A /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				C393022D1F1DC424007B1172 /* CopyFiles */,
+				CB110E0CE16ABA6E92A9F19C /* [CP] Embed Pods Frameworks */,
+				3E11B77F9411BF9FC8B5F9E3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -931,10 +977,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "OBBApp-tvOS" */;
 			buildPhases = (
+				B585FFCCF0D9B7892938A31C /* [CP] Check Pods Manifest.lock */,
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
 				2D02E4791E0B4A5D006451C7 /* Resources */,
 				2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */,
+				08D9A27918D74088E05E33AA /* [CP] Embed Pods Frameworks */,
+				C1B523588E92F06384813329 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -949,9 +998,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "OBBApp-tvOSTests" */;
 			buildPhases = (
+				B6D9A5A9F593B010F37107E4 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
+				DFB7E76F6E971FF326DA409B /* [CP] Embed Pods Frameworks */,
+				781E0893ED39D4ACA2DF77C8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1447,6 +1499,39 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		08D9A27918D74088E05E33AA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OBBApp-tvOS/Pods-OBBApp-tvOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1AEADC7D6B0A8E2A47B73028 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OBBAppTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1460,6 +1545,165 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		2F2A5D670DA4EC4A66BB7FED /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OBBAppTests/Pods-OBBAppTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3E11B77F9411BF9FC8B5F9E3 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OBBApp/Pods-OBBApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		781E0893ED39D4ACA2DF77C8 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OBBApp-tvOSTests/Pods-OBBApp-tvOSTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9242A7BB96D2D81D89E9567A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OBBApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A243F43DFE7A26DC1C5BFE6B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OBBAppTests/Pods-OBBAppTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B585FFCCF0D9B7892938A31C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OBBApp-tvOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B6D9A5A9F593B010F37107E4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OBBApp-tvOSTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C1B523588E92F06384813329 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OBBApp-tvOS/Pods-OBBApp-tvOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CB110E0CE16ABA6E92A9F19C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OBBApp/Pods-OBBApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		DFB7E76F6E971FF326DA409B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-OBBApp-tvOSTests/Pods-OBBApp-tvOSTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1532,6 +1776,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 34E62E7B4F3D25071E951D65 /* Pods-OBBAppTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1568,6 +1813,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
@@ -1579,6 +1825,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA95AAEE29F5A30ED77A3FDD /* Pods-OBBAppTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1612,6 +1859,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
@@ -1623,6 +1871,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 91C0D0096572EA6A4C4EF0D3 /* Pods-OBBApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1650,7 +1899,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 				);
 				INFOPLIST_FILE = OBBApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1667,6 +1916,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4DE54ECB1DCDF2BC2041761E /* Pods-OBBApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -1693,7 +1943,7 @@
 					"$(SRCROOT)/../node_modules/react-native-fetch-blob/ios/**",
 				);
 				INFOPLIST_FILE = OBBApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1710,6 +1960,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ACAB483D1590E0FA8A5933F1 /* Pods-OBBApp-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1744,6 +1995,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
@@ -1757,6 +2009,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 35043C8A2CDA3EDD23010D41 /* Pods-OBBApp-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1791,6 +2044,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
@@ -1804,6 +2058,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 36D60B0DD70C3D9E9805D23E /* Pods-OBBApp-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1836,6 +2091,7 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A1F1DA517043DE4003344F21 /* Pods-OBBApp-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1912,7 +2168,7 @@
 					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1958,7 +2214,7 @@
 					"$(SRCROOT)/../node_modules/react-native-background-timer/ios",
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

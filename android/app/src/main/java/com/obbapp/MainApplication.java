@@ -15,7 +15,9 @@ import com.facebook.react.ReactInstanceManager; // note, may not be needed, theo
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
-
+import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
+import io.invertase.firebase.crash.RNFirebaseCrashPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
 
 import java.util.Arrays;
@@ -42,7 +44,10 @@ public class MainApplication extends Application implements ReactApplication {
             new ReactVideoPackage(),
             new RNFSPackage(),
               new BackgroundTimerPackage(),
-              new RFDuinoServicePackage());
+              new RFDuinoServicePackage(),
+              new RNFirebasePackage(),
+              new RNFirebaseAnalyticsPackage(),
+              new RNFirebaseCrashPackage());
     }
   };
 

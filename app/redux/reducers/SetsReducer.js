@@ -24,6 +24,7 @@ import {
 import uuidV4 from 'uuid/v4';
 import DeviceInfo from 'react-native-device-info';
 import { Platform } from 'react-native';
+import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 
 const SetsReducer = (state = createDefaultState(), action) => {
     switch (action.type) {
@@ -117,7 +118,7 @@ const saveDefaultMetric = (state, action) => {
     let changes = {};
     
     // Check if set is empty before allowing metric to change
-    if (!set.exercise && !set.weight && !set.rpe && (set.reps !== null && set.reps !== undefined && set.reps.length === 0) && (set.tags !== null && set.tags !== undefined && set.tags.length === 0) && !set.videoFileURL) {
+    if (SetEmptyCheck.isEmpty(set)) {
         changes.metric = action.defaultMetric;
     }
     

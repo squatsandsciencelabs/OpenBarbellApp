@@ -9,6 +9,7 @@ import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 import WorkoutList from './WorkoutList';
 import * as Actions from './WorkoutActions';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
+import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 
 // assumes chronological sets
 const createViewModels = (sets) => {
@@ -181,7 +182,8 @@ const mapStateToProps = (state) => {
     let sets = SetsSelectors.getWorkoutSets(state);
     return {
         sections: createViewModels(sets),
-        sets
+        sets: sets,
+        isAddEnabled: !SetEmptyCheck.isEmpty(sets[0])
     }
 };
 

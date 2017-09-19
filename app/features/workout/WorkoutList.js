@@ -43,7 +43,7 @@ class WorkoutList extends Component {
 
         // if there is no set data show disabled add set button
         if (section.key === 0) {
-            if (!set.exercise && !set.weight && !set.rpe && (set.reps !== null && set.reps !== undefined && set.reps.length === 0) && (set.tags !== null && set.tags !== undefined && set.tags.length === 0) && !set.videoFileURL) {
+            if (!this.props.isAddEnabled) {
                 return (
                     <View style={styles.disabledButton}>
                         <Text style={styles.buttonText}>START NEW SET</Text>

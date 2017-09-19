@@ -452,14 +452,28 @@ const loadPersistedSetData = (state, action) => {
 // END_WORKOUT
 
 const endWorkout = (state, action) => {
-    var workoutSetIDs = [];
-    var historyChanges = {};
-    var workoutID = uuidV4();
-    for (set of state.workoutData) {
+    let workoutSetIDs = [];
+    let historyChanges = {};
+    let workoutID = uuidV4();
+    let workoutData = state.workoutData;
+    let length = workoutData.length;
+
+    // add all sets except the working set
+    for (let i=0; i<length-1; i++) {
+        let set = workoutData[i];
         let setID = set.setID;
         set.workoutID = workoutID;
         workoutSetIDs.push(setID);
         historyChanges[setID] = set;
+    }
+
+    // add working set
+    let lastSet = workoutData[length-1];
+    if (length > 0 && !SetEmptyCheck.isBlank(lastSet)) {
+        let setID = lastSet.setID;
+        lastSet.workoutID = workoutID;
+        workoutSetIDs.push(setID);
+        historyChanges[setID] = lastSet;
     }
 
     let newSetIDsToUpload = [...state.setIDsToUpload, ...workoutSetIDs];

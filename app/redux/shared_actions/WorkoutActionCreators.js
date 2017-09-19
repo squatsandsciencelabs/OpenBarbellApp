@@ -6,10 +6,10 @@ import { END_WORKOUT } from 'app/ActionTypes';
 
 export const endWorkout = () => (dispatch, getState) => {
     var state = getState();
-    var getIsWorkingSetEmpty = SetsSelectors.getIsWorkingSetEmpty(state)
+    var isWorkoutEmpty = SetsSelectors.getIsWorkoutEmpty(state)
     var isLoggedIn = AuthSelectors.getIsLoggedIn(state);
 
-    if (getIsWorkingSetEmpty && isLoggedIn) {
+    if (!getIsWorkoutEmpty && isLoggedIn) {
         dispatch({ type: END_WORKOUT });
     } else if(!isLoggedIn) {
         Alert.alert(

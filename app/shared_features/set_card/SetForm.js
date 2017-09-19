@@ -70,6 +70,7 @@ class SetForm extends Component {
             weight: weight,
             didChangeWeight: true
         });
+        this.props.saveSet(this.props.setID, this.state.exercise, this.state.weight, this.state.metric, this.state.rpe);
     }
 
     _onChangeRPE(rpe) {
@@ -77,6 +78,7 @@ class SetForm extends Component {
             rpe: rpe,
             didChangeRPE: true
         });
+        this.props.saveSet(this.props.setID, this.state.exercise, this.state.weight, this.state.metric, this.state.rpe);
     }
 
     // SAVING

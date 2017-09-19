@@ -3,7 +3,7 @@ export const isEmpty = (set) => {
 };
 
 export const hasEmptyData = (set) => {
-    return !set.exercise && !set.weight && !set.rpe && (set.tags !== null && set.tags !== undefined && set.tags.length === 0) && !set.videoFileURL;
+    return !set.exercise && (!set.weight || set.weight === '') && (!set.rpe || set.rpe === '') && (!set.tags || set.tags === undefined || set.tags.length === 0) && !set.videoFileURL;
 };
 
 export const hasEmptyReps = (set) => {

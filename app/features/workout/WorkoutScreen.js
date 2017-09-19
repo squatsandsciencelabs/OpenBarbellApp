@@ -180,10 +180,16 @@ const createFooterVM = (set, lastSetEndTime) => {
 
 const mapStateToProps = (state) => {
     let sets = SetsSelectors.getWorkoutSets(state);
+    if (sets.length === 0) {
+        var isAddEnabled = false;
+    } else {
+        var isAddEnabled = !SetEmptyCheck.isEmpty(sets[sets.length-1]);
+    }
+
     return {
         sections: createViewModels(sets),
         sets: sets,
-        isAddEnabled: !SetEmptyCheck.isEmpty(sets[0])
+        isAddEnabled: isAddEnabled
     }
 };
 

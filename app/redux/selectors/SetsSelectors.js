@@ -2,6 +2,7 @@
 // reason being that, the callers shouldn't know to make this state.sets
 // right now only a few of them use the stateRoot
 import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
+import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 
 const stateRoot = (state) => state.sets;
 
@@ -49,7 +50,23 @@ export const getWorkoutSets = (state) => {
     return stateRoot(state).workoutData;
 };
 
-// Check Workout Sets
+// Get Is Workout Empty
+
+export const getIsWorkoutEmpty = (state) => {
+    const workoutData = stateRoot(state).workoutData;
+
+    if (workoutData.length >= 2) {
+        // at least one set
+        return false;
+    } else if (workoutData.length === 1 && !SetEmptyCheck.isEmpty(workoutData[0])) {
+        // only one set and it has data
+        return false;
+    }
+
+    return true;
+};
+
+// Get Working Set Empty
 
 export const getIsWorkingSetEmpty = (state) => {
     const workoutData = stateRoot(state).workoutData;

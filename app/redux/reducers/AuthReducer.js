@@ -49,7 +49,8 @@ const loginSuccess = (state, action) => {
         isLoggingIn: false,
         accessToken: action.accessToken,
         refreshToken: action.refreshToken,
-        email: action.email
+        email: action.email,
+        lastRefreshDate: action.syncDate
     });
 };
 

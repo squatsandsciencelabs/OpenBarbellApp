@@ -6,5 +6,5 @@
     "webGoogleClientID" : "971870516004-oge4ph6j8s0a4e5lbimr7dc6e22od5jc.apps.googleusercontent.com",
     "endWorkoutTimer" : 3600000,
     "obtainTokenTimer": 1800000,
-    "apiWaitTimer": 1209600000
+    "apiWaitTimer": 3600000
 }

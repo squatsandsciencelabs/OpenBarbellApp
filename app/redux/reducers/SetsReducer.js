@@ -118,7 +118,7 @@ const saveDefaultMetric = (state, action) => {
     let changes = {};
     
     // Check if set is empty before allowing metric to change
-    if (SetEmptyCheck.isEmpty(set)) {
+    if (SetEmptyCheck.isBlank(set)) {
         changes.metric = action.defaultMetric;
     }
     

@@ -70,7 +70,6 @@ class SetForm extends Component {
             weight: weight,
             didChangeWeight: true
         });
-        this.props.saveSet(this.props.setID, this.state.exercise, this.state.weight, this.state.metric, this.state.rpe);
     }
 
     _onChangeRPE(rpe) {
@@ -78,7 +77,16 @@ class SetForm extends Component {
             rpe: rpe,
             didChangeRPE: true
         });
-        this.props.saveSet(this.props.setID, this.state.exercise, this.state.weight, this.state.metric, this.state.rpe);
+    }
+
+    _onEndEditWeight() {
+        this._save();
+        this.props.dismissWeight();
+    }
+
+    _onEndEditRPE() {
+        this._save();
+        this.props.dismissRPE();
     }
 
     // SAVING
@@ -176,7 +184,7 @@ class SetForm extends Component {
                     placeholderTextColor={'lightgray'}
                     value={this.state.weight}
 
-                    onEndEditing={() => this.props.dismissWeight()}
+                    onEndEditing={() => this._onEndEditWeight() }
                     onFocus={() => this.props.tapWeight()}
                     onChangeText={(weight) => this._onChangeWeight(weight) }
                 />
@@ -201,7 +209,7 @@ class SetForm extends Component {
                     underlineColorAndroid={'transparent'}
                     editable = {true}
                     placeholder="Enter"
-                    onEndEditing={() => this.props.dismissRPE()}
+                    onEndEditing={() => this._onEndEditRPE() }
                     placeholderTextColor={'lightgray'}
                     value = {this.state.rpe}
                     onFocus={() => this.props.tapRPE() }

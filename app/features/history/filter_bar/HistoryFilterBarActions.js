@@ -37,6 +37,10 @@ export const exportCSV = () => (dispatch, getState) => {
             try {
                 let date = new Date();
                 let name = 'OpenBarbell Data -- Exported on ' + date.toLocaleString() + '.csv';
+                // TODO: use a more efficient method of generating the name, perhaps an actual date format
+                name = name.split('/').join('-');
+                name = name.split(',').join('');
+                name = name.split(':').join('.');
                 let state = getState();
                 let sets = SetsSelectors.getHistorySetsChronological(state.sets);
                 let csv = CSVConverter.convert(sets);

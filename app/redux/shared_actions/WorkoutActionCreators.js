@@ -9,7 +9,7 @@ export const endWorkout = () => (dispatch, getState) => {
     var isWorkoutEmpty = SetsSelectors.getIsWorkoutEmpty(state)
     var isLoggedIn = AuthSelectors.getIsLoggedIn(state);
 
-    if (!getIsWorkoutEmpty && isLoggedIn) {
+    if (!isWorkoutEmpty && isLoggedIn) {
         dispatch({ type: END_WORKOUT });
     } else if(!isLoggedIn) {
         Alert.alert(

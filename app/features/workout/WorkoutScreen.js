@@ -183,7 +183,7 @@ const mapStateToProps = (state) => {
     if (sets.length === 0) {
         var isAddEnabled = false;
     } else {
-        var isAddEnabled = !SetEmptyCheck.isBlank(sets[sets.length-1]);
+        var isAddEnabled = !SetEmptyCheck.isUntouched(sets[sets.length-1]);
     }
 
     return {

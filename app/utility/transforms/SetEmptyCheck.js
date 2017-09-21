@@ -4,7 +4,7 @@ export const isEmpty = (set) => {
 };
 
 // no data and no reps at all
-export const isBlank = (set) => {
+export const isUntouched = (set) => {
     return hasEmptyData(set) && hasNoReps(set);
 };
 

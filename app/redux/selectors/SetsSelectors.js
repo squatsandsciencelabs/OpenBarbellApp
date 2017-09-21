@@ -58,7 +58,7 @@ export const getIsWorkoutEmpty = (state) => {
     if (workoutData.length >= 2) {
         // at least one set
         return false;
-    } else if (workoutData.length === 1 && !SetEmptyCheck.isBlank(workoutData[0])) {
+    } else if (workoutData.length === 1 && !SetEmptyCheck.isUntouched(workoutData[0])) {
         // only one set and it has data
         return false;
     }

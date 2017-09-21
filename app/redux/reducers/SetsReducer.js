@@ -118,7 +118,7 @@ const saveDefaultMetric = (state, action) => {
     let changes = {};
     
     // Check if set is empty before allowing metric to change
-    if (SetEmptyCheck.isBlank(set)) {
+    if (SetEmptyCheck.isUntouched(set)) {
         changes.metric = action.defaultMetric;
     }
     
@@ -469,7 +469,7 @@ const endWorkout = (state, action) => {
 
     // add working set
     let lastSet = workoutData[length-1];
-    if (length > 0 && !SetEmptyCheck.isBlank(lastSet)) {
+    if (length > 0 && !SetEmptyCheck.isUntouched(lastSet)) {
         let setID = lastSet.setID;
         lastSet.workoutID = workoutID;
         workoutSetIDs.push(setID);

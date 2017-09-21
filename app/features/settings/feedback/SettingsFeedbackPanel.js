@@ -12,10 +12,10 @@ class SettingsFeedbackPanel extends Component {
         return (
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flex: 1, flexDirection:'column', justifyContent:'space-between' }] }>
                 <Text style={ SETTINGS_PANEL_STYLES.headerText }>
-                    Feedback {"\n"}
+                    Tell us how we can improve {"\n"}
                 </Text>    
                 <TouchableOpacity onPress={() => Linking.openURL('mailto:contact@squatsandscience.com?subject=A%20really%20nice%20comment%20from%20an%20app%20user&body=')}>
-                    <Text style={SETTINGS_PANEL_STYLES.tappableText}>
+                    <Text style={ [SETTINGS_PANEL_STYLES.tappableText, { fontSize: 14 }]}>
                         contact@squatsandscience.com
                     </Text>
                 </TouchableOpacity>         

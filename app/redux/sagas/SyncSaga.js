@@ -108,6 +108,8 @@ function* pullUpdates(previousRevision=null) {
         const json = yield call(API.sync, revision, validator);
         if (json !== undefined) {
             yield put(SetsActionCreators.updateSetDataFromServer(json.revision, json.sets));
+        } else {
+            yield put(SetsActionCreators.updateDate());
         }
     } catch(error) {
         // error

@@ -90,7 +90,6 @@ export const updateSetDataFromServer = (revision, sets=null, syncDate=new Date()
     syncDate: syncDate
 });
 
-
 export const finishedUploadingSets = (revision) => ({
     type: FINISH_UPLOADING_SETS,
     revision: revision

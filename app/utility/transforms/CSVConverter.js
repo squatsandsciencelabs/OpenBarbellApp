@@ -32,8 +32,11 @@ export const convert = (sets) => {
             lastSetEndTime = null;
         }
 
+        let priorSets = sets.slice(0, sets.length - 1);
+        let exerciseExists = priorSets.find(priorSet => priorSet.exercise.toLowerCase() === set.exercise.toLowerCase());        
+
         // calculate setcount
-        if (lastExercise !== null && lastExercise === set.exercise) {
+        if (lastExercise !== null && exerciseExists) {
             setCount += 1;
         } else {
             setCount = 1;

@@ -35,6 +35,10 @@ const createViewModels = (sets, shouldShowRemoved) => {
         let set = sets[i];
         let rpe = String(sets[i].rpe);
 
+        if (set.exercise === null) {
+            set.exercise = "";
+        }
+
         if (set.rpe) {
             set.rpe = rpe;
         } else {
@@ -68,7 +72,10 @@ const createViewModels = (sets, shouldShowRemoved) => {
             lastExerciseName = null;
             setNumber = 1;
         } else if (!set.removed) {
-            if (lastExerciseName !== null && lastExerciseName === set.exercise) {
+            let priorSets = sets.slice(0, sets.length - 2);
+            let exerciseExists = priorSets.find(priorSet => priorSet.exercise.toLowerCase() === set.exercise.toLowerCase());
+
+            if (lastExerciseName !== null && exerciseExists) {
                 setNumber++;
             } else {
                 setNumber = 1;

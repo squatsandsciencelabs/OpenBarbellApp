@@ -21,9 +21,12 @@ const createViewModels = (sets) => {
     let lastSetEndTime = null; // to help calculate rest time
     let isInitialSet = true; // to help determine when to display rest time and split up the sections properly
     let count = 0;
-
+    
     // build view models
     sets.map((set) => {
+        if (set.exercise === null) {
+            set.exercise = "";
+        }
         // last section check, splitting the "current set" out for footer purposes
         // TODO: depending on design for "finish current set", can put all the data in one section instead
         if (count === sets.length-1) {
@@ -40,7 +43,11 @@ const createViewModels = (sets) => {
             setNumber = 1;
 
         } else if (!set.removed) {
-            if (lastExerciseName !== null && lastExerciseName === set.exercise) {
+            // new array with all sets except current one
+            let priorSets = sets.slice(0, sets.length - 1);
+            let exerciseExists = priorSets.find(priorSet => priorSet.exercise.toLowerCase() === set.exercise.toLowerCase());
+
+            if (lastExerciseName !== null && exerciseExists) {
                 setNumber++;
             } else {
                 setNumber = 1;

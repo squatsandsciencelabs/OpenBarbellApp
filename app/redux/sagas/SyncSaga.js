@@ -17,6 +17,7 @@ import API from 'app/services/API';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
+import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsActionCreators';
 import Validator from 'app/utility/transforms/Validator';
 
 const SyncSaga = function * SyncSaga() {
@@ -108,6 +109,8 @@ function* pullUpdates(previousRevision=null) {
         const json = yield call(API.sync, revision, validator);
         if (json !== undefined) {
             yield put(SetsActionCreators.updateSetDataFromServer(json.revision, json.sets));
+        } else {
+            yield put(SettingsActionCreators.updateSyncDate());
         }
     } catch(error) {
         // error

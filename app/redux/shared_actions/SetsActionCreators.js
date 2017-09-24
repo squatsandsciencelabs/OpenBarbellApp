@@ -7,7 +7,7 @@ import {
     RE_ADD_SETS_TO_UPLOAD,
     UPDATE_SET_DATA_FROM_SERVER,
     FINISH_UPLOADING_SETS,
-    FAILED_UPLOAD_SETS
+    FAILED_UPLOAD_SETS,
 } from 'app/ActionTypes';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
@@ -89,7 +89,6 @@ export const updateSetDataFromServer = (revision, sets=null, syncDate=new Date()
     revision: revision,
     syncDate: syncDate
 });
-
 
 export const finishedUploadingSets = (revision) => ({
     type: FINISH_UPLOADING_SETS,

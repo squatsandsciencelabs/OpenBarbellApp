@@ -6,7 +6,8 @@ import {
     UPDATE_SET_DATA_FROM_SERVER,
     SAVE_DEFAULT_METRIC,
     PRESENT_DEFAULT_METRIC,
-    DISMISS_DEFAULT_METRIC
+    DISMISS_DEFAULT_METRIC,
+    UPDATE_SYNC_DATE
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -45,6 +46,10 @@ const SettingsReducer = (state = defaultState, action) => {
             });
         case UPDATE_SET_DATA_FROM_SERVER:
         case LOGIN_SUCCESS:
+            return Object.assign({}, state, {
+                syncDate: action.syncDate
+            });
+        case UPDATE_SYNC_DATE:
             return Object.assign({}, state, {
                 syncDate: action.syncDate
             });

@@ -4,6 +4,7 @@ import {
     DISMISS_HISTORY_VIDEO_RECORDER,
     SAVE_HISTORY_VIDEO,
     SAVE_VIDEO_ERROR,
+    SWITCH_HISTORY_CAMERA_TYPE,
 } from 'app/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
@@ -51,7 +52,12 @@ export const saveVideoError = (setID) => (dispatch, getState) => {
     dispatch({
         type: SAVE_VIDEO_ERROR,
     });
-}
+};
+
+export const changeCameraType = (cameraType) => ({
+    type: SWITCH_HISTORY_CAMERA_TYPE,
+    cameraType: cameraType
+});
 
 const logStartRecordingVideoAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('start_recording_video', {
@@ -59,6 +65,8 @@ const logStartRecordingVideoAnalytics = (setID, state) => {
         set_id: setID,
     }, state);
 };
+
+// TODO: check that the duration calculation operates properly
 
 const logSaveVideoAnalytics = (setID, state) => {
     const duration = DurationsSelectors.getHistoryVideoRecorderDuration(state);

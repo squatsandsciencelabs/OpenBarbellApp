@@ -23,6 +23,7 @@ import {
     RESUME_END_SET_TIMER,
     SAVE_WORKOUT_REP,
     END_WORKOUT,
+    SWITCH_WORKOUT_CAMERA_TYPE,
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -44,7 +45,8 @@ const defaultState = {
     isSavingVideo: false,
     watchSetID: null,
     watchFileURL: null,
-
+    cameraType: "back",
+    
     // timer
     projectedEndSetTime: null,
     timerRemaining: null,
@@ -189,6 +191,10 @@ const WorkoutReducer = (state = defaultState, action) => {
                 removedCounter: 0,
                 restoredCounter: 0,
             });
+        case SWITCH_WORKOUT_CAMERA_TYPE: 
+            return Object.assign({}, state, {
+                cameraType: action.cameraType
+            });                              
         default:
             return state;
     }

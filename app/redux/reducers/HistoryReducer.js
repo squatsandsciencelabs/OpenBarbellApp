@@ -15,7 +15,8 @@ import {
     DISMISS_HISTORY_VIDEO_PLAYER,
     DELETE_HISTORY_VIDEO,
     SAVE_HISTORY_VIDEO,
-    END_WORKOUT
+    END_WORKOUT,
+    SWITCH_HISTORY_CAMERA_TYPE,
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -32,6 +33,7 @@ const defaultState = {
     watchSetID: null,
     watchFileURL: null,
     viewedCounter: 0,
+    cameraType: "front",
 };
 
 const HistoryReducer = (state = defaultState, action) => {
@@ -111,6 +113,10 @@ const HistoryReducer = (state = defaultState, action) => {
                 watchSetID: null,
                 watchFileURL: null
             });
+        case SWITCH_HISTORY_CAMERA_TYPE: 
+            return Object.assign({}, state, {
+                cameraType: action.cameraType
+            });          
         default:
             return state;
     }

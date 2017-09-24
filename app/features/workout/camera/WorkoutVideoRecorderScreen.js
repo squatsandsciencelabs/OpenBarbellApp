@@ -6,6 +6,7 @@ import * as Actions from './WorkoutVideoRecorderActions';
 import * as WorkoutSelectors from 'app/redux/selectors/WorkoutSelectors';
 
 const mapStateToProps = (state) => ({
+    cameraType: WorkoutSelectors.getCameraType(state),
     setID: WorkoutSelectors.getRecordingSetID(state),
     videoType: WorkoutSelectors.getRecordingVideoType(state),
     isModalShowing: WorkoutSelectors.getIsCameraVisible(state),
@@ -15,6 +16,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
+        changeCameraType: Actions.changeCameraType,
         closeModal: Actions.dismissRecording,
         tappedStart: Actions.startRecording,
         tappedStop: Actions.stopRecording,

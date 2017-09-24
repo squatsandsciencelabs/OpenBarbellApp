@@ -2,7 +2,8 @@
 
 import { 
 	SAVE_END_SET_TIMER, 
-	SAVE_DEFAULT_METRIC
+    SAVE_DEFAULT_METRIC,
+    UPDATE_SYNC_DATE
 } from 'app/ActionTypes';
 
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
@@ -22,4 +23,9 @@ export const saveDefaultMetric = (metric = 'kgs') => (dispatch, getState) => {
 export const saveEndSetTimer = (duration = 30) => ({
     type: SAVE_END_SET_TIMER,
     endSetTimerDuration: duration
+});
+
+export const updateSyncDate = (syncDate=new Date()) => ({
+    type: UPDATE_SYNC_DATE,
+    syncDate: syncDate
 });

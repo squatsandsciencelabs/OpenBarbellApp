@@ -23,11 +23,10 @@ class WorkoutBottomBar extends Component {
     }
 
     render() {
-        var message = "";
         if (this.props.isLoggedIn) {
-            message = 'FINISH AND SAVE';
+            var message = 'FINISH AND SAVE';
         } else {
-            message = 'DELETE WORKOUT';
+            var message = 'DELETE WORKOUT';
         }
         return (
             <View style={styles.bar}>

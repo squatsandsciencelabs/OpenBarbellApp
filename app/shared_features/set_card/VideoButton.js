@@ -96,9 +96,11 @@ const styles = StyleSheet.create({
     },
     whiteText: {
         color: 'white',
+        fontSize: 11
     },
     grayText: {
-        color: 'gray'
+        color: 'gray',
+        fontSize: 11
     },
 });
 

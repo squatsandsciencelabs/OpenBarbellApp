@@ -298,6 +298,7 @@ const styles = StyleSheet.create({
         color: 'lightgray'
     },
     detailText: {
+        fontSize: 12,
         color: 'gray',
         backgroundColor: 'rgba(0, 0, 0, 0)'
     },

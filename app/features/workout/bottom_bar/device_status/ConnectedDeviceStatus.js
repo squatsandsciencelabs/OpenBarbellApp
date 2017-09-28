@@ -17,6 +17,12 @@ class ConnectedDeviceStatus extends Component {
                     <Image style={styles.imageStyle} source={require('app/appearance/images/icon_connected.png')} /><Text style={styles.textStyle}> {this.props.deviceName} </Text>
                 </View>
             );
+        } else if (this.props.deviceStatus === 'RECONNECTING') {
+            return (
+                <View style={styles.statusBar}>
+                    <Image style={styles.imageStyle} source={require('app/appearance/images/icon_disconnected.png')} /><Text style={styles.textStyle}> RECONNECTING</Text>
+                </View>
+            );
         } else {
             return (
                 <View style={styles.statusBar}>

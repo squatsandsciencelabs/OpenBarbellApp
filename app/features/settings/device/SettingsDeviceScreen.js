@@ -18,6 +18,7 @@ const mapDispatchToProps = (dispatch) => {
         stopDeviceScan: Actions.stopDeviceScan,
         connectDevice: Actions.connectDevice,
         disconnectDevice: Actions.disconnectDevice,
+        stopReconnect: Actions.stopReconnect,
     }, dispatch);
 };
 

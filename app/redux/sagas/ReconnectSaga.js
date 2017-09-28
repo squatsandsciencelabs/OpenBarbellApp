@@ -1,15 +1,27 @@
-import { take, call, put, apply } from 'redux-saga/effects';
+import { take, put, cancel, fork } from 'redux-saga/effects';
 import { Alert } from 'react-native';
 
 import {
     DISCONNECTED_FROM_DEVICE,
-    FOUND_DEVICE
+    FOUND_DEVICE,
+    STOP_RECONNECT
 } from 'app/ActionTypes';
 import * as DeviceActionCreators from 'app/redux/shared_actions/DeviceActionCreators';
 
 // TODO: fork this function so I can actually cancel reconnect mode
 
 const ReconnectSaga = function * ReconnectSaga() {
+    while (true) {
+        // reconnect
+        const task = yield fork(executeReconnect);
+
+        // cancel
+        yield take(STOP_RECONNECT);
+        yield cancel(task);
+    }
+};
+
+function* executeReconnect() {
     while (true) {
         // listen for non manual disconnect
         let reconnectDevice = null;
@@ -38,6 +50,6 @@ const ReconnectSaga = function * ReconnectSaga() {
         yield put(DeviceActionCreators.stopDeviceScan());
         yield put(DeviceActionCreators.reconnectDevice(foundDevice, foundIdentifier));
     }
-};
+}    
 
 export default ReconnectSaga;

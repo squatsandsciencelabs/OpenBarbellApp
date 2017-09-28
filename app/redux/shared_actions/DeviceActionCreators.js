@@ -73,7 +73,10 @@ export const connectDevice = (device) => (dispatch, getState) => {
 };
 
 export const reconnectDevice = (device, identifier) => (dispatch, getState) => {
-    RFDuinoLib.connectDevice(device);
+    // reconnect after a second
+    BackgroundTimer.setTimeout(() => {
+        RFDuinoLib.connectDevice(device);
+    }, 1000);
 
     // HACK: ideally this is a connect timeout saga
     // but it requires both background timer and access to actions
@@ -87,7 +90,7 @@ export const reconnectDevice = (device, identifier) => (dispatch, getState) => {
             dispatch(disconnectDevice()); // in case it's trying to connect, ensure it's actually disconnecting
             dispatch(disconnectedFromDevice(device, identifier)); // in case it can never find it, visually update and trigger another reconnect
         }
-    }, 5000);
+    }, 6000);
 
     dispatch({
         type: RECONNECT_DEVICE,

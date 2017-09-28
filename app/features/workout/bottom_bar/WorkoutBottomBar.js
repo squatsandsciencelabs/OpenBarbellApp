@@ -15,13 +15,6 @@ class WorkoutBottomBar extends Component {
         this.props.endWorkout();
     }
 
-    _renderDevice() {
-        // TODO: device info
-        return (
-            <View></View>
-        );
-    }
-
     render() {
         if (this.props.isLoggedIn) {
             var message = 'FINISH AND SAVE';
@@ -30,7 +23,6 @@ class WorkoutBottomBar extends Component {
         }
         return (
             <View style={styles.bar}>
-                { this._renderDevice() }
                 <ConnectedDeviceStatusScreen />
                 <TouchableOpacity style={{justifyContent: 'center'}} onPress={ () => this._onPressEndWorkout() } >
                     <Text style={styles.buttonText}>{message}</Text>

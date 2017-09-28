@@ -7,6 +7,7 @@ import SettingsDevicePanelDisconnected from './panels/SettingsDevicePanelDisconn
 import SettingsDevicePanelConnecting from './panels/SettingsDevicePanelConnecting';
 import SettingsDevicePanelConnected from './panels/SettingsDevicePanelConnected';
 import SettingsDevicePanelDisconnecting from './panels/SettingsDevicePanelDisconnecting';
+import SettingsDevicePanelReconnecting from './panels/SettingsDevicePanelReconnecting';
 
 class SettingsDevicePanel extends Component {
 
@@ -32,8 +33,8 @@ class SettingsDevicePanel extends Component {
                 return <SettingsDevicePanelDisconnecting
                     device={ this.props.deviceName }/>;
             case 'RECONNECTING':
-                // TODO: reconnecting screen
-                return null;
+                return <SettingsDevicePanelReconnecting
+                    stopReconnect={ this.props.stopReconnect }/>;
         }
     }
 

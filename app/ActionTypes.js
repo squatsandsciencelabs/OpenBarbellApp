@@ -4,6 +4,7 @@ export const STOP_DEVICE_SCAN = 'STOP_DEVICE_SCAN';
 export const FOUND_DEVICE = 'FOUND_DEVICE';
 export const CONNECT_DEVICE = 'CONNECT_DEVICE';
 export const RECONNECT_DEVICE = 'RECONNECT_DEVICE';
+export const STOP_RECONNECT = 'STOP_RECONNECT';
 
 // connection status
 export const BLUETOOTH_OFF = 'BLUETOOTH_OFF';

@@ -1,6 +1,7 @@
 import {
     CONNECT_DEVICE,
     RECONNECT_DEVICE,
+    STOP_RECONNECT,
     DISCONNECT_DEVICE,
     BLUETOOTH_OFF,
     DISCONNECTED_FROM_DEVICE,
@@ -40,6 +41,7 @@ const ConnectedDeviceReducer = ( state = defaultState, action) => {
                 deviceIdentifier: null
             });
         case DISCONNECTED_FROM_DEVICE:
+        case STOP_RECONNECT:
             return Object.assign({}, state, {
                 status: 'DISCONNECTED',
                 deviceName: null,

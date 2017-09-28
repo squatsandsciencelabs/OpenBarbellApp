@@ -5,6 +5,8 @@ import { NativeModules } from 'react-native';
 import BackgroundTimer from 'react-native-background-timer';
 
 import {
+    START_DEVICE_SCAN,
+    STOP_DEVICE_SCAN,
     FOUND_DEVICE,
     BLUETOOTH_OFF,
     DISCONNECTED_FROM_DEVICE,
@@ -13,7 +15,8 @@ import {
     ADD_REP_DATA,
     RECONNECTING_TO_DEVICE,
     DISCONNECT_DEVICE,
-    CONNECT_DEVICE
+    CONNECT_DEVICE,
+    RECONNECT_DEVICE
 } from 'app/ActionTypes';
 import * as TimerActionCreators from './TimerActionCreators';
 import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDeviceStatusSelectors';
@@ -21,6 +24,22 @@ import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDe
 const RFDuinoLib = NativeModules.RFDuinoLib;
 
 // SCANNING
+
+export const startDeviceScan = () => {
+    RFDuinoLib.startScan();
+
+    return {
+        type: START_DEVICE_SCAN
+    };
+};
+
+export const stopDeviceScan = () => {
+    RFDuinoLib.stopScan();
+
+    return {
+        type: STOP_DEVICE_SCAN
+    };
+};
 
 export const foundDevice = (name, identifier) => ({
     type: FOUND_DEVICE,
@@ -49,6 +68,29 @@ export const connectDevice = (device) => (dispatch, getState) => {
 
     dispatch({
         type: CONNECT_DEVICE,
+        device: device
+    });
+};
+
+export const reconnectDevice = (device, identifier) => (dispatch, getState) => {
+    RFDuinoLib.connectDevice(device);
+
+    // HACK: ideally this is a connect timeout saga
+    // but it requires both background timer and access to actions
+    // therefore putting it here
+    BackgroundTimer.setTimeout(() => {
+        // check to see if stuck connecting
+        const state = getState();
+        const status = ConnectedDeviceStatusSelectors.getConnectedDeviceStatus(state);
+        if (status !== 'CONNECTED') {
+            // disconnect
+            dispatch(disconnectDevice()); // in case it's trying to connect, ensure it's actually disconnecting
+            dispatch(disconnectedFromDevice(device, identifier)); // in case it can never find it, visually update and trigger another reconnect
+        }
+    }, 5000);
+
+    dispatch({
+        type: RECONNECT_DEVICE,
         device: device
     });
 };
@@ -85,10 +127,8 @@ export const connectedToDevice = (name, identifier) => ({
     deviceIdentifier: identifier
 });
 
-export const reconnectingToDevice = (name, identifier) => ({
+export const reconnectingToDevice = () => ({
     type: RECONNECTING_TO_DEVICE,
-    deviceName: name,
-    deviceIdentifier: identifier
 });
 
 // DATA

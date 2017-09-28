@@ -51,25 +51,7 @@ export default function (store) {
         const state = store.getState();
         const name = ConnectedDeviceStatusSelectors.getConnectedDeviceName(state);
         const identifier = ConnectedDeviceStatusSelectors.getConnectedDeviceIdentifier(state);
-
         store.dispatch(DeviceActionCreators.disconnectedFromDevice(name, identifier));
-
-        // HACK
-        // ideally this should be done as a saga
-        // however, I need background timing code and actions to run
-        // so instead just manually doing it here
-        if (name !== null && name !== undefined) { // non manual disconnect occurred
-            BackgroundTimer.setTimeout(() => {
-                // check state to see if ready to reconnect
-                const state = store.getState();
-                const status = ConnectedDeviceStatusSelectors.getConnectedDeviceStatus(state);        
-                if (status === 'DISCONNECTED') {
-                    // reconnect
-                    store.dispatch(DeviceActionCreators.connectDevice(name));
-                    Alert.alert("Reconnecting!", "It looks like you disconnected, make sure your phone is within range and reduce interference from other bluetooth devices.");                    
-                }
-            }, 7000);
-        }
     });
 
     Emitter.addListener('Connecting', (data) => {

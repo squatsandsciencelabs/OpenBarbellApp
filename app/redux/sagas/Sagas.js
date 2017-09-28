@@ -7,6 +7,7 @@ import SuggestionsSaga from './SuggestionsSaga';
 import SyncSaga from './SyncSaga';
 import TimerSaga from './TimerSaga';
 import EndOldWorkoutSaga from './EndOldWorkoutSaga';
+import ReconnectSaga from './ReconnectSaga';
 
 const Sagas = function* Sagas() {
     yield all([
@@ -17,6 +18,7 @@ const Sagas = function* Sagas() {
         call(SyncSaga),
         call(TimerSaga),
         call(EndOldWorkoutSaga),
+        call(ReconnectSaga),        
     ]);
 };
 

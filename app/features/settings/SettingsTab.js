@@ -6,13 +6,16 @@ import {
     View,
     ListView
 } from 'react-native';
-
+import firebase from 'app/configs/firebase'
 import SettingsDeviceScreen from './device/SettingsDeviceScreen';
 import SettingsAccountScreen from './account/SettingsAccountScreen';
 import SettingsApplicationScreen from './application/SettingsApplicationScreen';
 import SettingsFeedbackScreen from './feedback/SettingsFeedbackPanel';
 
 class SettingsTab extends Component {
+    componentDidMount() {
+        firebase.analytics().setCurrentScreen('Settings');
+    }
 
     render() {
         return (

@@ -1,6 +1,13 @@
 const stateRoot = (state) => state.connectedDevice;
 
-export const getConnectedDeviceStatus = (state) => stateRoot(state).status;
+export const getConnectedDeviceStatus = (state) => {
+    let root = stateRoot(state);
+    if (root.isReconnecting) {
+        return 'RECONNECTING';
+    } else {
+        return root.status;
+    }
+};
 
 export const getConnectedDeviceName = (state) => stateRoot(state).deviceName;
 

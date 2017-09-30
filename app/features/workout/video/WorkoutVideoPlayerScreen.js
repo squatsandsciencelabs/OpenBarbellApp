@@ -18,9 +18,9 @@ const mapDispatchToProps = (dispatch) => {
     }, dispatch);
 };
 
-const HistoryVideoPlayerScreen = connect(
+const WorkoutVideoPlayerScreen = connect(
     mapStateToProps,
     mapDispatchToProps
 )(VideoPlayer);
 
-export default HistoryVideoPlayerScreen;
+export default WorkoutVideoPlayerScreen;

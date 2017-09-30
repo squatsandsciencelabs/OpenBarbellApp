@@ -23,6 +23,18 @@ import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDe
 
 const RFDuinoLib = NativeModules.RFDuinoLib;
 
+var connectTimeoutTimer = null;
+var reconnectTimeoutTimer = null;
+var reconnectTimer = null;
+const clearTimers = () => {
+    BackgroundTimer.clearTimeout(connectTimeoutTimer);
+    BackgroundTimer.clearTimeout(reconnectTimeoutTimer);
+    BackgroundTimer.clearTimeout(reconnectTimer);
+    connectTimeoutTimer = null;
+    reconnectTimeoutTimer = null;
+    reconnectTimer = null;
+};
+
 // SCANNING
 
 export const startDeviceScan = () => {
@@ -55,7 +67,7 @@ export const connectDevice = (device) => (dispatch, getState) => {
     // HACK: ideally this is a connect timeout saga
     // but it requires both background timer and access to actions
     // therefore putting it here
-    BackgroundTimer.setTimeout(() => {
+    connectTimeoutTimer = BackgroundTimer.setTimeout(() => {
         // check to see if stuck connecting
         const state = getState();
         const status = ConnectedDeviceStatusSelectors.getConnectedDeviceStatus(state);
@@ -73,15 +85,15 @@ export const connectDevice = (device) => (dispatch, getState) => {
 };
 
 export const reconnectDevice = (device, identifier) => (dispatch, getState) => {
-    // reconnect after a second
-    BackgroundTimer.setTimeout(() => {
+    // reconnect after a second as V2s have issues
+    reconnectTimer = BackgroundTimer.setTimeout(() => {
         RFDuinoLib.connectDevice(device);
-    }, 1000);
+    }, 2000);
 
     // HACK: ideally this is a connect timeout saga
     // but it requires both background timer and access to actions
     // therefore putting it here
-    BackgroundTimer.setTimeout(() => {
+    reconnectTimeoutTimer = BackgroundTimer.setTimeout(() => {
         // check to see if stuck connecting
         const state = getState();
         const status = ConnectedDeviceStatusSelectors.getConnectedDeviceStatus(state);
@@ -90,7 +102,7 @@ export const reconnectDevice = (device, identifier) => (dispatch, getState) => {
             dispatch(disconnectDevice()); // in case it's trying to connect, ensure it's actually disconnecting
             dispatch(disconnectedFromDevice(device, identifier)); // in case it can never find it, visually update and trigger another reconnect
         }
-    }, 6000);
+    }, 7000);
 
     dispatch({
         type: RECONNECT_DEVICE,
@@ -112,11 +124,15 @@ export const bluetoothIsOff = () => ({
     type: BLUETOOTH_OFF
 });
 
-export const disconnectedFromDevice = (name=null, identifier=null) => ({
-    type: DISCONNECTED_FROM_DEVICE,
-    device: name,
-    deviceIdentifier: identifier
-});
+export const disconnectedFromDevice = (name=null, identifier=null) => {
+    clearTimers();
+
+    return {
+        type: DISCONNECTED_FROM_DEVICE,
+        device: name,
+        deviceIdentifier: identifier
+    };
+};
 
 export const connectingToDevice = (name, identifier) => ({
     type: CONNECTING_TO_DEVICE,
@@ -124,11 +140,15 @@ export const connectingToDevice = (name, identifier) => ({
     deviceIdentifier: identifier
 });
 
-export const connectedToDevice = (name, identifier) => ({
-    type: CONNECTED_TO_DEVICE,
-    deviceName: name,
-    deviceIdentifier: identifier
-});
+export const connectedToDevice = (name, identifier) => {
+    clearTimers();
+    
+    return {
+        type: CONNECTED_TO_DEVICE,
+        deviceName: name,
+        deviceIdentifier: identifier
+    }
+};
 
 export const reconnectingToDevice = () => ({
     type: RECONNECTING_TO_DEVICE,

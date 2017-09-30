@@ -13,7 +13,8 @@ import {
 const defaultState = {
     status: 'DISCONNECTED',
     deviceName: null,
-    deviceIdentifier: null
+    deviceIdentifier: null,
+    isReconnecting: false
 };
 
 const ConnectedDeviceReducer = ( state = defaultState, action) => {
@@ -41,11 +42,17 @@ const ConnectedDeviceReducer = ( state = defaultState, action) => {
                 deviceIdentifier: null
             });
         case DISCONNECTED_FROM_DEVICE:
-        case STOP_RECONNECT:
             return Object.assign({}, state, {
                 status: 'DISCONNECTED',
                 deviceName: null,
                 deviceIdentifier: null
+            });
+        case STOP_RECONNECT:
+            return Object.assign({}, state, {
+                status: 'DISCONNECTED',
+                deviceName: null,
+                deviceIdentifier: null,
+                isReconnecting: false
             });
         case CONNECTING_TO_DEVICE:
             return Object.assign({}, state, {
@@ -57,11 +64,12 @@ const ConnectedDeviceReducer = ( state = defaultState, action) => {
             return Object.assign({}, state, {
                 status: 'CONNECTED',
                 deviceName: action.deviceName,
-                deviceIdentifier: action.deviceIdentifier
+                deviceIdentifier: action.deviceIdentifier,
+                isReconnecting: false
             });
         case RECONNECTING_TO_DEVICE:
             return Object.assign({}, state, {
-                status: 'RECONNECTING',
+                isReconnecting: true
             });
         default:
             return state;

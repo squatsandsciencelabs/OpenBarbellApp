@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 
 import SettingsDevicePanel from './SettingsDevicePanel';
 import * as Actions from './SettingsDeviceActions';
+import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDeviceStatusSelectors';
 
 const mapStateToProps = (state) => {
     return {
-        deviceStatus: state.connectedDevice.status,
-        deviceName: state.connectedDevice.deviceName,
+        deviceStatus: ConnectedDeviceStatusSelectors.getConnectedDeviceStatus(state),
+        deviceName: ConnectedDeviceStatusSelectors.getConnectedDeviceName(state),
         scannedDevices: state.scannedDevices,
     };
 };

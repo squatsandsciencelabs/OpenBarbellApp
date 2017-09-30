@@ -18,10 +18,13 @@ const ReconnectSaga = function * ReconnectSaga() {
         // cancel
         yield take(STOP_RECONNECT);
         yield cancel(task);
+        yield put(DeviceActionCreators.disconnectDevice());
+        yield put(DeviceActionCreators.disconnectedFromDevice());
     }
 };
 
 function* executeReconnect() {
+    console.tron.log("EXEC RECONNECT!");
     while (true) {
         // listen for non manual disconnect
         let reconnectDevice = null;

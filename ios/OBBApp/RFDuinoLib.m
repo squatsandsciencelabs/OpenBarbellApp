@@ -53,7 +53,9 @@ RCT_EXPORT_METHOD(disconnectDevice)
 {
   RFduino *rfduino = self.connectedRFduino;
   self.connectedRFduino = nil;
-  [self.manager disconnectRFduino:rfduino];
+  if (rfduino != nil) {
+    [self.manager disconnectRFduino:rfduino];
+  }
 }
 
 - (NSArray<NSString *> *)supportedEvents

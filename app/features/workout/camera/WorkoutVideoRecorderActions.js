@@ -14,9 +14,13 @@ export const stopRecording = () => ({
     type: STOP_RECORDING_WORKOUT
 });
 
-export const dismissRecording = () => ({
-    type: DISMISS_WORKOUT_VIDEO_RECORDER
-});
+export const dismissRecording = () => {
+    Analytics.setCurrentScreen('workout');
+    
+    return {
+        type: DISMISS_WORKOUT_VIDEO_RECORDER
+    }
+};
 
 export const saveVideo = (setID, videoFileURL, videoType) => ({
     type: SAVE_WORKOUT_VIDEO,

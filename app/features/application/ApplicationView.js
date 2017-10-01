@@ -70,7 +70,7 @@ class ApplicationView extends Component {
                         contentProps={{ keyboardShouldPersistTaps: 'always', keyboardDismissMode: 'on-drag' }}
                         renderTabBar={() => <DefaultTabBar />}
                         initialPage={ 2 }
-                        onChangeTab={ () => { this.props.changeTab() } }>
+                        onChangeTab={ ({ i, ref }) => { this.props.changeTab(i) } }>
                         <View style={styles.tabView} tabLabel='WORKOUT'>
                             <WorkoutScreen />
                         </View>

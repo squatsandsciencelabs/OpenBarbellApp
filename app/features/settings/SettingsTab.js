@@ -6,7 +6,6 @@ import {
     View,
     ListView
 } from 'react-native';
-
 import SettingsDeviceScreen from './device/SettingsDeviceScreen';
 import SettingsAccountScreen from './account/SettingsAccountScreen';
 import SettingsApplicationScreen from './application/SettingsApplicationScreen';

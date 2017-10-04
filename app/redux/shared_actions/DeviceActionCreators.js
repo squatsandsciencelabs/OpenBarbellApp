@@ -22,6 +22,7 @@ import * as TimerActionCreators from './TimerActionCreators';
 import * as SetsActionCreators from './SetsActionCreators';
 import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDeviceStatusSelectors';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
+import * as Analytics from 'app/utility/analytics/Analytics';
 
 const RFDuinoLib = NativeModules.RFDuinoLib;
 
@@ -47,12 +48,15 @@ export const startDeviceScan = () => {
     };
 };
 
-export const stopDeviceScan = () => {
+export const stopDeviceScan = () => (dispatch, getState) => {
     RFDuinoLib.stopScan();
+    const state = getState();    
+    const devices = state.scannedDevices.devices.join();
+    Analytics.setUserProp('scanned_devices', devices);
 
-    return {
+    dispatch({
         type: STOP_DEVICE_SCAN
-    };
+    });
 };
 
 export const foundDevice = (name, identifier) => ({
@@ -122,11 +126,16 @@ export const disconnectDevice = () => {
 
 // DEVICE STATUS
 
-export const bluetoothIsOff = () => ({
-    type: BLUETOOTH_OFF
-});
+export const bluetoothIsOff = () => {
+    Analytics.setUserProp('is_bluetooth_on', false);
+
+    return {
+        type: BLUETOOTH_OFF
+    };
+};
 
 export const disconnectedFromDevice = (name=null, identifier=null) => {
+    Analytics.setUserProp('connected_device_id', null);    
     clearTimers();
 
     return {
@@ -136,25 +145,36 @@ export const disconnectedFromDevice = (name=null, identifier=null) => {
     };
 };
 
-export const connectingToDevice = (name, identifier) => ({
-    type: CONNECTING_TO_DEVICE,
-    device: name,
-    deviceIdentifier: identifier
-});
+export const connectingToDevice = (name, identifier) => {
+    Analytics.setUserProp('is_bluetooth_on', true);
+    
+    return {
+        type: CONNECTING_TO_DEVICE,
+        device: name,
+        deviceIdentifier: identifier
+    };
+};
 
 export const connectedToDevice = (name, identifier) => {
+    Analytics.setUserProp('connected_device_id', identifier);
     clearTimers();
     
     return {
         type: CONNECTED_TO_DEVICE,
         deviceName: name,
         deviceIdentifier: identifier
-    }
+    };
 };
 
-export const reconnectingToDevice = () => ({
-    type: RECONNECTING_TO_DEVICE,
-});
+export const reconnectingToDevice = (name, identifier) => {
+    Analytics.setUserProp('connected_device_id', identifier);
+
+    return {
+        type: RECONNECTING_TO_DEVICE,
+        deviceName: name,
+        deviceIdentifier: identifier
+    };
+};
 
 // DATA
 

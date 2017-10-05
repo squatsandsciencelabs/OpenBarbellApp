@@ -8,8 +8,6 @@ import {
 } from 'app/ActionTypes';
 import * as DeviceActionCreators from 'app/redux/shared_actions/DeviceActionCreators';
 
-// TODO: fork this function so I can actually cancel reconnect mode
-
 const ReconnectSaga = function * ReconnectSaga() {
     while (true) {
         // reconnect
@@ -24,7 +22,6 @@ const ReconnectSaga = function * ReconnectSaga() {
 };
 
 function* executeReconnect() {
-    console.tron.log("EXEC RECONNECT!");
     while (true) {
         // listen for non manual disconnect
         let reconnectDevice = null;

@@ -12,7 +12,7 @@ import {
 } from 'app/ActionTypes';
 
 var timer = null;
-var startTime = null;
+var startTime = null; // start time of the background timer, NOT the initial start time of the timer
 var timeRemaining = null;
 var isPaused = false;
 
@@ -26,7 +26,7 @@ const runTimer = (duration, dispatch) => {
         startTime = null;
         timer = null;
         isPaused = false;
-        dispatch(SetsActionCreators.endSet());
+        dispatch(SetsActionCreators.endSet());        
     }, duration);
 };
 
@@ -47,12 +47,15 @@ export const startEndSetTimer = () => (dispatch, getState) => {
         timeRemaining = durationInSeconds * 1000;
         isPaused = true;
         startTime = (new Date()).getTime();
-        dispatch({type: START_END_SET_TIMER});
+        // start it paused
+        dispatch({type: START_END_SET_TIMER, time: null});
         dispatch({type: PAUSE_END_SET_TIMER});
     } else {
         timeRemaining = durationInSeconds * 1000;
         runTimer(timeRemaining, dispatch);
-        dispatch({type: START_END_SET_TIMER});        
+        let projectedEndTime = (new Date()).getTime() + timeRemaining;
+        // start it normal
+        dispatch({type: START_END_SET_TIMER, time: projectedEndTime});        
     }
     
     console.tron.log("New end set timer is now " + timer);
@@ -69,7 +72,8 @@ export const resumeEndSetTimer = () => (dispatch) => {
         timeRemaining = 10000;
     }
     runTimer(timeRemaining, dispatch);
-    dispatch({type: RESUME_END_SET_TIMER});    
+    let projectedEndTime = (new Date()).getTime() + timeRemaining;    
+    dispatch({type: RESUME_END_SET_TIMER, time: projectedEndTime});    
 };
 
 export const pauseEndSetTimer = () => (dispatch) => {
@@ -95,6 +99,7 @@ export const stopEndSetTimer = () =>  {
     timer = null;
     isPaused = false;
     timeRemaining = null;
+    startTime = null;
 
     return {
         type: STOP_END_SET_TIMER

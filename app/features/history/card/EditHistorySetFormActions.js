@@ -8,7 +8,7 @@ import {
     END_EDITING_HISTORY_RPE,
     END_EDITING_HISTORY_WEIGHT,    
 } from 'app/ActionTypes';
-import * as Analytics from 'app/utility/analytics/Analytics';
+import * as Analytics from 'app/utility/Analytics';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 
 export const presentExercise = (setID, exercise) => {

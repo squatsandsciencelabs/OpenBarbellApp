@@ -4,7 +4,7 @@ import {
     DISMISS_HISTORY_VIDEO_RECORDER,
     SAVE_HISTORY_VIDEO
 } from 'app/ActionTypes';
-import * as Analytics from 'app/utility/analytics/Analytics';
+import * as Analytics from 'app/utility/Analytics';
 
 export const startRecording = (setID) => ({
     type: START_RECORDING_HISTORY,

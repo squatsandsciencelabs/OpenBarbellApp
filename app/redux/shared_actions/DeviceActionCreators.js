@@ -3,6 +3,7 @@
 
 import { NativeModules } from 'react-native';
 import BackgroundTimer from 'react-native-background-timer';
+import DeviceInfo from 'react-native-device-info';
 
 import {
     START_DEVICE_SCAN,
@@ -22,7 +23,7 @@ import * as TimerActionCreators from './TimerActionCreators';
 import * as SetsActionCreators from './SetsActionCreators';
 import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDeviceStatusSelectors';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
-import * as Analytics from 'app/utility/analytics/Analytics';
+import * as Analytics from 'app/utility/Analytics';
 
 const RFDuinoLib = NativeModules.RFDuinoLib;
 
@@ -43,6 +44,10 @@ const clearTimers = () => {
 export const startDeviceScan = () => {
     RFDuinoLib.startScan();
 
+    // analytics
+    const uniqueID = DeviceInfo.getUniqueId();
+    Analytics.setUserProp('mobile_identifier', uniqueID);
+
     return {
         type: START_DEVICE_SCAN
     };
@@ -50,24 +55,33 @@ export const startDeviceScan = () => {
 
 export const stopDeviceScan = () => (dispatch, getState) => {
     RFDuinoLib.stopScan();
-    const state = getState();    
-    const devices = state.scannedDevices.devices.join();
-    Analytics.setUserProp('scanned_devices', devices);
+
+    // analytics
+    const state = getState();
+    const scanned_devices = state.scannedDevices.devices.join();
+    const num_scanned_devices = state.scannedDevices.devices.length;
+    Analytics.setUserProp('scanned_devices', scanned_devices);
+    Analytics.setUserProps('num_scanned_devices', num_scanned_devices);
 
     dispatch({
         type: STOP_DEVICE_SCAN
     });
 };
 
-export const foundDevice = (name, identifier) => ({
-    type: FOUND_DEVICE,
-    device: name,
-    deviceIdentifier: identifier
-});
+export const foundDevice = (name, identifier) => {
+    Analytics.setUserProp('is_bluetooth_on', true);
+
+    return {
+        type: FOUND_DEVICE,
+        device: name,
+        deviceIdentifier: identifier
+    }
+};
 
 // DEVICE
 
 export const connectDevice = (device) => (dispatch, getState) => {
+    Analytics.setUserProp('is_bluetooth_on', true);
     RFDuinoLib.connectDevice(device);
 
     // HACK: ideally this is a connect timeout saga
@@ -135,8 +149,14 @@ export const bluetoothIsOff = () => {
 };
 
 export const disconnectedFromDevice = (name=null, identifier=null) => {
+<<<<<<< HEAD
     Analytics.setUserProp('connected_device_id', null);    
     clearTimers();
+=======
+    Analytics.setUserProp('connected_device_id', null);
+    Analytics.setUserProp('is_v2', false);
+    Analytics.setUserProps('is_v3', false);
+>>>>>>> added start new set events
 
     return {
         type: DISCONNECTED_FROM_DEVICE,
@@ -157,8 +177,21 @@ export const connectingToDevice = (name, identifier) => {
 
 export const connectedToDevice = (name, identifier) => {
     Analytics.setUserProp('connected_device_id', identifier);
+<<<<<<< HEAD
     clearTimers();
     
+=======
+    Analytics.setUserProp('is_bluetooth_on', true);
+
+    if (name.charAt(3) === '2') {
+        Analytics.setUserProp('is_v2', true);
+        Analytics.setUserProps('is_v3', false);
+    } else if (name.charAt(3) === '3') {
+        Analytics.setUserProp('is_v3', true);
+        Analytics.setUserProp('is_v2', false);
+    }
+
+>>>>>>> added start new set events
     return {
         type: CONNECTED_TO_DEVICE,
         deviceName: name,
@@ -168,7 +201,15 @@ export const connectedToDevice = (name, identifier) => {
 
 export const reconnectingToDevice = (name, identifier) => {
     Analytics.setUserProp('connected_device_id', identifier);
+    Analytics.setUserProp('is_bluetooth_on', true);
 
+    if (name.charAt(3) === '2') {
+        Analytics.setUserProp('is_v2', true);
+        Analytics.setUserProps('is_v3', false);
+    } else if (name.charAt(3) === '3') {
+        Analytics.setUserProp('is_v3', true);
+        Analytics.setUserProp('is_v2', false);
+    }
     return {
         type: RECONNECTING_TO_DEVICE,
         deviceName: name,
@@ -180,6 +221,7 @@ export const reconnectingToDevice = (name, identifier) => {
 
 export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, getState) => {
     var state = getState();
+    Analytics.setUserProp('is_bluetooth_on', true);
 
     dispatch(TimerActionCreators.sanityCheckTimer());
 

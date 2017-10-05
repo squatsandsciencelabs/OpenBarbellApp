@@ -7,6 +7,7 @@ import Store from 'app/redux/Store';
 import ApplicationScreen from 'app/features/application/ApplicationScreen';
 import * as GoogleSignInSetup from 'app/services/GoogleSignInSetup';
 import Bluetooth from 'app/services/Bluetooth';
+import AppState from 'app/utility/AppState';
 import Permissions from 'app/services/Permissions';
 
 // initialize the store
@@ -20,6 +21,9 @@ GoogleSignInSetup.configure();
 
 // start the bluetooth
 Bluetooth(store);
+
+// set up app state listeners
+AppState(store);
 
 // render
 class OBBApp extends Component {

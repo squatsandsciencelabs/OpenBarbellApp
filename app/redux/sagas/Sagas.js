@@ -6,6 +6,7 @@ import AuthSaga from './AuthSaga';
 import SuggestionsSaga from './SuggestionsSaga';
 import SyncSaga from './SyncSaga';
 import TimerSaga from './TimerSaga';
+import TimerUnlockSaga from './TimerUnlockSaga';
 import EndOldWorkoutSaga from './EndOldWorkoutSaga';
 import ReconnectSaga from './ReconnectSaga';
 
@@ -17,8 +18,9 @@ const Sagas = function* Sagas() {
         call(SuggestionsSaga),
         call(SyncSaga),
         call(TimerSaga),
+        call(TimerUnlockSaga),
         call(EndOldWorkoutSaga),
-        call(ReconnectSaga),        
+        call(ReconnectSaga),
     ]);
 };
 

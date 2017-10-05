@@ -2,7 +2,7 @@ import {
     DISMISS_WORKOUT_TAGS,
     SAVE_WORKOUT_SET_TAGS
 } from 'app/ActionTypes';
-import * as Analytics from 'app/utility/analytics/Analytics';
+import * as Analytics from 'app/utility/Analytics';
 
 export const dismissTags = () => {
     Analytics.setCurrentScreen('workout');

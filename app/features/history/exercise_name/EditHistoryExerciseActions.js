@@ -1,6 +1,6 @@
 import { DISMISS_HISTORY_EXERCISE } from 'app/ActionTypes';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
-import * as Analytics from 'app/utility/analytics/Analytics';
+import * as Analytics from 'app/utility/Analytics';
 
 export const dismissExercise = () => {
     Analytics.setCurrentScreen('history');

@@ -5,7 +5,7 @@ import {
     SAVE_TOKENS,
     TOKENS_READY
 } from 'app/ActionTypes';
-import * as Analytics from 'app/utility/analytics/Analytics';
+import * as Analytics from 'app/utility/Analytics';
 
 export const loginSucceeded = (accessToken, refreshToken, email, date = new Date(), revision = null, sets = null) => {
     Analytics.setUserProp('email', email);

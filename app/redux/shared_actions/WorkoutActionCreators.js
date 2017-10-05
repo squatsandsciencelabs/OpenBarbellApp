@@ -3,11 +3,13 @@ import { Alert } from 'react-native';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import { END_WORKOUT } from 'app/ActionTypes';
+import * as Analytics from 'app/utlity/Analytics';
 
 export const endWorkout = () => (dispatch, getState) => {
     var state = getState();
     var isWorkoutEmpty = SetsSelectors.getIsWorkoutEmpty(state)
     var isLoggedIn = AuthSelectors.getIsLoggedIn(state);
+    Analytics.setUserProp('is_workout_in_progress', false);
 
     if (!isWorkoutEmpty && isLoggedIn) {
         dispatch({ type: END_WORKOUT });

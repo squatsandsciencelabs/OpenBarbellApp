@@ -2,7 +2,7 @@ import {
     DELETE_WORKOUT_VIDEO,
     DISMISS_WORKOUT_VIDEO_PLAYER
 } from 'app/ActionTypes';
-import * as Analytics from 'app/utility/analytics/Analytics';
+import * as Analytics from 'app/utility/Analytics';
 
 export const deleteVideo = (setID) => ({
     type: DELETE_WORKOUT_VIDEO,

@@ -1,7 +1,7 @@
 // These exist in shared because the Bluetooth service needs access to them
 // Services do not have "Actions" they're directly associated with, so they use the shared creator
 
-import { NativeModules } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 import BackgroundTimer from 'react-native-background-timer';
 
 import {
@@ -16,7 +16,10 @@ import {
     CONNECT_DEVICE
 } from 'app/ActionTypes';
 import * as TimerActionCreators from './TimerActionCreators';
+import * as SetsActionCreators from './SetsActionCreators';
 import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDeviceStatusSelectors';
+import * as WorkoutSelectors from 'app/redux/selectors/WorkoutSelectors';
+import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 
 const RFDuinoLib = NativeModules.RFDuinoLib;
 
@@ -95,6 +98,15 @@ export const reconnectingToDevice = (name, identifier) => ({
 
 export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, getState) => {
     var state = getState();
+
+    // sanity check - should set have ended during this time?
+    if (Platform.OS === 'ios') {
+        let projectedEndTime = WorkoutSelectors.getProjectedEndSetTime(state);
+        let currentTime = (new Date()).getTime();
+        if (projectedEndTime !== null && currentTime >= projectedEndTime) {
+            dispatch(SetsActionCreators.endSet());
+        }
+    }
 
     dispatch({
         type: ADD_REP_DATA,

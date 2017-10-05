@@ -16,7 +16,11 @@ import {
     PRESENT_WORKOUT_VIDEO_PLAYER,
     DISMISS_WORKOUT_VIDEO_PLAYER,
     DELETE_WORKOUT_VIDEO,
-    SAVE_WORKOUT_VIDEO
+    SAVE_WORKOUT_VIDEO,
+    START_END_SET_TIMER,
+    STOP_END_SET_TIMER,
+    PAUSE_END_SET_TIMER,
+    RESUME_END_SET_TIMER
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -33,6 +37,7 @@ const defaultState = {
     isSavingVideo: false,
     watchSetID: null,
     watchFileURL: null,
+    projectedEndSetTime: null
 };
 
 const WorkoutReducer = (state = defaultState, action) => {
@@ -118,7 +123,6 @@ const WorkoutReducer = (state = defaultState, action) => {
                 isEditing: true,
             });
         case END_EDITING_WORKOUT_RPE:
-            console.tron.log("setting isediting to " + isModalVisible(state));
             return Object.assign({}, state, {
                 isEditing: isModalVisible(state),
             });
@@ -127,10 +131,22 @@ const WorkoutReducer = (state = defaultState, action) => {
                 isEditing: true,
             });
         case END_EDITING_WORKOUT_WEIGHT:
-            console.tron.log("setting isediting to " + isModalVisible(state));        
             return Object.assign({}, state, {
                 isEditing: isModalVisible(state),
-            });                
+            });
+        case START_END_SET_TIMER:
+        case RESUME_END_SET_TIMER:
+            return Object.assign({}, state, {
+                projectedEndSetTime: action.time,
+            });
+        case STOP_END_SET_TIMER:
+            return Object.assign({}, state, {
+                projectedEndSetTime: null,
+            });
+        case PAUSE_END_SET_TIMER:
+            return Object.assign({}, state, {
+                projectedEndSetTime: null,
+            });
         default:
             return state;
     }

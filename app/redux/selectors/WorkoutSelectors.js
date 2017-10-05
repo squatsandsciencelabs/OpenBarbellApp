@@ -27,3 +27,7 @@ export const getWatchSetID = (state) => stateRoot(state).watchSetID;
 export const getIsVideoPlayerVisible = (state) => stateRoot(state).watchSetID !== null;
 
 export const getWatchFileURL = (state) => stateRoot(state).watchFileURL;
+
+// end set timer
+
+export const getProjectedEndSetTime = (state) => stateRoot(state).projectedEndSetTime;

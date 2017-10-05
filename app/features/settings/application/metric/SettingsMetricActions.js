@@ -1,7 +1,7 @@
 import {
     DISMISS_DEFAULT_METRIC
 } from 'app/ActionTypes';
-import * as Analytics from 'app/utility/analytics/Analytics';
+import * as Analytics from 'app/utility/Analytics';
 import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsActionCreators';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 

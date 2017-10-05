@@ -1,5 +1,5 @@
 import { Keyboard } from 'react-native';
-import * as Analytics from 'app/utility/analytics/Analytics';
+import * as Analytics from 'app/utility/Analytics';
 
 import {
     CHANGED_TAB

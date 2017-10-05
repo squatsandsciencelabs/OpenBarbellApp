@@ -10,6 +10,7 @@ import {
     START_END_SET_TIMER,
     STOP_END_SET_TIMER
 } from 'app/ActionTypes';
+import { Platform } from 'react-native';
 
 var timer = null;
 var startTime = null; // start time of the background timer, NOT the initial start time of the timer
@@ -103,5 +104,17 @@ export const stopEndSetTimer = () =>  {
 
     return {
         type: STOP_END_SET_TIMER
+    }
+};
+
+// sanity check - should set have ended during this time?
+export const sanityCheckTimer = () => (dispatch, getState) => {
+    if (Platform.OS === 'ios') {
+        let state = getState();        
+        let projectedEndTime = WorkoutSelectors.getProjectedEndSetTime(state);
+        let currentTime = (new Date()).getTime();
+        if (projectedEndTime !== null && currentTime >= projectedEndTime) {
+            dispatch(SetsActionCreators.endSet());
+        }
     }
 };

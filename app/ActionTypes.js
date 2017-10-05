@@ -106,6 +106,9 @@ export const PRESENT_DEFAULT_METRIC = 'PRESENT_DEFAULT_METRIC';
 export const DISMISS_DEFAULT_METRIC = 'DISMISS_DEFAULT_METRIC';
 export const UPDATE_SYNC_DATE = 'UPDATE_SYNC_DATE';
 
+// app state
+export const UNLOCKED_SCREEN = 'UNLOCKED_SCREEN';
+
 // kill switch
 export const FETCH_VERSION = 'FETCH_VERSION';
 export const VERSION_OK = 'VERSION_OK';

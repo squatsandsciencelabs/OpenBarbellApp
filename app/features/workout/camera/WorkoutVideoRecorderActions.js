@@ -4,6 +4,7 @@ import {
     DISMISS_WORKOUT_VIDEO_RECORDER,
     SAVE_WORKOUT_VIDEO
 } from 'app/ActionTypes';
+import Analytics from 'app/utility/Analytics';
 
 export const startRecording = (setID) => ({
     type: START_RECORDING_WORKOUT,
@@ -14,9 +15,13 @@ export const stopRecording = () => ({
     type: STOP_RECORDING_WORKOUT
 });
 
-export const dismissRecording = () => ({
-    type: DISMISS_WORKOUT_VIDEO_RECORDER
-});
+export const dismissRecording = () => {
+    Analytics.setCurrentScreen('workout');
+    
+    return {
+        type: DISMISS_WORKOUT_VIDEO_RECORDER
+    }
+};
 
 export const saveVideo = (setID, videoFileURL, videoType) => ({
     type: SAVE_WORKOUT_VIDEO,

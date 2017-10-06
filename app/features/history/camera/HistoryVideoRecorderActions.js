@@ -4,6 +4,7 @@ import {
     DISMISS_HISTORY_VIDEO_RECORDER,
     SAVE_HISTORY_VIDEO
 } from 'app/ActionTypes';
+import * as Analytics from 'app/utility/Analytics';
 
 export const startRecording = (setID) => ({
     type: START_RECORDING_HISTORY,
@@ -14,9 +15,13 @@ export const stopRecording = () => ({
     type: STOP_RECORDING_HISTORY
 });
 
-export const dismissRecording = () => ({
-    type: DISMISS_HISTORY_VIDEO_RECORDER
-});
+export const dismissRecording = () => {
+    Analytics.setCurrentScreen('history');
+    
+    return {
+        type: DISMISS_HISTORY_VIDEO_RECORDER
+    }
+};
 
 export const saveVideo = (setID, videoFileURL, videoType) => ({
     type: SAVE_HISTORY_VIDEO,

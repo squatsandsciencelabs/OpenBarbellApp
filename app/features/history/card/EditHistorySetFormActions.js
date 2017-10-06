@@ -8,13 +8,18 @@ import {
     END_EDITING_HISTORY_RPE,
     END_EDITING_HISTORY_WEIGHT,    
 } from 'app/ActionTypes';
+import * as Analytics from 'app/utility/Analytics';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 
-export const presentExercise = (setID, exercise) => ({
-    type: PRESENT_HISTORY_EXERCISE,
-    setID: setID,
-    exercise: exercise
-});
+export const presentExercise = (setID, exercise) => {
+    Analytics.setCurrentScreen('edit_history_exercise_name');
+
+    return {
+        type: PRESENT_HISTORY_EXERCISE,
+        setID: setID,
+        exercise: exercise
+    }
+};
 
 export const editRPE = () => ({
     type: START_EDITING_HISTORY_RPE
@@ -32,30 +37,47 @@ export const dismissWeight = () => ({
     type: END_EDITING_HISTORY_WEIGHT
 });
 
-export const presentTags = (setID, tags) => ({
-    type: PRESENT_HISTORY_TAGS,
-    setID: setID,
-    tags: tags
-});
+export const presentTags = (setID, tags) => {
+    Analytics.setCurrentScreen('edit_history_tags');
+
+    return {
+        type: PRESENT_HISTORY_TAGS,
+        setID: setID,
+        tags: tags
+    }
+};
 
 export const saveSet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {
+    Analytics.setCurrentScreen('history');
     return SetsActionCreators.saveHistorySet(setID, exercise, weight, metric, rpe);
 };
 
-export const presentRecordVideo = (setID) => ({
-    type: PRESENT_HISTORY_VIDEO_RECORDER,
-    setID: setID,
-    isCommentary: false
-});
+export const presentRecordVideo = (setID) => {
+    Analytics.setCurrentScreen('history_record_video');
 
-export const presentRecordCommentary = (setID) => ({
-    type: PRESENT_HISTORY_VIDEO_RECORDER,
-    setID: setID,
-    isCommentary: true
-});
+    return {
+        type: PRESENT_HISTORY_VIDEO_RECORDER,
+        setID: setID,
+        isCommentary: false
+    }
+};
 
-export const presentWatchVideo = (setID, videoFileURL) => ({
-    type: PRESENT_HISTORY_VIDEO_PLAYER,
-    setID: setID,
-    videoFileURL: videoFileURL
-});
+export const presentRecordCommentary = (setID) => {
+    Analytics.setCurrentScreen('history_record_video_log');
+
+    return {
+        type: PRESENT_HISTORY_VIDEO_RECORDER,
+        setID: setID,
+        isCommentary: true
+    }
+};
+
+export const presentWatchVideo = (setID, videoFileURL) => {
+    Analytics.setCurrentScreen('history_watch_video');
+
+    return {
+        type: PRESENT_HISTORY_VIDEO_PLAYER,
+        setID: setID,
+        videoFileURL: videoFileURL
+    }
+};

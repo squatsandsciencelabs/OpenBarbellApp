@@ -17,6 +17,7 @@ export const loginSucceeded = (accessToken, refreshToken, email, date = new Date
 });
 
 export const logout = (showMessage = false) => {
+    
     if (showMessage) {
         Alert.alert("Important", "As it's been awhile since you've signed on, you've been logged out! Please login again.");
     }

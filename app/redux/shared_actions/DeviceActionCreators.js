@@ -3,6 +3,7 @@
 
 import { NativeModules } from 'react-native';
 import BackgroundTimer from 'react-native-background-timer';
+import DeviceInfo from 'react-native-device-info';
 
 import {
     START_DEVICE_SCAN,
@@ -22,6 +23,7 @@ import * as TimerActionCreators from './TimerActionCreators';
 import * as SetsActionCreators from './SetsActionCreators';
 import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDeviceStatusSelectors';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
+import * as Analytics from 'app/utility/Analytics';
 
 const RFDuinoLib = NativeModules.RFDuinoLib;
 
@@ -41,6 +43,10 @@ const clearTimers = () => {
 
 export const startDeviceScan = () => {
     RFDuinoLib.startScan();
+
+    // analytics
+    const uniqueID = DeviceInfo.getUniqueID();
+    Analytics.setUserProp('mobile_identifier', uniqueID);
 
     return {
         type: START_DEVICE_SCAN
@@ -64,6 +70,7 @@ export const foundDevice = (name, identifier) => ({
 // DEVICE
 
 export const connectDevice = (device) => (dispatch, getState) => {
+
     RFDuinoLib.connectDevice(device);
 
     // HACK: ideally this is a connect timeout saga
@@ -129,6 +136,9 @@ export const bluetoothIsOff = () => ({
 export const disconnectedFromDevice = (name=null, identifier=null) => {
     clearTimers();
 
+    Analytics.setUserProp('connected_device_id', null);
+    Analytics.setUserProp('device_version', null);
+
     return {
         type: DISCONNECTED_FROM_DEVICE,
         device: name,
@@ -144,17 +154,42 @@ export const connectingToDevice = (name, identifier) => ({
 
 export const connectedToDevice = (name, identifier) => {
     clearTimers();
-    
+    const id = identifier.toString();
+    Analytics.setUserProp('connected_device_id', id);
+
+    if (name.charAt(3) === '1') {
+        Analytics.setUserProp('device_version', 'v1')
+    } else if (name.charAt(3) === '2') {
+        Analytics.setUserProp('device_version', 'v2');
+    } else if (name.charAt(3) === '3') {
+        Analytics.setUserProp('device_version', 'v3');
+    }
+
     return {
         type: CONNECTED_TO_DEVICE,
         deviceName: name,
         deviceIdentifier: identifier
-    }
+    };
 };
 
-export const reconnectingToDevice = () => ({
-    type: RECONNECTING_TO_DEVICE,
-});
+export const reconnectingToDevice = (name, identifier) => {
+    const id = identifier.toString();
+    Analytics.setUserProp('connected_device_id', id);
+
+    if (name.charAt(3) === '1') {
+        Analytics.setUserProp('device_version', 'v1')
+    } else if (name.charAt(3) === '2') {
+        Analytics.setUserProp('device_version', 'v2');
+    } else if (name.charAt(3) === '3') {
+        Analytics.setUserProp('device_version', 'v3');
+    }
+
+    return {
+        type: RECONNECTING_TO_DEVICE,
+        deviceName: name,
+        deviceIdentifier: identifier
+    };
+};
 
 // DATA
 

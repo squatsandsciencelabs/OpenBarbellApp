@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import { END_WORKOUT } from 'app/ActionTypes';
-import * as Analytics from 'app/utlity/Analytics';
+import * as Analytics from 'app/utility/Analytics';
 
 export const endWorkout = () => (dispatch, getState) => {
     var state = getState();

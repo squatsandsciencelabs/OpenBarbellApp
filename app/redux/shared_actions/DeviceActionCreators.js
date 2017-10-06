@@ -45,7 +45,7 @@ export const startDeviceScan = () => {
     RFDuinoLib.startScan();
 
     // analytics
-    const uniqueID = DeviceInfo.getUniqueId();
+    const uniqueID = DeviceInfo.getUniqueID();
     Analytics.setUserProp('mobile_identifier', uniqueID);
 
     return {
@@ -60,8 +60,10 @@ export const stopDeviceScan = () => (dispatch, getState) => {
     const state = getState();
     const scanned_devices = state.scannedDevices.devices.join();
     const num_scanned_devices = state.scannedDevices.devices.length;
+    console.tron.log(scanned_devices);
+    console.tron.log(num_scanned_devices);    
     Analytics.setUserProp('scanned_devices', scanned_devices);
-    Analytics.setUserProps('num_scanned_devices', num_scanned_devices);
+    Analytics.setUserProp('num_scanned_devices', num_scanned_devices);
 
     dispatch({
         type: STOP_DEVICE_SCAN
@@ -153,7 +155,7 @@ export const disconnectedFromDevice = (name=null, identifier=null) => {
 
     Analytics.setUserProp('connected_device_id', null);
     Analytics.setUserProp('is_v2', false);
-    Analytics.setUserProps('is_v3', false);
+    Analytics.setUserProp('is_v3', false);
 
     return {
         type: DISCONNECTED_FROM_DEVICE,
@@ -180,7 +182,7 @@ export const connectedToDevice = (name, identifier) => {
 
     if (name.charAt(3) === '2') {
         Analytics.setUserProp('is_v2', true);
-        Analytics.setUserProps('is_v3', false);
+        Analytics.setUserProp('is_v3', false);
     } else if (name.charAt(3) === '3') {
         Analytics.setUserProp('is_v3', true);
         Analytics.setUserProp('is_v2', false);
@@ -199,7 +201,7 @@ export const reconnectingToDevice = (name, identifier) => {
 
     if (name.charAt(3) === '2') {
         Analytics.setUserProp('is_v2', true);
-        Analytics.setUserProps('is_v3', false);
+        Analytics.setUserProp('is_v3', false);
     } else if (name.charAt(3) === '3') {
         Analytics.setUserProp('is_v3', true);
         Analytics.setUserProp('is_v2', false);

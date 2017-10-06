@@ -15,7 +15,7 @@ export const setUserProp = (name, value) => {
 // Log Events
 // params must be an object
 export const logEvent = (event, params) => {
-    firebase.analytics().logEvent(event, name);
+    firebase.analytics().logEvent(event, params);
 };
 
 export const logEventWithAppState = (event, params, state) => {

@@ -89,7 +89,7 @@ export const endSet = () => (dispatch, getState) => {
     Analytics.logEvent(start_new_set, { has_weight: Boolean(set.weight) });
     Analytics.logEvent(start_new_set, { has_rpe: Boolean(set.rpe) });
     Analytics.logEvent(start_new_set, { has_tags: Boolean(set.tags.length) });
-    Analytics.logEvent(start_new_set, { has_video: Boolean(set.videoFileURL) }):
+    Analytics.logEvent(start_new_set, { has_video: Boolean(set.videoFileURL) });
     Analytics.logEvent(start_new_set, { has_reps: Boolean(set.reps.length) });
 
     // check if set form has any data

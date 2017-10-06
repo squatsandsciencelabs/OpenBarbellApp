@@ -149,14 +149,11 @@ export const bluetoothIsOff = () => {
 };
 
 export const disconnectedFromDevice = (name=null, identifier=null) => {
-<<<<<<< HEAD
-    Analytics.setUserProp('connected_device_id', null);    
     clearTimers();
-=======
+
     Analytics.setUserProp('connected_device_id', null);
     Analytics.setUserProp('is_v2', false);
     Analytics.setUserProps('is_v3', false);
->>>>>>> added start new set events
 
     return {
         type: DISCONNECTED_FROM_DEVICE,
@@ -176,11 +173,9 @@ export const connectingToDevice = (name, identifier) => {
 };
 
 export const connectedToDevice = (name, identifier) => {
-    Analytics.setUserProp('connected_device_id', identifier);
-<<<<<<< HEAD
     clearTimers();
-    
-=======
+
+    Analytics.setUserProp('connected_device_id', identifier);
     Analytics.setUserProp('is_bluetooth_on', true);
 
     if (name.charAt(3) === '2') {
@@ -191,7 +186,6 @@ export const connectedToDevice = (name, identifier) => {
         Analytics.setUserProp('is_v2', false);
     }
 
->>>>>>> added start new set events
     return {
         type: CONNECTED_TO_DEVICE,
         deviceName: name,

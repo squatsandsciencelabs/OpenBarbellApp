@@ -17,3 +17,8 @@ export const setUserProp = (name, value) => {
 export const logEvent = (event, params) => {
     firebase.analytics().logEvent(event, name);
 };
+
+export const logEventWithAppState = (event, params, state) => {
+    // TODO: use selectors on state
+    logEvent(event, params);
+};

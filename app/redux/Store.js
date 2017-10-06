@@ -15,6 +15,7 @@ import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators
 import * as KillSwitchActionCreators from 'app/redux/shared_actions/KillSwitchActionCreators';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
 import * as StoreActionCreators from 'app/redux/shared_actions/StoreActionCreators';
+import * as Analytics from 'app/utility/Analytics';
 
 export default initializeStore = () => {
     // create the store
@@ -38,6 +39,11 @@ export default initializeStore = () => {
         const enhancers = compose(middlewares, autoRehydrate());        
         var store = createStore(reducers, enhancers);
     }
+
+    // set initial user props analytics
+    Analytics.setUserProp('connected_device_id', null);
+    Analytics.setUserProp('mobile_identifier', null);
+    Analytics.setUserProp('device_version', null);
 
     // run sagas
     sagaMiddleware.run(Sagas);

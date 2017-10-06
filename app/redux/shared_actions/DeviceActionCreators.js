@@ -53,37 +53,24 @@ export const startDeviceScan = () => {
     };
 };
 
-export const stopDeviceScan = () => (dispatch, getState) => {
+export const stopDeviceScan = () => {
     RFDuinoLib.stopScan();
 
-    // analytics
-    const state = getState();
-    const scanned_devices = state.scannedDevices.devices.join();
-    const num_scanned_devices = state.scannedDevices.devices.length;
-    console.tron.log(scanned_devices);
-    console.tron.log(num_scanned_devices);    
-    Analytics.setUserProp('scanned_devices', scanned_devices);
-    Analytics.setUserProp('num_scanned_devices', num_scanned_devices);
-
-    dispatch({
-        type: STOP_DEVICE_SCAN
-    });
-};
-
-export const foundDevice = (name, identifier) => {
-    Analytics.setUserProp('is_bluetooth_on', true);
-
     return {
-        type: FOUND_DEVICE,
-        device: name,
-        deviceIdentifier: identifier
-    }
+        type: STOP_DEVICE_SCAN
+    };
 };
+
+export const foundDevice = (name, identifier) => ({
+    type: FOUND_DEVICE,
+    device: name,
+    deviceIdentifier: identifier
+});
 
 // DEVICE
 
 export const connectDevice = (device) => (dispatch, getState) => {
-    Analytics.setUserProp('is_bluetooth_on', true);
+
     RFDuinoLib.connectDevice(device);
 
     // HACK: ideally this is a connect timeout saga
@@ -142,20 +129,15 @@ export const disconnectDevice = () => {
 
 // DEVICE STATUS
 
-export const bluetoothIsOff = () => {
-    Analytics.setUserProp('is_bluetooth_on', false);
-
-    return {
-        type: BLUETOOTH_OFF
-    };
-};
+export const bluetoothIsOff = () => ({
+    type: BLUETOOTH_OFF
+});
 
 export const disconnectedFromDevice = (name=null, identifier=null) => {
     clearTimers();
 
     Analytics.setUserProp('connected_device_id', null);
-    Analytics.setUserProp('is_v2', false);
-    Analytics.setUserProp('is_v3', false);
+    Analytics.setUserProp('device_version', null);
 
     return {
         type: DISCONNECTED_FROM_DEVICE,
@@ -164,28 +146,23 @@ export const disconnectedFromDevice = (name=null, identifier=null) => {
     };
 };
 
-export const connectingToDevice = (name, identifier) => {
-    Analytics.setUserProp('is_bluetooth_on', true);
-    
-    return {
-        type: CONNECTING_TO_DEVICE,
-        device: name,
-        deviceIdentifier: identifier
-    };
-};
+export const connectingToDevice = (name, identifier) => ({
+    type: CONNECTING_TO_DEVICE,
+    device: name,
+    deviceIdentifier: identifier
+});
 
 export const connectedToDevice = (name, identifier) => {
     clearTimers();
+    const id = identifier.toString();
+    Analytics.setUserProp('connected_device_id', id);
 
-    Analytics.setUserProp('connected_device_id', identifier);
-    Analytics.setUserProp('is_bluetooth_on', true);
-
-    if (name.charAt(3) === '2') {
-        Analytics.setUserProp('is_v2', true);
-        Analytics.setUserProp('is_v3', false);
+    if (name.charAt(3) === '1') {
+        Analytics.setUserProp('device_version', 'v1')
+    } else if (name.charAt(3) === '2') {
+        Analytics.setUserProp('device_version', 'v2');
     } else if (name.charAt(3) === '3') {
-        Analytics.setUserProp('is_v3', true);
-        Analytics.setUserProp('is_v2', false);
+        Analytics.setUserProp('device_version', 'v3');
     }
 
     return {
@@ -196,16 +173,17 @@ export const connectedToDevice = (name, identifier) => {
 };
 
 export const reconnectingToDevice = (name, identifier) => {
-    Analytics.setUserProp('connected_device_id', identifier);
-    Analytics.setUserProp('is_bluetooth_on', true);
+    const id = identifier.toString();
+    Analytics.setUserProp('connected_device_id', id);
 
-    if (name.charAt(3) === '2') {
-        Analytics.setUserProp('is_v2', true);
-        Analytics.setUserProp('is_v3', false);
+    if (name.charAt(3) === '1') {
+        Analytics.setUserProp('device_version', 'v1')
+    } else if (name.charAt(3) === '2') {
+        Analytics.setUserProp('device_version', 'v2');
     } else if (name.charAt(3) === '3') {
-        Analytics.setUserProp('is_v3', true);
-        Analytics.setUserProp('is_v2', false);
+        Analytics.setUserProp('device_version', 'v3');
     }
+
     return {
         type: RECONNECTING_TO_DEVICE,
         deviceName: name,
@@ -217,7 +195,6 @@ export const reconnectingToDevice = (name, identifier) => {
 
 export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, getState) => {
     var state = getState();
-    Analytics.setUserProp('is_bluetooth_on', true);
 
     dispatch(TimerActionCreators.sanityCheckTimer());
 

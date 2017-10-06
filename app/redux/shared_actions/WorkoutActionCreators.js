@@ -9,7 +9,6 @@ export const endWorkout = () => (dispatch, getState) => {
     var state = getState();
     var isWorkoutEmpty = SetsSelectors.getIsWorkoutEmpty(state)
     var isLoggedIn = AuthSelectors.getIsLoggedIn(state);
-    Analytics.setUserProp('is_workout_in_progress', false);
 
     if (!isWorkoutEmpty && isLoggedIn) {
         dispatch({ type: END_WORKOUT });

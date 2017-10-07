@@ -10,6 +10,7 @@ import {
     FAILED_UPLOAD_SETS,
 } from 'app/ActionTypes';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
+import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 
 export const getDefaultMetric = () => (dispatch, getState) => {
     var state = getState();
@@ -73,7 +74,7 @@ export const endSet = () => (dispatch, getState) => {
     var defaultMetric = state.settings.defaultMetric;
 
     // check if set form has any data
-    if (set.reps.length >= 0 || set.exercise || set.weight || set.rpe || set.tags.length > 0 || set.videoFileURL) {
+    if (!SetEmptyCheck.isUntouched(set)) {
         dispatch({
             type: END_SET,
             defaultMetric: defaultMetric

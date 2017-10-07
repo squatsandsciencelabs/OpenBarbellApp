@@ -19,6 +19,7 @@ import WorkoutSetExpandedScreen from './expanded/WorkoutSetExpandedScreen';
 import SetDataLabelRow from 'app/shared_features/set_card/SetDataLabelRow';
 import SetDataRow from 'app/shared_features/set_card/SetDataRow';
 import SetRestRow from 'app/shared_features/set_card/SetRestRow';
+import LiveRestRow from 'app/shared_features/set_card/LiveRestRow';
 import WorkoutVideoButtonScreen from './card/WorkoutVideoButtonScreen';
 import WorkoutVideoRecorderScreen from './camera/WorkoutVideoRecorderScreen';
 import WorkoutVideoPlayerScreen from './video/WorkoutVideoPlayerScreen';
@@ -109,6 +110,8 @@ class WorkoutList extends Component {
                         />);
             case "footer":
                 return (<SetRestRow item={item} />);
+            case "working set footer":
+                return (<LiveRestRow restStartTimeMS={item.restStartTimeMS} />);
             default:
                 break;
         }

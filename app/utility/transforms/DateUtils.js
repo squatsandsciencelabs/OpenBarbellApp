@@ -45,6 +45,24 @@ export const restInClockFormat = (duration) => {
     return hours + ":" + minutes + ":" + seconds + "." + milliseconds;
 };
 
+export const restInShortenedClockFormat = (duration) => {
+    var milliseconds = parseInt((duration%1000)/100)
+        , seconds = parseInt((duration/1000)%60)
+        , minutes = parseInt((duration/(1000*60))%60)
+        , hours = parseInt((duration/(1000*60*60))%24);
+
+    var returnString = '';
+    if (hours > 0) {
+        returnString += (hours < 10) ? "0" + hours : hours;
+        returnString += ':'
+    }
+    returnString += (minutes < 10) ? "0" + minutes : minutes;
+    returnString += ':'    
+    returnString += (seconds < 10) ? "0" + seconds : seconds;
+
+    return returnString;
+};
+
 export const restInSentenceFormat = (millis) => {
     var minutes = Math.floor(millis / 60000);
     var seconds = ((millis % 60000) / 1000).toFixed(0);

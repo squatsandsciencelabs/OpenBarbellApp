@@ -36,6 +36,7 @@ function* executeReconnect() {
         // set reconnect mode and scan
         yield put(DeviceActionCreators.reconnectingToDevice());
         yield put(DeviceActionCreators.startDeviceScan());
+        const restartReconnectTask = yield fork(restartReconnect);        
 
         // find the device
         let foundDevice = null;
@@ -45,11 +46,19 @@ function* executeReconnect() {
             foundDevice = scanAction.device;
             foundIdentifier = scanAction.deviceIdentifier;
         }
+        yield cancel(restartReconnectTask);        
 
         // stop scan and connect
         yield put(DeviceActionCreators.stopDeviceScan());
         yield put(DeviceActionCreators.reconnectDevice(foundDevice, foundIdentifier));
     }
-}    
+}
+
+function* restartReconnect() {
+    while (true) {
+        yield take(DISCONNECTED_FROM_DEVICE);
+        yield put(DeviceActionCreators.startDeviceScan());
+    }
+}
 
 export default ReconnectSaga;

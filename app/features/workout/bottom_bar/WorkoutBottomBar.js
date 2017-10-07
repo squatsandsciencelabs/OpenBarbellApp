@@ -16,11 +16,7 @@ class WorkoutBottomBar extends Component {
     }
 
     render() {
-        if (this.props.isLoggedIn) {
-            var message = 'FINISH AND SAVE';
-        } else {
-            var message = 'DELETE WORKOUT';
-        }
+        const message = 'FINISH WORKOUT';
         return (
             <View style={styles.bar}>
                 <ConnectedDeviceStatusScreen />

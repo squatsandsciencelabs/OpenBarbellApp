@@ -18,7 +18,8 @@ import {
     DISMISS_WORKOUT_VIDEO_RECORDER,
     DISMISS_WORKOUT_VIDEO_PLAYER,
     STOP_RECORDING_WORKOUT,
-    END_SET
+    END_SET,
+    END_WORKOUT
 } from 'app/ActionTypes';
 
 import * as TimerActionCreators from 'app/redux/shared_actions/TimerActionCreators';
@@ -42,7 +43,8 @@ const TimerSaga = function * TimerSaga() {
         takeEvery(DISMISS_WORKOUT_VIDEO_RECORDER, resumeTimer),
         takeEvery(DISMISS_WORKOUT_VIDEO_PLAYER, resumeTimer),
         takeEvery(STOP_RECORDING_WORKOUT, resumeTimer),
-        takeEvery(END_SET, stopTimer)
+        takeEvery(END_SET, stopTimer),
+        takeEvery(END_WORKOUT, stopTimer)
     ]);
 };
 

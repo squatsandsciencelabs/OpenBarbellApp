@@ -21,6 +21,7 @@ const createViewModels = (sets) => {
     let lastSetEndTime = null; // to help calculate rest time
     let isInitialSet = true; // to help determine when to display rest time and split up the sections properly
     let count = 0;
+    let isLastSet = false; // to set up the live set footer
 
     // build view models
     sets.map((set) => {
@@ -29,6 +30,7 @@ const createViewModels = (sets) => {
         if (count === sets.length-1) {
             section = { key: 0, data: [], position: -1 };
             sections.splice(0, 0, section); // insert at beginning
+            isLastSet = true;
         }
 
         // set card data
@@ -67,6 +69,9 @@ const createViewModels = (sets) => {
 
             // update variable for calculation purposes
             lastSetEndTime = SetTimeCalculator.endTime(set);
+        } if (isLastSet && lastSetEndTime !== null && set.reps.length === 0) {
+            // working set, live rest mode
+            array.push(createWorkingSetFooterVM(lastSetEndTime));
         }
 
         // insert set card data
@@ -174,6 +179,15 @@ const createFooterVM = (set, lastSetEndTime) => {
         type: "footer",
         rest: DateUtils.restInSentenceFormat(restInMS),
         key: set.setID + 'rest'
+    };
+    return footerVM;
+};
+
+const createWorkingSetFooterVM = (restStartTime) => {
+    let footerVM = {
+        type: "working set footer",
+        restStartTimeMS: (new Date(restStartTime)).getTime(),
+        key: 'live rest'
     };
     return footerVM;
 };

@@ -54,10 +54,10 @@ export const restInShortenedClockFormat = (duration) => {
     var returnString = '';
     if (hours > 0) {
         returnString += (hours < 10) ? "0" + hours : hours;
-        returnString += ':'
+        returnString += ':';
     }
     returnString += (minutes < 10) ? "0" + minutes : minutes;
-    returnString += ':'    
+    returnString += ':';
     returnString += (seconds < 10) ? "0" + seconds : seconds;
 
     return returnString;

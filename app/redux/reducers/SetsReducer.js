@@ -370,10 +370,15 @@ const saveWorkoutVideo = (state, action) => {
     let setIndex = newWorkoutData.findIndex( set => set.setID === action.setID );
     let set = newWorkoutData[setIndex];
 
-    newWorkoutData[setIndex] = Object.assign({}, set, {
+    let setChanges = {
         videoFileURL: action.videoFileURL,
         videoType: action.videoType        
-    });
+    };
+    if (!set.initialStartTime) {
+        setChanges.initialStartTime = new Date();
+    }
+    newWorkoutData[setIndex] = Object.assign({}, set, setChanges);
+    
     return Object.assign({}, state, {
         workoutData: newWorkoutData
     });

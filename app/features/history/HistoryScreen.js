@@ -29,6 +29,9 @@ const createViewModels = (sets, shouldShowRemoved) => {
     let lastSetEndTime = null; // to help calculate rest time
     let isInitialSet = false; // to help determine when to display rest time
 
+    // ignore if initialStartTime is null as that was a bug, it's supposed to be undefined or an actual date
+    sets = sets.filter((set) => set.initialStartTime !== null);
+
     // build view models
     for (let i=0; i<sets.length; i++) {
         // get set

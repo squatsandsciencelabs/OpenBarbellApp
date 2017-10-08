@@ -7,7 +7,10 @@ import {
 
 export const SETTINGS_PANEL_STYLES = StyleSheet.create({
     panel: {
-        margin: 20,
+        marginTop: 10,
+        marginBottom: 10,
+        marginLeft: 13,
+        marginRight: 13,
         padding: 30,
         backgroundColor: 'white',
         elevation: 3,

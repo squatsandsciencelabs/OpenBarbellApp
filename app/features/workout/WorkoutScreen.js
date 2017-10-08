@@ -49,7 +49,7 @@ const createViewModels = (sets) => {
             }
         }
         if (isLastSet) {
-            array.push({type: 'working set header', key: 'end set timer'});
+            array.push({type: 'working set header', key: set.setID+'end set timer'});
         }
         array.push(createHeaderViewModel(set, setNumber, lastExerciseName, isLastSet));
         if (set.reps.length > 0) {
@@ -74,7 +74,7 @@ const createViewModels = (sets) => {
             lastSetEndTime = SetTimeCalculator.endTime(set);
         } if (isLastSet && lastSetEndTime !== null && set.reps.length === 0) {
             // working set, live rest mode
-            array.push(createWorkingSetFooterVM(lastSetEndTime));
+            array.push(createWorkingSetFooterVM(set, lastSetEndTime));
         }
 
         // insert set card data
@@ -187,11 +187,11 @@ const createFooterVM = (set, lastSetEndTime) => {
     return footerVM;
 };
 
-const createWorkingSetFooterVM = (restStartTime) => {
+const createWorkingSetFooterVM = (set, restStartTime) => {
     let footerVM = {
         type: "working set footer",
         restStartTimeMS: (new Date(restStartTime)).getTime(),
-        key: 'live rest'
+        key: set.setID + 'live rest'
     };
     return footerVM;
 };

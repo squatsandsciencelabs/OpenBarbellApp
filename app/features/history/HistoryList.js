@@ -71,7 +71,6 @@ class HistoryList extends Component {
                                 weight={item.weight}
                                 metric={item.metric}
                                 rpe={item.rpe}
-                                topShadowVisible={true}
                                 onFocus={() => {
                                     this.sectionList.scrollToLocation({sectionIndex: section.position, itemIndex: index});
                                 }}

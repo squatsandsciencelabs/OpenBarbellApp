@@ -233,15 +233,9 @@ class SetForm extends Component {
     }
 
     render() {
-        if(this.props.topShadowVisible) {
-            var topShadow = (<View style={styles.upperShadow} />);
-        } else {
-            var topShadow = null;
-        }
-
         return (
             <View style={{flex: 1, flexDirection: 'column'}}>
-                { topShadow }
+                <View style={styles.upperShadow} />
                 <View style={[styles.shadow, {flex: 1, flexDirection: 'column', padding: 5}]}>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                         <View style={{flex: 1}}>

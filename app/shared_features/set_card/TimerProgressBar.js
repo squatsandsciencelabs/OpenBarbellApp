@@ -17,16 +17,17 @@ class TimerProgressBar extends Component {
     }
 
     shouldComponentUpdate(nextProps) {
+        const differentProjectedEndSetTime = nextProps.projectedEndSetTime !== this.props.projectedEndSetTime;        
         const differentTimerDuration = nextProps.timerDuration !== this.props.timerDuration;
         const differentTimerRemaining = nextProps.timerRemaining !== this.props.timerRemaining;
         const differentTimerStatus = nextProps.timerStatus !== this.props.timerStatus;
 
-        if (differentTimerDuration || differentTimerRemaining || differentTimerStatus) {
+        if (differentProjectedEndSetTime || differentTimerDuration || differentTimerRemaining || differentTimerStatus) {
             // set initial position
             const value = (nextProps.timerDuration-nextProps.timerRemaining)/nextProps.timerDuration;
             this.state.barAnimations.setValue(value);
 
-            if (nextProps.timerStatus === 'inactive' || nextProps.timerStatus === 'paused') {
+            if (nextProps.timerStatus === 'stopped' || nextProps.timerStatus === 'paused') {
                 // pause it
                 this.state.barAnimations.stopAnimation();
             } else {

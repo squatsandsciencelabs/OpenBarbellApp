@@ -5,6 +5,7 @@ import TimerProgressBar from 'app/shared_features/set_card/TimerProgressBar';
 import * as WorkoutSelectors from 'app/redux/selectors/WorkoutSelectors';
 
 const mapStateToProps = (state) => ({
+    projectedEndSetTime: WorkoutSelectors.getProjectedEndSetTime(state),
     timerDuration: WorkoutSelectors.getTimerDuration(state),
     timerRemaining: WorkoutSelectors.getTimerRemaining(state),
     timerStatus: WorkoutSelectors.getTimerStatus(state),    

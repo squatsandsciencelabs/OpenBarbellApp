@@ -149,20 +149,20 @@ const WorkoutReducer = (state = defaultState, action) => {
                 projectedEndSetTime: action.projectedEndSetTime,
                 timerDuration: action.timerDuration,
                 timerRemaining: action.timerRemaining,
-                timerStatus: 'running'
+                timerStatus: 'started'
             });
         case RESUME_END_SET_TIMER:
             return Object.assign({}, state, {
                 projectedEndSetTime: action.projectedEndSetTime,
                 timerRemaining: action.timerRemaining,
-                timerStatus: 'running'
+                timerStatus: 'resumed'
             });
         case STOP_END_SET_TIMER:
             return Object.assign({}, state, {
                 projectedEndSetTime: null,
                 timerDuration: null,
                 timerRemaining: null,
-                timerStatus: 'inactive'
+                timerStatus: 'stopped'
             });
         case PAUSE_END_SET_TIMER:        
             return Object.assign({}, state, {

@@ -24,20 +24,30 @@ import {
 } from 'app/ActionTypes';
 
 const defaultState = {
+    // editing
     isEditing: false,
     editingExerciseSetID: null,
     editingExerciseName: '',
     editingExerciseBias: null,
     editingTagsSetID: null,
     editingTags: [],
+
+    // expanded
     expandedSetID: null,
+
+    // video
     recordingSetID: null,
     recordingVideoType: null,
     isRecording: false,
     isSavingVideo: false,
     watchSetID: null,
     watchFileURL: null,
-    projectedEndSetTime: null
+
+    // timer
+    projectedEndSetTime: null,
+    timerRemaining: null,
+    timerDuration: null,
+    timerStatus: 'inactive'
 };
 
 const WorkoutReducer = (state = defaultState, action) => {
@@ -135,17 +145,30 @@ const WorkoutReducer = (state = defaultState, action) => {
                 isEditing: isModalVisible(state),
             });
         case START_END_SET_TIMER:
+            return Object.assign({}, state, {
+                projectedEndSetTime: action.projectedEndSetTime,
+                timerDuration: action.timerDuration,
+                timerRemaining: action.timerRemaining,
+                timerStatus: 'running'
+            });
         case RESUME_END_SET_TIMER:
             return Object.assign({}, state, {
-                projectedEndSetTime: action.time,
+                projectedEndSetTime: action.projectedEndSetTime,
+                timerRemaining: action.timerRemaining,
+                timerStatus: 'running'
             });
         case STOP_END_SET_TIMER:
             return Object.assign({}, state, {
                 projectedEndSetTime: null,
+                timerDuration: null,
+                timerRemaining: null,
+                timerStatus: 'inactive'
             });
-        case PAUSE_END_SET_TIMER:
+        case PAUSE_END_SET_TIMER:        
             return Object.assign({}, state, {
                 projectedEndSetTime: null,
+                timerRemaining: action.timerRemaining,
+                timerStatus: 'paused'
             });
         default:
             return state;

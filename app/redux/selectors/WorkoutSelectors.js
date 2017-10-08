@@ -31,3 +31,9 @@ export const getWatchFileURL = (state) => stateRoot(state).watchFileURL;
 // end set timer
 
 export const getProjectedEndSetTime = (state) => stateRoot(state).projectedEndSetTime;
+
+export const getTimerRemaining = (state) => stateRoot(state).timerRemaining;
+
+export const getTimerDuration = (state) => stateRoot(state).timerDuration;
+
+export const getTimerStatus = (state) => stateRoot(state).timerStatus;

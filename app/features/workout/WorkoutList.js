@@ -86,7 +86,6 @@ class WorkoutList extends Component {
                                 metric={item.metric}
                                 rpe={item.rpe}
                                 bias={item.bias}
-                                topShadowVisible={!item.isWorkingSet}
                                 onFocus={() => {
                                     this.sectionList.scrollToLocation({sectionIndex: section.position, itemIndex: index});
                                 }}

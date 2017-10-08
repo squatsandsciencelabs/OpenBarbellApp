@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
     View,
-    StyleSheet,
     Text,
     Animated,
     Easing
@@ -51,24 +50,12 @@ class TimerProgressBar extends Component {
         const barAnimation = this.state.barAnimations;
 
         return (
-            <View style={[styles.shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
+            <View style={[{flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
                 <Animated.View style={{flex: barAnimation, height: 2, backgroundColor: 'green'}}></Animated.View>
             </View>
         );
     }
 
 }
-
-const styles = StyleSheet.create({
-    shadow: {
-        shadowColor: "#000000",
-        shadowOpacity: 0.2,
-        shadowRadius: 2,
-        shadowOffset: {
-            height: 4,
-            width: 0
-        },
-    },
-});
 
 export default TimerProgressBar;

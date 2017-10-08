@@ -34,7 +34,7 @@ class TimerProgressBar extends Component {
                 Animated.timing(
                     this.state.barAnimations,
                     {
-                        toValue: 1.0, // can i make this a percent? for now just have it work <_>
+                        toValue: 1.0,
                         duration: nextProps.timerRemaining,
                         easing: Easing.linear
                     }

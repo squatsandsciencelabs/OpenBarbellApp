@@ -24,6 +24,7 @@ import WorkoutVideoButtonScreen from './card/WorkoutVideoButtonScreen';
 import WorkoutVideoRecorderScreen from './camera/WorkoutVideoRecorderScreen';
 import WorkoutVideoPlayerScreen from './video/WorkoutVideoPlayerScreen';
 import ListLoadingFooter from '../history/loading/ListLoadingFooter';
+import TimerProgressBarScreen from 'app/features/workout/card/TimerProgressBarScreen';
 
 class WorkoutList extends Component {
 
@@ -73,7 +74,8 @@ class WorkoutList extends Component {
     _renderRow(section, index, item) {
         switch (item.type) {
             case "header":
-                return (<View style={{marginTop: 15, backgroundColor: 'white'}}>
+                const margin = item.isWorkingSet ? 0 : 15;
+                return (<View style={{marginTop: margin, backgroundColor: 'white'}}>
                             <EditWorkoutSetFormScreen
                                 setNumber={item.setNumber}
                                 setID={item.setID}
@@ -84,6 +86,7 @@ class WorkoutList extends Component {
                                 metric={item.metric}
                                 rpe={item.rpe}
                                 bias={item.bias}
+                                topShadowVisible={!item.isWorkingSet}
                                 onFocus={() => {
                                     this.sectionList.scrollToLocation({sectionIndex: section.position, itemIndex: index});
                                 }}
@@ -110,6 +113,12 @@ class WorkoutList extends Component {
                         />);
             case "footer":
                 return (<SetRestRow item={item} />);
+            case "working set header":
+                return (
+                    <View style={{marginTop: 15}}>
+                        <TimerProgressBarScreen />
+                    </View>
+                );
             case "working set footer":
                 return (<LiveRestRow restStartTimeMS={item.restStartTimeMS} />);
             default:

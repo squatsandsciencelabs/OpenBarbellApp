@@ -1,4 +1,5 @@
 // TODO: refactor logic so it isn't as convoluted and repeats code less
+// This is really really difficult to understand and maintain
 // For example, make pause functionality part of the background timer library itself instead
 
 import BackgroundTimer from 'react-native-background-timer';
@@ -49,14 +50,27 @@ export const startEndSetTimer = () => (dispatch, getState) => {
         isPaused = true;
         startTime = (new Date()).getTime();
         // start it paused
-        dispatch({type: START_END_SET_TIMER, time: null});
-        dispatch({type: PAUSE_END_SET_TIMER});
+        dispatch({
+            type: START_END_SET_TIMER,
+            projectedEndSetTime: null,
+            timerDuration: timeRemaining,
+            timerRemaining: timeRemaining
+        });
+        dispatch({
+            type: PAUSE_END_SET_TIMER,
+            timerRemaining: timeRemaining            
+        });
     } else {
         timeRemaining = durationInSeconds * 1000;
         runTimer(timeRemaining, dispatch);
-        let projectedEndTime = (new Date()).getTime() + timeRemaining;
+        let projectedEndSetTime = (new Date()).getTime() + timeRemaining;
         // start it normal
-        dispatch({type: START_END_SET_TIMER, time: projectedEndTime});        
+        dispatch({
+            type: START_END_SET_TIMER,
+            projectedEndSetTime: projectedEndSetTime,
+            timerDuration: timeRemaining,
+            timerRemaining: timeRemaining            
+        });
     }
     
     console.tron.log("New end set timer is now " + timer);
@@ -73,8 +87,12 @@ export const resumeEndSetTimer = () => (dispatch) => {
         timeRemaining = 10000;
     }
     runTimer(timeRemaining, dispatch);
-    let projectedEndTime = (new Date()).getTime() + timeRemaining;    
-    dispatch({type: RESUME_END_SET_TIMER, time: projectedEndTime});    
+    let projectedEndSetTime = (new Date()).getTime() + timeRemaining;    
+    dispatch({
+        type: RESUME_END_SET_TIMER,
+        projectedEndSetTime: projectedEndSetTime,
+        timerRemaining: timeRemaining        
+    });
 };
 
 export const pauseEndSetTimer = () => (dispatch) => {
@@ -92,7 +110,10 @@ export const pauseEndSetTimer = () => (dispatch) => {
     timeRemaining -= timeElapsed;
     console.tron.log("Pause timer, time elapsed " + timeElapsed + " time remaining " + timeRemaining);
 
-    dispatch({type: PAUSE_END_SET_TIMER});
+    dispatch({
+        type: PAUSE_END_SET_TIMER,
+        timerRemaining: timeRemaining        
+    });
 };
 
 export const stopEndSetTimer = () =>  {
@@ -111,9 +132,9 @@ export const stopEndSetTimer = () =>  {
 export const sanityCheckTimer = () => (dispatch, getState) => {
     if (Platform.OS === 'ios') {
         let state = getState();        
-        let projectedEndTime = WorkoutSelectors.getProjectedEndSetTime(state);
+        let projectedEndSetTime = WorkoutSelectors.getProjectedEndSetTime(state);
         let currentTime = (new Date()).getTime();
-        if (projectedEndTime !== null && currentTime >= projectedEndTime) {
+        if (projectedEndSetTime !== null && currentTime >= projectedEndSetTime) {
             dispatch(SetsActionCreators.endSet());
         }
     }

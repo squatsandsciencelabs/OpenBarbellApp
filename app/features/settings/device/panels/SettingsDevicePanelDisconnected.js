@@ -123,7 +123,7 @@ class SettingsDevicePanelDisconnected extends Component {
     _renderScanningMessage() {
         return (
             <Text style={{ textAlign: 'center' }}>
-                Scanning for OpenBarbell Devices
+                Scanning for OpenBarbell Devices...
             </Text>
         );
     }

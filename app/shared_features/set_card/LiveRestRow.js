@@ -10,7 +10,7 @@ class LiveRestRow extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { rest: '' };
+        this.state = { rest: '--:--' };
     }
 
     componentDidMount() {

@@ -48,14 +48,14 @@ class WorkoutList extends Component {
             if (!this.props.isAddEnabled) {
                 return (
                     <View style={styles.disabledButton}>
-                        <Text style={styles.buttonText}>START NEW SET</Text>
+                        <Text style={styles.buttonText}>CREATE NEW SET</Text>
                     </View>
                 );                
             } else {
                 return (
                     <View style={styles.button}>
                         <TouchableOpacity onPress={ () => this.props.endSet() }>
-                            <Text style={styles.buttonText}>START NEW SET</Text>
+                            <Text style={styles.buttonText}>CREATE NEW SET</Text>
                         </TouchableOpacity>
                     </View>
                 );

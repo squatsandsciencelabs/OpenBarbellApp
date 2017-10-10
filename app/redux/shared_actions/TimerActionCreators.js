@@ -135,7 +135,7 @@ export const sanityCheckTimer = () => (dispatch, getState) => {
         let projectedEndSetTime = WorkoutSelectors.getProjectedEndSetTime(state);
         let currentTime = (new Date()).getTime();
         if (projectedEndSetTime !== null && currentTime >= projectedEndSetTime) {
-            dispatch(SetsActionCreators.endSet());
+            dispatch(SetsActionCreators.endSet(true));
         }
     }
 };

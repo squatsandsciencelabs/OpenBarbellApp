@@ -77,7 +77,7 @@ export const endSet = (was_sanity_check=false, duration=0, manually_started=fals
     var defaultMetric = state.settings.defaultMetric;
     var num_fields_entered = 0;
     var is_previous_set_fields_filled = null;
-    var previous_set_has_reps = Boolean(prevSet.reps.length);
+    var previous_set_has_reps = prevSet ? Boolean(prevSet.reps.length) : false;
     let fields = [set.exercise, set.weight, set.rpe, set.tags.length];
     let prevFields = [];
     
@@ -87,13 +87,11 @@ export const endSet = (was_sanity_check=false, duration=0, manually_started=fals
 
     if (prevSet) {
         prevFields = [prevSet.exercise, prevSet.weight, prevSet.rpe, prevSet.tags.length];
-        if (prevFields.length > 0) {
-           is_previous_set_fields_filled = 0;
-        } else {
-            is_previous_set_fields_filled = 1
-        }
+        
+        is_previous_set_fields_filled = prevFields.length > 0 ? 1 : 0;
+
     } else {
-        is_previous_set_filled = -1;
+        is_previous_set_fields_filled = -1;
     }
 
     fields.forEach((field) => {

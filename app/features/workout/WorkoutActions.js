@@ -23,6 +23,6 @@ export const restoreRep = (setID, repIndex) => ({
     removed: false
 });
 
-export const endSet = () => {
-    return SetsActionCreators.endSet();
+export const endSet = (manually_started = true) => {
+    return SetsActionCreators.endSet(true, 0, manually_started);
 };

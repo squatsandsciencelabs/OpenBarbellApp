@@ -3,6 +3,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as DateUtils from 'app/utility/transforms/DateUtils';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
@@ -211,7 +212,7 @@ const createFooterVM = (set, lastSetEndTime) => {
 
 const mapStateToProps = (state) => {
     // declare vars
-    let shouldShowRemoved = state.history.showRemoved;
+    let shouldShowRemoved = SettingsSelectors.getShowRemoved(state);
     let historyData = state.sets.historyData;
     let rebuildViewModels = false;
 

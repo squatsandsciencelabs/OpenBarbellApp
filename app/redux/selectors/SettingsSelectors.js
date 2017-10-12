@@ -9,3 +9,7 @@ export const getIsEditingEndSetTimer = (state) => stateRoot(state).isEditingEndS
 export const getEndSetTimerDuration = (state) => stateRoot(state).endSetTimerDuration;
 
 export const getIfTimerWasEdited = (state) => stateRoot(state).wasTimerEdited;
+
+export const getIsExportingCSV = (state) => stateRoot(state).isExportingCSV;
+
+export const getShowRemoved = (state) => stateRoot(state).showRemoved;

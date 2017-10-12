@@ -8,4 +8,4 @@ export const getIsEditingEndSetTimer = (state) => stateRoot(state).isEditingEndS
 
 export const getEndSetTimerDuration = (state) => stateRoot(state).endSetTimerDuration;
 
-export const getIfTimerWasEdited = (state) => stateRoot(state).wasEdited;
+export const getIfTimerWasEdited = (state) => stateRoot(state).wasTimerEdited;

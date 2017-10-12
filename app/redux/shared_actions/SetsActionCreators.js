@@ -73,44 +73,9 @@ export const endSet = (manuallyStarted=false, wasSanityCheck=false) => (dispatch
     var state = getState();
     var workoutData = state.sets.workoutData;
     var set = workoutData[workoutData.length - 1];
-    var prevSet = workoutData[workoutData.length - 2];
     var defaultMetric = state.settings.defaultMetric;
-    var num_fields_entered = 0;
-    var has_reps = false;
-    var previous_set_has_reps = prevSet ? Boolean(prevSet.reps.length) : false;
-    let fields = [set.exercise, set.weight, set.rpe, set.tags.length];
-    let auto_end_timer = 0;
-    
-    let endSetTimerDuration = SettingsSelectors.getEndSetTimerDuration(state);
 
-    let is_default_end_timer = !SettingsSelectors.getIfTimerWasEdited(state);
-
-    if (manuallyStarted) {
-        auto_end_timer = endSetTimerDuration;
-    };
-
-    if (prevSet) {
-        var prevFields = [prevSet.exercise, prevSet.weight, prevSet.rpe, prevSet.tags.length];        
-        var is_previous_set_fields_filled = prevFields.length > 0 ? 1 : 0;
-
-    } else {
-        var prevFields = null;
-        var is_previous_set_fields_filled = -1;
-    }
-
-    fields.forEach((field) => {
-        if (Boolean(field)) {
-            num_fields_entered++;
-        }
-    });
-
-    if (set.reps.length > 0) {
-        set.reps.map((rep) => {
-            has_reps = !rep.removed;
-        })
-    }
-
-    logAnalytics(set, auto_end_timer, has_reps, is_previous_set_fields_filled, num_fields_entered, is_default_end_timer, manuallyStarted, wasSanityCheck, previous_set_has_reps, state);
+    logAnalytics(manuallyStarted, wasSanityCheck, state);
 
     // check if set form has any data
     if (!SetEmptyCheck.isUntouched(set)) {
@@ -137,7 +102,45 @@ export const finishedUploadingSets = (revision) => ({
 
 export const failedUploadSets = () => ({ type: FAILED_UPLOAD_SETS });
 
-const logAnalytics = (set, auto_end_timer, has_reps, is_previous_set_fields_filled, num_fields_entered, is_default_end_timer, manuallyStarted, wasSanityCheck, previous_set_has_reps, state) => {
+const logAnalytics = (manuallyStarted, wasSanityCheck, state) => {
+    var workoutData = state.sets.workoutData;
+    var set = workoutData[workoutData.length - 1];
+    var prevSet = workoutData[workoutData.length - 2];
+    var num_fields_entered = 0;
+    var has_reps = false;
+    var previous_set_has_reps = prevSet ? Boolean(prevSet.reps.length) : false;
+    let fields = [set.exercise, set.weight, set.rpe, set.tags.length];
+    let auto_end_timer = 0;
+    
+    let endSetTimerDuration = SettingsSelectors.getEndSetTimerDuration(state);
+
+    let is_default_end_timer = !SettingsSelectors.getIfTimerWasEdited(state);
+
+    if (!manuallyStarted) {
+        auto_end_timer = endSetTimerDuration;
+    };
+
+    if (prevSet) {
+        var prevFields = [prevSet.exercise, prevSet.weight, prevSet.rpe, prevSet.tags.length];        
+        var is_previous_set_fields_filled = prevFields.length > 0 ? 1 : 0;
+
+    } else {
+        var prevFields = null;
+        var is_previous_set_fields_filled = -1;
+    }
+
+    fields.forEach((field) => {
+        if (Boolean(field)) {
+            num_fields_entered++;
+        }
+    });
+
+    if (set.reps.length > 0) {
+        set.reps.map((rep) => {
+            has_reps = !rep.removed;
+        })
+    }
+    
     Analytics.logEventWithAppState('start_new_set', {   
         value: num_fields_entered,
         auto_end_timer: auto_end_timer / 10,

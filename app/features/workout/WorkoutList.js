@@ -54,7 +54,7 @@ class WorkoutList extends Component {
             } else {
                 return (
                     <View style={styles.button}>
-                        <TouchableOpacity onPress={ () => this.props.endSet(true) }>
+                        <TouchableOpacity onPress={ () => this.props.endSet() }>
                             <Text style={styles.buttonText}>CREATE NEW SET</Text>
                         </TouchableOpacity>
                     </View>

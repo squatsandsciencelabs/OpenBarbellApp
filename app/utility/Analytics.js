@@ -7,7 +7,7 @@ import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDeviceStatusSelectors';
 import DeviceInfo from 'react-native-device-info';
 
-//initial analytics
+//initial analytics and initial screen
 
 export const setInitialAnalytics = () => {
     const mobileID = DeviceInfo.getUniqueID();
@@ -16,7 +16,7 @@ export const setInitialAnalytics = () => {
     setUserProp('mobile_identifier', mobileID);
     setUserProp('device_version', null);    
     setCurrentScreen('settings');
-}
+};
 
 // Screens
 

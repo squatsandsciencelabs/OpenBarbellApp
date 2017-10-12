@@ -153,6 +153,8 @@ export const connectedToDevice = (name, identifier) => {
     const id = identifier.toString();
     Analytics.setUserProp('connected_device_id', id);
 
+    checkOBVersion(name);
+    
     return {
         type: CONNECTED_TO_DEVICE,
         deviceName: name,

@@ -5,6 +5,7 @@ import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import { END_WORKOUT } from 'app/ActionTypes';
 import * as Analytics from 'app/utility/Analytics';
 import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
+import * as WorkoutSelectors from 'app/redux/selectors/WorkoutSelectors';
 
 export const endWorkout = () => (dispatch, getState) => {
     var state = getState();
@@ -18,19 +19,14 @@ export const endWorkout = () => (dispatch, getState) => {
     var num_sets = sets.length;
     var num_sets_with_fields = 0;
     var num_reps = 0;
-    var num_removes = 0;
-    var num_restores = 0;
+    
+    let num_removes = WorkoutSelectors.getRemovedCounter(state);
+    let num_restores = WorkoutSelectors.getRestoredCounter(state);
 
     sets.map((set) => {
-        set.reps.map((rep) => {
-            if (rep.removed) {
-                num_removes++;
-            }
-        });
-
         num_reps += set.reps.length;
 
-        if (SetEmptyCheck.isEmpty(set)) {
+        if (SetEmptyCheck.hasEmptyData(set)) {
             num_sets_with_fields++;
         }
     });
@@ -40,24 +36,8 @@ export const endWorkout = () => (dispatch, getState) => {
     } else {
         timeEndActive = new Date();
     }
-    
-    console.tron.log(sets);
 
-    Analytics.logEventWithAppState('end_workout', {
-        value: percentAppActive,
-        num_screen_locks: null,
-        num_multitask: null,
-        percent_app_active: percentAppActive,
-        num_history_views: null,
-        num_disconnects: null,
-        num_auto_reconnects: null,
-        num_sets: num_sets,
-        num_reps: num_reps,
-        num_removes: num_removes,
-        num_restores: null,
-        num_sets_with_fields: num_sets_with_fields,
-        percent_sets_fields: null
-    }, state);
+    logAnalytics(num_sets, num_reps, num_removes, num_restores, num_sets_with_fields, state);
 
     if (!isWorkoutEmpty && isLoggedIn) {
         dispatch({ type: END_WORKOUT });
@@ -75,3 +55,21 @@ export const endWorkout = () => (dispatch, getState) => {
 };
 
 export const autoEndWorkout = () => ({ type: END_WORKOUT });
+
+const logAnalytics = (num_sets, num_reps, num_removes, num_restores, num_sets_with_fields, state) => {
+    Analytics.logEventWithAppState('end_workout', {
+        value: null,
+        num_screen_locks: null,
+        num_multitask: null,
+        percent_app_active: null,
+        num_history_views: null,
+        num_disconnects: null,
+        num_auto_reconnects: null,
+        num_sets: num_sets,
+        num_reps: num_reps,
+        num_removes: num_removes,
+        num_restores: num_restores,
+        num_sets_with_fields: num_sets_with_fields,
+        percent_sets_fields: null
+    }, state);    
+}

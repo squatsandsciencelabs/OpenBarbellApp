@@ -8,6 +8,7 @@ import ApplicationScreen from 'app/features/application/ApplicationScreen';
 import * as GoogleSignInSetup from 'app/services/GoogleSignInSetup';
 import Bluetooth from 'app/services/Bluetooth';
 import AppState from 'app/utility/AppState';
+import * as Analytics from 'app/utility/Analytics';
 import Permissions from 'app/services/Permissions';
 
 // initialize the store
@@ -15,6 +16,9 @@ var store = Store();
 
 // request permissions
 Permissions();
+
+// initialize analytics
+Analytics.setInitialAnalytics();
 
 // configure google sign in
 GoogleSignInSetup.configure();

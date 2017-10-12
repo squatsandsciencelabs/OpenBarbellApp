@@ -40,11 +40,6 @@ export default initializeStore = () => {
         var store = createStore(reducers, enhancers);
     }
 
-    // set initial user props analytics
-    Analytics.setUserProp('connected_device_id', null);
-    Analytics.setUserProp('mobile_identifier', null);
-    Analytics.setUserProp('device_version', null);
-
     // run sagas
     sagaMiddleware.run(Sagas);
     
@@ -58,6 +53,7 @@ export default initializeStore = () => {
             'history',
             'killSwitch',
             'suggestions',
+            'appState',
         ],
         // note, everything in sets is to be persisted so not blacklisting or transforming them
         transforms: [

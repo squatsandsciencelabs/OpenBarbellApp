@@ -1,6 +1,4 @@
 import {
-    UPDATE_HISTORY_FILTER,
-    EXPORTING_CSV,
     LOADING_HISTORY,
     PRESENT_HISTORY_EXERCISE,
     PRESENT_HISTORY_TAGS,
@@ -19,8 +17,6 @@ import {
 } from 'app/ActionTypes';
 
 const defaultState = {
-    showRemoved: false,
-    isExportingCSV: false,
     isLoadingHistory: true,
     editingExerciseName: '',
     editingExerciseSetID: null,
@@ -40,14 +36,6 @@ const HistoryReducer = (state = defaultState, action) => {
         case LOADING_HISTORY:
             return Object.assign({}, state, {
                 isLoadingHistory: action.isLoading
-            });
-        case UPDATE_HISTORY_FILTER:
-            return Object.assign({}, state, {
-                showRemoved: action.showRemoved
-            });
-        case EXPORTING_CSV:
-            return Object.assign({}, state, {
-                isExportingCSV: action.isExportingCSV
             });
         case PRESENT_HISTORY_EXERCISE:
             return Object.assign({}, state, {

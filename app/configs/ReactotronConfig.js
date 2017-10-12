@@ -14,5 +14,6 @@ if (__DEV__) {
 } else {
     // production, remove tron logs
     console.tron = {};
-    console.tron.log = () => {};    
+    console.tron.log = () => {};
+    console.tron.display = () => {};
 }

@@ -49,7 +49,6 @@ export default initializeStore = () => {
         blacklist: [
             'scannedDevices',
             'connectedDevice',
-            'workout',
             'history',
             'killSwitch',
             'suggestions',
@@ -58,7 +57,8 @@ export default initializeStore = () => {
         // note, everything in sets is to be persisted so not blacklisting or transforming them
         transforms: [
             createFilter('auth', ['accessToken', 'refreshToken', 'lastRefreshDate', 'email']),
-            createFilter('settings', ['defaultMetric', 'endSetTimerDuration', 'syncDate',])
+            createFilter('settings', ['defaultMetric', 'endSetTimerDuration', 'syncDate', 'wasTimerEdited', 'wasMetricEdited']),
+            createFilter('workout', ['removedCounter', 'restoredCounter'])
         ]}, () => {
             // on startup, always "fail" it so syncing variables go back into the queue to be synced
             store.dispatch(SetsActionCreators.failedUploadSets());

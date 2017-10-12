@@ -11,6 +11,27 @@ export const endWorkout = () => (dispatch, getState) => {
     var state = getState();
     var isWorkoutEmpty = SetsSelectors.getIsWorkoutEmpty(state)
     var isLoggedIn = AuthSelectors.getIsLoggedIn(state);
+
+    logAnalytics(state);
+
+    if (!isWorkoutEmpty && isLoggedIn) {
+        dispatch({ type: END_WORKOUT });
+    } else if(!isLoggedIn) {
+        Alert.alert(
+            'Heads up!',
+            "You are not logged in, the data from this workout will be lost,\nPlease sign in under settings to save your data to the cloud",
+            [
+              {text: 'Continue', onPress: () => dispatch({ type: END_WORKOUT })},
+              {text: 'Nevermind', style: 'cancel'},,
+            ],
+            { cancelable: false }
+          )                    
+    }
+};
+
+export const autoEndWorkout = () => ({ type: END_WORKOUT });
+
+const logAnalytics = (state) => {
     var screenStatus = state.appState.screenStatus;
     var timeStartActive = null;
     var timeEndActive = null;
@@ -35,28 +56,8 @@ export const endWorkout = () => (dispatch, getState) => {
         timeStartActive = new Date();
     } else {
         timeEndActive = new Date();
-    }
-
-    logAnalytics(num_sets, num_reps, num_removes, num_restores, num_sets_with_fields, state);
-
-    if (!isWorkoutEmpty && isLoggedIn) {
-        dispatch({ type: END_WORKOUT });
-    } else if(!isLoggedIn) {
-        Alert.alert(
-            'Heads up!',
-            "You are not logged in, the data from this workout will be lost,\nPlease sign in under settings to save your data to the cloud",
-            [
-              {text: 'Continue', onPress: () => dispatch({ type: END_WORKOUT })},
-              {text: 'Nevermind', style: 'cancel'},,
-            ],
-            { cancelable: false }
-          )                    
-    }
-};
-
-export const autoEndWorkout = () => ({ type: END_WORKOUT });
-
-const logAnalytics = (num_sets, num_reps, num_removes, num_restores, num_sets_with_fields, state) => {
+    }    
+    
     Analytics.logEventWithAppState('end_workout', {
         value: null,
         num_screen_locks: null,
@@ -70,6 +71,10 @@ const logAnalytics = (num_sets, num_reps, num_removes, num_restores, num_sets_wi
         num_removes: num_removes,
         num_restores: num_restores,
         num_sets_with_fields: num_sets_with_fields,
-        percent_sets_fields: null
+        percent_sets_fields: null,
+        time_since_last_workout: null,
+        workout_duration: null,
+        time_since_last_rep: null,
+        manually_ended: null
     }, state);    
 }

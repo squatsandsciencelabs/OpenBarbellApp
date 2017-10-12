@@ -69,29 +69,33 @@ export const saveHistorySet = (setID, exercise = null, weight = null, metric = n
     return action;
 };
 
-export const endSet = (was_sanity_check=false, duration=0, manually_started=false) => (dispatch, getState) => {
+export const endSet = (manuallyStarted=false, wasSanityCheck=false) => (dispatch, getState) => {
     var state = getState();
     var workoutData = state.sets.workoutData;
     var set = workoutData[workoutData.length - 1];
     var prevSet = workoutData[workoutData.length - 2];
     var defaultMetric = state.settings.defaultMetric;
     var num_fields_entered = 0;
-    var is_previous_set_fields_filled = null;
+    var has_reps = false;
     var previous_set_has_reps = prevSet ? Boolean(prevSet.reps.length) : false;
     let fields = [set.exercise, set.weight, set.rpe, set.tags.length];
-    let prevFields = [];
+    let auto_end_timer = 0;
     
-    let endSetTimerDuration = SettingsSelectors.getEndSetTimerDuration;
+    let endSetTimerDuration = SettingsSelectors.getEndSetTimerDuration(state);
 
-    var is_default_end_timer = endSetTimerDuration > 30;
+    let is_default_end_timer = !SettingsSelectors.getIfTimerWasEdited(state);
+
+    if (manuallyStarted) {
+        auto_end_timer = endSetTimerDuration;
+    };
 
     if (prevSet) {
-        prevFields = [prevSet.exercise, prevSet.weight, prevSet.rpe, prevSet.tags.length];
-        
-        is_previous_set_fields_filled = prevFields.length > 0 ? 1 : 0;
+        var prevFields = [prevSet.exercise, prevSet.weight, prevSet.rpe, prevSet.tags.length];        
+        var is_previous_set_fields_filled = prevFields.length > 0 ? 1 : 0;
 
     } else {
-        is_previous_set_fields_filled = -1;
+        var prevFields = null;
+        var is_previous_set_fields_filled = -1;
     }
 
     fields.forEach((field) => {
@@ -100,22 +104,13 @@ export const endSet = (was_sanity_check=false, duration=0, manually_started=fals
         }
     });
 
+    if (set.reps.length > 0) {
+        set.reps.map((rep) => {
+            has_reps = !rep.removed;
+        })
+    }
 
-    Analytics.logEventWithAppState('start_new_set', {   
-        value: num_fields_entered,
-        auto_end_timer: duration / 1000,
-        has_exercise_name: Boolean(set.exercise),
-        has_weight: Boolean(set.weight),
-        has_rpe: Boolean(set.rpe),
-        has_tags: Boolean(set.tags.length),
-        has_video: Boolean(set.videoFileURL),
-        has_reps: Boolean(set.reps.length),
-        is_previous_set_fields_filled: is_previous_set_fields_filled,
-        is_default_end_timer: is_default_end_timer,
-        manually_started: manually_started,
-        was_sanity_check: was_sanity_check,
-        previous_set_has_reps: previous_set_has_reps      
-    }, state);
+    logAnalytics(set, auto_end_timer, has_reps, is_previous_set_fields_filled, num_fields_entered, is_default_end_timer, manuallyStarted, wasSanityCheck, previous_set_has_reps, state);
 
     // check if set form has any data
     if (!SetEmptyCheck.isUntouched(set)) {
@@ -141,3 +136,22 @@ export const finishedUploadingSets = (revision) => ({
 });
 
 export const failedUploadSets = () => ({ type: FAILED_UPLOAD_SETS });
+
+const logAnalytics = (set, auto_end_timer, has_reps, is_previous_set_fields_filled, num_fields_entered, is_default_end_timer, manuallyStarted, wasSanityCheck, previous_set_has_reps, state) => {
+    Analytics.logEventWithAppState('start_new_set', {   
+        value: num_fields_entered,
+        auto_end_timer: auto_end_timer / 10,
+        has_exercise_name: Boolean(set.exercise),
+        has_weight: Boolean(set.weight),
+        has_rpe: Boolean(set.rpe),
+        has_tags: Boolean(set.tags.length),
+        has_video: Boolean(set.videoFileURL),
+        has_reps: has_reps,
+        is_previous_set_fields_filled: is_previous_set_fields_filled,
+        num_fields_entered: num_fields_entered,
+        is_default_end_timer: is_default_end_timer,
+        manually_started: manuallyStarted,
+        was_sanity_check: wasSanityCheck,
+        previous_set_has_reps: previous_set_has_reps      
+    }, state);    
+}

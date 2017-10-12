@@ -48,9 +48,7 @@ export const presentTags = (setID, tags) => {
     }
 };
 
-export const saveSet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {
-    Analytics.setCurrentScreen('workout');
-    
+export const saveSet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {    
     return SetsActionCreators.saveWorkoutSet(setID, exercise, weight, metric, rpe);
 };
 

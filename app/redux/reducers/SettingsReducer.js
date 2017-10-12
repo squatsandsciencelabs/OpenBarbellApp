@@ -16,6 +16,7 @@ const defaultState = {
     endSetTimerDuration: 30,
     isEditingEndSetTimer: false,
     syncDate: '',
+    wasEdited: false
 };
 
 const SettingsReducer = (state = defaultState, action) => {
@@ -23,6 +24,7 @@ const SettingsReducer = (state = defaultState, action) => {
         case SAVE_DEFAULT_METRIC: 
             return Object.assign({}, state, {
                 defaultMetric: action.defaultMetric,
+                wasEdited: true,
             });
         case PRESENT_DEFAULT_METRIC:
             return Object.assign({}, state, {

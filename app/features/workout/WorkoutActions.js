@@ -24,5 +24,5 @@ export const restoreRep = (setID, repIndex) => ({
 });
 
 export const endSet = (manuallyStarted = true) => {
-    return SetsActionCreators.endSet(true, 0, manuallyStarted);
+    return SetsActionCreators.endSet(manuallyStarted, false);
 };

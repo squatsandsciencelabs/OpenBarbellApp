@@ -13,7 +13,6 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import EditHistorySetFormScreen from './card/EditHistorySetFormScreen';
-import HistoryFilterBarScreen from './filter_bar/HistoryFilterBarScreen';
 import HistoryLoadingFooterScreen from './loading/HistoryLoadingFooterScreen';
 import EditHistoryExerciseScreen from './exercise_name/EditHistoryExerciseScreen';
 import EditHistoryTagsScreen from './tags/EditHistoryTagsScreen';
@@ -130,11 +129,6 @@ class HistoryList extends Component {
                     <View style={{ flex: 1, backgroundColor: 'white' }}>
                         {list}
                     </View>
-
-                    <View style={{height: 50}}>
-                        <HistoryFilterBarScreen />
-                    </View>
-
                 </View>
             );
         } else {

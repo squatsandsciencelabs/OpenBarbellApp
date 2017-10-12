@@ -5,6 +5,7 @@ import * as Actions from './HistorySetExpandedActions';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
 import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
+import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import SetExpandedView from 'app/shared_features/expanded_set/SetExpandedView';
 
 const mapStateToProps = (state) => {
@@ -13,7 +14,7 @@ const mapStateToProps = (state) => {
     if (setID !== null) {
         var set = SetsSelectors.getExpandedHistorySet(state, setID);
         var repNum = 0;
-        if (HistorySelectors.getShowRemoved(state)) {
+        if (SettingsSelectors.getShowRemoved(state)) {
             var reps = set.reps;            
         } else {
             var reps = set.reps.filter((rep) => !rep.removed);            

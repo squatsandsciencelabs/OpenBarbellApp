@@ -44,10 +44,6 @@ const clearTimers = () => {
 export const startDeviceScan = () => {
     RFDuinoLib.startScan();
 
-    // analytics
-    const uniqueID = DeviceInfo.getUniqueID();
-    Analytics.setUserProp('mobile_identifier', uniqueID);
-
     return {
         type: START_DEVICE_SCAN
     };
@@ -157,14 +153,6 @@ export const connectedToDevice = (name, identifier) => {
     const id = identifier.toString();
     Analytics.setUserProp('connected_device_id', id);
 
-    if (name.charAt(3) === '1') {
-        Analytics.setUserProp('device_version', 'v1')
-    } else if (name.charAt(3) === '2') {
-        Analytics.setUserProp('device_version', 'v2');
-    } else if (name.charAt(3) === '3') {
-        Analytics.setUserProp('device_version', 'v3');
-    }
-
     return {
         type: CONNECTED_TO_DEVICE,
         deviceName: name,
@@ -176,13 +164,7 @@ export const reconnectingToDevice = (name, identifier) => {
     const id = identifier.toString();
     Analytics.setUserProp('connected_device_id', id);
 
-    if (name.charAt(3) === '1') {
-        Analytics.setUserProp('device_version', 'v1')
-    } else if (name.charAt(3) === '2') {
-        Analytics.setUserProp('device_version', 'v2');
-    } else if (name.charAt(3) === '3') {
-        Analytics.setUserProp('device_version', 'v3');
-    }
+    checkOBVersion(name);
 
     return {
         type: RECONNECTING_TO_DEVICE,
@@ -208,4 +190,14 @@ export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, g
     });
 
     dispatch(TimerActionCreators.startEndSetTimer());
+};
+
+function checkOBVersion(name) {
+    if (name.charAt(3) === '1') {
+        Analytics.setUserProp('device_version', 'v1')
+    } else if (name.charAt(3) === '2') {
+        Analytics.setUserProp('device_version', 'v2');
+    } else if (name.charAt(3) === '3') {
+        Analytics.setUserProp('device_version', 'v3');
+    }    
 };

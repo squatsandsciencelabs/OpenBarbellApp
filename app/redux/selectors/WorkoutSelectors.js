@@ -37,3 +37,9 @@ export const getTimerRemaining = (state) => stateRoot(state).timerRemaining;
 export const getTimerDuration = (state) => stateRoot(state).timerDuration;
 
 export const getTimerStatus = (state) => stateRoot(state).timerStatus;
+
+// removed/restored counters
+
+export const getRemovedCounter = (state) => stateRoot(state).removedCounter;
+
+export const getRestoredCounter = (state) => stateRoot(state).restoredCounter;

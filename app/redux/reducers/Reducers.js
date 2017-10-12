@@ -8,6 +8,7 @@ import KillSwitchReducer from './KillSwitchReducer';
 import AuthReducer from './AuthReducer';
 import SettingsReducer from './SettingsReducer';
 import SuggestionsReducer from './SuggestionsReducer';
+import AppStateReducer from './AppStateReducer';
 
 export default reducers = combineReducers({
     sets: SetsReducer,
@@ -18,5 +19,6 @@ export default reducers = combineReducers({
     killSwitch: KillSwitchReducer,
     auth: AuthReducer,
     suggestions: SuggestionsReducer,
-    settings: SettingsReducer
+    settings: SettingsReducer,
+    appState: AppStateReducer
 });

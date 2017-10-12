@@ -7,3 +7,5 @@ export const getDefaultMetric = (state) => stateRoot(state).defaultMetric;
 export const getIsEditingEndSetTimer = (state) => stateRoot(state).isEditingEndSetTimer;
 
 export const getEndSetTimerDuration = (state) => stateRoot(state).endSetTimerDuration;
+
+export const getIfTimerWasEdited = (state) => stateRoot(state).wasEdited;

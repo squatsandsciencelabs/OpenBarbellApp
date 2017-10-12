@@ -20,7 +20,9 @@ import {
     START_END_SET_TIMER,
     STOP_END_SET_TIMER,
     PAUSE_END_SET_TIMER,
-    RESUME_END_SET_TIMER
+    RESUME_END_SET_TIMER,
+    SAVE_WORKOUT_REP,
+    END_WORKOUT,
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -47,7 +49,9 @@ const defaultState = {
     projectedEndSetTime: null,
     timerRemaining: null,
     timerDuration: null,
-    timerStatus: 'inactive'
+    timerStatus: 'inactive',
+    removedCounter: 0,
+    restoredCounter: 0,
 };
 
 const WorkoutReducer = (state = defaultState, action) => {
@@ -170,6 +174,21 @@ const WorkoutReducer = (state = defaultState, action) => {
                 timerRemaining: action.timerRemaining,
                 timerStatus: 'paused'
             });
+        case SAVE_WORKOUT_REP:
+            if (action.removed) {
+                return Object.assign({}, state, {
+                    removedCounter: state.removedCounter + 1
+                });
+            } else {
+                return Object.assign({}, state, {
+                    restoredCounter: state.restoredCounter + 1
+                });
+            }
+        case END_WORKOUT: 
+            return Object.assign({}, state, {
+                removedCounter: 0,
+                restoredCounter: 0
+            })
         default:
             return state;
     }

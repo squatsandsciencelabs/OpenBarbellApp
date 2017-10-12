@@ -108,6 +108,7 @@ export const UPDATE_SYNC_DATE = 'UPDATE_SYNC_DATE';
 
 // app state
 export const UNLOCKED_SCREEN = 'UNLOCKED_SCREEN';
+export const LOCKED_SCREEN = 'LOCKED_SCREEN';
 
 // kill switch
 export const FETCH_VERSION = 'FETCH_VERSION';

@@ -48,7 +48,6 @@ export const presentTags = (setID, tags) => {
 };
 
 export const saveSet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {
-    Analytics.setCurrentScreen('history');
     return SetsActionCreators.saveHistorySet(setID, exercise, weight, metric, rpe);
 };
 

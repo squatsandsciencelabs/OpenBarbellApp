@@ -46,7 +46,7 @@ export const logEventWithAppState = (event, params, state) => {
         params.is_app_inactive = false;
     } else if (currentAppState === 'inactive') {
         params.is_app_active = false;
-        params.is_app_in_backtround = true;
+        params.is_app_in_backround = true;
         params.is_app_inactive = true;        
     }
 

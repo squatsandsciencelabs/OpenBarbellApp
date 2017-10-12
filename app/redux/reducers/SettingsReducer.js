@@ -7,7 +7,9 @@ import {
     SAVE_DEFAULT_METRIC,
     PRESENT_DEFAULT_METRIC,
     DISMISS_DEFAULT_METRIC,
-    UPDATE_SYNC_DATE
+    UPDATE_SYNC_DATE,
+    EXPORTING_CSV,
+    UPDATE_HISTORY_FILTER
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -17,7 +19,9 @@ const defaultState = {
     isEditingEndSetTimer: false,
     syncDate: '',
     wasTimerEdited: false,
-    wasMetricEdited: false
+    wasMetricEdited: false,
+    showRemoved: false,
+    isExportingCSV: false,
 };
 
 const SettingsReducer = (state = defaultState, action) => {
@@ -55,6 +59,14 @@ const SettingsReducer = (state = defaultState, action) => {
         case UPDATE_SYNC_DATE:
             return Object.assign({}, state, {
                 syncDate: action.syncDate
+            });
+        case EXPORTING_CSV:
+            return Object.assign({}, state, {
+                isExportingCSV: action.isExportingCSV
+            });
+        case UPDATE_HISTORY_FILTER:
+            return Object.assign({}, state, {
+                showRemoved: action.showRemoved
             });
         default:
             return state;

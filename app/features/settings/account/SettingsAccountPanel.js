@@ -4,7 +4,8 @@ import {
     TouchableOpacity,
     View,
     Text,
-    Switch
+    Switch,
+    ActivityIndicator
 } from 'react-native';
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
@@ -67,20 +68,20 @@ class SettingsAccountPanel extends Component {
         if (isExportingCSV) {
             return (
                 <View>
-                <Text style={{color:'gray', marginTop: 10}}>Data:</Text>
-                <ActivityIndicator
-                    style={{marginLeft: 10}}
-                    color="white"
-                />
+                    <Text style={{color:'gray', marginTop: 10}}>Data:</Text>
+                    <ActivityIndicator
+                        style={{marginLeft: 10, width: 100}}
+                        color="gray"
+                    />
                 </View>
             );
         } else {
             return (
                 <View>
-                <Text style={{color:'gray', marginTop: 10}}>Data:</Text>                
-                <TouchableOpacity style={{justifyContent: 'center'}} onPress={ () => this._onPressCSV() } >
-                    <Text style={[SETTINGS_PANEL_STYLES.blueButton, {padding: 5, width: 100}]}>Export CSV</Text>
-                </TouchableOpacity>
+                    <Text style={{color:'gray', marginTop: 10}}>Data:</Text>                
+                    <TouchableOpacity style={{justifyContent: 'center'}} onPress={ () => this._onPressCSV() } >
+                        <Text style={[SETTINGS_PANEL_STYLES.blueButton, {padding: 5, width: 100}]}>Export CSV</Text>
+                    </TouchableOpacity>
                 </View>
             );
         }
@@ -95,7 +96,7 @@ class SettingsAccountPanel extends Component {
                 value={this.props.shouldShowRemoved}
                 onValueChange={(isSwitchOn) => this._onPressSwitch(isSwitchOn)}
                 onTintColor='rgba(47, 128, 237, 1)'
-                thumbTintColor='rgba(47, 128, 237, 1)'
+                thumbTintColor='lightgray'
                 tintColor='rgba(47, 128, 237, 1)'/>
             </View>
         );

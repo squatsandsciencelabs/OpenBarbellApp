@@ -3,7 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "react-native"
   },
   "dependencies": {
     "react": "16.0.0-alpha.12",
@@ -37,7 +41,9 @@
   },
   "devDependencies": {
     "babel-preset-react-native": "2.0.0",
-    "jest": "20.0.4",
+    "jest": "21.2.1",
+    "babel-jest": "21.2.0",
+    "react-test-renderer": "16.0.0",
     "reactotron-react-native": "1.12.2",
     "reactotron-redux": "1.12.2",
     "reactotron-redux-saga": "1.12.2"

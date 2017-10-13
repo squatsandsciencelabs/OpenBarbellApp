@@ -107,7 +107,7 @@ const logEndSetAnalytics = (manuallyStarted, wasSanityCheck, state) => {
     var set = workoutData[workoutData.length - 1];
     var prevSet = workoutData[workoutData.length - 2];
     var num_fields_entered = 0;
-    var has_reps = false;
+    var has_reps = !SetEmptyCheck.hasEmptyReps(set);
     var previous_set_has_reps = prevSet ? Boolean(prevSet.reps.length) : false;
     let fields = [set.exercise, set.weight, set.rpe, set.tags.length];
     let auto_end_timer = 0;
@@ -135,12 +135,6 @@ const logEndSetAnalytics = (manuallyStarted, wasSanityCheck, state) => {
             num_fields_entered++;
         }
     });
-
-    if (set.reps.length > 0) {
-        set.reps.map((rep) => {
-            has_reps = !rep.removed;
-        })
-    }
     
     Analytics.logEventWithAppState('start_new_set', {   
         value: num_fields_entered,

@@ -24,6 +24,21 @@ describe('endSet analytics', () => {
         logEventSpy.mockRestore();
     });
 
+    test("not called when there's no reps", () => {
+        store = mockStore({
+            sets: {
+                workoutData: [{
+                    reps: [],
+                    tags: []
+                }],
+            }
+        });
+
+        store.dispatch(SetsActionCreators.endSet());
+
+        expect(logEventSpy).not.toBeCalled();
+    });
+
     describe('manually_started', () => {
         beforeEach(() => {
             store = mockStore({

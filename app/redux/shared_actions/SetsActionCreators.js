@@ -126,7 +126,6 @@ const logAnalytics = (manuallyStarted, wasSanityCheck, state) => {
         } else {
             var is_previous_set_fields_filled = 0;
         }
-
     } else {
         var is_previous_set_fields_filled = -1;
     }

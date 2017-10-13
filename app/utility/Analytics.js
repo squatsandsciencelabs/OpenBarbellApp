@@ -26,6 +26,7 @@ export const setCurrentScreen = (screen) => {
     console.tron.display({
         name: 'SetScreen',
         value: screen,
+        preview: screen,
         important: true,
         image: 'https://firebase.google.com/_static/images/firebase/touchicon-180.png'
     })
@@ -39,7 +40,7 @@ export const setUserProp = (name, value) => {
     console.tron.display({
         name: 'SetUserProp',
         value: value,
-        preview: name,
+        preview: name + " = " + value,
         important: true,
         image: 'https://firebase.google.com/_static/images/firebase/touchicon-180.png'
     })    

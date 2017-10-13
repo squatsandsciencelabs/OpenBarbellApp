@@ -121,11 +121,13 @@ const logAnalytics = (manuallyStarted, wasSanityCheck, state) => {
     };
 
     if (prevSet) {
-        var prevFields = [prevSet.exercise, prevSet.weight, prevSet.rpe, prevSet.tags.length];        
-        var is_previous_set_fields_filled = prevFields.length > 0 ? 1 : 0;
+        if(prevSet.exercise || prevSet.weight || prevSet.rpe || prevSet.tags.length) {
+            var is_previous_set_fields_filled = 1;
+        } else {
+            var is_previous_set_fields_filled = 0;
+        }
 
     } else {
-        var prevFields = null;
         var is_previous_set_fields_filled = -1;
     }
 

@@ -1,5 +1,5 @@
 import firebase from 'app/configs/Firebase';
-import { 
+import {
     AppState
 } from 'react-native';
 import * as ScannedDevicesSelectors from 'app/redux/selectors/ScannedDevicesSelectors';

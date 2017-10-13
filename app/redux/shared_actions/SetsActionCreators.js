@@ -75,10 +75,10 @@ export const endSet = (manuallyStarted=false, wasSanityCheck=false) => (dispatch
     var set = workoutData[workoutData.length - 1];
     var defaultMetric = state.settings.defaultMetric;
 
-    logAnalytics(manuallyStarted, wasSanityCheck, state);
-
     // check if set form has any data
     if (!SetEmptyCheck.isUntouched(set)) {
+        logEndSetAnalytics(manuallyStarted, wasSanityCheck, state);
+
         dispatch({
             type: END_SET,
             defaultMetric: defaultMetric
@@ -102,7 +102,7 @@ export const finishedUploadingSets = (revision) => ({
 
 export const failedUploadSets = () => ({ type: FAILED_UPLOAD_SETS });
 
-const logAnalytics = (manuallyStarted, wasSanityCheck, state) => {
+const logEndSetAnalytics = (manuallyStarted, wasSanityCheck, state) => {
     var workoutData = state.sets.workoutData;
     var set = workoutData[workoutData.length - 1];
     var prevSet = workoutData[workoutData.length - 2];

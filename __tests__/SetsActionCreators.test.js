@@ -114,6 +114,29 @@ describe('endSet analytics', () => {
         });
     });
 
+    describe('was_sanity_check', () => {
+
+        test('true when passed in true', () => {
+            // when you end the set with sanityCheck true passed in
+            store.dispatch(sut.endSet(false, true));
+            
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('start_new_set');
+            expect(params.was_sanity_check).toBeTruthy();
+        });
+
+        test('false when passed in false', () => {
+            // when you end the set with sanityCheck not passed in
+            store.dispatch(sut.endSet());
+            
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('start_new_set');
+            expect(params.was_sanity_check).toBeFalsy();
+        });        
+    })
+
     describe('has_reps', () => {
 
         var touchedSpy = null;
@@ -154,5 +177,89 @@ describe('endSet analytics', () => {
             expect(event).toEqual('start_new_set');
             expect(params.has_reps).toBeFalsy();
         });
+    });
+
+    describe("num_fields_entered", () => {
+
+        var fieldsSpy = null
+
+        afterEach(() => {
+            fieldsSpy.mockReset();
+        });
+
+        afterAll(() => {
+            fieldsSpy.mockReset();
+            fieldsSpy.mockRestore();
+        });       
+
+        test("num_fields_entered is 0", () => {
+            // given a number of fields
+            fieldsSpy = jest.spyOn(SetEmptyCheck, 'numFieldsEntered').mockImplementation(() => 0);
+
+            // when you end the set
+            store.dispatch(sut.endSet());
+
+            //then
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('start_new_set');
+            expect(params.num_fields_entered).toBe(0);           
+        });
+
+        test("num_fields_entered is 1", () => {
+            // given a number of fields
+            fieldsSpy = jest.spyOn(SetEmptyCheck, 'numFieldsEntered').mockImplementation(() => 1);
+
+            // when you end the set
+            store.dispatch(sut.endSet());
+
+            //then
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('start_new_set');
+            expect(params.num_fields_entered).toBe(1);           
+        });
+        
+        test("num_fields_entered is 2", () => {
+            // given a number of fields
+            fieldsSpy = jest.spyOn(SetEmptyCheck, 'numFieldsEntered').mockImplementation(() => 2);
+
+            // when you end the set
+            store.dispatch(sut.endSet());
+
+            //then
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('start_new_set');
+            expect(params.num_fields_entered).toBe(2);           
+        });    
+        
+        test("num_fields_entered is 3", () => {
+            // given a number of fields
+            fieldsSpy = jest.spyOn(SetEmptyCheck, 'numFieldsEntered').mockImplementation(() => 3);
+
+            // when you end the set
+            store.dispatch(sut.endSet());
+
+            //then
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('start_new_set');
+            expect(params.num_fields_entered).toBe(3);           
+        });     
+
+        test("num_fields_entered is 4", () => {
+            // given a number of fields
+            fieldsSpy = jest.spyOn(SetEmptyCheck, 'numFieldsEntered').mockImplementation(() => 4);
+
+            // when you end the set
+            store.dispatch(sut.endSet());
+
+            //then
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('start_new_set');
+            expect(params.num_fields_entered).toBe(4);           
+        });      
     });
 });

@@ -72,6 +72,37 @@ export const getExpandedWorkoutSet = (state, setID) => {
     return state.workoutData.find( set => set.setID == setID );
 };
 
+// Get previous set
+
+export const getPreviousSetHasEmptyReps = (state) => {
+    const workoutData = stateRoot(state).workoutData;
+    const prevSet = workoutData[workoutData.length - 2];
+    
+    if (prevSet) {
+        return SetEmptyCheck.hasEmptyReps(prevSet);
+    } else {
+        return false;
+    }
+}
+
+export const getIsPreviousSetFilled = (state) => {
+    const workoutData = stateRoot(state).workoutData;    
+
+    const prevSet = workoutData[workoutData.length - 2];
+
+    if (prevSet) {
+        if(SetEmptyCheck.isEmpty(prevSet)) {
+            var is_previous_set_filled = 0;
+        } else {
+            var is_previous_set_filled = 1;
+        }
+    } else {
+        var is_previous_set_filled = -1;
+    }  
+    
+    return is_previous_set_filled;
+}
+
 // Dictionary to Aarry
 
 const dictToArray = (dictionary) => {

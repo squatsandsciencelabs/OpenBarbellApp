@@ -36,7 +36,7 @@ const logAnalytics = (state) => {
     var timeStartActive = null;
     var timeEndActive = null;
     var percentAppActive;
-    var sets = state.sets.workoutData;
+    var sets = SetsSelectors.getWorkoutSets(state);
     var num_sets = sets.length;
     var num_sets_with_fields = 0;
     var num_reps = 0;

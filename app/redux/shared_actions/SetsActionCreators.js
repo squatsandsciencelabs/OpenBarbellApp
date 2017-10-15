@@ -23,6 +23,7 @@ export const getDefaultMetric = () => (dispatch, getState) => {
         defaultMetric: defaultMetric
     });
 }
+
 export const saveWorkoutSet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {   
     var action  = {
         type: SAVE_WORKOUT_SET
@@ -105,32 +106,18 @@ export const failedUploadSets = () => ({ type: FAILED_UPLOAD_SETS });
 const logEndSetAnalytics = (manuallyStarted, wasSanityCheck, state) => {
     var workoutData = state.sets.workoutData;
     var set = workoutData[workoutData.length - 1];
-    var prevSet = workoutData[workoutData.length - 2];
-    var previous_set_has_reps = prevSet ? Boolean(prevSet.reps.length) : false;
+    var previous_set_has_reps = !SetsSelectors.getPreviousSetHasEmptyReps(state);
+    var is_previous_set_fields_filled = SetsSelectors.getIsPreviousSetFilled(state);
     let num_fields_entered = SetEmptyCheck.numFieldsEntered(set);
     let has_reps = !SetEmptyCheck.hasEmptyReps(set);
-    let fields = [set.exercise, set.weight, set.rpe, set.tags.length];
     let auto_end_timer = 0;
-    
     let endSetTimerDuration = SettingsSelectors.getEndSetTimerDuration(state);
-
     let is_default_end_timer = !SettingsSelectors.getIfTimerWasEdited(state);
 
     if (!manuallyStarted) {
         auto_end_timer = endSetTimerDuration;
     };
 
-    if (prevSet) {
-        if(SetEmptyCheck.isEmpty(prevSet)) {
-            var is_previous_set_fields_filled = 1;
-        } else {
-            var is_previous_set_fields_filled = 0;
-        }
-    } else {
-        var is_previous_set_fields_filled = -1;
-    }
-
-        
     Analytics.logEventWithAppState('start_new_set', {   
         value: num_fields_entered,
         auto_end_timer: auto_end_timer / 10,

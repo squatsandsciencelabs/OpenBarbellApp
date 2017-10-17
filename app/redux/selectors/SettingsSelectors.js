@@ -13,3 +13,11 @@ export const getIfTimerWasEdited = (state) => stateRoot(state).wasTimerEdited;
 export const getIsExportingCSV = (state) => stateRoot(state).isExportingCSV;
 
 export const getShowRemoved = (state) => stateRoot(state).showRemoved;
+
+export const endSetTimeLeft = (state) => {
+    const endSetTimerDuration = getEndSetTimerDuration(state);
+    const currentTime = new Date();
+    const timeLeft = Math.abs(endSetTimerDuration - currentTime.getTime())
+
+    return timeLeft;
+}

@@ -43,3 +43,7 @@ export const getTimerStatus = (state) => stateRoot(state).timerStatus;
 export const getRemovedCounter = (state) => stateRoot(state).removedCounter;
 
 export const getRestoredCounter = (state) => stateRoot(state).restoredCounter;
+
+// history viewed 
+
+export const getHistoryViewedCounter = (state) => stateRoot(state).historyViewedCounter;

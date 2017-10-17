@@ -23,6 +23,7 @@ import {
     RESUME_END_SET_TIMER,
     SAVE_WORKOUT_REP,
     END_WORKOUT,
+    HISTORY_VIEWED,
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -52,6 +53,7 @@ const defaultState = {
     timerStatus: 'inactive',
     removedCounter: 0,
     restoredCounter: 0,
+    historyViewedCounter: 0,
 };
 
 const WorkoutReducer = (state = defaultState, action) => {
@@ -184,11 +186,16 @@ const WorkoutReducer = (state = defaultState, action) => {
                     restoredCounter: state.restoredCounter + 1
                 });
             }
+        case HISTORY_VIEWED:
+            return Object.assign({}, state, {
+                historyViewedCounter: state.historyViewedCounter += 1,
+            });
         case END_WORKOUT: 
             return Object.assign({}, state, {
                 removedCounter: 0,
-                restoredCounter: 0
-            })
+                restoredCounter: 0,
+                historyViewedCoutner: 0,
+            });
         default:
             return state;
     }

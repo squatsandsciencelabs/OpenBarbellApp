@@ -152,3 +152,66 @@ export const hasChangesToSync = (state) => {
     const root = stateRoot(state);
     return (root.setIDsToUpload.length > 0 || root.setIDsBeingUploaded.length > 0);
 };
+
+export const getNumReps = (state) => {
+    const sets = getWorkoutSets(state);
+    var num_reps = 0;
+
+    sets.forEach((set) => {
+        if (set.reps) {
+            num_reps += set.reps.length;
+        }
+    });
+
+    return num_reps
+};
+
+export const getNumFields = (state) => {
+    const sets = getWorkoutSets(state);
+    var num_sets_with_fields = 0;
+
+    sets.forEach((set) => {
+        if (!SetEmptyCheck.hasEmptyData(set)) {
+            num_sets_with_fields++;
+        }
+    });
+
+    return num_sets_with_fields 
+};
+
+export const getPercentFields = (state) => {
+    const sets = getWorkoutSets(state);
+    const numSetsFields = getNumFields(state);
+
+    const percent_sets_with_fields = (numSetsFields/(sets.length)) * 100;
+
+    return percent_sets_with_fields;
+}
+
+// export const getWorkoutDuration = (state) => {
+//     const sets = getWorkoutSets(state);
+//     const firstSetReps = sets.forEach((set) => {
+//         if (set.reps.length > 0) {
+//             return set.reps;
+//         }
+//     });
+
+//     const lastSetReps = sets[sets.length - 1].reps;
+
+//     const startTime = firstSetReps[0].initialStartTime;
+//     const endTime = lastSetReps[lastSetReps.length - 1].initialStartTime
+
+//     const workoutDuration = Math.abs(endTime.getTime() - startTime.getTime());
+
+//     return workoutDuration;
+// }
+
+export const getTimeSinceLastRep = (state) => {
+    const sets = getWorkoutSets(state);
+    const lastSetReps = sets[sets.length - 1].reps;
+    const endTime = lastSetReps[lastSetReps.length - 1].initialStartTime
+    
+    const currentTime = new Date();
+
+    const timeSinceLastRep = Math.abs(currentTime.getTime() - endTime.getTime());
+}

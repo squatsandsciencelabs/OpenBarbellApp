@@ -6,13 +6,15 @@ import { END_WORKOUT } from 'app/ActionTypes';
 import * as Analytics from 'app/utility/Analytics';
 import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 import * as WorkoutSelectors from 'app/redux/selectors/WorkoutSelectors';
+import * as AppStateSelectors from 'app/redux/selectors/AppStateSelectors';
+import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDeviceStatusSelectors';
 
 export const endWorkout = () => (dispatch, getState) => {
     var state = getState();
     var isWorkoutEmpty = SetsSelectors.getIsWorkoutEmpty(state)
     var isLoggedIn = AuthSelectors.getIsLoggedIn(state);
 
-    logAnalytics(state);
+    logAnalytics(true, state);
 
     if (!isWorkoutEmpty && isLoggedIn) {
         dispatch({ type: END_WORKOUT });
@@ -29,52 +31,49 @@ export const endWorkout = () => (dispatch, getState) => {
     }
 };
 
-export const autoEndWorkout = () => ({ type: END_WORKOUT });
+export const autoEndWorkout = () => (dispatch, getState) => { 
+    var state = getState();
 
-const logAnalytics = (state) => {
-    var screenStatus = state.appState.screenStatus;
+    logAnalytics(false, state);
+
+    dispatch({ type: END_WORKOUT });
+};
+
+const logAnalytics = (manuallyEnded, state) => {
+    // var screenStatus = state.appState.screenStatus;
     var timeStartActive = null;
     var timeEndActive = null;
-    var percentAppActive;
-    var sets = SetsSelectors.getWorkoutSets(state);
-    var num_sets = sets.length;
-    var num_sets_with_fields = 0;
-    var num_reps = 0;
-    
+    var percentAppActive = null;
+    let sets = SetsSelectors.getWorkoutSets(state);
+    let num_sets = sets.length;
+    let num_sets_with_fields = SetsSelectors.getNumFields(state);
+    let percent_sets_fields = SetsSelectors.getPercentFields(state);
+    let num_reps = SetsSelectors.getNumReps(state);    
     let num_removes = WorkoutSelectors.getRemovedCounter(state);
     let num_restores = WorkoutSelectors.getRestoredCounter(state);
+    let num_screen_locks = AppStateSelectors.getNumLocks(state);
+    let num_multitask = AppStateSelectors.getNumMultiTask(state);
+    let num_disconnects = ConnectedDeviceStatusSelectors.getNumDisconnects(state);
+    let num_auto_reconnects = ConnectedDeviceStatusSelectors.getNumReconnects(state);
+    let num_history_views = WorkoutSelectors.getHistoryViewedCounter(state);
 
-    sets.map((set) => {
-        num_reps += set.reps.length;
-
-        if (SetEmptyCheck.hasEmptyData(set)) {
-            num_sets_with_fields++;
-        }
-    });
-
-    if (screenStatus === 'active') {
-        timeStartActive = new Date();
-    } else {
-        timeEndActive = new Date();
-    }    
-    
     Analytics.logEventWithAppState('end_workout', {
         value: null,
-        num_screen_locks: null,
-        num_multitask: null,
+        num_screen_locks: num_screen_locks,
+        num_multitask: num_multitask,
         percent_app_active: null,
-        num_history_views: null,
-        num_disconnects: null,
-        num_auto_reconnects: null,
+        num_history_views: num_history_views,
+        num_disconnects: num_disconnects,
+        num_auto_reconnects: num_auto_reconnects,
         num_sets: num_sets,
         num_reps: num_reps,
         num_removes: num_removes,
         num_restores: num_restores,
         num_sets_with_fields: num_sets_with_fields,
-        percent_sets_fields: null,
+        percent_sets_fields: percent_sets_fields,
         time_since_last_workout: null,
         workout_duration: null,
         time_since_last_rep: null,
-        manually_ended: null
+        manually_ended: manuallyEnded,
     }, state);    
 }

@@ -5,6 +5,7 @@ import {
 import * as ScannedDevicesSelectors from 'app/redux/selectors/ScannedDevicesSelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDeviceStatusSelectors';
+import * as AppStateSelectors from 'app/redux/selectors/AppStateSelectors';
 import DeviceInfo from 'react-native-device-info';
 
 //initial analytics and initial screen
@@ -61,10 +62,8 @@ export const logEvent = (event, params) => {
 };
 
 export const logEventWithAppState = (event, params, state) => {
-    const screenStatus = state.appState.screenStatus;
+    const screenStatus = AppStateSelectors.getScreenStatus;
     const currentAppState = AppState.currentState;
-
-    // update screen_locked with state
 
     if (screenStatus === 'active') {
         params.is_screen_locked = false;

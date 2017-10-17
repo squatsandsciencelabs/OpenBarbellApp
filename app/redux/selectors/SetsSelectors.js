@@ -188,30 +188,26 @@ export const getPercentFields = (state) => {
     return percent_sets_with_fields;
 }
 
-// export const getWorkoutDuration = (state) => {
-//     const sets = getWorkoutSets(state);
-//     const firstSetReps = sets.forEach((set) => {
-//         if (set.reps.length > 0) {
-//             return set.reps;
-//         }
-//     });
-
-//     const lastSetReps = sets[sets.length - 1].reps;
-
-//     const startTime = firstSetReps[0].initialStartTime;
-//     const endTime = lastSetReps[lastSetReps.length - 1].initialStartTime
-
-//     const workoutDuration = Math.abs(endTime.getTime() - startTime.getTime());
-
-//     return workoutDuration;
-// }
-
-export const getTimeSinceLastRep = (state) => {
+export const getWorkoutDuration = (state) => {
     const sets = getWorkoutSets(state);
-    const lastSetReps = sets[sets.length - 1].reps;
-    const endTime = lastSetReps[lastSetReps.length - 1].initialStartTime
-    
+    const startTime = sets[0].initialStartTime;
     const currentTime = new Date();
 
-    const timeSinceLastRep = Math.abs(currentTime.getTime() - endTime.getTime());
+    if (startTime) {
+        var duration = Math.abs(currentTime.getTime() - startTime.getTime());
+    } else {
+        var duration = null;
+    }
+
+    return duration;
 }
+
+// export const getTimeSinceLastRep = (state) => {
+//     const sets = getWorkoutSets(state);
+//     const lastSetReps = sets[sets.length - 1].reps;
+//     const endTime = lastSetReps[lastSetReps.length - 1].initialStartTime
+    
+//     const currentTime = new Date();
+
+//     const timeSinceLastRep = Math.abs(currentTime.getTime() - endTime.getTime());
+// }

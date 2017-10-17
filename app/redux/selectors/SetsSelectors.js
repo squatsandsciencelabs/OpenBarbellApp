@@ -196,18 +196,15 @@ export const getWorkoutDuration = (state) => {
     if (startTime) {
         var duration = Math.abs(currentTime.getTime() - startTime.getTime());
     } else {
-        var duration = null;
+        var duration = 0;
     }
 
     return duration;
 }
 
-// export const getTimeSinceLastRep = (state) => {
-//     const sets = getWorkoutSets(state);
-//     const lastSetReps = sets[sets.length - 1].reps;
-//     const endTime = lastSetReps[lastSetReps.length - 1].initialStartTime
-    
-//     const currentTime = new Date();
+export const getCurrentSet = (state) => {
+    const sets = getWorkoutSets(state);
+    const currentSet = sets[sets.length - 1];
 
-//     const timeSinceLastRep = Math.abs(currentTime.getTime() - endTime.getTime());
-// }
+    return currentSet;
+}

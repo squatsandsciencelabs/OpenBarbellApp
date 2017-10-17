@@ -23,6 +23,7 @@ import * as TimerActionCreators from './TimerActionCreators';
 import * as SetsActionCreators from './SetsActionCreators';
 import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDeviceStatusSelectors';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
+import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as Analytics from 'app/utility/Analytics';
 
 const RFDuinoLib = NativeModules.RFDuinoLib;
@@ -180,6 +181,8 @@ export const reconnectingToDevice = (name, identifier) => {
 export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, getState) => {
     var state = getState();
 
+    logAnalytics(state);
+
     dispatch(TimerActionCreators.sanityCheckTimer());
 
     dispatch({
@@ -193,6 +196,30 @@ export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, g
 
     dispatch(TimerActionCreators.startEndSetTimer());
 };
+
+const logAnalytics = (state) => {
+    let currentSet = SetsSelectors.getCurrentSet(state);
+    let set_id = currentSet.set_id;
+    let rep_count = currentSet.reps.length;
+    let has_exercise_name = Boolean(currentSet.exercise);
+    let has_weight = Boolean(currentSet.weight);
+    let has_rpe = Boolean(currentSet.rpe);
+    let has_tags = Boolean(currentSet.tags.length);
+    let has_video = Boolean(currentSet.videoFileUrl);
+    let end_set_time_left = SettingsSelectors.endSetTimeLeft(state);
+
+    Analytics.logEventWithAppState('add_rep', {
+        set_id,
+        rep_count,
+        has_exercise_name,
+        has_weight,
+        has_rpe,
+        has_tags,
+        has_video,
+        has_reps,
+        end_set_time_left,
+    })
+}
 
 function checkOBVersion(name) {
     if (name.charAt(3) === '1') {

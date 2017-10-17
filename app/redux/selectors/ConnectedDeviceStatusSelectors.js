@@ -12,3 +12,7 @@ export const getConnectedDeviceStatus = (state) => {
 export const getConnectedDeviceName = (state) => stateRoot(state).deviceName;
 
 export const getConnectedDeviceIdentifier = (state) => stateRoot(state).deviceIdentifier;
+
+export const getNumDisconnects = (state) => stateRoot(state).numDisconnects;
+
+export const getNumReconnects = (state) => stateRoot(state).numReconnects;

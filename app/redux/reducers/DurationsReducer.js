@@ -30,8 +30,8 @@ const defaultState = {
     editHistoryTagsStart: null,
     workoutVideoRecorderStart: null,
     historyVideoRecorderStart: null,
-    workoutWatchVideoStart: null,
-    historyWatchVideoStart: null,
+    workoutVideoPlayerStart: null,
+    historyVideoPlayerStart: null,
 };
 
 const DurationsReducer = (state = defaultState, action) => {
@@ -78,11 +78,11 @@ const DurationsReducer = (state = defaultState, action) => {
             });
         case PRESENT_WORKOUT_VIDEO_PLAYER: 
             return Object.assign({}, state, {
-                workoutWatchVideoStart: new Date()
+                workoutVideoPlayerStart: new Date()
             });
         case PRESENT_HISTORY_VIDEO_PLAYER:
             return Object.assign({}, state, {
-                historyWatchVideoStart: new Date()
+                historyVideoPlayerStart: new Date()
             });
         default:
             return state;                                                                                                                                  

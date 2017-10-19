@@ -81,12 +81,12 @@ class SetForm extends Component {
 
     _onEndEditWeight() {
         this._save();
-        this.props.dismissWeight();
+        this.props.dismissWeight(this.props.setID);
     }
 
     _onEndEditRPE() {
         this._save();
-        this.props.dismissRPE();
+        this.props.dismissRPE(this.props.setID);
     }
 
     // SAVING
@@ -212,7 +212,7 @@ class SetForm extends Component {
                     onEndEditing={() => this._onEndEditRPE() }
                     placeholderTextColor={'lightgray'}
                     value = {this.state.rpe}
-                    onFocus={() => this.props.tapRPE() }
+                    onFocus={() => this.props.tapRPE(this.props.setID) }
                     onChangeText={(rpe) => this._onChangeRPE(rpe) }
                 />
                 <View style={styles.fieldDetails} pointerEvents='none'>

@@ -213,7 +213,5 @@ export const getCurrentSet = (state) => {
 
 export const getIsCurrentSet = (state, setID) => {
     const currentSet = getCurrentSet(state);
-    const is_working_set = setID === currentSet.setID;
-    console.tron.log(currentSet.setID + " " + setID);
-    return is_working_set;
+    return setID === currentSet.setID;
 }

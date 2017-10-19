@@ -134,4 +134,4 @@ const logEndSetAnalytics = (manuallyStarted, wasSanityCheck, state) => {
         was_sanity_check: wasSanityCheck,
         previous_set_has_reps: previous_set_has_reps      
     }, state);    
-}
+};

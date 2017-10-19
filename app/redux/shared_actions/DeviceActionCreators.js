@@ -206,20 +206,21 @@ const logAnalytics = (state) => {
     let has_rpe = Boolean(currentSet.rpe);
     let has_tags = Boolean(currentSet.tags.length);
     let has_video = Boolean(currentSet.videoFileUrl);
+    let has_reps = Boolean(SetsSelectors.getNumReps(state));
     let end_set_time_left = SettingsSelectors.endSetTimeLeft(state);
 
     Analytics.logEventWithAppState('add_rep', {
-        set_id,
-        rep_count,
-        has_exercise_name,
-        has_weight,
-        has_rpe,
-        has_tags,
-        has_video,
-        has_reps,
-        end_set_time_left,
-    })
-}
+        set_id: set_id,
+        rep_count: rep_count,
+        has_exercise_name: has_exercise_name,
+        has_weight: has_weight,
+        has_rpe: has_rpe,
+        has_tags: has_tags,
+        has_video: has_video,
+        has_reps: has_reps,
+        end_set_time_left: end_set_time_left,
+    }, state);
+};
 
 function checkOBVersion(name) {
     if (name.charAt(3) === '1') {

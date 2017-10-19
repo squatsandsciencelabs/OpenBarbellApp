@@ -29,42 +29,52 @@ export const presentExercise = (setID, exercise, bias) => (dispatch, getState) =
     });
 };
 
-export const editRPE = () => ({
-    type: START_EDITING_WORKOUT_RPE
-});
+export const editRPE = (setID) => (dispatch, getState) => {
+    var state = getState();
+
+    editRPEAnalytics(setID, state);
+
+    dispatch({
+        type: START_EDITING_WORKOUT_RPE
+    });
+};
 
 export const editWeight = () => ({
     type: START_EDITING_WORKOUT_WEIGHT
 });
 
-export const dismissRPE = () => (dispatch, getState) => {
+export const dismissRPE = (setID) => (dispatch, getState) => {
     var state = getState();
 
-    saveRPEAnalytics(state);
+    saveRPEAnalytics(setID, state);
 
     return {
         type: END_EDITING_WORKOUT_RPE
     }
 };
 
-export const dismissWeight = () => (dispatch, getState) => {
+export const dismissWeight = (setID) => (dispatch, getState) => {
     var state = getState();
 
-    saveWeightAnalytics(state);
+    saveWeightAnalytics(setID, state);
 
     return {
         type: END_EDITING_WORKOUT_WEIGHT
     }
 };
 
-export const presentTags = (setID, tags) => {
+export const presentTags = (setID, tags) => (dispatch, getState) => {
+    var state = getState();
+
     Analytics.setCurrentScreen('edit_workout_tags');
 
-    return {
+    editTagsAnalytics(setID, state);
+
+    dispatch({
         type: PRESENT_WORKOUT_TAGS,
         setID: setID,
         tags: tags
-    }
+    });
 };
 
 export const saveSet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {    
@@ -109,26 +119,42 @@ const editExerciseAnalytics = (setID, exercise, state) => {
     }, state);
 };
 
-const saveWeightAnalytics = (state) => {
-    // let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
+const saveWeightAnalytics = (setID, state) => {
+    let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
     let startDate = DurationsSelectors.getEditWorkoutWeightStart(state);
     let duration = DurationCalculator.getDurationTime(startDate, new Date());  
 
     Analytics.logEventWithAppState('save_weight', {
         value: duration,
         duration: duration,
-        // is_working_set: is_working_set
+        is_working_set: is_working_set
     }, state);    
 }
 
-const saveRPEAnalytics = (state) => {
-    // let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
+const saveRPEAnalytics = (setID, state) => {
+    let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
     let startDate = DurationsSelectors.getEditWorkoutRPEStart(state);
     let duration = DurationCalculator.getDurationTime(startDate, new Date());  
 
     Analytics.logEventWithAppState('save_rpe', {
         value: duration,
         duration: duration,
-        // is_working_set: is_working_set
+        is_working_set: is_working_set
     }, state);    
+};
+
+const editRPEAnalytics = (setID, state) => {
+    let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
+
+    Analytics.logEventWithAppState('edit_rpe', {
+        is_working_set: is_working_set
+    }, state);       
+};
+
+const editTagsAnalytics = (setID, state) => {
+    let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
+
+    Analytics.logEventWithAppState('edit_tags', {
+        is_working_set: is_working_set
+    }, state);       
 };

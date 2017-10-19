@@ -51,6 +51,7 @@ class VideoRecorder extends Component {
             // TODO: share options can be here, but for now just finish
         }).catch((err) => {
             console.tron.log("ERROR " + err);
+            this.props.saveVideoError(this.props.setID);
             Alert.alert('There was an issue saving your video. Please try again');
         });
     }

@@ -18,7 +18,8 @@ const mapDispatchToProps = (dispatch) => {
         closeModal: Actions.dismissRecording,
         tappedStart: Actions.startRecording,
         tappedStop: Actions.stopRecording,
-        saveVideo: Actions.saveVideo        
+        saveVideo: Actions.saveVideo,
+        saveVideoError: Actions.saveVideoError
     }, dispatch);
 };
 

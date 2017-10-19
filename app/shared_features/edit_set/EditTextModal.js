@@ -172,7 +172,7 @@ class EditTextModal extends Component {
                 { statusBar }
 
                 <View style={{position: 'absolute', left: 0, top: 0}}>
-                    <TouchableOpacity onPress={() => this.props.closeModal()}>
+                    <TouchableOpacity onPress={() => this.props.closeModal(this.state.setID, this.state.text)}>
                         <View style={styles.nav}>
                             <Text style={[styles.boldFont, {color: 'rgba(47, 128, 237, 1)'}]}>Cancel</Text>
                         </View>

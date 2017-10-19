@@ -9,6 +9,7 @@ import AuthReducer from './AuthReducer';
 import SettingsReducer from './SettingsReducer';
 import SuggestionsReducer from './SuggestionsReducer';
 import AppStateReducer from './AppStateReducer';
+import DurationsReducer from './DurationsReducer';
 
 export default reducers = combineReducers({
     sets: SetsReducer,
@@ -20,5 +21,6 @@ export default reducers = combineReducers({
     auth: AuthReducer,
     suggestions: SuggestionsReducer,
     settings: SettingsReducer,
-    appState: AppStateReducer
+    appState: AppStateReducer,
+    durations: DurationsReducer,
 });

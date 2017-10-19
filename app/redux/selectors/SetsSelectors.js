@@ -188,6 +188,8 @@ export const getPercentFields = (state) => {
     return percent_sets_with_fields;
 }
 
+// startTime.getTime() returns undefined
+
 export const getWorkoutDuration = (state) => {
     const sets = getWorkoutSets(state);
     const startTime = sets[0].initialStartTime;
@@ -207,4 +209,11 @@ export const getCurrentSet = (state) => {
     const currentSet = sets[sets.length - 1];
 
     return currentSet;
+}
+
+export const getIsCurrentSet = (state, setID) => {
+    const currentSet = getCurrentSet(state);
+    const is_working_set = setID === currentSet.setID;
+    console.tron.log(currentSet.setID + " " + setID);
+    return is_working_set;
 }

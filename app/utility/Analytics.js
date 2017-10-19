@@ -85,10 +85,16 @@ export const logEventWithAppState = (event, params, state) => {
         params.is_app_inactive = true;        
     }
 
-    const devices = ScannedDevicesSelectors.getScannedDevices(state);
+    let devices = ScannedDevicesSelectors.getScannedDevices(state);
     const connectedDeviceStatus = ConnectedDeviceStatusSelectors.getConnectedDeviceStatus(state);
     const isWorkoutEmpty = SetsSelectors.getIsWorkoutEmpty(state);
-    const scanned_devices = devices.join().replace(/\s|OB/g, '')
+    
+
+    if (devices.length > 6) {
+        devices = devices.slice(0, 5);
+    };
+
+    const scanned_devices = devices.join().replace(/\s|OB|,/g, '');
 
     params.scanned_devices = scanned_devices;
         

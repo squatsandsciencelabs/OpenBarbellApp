@@ -20,6 +20,6 @@ export const getWorkoutVideoRecorderStart = (state) => stateRoot(state).workoutV
 
 export const getHistoryVideoRecorderStart = (state) => stateRoot(state).historyVideoRecorderStart;
 
-export const getWorkoutWatchVideoStart = (state) => stateRoot(state).workoutWatchVideoStart;
+export const getWorkoutVideoPlayerStart = (state) => stateRoot(state).workoutWatchVideoStart;
 
-export const getHistoryWatchVideoStart = (state) => stateRoot(state).historyWatchVideoStart;
+export const getHistoryVideoPlayerStart = (state) => stateRoot(state).historyWatchVideoStart;

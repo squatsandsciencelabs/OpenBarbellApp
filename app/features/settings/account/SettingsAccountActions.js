@@ -1,16 +1,18 @@
 import { Alert, Linking } from 'react-native';
 import { GoogleSignin } from 'react-native-google-signin';
+import * as Analytics from 'app/utility/Analytics';
 
 import {
     LOGIN_REQUEST,
     UPDATE_HISTORY_FILTER,
-    EXPORTING_CSV,
-    EXPORT_CSV_ERROR
+    ATTEMPT_EXPORTING_CSV,
+    EXPORTING_CSV
 } from 'app/ActionTypes';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
 import * as GoogleDriveUploader from 'app/services/GoogleDriveUploader';
 import * as CSVConverter from 'app/utility/transforms/CSVConverter';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
+import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 
 export const signIn = () => ({ type: LOGIN_REQUEST });
 
@@ -39,8 +41,11 @@ export const exportCSV = () => (dispatch, getState) => {
 
     GoogleSignin.currentUserAsync().then(async (user) => {
         if (user === null) {
+            dispatch({ type: EXPORTING_CSV_ERROR });
             Alert.alert('Error Exporting CSV', 'Tip: Is your internet connection working?\n\nTip: Try Logging out then logging in again as this feature requires additional Google Drive permissions.');
         } else {
+            //ATTEMPT
+            attemptExportCSVAnalytics(state);
             dispatch(updateIsExportingCSV(true));
             try {
                 let date = new Date();
@@ -58,6 +63,7 @@ export const exportCSV = () => (dispatch, getState) => {
                     Linking.openURL('https://drive.google.com/open?id=' + fileID).catch(err => {
                         Alert.alert('Upload Succeeded', 'CSV uploaded to your Google Drive!');
                     });
+                    exportCSVAnalytics(state);
                 });
             } catch(err) {
                 console.tron.log("Error uploading csv file " + typeof err + " " + err);
@@ -67,14 +73,72 @@ export const exportCSV = () => (dispatch, getState) => {
                     Alert.alert('Error exporting CSV', 'Please try again later.\n\nTip: Is your internet connection working?');
                 }
                 dispatch(updateIsExportingCSV(false));
-                dispatch({ type: EXPORT_CSV_ERROR });
+                let state = getState();
+                exportCSVErrorAnalytics(state);
             }
         }
     })
     .catch((err) => {
+        // error here
         console.tron.log("EXPORT HISTORY ERROR " + err);
     })
     .done();
 };
 
 const updateIsExportingCSV = (isExportingCSV) => ({ type: EXPORTING_CSV, isExportingCSV: isExportingCSV });
+
+const attemptExportCSVAnalytics = (state) => {
+    let sets = SetsSelectors.getHistorySetsChronological(state.sets);
+    let num_reps = SetsSelectors.getHistoryRepsChronological(sets);
+    let workoutIDs = SetsSelectors.getHistoryWorkoutIDsChronological(sets);
+    let time_since_last_export = getLastExportCSV(state);
+
+    Analytics.logEventWithAppState('attempt_export_csv', {
+        value: time_since_last_export,
+        num_sets: sets.length,
+        num_reps: num_reps,
+        num_workouts: workoutIDs.length,
+        time_since_last_workout: null,
+        time_since_last_export: time_since_last_export,
+    }, state);    
+};
+
+const exportCSVAnalytics = (state) => {
+    let sets = SetsSelectors.getHistorySetsChronological(state.sets);
+    let num_reps = SetsSelectors.getHistoryRepsChronological(sets);
+    let workoutIDs = SetsSelectors.getHistoryWorkoutIDsChronological(sets);
+    let time_since_last_export = getLastExportCSV(state);
+
+    Analytics.logEventWithAppState('export_csv', {
+        value: time_since_last_export,
+        num_sets: sets.length,
+        num_reps: num_reps,
+        num_workouts: workoutIDs.length,
+        time_since_last_workout: null,
+        time_since_last_export: time_since_last_export,
+    }, state);    
+};
+
+const exportCSVErrorAnalytics = (state) => {
+    let sets = SetsSelectors.getHistorySetsChronological(state.sets);
+    let num_reps = SetsSelectors.getHistoryRepsChronological(sets);
+    let workoutIDs = SetsSelectors.getHistoryWorkoutIDsChronological(sets);
+    let time_since_last_export = getLastExportCSV(state);
+
+    Analytics.logEventWithAppState('export_csv_error', {
+        num_sets: sets.length,
+        num_reps: num_reps,
+        num_workouts: workoutIDs.length,
+        time_since_last_workout: null,
+        time_since_last_export: time_since_last_export,
+    }, state);    
+};
+
+const getLastExportCSV = (state) => {
+    let startDate = HistorySelectors.getLastExportCSV(state);
+    if (Boolean(startDate)) {
+        return Math.abs((new Date()).getTime() - startDate.getTime());
+    } else {
+        return 0;
+    }
+};

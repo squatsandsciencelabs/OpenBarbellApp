@@ -29,6 +29,7 @@ const defaultState = {
     isSavingVideo: false,    
     watchSetID: null,
     watchFileURL: null,
+    lastExportCSV: '',
 };
 
 const HistoryReducer = (state = defaultState, action) => {

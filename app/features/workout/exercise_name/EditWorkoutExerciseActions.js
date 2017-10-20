@@ -8,9 +8,9 @@ import * as Analytics from 'app/utility/Analytics';
 export const dismissExercise = (setID, exercise) => {
     Analytics.setCurrentScreen('workout');
 
-    dispatch({
+    return {
         type: DISMISS_WORKOUT_EXERCISE
-    });
+    };
 };
 
 export const cancelExercise = (setID) => (dispatch, getState) => {

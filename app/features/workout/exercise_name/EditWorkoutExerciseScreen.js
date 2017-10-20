@@ -20,6 +20,7 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         saveSetSingleInput: Actions.saveExerciseName,
         closeModal: Actions.dismissExercise,
+        cancelModal: Actions.cancelExercise,
     }, dispatch);
 };
 

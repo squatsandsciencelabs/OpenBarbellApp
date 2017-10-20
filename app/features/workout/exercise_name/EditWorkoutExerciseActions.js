@@ -5,14 +5,20 @@ import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
 import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 import * as Analytics from 'app/utility/Analytics';
 
-export const dismissExercise = (setID, exercise) => (dispatch, getState) => {
-    var state = getState();
-    
+export const dismissExercise = (setID, exercise) => {
     Analytics.setCurrentScreen('workout');
 
-    // need to differentiate between dismiss and cancel
+    dispatch({
+        type: DISMISS_WORKOUT_EXERCISE
+    });
+};
 
-    // cancelExerciseAnalytics(setID, exercise, state)
+export const cancelExercise = (setID) => (dispatch, getState) => {
+    var state = getState();
+
+    Analytics.setCurrentScreen('workout');
+
+    cancelExerciseAnalytics(setID, state);
 
     dispatch({
         type: DISMISS_WORKOUT_EXERCISE
@@ -39,7 +45,7 @@ const saveExerciseAnalytics = (setID, exercise, state) => {
     }, state);
 };
 
-const cancelExerciseAnalytics = (setID, exercise, state) => {
+const cancelExerciseAnalytics = (setID, state) => {
     let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
     let startDate = DurationsSelectors.getEditWorkoutExerciseStart(state);
     let duration = DurationCalculator.getDurationTime(startDate, new Date());  

@@ -123,6 +123,30 @@ export const getHistorySetsChronological = (state) => {
     return array;
 };
 
+export const getHistoryRepsChronological = (sets) => {
+    var num_reps = 0;
+    
+    sets.forEach((set) => {
+        if (set.reps) {
+            num_reps += set.reps.length;
+        }
+    });
+    
+    return num_reps;    
+}
+
+export const getHistoryWorkoutIDsChronological = (sets) => {
+    let workoutIDs = [sets[0].workoutID];
+
+    for (var i = 1; i < sets.length; i++) {
+        if (sets[i].workoutID !== sets[i - 1].workoutID) {
+            workoutIDs.push(sets[i].workoutID)
+        }
+    };
+
+    return workoutIDs;
+}
+
 // Get Expanded History Set
 
 export const getExpandedHistorySet = (state, setID) => {
@@ -193,25 +217,24 @@ export const getPercentFields = (state) => {
 export const getWorkoutDuration = (state) => {
     const sets = getWorkoutSets(state);
     const startTime = sets[0].initialStartTime;
-    const currentTime = new Date();
 
     if (startTime) {
-        var duration = Math.abs(currentTime.getTime() - startTime.getTime());
+        var duration = Math.abs((new Date()).getTime() - startTime.getTime());
     } else {
         var duration = 0;
     }
 
     return duration;
-}
+};
 
 export const getCurrentSet = (state) => {
     const sets = getWorkoutSets(state);
     const currentSet = sets[sets.length - 1];
 
     return currentSet;
-}
+};
 
 export const getIsCurrentSet = (state, setID) => {
     const currentSet = getCurrentSet(state);
     return setID === currentSet.setID;
-}
+};

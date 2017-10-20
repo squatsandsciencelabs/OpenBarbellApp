@@ -238,3 +238,10 @@ export const getIsCurrentSet = (state, setID) => {
     const currentSet = getCurrentSet(state);
     return setID === currentSet.setID;
 };
+
+export const lastWorkoutTime = (state) => {
+    let sets = getHistorySetsChronological(state.sets);
+    let startTime = Date.parse(sets[sets.length - 1].initialStartTime);
+
+    return Math.abs((new Date()).getTime() - startTime);
+}

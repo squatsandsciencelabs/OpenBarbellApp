@@ -14,6 +14,18 @@ export const dismissTags = () => {
     }
 };
 
+export const cancelTags = () => (dispatch, getState) => {
+    var state = getState();
+
+    Analytics.setCurrentScreen('workout');
+
+    cancelTagsAnalytics(state);
+
+    dispatch({
+        type: DISMISS_WORKOUT_TAGS
+    });
+};
+
 export const saveTags = (setID, tags = []) => (dispatch, getState) => {
     var state = getState();
 
@@ -27,13 +39,21 @@ export const saveTags = (setID, tags = []) => (dispatch, getState) => {
 };
 
 const saveTagsAnalytics = (state) => {
-    // let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
     let startDate = DurationsSelectors.getEditWorkoutTagsStart(state);
     let duration = DurationCalculator.getDurationTime(startDate, new Date());  
 
     Analytics.logEventWithAppState('save_tags', {
         value: duration,
         duration: duration,
-        // is_working_set: is_working_set
     }, state);    
+};
+
+const cancelTagsAnalytics = (state) => {
+    let startDate = DurationsSelectors.getEditWorkoutTagsStart(state);
+    let duration = DurationCalculator.getDurationTime(startDate, new Date());  
+
+    Analytics.logEventWithAppState('cancel_edit_tags', {
+        value: duration,
+        duration: duration
+    }, state);
 };

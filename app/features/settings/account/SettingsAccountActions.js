@@ -4,7 +4,8 @@ import { GoogleSignin } from 'react-native-google-signin';
 import {
     LOGIN_REQUEST,
     UPDATE_HISTORY_FILTER,
-    EXPORTING_CSV
+    EXPORTING_CSV,
+    EXPORT_CSV_ERROR
 } from 'app/ActionTypes';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
 import * as GoogleDriveUploader from 'app/services/GoogleDriveUploader';
@@ -66,6 +67,7 @@ export const exportCSV = () => (dispatch, getState) => {
                     Alert.alert('Error exporting CSV', 'Please try again later.\n\nTip: Is your internet connection working?');
                 }
                 dispatch(updateIsExportingCSV(false));
+                dispatch({ type: EXPORT_CSV_ERROR });
             }
         }
     })

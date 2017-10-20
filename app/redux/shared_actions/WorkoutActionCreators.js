@@ -56,7 +56,7 @@ const logAnalytics = (manuallyEnded, state) => {
     let num_disconnects = ConnectedDeviceStatusSelectors.getNumDisconnects(state);
     let num_auto_reconnects = ConnectedDeviceStatusSelectors.getNumReconnects(state);
     let num_history_views = WorkoutSelectors.getHistoryViewedCounter(state);
-    // let workout_duration = SetsSelectors.getWorkoutDuration(state);
+    let workout_duration = SetsSelectors.getWorkoutDuration(state);
 
     Analytics.logEventWithAppState('end_workout', {
         value: null,
@@ -73,7 +73,7 @@ const logAnalytics = (manuallyEnded, state) => {
         num_sets_with_fields: num_sets_with_fields,
         percent_sets_fields: percent_sets_fields,
         time_since_last_workout: null,
-        workout_duration: null,
+        workout_duration: workout_duration,
         time_since_last_rep: null,
         manually_ended: manuallyEnded,
     }, state);    

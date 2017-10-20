@@ -13,6 +13,18 @@ export const dismissExercise = () => {
     }
 };
 
+export const cancelExercise = (setID) => (dispatch, getState) => {
+    var state = getState();
+
+    Analytics.setCurrentScreen('history');
+
+    cancelExerciseAnalytics(setID, state);
+
+    dispatch({
+        type: DISMISS_HISTORY_EXERCISE
+    });
+};
+
 export const saveExerciseName = (setID, exercise) => (dispatch, getState) => {
     var state = getState();
     
@@ -33,7 +45,7 @@ const saveExerciseAnalytics = (setID, exercise, state) => {
     }, state);
 };
 
-const cancelExerciseAnalytics = (setID, exercise, state) => {
+const cancelExerciseAnalytics = (setID, state) => {
     let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
     let startDate = DurationsSelectors.getEditHistoryExerciseStart(state);
     let duration = DurationCalculator.getDurationTime(startDate, new Date());  

@@ -92,13 +92,14 @@ const attemptExportCSVAnalytics = (state) => {
     let num_reps = SetsSelectors.getHistoryRepsChronological(sets);
     let workoutIDs = SetsSelectors.getHistoryWorkoutIDsChronological(sets);
     let time_since_last_export = getLastExportCSV(state);
+    let time_since_last_workout = SetsSelectors.lastWorkoutTime(state);
 
     Analytics.logEventWithAppState('attempt_export_csv', {
         value: time_since_last_export,
         num_sets: sets.length,
         num_reps: num_reps,
         num_workouts: workoutIDs.length,
-        time_since_last_workout: null,
+        time_since_last_workout: time_since_last_workout,
         time_since_last_export: time_since_last_export,
     }, state);    
 };
@@ -108,13 +109,14 @@ const exportCSVAnalytics = (state) => {
     let num_reps = SetsSelectors.getHistoryRepsChronological(sets);
     let workoutIDs = SetsSelectors.getHistoryWorkoutIDsChronological(sets);
     let time_since_last_export = getLastExportCSV(state);
+    let time_since_last_workout = SetsSelectors.lastWorkoutTime(state);
 
     Analytics.logEventWithAppState('export_csv', {
         value: time_since_last_export,
         num_sets: sets.length,
         num_reps: num_reps,
         num_workouts: workoutIDs.length,
-        time_since_last_workout: null,
+        time_since_last_workout: time_since_last_workout,
         time_since_last_export: time_since_last_export,
     }, state);    
 };
@@ -124,12 +126,13 @@ const exportCSVErrorAnalytics = (state) => {
     let num_reps = SetsSelectors.getHistoryRepsChronological(sets);
     let workoutIDs = SetsSelectors.getHistoryWorkoutIDsChronological(sets);
     let time_since_last_export = getLastExportCSV(state);
+    let time_since_last_workout = SetsSelectors.lastWorkoutTime(state);
 
     Analytics.logEventWithAppState('export_csv_error', {
         num_sets: sets.length,
         num_reps: num_reps,
         num_workouts: workoutIDs.length,
-        time_since_last_workout: null,
+        time_since_last_workout: time_since_last_workout,
         time_since_last_export: time_since_last_export,
     }, state);    
 };

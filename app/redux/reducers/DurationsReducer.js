@@ -1,3 +1,6 @@
+// TODO: consider if should move these back into the reducers for each screen
+// OR consider if there should be an alt paradigm of reducers, for example a navigationreducer / reducers by data type theme
+
 import {
     PRESENT_WORKOUT_EXERCISE,
     PRESENT_HISTORY_EXERCISE,

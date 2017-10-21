@@ -12,7 +12,7 @@ import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators
 import * as GoogleDriveUploader from 'app/services/GoogleDriveUploader';
 import * as CSVConverter from 'app/utility/transforms/CSVConverter';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
-import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
+import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 
 export const signIn = () => ({ type: LOGIN_REQUEST });
 
@@ -138,7 +138,7 @@ const exportCSVErrorAnalytics = (state) => {
 };
 
 const getLastExportCSV = (state) => {
-    let startDate = HistorySelectors.getLastExportCSV(state);
+    let startDate = SettingsSelectors.getLastExportCSV(state);
     if (Boolean(startDate)) {
         return Math.abs((new Date()).getTime() - startDate.getTime());
     } else {

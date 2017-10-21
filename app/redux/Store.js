@@ -53,6 +53,7 @@ export default initializeStore = () => {
             'killSwitch',
             'suggestions',
             'appState',
+            'durations'
         ],
         // note, everything in sets is to be persisted so not blacklisting or transforming them
         transforms: [

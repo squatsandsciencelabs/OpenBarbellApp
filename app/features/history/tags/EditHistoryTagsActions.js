@@ -31,11 +31,11 @@ export const saveTags = (setID, tags = []) => (dispatch, getState) => {
 
     saveTagsAnalytics(state);
 
-    return {
+    dispatch({
         type: SAVE_HISTORY_SET_TAGS,
         setID: setID,
         tags: tags
-    }
+    });
 };
 
 const saveTagsAnalytics = (state) => {

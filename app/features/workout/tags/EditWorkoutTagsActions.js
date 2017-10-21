@@ -11,7 +11,7 @@ export const dismissTags = () => {
     
     return {
         type: DISMISS_WORKOUT_TAGS
-    }
+    };
 };
 
 export const cancelTags = () => (dispatch, getState) => {
@@ -31,11 +31,11 @@ export const saveTags = (setID, tags = []) => (dispatch, getState) => {
 
     saveTagsAnalytics(state);
 
-    return {
+    dispatch({
         type: SAVE_WORKOUT_SET_TAGS,
         setID: setID,
         tags: tags
-    }
+    });
 };
 
 const saveTagsAnalytics = (state) => {

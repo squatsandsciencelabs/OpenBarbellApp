@@ -5,6 +5,8 @@ import {
     SAVE_HISTORY_VIDEO
 } from 'app/ActionTypes';
 import * as Analytics from 'app/utility/Analytics';
+import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
+import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 
 export const startRecording = (setID) => ({
     type: START_RECORDING_HISTORY,

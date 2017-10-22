@@ -48,9 +48,9 @@ export const dismissRPE = (setID) => (dispatch, getState) => {
 
     saveRPEAnalytics(setID, state);
 
-    return {
+    dispatch({
         type: END_EDITING_HISTORY_RPE
-    }
+    });
 };
 
 export const dismissWeight = (setID) => (dispatch, getState) => {
@@ -58,10 +58,11 @@ export const dismissWeight = (setID) => (dispatch, getState) => {
 
     saveWeightAnalytics(setID, state);
 
-    return {
+    dispatch({
         type: END_EDITING_HISTORY_WEIGHT
-    }
+    });
 };
+
 export const presentTags = (setID, tags) => (dispatch, getState) => {
     var state = getState();
 

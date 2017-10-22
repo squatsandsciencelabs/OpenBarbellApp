@@ -88,7 +88,6 @@ export const logEventWithAppState = (event, params, state) => {
     let devices = ScannedDevicesSelectors.getScannedDevices(state);
     const connectedDeviceStatus = ConnectedDeviceStatusSelectors.getConnectedDeviceStatus(state);
     const isWorkoutEmpty = SetsSelectors.getIsWorkoutEmpty(state);
-    
 
     if (devices.length > 6) {
         devices = devices.slice(0, 5);

@@ -34,17 +34,14 @@ const deleteVideoAnalytics = (state) => {
 
     Analytics.logEventWithAppState('delete_video', {
         duration: duration
-        // is_working_set: is_working_set
     }, state);        
 }
 
 const cancelWatchVideoAnalytics = (state) => {
-    // let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
     let startDate = DurationsSelectors.getWorkoutVideoPlayerStart(state);
     let duration = DurationCalculator.getDurationTime(startDate, new Date());  
 
     Analytics.logEventWithAppState('cancel_watch_video', {
         duration: duration
-        // is_working_set: is_working_set
     }, state);    
 };

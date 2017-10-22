@@ -1,4 +1,5 @@
 import {
+    HISTORY_VIEWED,
     LOADING_HISTORY,
     PRESENT_HISTORY_EXERCISE,
     PRESENT_HISTORY_TAGS,
@@ -13,7 +14,8 @@ import {
     PRESENT_HISTORY_VIDEO_PLAYER,
     DISMISS_HISTORY_VIDEO_PLAYER,
     DELETE_HISTORY_VIDEO,
-    SAVE_HISTORY_VIDEO
+    SAVE_HISTORY_VIDEO,
+    END_WORKOUT
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -29,10 +31,19 @@ const defaultState = {
     isSavingVideo: false,    
     watchSetID: null,
     watchFileURL: null,
+    viewedCounter: 0,
 };
 
 const HistoryReducer = (state = defaultState, action) => {
     switch (action.type) {
+        case HISTORY_VIEWED:
+            return Object.assign({}, state, {
+                viewedCounter: state.viewedCounter + 1,
+            });
+        case END_WORKOUT:
+            return Object.assign({}, state, {
+                viewedCounter: 0,
+            });
         case LOADING_HISTORY:
             return Object.assign({}, state, {
                 isLoadingHistory: action.isLoading

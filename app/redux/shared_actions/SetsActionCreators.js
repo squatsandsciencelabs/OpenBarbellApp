@@ -120,7 +120,7 @@ const logEndSetAnalytics = (manuallyStarted, wasSanityCheck, state) => {
 
     Analytics.logEventWithAppState('start_new_set', {   
         value: num_fields_entered,
-        auto_end_timer: auto_end_timer / 10,
+        auto_end_timer: auto_end_timer,
         has_exercise_name: Boolean(set.exercise),
         has_weight: Boolean(set.weight),
         has_rpe: Boolean(set.rpe),

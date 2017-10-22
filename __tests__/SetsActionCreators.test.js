@@ -114,76 +114,91 @@ describe('endSet analytics', () => {
             expect(event).toEqual('start_new_set');
             expect(params.manually_started).toBeFalsy();
         });
+    });
 
-        describe('auto_end_timer', () => {
+    describe('auto_end_timer', () => {
 
-            var endSetTimerSpy = null;
+        var endSetTimerSpy = null;
 
-            afterEach(() => {
-                endSetTimerSpy.mockReset();
+        beforeEach(() => {
+            store = mockStore({
+                sets: {
+                    workoutData: [{
+                        exercise: 'derp',
+                        reps: [],
+                        tags: []
+                    }],
+                },
+                settings: {
+                    defaultMetric: 'kg'
+                }
             });
-    
-            afterAll(() => {
-                endSetTimerSpy.mockReset();
-                endSetTimerSpy.mockRestore();
-            });            
+        });
 
-            test('0 when manually started', () => {
-                endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 0);
+        afterEach(() => {
+            endSetTimerSpy.mockReset();
+        });
 
-                store.dispatch(sut.endSet(true));
+        afterAll(() => {
+            endSetTimerSpy.mockReset();
+            endSetTimerSpy.mockRestore();
+        });            
 
-                const event = logEventSpy.mock.calls[0][0];
-                const params = logEventSpy.mock.calls[0][1];
-                expect(event).toEqual('start_new_set');
-                expect(params.auto_end_timer).toBe(0);            
-            });
+        test('0 when manually started', () => {
+            endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 0);
 
-            test('30 seconds when endSetTimerDuration is 30', () => {
-                endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 30);
+            store.dispatch(sut.endSet(true));
 
-                store.dispatch(sut.endSet());
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('start_new_set');
+            expect(params.auto_end_timer).toBe(0);
+        });
 
-                const event = logEventSpy.mock.calls[0][0];
-                const params = logEventSpy.mock.calls[0][1];
-                expect(event).toEqual('start_new_set');
-                expect(params.auto_end_timer).toBe(30);            
-            });  
-            
-            test('60 seconds when endSetTimerDuration is 1 min', () => {
-                endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 60);
+        test('30 seconds when endSetTimerDuration is 30', () => {
+            endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 30);
 
-                store.dispatch(sut.endSet());
+            store.dispatch(sut.endSet());
 
-                const event = logEventSpy.mock.calls[0][0];
-                const params = logEventSpy.mock.calls[0][1];
-                expect(event).toEqual('start_new_set');
-                expect(params.auto_end_timer).toBe(60);            
-            });      
-            
-            
-            test('120 seconds when endSetTimerDuration is 2 min', () => {
-                endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 120);
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('start_new_set');
+            expect(params.auto_end_timer).toBe(30);
+        });  
+        
+        test('60 seconds when endSetTimerDuration is 1 min', () => {
+            endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 60);
 
-                store.dispatch(sut.endSet());
+            store.dispatch(sut.endSet());
 
-                const event = logEventSpy.mock.calls[0][0];
-                const params = logEventSpy.mock.calls[0][1];
-                expect(event).toEqual('start_new_set');
-                expect(params.auto_end_timer).toBe(120);            
-            }); 
-            
-            test('300 seconds when endSetTimerDuration is 5 min', () => {
-                endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 300);
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('start_new_set');
+            expect(params.auto_end_timer).toBe(60);
+        });      
+        
+        
+        test('120 seconds when endSetTimerDuration is 2 min', () => {
+            endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 120);
 
-                store.dispatch(sut.endSet());
+            store.dispatch(sut.endSet());
 
-                const event = logEventSpy.mock.calls[0][0];
-                const params = logEventSpy.mock.calls[0][1];
-                expect(event).toEqual('start_new_set');
-                expect(params.auto_end_timer).toBe(300);            
-            });                   
-        })
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('start_new_set');
+            expect(params.auto_end_timer).toBe(120);
+        }); 
+        
+        test('300 seconds when endSetTimerDuration is 5 min', () => {
+            endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 300);
+
+            store.dispatch(sut.endSet());
+
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('start_new_set');
+            expect(params.auto_end_timer).toBe(300);
+        });
     });
 
     describe('was_sanity_check', () => {

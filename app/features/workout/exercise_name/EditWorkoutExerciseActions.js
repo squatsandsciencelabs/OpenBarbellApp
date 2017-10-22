@@ -36,7 +36,7 @@ export const saveExerciseName = (setID, exercise) => (dispatch, getState) => {
 const saveExerciseAnalytics = (setID, exercise, state) => {
     let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
     let startDate = DurationsSelectors.getEditWorkoutExerciseStart(state);
-    let duration = DurationCalculator.getDurationTime(startDate, new Date());  
+    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
 
     Analytics.logEventWithAppState('save_exercise_name', {
         value: duration,
@@ -48,7 +48,7 @@ const saveExerciseAnalytics = (setID, exercise, state) => {
 const cancelExerciseAnalytics = (setID, state) => {
     let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
     let startDate = DurationsSelectors.getEditWorkoutExerciseStart(state);
-    let duration = DurationCalculator.getDurationTime(startDate, new Date());  
+    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
 
     Analytics.logEventWithAppState('cancel_edit_exercise_name', {
         value: duration,

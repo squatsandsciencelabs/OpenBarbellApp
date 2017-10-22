@@ -40,7 +40,7 @@ export const saveTags = (setID, tags = []) => (dispatch, getState) => {
 
 const saveTagsAnalytics = (state) => {
     let startDate = DurationsSelectors.getEditWorkoutTagsStart(state);
-    let duration = DurationCalculator.getDurationTime(startDate, new Date());  
+    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
 
     Analytics.logEventWithAppState('save_tags', {
         value: duration,
@@ -50,7 +50,7 @@ const saveTagsAnalytics = (state) => {
 
 const cancelTagsAnalytics = (state) => {
     let startDate = DurationsSelectors.getEditWorkoutTagsStart(state);
-    let duration = DurationCalculator.getDurationTime(startDate, new Date());  
+    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
 
     Analytics.logEventWithAppState('cancel_edit_tags', {
         value: duration,

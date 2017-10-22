@@ -261,7 +261,7 @@ describe('endSet analytics', () => {
         });
     });
 
-    describe("num_fields_entered", () => {
+    describe("num_fields_entered and value", () => {
 
         var fieldsSpy = null
 
@@ -285,7 +285,8 @@ describe('endSet analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('start_new_set');
-            expect(params.num_fields_entered).toBe(0);           
+            expect(params.num_fields_entered).toBe(0);
+            expect(params.value).toBe(0);            
         });
 
         test("num_fields_entered is 1", () => {
@@ -299,7 +300,8 @@ describe('endSet analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('start_new_set');
-            expect(params.num_fields_entered).toBe(1);           
+            expect(params.num_fields_entered).toBe(1);
+            expect(params.value).toBe(1);            
         });
         
         test("num_fields_entered is 2", () => {
@@ -313,7 +315,8 @@ describe('endSet analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('start_new_set');
-            expect(params.num_fields_entered).toBe(2);           
+            expect(params.num_fields_entered).toBe(2);
+            expect(params.value).toBe(2);            
         });    
         
         test("num_fields_entered is 3", () => {
@@ -327,7 +330,8 @@ describe('endSet analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('start_new_set');
-            expect(params.num_fields_entered).toBe(3);           
+            expect(params.num_fields_entered).toBe(3);
+            expect(params.value).toBe(3);            
         });     
 
         test("num_fields_entered is 4", () => {
@@ -341,7 +345,8 @@ describe('endSet analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('start_new_set');
-            expect(params.num_fields_entered).toBe(4);           
+            expect(params.num_fields_entered).toBe(4);
+            expect(params.value).toBe(4);            
         });      
     });
 

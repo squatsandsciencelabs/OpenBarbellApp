@@ -378,7 +378,6 @@ describe('endSet analytics', () => {
             timerEditedSpy.mockRestore();
         });
         
-
         test("timer edited is false", () => {
             timerEditedSpy = jest.spyOn(SettingsSelectors, 'getIfTimerWasEdited').mockImplementation(() => false);
 
@@ -414,7 +413,6 @@ describe('endSet analytics', () => {
             previousSetFilledSpy.mockReset();
             previousSetFilledSpy.mockRestore();
         });
-        
         
         test('-1 if no previous set', () => {
            previousSetFilledSpy = jest.spyOn(SetsSelectors, 'getIsPreviousSetFilled').mockImplementation(() => -1);

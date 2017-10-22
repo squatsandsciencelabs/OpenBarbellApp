@@ -52,7 +52,6 @@ export default initializeStore = () => {
             'history',
             'killSwitch',
             'suggestions',
-            'appState',
             'durations'
         ],
         // note, everything in sets is to be persisted so not blacklisting or transforming them
@@ -60,6 +59,7 @@ export default initializeStore = () => {
             createFilter('auth', ['accessToken', 'refreshToken', 'lastRefreshDate', 'email']),
             createFilter('settings', ['defaultMetric', 'endSetTimerDuration', 'syncDate', 'wasTimerEdited', 'wasMetricEdited', 'lastExportCSV']),
             createFilter('workout', ['removedCounter', 'restoredCounter']),
+            createFilter('appState', ['multiTaskCounter', 'lockedCounter']),            
         ]}, () => {
             // on startup, always "fail" it so syncing variables go back into the queue to be synced
             store.dispatch(SetsActionCreators.failedUploadSets());

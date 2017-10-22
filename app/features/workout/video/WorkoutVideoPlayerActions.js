@@ -28,7 +28,6 @@ export const closeModal = () => (dispatch, getState) => {
 };
 
 const deleteVideoAnalytics = (state) => {
-    // let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
     let startDate = DurationsSelectors.getWorkoutVideoPlayerStart(state);
     let duration = DurationCalculator.getDurationTime(startDate, new Date());  
 

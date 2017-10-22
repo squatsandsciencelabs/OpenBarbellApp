@@ -20,12 +20,12 @@ const AppStateReducer = (state = defaultState, action) => {
         case LOCKED_SCREEN:
             return Object.assign({}, state, {
                 screenStatus: 'inactive',
-                lockedCounter: state.lockedCounter += 1,
+                lockedCounter: state.lockedCounter + 1,
             });
         case MULTI_TASK_SCREEN:
             return Object.assign({}, state, {
                 screenStatus: 'multiView',
-                multiTaskCounter: state.multiTaskCounter += 1,
+                multiTaskCounter: state.multiTaskCounter + 1,
             })
         case END_WORKOUT:
             return Object.assign({}, state, {

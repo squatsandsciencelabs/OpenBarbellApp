@@ -9,10 +9,10 @@ export const deleteVideo = (setID) => (dispatch, getState) => {
 
     deleteVideoAnalytics(state);
 
-    return {
+    dispatch({
         type: DELETE_WORKOUT_VIDEO,
         setID: setID        
-    }
+    });
 };
 
 export const closeModal = () => (dispatch, getState) => {
@@ -22,9 +22,9 @@ export const closeModal = () => (dispatch, getState) => {
 
     Analytics.setCurrentScreen('workout');
     
-    return {
+    dispatch({
         type: DISMISS_WORKOUT_VIDEO_PLAYER
-    }
+    });
 };
 
 const deleteVideoAnalytics = (state) => {

@@ -6,6 +6,7 @@ import { END_WORKOUT } from 'app/ActionTypes';
 import * as Analytics from 'app/utility/Analytics';
 import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 import * as WorkoutSelectors from 'app/redux/selectors/WorkoutSelectors';
+import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 import * as AppStateSelectors from 'app/redux/selectors/AppStateSelectors';
 import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDeviceStatusSelectors';
 
@@ -55,7 +56,7 @@ const logAnalytics = (manuallyEnded, state) => {
     let num_multitask = AppStateSelectors.getNumMultiTask(state);
     let num_disconnects = ConnectedDeviceStatusSelectors.getNumDisconnects(state);
     let num_auto_reconnects = ConnectedDeviceStatusSelectors.getNumReconnects(state);
-    let num_history_views = WorkoutSelectors.getHistoryViewedCounter(state);
+    let num_history_views = HistorySelectors.getHistoryViewedCounter(state);
     let workout_duration = SetsSelectors.getWorkoutDuration(state);
 
     Analytics.logEventWithAppState('end_workout', {

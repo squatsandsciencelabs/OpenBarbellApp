@@ -21,3 +21,7 @@ export const getWatchSetID = (state) => stateRoot(state).watchSetID;
 export const getIsVideoPlayerVisible = (state) => stateRoot(state).watchSetID !== null;
 
 export const getWatchFileURL = (state) => stateRoot(state).watchFileURL;
+
+// history viewed 
+
+export const getHistoryViewedCounter = (state) => stateRoot(state).viewedCounter;

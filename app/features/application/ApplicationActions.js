@@ -20,5 +20,5 @@ export const changeTab = (i) => (dispatch) => {
             break;
     }
     Keyboard.dismiss();    
-    return { type: CHANGED_TAB };
+    dispatch({ type: CHANGED_TAB });
 };

@@ -48,7 +48,6 @@ export default initializeStore = () => {
         storage: AsyncStorage,
         blacklist: [
             'scannedDevices',
-            'connectedDevice',
             'history',
             'killSwitch',
             'suggestions',
@@ -59,7 +58,8 @@ export default initializeStore = () => {
             createFilter('auth', ['accessToken', 'refreshToken', 'lastRefreshDate', 'email']),
             createFilter('settings', ['defaultMetric', 'endSetTimerDuration', 'syncDate', 'wasTimerEdited', 'wasMetricEdited', 'lastExportCSV']),
             createFilter('workout', ['removedCounter', 'restoredCounter']),
-            createFilter('appState', ['multiTaskCounter', 'lockedCounter']),            
+            createFilter('appState', ['multiTaskCounter', 'lockedCounter']),
+            createFilter('connectedDevice', ['numDisconnects', 'numReconnects']),            
         ]}, () => {
             // on startup, always "fail" it so syncing variables go back into the queue to be synced
             store.dispatch(SetsActionCreators.failedUploadSets());

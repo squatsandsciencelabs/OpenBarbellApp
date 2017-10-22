@@ -9,7 +9,6 @@ const defaultState = {
     screenStatus: 'active',
     lockedCounter: 0,
     multiTaskCounter: 0,
-    activeTime: 0,
 }
 
 const AppStateReducer = (state = defaultState, action) => {
@@ -31,6 +30,7 @@ const AppStateReducer = (state = defaultState, action) => {
         case END_WORKOUT:
             return Object.assign({}, state, {
                 lockedCounter: 0,
+                multiTaskCounter: 0
             });
         default: 
             return state;

@@ -45,7 +45,6 @@ describe('endWorkout analytics', () => {
         logEventSpy.mockRestore();
     });    
 
-    // make function selectors for num_reps to spy on
     describe('num_reps', () => {
         var repsSpy = null;
 
@@ -91,7 +90,7 @@ describe('endWorkout analytics', () => {
             expect(params.num_reps).toBe(3);                   
         });         
     });
-    // also make function for num_sets_with_fields
+
     describe('num_sets_with_fields', () => {
         var fieldsSpy = null;
 

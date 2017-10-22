@@ -29,7 +29,7 @@ export const closeModal = () => (dispatch, getState) => {
 
 const deleteVideoAnalytics = (state) => {
     let startDate = DurationsSelectors.getWorkoutVideoPlayerStart(state);
-    let duration = DurationCalculator.getDurationTime(startDate, new Date());  
+    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
 
     Analytics.logEventWithAppState('delete_video', {
         duration: duration
@@ -38,7 +38,7 @@ const deleteVideoAnalytics = (state) => {
 
 const cancelWatchVideoAnalytics = (state) => {
     let startDate = DurationsSelectors.getWorkoutVideoPlayerStart(state);
-    let duration = DurationCalculator.getDurationTime(startDate, new Date());  
+    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
 
     Analytics.logEventWithAppState('cancel_watch_video', {
         duration: duration

@@ -6,7 +6,6 @@ import {
 } from 'app/ActionTypes';
 import * as Analytics from 'app/utility/Analytics';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
-import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 
 export const startRecording = (setID) => ({
     type: START_RECORDING_HISTORY,
@@ -52,18 +51,18 @@ export const saveVideoError = (setID) => (dispatch, getState) => {
     });
 }
 
-const saveVideoAnalytics = (state) => {
-    let startDate = DurationsSelectors.getHistoryVideoRecorderStart(state);
-    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
+// TODO: check that the duration calculation operates properly
 
+const saveVideoAnalytics = (state) => {
+    let duration = DurationsSelectors.getHistoryVideoRecorderDuration(state);
+    
     Analytics.logEventWithAppState('save_video', {
         duration: duration
     }, state);    
 };
 
 const cancelVideoAnalytics = (state) => {
-    let startDate = DurationsSelectors.getHistoryVideoRecorderStart(state);
-    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getHistoryVideoRecorderDuration(state);
 
     Analytics.logEventWithAppState('cancel_record_video', {
         duration: duration
@@ -71,8 +70,7 @@ const cancelVideoAnalytics = (state) => {
 };
 
 const saveVideoErrorAnalytics = (state) => {
-    let startDate = DurationsSelectors.getHistoryVideoRecorderStart(state);
-    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getHistoryVideoRecorderDuration(state);
 
     Analytics.logEventWithAppState('save_video_error', {
         duration: duration

@@ -54,35 +54,29 @@ export const saveVideoError = (setID) => (dispatch, getState) => {
 }
 
 const saveVideoAnalytics = (state) => {
-    // let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
     let startDate = DurationsSelectors.getWorkoutVideoRecorderStart(state);
     let duration = DurationCalculator.getDurationTime(startDate, new Date());  
 
     Analytics.logEventWithAppState('save_video', {
         duration: duration
-        // is_working_set: is_working_set
     }, state);    
 };
 
 const cancelVideoAnalytics = (state) => {
-    // let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
     let startDate = DurationsSelectors.getWorkoutVideoRecorderStart(state);
     let duration = DurationCalculator.getDurationTime(startDate, new Date());  
 
     Analytics.logEventWithAppState('cancel_record_video', {
         duration: duration
-        // is_working_set: is_working_set
     }, state);    
 };
 
 const saveVideoErrorAnalytics = (state) => {
-    // let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
     let startDate = DurationsSelectors.getWorkoutVideoRecorderStart(state);
     let duration = DurationCalculator.getDurationTime(startDate, new Date());  
 
     Analytics.logEventWithAppState('save_video_error', {
         duration: duration
-        // is_working_set: is_working_set
     }, state);    
 };
 

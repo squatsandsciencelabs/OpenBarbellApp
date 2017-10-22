@@ -198,7 +198,7 @@ describe('endSet analytics', () => {
             expect(params.was_sanity_check).toBeTruthy();
         });
 
-        test('false when passed in false', () => {
+        test('false when passed nothing', () => {
             // when you end the set with sanityCheck not passed in
             store.dispatch(sut.endSet());
             
@@ -206,7 +206,17 @@ describe('endSet analytics', () => {
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('start_new_set');
             expect(params.was_sanity_check).toBeFalsy();
-        });        
+        });
+
+        test('false when passed in false', () => {
+            // when you end the set with sanityCheck not passed in
+            store.dispatch(sut.endSet(false, false));
+            
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('start_new_set');
+            expect(params.was_sanity_check).toBeFalsy();
+        });
     })
 
     describe('has_reps', () => {

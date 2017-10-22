@@ -129,7 +129,7 @@ describe('endSet analytics', () => {
             });            
 
             test('0 when manually started', () => {
-                endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => {});
+                endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 0);
 
                 store.dispatch(sut.endSet(true));
 
@@ -140,7 +140,7 @@ describe('endSet analytics', () => {
             });
 
             test('30 seconds when endSetTimerDuration is 30', () => {
-                endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 300);
+                endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 30);
 
                 store.dispatch(sut.endSet());
 
@@ -151,7 +151,7 @@ describe('endSet analytics', () => {
             });  
             
             test('60 seconds when endSetTimerDuration is 1 min', () => {
-                endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 600);
+                endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 60);
 
                 store.dispatch(sut.endSet());
 
@@ -163,7 +163,7 @@ describe('endSet analytics', () => {
             
             
             test('120 seconds when endSetTimerDuration is 2 min', () => {
-                endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 1200);
+                endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 120);
 
                 store.dispatch(sut.endSet());
 
@@ -174,7 +174,7 @@ describe('endSet analytics', () => {
             }); 
             
             test('300 seconds when endSetTimerDuration is 5 min', () => {
-                endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 3000);
+                endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 300);
 
                 store.dispatch(sut.endSet());
 

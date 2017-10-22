@@ -35,12 +35,12 @@ export const saveVideo = (setID, videoFileURL, videoType) => (dispatch, getState
 
     saveVideoAnalytics(state);
 
-    return {
+    dispatch({
         type: SAVE_WORKOUT_VIDEO,
         setID: setID,
         videoFileURL: videoFileURL,
         videoType: videoType
-    }
+    });
 };
 
 export const saveVideoError = (setID) => (dispatch, getState) => {
@@ -48,9 +48,9 @@ export const saveVideoError = (setID) => (dispatch, getState) => {
 
     saveVideoErrorAnalytics(state);
 
-    return {
+    dispatch({
         type: SAVE_VIDEO_ERROR,
-    }
+    });
 }
 
 const saveVideoAnalytics = (state) => {

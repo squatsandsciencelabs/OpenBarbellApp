@@ -27,7 +27,8 @@ const ConnectedDeviceReducer = ( state = defaultState, action) => {
             return Object.assign({}, state, {
                 status: 'CONNECTING',
                 deviceName: action.deviceName,
-                deviceIdentifier: action.deviceIdentifier
+                deviceIdentifier: action.deviceIdentifier.action,
+                numReconnects: state.numReconnects + 1
             });
         case DISCONNECT_DEVICE:
             // TODO: confirm if there's an issue here with disconnecting from the device
@@ -37,7 +38,6 @@ const ConnectedDeviceReducer = ( state = defaultState, action) => {
                 status: 'DISCONNECTING',
                 deviceName: null,
                 deviceIdentifier: null,
-                numDisconnects: state.numDisconnects += 1,
             });
         case BLUETOOTH_OFF:
             return Object.assign({}, state, {
@@ -50,7 +50,7 @@ const ConnectedDeviceReducer = ( state = defaultState, action) => {
                 status: 'DISCONNECTED',
                 deviceName: null,
                 deviceIdentifier: null,
-                numDisconnects: state.numDisconnects += 1,
+                numDisconnects: action.device ? state.numDisconnects + 1 : state.numDisconnects, // TODO: need to test this
             });
         case STOP_RECONNECT:
             return Object.assign({}, state, {
@@ -75,7 +75,6 @@ const ConnectedDeviceReducer = ( state = defaultState, action) => {
         case RECONNECTING_TO_DEVICE:
             return Object.assign({}, state, {
                 isReconnecting: true,
-                numReconnects: state.numReconnects += 1
             });
         case END_WORKOUT:
             return Object.assign({}, state, {

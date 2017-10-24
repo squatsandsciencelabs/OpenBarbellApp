@@ -220,7 +220,7 @@ const mapStateToProps = (state) => {
     if (historyData !== storedHistoryData) {
         // data changed, redo it all
         storedHistoryData = historyData;
-        storedHistorySets = SetsSelectors.getHistorySetsChronological(state.sets);
+        storedHistorySets = SetsSelectors.getHistorySetsChronological(state);
         rebuildViewModels = true;
     } else if (shouldShowRemoved !== storedShouldShowRemoved) {
         // toggled with no data changed, just rebuild viewmodels

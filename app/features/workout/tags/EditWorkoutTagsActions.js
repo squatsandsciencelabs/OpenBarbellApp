@@ -38,8 +38,7 @@ export const saveTags = (setID, tags = []) => (dispatch, getState) => {
 };
 
 const logSaveTagsAnalytics = (state) => {
-    let startDate = DurationsSelectors.getEditWorkoutTagsStart(state);
-    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getEditWorkoutTagsDuration(state);
 
     Analytics.logEventWithAppState('save_tags', {
         value: duration,
@@ -48,8 +47,7 @@ const logSaveTagsAnalytics = (state) => {
 };
 
 const logCancelEditTagsAnalytics = (state) => {
-    let startDate = DurationsSelectors.getEditWorkoutTagsStart(state);
-    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getEditWorkoutTagsDuration(state);
 
     Analytics.logEventWithAppState('cancel_edit_tags', {
         value: duration,

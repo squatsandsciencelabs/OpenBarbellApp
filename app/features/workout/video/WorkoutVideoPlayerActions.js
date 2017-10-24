@@ -29,8 +29,7 @@ export const closeModal = () => (dispatch, getState) => {
 };
 
 const logDeleteVideoAnalytics = (state) => {
-    let startDate = DurationsSelectors.getWorkoutVideoPlayerStart(state);
-    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getWorkoutVideoPlayerDuration(state);
 
     Analytics.logEventWithAppState('delete_video', {
         duration: duration
@@ -38,8 +37,7 @@ const logDeleteVideoAnalytics = (state) => {
 }
 
 const logCancelWatchVideoAnalytics = (state) => {
-    let startDate = DurationsSelectors.getWorkoutVideoPlayerStart(state);
-    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getWorkoutVideoPlayerDuration(state);
 
     Analytics.logEventWithAppState('cancel_watch_video', {
         duration: duration

@@ -34,8 +34,7 @@ export const saveExerciseName = (setID, exercise) => (dispatch, getState) => {
 
 const logSaveExerciseNameAnalytics = (setID, exercise, state) => {
     let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
-    let startDate = DurationsSelectors.getEditHistoryExerciseStart(state);
-    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getEditHistoryExerciseDuration(state);
 
     Analytics.logEventWithAppState('save_exercise_name', {
         value: duration,
@@ -46,8 +45,7 @@ const logSaveExerciseNameAnalytics = (setID, exercise, state) => {
 
 const logCancelEditExerciseNameAnalytics = (setID, state) => {
     let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
-    let startDate = DurationsSelectors.getEditHistoryExerciseStart(state);
-    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getEditHistoryExerciseDuration(state);
 
     Analytics.logEventWithAppState('cancel_edit_exercise_name', {
         value: duration,

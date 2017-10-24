@@ -46,13 +46,12 @@ export const getHistoryVideoRecorderDuration = (state) => DurationCalculator.get
 
 // workout video recorder
 
-export const getWorkoutVideoPlayerStart = (state) => stateRoot(state).workoutWatchVideoStart;
+export const getWorkoutVideoPlayerStart = (state) => stateRoot(state).workoutVideoPlayerStart;
 
 export const getWorkoutVideoPlayerDuration = (state) => DurationCalculator.getDurationBetween(getWorkoutVideoPlayerStart(state), new Date());
 
 // history video player
 
-export const getHistoryVideoPlayerStart = (state) => stateRoot(state).historyWatchVideoStart;
+export const getHistoryVideoPlayerStart = (state) => stateRoot(state).historyVideoPlayerStart;
 
 export const getHistoryVideoPlayerDuration = (state) => DurationCalculator.getDurationBetween(getHistoryVideoPlayerStart(state), new Date());
-

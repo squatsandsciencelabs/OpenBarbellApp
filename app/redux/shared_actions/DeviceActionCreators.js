@@ -206,7 +206,7 @@ const logAnalytics = (state) => {
     let has_rpe = Boolean(currentSet.rpe);
     let has_tags = Boolean(currentSet.tags.length);
     let has_video = Boolean(currentSet.videoFileUrl);
-    let has_reps = Boolean(SetsSelectors.getNumReps(state));
+    let has_reps = Boolean(SetsSelectors.getNumWorkoutReps(state));
     let end_set_time_left = SettingsSelectors.endSetTimeLeft(state);
 
     Analytics.logEventWithAppState('add_rep', {

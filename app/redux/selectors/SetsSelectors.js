@@ -3,6 +3,7 @@
 // right now only a few of them use the stateRoot
 import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
+import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 
 const stateRoot = (state) => state.sets;
 
@@ -103,7 +104,7 @@ export const getIsPreviousSetFilled = (state) => {
     return is_previous_set_filled;
 }
 
-// Dictionary to Aarry
+// Array to Array
 
 const dictToArray = (dictionary) => {
     var array = [];
@@ -144,8 +145,8 @@ export const getHistoryWorkoutIDs = (state) => {
 
     for (var i = 1; i < sets.length; i++) {
         if (sets[i].workoutID !== sets[i - 1].workoutID) {
-            workoutIDs.push(sets[i].workoutID)
-        }
+            workoutIDs.push(sets[i].workoutID);
+        };
     };
 
     return workoutIDs;
@@ -181,7 +182,7 @@ export const hasChangesToSync = (state) => {
     return (root.setIDsToUpload.length > 0 || root.setIDsBeingUploaded.length > 0);
 };
 
-export const getNumReps = (state) => {
+export const getNumWorkoutReps = (state) => {
     const sets = getWorkoutSets(state);
     var num_reps = 0;
 
@@ -191,10 +192,10 @@ export const getNumReps = (state) => {
         }
     });
 
-    return num_reps
+    return num_reps;
 };
 
-export const getNumFields = (state) => {
+export const getNumWorkoutSetsWithFields = (state) => {
     const sets = getWorkoutSets(state);
     var num_sets_with_fields = 0;
 
@@ -204,28 +205,26 @@ export const getNumFields = (state) => {
         }
     });
 
-    return num_sets_with_fields 
+    return num_sets_with_fields; 
 };
 
 export const getPercentFields = (state) => {
     const sets = getWorkoutSets(state);
-    const numSetsFields = getNumFields(state);
+    const numSetsFields = getNumWorkoutSetsWithFields(state);
 
     const percent_sets_with_fields = (numSetsFields/(sets.length)) * 100;
 
     return percent_sets_with_fields;
 }
 
-// startTime.getTime() returns undefined
-
 export const getWorkoutDuration = (state) => {
     const sets = getWorkoutSets(state);
-    const startTime = sets[0].initialStartTime;
+    const startDate = SetTimeCalculator.startTime(sets[0]);
 
     if (startTime) {
-        var duration = Math.abs((new Date()).getTime() - startTime.getTime());
+        var duration = DurationCalculator.getDurationBetween(startDate, new Date());
     } else {
-        var duration = 0;
+        return 0;
     }
 
     return duration;

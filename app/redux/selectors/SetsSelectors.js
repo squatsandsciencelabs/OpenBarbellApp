@@ -213,9 +213,11 @@ export const getPercentFields = (state) => {
     const sets = getWorkoutSets(state);
     const numSetsFields = getNumWorkoutSetsWithFields(state);
 
-    const percent_sets_with_fields = (numSetsFields/(sets.length)) * 100;
-
-    return percent_sets_with_fields;
+    if (sets.length > 0) {
+        return (numSetsFields/(sets.length)) * 100;
+    } else {
+        return 0;
+    }
 }
 
 export const getWorkoutDuration = (state) => {

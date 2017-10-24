@@ -15,7 +15,7 @@ export const endWorkout = () => (dispatch, getState) => {
     var isWorkoutEmpty = SetsSelectors.getIsWorkoutEmpty(state)
     var isLoggedIn = AuthSelectors.getIsLoggedIn(state);
 
-    logAnalytics(true, state);
+    logEndWorkoutAnalytics(true, state);
 
     if (!isWorkoutEmpty && isLoggedIn) {
         dispatch({ type: END_WORKOUT });
@@ -35,13 +35,12 @@ export const endWorkout = () => (dispatch, getState) => {
 export const autoEndWorkout = () => (dispatch, getState) => { 
     var state = getState();
 
-    logAnalytics(false, state);
+    logEndWorkoutAnalytics(false, state);
 
     dispatch({ type: END_WORKOUT });
 };
 
-const logAnalytics = (manuallyEnded, state) => {
-    // var screenStatus = state.appState.screenStatus;
+const logEndWorkoutAnalytics = (manuallyEnded, state) => {    
     var timeStartActive = null;
     var timeEndActive = null;
     var percentAppActive = null;

@@ -181,7 +181,7 @@ export const reconnectingToDevice = (name, identifier) => {
 export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, getState) => {
     var state = getState();
 
-    logAnalytics(state);
+    logAddRepAnalytics(state);
 
     dispatch(TimerActionCreators.sanityCheckTimer());
 
@@ -197,7 +197,7 @@ export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, g
     dispatch(TimerActionCreators.startEndSetTimer());
 };
 
-const logAnalytics = (state) => {
+const logAddRepAnalytics = (state) => {
     let currentSet = SetsSelectors.getCurrentSet(state);
     let set_id = currentSet.set_id;
     let rep_count = currentSet.reps.length;

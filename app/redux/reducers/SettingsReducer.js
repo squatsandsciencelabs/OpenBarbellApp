@@ -22,7 +22,7 @@ const defaultState = {
     wasMetricEdited: false,
     showRemoved: false,
     isExportingCSV: false,
-    lastExportCSV: '',    
+    lastExportCSVDateDate: '',    
 };
 
 const SettingsReducer = (state = defaultState, action) => {
@@ -64,7 +64,7 @@ const SettingsReducer = (state = defaultState, action) => {
         case EXPORTING_CSV:
             return Object.assign({}, state, {
                 isExportingCSV: action.isExportingCSV,
-                lastExportCSV: new Date()
+                lastExportCSVDateDate: new Date()
             });
         case UPDATE_HISTORY_FILTER:
             return Object.assign({}, state, {

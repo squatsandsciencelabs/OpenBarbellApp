@@ -55,7 +55,7 @@ export default initializeStore = () => {
         // note, everything in sets is to be persisted so not blacklisting or transforming them
         transforms: [
             createFilter('auth', ['accessToken', 'refreshToken', 'lastRefreshDate', 'email']),
-            createFilter('settings', ['defaultMetric', 'endSetTimerDuration', 'syncDate', 'wasTimerEdited', 'wasMetricEdited', 'lastExportCSV']),
+            createFilter('settings', ['defaultMetric', 'endSetTimerDuration', 'syncDate', 'wasTimerEdited', 'wasMetricEdited', 'lastExportCSVDate']),
             createFilter('workout', ['removedCounter', 'restoredCounter']),
             createFilter('history', ['viewedCounter']),
             createFilter('appState', ['multiTaskCounter', 'lockedCounter']),

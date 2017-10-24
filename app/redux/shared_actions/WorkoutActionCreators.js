@@ -47,9 +47,9 @@ const logAnalytics = (manuallyEnded, state) => {
     var percentAppActive = null;
     let sets = SetsSelectors.getWorkoutSets(state);
     let num_sets = sets.length;
-    let num_sets_with_fields = SetsSelectors.getNumFields(state);
+    let num_sets_with_fields = SetsSelectors.getNumWorkoutSetsWithFields(state);
     let percent_sets_fields = SetsSelectors.getPercentFields(state);
-    let num_reps = SetsSelectors.getNumReps(state);    
+    let num_reps = SetsSelectors.getNumWorkoutReps(state);    
     let num_removes = WorkoutSelectors.getRemovedCounter(state);
     let num_restores = WorkoutSelectors.getRestoredCounter(state);
     let num_screen_locks = AppStateSelectors.getNumLocks(state);

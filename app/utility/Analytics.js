@@ -62,7 +62,7 @@ export const logEvent = (event, params) => {
 };
 
 export const logEventWithAppState = (event, params, state) => {
-    const screenStatus = AppStateSelectors.getScreenStatus;
+    const screenStatus = AppStateSelectors.getScreenStatus(state);
     const currentAppState = AppState.currentState;
 
     if (screenStatus === 'active') {
@@ -89,8 +89,8 @@ export const logEventWithAppState = (event, params, state) => {
     const connectedDeviceStatus = ConnectedDeviceStatusSelectors.getConnectedDeviceStatus(state);
     const isWorkoutEmpty = SetsSelectors.getIsWorkoutEmpty(state);
 
-    if (devices.length > 6) {
-        devices = devices.slice(0, 5);
+    if (devices.length >= 25) {
+        devices = devices.slice(0, 24);
     };
 
     const scanned_devices = devices.join().replace(/\s|OB|,/g, '');

@@ -222,7 +222,7 @@ export const getWorkoutDuration = (state) => {
     const sets = getWorkoutSets(state);
     const startDate = SetTimeCalculator.startTime(sets[0]);
 
-    if (startTime) {
+    if (startDate) {
         return DurationCalculator.getDurationBetween(startDate, new Date());
     } else {
         return 0;

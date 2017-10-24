@@ -13,6 +13,7 @@ import * as GoogleDriveUploader from 'app/services/GoogleDriveUploader';
 import * as CSVConverter from 'app/utility/transforms/CSVConverter';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
+import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 
 export const signIn = () => ({ type: LOGIN_REQUEST });
 
@@ -45,7 +46,7 @@ export const exportCSV = () => (dispatch, getState) => {
             Alert.alert('Error Exporting CSV', 'Tip: Is your internet connection working?\n\nTip: Try Logging out then logging in again as this feature requires additional Google Drive permissions.');
         } else {
             //ATTEMPT
-            logAttemptExportCSVAnalytics(state);
+            logAttemptlogExportCSVAnalytics(state);
             dispatch(updateIsExportingCSV(true));
             try {
                 let date = new Date();
@@ -63,7 +64,7 @@ export const exportCSV = () => (dispatch, getState) => {
                     Linking.openURL('https://drive.google.com/open?id=' + fileID).catch(err => {
                         Alert.alert('Upload Succeeded', 'CSV uploaded to your Google Drive!');
                     });
-                    exportCSVAnalytics(state);
+                    logExportCSVAnalytics(state);
                 });
             } catch(err) {
                 console.tron.log("Error uploading csv file " + typeof err + " " + err);
@@ -74,7 +75,7 @@ export const exportCSV = () => (dispatch, getState) => {
                 }
                 dispatch(updateIsExportingCSV(false));
                 let state = getState();
-                exportCSVErrorAnalytics(state);
+                logExportCSVErrorAnalytics(state);
             }
         }
     })
@@ -87,11 +88,11 @@ export const exportCSV = () => (dispatch, getState) => {
 
 const updateIsExportingCSV = (isExportingCSV) => ({ type: EXPORTING_CSV, isExportingCSV: isExportingCSV });
 
-const logAttemptExportCSVAnalytics = (state) => {
+const logAttemptlogExportCSVAnalytics = (state) => {
     let sets = SetsSelectors.getHistorySetsChronological(state);
     let num_reps = SetsSelectors.getHistoryReps(state);
     let workoutIDs = SetsSelectors.getHistoryWorkoutIDs(state);
-    let time_since_last_export = getLastExportCSV(state);
+    let time_since_last_export = getlastExportCSVDuration(state);
     let time_since_last_workout = SetsSelectors.lastWorkoutTime(state);
 
     Analytics.logEventWithAppState('attempt_export_csv', {
@@ -104,11 +105,11 @@ const logAttemptExportCSVAnalytics = (state) => {
     }, state);    
 };
 
-const exportCSVAnalytics = (state) => {
+const logExportCSVAnalytics = (state) => {
     let sets = SetsSelectors.getHistorySetsChronological(state);
     let num_reps = SetsSelectors.getHistoryReps(state);
     let workoutIDs = SetsSelectors.getHistoryWorkoutIDs(state);
-    let time_since_last_export = getLastExportCSV(state);
+    let time_since_last_export = getlastExportCSVDuration(state);
     let time_since_last_workout = SetsSelectors.lastWorkoutTime(state);
 
     Analytics.logEventWithAppState('export_csv', {
@@ -121,11 +122,11 @@ const exportCSVAnalytics = (state) => {
     }, state);    
 };
 
-const exportCSVErrorAnalytics = (state) => {
+const logExportCSVErrorAnalytics = (state) => {
     let sets = SetsSelectors.getHistorySetsChronological(state);
     let num_reps = SetsSelectors.getHistoryReps(state);
     let workoutIDs = SetsSelectors.getHistoryWorkoutIDs(state);
-    let time_since_last_export = getLastExportCSV(state);
+    let time_since_last_export = getlastExportCSVDuration(state);
     let time_since_last_workout = SetsSelectors.lastWorkoutTime(state);
 
     Analytics.logEventWithAppState('export_csv_error', {
@@ -137,10 +138,10 @@ const exportCSVErrorAnalytics = (state) => {
     }, state);    
 };
 
-const getLastExportCSV = (state) => {
-    let startDate = SettingsSelectors.getLastExportCSV(state);
+const getlastExportCSVDuration = (state) => {
+    let startDate = SettingsSelectors.getlastExportCSVDate(state);
     if (Boolean(startDate)) {
-        return Math.abs((new Date()).getTime() - startDate.getTime());
+        return DurationCalculator.getDurationBetween(startDate, new Date());
     } else {
         return 0;
     }

@@ -3,7 +3,6 @@ import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
 import * as Analytics from 'app/utility/Analytics';
-import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 
 export const dismissExercise = () => {
     Analytics.setCurrentScreen('history');
@@ -18,7 +17,7 @@ export const cancelExercise = (setID) => (dispatch, getState) => {
 
     Analytics.setCurrentScreen('history');
 
-    cancelExerciseAnalytics(setID, state);
+    logCancelEditExerciseNameAnalytics(setID, state);
 
     dispatch({
         type: DISMISS_HISTORY_EXERCISE
@@ -28,15 +27,15 @@ export const cancelExercise = (setID) => (dispatch, getState) => {
 export const saveExerciseName = (setID, exercise) => (dispatch, getState) => {
     var state = getState();
     
-    saveExerciseAnalytics(setID, exercise, state);
+    logSaveExerciseNameAnalytics(setID, exercise, state);
     
     dispatch(SetsActionCreators.saveHistorySet(setID, exercise));
 };
 
-const saveExerciseAnalytics = (setID, exercise, state) => {
+const logSaveExerciseNameAnalytics = (setID, exercise, state) => {
     let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
     let startDate = DurationsSelectors.getEditHistoryExerciseStart(state);
-    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
 
     Analytics.logEventWithAppState('save_exercise_name', {
         value: duration,
@@ -45,10 +44,10 @@ const saveExerciseAnalytics = (setID, exercise, state) => {
     }, state);
 };
 
-const cancelExerciseAnalytics = (setID, state) => {
+const logCancelEditExerciseNameAnalytics = (setID, state) => {
     let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
     let startDate = DurationsSelectors.getEditHistoryExerciseStart(state);
-    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
 
     Analytics.logEventWithAppState('cancel_edit_exercise_name', {
         value: duration,
@@ -56,4 +55,3 @@ const cancelExerciseAnalytics = (setID, state) => {
         is_working_set: is_working_set
     }, state);
 };
-

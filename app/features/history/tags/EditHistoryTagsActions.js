@@ -4,7 +4,6 @@ import {
 } from 'app/ActionTypes';
 import * as Analytics from 'app/utility/Analytics';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
-import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 
 export const dismissTags = () => {
     Analytics.setCurrentScreen('history');
@@ -19,7 +18,7 @@ export const cancelTags = () => (dispatch, getState) => {
 
     Analytics.setCurrentScreen('history');
 
-    cancelTagsAnalytics(state);
+    logCancelEditTagsAnalytics(state);
 
     dispatch({
         type: DISMISS_HISTORY_TAGS
@@ -29,7 +28,7 @@ export const cancelTags = () => (dispatch, getState) => {
 export const saveTags = (setID, tags = []) => (dispatch, getState) => {
     var state = getState();
 
-    saveTagsAnalytics(state);
+    logSaveTagsAnalytics(state);
 
     dispatch({
         type: SAVE_HISTORY_SET_TAGS,
@@ -38,9 +37,9 @@ export const saveTags = (setID, tags = []) => (dispatch, getState) => {
     });
 };
 
-const saveTagsAnalytics = (state) => {
+const logSaveTagsAnalytics = (state) => {
     let startDate = DurationsSelectors.getEditHistoryTagsStart(state);
-    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
 
     Analytics.logEventWithAppState('save_tags', {
         value: duration,
@@ -48,9 +47,9 @@ const saveTagsAnalytics = (state) => {
     }, state);    
 };
 
-const cancelTagsAnalytics = (state) => {
+const logCancelEditTagsAnalytics = (state) => {
     let startDate = DurationsSelectors.getEditHistoryTagsStart(state);
-    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
 
     Analytics.logEventWithAppState('cancel_edit_tags', {
         value: duration,

@@ -12,14 +12,13 @@ import * as Analytics from 'app/utility/Analytics';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
-import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 
 export const presentExercise = (setID, exercise, bias) => (dispatch, getState) => {
     var state = getState();
 
     Analytics.setCurrentScreen('edit_workout_exercise_name');
 
-    editExerciseAnalytics(setID, exercise, state);
+    logEditExerciseNameAnalytics(setID, exercise, state);
 
     dispatch({
         type: PRESENT_WORKOUT_EXERCISE,
@@ -32,7 +31,7 @@ export const presentExercise = (setID, exercise, bias) => (dispatch, getState) =
 export const editRPE = (setID) => (dispatch, getState) => {
     var state = getState();
 
-    editRPEAnalytics(setID, state);
+    logEditRPEAnalytics(setID, state);
 
     dispatch({
         type: START_EDITING_WORKOUT_RPE
@@ -46,7 +45,7 @@ export const editWeight = () => ({
 export const dismissRPE = (setID) => (dispatch, getState) => {
     var state = getState();
 
-    saveRPEAnalytics(setID, state);
+    logSaveRPEAnalytics(setID, state);
 
     return {
         type: END_EDITING_WORKOUT_RPE
@@ -56,7 +55,7 @@ export const dismissRPE = (setID) => (dispatch, getState) => {
 export const dismissWeight = (setID) => (dispatch, getState) => {
     var state = getState();
 
-    saveWeightAnalytics(setID, state);
+    logSaveWeightAnalytics(setID, state);
 
     return {
         type: END_EDITING_WORKOUT_WEIGHT
@@ -68,7 +67,7 @@ export const presentTags = (setID, tags) => (dispatch, getState) => {
 
     Analytics.setCurrentScreen('edit_workout_tags');
 
-    editTagsAnalytics(setID, state);
+    logEditTagsAnalytics(setID, state);
 
     dispatch({
         type: PRESENT_WORKOUT_TAGS,
@@ -111,7 +110,7 @@ export const presentWatchVideo = (setID, videoFileURL) => {
     }
 };
 
-const editExerciseAnalytics = (setID, exercise, state) => {
+const logEditExerciseNameAnalytics = (setID, exercise, state) => {
     let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
 
     Analytics.logEventWithAppState('edit_exercise_name', {
@@ -119,10 +118,10 @@ const editExerciseAnalytics = (setID, exercise, state) => {
     }, state);
 };
 
-const saveWeightAnalytics = (setID, state) => {
+const logSaveWeightAnalytics = (setID, state) => {
     let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
     let startDate = DurationsSelectors.getEditWorkoutWeightStart(state);
-    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
 
     Analytics.logEventWithAppState('save_weight', {
         value: duration,
@@ -131,10 +130,10 @@ const saveWeightAnalytics = (setID, state) => {
     }, state);    
 }
 
-const saveRPEAnalytics = (setID, state) => {
+const logSaveRPEAnalytics = (setID, state) => {
     let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
     let startDate = DurationsSelectors.getEditWorkoutRPEStart(state);
-    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
 
     Analytics.logEventWithAppState('save_rpe', {
         value: duration,
@@ -143,7 +142,7 @@ const saveRPEAnalytics = (setID, state) => {
     }, state);    
 };
 
-const editRPEAnalytics = (setID, state) => {
+const logEditRPEAnalytics = (setID, state) => {
     let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
 
     Analytics.logEventWithAppState('edit_rpe', {
@@ -151,7 +150,7 @@ const editRPEAnalytics = (setID, state) => {
     }, state);       
 };
 
-const editTagsAnalytics = (setID, state) => {
+const logEditTagsAnalytics = (setID, state) => {
     let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
 
     Analytics.logEventWithAppState('edit_tags', {

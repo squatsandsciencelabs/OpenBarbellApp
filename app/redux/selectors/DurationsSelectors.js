@@ -1,5 +1,3 @@
-import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
-
 const stateRoot = (state) => state.durations
 
 export const getEditWorkoutExerciseStart = (state) => stateRoot(state).editWorkoutExerciseStart;
@@ -24,7 +22,7 @@ export const getWorkoutVideoRecorderStart = (state) => stateRoot(state).workoutV
 
 export const getHistoryVideoRecorderStart = (state) => stateRoot(state).historyVideoRecorderStart;
 
-export const getHistoryVideoRecorderDuration = (state) => DurationCalculator.getDurationBetween(getHistoryVideoRecorderStart(state), new Date());
+export const getHistoryVideoRecorderDuration = (state) => DurationsSelectors.getDurationBetween(getHistoryVideoRecorderStart(state), new Date());
 
 // workout video recorder
 
@@ -34,7 +32,11 @@ export const getWorkoutVideoPlayerStart = (state) => stateRoot(state).workoutWat
 
 export const getHistoryVideoPlayerStart = (state) => stateRoot(state).historyWatchVideoStart;
 
+// duration calculator
 
+export const getDurationBetween = (startDate, endDate) => {
+    return Math.abs(endDate.getTime() - startDate.getTime());
+}
 
 
 

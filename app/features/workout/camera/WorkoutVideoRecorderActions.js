@@ -6,7 +6,6 @@ import {
     SAVE_VIDEO_ERROR,
 } from 'app/ActionTypes';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
-import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 import * as Analytics from 'app/utility/Analytics';
 
 export const startRecording = (setID) => ({
@@ -21,7 +20,7 @@ export const stopRecording = () => ({
 export const dismissRecording = () => (dispatch, getState) => {
     var state = getState();
 
-    cancelVideoAnalytics(state);
+    logCancelRecordVideoAnalytics(state);
 
     Analytics.setCurrentScreen('workout');
     
@@ -33,7 +32,7 @@ export const dismissRecording = () => (dispatch, getState) => {
 export const saveVideo = (setID, videoFileURL, videoType) => (dispatch, getState) => {
     var state = getState();
 
-    saveVideoAnalytics(state);
+    logSaveVideoAnalytics(state);
 
     dispatch({
         type: SAVE_WORKOUT_VIDEO,
@@ -46,34 +45,34 @@ export const saveVideo = (setID, videoFileURL, videoType) => (dispatch, getState
 export const saveVideoError = (setID) => (dispatch, getState) => {
     var state = getState();
 
-    saveVideoErrorAnalytics(state);
+    logSaveVideoErrorAnalytics(state);
 
     dispatch({
         type: SAVE_VIDEO_ERROR,
     });
 }
 
-const saveVideoAnalytics = (state) => {
+const logSaveVideoAnalytics = (state) => {
     let startDate = DurationsSelectors.getWorkoutVideoRecorderStart(state);
-    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
 
     Analytics.logEventWithAppState('save_video', {
         duration: duration
     }, state);    
 };
 
-const cancelVideoAnalytics = (state) => {
+const logCancelRecordVideoAnalytics = (state) => {
     let startDate = DurationsSelectors.getWorkoutVideoRecorderStart(state);
-    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
 
     Analytics.logEventWithAppState('cancel_record_video', {
         duration: duration
     }, state);    
 };
 
-const saveVideoErrorAnalytics = (state) => {
+const logSaveVideoErrorAnalytics = (state) => {
     let startDate = DurationsSelectors.getWorkoutVideoRecorderStart(state);
-    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
 
     Analytics.logEventWithAppState('save_video_error', {
         duration: duration

@@ -120,8 +120,7 @@ const logEditExerciseNameAnalytics = (setID, exercise, state) => {
 
 const logSaveWeightAnalytics = (setID, state) => {
     let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
-    let startDate = DurationsSelectors.getEditWorkoutWeightStart(state);
-    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getEditWorkoutWeightDuration(state);
 
     Analytics.logEventWithAppState('save_weight', {
         value: duration,
@@ -132,8 +131,7 @@ const logSaveWeightAnalytics = (setID, state) => {
 
 const logSaveRPEAnalytics = (setID, state) => {
     let is_working_set = SetsSelectors.getIsCurrentSet(state, setID);
-    let startDate = DurationsSelectors.getEditWorkoutRPEStart(state);
-    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getEditWorkoutRPEDuration(state);
 
     Analytics.logEventWithAppState('save_rpe', {
         value: duration,

@@ -53,8 +53,7 @@ export const saveVideoError = (setID) => (dispatch, getState) => {
 }
 
 const logSaveVideoAnalytics = (state) => {
-    let startDate = DurationsSelectors.getWorkoutVideoRecorderStart(state);
-    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getWorkoutVideoRecorderDuration(state);
 
     Analytics.logEventWithAppState('save_video', {
         duration: duration
@@ -62,8 +61,7 @@ const logSaveVideoAnalytics = (state) => {
 };
 
 const logCancelRecordVideoAnalytics = (state) => {
-    let startDate = DurationsSelectors.getWorkoutVideoRecorderStart(state);
-    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getWorkoutVideoRecorderDuration(state);
 
     Analytics.logEventWithAppState('cancel_record_video', {
         duration: duration
@@ -71,8 +69,7 @@ const logCancelRecordVideoAnalytics = (state) => {
 };
 
 const logSaveVideoErrorAnalytics = (state) => {
-    let startDate = DurationsSelectors.getWorkoutVideoRecorderStart(state);
-    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getWorkoutVideoRecorderDuration(state);
 
     Analytics.logEventWithAppState('save_video_error', {
         duration: duration

@@ -118,12 +118,14 @@ const dictToArray = (dictionary) => {
 // Get History Sets
 
 export const getHistorySetsChronological = (state) => {
-    var array = dictToArray(state.historyData);
+    var array = dictToArray(stateRoot(state).historyData);
     array.sort((set1, set2) => new Date(set1.startTime) - new Date(set2.startTime));
     return array;
 };
 
-export const getHistoryRepsChronological = (sets) => {
+export const getHistoryReps = (state) => {
+    let sets = stateRoot(state);
+
     var num_reps = 0;
     
     sets.forEach((set) => {
@@ -135,7 +137,9 @@ export const getHistoryRepsChronological = (sets) => {
     return num_reps;    
 }
 
-export const getHistoryWorkoutIDsChronological = (sets) => {
+export const getHistoryWorkoutIDs = (state) => {
+    let sets = stateRoot(state);
+    
     let workoutIDs = [sets[0].workoutID];
 
     for (var i = 1; i < sets.length; i++) {
@@ -244,4 +248,4 @@ export const lastWorkoutTime = (state) => {
     let startTime = Date.parse(sets[sets.length - 1].initialStartTime);
 
     return Math.abs((new Date()).getTime() - startTime);
-}
+};

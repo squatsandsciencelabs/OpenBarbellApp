@@ -58,7 +58,7 @@ describe('endWorkout analytics', () => {
         });        
 
         test('num_reps is 1', () => {
-           repsSpy = jest.spyOn(SetsSelectors, 'getNumReps').mockImplementation(() => 1);
+           repsSpy = jest.spyOn(SetsSelectors, 'getNumWorkoutReps').mockImplementation(() => 1);
            
            store.dispatch(sut.endWorkout());
 
@@ -69,7 +69,7 @@ describe('endWorkout analytics', () => {
         });
 
         test('num_reps is 2', () => {
-            repsSpy = jest.spyOn(SetsSelectors, 'getNumReps').mockImplementation(() => 2);
+            repsSpy = jest.spyOn(SetsSelectors, 'getNumWorkoutReps').mockImplementation(() => 2);
             
             store.dispatch(sut.endWorkout());
  
@@ -80,7 +80,7 @@ describe('endWorkout analytics', () => {
          });
 
         test('num_reps is 3', () => {
-            repsSpy = jest.spyOn(SetsSelectors, 'getNumReps').mockImplementation(() => 3);
+            repsSpy = jest.spyOn(SetsSelectors, 'getNumWorkoutReps').mockImplementation(() => 3);
             
             store.dispatch(sut.endWorkout());
  
@@ -104,7 +104,7 @@ describe('endWorkout analytics', () => {
         })
 
         test('num_sets_with_fields is 1', () => {
-            fieldsSpy = jest.spyOn(SetsSelectors, 'getNumFields').mockImplementation(() => 1);
+            fieldsSpy = jest.spyOn(SetsSelectors, 'getNumWorkoutSetsWithFields').mockImplementation(() => 1);
 
             store.dispatch(sut.endWorkout());
             
@@ -115,7 +115,7 @@ describe('endWorkout analytics', () => {
         });
 
         test('num_sets_with_fields is 2', () => {
-            fieldsSpy = jest.spyOn(SetsSelectors, 'getNumFields').mockImplementation(() => 2);
+            fieldsSpy = jest.spyOn(SetsSelectors, 'getNumWorkoutSetsWithFields').mockImplementation(() => 2);
 
             store.dispatch(sut.endWorkout());
             
@@ -126,7 +126,7 @@ describe('endWorkout analytics', () => {
         });
         
         test('num_sets_with_fields is 3', () => {
-            fieldsSpy = jest.spyOn(SetsSelectors, 'getNumFields').mockImplementation(() => 3);
+            fieldsSpy = jest.spyOn(SetsSelectors, 'getNumWorkoutSetsWithFields').mockImplementation(() => 3);
 
             store.dispatch(sut.endWorkout());
             

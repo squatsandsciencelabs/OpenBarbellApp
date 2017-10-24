@@ -46,7 +46,7 @@ export const exportCSV = () => (dispatch, getState) => {
             Alert.alert('Error Exporting CSV', 'Tip: Is your internet connection working?\n\nTip: Try Logging out then logging in again as this feature requires additional Google Drive permissions.');
         } else {
             //ATTEMPT
-            logAttemptlogExportCSVAnalytics(state);
+            logAttemptCSVAnalytics(state);
             dispatch(updateIsExportingCSV(true));
             try {
                 let date = new Date();
@@ -88,7 +88,7 @@ export const exportCSV = () => (dispatch, getState) => {
 
 const updateIsExportingCSV = (isExportingCSV) => ({ type: EXPORTING_CSV, isExportingCSV: isExportingCSV });
 
-const logAttemptlogExportCSVAnalytics = (state) => {
+const logAttemptCSVAnalytics = (state) => {
     let sets = SetsSelectors.getHistorySetsChronological(state);
     let num_reps = SetsSelectors.getHistoryReps(state);
     let workoutIDs = SetsSelectors.getHistoryWorkoutIDs(state);

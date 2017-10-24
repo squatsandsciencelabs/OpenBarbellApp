@@ -77,4 +77,4 @@ const logEndWorkoutAnalytics = (manuallyEnded, state) => {
         time_since_last_rep: null,
         manually_ended: manuallyEnded,
     }, state);    
-}
+};

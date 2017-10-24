@@ -88,9 +88,9 @@ export const exportCSV = () => (dispatch, getState) => {
 const updateIsExportingCSV = (isExportingCSV) => ({ type: EXPORTING_CSV, isExportingCSV: isExportingCSV });
 
 const attemptExportCSVAnalytics = (state) => {
-    let sets = SetsSelectors.getHistorySetsChronological(state.sets);
-    let num_reps = SetsSelectors.getHistoryRepsChronological(sets);
-    let workoutIDs = SetsSelectors.getHistoryWorkoutIDsChronological(sets);
+    let sets = SetsSelectors.getHistorySetsChronological(state);
+    let num_reps = SetsSelectors.getHistoryReps(state);
+    let workoutIDs = SetsSelectors.getHistoryWorkoutIDs(state);
     let time_since_last_export = getLastExportCSV(state);
     let time_since_last_workout = SetsSelectors.lastWorkoutTime(state);
 
@@ -105,9 +105,9 @@ const attemptExportCSVAnalytics = (state) => {
 };
 
 const exportCSVAnalytics = (state) => {
-    let sets = SetsSelectors.getHistorySetsChronological(state.sets);
-    let num_reps = SetsSelectors.getHistoryRepsChronological(sets);
-    let workoutIDs = SetsSelectors.getHistoryWorkoutIDsChronological(sets);
+    let sets = SetsSelectors.getHistorySetsChronological(state);
+    let num_reps = SetsSelectors.getHistoryReps(state);
+    let workoutIDs = SetsSelectors.getHistoryWorkoutIDs(state);
     let time_since_last_export = getLastExportCSV(state);
     let time_since_last_workout = SetsSelectors.lastWorkoutTime(state);
 
@@ -122,9 +122,9 @@ const exportCSVAnalytics = (state) => {
 };
 
 const exportCSVErrorAnalytics = (state) => {
-    let sets = SetsSelectors.getHistorySetsChronological(state.sets);
-    let num_reps = SetsSelectors.getHistoryRepsChronological(sets);
-    let workoutIDs = SetsSelectors.getHistoryWorkoutIDsChronological(sets);
+    let sets = SetsSelectors.getHistorySetsChronological(state);
+    let num_reps = SetsSelectors.getHistoryReps(state);
+    let workoutIDs = SetsSelectors.getHistoryWorkoutIDs(state);
     let time_since_last_export = getLastExportCSV(state);
     let time_since_last_workout = SetsSelectors.lastWorkoutTime(state);
 

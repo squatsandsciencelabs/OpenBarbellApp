@@ -56,7 +56,7 @@ export const exportCSV = () => (dispatch, getState) => {
                 name = name.split(',').join('');
                 name = name.split(':').join('.');
                 let state = getState();
-                let sets = SetsSelectors.getHistorySetsChronological(state.sets);
+                let sets = SetsSelectors.getHistorySetsChronological(state);
                 let csv = CSVConverter.convert(sets);
                 console.tron.log("google access token " + user.accessToken);
                 await GoogleDriveUploader.upload(user.accessToken, name, csv, (fileID) => {
@@ -141,7 +141,7 @@ const logExportCSVErrorAnalytics = (state) => {
 const getlastExportCSVDuration = (state) => {
     let startDate = SettingsSelectors.getlastExportCSVDate(state);
     if (Boolean(startDate)) {
-        return DurationCalculator.getDurationBetween(startDate, new Date());
+        return Date.parse(new Date()) - Date.parse(startDate);
     } else {
         return 0;
     }

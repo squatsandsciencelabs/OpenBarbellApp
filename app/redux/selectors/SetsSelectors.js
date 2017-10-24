@@ -119,13 +119,14 @@ const dictToArray = (dictionary) => {
 // Get History Sets
 
 export const getHistorySetsChronological = (state) => {
-    var array = dictToArray(stateRoot(state).historyData);
+    let sets = state.sets;
+    var array = dictToArray(sets.historyData);
     array.sort((set1, set2) => new Date(set1.startTime) - new Date(set2.startTime));
     return array;
 };
 
 export const getHistoryReps = (state) => {
-    let sets = stateRoot(state);
+    let sets = getHistorySetsChronological(state);
 
     var num_reps = 0;
     
@@ -139,7 +140,7 @@ export const getHistoryReps = (state) => {
 }
 
 export const getHistoryWorkoutIDs = (state) => {
-    let sets = stateRoot(state);
+    let sets = getHistorySetsChronological(state);
     
     let workoutIDs = [sets[0].workoutID];
 
@@ -222,12 +223,10 @@ export const getWorkoutDuration = (state) => {
     const startDate = SetTimeCalculator.startTime(sets[0]);
 
     if (startTime) {
-        var duration = DurationCalculator.getDurationBetween(startDate, new Date());
+        return DurationCalculator.getDurationBetween(startDate, new Date());
     } else {
         return 0;
     }
-
-    return duration;
 };
 
 export const getCurrentSet = (state) => {
@@ -243,8 +242,8 @@ export const getIsCurrentSet = (state, setID) => {
 };
 
 export const lastWorkoutTime = (state) => {
-    let sets = getHistorySetsChronological(state.sets);
+    let sets = getHistorySetsChronological(state);
     let startTime = Date.parse(sets[sets.length - 1].initialStartTime);
 
-    return Math.abs((new Date()).getTime() - startTime);
+    return Date.parse(new Date()) - startTime;
 };

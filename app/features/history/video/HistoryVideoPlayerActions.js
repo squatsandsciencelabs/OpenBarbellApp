@@ -4,12 +4,11 @@ import {
 } from 'app/ActionTypes';
 import * as Analytics from 'app/utility/Analytics';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
-import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 
 export const deleteVideo = (setID) => (dispatch, getState) => {
     var state = getState();
 
-    deleteVideoAnalytics(state);
+    logDeleteVideoAnalytics(state);
 
     dispatch({
         type: DELETE_HISTORY_VIDEO,
@@ -20,7 +19,7 @@ export const deleteVideo = (setID) => (dispatch, getState) => {
 export const closeModal = () => (dispatch, getState) => {
     var state = getState();
 
-    cancelWatchVideoAnalytics(state);    
+    logCancelWatchVideoAnalytics(state);    
 
     Analytics.setCurrentScreen('history');
     
@@ -29,18 +28,18 @@ export const closeModal = () => (dispatch, getState) => {
     });
 };
 
-const deleteVideoAnalytics = (state) => {
+const logDeleteVideoAnalytics = (state) => {
     let startDate = DurationsSelectors.getHistoryVideoPlayerStart(state);
-    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
 
     Analytics.logEventWithAppState('delete_video', {
         duration: duration
     }, state);        
 }
 
-const cancelWatchVideoAnalytics = (state) => {
+const logCancelWatchVideoAnalytics = (state) => {
     let startDate = DurationsSelectors.getHistoryVideoPlayerStart(state);
-    let duration = DurationCalculator.getDurationBetween(startDate, new Date());  
+    let duration = DurationsSelectors.getDurationBetween(startDate, new Date());  
 
     Analytics.logEventWithAppState('cancel_watch_video', {
         duration: duration

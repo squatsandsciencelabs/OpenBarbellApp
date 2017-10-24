@@ -19,7 +19,7 @@ export const stopRecording = () => ({
 export const dismissRecording = () => (dispatch, getState) => {
     var state = getState();
 
-    cancelVideoAnalytics(state);
+    logCancelRecordVideoAnalytics(state);
 
     Analytics.setCurrentScreen('history');
     
@@ -31,7 +31,7 @@ export const dismissRecording = () => (dispatch, getState) => {
 export const saveVideo = (setID, videoFileURL, videoType) => (dispatch, getState) => {
     var state = getState();
 
-    saveVideoAnalytics(state);
+    logSaveVideoAnalytics(state);
 
     dispatch({
         type: SAVE_HISTORY_VIDEO,
@@ -44,7 +44,7 @@ export const saveVideo = (setID, videoFileURL, videoType) => (dispatch, getState
 export const saveVideoError = (setID) => (dispatch, getState) => {
     var state = getState();
 
-    saveVideoErrorAnalytics(state);
+    logSaveVideoErrorAnalytics(state);
 
     dispatch({
         type: SAVE_VIDEO_ERROR,
@@ -53,7 +53,7 @@ export const saveVideoError = (setID) => (dispatch, getState) => {
 
 // TODO: check that the duration calculation operates properly
 
-const saveVideoAnalytics = (state) => {
+const logSaveVideoAnalytics = (state) => {
     let duration = DurationsSelectors.getHistoryVideoRecorderDuration(state);
     
     Analytics.logEventWithAppState('save_video', {
@@ -61,7 +61,7 @@ const saveVideoAnalytics = (state) => {
     }, state);    
 };
 
-const cancelVideoAnalytics = (state) => {
+const logCancelRecordVideoAnalytics = (state) => {
     let duration = DurationsSelectors.getHistoryVideoRecorderDuration(state);
 
     Analytics.logEventWithAppState('cancel_record_video', {
@@ -69,7 +69,7 @@ const cancelVideoAnalytics = (state) => {
     }, state);    
 };
 
-const saveVideoErrorAnalytics = (state) => {
+const logSaveVideoErrorAnalytics = (state) => {
     let duration = DurationsSelectors.getHistoryVideoRecorderDuration(state);
 
     Analytics.logEventWithAppState('save_video_error', {

@@ -111,19 +111,20 @@ const createDefaultState = () => {
 
 const saveDefaultMetric = (state, action) => {
     let newWorkoutData = state.workoutData.slice(0);
-    let latestSet = newWorkoutData[newWorkoutData.length - 1];
-    let setIndex = newWorkoutData.findIndex( set => set.setID === action.setID );
-    let set = newWorkoutData[setIndex];
 
-    let changes = {};
-    
-    // Check if set is empty before allowing metric to change
-    if (SetEmptyCheck.isUntouched(set)) {
-        changes.metric = action.defaultMetric;
+    // update the working set's metric
+    if (newWorkoutData.length > 0) {
+        let setIndex = newWorkoutData.length-1;
+        let latestSet = newWorkoutData[setIndex];
+        let changes = {};
+        
+        // Check if set is empty before allowing metric to change
+        if (SetEmptyCheck.isUntouched(latestSet)) {
+            changes.metric = action.defaultMetric;
+        }
+        
+        newWorkoutData[setIndex] = Object.assign({}, latestSet, changes);
     }
-    
-    newWorkoutData[setIndex] = Object.assign({}, set, changes);
-    
     return Object.assign({}, state, {
         workoutData: newWorkoutData
     });

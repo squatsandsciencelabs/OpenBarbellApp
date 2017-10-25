@@ -17,7 +17,11 @@ describe('endWorkout analytics', () => {
         logEventSpy = jest.spyOn(Analytics, 'logEventWithAppState').mockImplementation(() => {});        
         store = mockStore({
             sets: {
-                workoutData: [{}],
+                workoutData: [{
+                    exercise: 'derp',
+                    reps: [],
+                    tags: []
+                }],
             },
             auth: {
                 email: '',
@@ -25,6 +29,9 @@ describe('endWorkout analytics', () => {
             workout: {
                 removedCounter: '',
                 restoredCounter: '',
+            },
+            history: {
+                viewedCounter: 0
             },
             appState: {
                 lockedCounter: 0,
@@ -65,7 +72,7 @@ describe('endWorkout analytics', () => {
            const event = logEventSpy.mock.calls[0][0];
            const params = logEventSpy.mock.calls[0][1];
            expect(event).toEqual('end_workout');
-           expect(params.num_reps).toBe(1);                   
+           expect(params.num_reps).toBe(1);
         });
 
         test('num_reps is 2', () => {
@@ -76,7 +83,7 @@ describe('endWorkout analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('end_workout');
-            expect(params.num_reps).toBe(2);                   
+            expect(params.num_reps).toBe(2);
          });
 
         test('num_reps is 3', () => {
@@ -87,7 +94,7 @@ describe('endWorkout analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('end_workout');
-            expect(params.num_reps).toBe(3);                   
+            expect(params.num_reps).toBe(3);
         });         
     });
 
@@ -111,7 +118,7 @@ describe('endWorkout analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('end_workout');
-            expect(params.num_sets_with_fields).toBe(1);    
+            expect(params.num_sets_with_fields).toBe(1);
         });
 
         test('num_sets_with_fields is 2', () => {
@@ -133,7 +140,7 @@ describe('endWorkout analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('end_workout');
-            expect(params.num_sets_with_fields).toBe(3);    
+            expect(params.num_sets_with_fields).toBe(3);
         });        
     });
 
@@ -145,7 +152,7 @@ describe('endWorkout analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('end_workout');
-            expect(params.manually_ended).toBeTruthy();              
+            expect(params.manually_ended).toBeTruthy();
         });
 
         test('false', () => {
@@ -154,7 +161,7 @@ describe('endWorkout analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('end_workout');
-            expect(params.manually_ended).toBeFalsy();              
+            expect(params.manually_ended).toBeFalsy();
         });
     });
 
@@ -178,7 +185,7 @@ describe('endWorkout analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('end_workout');
-            expect(params.percent_sets_fields).toBe(25);             
+            expect(params.percent_sets_fields).toBe(25);
         });
 
         test('50%', () => {
@@ -189,7 +196,7 @@ describe('endWorkout analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('end_workout');
-            expect(params.percent_sets_fields).toBe(50);             
+            expect(params.percent_sets_fields).toBe(50);
         });
         
         test('75%', () => {
@@ -200,7 +207,7 @@ describe('endWorkout analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('end_workout');
-            expect(params.percent_sets_fields).toBe(75);             
+            expect(params.percent_sets_fields).toBe(75);
         });  
         
         test('100%', () => {
@@ -211,7 +218,7 @@ describe('endWorkout analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('end_workout');
-            expect(params.percent_sets_fields).toBe(100);             
+            expect(params.percent_sets_fields).toBe(100);
         });        
     });
 });

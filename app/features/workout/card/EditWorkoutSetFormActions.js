@@ -47,9 +47,9 @@ export const dismissRPE = (setID) => (dispatch, getState) => {
 
     logSaveRPEAnalytics(setID, state);
 
-    return {
+    dispatch({
         type: END_EDITING_WORKOUT_RPE
-    }
+    });
 };
 
 export const dismissWeight = (setID) => (dispatch, getState) => {
@@ -57,9 +57,9 @@ export const dismissWeight = (setID) => (dispatch, getState) => {
 
     logSaveWeightAnalytics(setID, state);
 
-    return {
+    dispatch({
         type: END_EDITING_WORKOUT_WEIGHT
-    }
+    });
 };
 
 export const presentTags = (setID, tags) => (dispatch, getState) => {

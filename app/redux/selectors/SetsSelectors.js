@@ -153,6 +153,10 @@ export const getHistoryWorkoutIDs = (state) => {
     return workoutIDs;
 }
 
+export const getNumHistoryWorkouts = (state) => {
+    return getHistoryWorkoutIDs(state).length;
+};
+
 // Get Expanded History Set
 
 export const getExpandedHistorySet = (state, setID) => {

@@ -23,6 +23,11 @@ const defaultState = {
 const ConnectedDeviceReducer = ( state = defaultState, action) => {
     switch (action.type) {
         case CONNECT_DEVICE:
+            return Object.assign({}, state, {
+                status: 'CONNECTING',
+                deviceName: action.deviceName,
+                deviceIdentifier: action.deviceIdentifier,
+            });
         case RECONNECT_DEVICE:
             return Object.assign({}, state, {
                 status: 'CONNECTING',

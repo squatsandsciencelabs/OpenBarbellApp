@@ -104,7 +104,7 @@ export const getIsPreviousSetFilled = (state) => {
     return is_previous_set_filled;
 }
 
-// Array to Array
+// Dictionary to Array
 
 const dictToArray = (dictionary) => {
     var array = [];

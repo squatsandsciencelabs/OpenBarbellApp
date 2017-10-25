@@ -72,8 +72,7 @@ export const saveHistorySet = (setID, exercise = null, weight = null, metric = n
 
 export const endSet = (manuallyStarted=false, wasSanityCheck=false) => (dispatch, getState) => {
     const state = getState();
-    const workoutData = state.sets.workoutData;
-    const set = workoutData[workoutData.length - 1];
+    const set = SetsSelectors.getWorkingSet(state);
 
     // check if set form has any data
     if (!SetEmptyCheck.isUntouched(set)) {
@@ -104,8 +103,7 @@ export const finishedUploadingSets = (revision) => ({
 export const failedUploadSets = () => ({ type: FAILED_UPLOAD_SETS });
 
 const logEndSetAnalytics = (manuallyStarted, wasSanityCheck, state) => {
-    var workoutData = state.sets.workoutData;
-    var set = workoutData[workoutData.length - 1];
+    var set = SetsSelectors.getWorkingSet(state);
     var previous_set_has_reps = !SetsSelectors.getPreviousWorkoutSetHasEmptyReps(state);
     var is_previous_set_fields_filled = SetsSelectors.getIsPreviousWorkoutSetFilled(state);
     let num_fields_entered = SetEmptyCheck.numFieldsEntered(set);

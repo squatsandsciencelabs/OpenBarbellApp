@@ -230,7 +230,7 @@ export const getExpandedHistorySet = (state, setID) => {
     return null;
 };
 
-export const lastWorkoutTime = (state) => {
+export const getTimeSinceLastWorkout = (state) => {
     const sets = getHistorySetsChronological(state);
     if (sets.length <= 0) {
         return null;

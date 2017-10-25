@@ -151,8 +151,7 @@ export const connectingToDevice = (name, identifier) => ({
 
 export const connectedToDevice = (name, identifier) => {
     clearTimers();
-    const id = identifier.toString();
-    Analytics.setUserProp('connected_device_id', id);
+    Analytics.setUserProp('connected_device_id', name);
 
     checkOBVersion(name);
     
@@ -163,16 +162,12 @@ export const connectedToDevice = (name, identifier) => {
     };
 };
 
-export const reconnectingToDevice = (name, identifier) => {
-    const id = identifier.toString();
-    Analytics.setUserProp('connected_device_id', id);
-
+export const reconnectingToDevice = (name) => {
     checkOBVersion(name);
 
     return {
         type: RECONNECTING_TO_DEVICE,
         deviceName: name,
-        deviceIdentifier: identifier
     };
 };
 

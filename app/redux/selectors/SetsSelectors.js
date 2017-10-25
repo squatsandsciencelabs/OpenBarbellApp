@@ -147,8 +147,8 @@ export const getHistoryWorkoutIDs = (state) => {
     for (var i = 1; i < sets.length; i++) {
         if (sets[i].workoutID !== sets[i - 1].workoutID) {
             workoutIDs.push(sets[i].workoutID);
-        };
-    };
+        }
+    }
 
     return workoutIDs;
 }

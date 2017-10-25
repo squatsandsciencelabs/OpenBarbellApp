@@ -137,8 +137,6 @@ const logSaveRPEAnalytics = (setID, state) => {
 };
 
 const logEditRPEAnalytics = (setID, state) => {
-    let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
-
     Analytics.logEventWithAppState('edit_rpe', {
         is_working_set: false
     }, state);       

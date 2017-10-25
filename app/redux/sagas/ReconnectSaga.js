@@ -34,7 +34,7 @@ function* executeReconnect() {
         Alert.alert("Reconnecting!", "It looks like you disconnected, make sure your phone is within range and reduce interference from other bluetooth devices.");
 
         // set reconnect mode and scan
-        yield put(DeviceActionCreators.reconnectingToDevice());
+        yield put(DeviceActionCreators.reconnectingToDevice(reconnectDevice));
         yield put(DeviceActionCreators.startDeviceScan());
         const restartReconnectTask = yield fork(restartReconnect);        
 

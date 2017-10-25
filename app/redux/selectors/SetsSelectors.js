@@ -255,7 +255,7 @@ export const getIsWorkingSet = (state, setID) => {
 
 export const lastWorkoutTime = (state) => {
     let sets = getHistorySetsChronological(state);
-    let startTime = Date.parse(sets[sets.length - 1].initialStartTime);
+    let startTime = Date.parse(SetTimeCalculator.startTime(sets[sets.length - 1]));
 
     return Date.parse(new Date()) - startTime;
 };

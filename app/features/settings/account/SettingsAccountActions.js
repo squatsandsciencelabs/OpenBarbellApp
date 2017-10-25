@@ -93,7 +93,7 @@ const logAttemptCSVAnalytics = (state) => {
     let num_reps = SetsSelectors.getNumHistoryReps(state);
     let num_workouts = SetsSelectors.getNumHistoryWorkouts(state);
     let time_since_last_export = getlastExportCSVDuration(state);
-    let time_since_last_workout = SetsSelectors.lastWorkoutTime(state);
+    let time_since_last_workout = SetsSelectors.getTimeSinceLastWorkout(state);
 
     Analytics.logEventWithAppState('attempt_export_csv', {
         value: time_since_last_export,
@@ -110,7 +110,7 @@ const logExportCSVAnalytics = (state) => {
     let num_reps = SetsSelectors.getNumHistoryReps(state);
     let num_workouts = SetsSelectors.getNumHistoryWorkouts(state);
     let time_since_last_export = getlastExportCSVDuration(state);
-    let time_since_last_workout = SetsSelectors.lastWorkoutTime(state);
+    let time_since_last_workout = SetsSelectors.getTimeSinceLastWorkout(state);
 
     Analytics.logEventWithAppState('export_csv', {
         value: time_since_last_export,
@@ -127,7 +127,7 @@ const logExportCSVErrorAnalytics = (state) => {
     let num_reps = SetsSelectors.getNumHistoryReps(state);
     let num_workouts = SetsSelectors.getNumHistoryWorkouts(state);
     let time_since_last_export = getlastExportCSVDuration(state);
-    let time_since_last_workout = SetsSelectors.lastWorkoutTime(state);
+    let time_since_last_workout = SetsSelectors.getTimeSinceLastWorkout(state);
 
     Analytics.logEventWithAppState('export_csv_error', {
         num_sets: num_sets,

@@ -139,7 +139,7 @@ const logExportCSVErrorAnalytics = (state) => {
 };
 
 const getlastExportCSVDuration = (state) => {
-    let startDate = SettingsSelectors.getlastExportCSVDate(state);
+    let startDate = SettingsSelectors.getLastExportCSVDate(state);
     if (Boolean(startDate)) {
         return Date.parse(new Date()) - Date.parse(startDate);
     } else {

@@ -119,10 +119,16 @@ const dictToArray = (dictionary) => {
 // Get History Sets
 
 export const getHistorySetsChronological = (state) => {
-    let sets = state.sets;
+    let sets = stateRoot(state);
     var array = dictToArray(sets.historyData);
     array.sort((set1, set2) => new Date(set1.startTime) - new Date(set2.startTime));
     return array;
+};
+
+export const getNumHistorySets = (state) => {
+    let sets = stateRoot(state);
+    var array = dictToArray(sets.historyData);
+    return array.length;
 };
 
 export const getNumHistoryReps = (state) => {

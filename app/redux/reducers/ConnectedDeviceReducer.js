@@ -27,7 +27,7 @@ const ConnectedDeviceReducer = ( state = defaultState, action) => {
             return Object.assign({}, state, {
                 status: 'CONNECTING',
                 deviceName: action.deviceName,
-                deviceIdentifier: action.deviceIdentifier.action,
+                deviceIdentifier: action.deviceIdentifier,
                 numReconnects: state.numReconnects + 1
             });
         case DISCONNECT_DEVICE:

@@ -198,7 +198,7 @@ export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, g
 };
 
 const logAddRepAnalytics = (state) => {
-    let currentSet = SetsSelectors.getCurrentSet(state);
+    let currentSet = SetsSelectors.getWorkingSet(state);
     let set_id = currentSet.set_id;
     let rep_count = currentSet.reps.length;
     let has_exercise_name = Boolean(currentSet.exercise);

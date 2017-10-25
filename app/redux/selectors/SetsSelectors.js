@@ -223,7 +223,7 @@ export const getNumWorkoutSetsWithFields = (state) => {
     return num_sets_with_fields; 
 };
 
-export const getPercentFields = (state) => {
+export const getPercentWorkoutSetsWithFields = (state) => {
     const sets = getWorkoutSets(state);
     const numSetsFields = getNumWorkoutSetsWithFields(state);
 

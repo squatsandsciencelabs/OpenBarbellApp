@@ -245,7 +245,7 @@ export const getWorkoutDuration = (state) => {
     }
 };
 
-export const getCurrentSet = (state) => {
+export const getWorkingSet = (state) => {
     const sets = getWorkoutSets(state);
     const currentSet = sets[sets.length - 1];
 
@@ -253,7 +253,7 @@ export const getCurrentSet = (state) => {
 };
 
 export const getIsWorkingSet = (state, setID) => {
-    const currentSet = getCurrentSet(state);
+    const currentSet = getWorkingSet(state);
     return setID === currentSet.setID;
 };
 

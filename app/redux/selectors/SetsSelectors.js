@@ -125,7 +125,7 @@ export const getHistorySetsChronological = (state) => {
     return array;
 };
 
-export const getHistoryReps = (state) => {
+export const getNumHistoryReps = (state) => {
     let sets = getHistorySetsChronological(state);
 
     var num_reps = 0;

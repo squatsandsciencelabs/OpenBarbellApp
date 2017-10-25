@@ -51,6 +51,10 @@ export const getWorkoutSets = (state) => {
     return stateRoot(state).workoutData;
 };
 
+export const getNumWorkoutSets = (state) => {
+    return getWorkoutSets(state).length;
+};
+
 // Get Is Workout Empty
 
 export const getIsWorkoutEmpty = (state) => {

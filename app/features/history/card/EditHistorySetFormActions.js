@@ -111,32 +111,28 @@ export const presentWatchVideo = (setID, videoFileURL) => {
 };
 
 const logEditExerciseNameAnalytics = (setID, exercise, state) => {
-    let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
-
     Analytics.logEventWithAppState('edit_exercise_name', {
-        is_working_set: is_working_set
+        is_working_set: false
     }, state);
 };
 
 const logSaveWeightAnalytics = (setID, state) => {
-    let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
     let duration = DurationsSelectors.getEditHistoryWeightDuration(state);
 
     Analytics.logEventWithAppState('save_weight', {
         value: duration,
         duration: duration,
-        is_working_set: is_working_set
+        is_working_set: false
     }, state);    
 };
 
 const logSaveRPEAnalytics = (setID, state) => {
-    let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
     let duration = DurationsSelectors.getEditHistoryRPEDuration(state);
 
     Analytics.logEventWithAppState('save_rpe', {
         value: duration,
         duration: duration,
-        is_working_set: is_working_set
+        is_working_set: false
     }, state);    
 };
 
@@ -144,14 +140,12 @@ const logEditRPEAnalytics = (setID, state) => {
     let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 
     Analytics.logEventWithAppState('edit_rpe', {
-        is_working_set: is_working_set
+        is_working_set: false
     }, state);       
 };
 
 const logEditTagsAnalytics = (setID, state) => {
-    let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
-
     Analytics.logEventWithAppState('edit_tags', {
-        is_working_set: is_working_set
+        is_working_set: false
     }, state);       
 };

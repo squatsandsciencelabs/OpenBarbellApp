@@ -89,7 +89,7 @@ export const logEventWithAppState = (event, params, state) => {
     const connectedDeviceStatus = ConnectedDeviceStatusSelectors.getConnectedDeviceStatus(state);
     const isWorkoutEmpty = SetsSelectors.getIsWorkoutEmpty(state);
 
-    if (devices.length >= 25) {
+    if (devices.length > 25) {
         devices = devices.slice(0, 24);
     };
 

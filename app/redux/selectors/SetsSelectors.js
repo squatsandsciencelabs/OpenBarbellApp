@@ -238,7 +238,7 @@ export const getCurrentSet = (state) => {
     return currentSet;
 };
 
-export const getIsCurrentSet = (state, setID) => {
+export const getIsWorkingSet = (state, setID) => {
     const currentSet = getCurrentSet(state);
     return setID === currentSet.setID;
 };

@@ -171,7 +171,7 @@ describe('endWorkout analytics', () => {
         });
         
         test('25%', () => {
-            percentSpy = jest.spyOn(SetsSelectors, 'getPercentFields').mockImplementation(() => 25);
+            percentSpy = jest.spyOn(SetsSelectors, 'getPercentWorkoutSetsWithFields').mockImplementation(() => 25);
         
             store.dispatch(sut.endWorkout());
             
@@ -182,7 +182,7 @@ describe('endWorkout analytics', () => {
         });
 
         test('50%', () => {
-            percentSpy = jest.spyOn(SetsSelectors, 'getPercentFields').mockImplementation(() => 50);
+            percentSpy = jest.spyOn(SetsSelectors, 'getPercentWorkoutSetsWithFields').mockImplementation(() => 50);
         
             store.dispatch(sut.endWorkout());
             
@@ -193,7 +193,7 @@ describe('endWorkout analytics', () => {
         });
         
         test('75%', () => {
-            percentSpy = jest.spyOn(SetsSelectors, 'getPercentFields').mockImplementation(() => 75);
+            percentSpy = jest.spyOn(SetsSelectors, 'getPercentWorkoutSetsWithFields').mockImplementation(() => 75);
         
             store.dispatch(sut.endWorkout());
             
@@ -204,7 +204,7 @@ describe('endWorkout analytics', () => {
         });  
         
         test('100%', () => {
-            percentSpy = jest.spyOn(SetsSelectors, 'getPercentFields').mockImplementation(() => 100);
+            percentSpy = jest.spyOn(SetsSelectors, 'getPercentWorkoutSetsWithFields').mockImplementation(() => 100);
         
             store.dispatch(sut.endWorkout());
             

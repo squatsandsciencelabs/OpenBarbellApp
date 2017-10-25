@@ -46,7 +46,7 @@ const logEndWorkoutAnalytics = (manuallyEnded, state) => {
     var percentAppActive = null;
     let num_sets = SetsSelectors.getNumWorkoutSets(state);
     let num_sets_with_fields = SetsSelectors.getNumWorkoutSetsWithFields(state);
-    let percent_sets_fields = SetsSelectors.getPercentFields(state);
+    let percent_sets_fields = SetsSelectors.getPercentWorkoutSetsWithFields(state);
     let num_reps = SetsSelectors.getNumWorkoutReps(state);    
     let num_removes = WorkoutSelectors.getRemovedCounter(state);
     let num_restores = WorkoutSelectors.getRestoredCounter(state);

@@ -90,7 +90,7 @@ const updateIsExportingCSV = (isExportingCSV) => ({ type: EXPORTING_CSV, isExpor
 
 const logAttemptCSVAnalytics = (state) => {
     let sets = SetsSelectors.getHistorySetsChronological(state);
-    let num_reps = SetsSelectors.getHistoryReps(state);
+    let num_reps = SetsSelectors.getNumHistoryReps(state);
     let workoutIDs = SetsSelectors.getHistoryWorkoutIDs(state);
     let time_since_last_export = getlastExportCSVDuration(state);
     let time_since_last_workout = SetsSelectors.lastWorkoutTime(state);
@@ -107,7 +107,7 @@ const logAttemptCSVAnalytics = (state) => {
 
 const logExportCSVAnalytics = (state) => {
     let sets = SetsSelectors.getHistorySetsChronological(state);
-    let num_reps = SetsSelectors.getHistoryReps(state);
+    let num_reps = SetsSelectors.getNumHistoryReps(state);
     let workoutIDs = SetsSelectors.getHistoryWorkoutIDs(state);
     let time_since_last_export = getlastExportCSVDuration(state);
     let time_since_last_workout = SetsSelectors.lastWorkoutTime(state);
@@ -124,7 +124,7 @@ const logExportCSVAnalytics = (state) => {
 
 const logExportCSVErrorAnalytics = (state) => {
     let sets = SetsSelectors.getHistorySetsChronological(state);
-    let num_reps = SetsSelectors.getHistoryReps(state);
+    let num_reps = SetsSelectors.getNumHistoryReps(state);
     let workoutIDs = SetsSelectors.getHistoryWorkoutIDs(state);
     let time_since_last_export = getlastExportCSVDuration(state);
     let time_since_last_workout = SetsSelectors.lastWorkoutTime(state);

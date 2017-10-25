@@ -22,4 +22,4 @@ export const endSetTimeLeft = (state) => {
     return timeLeft;
 }
 
-export const getlastExportCSVDate = (state) => stateRoot(state).lastExportCSVDate;
+export const getLastExportCSVDate = (state) => stateRoot(state).lastExportCSVDate;

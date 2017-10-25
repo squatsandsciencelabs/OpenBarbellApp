@@ -20,7 +20,7 @@ export const lastWorkoutRepTime = (state) => {
     }
 
     // check the current set for end time
-    var currentSet = workoutData[workoutData.length-1];
+    var currentSet = getWorkingSet(state);
     var endTime = SetTimeCalculator.endTime(currentSet);
     if (endTime !== null) {
         return endTime;
@@ -117,9 +117,10 @@ export const getWorkoutDuration = (state) => {
 
 export const getWorkingSet = (state) => {
     const sets = getWorkoutSets(state);
-    const currentSet = sets[sets.length - 1];
-
-    return currentSet;
+    if (sets && sets.length > 0) {
+        return sets[sets.length - 1];
+    }
+    return null;
 };
 
 export const getIsWorkingSet = (state, setID) => {
@@ -129,31 +130,32 @@ export const getIsWorkingSet = (state, setID) => {
 
 export const getPreviousWorkoutSetHasEmptyReps = (state) => {
     const workoutData = stateRoot(state).workoutData;
-    const prevSet = workoutData[workoutData.length - 2];
-    
-    if (prevSet) {
-        return SetEmptyCheck.hasEmptyReps(prevSet);
-    } else {
-        return false;
+
+    if (workoutData.length >= 2) {
+        const prevSet = workoutData[workoutData.length - 2];
+        if (prevSet) {
+            return SetEmptyCheck.hasEmptyReps(prevSet);
+        }
     }
+
+    return false;
 }
 
 export const getIsPreviousWorkoutSetFilled = (state) => {
-    const workoutData = stateRoot(state).workoutData;    
+    const workoutData = stateRoot(state).workoutData;
 
-    const prevSet = workoutData[workoutData.length - 2];
-
-    if (prevSet) {
-        if(SetEmptyCheck.isEmpty(prevSet)) {
-            var is_previous_set_filled = 0;
-        } else {
-            var is_previous_set_filled = 1;
+    if (workoutData.length >= 2) {        
+        const prevSet = workoutData[workoutData.length - 2];
+        if (prevSet) {
+            if(SetEmptyCheck.isEmpty(prevSet)) {
+                return 0;
+            } else {
+                return 1;
+            }
         }
-    } else {
-        var is_previous_set_filled = -1;
-    }  
+    }
     
-    return is_previous_set_filled;
+    return -1;
 }
 
 // Dictionary to Array
@@ -229,10 +231,14 @@ export const getExpandedHistorySet = (state, setID) => {
 };
 
 export const lastWorkoutTime = (state) => {
-    let sets = getHistorySetsChronological(state);
-    let startTime = Date.parse(SetTimeCalculator.startTime(sets[sets.length - 1]));
-
-    return Date.parse(new Date()) - startTime;
+    const sets = getHistorySetsChronological(state);
+    if (sets.length <= 0) {
+        return null;
+    } else {
+        const lastSet = sets[sets.length-1];
+        const startTime = Date.parse(SetTimeCalculator.startTime(lastSet));
+        return Date.parse(new Date()) - startTime;
+    }
 };
 
 // Syncing

@@ -33,23 +33,21 @@ export const saveExerciseName = (setID, exercise) => (dispatch, getState) => {
 };
 
 const logSaveExerciseNameAnalytics = (setID, exercise, state) => {
-    let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
     let duration = DurationsSelectors.getEditHistoryExerciseDuration(state);
 
     Analytics.logEventWithAppState('save_exercise_name', {
         value: duration,
         duration: duration,
-        is_working_set: is_working_set
+        is_working_set: false
     }, state);
 };
 
 const logCancelEditExerciseNameAnalytics = (setID, state) => {
-    let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
     let duration = DurationsSelectors.getEditHistoryExerciseDuration(state);
 
     Analytics.logEventWithAppState('cancel_edit_exercise_name', {
         value: duration,
         duration: duration,
-        is_working_set: is_working_set
+        is_working_set: false
     }, state);
 };

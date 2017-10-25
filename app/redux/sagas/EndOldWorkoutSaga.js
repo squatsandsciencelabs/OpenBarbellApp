@@ -21,7 +21,7 @@ const EndOldWorkoutSaga = function * EndOldWorkoutSaga() {
 
 function* endOldWorkout() {
     // check end time
-    var endTime = yield select(SetsSelectors.lastRepTime);
+    var endTime = yield select(SetsSelectors.lastWorkoutRepTime);
     console.tron.log("End time originally " + endTime);
     endTime = DateUtils.getDate(endTime);
     if (endTime === null) {

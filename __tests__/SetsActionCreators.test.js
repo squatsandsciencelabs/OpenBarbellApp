@@ -415,7 +415,7 @@ describe('endSet analytics', () => {
         });
         
         test('-1 if no previous set', () => {
-           previousSetFilledSpy = jest.spyOn(SetsSelectors, 'getIsPreviousSetFilled').mockImplementation(() => -1);
+           previousSetFilledSpy = jest.spyOn(SetsSelectors, 'getIsPreviousWorkoutSetFilled').mockImplementation(() => -1);
 
            store.dispatch(sut.endSet());
            
@@ -426,7 +426,7 @@ describe('endSet analytics', () => {
         });
 
         test('0 if empty', () => {
-            previousSetFilledSpy = jest.spyOn(SetsSelectors, 'getIsPreviousSetFilled').mockImplementation(() => 0);
+            previousSetFilledSpy = jest.spyOn(SetsSelectors, 'getIsPreviousWorkoutSetFilled').mockImplementation(() => 0);
  
             store.dispatch(sut.endSet());
             
@@ -437,7 +437,7 @@ describe('endSet analytics', () => {
         });        
 
         test('1 if filled', () => {
-            previousSetFilledSpy = jest.spyOn(SetsSelectors, 'getIsPreviousSetFilled').mockImplementation(() => 1);
+            previousSetFilledSpy = jest.spyOn(SetsSelectors, 'getIsPreviousWorkoutSetFilled').mockImplementation(() => 1);
  
             store.dispatch(sut.endSet());
             
@@ -462,7 +462,7 @@ describe('endSet analytics', () => {
 
         test("true when it does not have empty reps", () => {
             // given the set does not have empty reps
-            touchedSpy = jest.spyOn(SetsSelectors, 'getPreviousSetHasEmptyReps').mockImplementation(() => false);
+            touchedSpy = jest.spyOn(SetsSelectors, 'getPreviousWorkoutSetHasEmptyReps').mockImplementation(() => false);
 
             // when you end the set
             store.dispatch(sut.endSet());            
@@ -476,7 +476,7 @@ describe('endSet analytics', () => {
 
         test("false when it has empty reps", () => {
             // given the set does not have empty reps
-            touchedSpy = jest.spyOn(SetsSelectors, 'getPreviousSetHasEmptyReps').mockImplementation(() => true);
+            touchedSpy = jest.spyOn(SetsSelectors, 'getPreviousWorkoutSetHasEmptyReps').mockImplementation(() => true);
 
             // when you end the set
             store.dispatch(sut.endSet());            

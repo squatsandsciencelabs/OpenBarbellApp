@@ -6,7 +6,7 @@ target 'OBBApp' do
   # use_frameworks!
 
   # Pods for OBBApp
-  pod 'Firebase', '4.1.1'
+  pod 'Firebase', '4.4.0'
   pod 'Firebase/Core'
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
   pod 'Firebase/Analytics'

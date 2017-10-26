@@ -1,3 +1,4 @@
 import firebase from 'react-native-firebase';
-
-export default firebase.app();
+let app = firebase.app();
+app.analytics().setAnalyticsCollectionEnabled(true);
+export default app;

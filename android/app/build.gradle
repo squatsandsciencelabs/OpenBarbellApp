@@ -72,6 +72,10 @@ import com.android.build.OutputFile
  * ]
  */
 
+project.ext.react = [
+    entryFile: "index.js"
+]
+
 apply from: "../../node_modules/react-native/react.gradle"
 
 /**
@@ -146,9 +150,7 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-fetch-blob')
     compile project(':react-native-keep-awake')
-    compile project(':react-native-fs')
     compile project(':react-native-video')
     compile project(':react-native-camera')
     compile(project(':react-native-device-info')){

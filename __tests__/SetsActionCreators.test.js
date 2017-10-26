@@ -1,4 +1,4 @@
-jest.mock('react-native-firebase');
+jest.mock('app/configs/Firebase', () => {});
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import * as Analytics from 'app/utility/Analytics';

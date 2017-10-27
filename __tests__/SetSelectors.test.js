@@ -140,6 +140,63 @@ describe('getExpandedWorkoutSet', () => {
 });
 
 describe('getNumWorkoutReps', () => {
+    test('0 when no sets', () => {
+        const state = {
+            sets: {
+                workoutData: []
+            }
+        };
+
+        const result = sut.getNumWorkoutReps(state);
+
+        expect(result).toBe(0);
+   });
+
+   test('0 when sets have none', () => {
+        const state = {
+            sets: {
+                workoutData: [{reps:[]}]
+            }
+        };
+
+        const result = sut.getNumWorkoutReps(state);
+
+        expect(result).toBe(0);
+    });
+
+    test('reps for a single set', () => {
+        const state = {
+            sets: {
+                workoutData: [{
+                    reps:[]
+                },
+                {
+                    reps:[{}, {}, {}]
+                }]
+            }
+        };
+
+        const result = sut.getNumWorkoutReps(state);
+
+        expect(result).toBe(3);
+    });
+
+    test('reps across multiple sets', () => {
+        const state = {
+            sets: {
+                workoutData: [{
+                    reps:[{}, {}]
+                },
+                {
+                    reps:[{}, {}, {}]
+                }]
+            }
+        };
+
+        const result = sut.getNumWorkoutReps(state);
+
+        expect(result).toBe(5);
+    });
 });
 
 describe('getNumWorkoutSetsWithFields', () => {
@@ -210,12 +267,79 @@ describe('getNumHistorySets', () => {
 });
 
 describe('getNumHistoryReps', () => {
+    test('0 when no sets', () => {
+        const state = {
+            sets: {
+                historyData: {
+                }
+            }
+        };
+
+        const result = sut.getNumHistoryReps(state);
+
+        expect(result).toBe(0);
+   });
+
+   test('0 when sets have none', () => {
+        const state = {
+            sets: {
+                historyData: {
+                    a: {
+                        reps:[]
+                    }
+                }
+            }
+        };
+
+        const result = sut.getNumHistoryReps(state);
+
+        expect(result).toBe(0);
+    });
+
+    test('reps for a single set', () => {
+        const state = {
+            sets: {
+                historyData: {
+                    a: {
+                        reps:[]
+                    },
+                    b: {
+                        reps:[{}, {}, {}]
+                    }
+                }
+            }
+        };
+
+        const result = sut.getNumHistoryReps(state);
+
+        expect(result).toBe(3);
+    });
+
+    test('reps across multiple sets', () => {
+        const state = {
+            sets: {
+                historyData: {
+                    a: {
+                        reps:[{}, {}]
+                    },
+                    b: {
+                        reps:[{}, {}, {}]
+                    }
+                }
+            }
+        };
+
+        const result = sut.getNumHistoryReps(state);
+
+        expect(result).toBe(5);
+    });
 });
 
 describe('getNumHistoryWorkouts', () => {
 });
 
-describe('getExpandedHistorySet', () => {
+describe.skip('getExpandedHistorySet', () => {
+    // expanded isn't being used right now, so skipping
 });
 
 describe('getTimeSinceLastWorkout', () => {

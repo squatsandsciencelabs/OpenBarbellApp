@@ -201,7 +201,8 @@ describe('getIsWorkoutEmpty', () => {
     });
 });
 
-describe('getExpandedWorkoutSet', () => {
+describe.skip('getExpandedWorkoutSet', () => {
+    // expanded isn't being used right now, so skipping
 });
 
 describe('getNumWorkoutReps', () => {
@@ -265,7 +266,33 @@ describe('getNumWorkoutReps', () => {
 });
 
 describe('getNumWorkoutSetsWithFields', () => {
+    let hasEmptyDataSpy = null;
 
+    afterEach(() => {
+        if (hasEmptyDataSpy) {
+            hasEmptyDataSpy.mockReset();
+        }
+    });
+
+    afterAll(() => {
+        if (hasEmptyDataSpy) {            
+            hasEmptyDataSpy.mockReset();
+            hasEmptyDataSpy.mockRestore();
+        }
+    });
+
+    test('3 fields', () => {
+        hasEmptyDataSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => set);    
+        const state = {
+            sets: {
+                workoutData: [false, true, false, false]
+            }
+        };
+    
+        const result = sut.getNumWorkoutSetsWithFields(state);
+    
+        expect(result).toBe(3);
+    });
 });
 
 describe('getPercentWorkoutSetsWithFields', () => {

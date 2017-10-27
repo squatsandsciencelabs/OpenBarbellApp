@@ -85,7 +85,7 @@ export const getNumWorkoutSetsWithFields = (state) => {
     var num_sets_with_fields = 0;
 
     sets.forEach((set) => {
-        if (!SetEmptyCheck.hasEmptyData(set)) {
+        if (!SetEmptyCheck.hasEmptyFields(set)) {
             num_sets_with_fields++;
         }
     });

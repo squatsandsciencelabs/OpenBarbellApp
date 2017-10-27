@@ -147,7 +147,7 @@ export const getIsPreviousWorkoutSetFilled = (state) => {
     if (workoutData.length >= 2) {        
         const prevSet = workoutData[workoutData.length - 2];
         if (prevSet) {
-            if(SetEmptyCheck.isEmpty(prevSet)) {
+            if(SetEmptyCheck.hasEmptyFields(prevSet)) {
                 return 0;
             } else {
                 return 1;

@@ -8,8 +8,12 @@ export const isUntouched = (set) => {
     return hasEmptyData(set) && hasNoReps(set);
 };
 
+export const hasEmptyFields = (set) => {
+    return !set.exercise && (!set.weight || set.weight === '') && (!set.rpe || set.rpe === '') && (!set.tags || set.tags === undefined || set.tags.length === 0);
+};
+
 export const hasEmptyData = (set) => {
-    return !set.exercise && (!set.weight || set.weight === '') && (!set.rpe || set.rpe === '') && (!set.tags || set.tags === undefined || set.tags.length === 0) && !set.videoFileURL;
+    return hasEmptyFields(set) && !set.videoFileURL;
 };
 
 export const hasNoReps = (set) => {

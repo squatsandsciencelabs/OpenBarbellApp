@@ -8,6 +8,88 @@ describe.skip('isUntouched', () => {
     // note: skipping for now as too many possibilities and theoretically testing inner functions is sufficient
 });
 
+describe('hasEmptyFields', () => {
+    // note: not testing for every undefined / null case as too many possibilities
+    // note: not testing for combinations as too many possibilities
+    test('true when null', () => {
+        let set = {
+            exercise: null,
+            weight: null,
+            rpe: null,
+            tags: [],
+        };
+
+        let result = sut.hasEmptyFields(set);
+
+        expect(result).toBeTruthy();
+    });
+
+    test('true when empty', () => {
+        let set = {
+            exercise: '',
+            weight: '',
+            rpe: '',
+            tags: [],
+        };
+
+        let result = sut.hasEmptyFields(set);
+
+        expect(result).toBeTruthy();
+    });
+
+    test('false w/ exercise name', () => {
+        let set = {
+            exercise: 'derp',
+            weight: '',
+            rpe: '',
+            tags: [],
+        };
+
+        let result = sut.hasEmptyFields(set);
+
+        expect(result).toBeFalsy();
+    });
+
+    test('false w/ weight', () => {
+        let set = {
+            exercise: '',
+            weight: '300',
+            rpe: '',
+            tags: [],
+        };
+
+        let result = sut.hasEmptyFields(set);
+
+        expect(result).toBeFalsy();
+    });
+
+    test('false w/ rpe', () => {
+        let set = {
+            exercise: '',
+            weight: '',
+            rpe: '5.5',
+            tags: [],
+        };
+
+        let result = sut.hasEmptyFields(set);
+
+        expect(result).toBeFalsy();
+    });
+
+    test('false w/ tag', () => {
+        let set = {
+            exercise: '',
+            weight: '',
+            rpe: '',
+            tags: [{}],
+        };
+
+        let result = sut.hasEmptyFields(set);
+
+        expect(result).toBeFalsy();
+    });
+});
+
 describe('hasEmptyData', () => {
     // note: not testing for every undefined / null case as too many possibilities
     // note: not testing for combinations as too many possibilities

@@ -351,10 +351,10 @@ describe('getIsPreviousWorkoutSetFilled', () => {
     });
 
     test('0 if not filled', () => {
-        hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => set);    
+        hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => true);    
         const state = {
             sets: {
-                workoutData: [true, true, true, true]
+                workoutData: [{}, {}, {}, {}]
             }
         };
     
@@ -364,10 +364,10 @@ describe('getIsPreviousWorkoutSetFilled', () => {
     });
 
     test('1 if filled', () => {
-        hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => set.returnVal);    
+        hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => false);    
         const state = {
             sets: {
-                workoutData: [{returnVal: false}, {returnVal: false}, {returnVal: false}, {returnVal: false}]
+                workoutData: [{}, {}, {}, {}]
             }
         };
     

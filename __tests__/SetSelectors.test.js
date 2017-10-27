@@ -266,23 +266,23 @@ describe('getNumWorkoutReps', () => {
 });
 
 describe('getNumWorkoutSetsWithFields', () => {
-    let hasEmptyDataSpy = null;
+    let hasEmptyFieldsSpy = null;
 
     afterEach(() => {
-        if (hasEmptyDataSpy) {
-            hasEmptyDataSpy.mockReset();
+        if (hasEmptyFieldsSpy) {
+            hasEmptyFieldsSpy.mockReset();
         }
     });
 
     afterAll(() => {
-        if (hasEmptyDataSpy) {            
-            hasEmptyDataSpy.mockReset();
-            hasEmptyDataSpy.mockRestore();
+        if (hasEmptyFieldsSpy) {            
+            hasEmptyFieldsSpy.mockReset();
+            hasEmptyFieldsSpy.mockRestore();
         }
     });
 
     test('3 fields', () => {
-        hasEmptyDataSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => set);    
+        hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => set);    
         const state = {
             sets: {
                 workoutData: [false, true, false, false]
@@ -311,6 +311,70 @@ describe('getPreviousWorkoutSetHasEmptyReps', () => {
 });
 
 describe('getIsPreviousWorkoutSetFilled', () => {
+    let hasEmptyFieldsSpy = null;
+    
+        afterEach(() => {
+            if (hasEmptyFieldsSpy) {
+                hasEmptyFieldsSpy.mockReset();
+            }
+        });
+    
+        afterAll(() => {
+            if (hasEmptyFieldsSpy) {            
+                hasEmptyFieldsSpy.mockReset();
+                hasEmptyFieldsSpy.mockRestore();
+            }
+        });
+        
+    test('-1 if no sets', () => {
+        const state = {
+            sets: {
+                workoutData: []
+            }
+        };
+    
+        const result = sut.getIsPreviousWorkoutSetFilled(state);
+    
+        expect(result).toBe(-1);
+    });
+
+    test('-1 if no previous set', () => {
+        const state = {
+            sets: {
+                workoutData: [{}]
+            }
+        };
+    
+        const result = sut.getIsPreviousWorkoutSetFilled(state);
+    
+        expect(result).toBe(-1);
+    });
+
+    test('0 if not filled', () => {
+        hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => set);    
+        const state = {
+            sets: {
+                workoutData: [true, true, true, true]
+            }
+        };
+    
+        const result = sut.getIsPreviousWorkoutSetFilled(state);
+    
+        expect(result).toBe(0);
+    });
+
+    test('1 if filled', () => {
+        hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => set.returnVal);    
+        const state = {
+            sets: {
+                workoutData: [{returnVal: false}, {returnVal: false}, {returnVal: false}, {returnVal: false}]
+            }
+        };
+    
+        const result = sut.getIsPreviousWorkoutSetFilled(state);
+    
+        expect(result).toBe(1);
+    });
 });
 
 describe('getHistorySetsChronological', () => {

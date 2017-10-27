@@ -13,7 +13,10 @@ export const hasEmptyData = (set) => {
 };
 
 export const hasNoReps = (set) => {
-    return set.reps !== null && set.reps !== undefined && set.reps.length === 0;
+    if (set.reps === null || set.reps === undefined) {
+        return true;
+    }
+    return set.reps.length === 0;
 };
 
 export const hasEmptyReps = (set) => {
@@ -21,7 +24,7 @@ export const hasEmptyReps = (set) => {
         return true;
     }
 
-    let activeRep = set.reps.find((rep) => { return !rep.removed; });
+    let activeRep = set.reps.find((rep) => { return rep.removed === false; });
     return activeRep === undefined;
 };
 

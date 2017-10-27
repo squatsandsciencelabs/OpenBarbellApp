@@ -1,10 +1,10 @@
 import * as sut from 'app/utility/transforms/SetEmptyCheck';
 
-describe('isEmpty', () => {
+describe.skip('isEmpty', () => {
     // note: skipping for now as too many possibilities and theoretically testing inner functions is sufficient
 });
 
-describe('isUntouched', () => {
+describe.skip('isUntouched', () => {
     // note: skipping for now as too many possibilities and theoretically testing inner functions is sufficient
 });
 

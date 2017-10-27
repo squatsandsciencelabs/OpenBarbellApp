@@ -56,7 +56,7 @@ describe('lastWorkoutRepTime', () => {
     });
 
     test('end time of current set', () => {
-        let expected = 3;
+        const expected = 3;
         endTimeSpy = jest.spyOn(SetTimeCalculator, 'endTime').mockImplementation(() => expected);
         const state = {
             sets: {
@@ -70,7 +70,7 @@ describe('lastWorkoutRepTime', () => {
     });
 
     test('end time of set after current set if current set has no end time', () => {
-        let expected = 3;
+        const expected = 3;
         let initialRun = false;
         endTimeSpy = jest.spyOn(SetTimeCalculator, 'endTime').mockImplementation(() => {
             if (!initialRun) {
@@ -92,10 +92,45 @@ describe('lastWorkoutRepTime', () => {
     });
 });
 
-describe('getWorkoutSets', () => {
+describe.skip('getWorkoutSets', () => {
 });
 
 describe('getNumWorkoutSets', () => {
+   test('0', () => {
+        const state = {
+            sets: {
+                workoutData: []
+            }
+        };
+
+        const result = sut.getNumWorkoutSets(state);
+
+        expect(result).toBe(0);    
+   });
+
+   test('1', () => {
+        const state = {
+            sets: {
+                workoutData: [{}]
+            }
+        };
+
+        const result = sut.getNumWorkoutSets(state);
+
+        expect(result).toBe(1);    
+    });
+
+    test('2', () => {
+        const state = {
+            sets: {
+                workoutData: [{}, {}]
+            }
+        };
+
+        const result = sut.getNumWorkoutSets(state);
+
+        expect(result).toBe(2);    
+    });
 });
 
 describe('getIsWorkoutEmpty', () => {
@@ -132,6 +167,46 @@ describe('getHistorySetsChronological', () => {
 });
 
 describe('getNumHistorySets', () => {
+    test('0', () => {
+        const state = {
+            sets: {
+                historyData: {}
+            }
+        };
+
+        const result = sut.getNumHistorySets(state);
+
+        expect(result).toBe(0);    
+   });
+
+   test('1', () => {
+        const state = {
+            sets: {
+                historyData: {
+                    a: {}
+                }
+            }
+        };
+
+        const result = sut.getNumHistorySets(state);
+
+        expect(result).toBe(1);    
+    });
+
+    test('2', () => {
+        const state = {
+            sets: {
+                historyData: {
+                    a: {},
+                    b: {}                    
+                }
+            }
+        };
+
+        const result = sut.getNumHistorySets(state);
+
+        expect(result).toBe(2);    
+    });
 });
 
 describe('getNumHistoryReps', () => {

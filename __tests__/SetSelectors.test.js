@@ -298,7 +298,8 @@ describe('getNumWorkoutSetsWithFields', () => {
 describe('getPercentWorkoutSetsWithFields', () => {
 });
 
-describe('getWorkoutDuration', () => {
+describe.skip('getWorkoutDuration', () => {
+    // skipping as it's very simple, revisit later
 });
 
 describe('getWorkingSet', () => {
@@ -377,7 +378,8 @@ describe('getIsPreviousWorkoutSetFilled', () => {
     });
 });
 
-describe('getHistorySetsChronological', () => {
+describe.skip('getHistorySetsChronological', () => {
+    // skipping for now as not related to analytics, should definitely do it later
 });
 
 describe('getNumHistorySets', () => {

@@ -1,5 +1,13 @@
 import * as sut from 'app/utility/transforms/SetEmptyCheck';
 
+describe('isEmpty', () => {
+    // note: skipping for now as too many possibilities and theoretically testing inner functions is sufficient
+});
+
+describe('isUntouched', () => {
+    // note: skipping for now as too many possibilities and theoretically testing inner functions is sufficient
+});
+
 describe('hasEmptyData', () => {
     // note: not testing for every undefined / null case as too many possibilities
     // note: not testing for combinations as too many possibilities
@@ -205,5 +213,211 @@ describe('hasEmptyReps', () => {
 });
 
 describe('numFieldsEntered', () => {
+    test('0 when none', () => {
+        let set = {
+            exercise: '',
+            weight: '',
+            rpe: '',
+            tags: [],
+        };
 
+        let result = sut.numFieldsEntered(set);
+
+        expect(result).toBe(0);
+    });
+
+    test('1 when exercise', () => {
+        let set = {
+            exercise: ' ',
+            weight: '',
+            rpe: '',
+            tags: [],
+        };
+
+        let result = sut.numFieldsEntered(set);
+
+        expect(result).toBe(1);
+    });
+
+    test('1 when weight', () => {
+        let set = {
+            exercise: '',
+            weight: ' ',
+            rpe: '',
+            tags: [],
+        };
+
+        let result = sut.numFieldsEntered(set);
+
+        expect(result).toBe(1);
+    });
+
+    test('1 when rpe', () => {
+        let set = {
+            exercise: '',
+            weight: '',
+            rpe: ' ',
+            tags: [],
+        };
+
+        let result = sut.numFieldsEntered(set);
+
+        expect(result).toBe(1);
+    });
+
+    test('1 when tags', () => {
+        let set = {
+            exercise: '',
+            weight: '',
+            rpe: '',
+            tags: [{}],
+        };
+
+        let result = sut.numFieldsEntered(set);
+
+        expect(result).toBe(1);
+    });
+
+    test('2 when exercise weight', () => {
+        let set = {
+            exercise: ' ',
+            weight: ' ',
+            rpe: '',
+            tags: [],
+        };
+
+        let result = sut.numFieldsEntered(set);
+
+        expect(result).toBe(2);
+    });
+
+    test('2 when exercise rpe', () => {
+        let set = {
+            exercise: ' ',
+            weight: '',
+            rpe: ' ',
+            tags: [],
+        };
+
+        let result = sut.numFieldsEntered(set);
+
+        expect(result).toBe(2);
+    });
+
+    test('2 when exercise tags', () => {
+        let set = {
+            exercise: ' ',
+            weight: '',
+            rpe: '',
+            tags: [{}],
+        };
+
+        let result = sut.numFieldsEntered(set);
+
+        expect(result).toBe(2);
+    });
+
+    test('2 when weight rpe', () => {
+        let set = {
+            exercise: '',
+            weight: ' ',
+            rpe: ' ',
+            tags: [],
+        };
+
+        let result = sut.numFieldsEntered(set);
+
+        expect(result).toBe(2);
+    });
+
+    test('2 when weight tags', () => {
+        let set = {
+            exercise: '',
+            weight: ' ',
+            rpe: '',
+            tags: [{}],
+        };
+
+        let result = sut.numFieldsEntered(set);
+
+        expect(result).toBe(2);
+    });
+
+    test('2 when rpe tags', () => {
+        let set = {
+            exercise: '',
+            weight: '',
+            rpe: ' ',
+            tags: [{}],
+        };
+
+        let result = sut.numFieldsEntered(set);
+
+        expect(result).toBe(2);
+    });
+
+    test('3 when exercise weight rpe', () => {
+        let set = {
+            exercise: ' ',
+            weight: ' ',
+            rpe: ' ',
+            tags: [],
+        };
+
+        let result = sut.numFieldsEntered(set);
+
+        expect(result).toBe(3);
+    });
+
+    test('3 when exercise weight tags', () => {
+        let set = {
+            exercise: ' ',
+            weight: ' ',
+            rpe: '',
+            tags: [{}],
+        };
+
+        let result = sut.numFieldsEntered(set);
+
+        expect(result).toBe(3);
+    });
+
+    test('3 when exercise rpe tags', () => {
+        let set = {
+            exercise: ' ',
+            weight: '',
+            rpe: ' ',
+            tags: [{}],
+        };
+
+        let result = sut.numFieldsEntered(set);
+
+        expect(result).toBe(3);
+    });
+
+    test('3 when weight rpe tags', () => {
+        let set = {
+            exercise: '',
+            weight: ' ',
+            rpe: ' ',
+            tags: [{}],
+        };
+
+        let result = sut.numFieldsEntered(set);
+
+        expect(result).toBe(3);
+    });
+
+    test('4 when exercise weight rpe tags', () => {
+        let set = {
+            exercise: ' ',
+            weight: ' ',
+            rpe: ' ',
+            tags: [{}],
+        };
+
+        let result = sut.numFieldsEntered(set);
+
+        expect(result).toBe(4);
+    });
 });

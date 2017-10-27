@@ -1,8 +1,9 @@
 import * as sut from 'app/redux/selectors/SetsSelectors';
 import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
+import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 
 describe('lastWorkoutRepTime', () => {
-    var endTimeSpy = null;
+    let endTimeSpy = null;
 
     afterEach(() => {
         if (endTimeSpy) {
@@ -134,6 +135,70 @@ describe('getNumWorkoutSets', () => {
 });
 
 describe('getIsWorkoutEmpty', () => {
+    let untouchedSpy = null;
+
+    afterEach(() => {
+        if (untouchedSpy) {
+            untouchedSpy.mockReset();
+        }
+    });
+
+    afterAll(() => {
+        if (untouchedSpy) {            
+            untouchedSpy.mockReset();
+            untouchedSpy.mockRestore();
+        }
+    });
+
+    test('false when > 2', () => {
+        const state = {
+            sets: {
+                workoutData: [{}, {}]
+            }
+        };
+
+        const result = sut.getIsWorkoutEmpty(state);
+
+        expect(result).toBeFalsy();
+   });
+
+   test('false when exactly 1 not untouched', () => {
+        untouchedSpy = jest.spyOn(SetEmptyCheck, 'isUntouched').mockImplementation(() => false);
+        const state = {
+            sets: {
+                workoutData: [{}]
+            }
+        };
+
+        const result = sut.getIsWorkoutEmpty(state);
+
+        expect(result).toBeFalsy();
+    });
+
+    test('true when 1 set untouched', () => {
+        untouchedSpy = jest.spyOn(SetEmptyCheck, 'isUntouched').mockImplementation(() => true);        
+        const state = {
+            sets: {
+                workoutData: [{}]
+            }
+        };
+
+        const result = sut.getIsWorkoutEmpty(state);
+
+        expect(result).toBeTruthy();
+    });
+
+    test('true when 0 sets', () => {
+        const state = {
+            sets: {
+                workoutData: []
+            }
+        };
+
+        const result = sut.getIsWorkoutEmpty(state);
+
+        expect(result).toBeTruthy();
+    });
 });
 
 describe('getExpandedWorkoutSet', () => {
@@ -200,6 +265,7 @@ describe('getNumWorkoutReps', () => {
 });
 
 describe('getNumWorkoutSetsWithFields', () => {
+
 });
 
 describe('getPercentWorkoutSetsWithFields', () => {

@@ -175,7 +175,7 @@ const dictToArray = (dictionary) => {
 export const getHistorySetsChronological = (state) => {
     let sets = stateRoot(state);
     var array = dictToArray(sets.historyData);
-    array.sort((set1, set2) => new Date(set1.startTime) - new Date(set2.startTime));
+    array.sort((set1, set2) => SetTimeCalculator.startTime(set1) - SetTimeCalculator.startTime(set2));
     return array;
 };
 
@@ -234,14 +234,14 @@ export const getExpandedHistorySet = (state, setID) => {
     return null;
 };
 
-export const getTimeSinceLastWorkout = (state) => {
+export const getTimeSinceLastWorkout = (state, date=new Date()) => {
     const sets = getHistorySetsChronological(state);
     if (sets.length <= 0) {
         return null;
     } else {
         const lastSet = sets[sets.length-1];
         const startTime = Date.parse(SetTimeCalculator.startTime(lastSet));
-        return Date.parse(new Date()) - startTime;
+        return Date.parse(date) - startTime;
     }
 };
 

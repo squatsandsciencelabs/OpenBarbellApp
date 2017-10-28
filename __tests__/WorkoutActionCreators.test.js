@@ -48,35 +48,29 @@ describe('endWorkout analytics', () => {
     });
 
     afterAll(() => {
-        logEventSpy.mockReset();
         logEventSpy.mockRestore();
     });    
 
     describe('num_reps', () => {
-        var repsSpy = null;
+        const realGetNumWorkoutReps = SetsSelectors.getNumWorkoutReps;
 
         afterEach(() => {
-            repsSpy.mockReset();
-        });
-
-        afterAll(() => {
-            repsSpy.mockReset();
-            repsSpy.mockRestore();
-        });        
+            SetsSelectors.getNumWorkoutReps = realGetNumWorkoutReps;
+        });  
 
         test('num_reps is 1', () => {
-           repsSpy = jest.spyOn(SetsSelectors, 'getNumWorkoutReps').mockImplementation(() => 1);
+            SetsSelectors.getNumWorkoutReps = () => 1;
            
-           store.dispatch(sut.endWorkout());
+            store.dispatch(sut.endWorkout());
 
-           const event = logEventSpy.mock.calls[0][0];
-           const params = logEventSpy.mock.calls[0][1];
-           expect(event).toEqual('end_workout');
-           expect(params.num_reps).toBe(1);
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('end_workout');
+            expect(params.num_reps).toBe(1);
         });
 
         test('num_reps is 2', () => {
-            repsSpy = jest.spyOn(SetsSelectors, 'getNumWorkoutReps').mockImplementation(() => 2);
+            SetsSelectors.getNumWorkoutReps = () => 2;
             
             store.dispatch(sut.endWorkout());
  
@@ -87,7 +81,7 @@ describe('endWorkout analytics', () => {
          });
 
         test('num_reps is 3', () => {
-            repsSpy = jest.spyOn(SetsSelectors, 'getNumWorkoutReps').mockImplementation(() => 3);
+            SetsSelectors.getNumWorkoutReps = () => 3;
             
             store.dispatch(sut.endWorkout());
  
@@ -99,19 +93,14 @@ describe('endWorkout analytics', () => {
     });
 
     describe('num_sets_with_fields', () => {
-        var fieldsSpy = null;
+        const realGetNumWorkoutSetsWithFields = SetsSelectors.getNumWorkoutSetsWithFields;
 
         afterEach(() => {
-            fieldsSpy.mockReset();
+            SetsSelectors.getNumWorkoutSetsWithFields = realGetNumWorkoutSetsWithFields;
         });
 
-        afterAll(() => {
-            fieldsSpy.mockReset();
-            fieldsSpy.mockRestore();
-        })
-
         test('num_sets_with_fields is 1', () => {
-            fieldsSpy = jest.spyOn(SetsSelectors, 'getNumWorkoutSetsWithFields').mockImplementation(() => 1);
+            SetsSelectors.getNumWorkoutSetsWithFields = () => 1;
 
             store.dispatch(sut.endWorkout());
             
@@ -122,8 +111,8 @@ describe('endWorkout analytics', () => {
         });
 
         test('num_sets_with_fields is 2', () => {
-            fieldsSpy = jest.spyOn(SetsSelectors, 'getNumWorkoutSetsWithFields').mockImplementation(() => 2);
-
+            SetsSelectors.getNumWorkoutSetsWithFields = () => 2;
+            
             store.dispatch(sut.endWorkout());
             
             const event = logEventSpy.mock.calls[0][0];
@@ -133,8 +122,8 @@ describe('endWorkout analytics', () => {
         });
         
         test('num_sets_with_fields is 3', () => {
-            fieldsSpy = jest.spyOn(SetsSelectors, 'getNumWorkoutSetsWithFields').mockImplementation(() => 3);
-
+            SetsSelectors.getNumWorkoutSetsWithFields = () => 3;
+            
             store.dispatch(sut.endWorkout());
             
             const event = logEventSpy.mock.calls[0][0];
@@ -166,19 +155,14 @@ describe('endWorkout analytics', () => {
     });
 
     describe('percent_sets_with_fields', () => {
-        var percentSpy = null;
+        const realGetPercentWorkoutSetsWithFields = SetsSelectors.getPercentWorkoutSetsWithFields;
 
         afterEach(() => {
-            percentSpy.mockReset();
-        });
-
-        afterAll(() => {
-            percentSpy.mockReset();
-            percentSpy.restore();
+            SetsSelectors.getPercentWorkoutSetsWithFields = realGetPercentWorkoutSetsWithFields;
         });
         
         test('25%', () => {
-            percentSpy = jest.spyOn(SetsSelectors, 'getPercentWorkoutSetsWithFields').mockImplementation(() => 25);
+            SetsSelectors.getPercentWorkoutSetsWithFields = () => 25;
         
             store.dispatch(sut.endWorkout());
             
@@ -189,8 +173,8 @@ describe('endWorkout analytics', () => {
         });
 
         test('50%', () => {
-            percentSpy = jest.spyOn(SetsSelectors, 'getPercentWorkoutSetsWithFields').mockImplementation(() => 50);
-        
+            SetsSelectors.getPercentWorkoutSetsWithFields = () => 50;
+            
             store.dispatch(sut.endWorkout());
             
             const event = logEventSpy.mock.calls[0][0];
@@ -200,8 +184,8 @@ describe('endWorkout analytics', () => {
         });
         
         test('75%', () => {
-            percentSpy = jest.spyOn(SetsSelectors, 'getPercentWorkoutSetsWithFields').mockImplementation(() => 75);
-        
+            SetsSelectors.getPercentWorkoutSetsWithFields = () => 75;
+            
             store.dispatch(sut.endWorkout());
             
             const event = logEventSpy.mock.calls[0][0];
@@ -211,8 +195,8 @@ describe('endWorkout analytics', () => {
         });  
         
         test('100%', () => {
-            percentSpy = jest.spyOn(SetsSelectors, 'getPercentWorkoutSetsWithFields').mockImplementation(() => 100);
-        
+            SetsSelectors.getPercentWorkoutSetsWithFields = () => 100;
+            
             store.dispatch(sut.endWorkout());
             
             const event = logEventSpy.mock.calls[0][0];

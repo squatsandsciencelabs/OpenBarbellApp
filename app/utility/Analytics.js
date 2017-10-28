@@ -1,4 +1,4 @@
-import firebase from 'app/configs/Firebase';
+import firebase from 'app/services/Firebase';
 import {
     AppState
 } from 'react-native';

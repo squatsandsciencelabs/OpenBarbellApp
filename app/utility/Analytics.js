@@ -90,7 +90,7 @@ export const logEventWithAppState = (event, params, state) => {
     const isWorkoutEmpty = SetsSelectors.getIsWorkoutEmpty(state);
 
     if (devices.length > 25) {
-        devices = devices.slice(0, 24);
+        devices = devices.slice(0, 25);
     };
 
     const scanned_devices = devices.join().replace(/\s|OB|,/g, '');

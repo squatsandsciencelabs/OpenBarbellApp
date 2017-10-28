@@ -476,8 +476,48 @@ describe('SetSelectors', () => {
         });
     });
 
-    describe.skip('getHistorySetsChronological', () => {
-        // skipping for now as not related to analytics, should definitely do it later
+    describe('getHistorySetsChronological', () => {
+        test('in order', () => {
+            let a = {
+                initialStartTime: new Date(1000),
+                reps: []
+            };
+            let b = {
+                reps: [{
+                    removed: false,
+                    isValid: false,
+                    time: new Date(3000)
+                },
+                {
+                    removed: false,
+                    isValid: true,
+                    time: new Date(3000)
+                }]
+            };
+            let c = {
+                reps: [{
+                    removed: false,
+                    isValid: true,
+                    time: new Date(2000)
+                }]                           
+            };
+            const state = {
+                sets: {
+                    historyData: {
+                        a: a,
+                        b: b,
+                        c: c
+                    }
+                }
+            };
+
+            const result = sut.getHistorySetsChronological(state);
+
+            expect(result[0]).toBe(a);
+            expect(result[1]).toBe(c);
+            expect(result[2]).toBe(b);
+            expect(result.length).toBe(3);
+        });
     });
 
     describe('getNumHistorySets', () => {

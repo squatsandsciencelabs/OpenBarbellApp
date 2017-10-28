@@ -251,7 +251,27 @@ describe('Analytics', () => {
         });
 
         describe('is_workout_in_progress', () => {
-            
+            beforeEach(() => {
+                AppStateSelectors.getScreenStatus = () => '';
+                ScannedDevicesSelectors.getScannedDevices = () => [];
+                ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = () => '';
+            });
+
+            test('true', () => {
+                SetsSelectors.getIsWorkoutEmpty = () => false;
+
+                sut.logEventWithAppState(null, params, null);
+                
+                expect(params.is_workout_in_progress).toBe(true);
+            });
+
+            test('false', () => {
+                SetsSelectors.getIsWorkoutEmpty = () => true;
+
+                sut.logEventWithAppState(null, params, null);
+                
+                expect(params.is_workout_in_progress).toBe(false);
+            });
         });
     });
 });

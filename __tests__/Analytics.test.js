@@ -119,12 +119,56 @@ describe('Analytics', () => {
                 sut.logEventWithAppState(null, params, null);
 
                 expect(params.is_app_active).toBeUndefined();
-
             });
         });
 
         describe('is_app_in_background', () => {
+            let originalAppCurrentState = null;
+            
+            beforeEach(() => {
+                originalAppCurrentState = AppState.currentState;
+                AppStateSelectors.getScreenStatus = () => '';
+                ScannedDevicesSelectors.getScannedDevices = () => [];
+                ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = () => '';
+                SetsSelectors.getIsWorkoutEmpty = () => true;
+                params = {};
+            });
 
+            afterEach(() => {
+                AppState.currentState = originalAppCurrentState;
+            });
+
+            test('false if active', () => {
+                AppState.currentState = 'active';
+
+                sut.logEventWithAppState(null, params, null);
+
+                expect(params.is_app_in_background).toBe(false);
+            });
+
+            test('true if inactive', () => {
+                AppState.currentState = 'inactive';
+
+                sut.logEventWithAppState(null, params, null);
+
+                expect(params.is_app_in_background).toBe(true);
+            });
+
+            test('true is background', () => {
+                AppState.currentState = 'background';
+
+                sut.logEventWithAppState(null, params, null);
+
+                expect(params.is_app_in_background).toBe(true);
+            });
+
+            test('undefined otherwise', () => {
+                AppState.currentState = 'foobar';
+
+                sut.logEventWithAppState(null, params, null);
+
+                expect(params.is_app_in_background).toBeUndefined();
+            });
         });
 
         describe('is_app_inactive', () => {

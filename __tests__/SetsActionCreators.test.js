@@ -462,7 +462,7 @@ describe('endSet analytics', () => {
 
         test("true when it does not have empty reps", () => {
             // given the set does not have empty reps
-            touchedSpy = jest.spyOn(SetsSelectors, 'getPreviousWorkoutSetHasEmptyReps').mockImplementation(() => false);
+            touchedSpy = jest.spyOn(SetsSelectors, 'getWorkoutPreviousSetHasEmptyReps').mockImplementation(() => false);
 
             // when you end the set
             store.dispatch(sut.endSet());            
@@ -476,7 +476,7 @@ describe('endSet analytics', () => {
 
         test("false when it has empty reps", () => {
             // given the set does not have empty reps
-            touchedSpy = jest.spyOn(SetsSelectors, 'getPreviousWorkoutSetHasEmptyReps').mockImplementation(() => true);
+            touchedSpy = jest.spyOn(SetsSelectors, 'getWorkoutPreviousSetHasEmptyReps').mockImplementation(() => true);
 
             // when you end the set
             store.dispatch(sut.endSet());            

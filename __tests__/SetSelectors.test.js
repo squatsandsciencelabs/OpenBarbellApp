@@ -6,7 +6,8 @@ describe('SetSelectors', () => {
     let endTimeSpy = null;
     let untouchedSpy = null;
     let hasEmptyFieldsSpy = null;
-
+    let hasEmptyRepsSpy = null;
+    
     afterEach(() => {
         if (endTimeSpy) {
             endTimeSpy.mockReset();
@@ -16,6 +17,9 @@ describe('SetSelectors', () => {
         }
         if (hasEmptyFieldsSpy) {
             hasEmptyFieldsSpy.mockReset();
+        }
+        if (hasEmptyRepsSpy) {
+            hasEmptyRepsSpy.mockReset();
         }
     });
 
@@ -31,6 +35,10 @@ describe('SetSelectors', () => {
         if (hasEmptyFieldsSpy) {            
             hasEmptyFieldsSpy.mockReset();
             hasEmptyFieldsSpy.mockRestore();
+        }
+        if (hasEmptyRepsSpy) {
+            hasEmptyRepsSpy.mockReset();
+            hasEmptyRepsSpy.mockRestore();
         }
     });
 
@@ -374,8 +382,55 @@ describe('SetSelectors', () => {
         // skipping, revisit later
     });
 
-    describe('getPreviousWorkoutSetHasEmptyReps', () => {
-        test('-1 if no sets', () => {
+    describe('getWorkoutPreviousSetHasEmptyReps', () => {
+        test('false if no sets', () => {
+            const state = {
+                sets: {
+                    workoutData: []
+                }
+            };
+
+            const result = sut.getWorkoutPreviousSetHasEmptyReps(state);
+            
+            expect(result).toBeFalsy();
+        });
+
+        test('false if only 1 set', () => {
+            const state = {
+                sets: {
+                    workoutData: [{}]
+                }
+            };
+
+            const result = sut.getWorkoutPreviousSetHasEmptyReps(state);
+            
+            expect(result).toBeFalsy();
+        });
+
+        test('false if 2 sets and 2nd set has reps', () => {
+            hasEmptyRepsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyReps').mockImplementation((set) => set);
+            const state = {
+                sets: {
+                    workoutData: [true, false, true]
+                }
+            };
+
+            const result = sut.getWorkoutPreviousSetHasEmptyReps(state);
+            
+            expect(result).toBeFalsy();
+        });
+
+        test('true if 2 sets and 2nd set does not have reps', () => {
+            hasEmptyRepsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyReps').mockImplementation((set) => set);            
+            const state = {
+                sets: {
+                    workoutData: [true, true, true]
+                }
+            };
+
+            const result = sut.getWorkoutPreviousSetHasEmptyReps(state);
+            
+            expect(result).toBeTruthy();
         });
     });
 

@@ -142,7 +142,7 @@ describe('SetSelectors', () => {
 
             const result = sut.getIsWorkoutEmpty(state);
 
-            expect(result).toBeFalsy();
+            expect(result).toBe(false);
         });
 
         test('false when exactly 1 not untouched', () => {
@@ -155,7 +155,7 @@ describe('SetSelectors', () => {
 
             const result = sut.getIsWorkoutEmpty(state);
 
-            expect(result).toBeFalsy();
+            expect(result).toBe(false);
         });
 
         test('true when 1 set untouched', () => {
@@ -168,7 +168,7 @@ describe('SetSelectors', () => {
 
             const result = sut.getIsWorkoutEmpty(state);
 
-            expect(result).toBeTruthy();
+            expect(result).toBe(true);;
         });
 
         test('true when 0 sets', () => {
@@ -180,7 +180,7 @@ describe('SetSelectors', () => {
 
             const result = sut.getIsWorkoutEmpty(state);
 
-            expect(result).toBeTruthy();
+            expect(result).toBe(true);;
         });
     });
 
@@ -385,7 +385,7 @@ describe('SetSelectors', () => {
 
             const result = sut.getWorkoutPreviousSetHasEmptyReps(state);
             
-            expect(result).toBeFalsy();
+            expect(result).toBe(false);
         });
 
         test('false if only 1 set', () => {
@@ -397,7 +397,7 @@ describe('SetSelectors', () => {
 
             const result = sut.getWorkoutPreviousSetHasEmptyReps(state);
             
-            expect(result).toBeFalsy();
+            expect(result).toBe(false);
         });
 
         test('false if 2 sets and 2nd set has reps', () => {
@@ -409,7 +409,7 @@ describe('SetSelectors', () => {
 
             const result = sut.getWorkoutPreviousSetHasEmptyReps(state);
             
-            expect(result).toBeFalsy();
+            expect(result).toBe(false);
         });
 
         test('true if 2 sets and 2nd set does not have reps', () => {
@@ -421,7 +421,7 @@ describe('SetSelectors', () => {
 
             const result = sut.getWorkoutPreviousSetHasEmptyReps(state);
             
-            expect(result).toBeTruthy();
+            expect(result).toBe(true);;
         });
     });
 

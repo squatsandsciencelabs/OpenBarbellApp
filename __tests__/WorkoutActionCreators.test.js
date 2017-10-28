@@ -141,7 +141,7 @@ describe('endWorkout analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('end_workout');
-            expect(params.manually_ended).toBeTruthy();
+            expect(params.manually_ended).toBe(true);;
         });
 
         test('false', () => {
@@ -150,7 +150,7 @@ describe('endWorkout analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('end_workout');
-            expect(params.manually_ended).toBeFalsy();
+            expect(params.manually_ended).toBe(false);
         });
     });
 

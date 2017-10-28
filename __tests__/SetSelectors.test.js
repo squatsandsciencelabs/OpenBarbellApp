@@ -7,23 +7,9 @@ describe('SetSelectors', () => {
     let untouchedSpy = null;
     let hasEmptyFieldsSpy = null;
     let hasEmptyRepsSpy = null;
-    
-    afterEach(() => {
-        if (endTimeSpy) {
-            endTimeSpy.mockReset();
-        }
-        if (untouchedSpy) {
-            untouchedSpy.mockReset();
-        }
-        if (hasEmptyFieldsSpy) {
-            hasEmptyFieldsSpy.mockReset();
-        }
-        if (hasEmptyRepsSpy) {
-            hasEmptyRepsSpy.mockReset();
-        }
-    });
+    let startTimeSpy = null;
 
-    afterAll(() => {
+    afterEach(() => {
         if (endTimeSpy) {            
             endTimeSpy.mockReset();
             endTimeSpy.mockRestore();
@@ -39,6 +25,10 @@ describe('SetSelectors', () => {
         if (hasEmptyRepsSpy) {
             hasEmptyRepsSpy.mockReset();
             hasEmptyRepsSpy.mockRestore();
+        }
+        if (startTimeSpy) {
+            startTimeSpy.mockReset();
+            startTimeSpy.mockRestore();
         }
     });
 
@@ -617,7 +607,7 @@ describe('SetSelectors', () => {
         });
 
         test('1', () => {
-            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => false);            
+            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => false);
             const state = {
                 sets: {
                     historyData: {
@@ -634,7 +624,8 @@ describe('SetSelectors', () => {
         });
 
         test('3', () => {
-            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => false);            
+            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => false);
+            startTimeSpy = jest.spyOn(SetTimeCalculator, 'startTime').mockImplementation((set) => 1);
             const state = {
                 sets: {
                     historyData: {
@@ -674,17 +665,64 @@ describe('SetSelectors', () => {
     });
 
     describe('getTimeSinceLastWorkout', () => {
+        test('null if no sets', () => {
+            const state = {
+                sets: {
+                    historyData: {
+                    }
+                }
+            };
+
+            const result = sut.getTimeSinceLastWorkout(state);
+            
+            expect(result).toBeNull()            
+        });
+
+        test('time difference if sets', () => {
+            const state = {
+                sets: {
+                    historyData: {
+                        a: {
+                            initialStartTime: new Date(1000),
+                            reps: []
+                        },
+                        b: {
+                            reps: [{
+                                removed: false,
+                                isValid: false,
+                                time: new Date(3000)
+                            }]
+                        },
+                        c: {
+                            reps: [{
+                                removed: false,
+                                isValid: true,
+                                time: new Date(2000)
+                            }]                           
+                        }
+                    }
+                }
+            };
+
+            const result = sut.getTimeSinceLastWorkout(state, new Date(6000));
+
+            expect(result).toBe(4000);
+        });
     });
 
-    describe('getSetsToUpload', () => {
+    describe.skip('getSetsToUpload', () => {
+        // skipping as focused on analytics, revisit later
     });
 
-    describe('getIsUploading', () => {
+    describe.skip('getIsUploading', () => {
+        // skipping as focused on analytics, revisit later
     });
 
-    describe('hasChangesToSync', () => {
+    describe.skip('hasChangesToSync', () => {
+        // skipping as focused on analytics, revisit later
     });
 
-    describe('getRevision', () => {
+    describe.skip('getRevision', () => {
+        // skipping as focused on analytics, revisit later
     });
 });

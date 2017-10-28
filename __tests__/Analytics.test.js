@@ -248,6 +248,18 @@ describe('Analytics', () => {
                 expect(params.scanned_devices).toBe('30003021');
             });
 
+            test('25', () => {
+                ScannedDevicesSelectors.getScannedDevices = () => [
+                    'OB 3001', 'OB 3002', 'OB 3003', 'OB 3004', 'OB 3005', 'OB 3006', 'OB 3007', 'OB 3008', 'OB 3009', 'OB 3010',
+                    'OB 2001', 'OB 2002', 'OB 2003', 'OB 2004', 'OB 2005', 'OB 2006', 'OB 2007', 'OB 2008', 'OB 2009', 'OB 2010',
+                    'OB 1001', 'OB 1002', 'OB 1003', 'OB 1004', 'OB 1005'
+                ];
+                
+                sut.logEventWithAppState(null, params, null);
+                
+                expect(params.scanned_devices).toBe('3001300230033004300530063007300830093010200120022003200420052006200720082009201010011002100310041005');
+            });
+
             test('26', () => {
                 ScannedDevicesSelectors.getScannedDevices = () => [
                     'OB 3001', 'OB 3002', 'OB 3003', 'OB 3004', 'OB 3005', 'OB 3006', 'OB 3007', 'OB 3008', 'OB 3009', 'OB 3010',
@@ -262,7 +274,59 @@ describe('Analytics', () => {
         });
 
         describe('num_scanned_devices', () => {
-            
+            beforeEach(() => {
+                AppStateSelectors.getScreenStatus = () => '';
+                ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = () => '';
+                SetsSelectors.getIsWorkoutEmpty = () => true;
+            });
+
+            test('0', () => {
+                ScannedDevicesSelectors.getScannedDevices = () => [];
+
+                sut.logEventWithAppState(null, params, null);
+                
+                expect(params.num_scanned_devices).toBe(0);
+            });
+
+            test('1', () => {
+                ScannedDevicesSelectors.getScannedDevices = () => ['OB 3000'];
+                
+                sut.logEventWithAppState(null, params, null);
+                
+                expect(params.num_scanned_devices).toBe(1);
+            });
+
+            test('2', () => {
+                ScannedDevicesSelectors.getScannedDevices = () => ['OB 3000', 'OB 3021'];
+                
+                sut.logEventWithAppState(null, params, null);
+                
+                expect(params.num_scanned_devices).toBe(2);
+            });
+
+            test('25', () => {
+                ScannedDevicesSelectors.getScannedDevices = () => [
+                    'OB 3001', 'OB 3002', 'OB 3003', 'OB 3004', 'OB 3005', 'OB 3006', 'OB 3007', 'OB 3008', 'OB 3009', 'OB 3010',
+                    'OB 2001', 'OB 2002', 'OB 2003', 'OB 2004', 'OB 2005', 'OB 2006', 'OB 2007', 'OB 2008', 'OB 2009', 'OB 2010',
+                    'OB 1001', 'OB 1002', 'OB 1003', 'OB 1004', 'OB 1005'
+                ];
+                
+                sut.logEventWithAppState(null, params, null);
+                
+                expect(params.num_scanned_devices).toBe(25);
+            });
+
+            test('26', () => {
+                ScannedDevicesSelectors.getScannedDevices = () => [
+                    'OB 3001', 'OB 3002', 'OB 3003', 'OB 3004', 'OB 3005', 'OB 3006', 'OB 3007', 'OB 3008', 'OB 3009', 'OB 3010',
+                    'OB 2001', 'OB 2002', 'OB 2003', 'OB 2004', 'OB 2005', 'OB 2006', 'OB 2007', 'OB 2008', 'OB 2009', 'OB 2010',
+                    'OB 1001', 'OB 1002', 'OB 1003', 'OB 1004', 'OB 1005', 'OB 1006'
+                ];
+                
+                sut.logEventWithAppState(null, params, null);
+                
+                expect(params.num_scanned_devices).toBe(25);
+            });
         });
 
         describe('is_bluetooth_on', () => {

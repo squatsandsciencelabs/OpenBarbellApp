@@ -3,36 +3,21 @@ import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 
 describe('SetSelectors', () => {
-    let endTimeSpy = null;
-    let untouchedSpy = null;
-    let hasEmptyFieldsSpy = null;
-    let hasEmptyRepsSpy = null;
-    let startTimeSpy = null;
-
-    afterEach(() => {
-        if (endTimeSpy) {            
-            endTimeSpy.mockReset();
-            endTimeSpy.mockRestore();
-        }
-        if (untouchedSpy) {            
-            untouchedSpy.mockReset();
-            untouchedSpy.mockRestore();
-        }
-        if (hasEmptyFieldsSpy) {            
-            hasEmptyFieldsSpy.mockReset();
-            hasEmptyFieldsSpy.mockRestore();
-        }
-        if (hasEmptyRepsSpy) {
-            hasEmptyRepsSpy.mockReset();
-            hasEmptyRepsSpy.mockRestore();
-        }
-        if (startTimeSpy) {
-            startTimeSpy.mockReset();
-            startTimeSpy.mockRestore();
-        }
-    });
-
     describe('lastWorkoutRepTime', () => {
+        let endTimeSpy = null;
+
+        afterEach(() => {
+            if (endTimeSpy) {
+                endTimeSpy.mockReset();
+            }
+        });
+
+        afterAll(() => {
+            if (endTimeSpy) {
+                endTimeSpy.mockRestore();
+            }
+        });
+        
         test('null if no workout data', () => {
             const state = {
                 sets: {
@@ -150,6 +135,19 @@ describe('SetSelectors', () => {
     });
 
     describe('getIsWorkoutEmpty', () => {
+        let untouchedSpy = null;
+
+        afterEach(() => {
+            if (untouchedSpy) {            
+                untouchedSpy.mockReset();
+            }    
+        });
+
+        afterAll(() => {
+            if (untouchedSpy) {            
+                untouchedSpy.mockRestore();
+            }
+        })
 
         test('false when > 2', () => {
             const state = {
@@ -161,7 +159,7 @@ describe('SetSelectors', () => {
             const result = sut.getIsWorkoutEmpty(state);
 
             expect(result).toBeFalsy();
-    });
+        });
 
         test('false when exactly 1 not untouched', () => {
             untouchedSpy = jest.spyOn(SetEmptyCheck, 'isUntouched').mockImplementation(() => false);
@@ -267,6 +265,12 @@ describe('SetSelectors', () => {
     });
 
     describe('getNumWorkoutSetsWithFields', () => {
+        let hasEmptyFieldsSpy = null;
+        
+        afterEach(() => {
+            hasEmptyFieldsSpy.mockRestore();
+        });
+
         test('3 fields', () => {
             hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => set);
             const state = {
@@ -282,6 +286,20 @@ describe('SetSelectors', () => {
     });
 
     describe('getPercentWorkoutSetsWithFields', () => {
+        let hasEmptyFieldsSpy = null;
+        
+        afterEach(() => {
+            if (hasEmptyFieldsSpy) {
+                hasEmptyFieldsSpy.mockReset();
+            }
+        });
+
+        afterAll(() => {
+            if (hasEmptyFieldsSpy) {
+                hasEmptyFieldsSpy.mockRestore();
+            }
+        });
+
         test('0% when none', () => {
             const state = {
                 sets: {
@@ -373,6 +391,20 @@ describe('SetSelectors', () => {
     });
 
     describe('getWorkoutPreviousSetHasEmptyReps', () => {
+        let hasEmptyRepsSpy = null;
+
+        afterEach(() => {
+            if (hasEmptyRepsSpy) {
+                hasEmptyRepsSpy.mockReset();
+            }
+        });
+
+        afterAll(() => {
+            if (hasEmptyRepsSpy) {
+                hasEmptyRepsSpy.mockRestore();
+            }
+        });
+        
         test('false if no sets', () => {
             const state = {
                 sets: {
@@ -633,6 +665,20 @@ describe('SetSelectors', () => {
     });
 
     describe('getNumHistoryWorkouts', () => {
+        let startTimeSpy = null;
+
+        afterEach(() => {
+            if (startTimeSpy) {
+                startTimeSpy.mockReset();
+            }
+        });
+
+        afterAll(() => {
+            if (startTimeSpy) {
+                startTimeSpy.mockRestore();
+            }
+        });
+
         test('0 if no sets', () => {
             const state = {
                 sets: {

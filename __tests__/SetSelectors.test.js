@@ -751,6 +751,12 @@ describe('SetSelectors', () => {
     });
 
     describe('getTimeSinceLastWorkout', () => {
+        const origNow = Date.now;
+
+        afterAll(() => {
+            Date.now = origNow;
+        });
+
         test('null if no sets', () => {
             const state = {
                 sets: {
@@ -765,6 +771,7 @@ describe('SetSelectors', () => {
         });
 
         test('time difference if sets', () => {
+            Date.now = () => new Date(6000);
             const state = {
                 sets: {
                     historyData: {
@@ -790,7 +797,7 @@ describe('SetSelectors', () => {
                 }
             };
 
-            const result = sut.getTimeSinceLastWorkout(state, new Date(6000));
+            const result = sut.getTimeSinceLastWorkout(state);
 
             expect(result).toBe(4000);
         });

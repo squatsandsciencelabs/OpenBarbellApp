@@ -234,14 +234,14 @@ export const getExpandedHistorySet = (state, setID) => {
     return null;
 };
 
-export const getTimeSinceLastWorkout = (state, date=new Date()) => {
+export const getTimeSinceLastWorkout = (state) => {
     const sets = getHistorySetsChronological(state);
     if (sets.length <= 0) {
         return null;
     } else {
         const lastSet = sets[sets.length-1];
         const startTime = Date.parse(SetTimeCalculator.startTime(lastSet));
-        return Date.parse(date) - startTime;
+        return Date.parse(Date.now()) - startTime;
     }
 };
 

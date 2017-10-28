@@ -128,7 +128,7 @@ export const getIsWorkingSet = (state, setID) => {
     return setID === currentSet.setID;
 };
 
-export const getPreviousWorkoutSetHasEmptyReps = (state) => {
+export const getWorkoutPreviousSetHasEmptyReps = (state) => {
     const workoutData = stateRoot(state).workoutData;
 
     if (workoutData.length >= 2) {

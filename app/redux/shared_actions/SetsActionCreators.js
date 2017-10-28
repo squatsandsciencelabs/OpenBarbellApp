@@ -104,7 +104,7 @@ export const failedUploadSets = () => ({ type: FAILED_UPLOAD_SETS });
 
 const logEndSetAnalytics = (manuallyStarted, wasSanityCheck, state) => {
     var set = SetsSelectors.getWorkingSet(state);
-    var previous_set_has_reps = !SetsSelectors.getPreviousWorkoutSetHasEmptyReps(state);
+    var previous_set_has_reps = !SetsSelectors.getWorkoutPreviousSetHasEmptyReps(state);
     var is_previous_set_fields_filled = SetsSelectors.getIsPreviousWorkoutSetFilled(state);
     let num_fields_entered = SetEmptyCheck.numFieldsEntered(set);
     let has_reps = !SetEmptyCheck.hasEmptyReps(set);

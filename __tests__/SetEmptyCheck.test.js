@@ -21,7 +21,7 @@ describe('hasEmptyFields', () => {
 
         let result = sut.hasEmptyFields(set);
 
-        expect(result).toBeTruthy();
+        expect(result).toBe(true);;
     });
 
     test('true when empty', () => {
@@ -34,7 +34,7 @@ describe('hasEmptyFields', () => {
 
         let result = sut.hasEmptyFields(set);
 
-        expect(result).toBeTruthy();
+        expect(result).toBe(true);;
     });
 
     test('false w/ exercise name', () => {
@@ -47,7 +47,7 @@ describe('hasEmptyFields', () => {
 
         let result = sut.hasEmptyFields(set);
 
-        expect(result).toBeFalsy();
+        expect(result).toBe(false);
     });
 
     test('false w/ weight', () => {
@@ -60,7 +60,7 @@ describe('hasEmptyFields', () => {
 
         let result = sut.hasEmptyFields(set);
 
-        expect(result).toBeFalsy();
+        expect(result).toBe(false);
     });
 
     test('false w/ rpe', () => {
@@ -73,7 +73,7 @@ describe('hasEmptyFields', () => {
 
         let result = sut.hasEmptyFields(set);
 
-        expect(result).toBeFalsy();
+        expect(result).toBe(false);
     });
 
     test('false w/ tag', () => {
@@ -86,7 +86,7 @@ describe('hasEmptyFields', () => {
 
         let result = sut.hasEmptyFields(set);
 
-        expect(result).toBeFalsy();
+        expect(result).toBe(false);
     });
 });
 
@@ -104,7 +104,7 @@ describe('hasEmptyData', () => {
 
         let result = sut.hasEmptyData(set);
 
-        expect(result).toBeTruthy();
+        expect(result).toBe(true);;
     });
 
     test('true when empty', () => {
@@ -118,7 +118,7 @@ describe('hasEmptyData', () => {
 
         let result = sut.hasEmptyData(set);
 
-        expect(result).toBeTruthy();
+        expect(result).toBe(true);;
     });
 
     test('false w/ exercise name', () => {
@@ -132,7 +132,7 @@ describe('hasEmptyData', () => {
 
         let result = sut.hasEmptyData(set);
 
-        expect(result).toBeFalsy();
+        expect(result).toBe(false);
     });
 
     test('false w/ weight', () => {
@@ -146,7 +146,7 @@ describe('hasEmptyData', () => {
 
         let result = sut.hasEmptyData(set);
 
-        expect(result).toBeFalsy();
+        expect(result).toBe(false);
     });
 
     test('false w/ rpe', () => {
@@ -160,7 +160,7 @@ describe('hasEmptyData', () => {
 
         let result = sut.hasEmptyData(set);
 
-        expect(result).toBeFalsy();
+        expect(result).toBe(false);
     });
 
     test('false w/ tag', () => {
@@ -174,7 +174,7 @@ describe('hasEmptyData', () => {
 
         let result = sut.hasEmptyData(set);
 
-        expect(result).toBeFalsy();
+        expect(result).toBe(false);
     });
 
     test('false w/ video', () => {
@@ -188,7 +188,7 @@ describe('hasEmptyData', () => {
 
         let result = sut.hasEmptyData(set);
 
-        expect(result).toBeFalsy();
+        expect(result).toBe(false);
     });
 });
 
@@ -200,7 +200,7 @@ describe('hasNoReps', () => {
 
         let result = sut.hasNoReps(set);
 
-        expect(result).toBeTruthy();
+        expect(result).toBe(true);;
     });
 
     test('undefined true', () => {
@@ -209,7 +209,7 @@ describe('hasNoReps', () => {
 
         let result = sut.hasNoReps(set);
 
-        expect(result).toBeTruthy();
+        expect(result).toBe(true);;
     });
 
     test('null true', () => {
@@ -219,7 +219,7 @@ describe('hasNoReps', () => {
 
         let result = sut.hasNoReps(set);
 
-        expect(result).toBeTruthy();
+        expect(result).toBe(true);;
     });
 
     test('false', () => {
@@ -229,7 +229,7 @@ describe('hasNoReps', () => {
 
         let result = sut.hasNoReps(set);
 
-        expect(result).toBeFalsy();
+        expect(result).toBe(false);
     });
 });
 
@@ -241,7 +241,7 @@ describe('hasEmptyReps', () => {
 
         let result = sut.hasEmptyReps(set);
 
-        expect(result).toBeTruthy();
+        expect(result).toBe(true);;
     });
 
     test('undefined true', () => {
@@ -250,7 +250,7 @@ describe('hasEmptyReps', () => {
 
         let result = sut.hasEmptyReps(set);
 
-        expect(result).toBeTruthy();
+        expect(result).toBe(true);;
     });
 
     test('null true', () => {
@@ -260,7 +260,7 @@ describe('hasEmptyReps', () => {
 
         let result = sut.hasEmptyReps(set);
 
-        expect(result).toBeTruthy();
+        expect(result).toBe(true);;
     });
 
     test('true when only undefined removes', () => {
@@ -270,7 +270,7 @@ describe('hasEmptyReps', () => {
 
         let result = sut.hasEmptyReps(set);
 
-        expect(result).toBeTruthy();
+        expect(result).toBe(true);;
     });
 
     test('true when everything is removed', () => {
@@ -280,7 +280,7 @@ describe('hasEmptyReps', () => {
 
         let result = sut.hasEmptyReps(set);
 
-        expect(result).toBeTruthy();
+        expect(result).toBe(true);;
     });
 
     test('false when at least one not removed', () => {
@@ -290,7 +290,7 @@ describe('hasEmptyReps', () => {
 
         let result = sut.hasEmptyReps(set);
 
-        expect(result).toBeFalsy();
+        expect(result).toBe(false);
     });
 });
 

@@ -61,7 +61,7 @@ describe('Analytics', () => {
 
                 sut.logEventWithAppState(null, params, null);
 
-                expect(params.is_screen_locked).toBeFalsy();
+                expect(params.is_screen_locked).toBe(false);
             });
 
             test('true', () => {
@@ -69,7 +69,7 @@ describe('Analytics', () => {
 
                 sut.logEventWithAppState(null, params, null);
 
-                expect(params.is_screen_locked).toBeTruthy();
+                expect(params.is_screen_locked).toBe(true);
             });
         });
 

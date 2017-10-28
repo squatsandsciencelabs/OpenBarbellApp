@@ -29,19 +29,15 @@ describe('Analytics', () => {
 
     afterEach(() => {
         if (screenStatusSpy) {
-            screenStatusSpy.mockReset();
             screenStatusSpy.mockRestore();
         }
         if (scannedDevicesSpy) {
-            scannedDevicesSpy.mockReset();
             scannedDevicesSpy.mockRestore();
         }
         if (connectedDeviceStatusSpy) {
-            connectedDeviceStatusSpy.mockReset();
             connectedDeviceStatusSpy.mockRestore();
         }
         if (workoutEmptySpy) {
-            workoutEmptySpy.mockReset();
             workoutEmptySpy.mockRestore();
         }
     });

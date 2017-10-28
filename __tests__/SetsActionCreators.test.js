@@ -27,16 +27,15 @@ describe('endSet analytics', () => {
     });
 
     describe("Analytics called", () => {
-
-        var untouchedSpy = null;
+        const realIsUntouched = SetEmptyCheck.isUntouched;
 
         afterEach(() => {
-            untouchedSpy.mockRestore();
+            SetEmptyCheck.isUntouched = realIsUntouched;
         });
 
         test("not called when the working set is untouched", () => {
             // given we have a store with an untouched working set
-            untouchedSpy = jest.spyOn(SetEmptyCheck, 'isUntouched').mockImplementation(() => true);
+            SetEmptyCheck.isUntouched = () => true;
             store = mockStore({
                 sets: {
                     workoutData: [{
@@ -55,7 +54,7 @@ describe('endSet analytics', () => {
 
         test('Analytics is called', () => {
             // given when a workout was touched
-            untouchedSpy = jest.spyOn(SetEmptyCheck, 'isUntouched').mockImplementation(() => false);
+            SetEmptyCheck.isUntouched = () => false;
             store = mockStore({
                 sets: {
                     workoutData: [{
@@ -115,8 +114,7 @@ describe('endSet analytics', () => {
     });
 
     describe('auto_end_timer', () => {
-
-        var endSetTimerSpy = null;
+        const realGetEndSetTimerDuration = SettingsSelectors.getEndSetTimerDuration;
 
         beforeEach(() => {
             store = mockStore({
@@ -134,15 +132,11 @@ describe('endSet analytics', () => {
         });
 
         afterEach(() => {
-            endSetTimerSpy.mockReset();
-        });
-
-        afterAll(() => {
-            endSetTimerSpy.mockRestore();
-        });            
+            SettingsSelectors.getEndSetTimerDuration = realGetEndSetTimerDuration;
+        });           
 
         test('0 when manually started', () => {
-            endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 0);
+            SettingsSelectors.getEndSetTimerDuration = () => 0;
 
             store.dispatch(sut.endSet(true));
 
@@ -153,8 +147,8 @@ describe('endSet analytics', () => {
         });
 
         test('30 seconds when endSetTimerDuration is 30', () => {
-            endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 30);
-
+            SettingsSelectors.getEndSetTimerDuration = () => 30;
+            
             store.dispatch(sut.endSet());
 
             const event = logEventSpy.mock.calls[0][0];
@@ -164,8 +158,8 @@ describe('endSet analytics', () => {
         });  
         
         test('60 seconds when endSetTimerDuration is 1 min', () => {
-            endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 60);
-
+            SettingsSelectors.getEndSetTimerDuration = () => 60;
+            
             store.dispatch(sut.endSet());
 
             const event = logEventSpy.mock.calls[0][0];
@@ -176,8 +170,8 @@ describe('endSet analytics', () => {
         
         
         test('120 seconds when endSetTimerDuration is 2 min', () => {
-            endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 120);
-
+            SettingsSelectors.getEndSetTimerDuration = () => 120;
+            
             store.dispatch(sut.endSet());
 
             const event = logEventSpy.mock.calls[0][0];
@@ -187,8 +181,8 @@ describe('endSet analytics', () => {
         }); 
         
         test('300 seconds when endSetTimerDuration is 5 min', () => {
-            endSetTimerSpy = timerEditedSpy = jest.spyOn(SettingsSelectors, 'getEndSetTimerDuration').mockImplementation(() => 300);
-
+            SettingsSelectors.getEndSetTimerDuration = () => 300;
+            
             store.dispatch(sut.endSet());
 
             const event = logEventSpy.mock.calls[0][0];
@@ -232,20 +226,15 @@ describe('endSet analytics', () => {
     })
 
     describe('has_reps', () => {
-
-        var touchedSpy = null;
+        const realHasEmptyReps = SetEmptyCheck.hasEmptyReps;
 
         afterEach(() => {
-            touchedSpy.mockReset();
-        });
-
-        afterAll(() => {
-            touchedSpy.mockRestore();
+            SetEmptyCheck.hasEmptyReps = realHasEmptyReps;
         });
 
         test("true when it does not have empty reps", () => {
             // given the set does not have empty reps
-            touchedSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyReps').mockImplementation(() => false);
+            SetEmptyCheck.hasEmptyReps = () => false;
 
             // when you end the set
             store.dispatch(sut.endSet());            
@@ -259,8 +248,8 @@ describe('endSet analytics', () => {
 
         test("false when it has empty reps", () => {
             // given the set does not have empty reps
-            touchedSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyReps').mockImplementation(() => true);
-
+            SetEmptyCheck.hasEmptyReps = () => true;
+            
             // when you end the set
             store.dispatch(sut.endSet());            
 
@@ -273,20 +262,15 @@ describe('endSet analytics', () => {
     });
 
     describe("num_fields_entered and value", () => {
-
-        var fieldsSpy = null
+        const realNumFieldsEntered = SetEmptyCheck.numFieldsEntered;
 
         afterEach(() => {
-            fieldsSpy.mockReset();
+            SetEmptyCheck.numFieldsEntered = realNumFieldsEntered;
         });
-
-        afterAll(() => {
-            fieldsSpy.mockRestore();
-        });       
 
         test("num_fields_entered is 0", () => {
             // given a number of fields
-            fieldsSpy = jest.spyOn(SetEmptyCheck, 'numFieldsEntered').mockImplementation(() => 0);
+            SetEmptyCheck.numFieldsEntered = () => 0;
 
             // when you end the set
             store.dispatch(sut.endSet());
@@ -301,8 +285,8 @@ describe('endSet analytics', () => {
 
         test("num_fields_entered is 1", () => {
             // given a number of fields
-            fieldsSpy = jest.spyOn(SetEmptyCheck, 'numFieldsEntered').mockImplementation(() => 1);
-
+            SetEmptyCheck.numFieldsEntered = () => 1;
+            
             // when you end the set
             store.dispatch(sut.endSet());
 
@@ -316,8 +300,8 @@ describe('endSet analytics', () => {
         
         test("num_fields_entered is 2", () => {
             // given a number of fields
-            fieldsSpy = jest.spyOn(SetEmptyCheck, 'numFieldsEntered').mockImplementation(() => 2);
-
+            SetEmptyCheck.numFieldsEntered = () => 2;
+            
             // when you end the set
             store.dispatch(sut.endSet());
 
@@ -331,8 +315,8 @@ describe('endSet analytics', () => {
         
         test("num_fields_entered is 3", () => {
             // given a number of fields
-            fieldsSpy = jest.spyOn(SetEmptyCheck, 'numFieldsEntered').mockImplementation(() => 3);
-
+            SetEmptyCheck.numFieldsEntered = () => 3;
+            
             // when you end the set
             store.dispatch(sut.endSet());
 
@@ -346,8 +330,8 @@ describe('endSet analytics', () => {
 
         test("num_fields_entered is 4", () => {
             // given a number of fields
-            fieldsSpy = jest.spyOn(SetEmptyCheck, 'numFieldsEntered').mockImplementation(() => 4);
-
+            SetEmptyCheck.numFieldsEntered = () => 4;
+            
             // when you end the set
             store.dispatch(sut.endSet());
 
@@ -361,19 +345,14 @@ describe('endSet analytics', () => {
     });
 
     describe("is_default_timer", () => {
-
-        var timerEditedSpy = null;
+        const realGetIfTimerWasEdited = SettingsSelectors.getIfTimerWasEdited;
 
         afterEach(() => {
-            timerEditedSpy.mockReset();
-        });
-
-        afterAll(() => {
-            timerEditedSpy.mockRestore();
+            SettingsSelectors.getIfTimerWasEdited = realGetIfTimerWasEdited;
         });
         
         test("timer edited is false", () => {
-            timerEditedSpy = jest.spyOn(SettingsSelectors, 'getIfTimerWasEdited').mockImplementation(() => false);
+            SettingsSelectors.getIfTimerWasEdited = () => false;
 
             store.dispatch(sut.endSet());
 
@@ -384,8 +363,8 @@ describe('endSet analytics', () => {
         });
 
         test("timer edited is true", () => {
-            timerEditedSpy = jest.spyOn(SettingsSelectors, 'getIfTimerWasEdited').mockImplementation(() => true);
-
+            SettingsSelectors.getIfTimerWasEdited = () => true;
+            
             store.dispatch(sut.endSet());
 
             const event = logEventSpy.mock.calls[0][0];
@@ -396,19 +375,14 @@ describe('endSet analytics', () => {
     });
 
     describe('is_previous_set_filled', () => {
-
-        var previousSetFilledSpy = null;
+        const realGetIsPreviousWorkoutSetFilled = SetsSelectors.getIsPreviousWorkoutSetFilled;
 
         afterEach(() => {
-            previousSetFilledSpy.mockReset();
-        });
-
-        afterAll(() => {
-            previousSetFilledSpy.mockRestore();
+            SetsSelectors.getIsPreviousWorkoutSetFilled = realGetIsPreviousWorkoutSetFilled;
         });
         
         test('-1 if no previous set', () => {
-           previousSetFilledSpy = jest.spyOn(SetsSelectors, 'getIsPreviousWorkoutSetFilled').mockImplementation(() => -1);
+            SetsSelectors.getIsPreviousWorkoutSetFilled = () => -1;
 
            store.dispatch(sut.endSet());
            
@@ -419,8 +393,8 @@ describe('endSet analytics', () => {
         });
 
         test('0 if empty', () => {
-            previousSetFilledSpy = jest.spyOn(SetsSelectors, 'getIsPreviousWorkoutSetFilled').mockImplementation(() => 0);
- 
+            SetsSelectors.getIsPreviousWorkoutSetFilled = () => 0;
+            
             store.dispatch(sut.endSet());
             
             const event = logEventSpy.mock.calls[0][0];
@@ -430,8 +404,8 @@ describe('endSet analytics', () => {
         });        
 
         test('1 if filled', () => {
-            previousSetFilledSpy = jest.spyOn(SetsSelectors, 'getIsPreviousWorkoutSetFilled').mockImplementation(() => 1);
- 
+            SetsSelectors.getIsPreviousWorkoutSetFilled = () => 1;
+            
             store.dispatch(sut.endSet());
             
             const event = logEventSpy.mock.calls[0][0];
@@ -442,19 +416,15 @@ describe('endSet analytics', () => {
     });
 
     describe('previous_set_has_reps', () => {
-        var touchedSpy = null;
+        const realGetWorkoutPreviousSetHasEmptyReps = SetsSelectors.getWorkoutPreviousSetHasEmptyReps;
 
         afterEach(() => {
-            touchedSpy.mockReset();
-        });
-
-        afterAll(() => {
-            touchedSpy.mockRestore();
+            SetsSelectors.getWorkoutPreviousSetHasEmptyReps = realGetWorkoutPreviousSetHasEmptyReps;
         });
 
         test("true when it does not have empty reps", () => {
             // given the set does not have empty reps
-            touchedSpy = jest.spyOn(SetsSelectors, 'getWorkoutPreviousSetHasEmptyReps').mockImplementation(() => false);
+            SetsSelectors.getWorkoutPreviousSetHasEmptyReps = () => false;
 
             // when you end the set
             store.dispatch(sut.endSet());            
@@ -468,8 +438,8 @@ describe('endSet analytics', () => {
 
         test("false when it has empty reps", () => {
             // given the set does not have empty reps
-            touchedSpy = jest.spyOn(SetsSelectors, 'getWorkoutPreviousSetHasEmptyReps').mockImplementation(() => true);
-
+            SetsSelectors.getWorkoutPreviousSetHasEmptyReps = () => true;
+            
             // when you end the set
             store.dispatch(sut.endSet());            
 

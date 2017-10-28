@@ -1,4 +1,4 @@
-jest.mock('app/configs/Firebase', () => {});
+jest.mock('app/services/Firebase', () => {});
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import * as Analytics from 'app/utility/Analytics';

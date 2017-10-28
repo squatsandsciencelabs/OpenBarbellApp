@@ -1,7 +1,4 @@
 // NOTE: maybe need to reset these somewhere? For now just going with this
-console.tron = {};
-console.tron.log = () => {};
-console.tron.display = () => {};
 jest.mock('app/services/Firebase', () => {
     return {
         analytics: () => {
@@ -22,34 +19,45 @@ import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDe
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
 describe('Analytics', () => {
-    let screenStatusSpy = null;
-    let scannedDevicesSpy = null;
-    let connectedDeviceStatusSpy = null;
-    let workoutEmptySpy = null;
+    let params = null;
+    const origTron = console.tron;
+    const origGetScreenStatus = AppStateSelectors.getScreenStatus;
+    const origGetScannedDevices = ScannedDevicesSelectors.getScannedDevices;
+    const origGetConnectedDeviceStatus = ConnectedDeviceStatusSelectors.getConnectedDeviceStatus;
+    const origGetIsWorkoutEmpty = SetsSelectors.getIsWorkoutEmpty;
+
+    beforeAll(() => {
+        console.tron = console.tron = {
+            log: () => null,
+            display: () => null
+        };
+    });
+
+    beforeEach(() => {
+        params = {};
+    });
 
     afterEach(() => {
-        if (screenStatusSpy) {
-            screenStatusSpy.mockRestore();
-        }
-        if (scannedDevicesSpy) {
-            scannedDevicesSpy.mockRestore();
-        }
-        if (connectedDeviceStatusSpy) {
-            connectedDeviceStatusSpy.mockRestore();
-        }
-        if (workoutEmptySpy) {
-            workoutEmptySpy.mockRestore();
-        }
+        AppStateSelectors.getScreenStatus = origGetScreenStatus;
+        ScannedDevicesSelectors.getScannedDevices = origGetScannedDevices;
+        ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = origGetConnectedDeviceStatus;
+        SetsSelectors.getIsWorkoutEmpty = origGetIsWorkoutEmpty;
+    });
+
+    afterAll(() => {
+        console.tron = origTron;
     });
 
     describe('logEventWithAppState', () => {
         describe('is_screen_locked', () => {
+            beforeEach(() => {
+                ScannedDevicesSelectors.getScannedDevices = () => [];
+                ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = () => '';
+                SetsSelectors.getIsWorkoutEmpty = () => true;
+            });
+
             test('false', () => {
-                screenStatusSpy = jest.spyOn(AppStateSelectors, 'getScreenStatus').mockImplementation(() => 'active');
-                scannedDevicesSpy = jest.spyOn(ScannedDevicesSelectors, 'getScannedDevices').mockImplementation(() => []);
-                connectedDeviceStatusSpy = jest.spyOn(ConnectedDeviceStatusSelectors, 'getConnectedDeviceStatus').mockImplementation(() => '');
-                workoutEmptySpy = jest.spyOn(SetsSelectors, 'getIsWorkoutEmpty').mockImplementation(() => true);
-                let params = {};
+                AppStateSelectors.getScreenStatus = () => 'active';
 
                 sut.logEventWithAppState(null, params, null);
 
@@ -57,11 +65,7 @@ describe('Analytics', () => {
             });
 
             test('true', () => {
-                screenStatusSpy = jest.spyOn(AppStateSelectors, 'getScreenStatus').mockImplementation(() => '');
-                scannedDevicesSpy = jest.spyOn(ScannedDevicesSelectors, 'getScannedDevices').mockImplementation(() => []);
-                connectedDeviceStatusSpy = jest.spyOn(ConnectedDeviceStatusSelectors, 'getConnectedDeviceStatus').mockImplementation(() => '');
-                workoutEmptySpy = jest.spyOn(SetsSelectors, 'getIsWorkoutEmpty').mockImplementation(() => true);
-                let params = {};
+                AppStateSelectors.getScreenStatus = () => '';
 
                 sut.logEventWithAppState(null, params, null);
 
@@ -73,7 +77,12 @@ describe('Analytics', () => {
             let originalAppCurrentState = null;
 
             beforeEach(() => {
-                originalAppCurrentState = AppState.currentState;    
+                originalAppCurrentState = AppState.currentState;
+                AppStateSelectors.getScreenStatus = () => '';
+                ScannedDevicesSelectors.getScannedDevices = () => [];
+                ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = () => '';
+                SetsSelectors.getIsWorkoutEmpty = () => true;
+                params = {};
             });
 
             afterEach(() => {
@@ -82,11 +91,6 @@ describe('Analytics', () => {
 
             test('true if active', () => {
                 AppState.currentState = 'active';
-                screenStatusSpy = jest.spyOn(AppStateSelectors, 'getScreenStatus').mockImplementation(() => '');
-                scannedDevicesSpy = jest.spyOn(ScannedDevicesSelectors, 'getScannedDevices').mockImplementation(() => []);
-                connectedDeviceStatusSpy = jest.spyOn(ConnectedDeviceStatusSelectors, 'getConnectedDeviceStatus').mockImplementation(() => '');
-                workoutEmptySpy = jest.spyOn(SetsSelectors, 'getIsWorkoutEmpty').mockImplementation(() => true);
-                let params = {};
 
                 sut.logEventWithAppState(null, params, null);
 
@@ -95,11 +99,6 @@ describe('Analytics', () => {
 
             test('false if inactive', () => {
                 AppState.currentState = 'inactive';
-                screenStatusSpy = jest.spyOn(AppStateSelectors, 'getScreenStatus').mockImplementation(() => '');
-                scannedDevicesSpy = jest.spyOn(ScannedDevicesSelectors, 'getScannedDevices').mockImplementation(() => []);
-                connectedDeviceStatusSpy = jest.spyOn(ConnectedDeviceStatusSelectors, 'getConnectedDeviceStatus').mockImplementation(() => '');
-                workoutEmptySpy = jest.spyOn(SetsSelectors, 'getIsWorkoutEmpty').mockImplementation(() => true);
-                let params = {};
 
                 sut.logEventWithAppState(null, params, null);
 
@@ -108,11 +107,6 @@ describe('Analytics', () => {
 
             test('false is background', () => {
                 AppState.currentState = 'background';
-                screenStatusSpy = jest.spyOn(AppStateSelectors, 'getScreenStatus').mockImplementation(() => '');
-                scannedDevicesSpy = jest.spyOn(ScannedDevicesSelectors, 'getScannedDevices').mockImplementation(() => []);
-                connectedDeviceStatusSpy = jest.spyOn(ConnectedDeviceStatusSelectors, 'getConnectedDeviceStatus').mockImplementation(() => '');
-                workoutEmptySpy = jest.spyOn(SetsSelectors, 'getIsWorkoutEmpty').mockImplementation(() => true);
-                let params = {};
 
                 sut.logEventWithAppState(null, params, null);
 
@@ -121,11 +115,6 @@ describe('Analytics', () => {
 
             test('undefined otherwise', () => {
                 AppState.currentState = 'foobar';
-                screenStatusSpy = jest.spyOn(AppStateSelectors, 'getScreenStatus').mockImplementation(() => '');
-                scannedDevicesSpy = jest.spyOn(ScannedDevicesSelectors, 'getScannedDevices').mockImplementation(() => []);
-                connectedDeviceStatusSpy = jest.spyOn(ConnectedDeviceStatusSelectors, 'getConnectedDeviceStatus').mockImplementation(() => '');
-                workoutEmptySpy = jest.spyOn(SetsSelectors, 'getIsWorkoutEmpty').mockImplementation(() => true);
-                let params = {};
 
                 sut.logEventWithAppState(null, params, null);
 

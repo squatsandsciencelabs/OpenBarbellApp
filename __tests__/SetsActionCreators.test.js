@@ -23,7 +23,6 @@ describe('endSet analytics', () => {
     });
 
     afterAll(() => {
-        logEventSpy.mockReset();
         logEventSpy.mockRestore();
     });
 
@@ -32,7 +31,6 @@ describe('endSet analytics', () => {
         var untouchedSpy = null;
 
         afterEach(() => {
-            untouchedSpy.mockReset();
             untouchedSpy.mockRestore();
         });
 
@@ -140,7 +138,6 @@ describe('endSet analytics', () => {
         });
 
         afterAll(() => {
-            endSetTimerSpy.mockReset();
             endSetTimerSpy.mockRestore();
         });            
 
@@ -243,7 +240,6 @@ describe('endSet analytics', () => {
         });
 
         afterAll(() => {
-            touchedSpy.mockReset();
             touchedSpy.mockRestore();
         });
 
@@ -285,7 +281,6 @@ describe('endSet analytics', () => {
         });
 
         afterAll(() => {
-            fieldsSpy.mockReset();
             fieldsSpy.mockRestore();
         });       
 
@@ -374,7 +369,6 @@ describe('endSet analytics', () => {
         });
 
         afterAll(() => {
-            timerEditedSpy.mockReset();
             timerEditedSpy.mockRestore();
         });
         
@@ -410,7 +404,6 @@ describe('endSet analytics', () => {
         });
 
         afterAll(() => {
-            previousSetFilledSpy.mockReset();
             previousSetFilledSpy.mockRestore();
         });
         
@@ -456,7 +449,6 @@ describe('endSet analytics', () => {
         });
 
         afterAll(() => {
-            touchedSpy.mockReset();
             touchedSpy.mockRestore();
         });
 

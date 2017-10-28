@@ -99,7 +99,7 @@ describe('endSet analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('start_new_set');
-            expect(params.manually_started).toBeTruthy();
+            expect(params.manually_started).toBe(true);;
         });
 
         test('false when passed in false', () => {
@@ -109,7 +109,7 @@ describe('endSet analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('start_new_set');
-            expect(params.manually_started).toBeFalsy();
+            expect(params.manually_started).toBe(false);
         });
     });
 
@@ -201,7 +201,7 @@ describe('endSet analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('start_new_set');
-            expect(params.was_sanity_check).toBeTruthy();
+            expect(params.was_sanity_check).toBe(true);;
         });
 
         test('false when passed nothing', () => {
@@ -211,7 +211,7 @@ describe('endSet analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('start_new_set');
-            expect(params.was_sanity_check).toBeFalsy();
+            expect(params.was_sanity_check).toBe(false);
         });
 
         test('false when passed in false', () => {
@@ -221,7 +221,7 @@ describe('endSet analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('start_new_set');
-            expect(params.was_sanity_check).toBeFalsy();
+            expect(params.was_sanity_check).toBe(false);
         });
     })
 
@@ -243,7 +243,7 @@ describe('endSet analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('start_new_set');
-            expect(params.has_reps).toBeTruthy();
+            expect(params.has_reps).toBe(true);;
         });
 
         test("false when it has empty reps", () => {
@@ -257,7 +257,7 @@ describe('endSet analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('start_new_set');
-            expect(params.has_reps).toBeFalsy();
+            expect(params.has_reps).toBe(false);
         });
     });
 
@@ -359,7 +359,7 @@ describe('endSet analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('start_new_set');
-            expect(params.is_default_end_timer).toBeTruthy();                   
+            expect(params.is_default_end_timer).toBe(true);;                   
         });
 
         test("timer edited is true", () => {
@@ -370,7 +370,7 @@ describe('endSet analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('start_new_set');
-            expect(params.is_default_end_timer).toBeFalsy();                   
+            expect(params.is_default_end_timer).toBe(false);                   
         });        
     });
 
@@ -433,7 +433,7 @@ describe('endSet analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('start_new_set');
-            expect(params.previous_set_has_reps).toBeTruthy();
+            expect(params.previous_set_has_reps).toBe(true);;
         });
 
         test("false when it has empty reps", () => {
@@ -447,7 +447,7 @@ describe('endSet analytics', () => {
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('start_new_set');
-            expect(params.previous_set_has_reps).toBeFalsy();
+            expect(params.previous_set_has_reps).toBe(false);
         });        
     })
 });

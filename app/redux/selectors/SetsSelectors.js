@@ -201,6 +201,10 @@ export const getNumHistoryReps = (state) => {
 
 const getHistoryWorkoutIDs = (state) => {
     let sets = getHistorySetsChronological(state);
+
+    if (sets.length === 0) {
+        return [];
+    }
     
     let workoutIDs = [sets[0].workoutID];
 

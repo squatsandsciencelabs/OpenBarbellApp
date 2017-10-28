@@ -460,7 +460,7 @@ describe('SetSelectors', () => {
         });
 
         test('0 if not filled', () => {
-            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => true);    
+            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => true);
             const state = {
                 sets: {
                     workoutData: [{}, {}, {}, {}]
@@ -473,7 +473,7 @@ describe('SetSelectors', () => {
         });
 
         test('1 if filled', () => {
-            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => false);    
+            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => false);
             const state = {
                 sets: {
                     workoutData: [{}, {}, {}, {}]
@@ -603,6 +603,70 @@ describe('SetSelectors', () => {
     });
 
     describe('getNumHistoryWorkouts', () => {
+        test('0 if no sets', () => {
+            const state = {
+                sets: {
+                    historyData: {
+                    }
+                }
+            };
+
+            const result = sut.getNumHistoryWorkouts(state);
+
+            expect(result).toBe(0);
+        });
+
+        test('1', () => {
+            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => false);            
+            const state = {
+                sets: {
+                    historyData: {
+                        a: {
+                            workoutID: 1
+                        }
+                    }
+                }
+            };
+
+            const result = sut.getNumHistoryWorkouts(state);
+            
+            expect(result).toBe(1);
+        });
+
+        test('3', () => {
+            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => false);            
+            const state = {
+                sets: {
+                    historyData: {
+                        a: {
+                            workoutID: 1
+                        },
+                        b: {
+                            workoutID: 1
+                        },
+                        c: {
+                            workoutID: 2
+                        },
+                        d: {
+                            workoutID: 2
+                        },
+                        e: {
+                            workoutID: 3
+                        },
+                        f: {
+                            workoutID: 3
+                        },
+                        g: {
+                            workoutID: 3
+                        },
+                    }
+                }
+            };
+
+            const result = sut.getNumHistoryWorkouts(state);
+            
+            expect(result).toBe(3);
+        });
     });
 
     describe.skip('getExpandedHistorySet', () => {

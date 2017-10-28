@@ -226,7 +226,28 @@ describe('Analytics', () => {
         });
 
         describe('is_bluetooth_on', () => {
+
+            beforeEach(() => {
+                AppStateSelectors.getScreenStatus = () => '';
+                ScannedDevicesSelectors.getScannedDevices = () => [];
+                SetsSelectors.getIsWorkoutEmpty = () => true;
+            });
             
+            test('false if bluetooth off', () => {
+                ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = () => 'BLUETOOTH_OFF';
+                
+                sut.logEventWithAppState(null, params, null);
+                
+                expect(params.is_bluetooth_on).toBe(false);
+            });
+
+            test('true otherwise', () => {
+                ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = () => 'foobar';
+
+                sut.logEventWithAppState(null, params, null);
+                
+                expect(params.is_bluetooth_on).toBe(true);
+            });
         });
 
         describe('is_workout_in_progress', () => {

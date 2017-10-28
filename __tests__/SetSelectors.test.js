@@ -4,20 +4,12 @@ import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 
 describe('SetSelectors', () => {
     describe('lastWorkoutRepTime', () => {
-        let endTimeSpy = null;
+        const realEndTime = SetTimeCalculator.endTime;
 
         afterEach(() => {
-            if (endTimeSpy) {
-                endTimeSpy.mockReset();
-            }
+            SetTimeCalculator.endTime = realEndTime;
         });
 
-        afterAll(() => {
-            if (endTimeSpy) {
-                endTimeSpy.mockRestore();
-            }
-        });
-        
         test('null if no workout data', () => {
             const state = {
                 sets: {
@@ -31,7 +23,7 @@ describe('SetSelectors', () => {
         });
 
         test('null if no end time on current set and it is the only set', () => {
-            endTimeSpy = jest.spyOn(SetTimeCalculator, 'endTime').mockImplementation(() => null);        
+            SetTimeCalculator.endTime = () => null;
             const state = {
                 sets: {
                     workoutData: [{}]
@@ -44,7 +36,7 @@ describe('SetSelectors', () => {
         });
 
         test('null if no end time on any set', () => {
-            endTimeSpy = jest.spyOn(SetTimeCalculator, 'endTime').mockImplementation(() => null);
+            SetTimeCalculator.endTime = () => null;
             const state = {
                 sets: {
                     workoutData: [{}, {}, {}, {}]
@@ -58,7 +50,7 @@ describe('SetSelectors', () => {
 
         test('end time of current set', () => {
             const expected = 3;
-            endTimeSpy = jest.spyOn(SetTimeCalculator, 'endTime').mockImplementation(() => expected);
+            SetTimeCalculator.endTime = () => expected;
             const state = {
                 sets: {
                     workoutData: [{}, {}, {}, {}]
@@ -73,14 +65,14 @@ describe('SetSelectors', () => {
         test('end time of set after current set if current set has no end time', () => {
             const expected = 3;
             let initialRun = false;
-            endTimeSpy = jest.spyOn(SetTimeCalculator, 'endTime').mockImplementation(() => {
+            SetTimeCalculator.endTime = () => {
                 if (!initialRun) {
-                    initialRun = true;
-                    return null;
-                } else {
-                    return expected;
-                }
-            });
+                        initialRun = true;
+                        return null;
+                    } else {
+                        return expected;
+                    }
+            };
             const state = {
                 sets: {
                     workoutData: [{}, {}, {}, {}]
@@ -135,19 +127,11 @@ describe('SetSelectors', () => {
     });
 
     describe('getIsWorkoutEmpty', () => {
-        let untouchedSpy = null;
+        const realIsUntouched = SetEmptyCheck.isUntouched;
 
         afterEach(() => {
-            if (untouchedSpy) {            
-                untouchedSpy.mockReset();
-            }    
+            SetEmptyCheck.isUntouched = realIsUntouched; 
         });
-
-        afterAll(() => {
-            if (untouchedSpy) {            
-                untouchedSpy.mockRestore();
-            }
-        })
 
         test('false when > 2', () => {
             const state = {
@@ -162,7 +146,7 @@ describe('SetSelectors', () => {
         });
 
         test('false when exactly 1 not untouched', () => {
-            untouchedSpy = jest.spyOn(SetEmptyCheck, 'isUntouched').mockImplementation(() => false);
+            SetEmptyCheck.isUntouched = () => false;
             const state = {
                 sets: {
                     workoutData: [{}]
@@ -175,7 +159,7 @@ describe('SetSelectors', () => {
         });
 
         test('true when 1 set untouched', () => {
-            untouchedSpy = jest.spyOn(SetEmptyCheck, 'isUntouched').mockImplementation(() => true);        
+            SetEmptyCheck.isUntouched = () => true;
             const state = {
                 sets: {
                     workoutData: [{}]
@@ -265,14 +249,14 @@ describe('SetSelectors', () => {
     });
 
     describe('getNumWorkoutSetsWithFields', () => {
-        let hasEmptyFieldsSpy = null;
+        const realHasEmptyFields = SetEmptyCheck.hasEmptyFields;
         
         afterEach(() => {
-            hasEmptyFieldsSpy.mockRestore();
+            SetEmptyCheck.hasEmptyFields = realHasEmptyFields;
         });
 
         test('3 fields', () => {
-            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => set);
+            SetEmptyCheck.hasEmptyFields = (set) => set;
             const state = {
                 sets: {
                     workoutData: [false, true, false, false]
@@ -286,18 +270,14 @@ describe('SetSelectors', () => {
     });
 
     describe('getPercentWorkoutSetsWithFields', () => {
-        let hasEmptyFieldsSpy = null;
-        
-        afterEach(() => {
-            if (hasEmptyFieldsSpy) {
-                hasEmptyFieldsSpy.mockReset();
-            }
-        });
+        const realHasEmptyFields = SetEmptyCheck.hasEmptyFields;
 
+        beforeAll(() => {
+            SetEmptyCheck.hasEmptyFields = (set) => set;            
+        });
+        
         afterAll(() => {
-            if (hasEmptyFieldsSpy) {
-                hasEmptyFieldsSpy.mockRestore();
-            }
+            SetEmptyCheck.hasEmptyFields = realHasEmptyFields;
         });
 
         test('0% when none', () => {
@@ -313,10 +293,9 @@ describe('SetSelectors', () => {
         });
 
         test('0% when 1', () => {
-            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => true);            
             const state = {
                 sets: {
-                    workoutData: [{}]
+                    workoutData: [true]
                 }
             };
         
@@ -326,7 +305,6 @@ describe('SetSelectors', () => {
         });
 
         test('25%', () => {
-            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => set);
             const state = {
                 sets: {
                     workoutData: [true, false, true, true]
@@ -339,7 +317,6 @@ describe('SetSelectors', () => {
         });
 
         test('66.66666666666%', () => {
-            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => set);
             const state = {
                 sets: {
                     workoutData: [true, false, false]
@@ -352,7 +329,6 @@ describe('SetSelectors', () => {
         });
 
         test('100% when single', () => {
-            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => set);
             const state = {
                 sets: {
                     workoutData: [false]
@@ -365,7 +341,6 @@ describe('SetSelectors', () => {
         });
 
         test('100% when multiple', () => {
-            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => set);
             const state = {
                 sets: {
                     workoutData: [false, false, false, false, false]
@@ -391,18 +366,14 @@ describe('SetSelectors', () => {
     });
 
     describe('getWorkoutPreviousSetHasEmptyReps', () => {
-        let hasEmptyRepsSpy = null;
+        const realHasEmptyReps = SetEmptyCheck.hasEmptyReps;
 
-        afterEach(() => {
-            if (hasEmptyRepsSpy) {
-                hasEmptyRepsSpy.mockReset();
-            }
+        beforeAll(() => {
+            SetEmptyCheck.hasEmptyReps = (set) => set;            
         });
 
         afterAll(() => {
-            if (hasEmptyRepsSpy) {
-                hasEmptyRepsSpy.mockRestore();
-            }
+            SetEmptyCheck.hasEmptyReps = realHasEmptyReps;
         });
         
         test('false if no sets', () => {
@@ -430,7 +401,6 @@ describe('SetSelectors', () => {
         });
 
         test('false if 2 sets and 2nd set has reps', () => {
-            hasEmptyRepsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyReps').mockImplementation((set) => set);
             const state = {
                 sets: {
                     workoutData: [true, false, true]
@@ -443,7 +413,6 @@ describe('SetSelectors', () => {
         });
 
         test('true if 2 sets and 2nd set does not have reps', () => {
-            hasEmptyRepsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyReps').mockImplementation((set) => set);            
             const state = {
                 sets: {
                     workoutData: [true, true, true]
@@ -457,6 +426,12 @@ describe('SetSelectors', () => {
     });
 
     describe('getIsPreviousWorkoutSetFilled', () => {
+        const realHasEmptyFields = SetEmptyCheck.hasEmptyFields;
+
+        afterEach(() => {
+            SetEmptyCheck.hasEmptyFields = realHasEmptyFields;
+        });
+
         test('-1 if no sets', () => {
             const state = {
                 sets: {
@@ -482,7 +457,7 @@ describe('SetSelectors', () => {
         });
 
         test('0 if not filled', () => {
-            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => true);
+            SetEmptyCheck.hasEmptyFields = (set) => true;
             const state = {
                 sets: {
                     workoutData: [{}, {}, {}, {}]
@@ -495,7 +470,7 @@ describe('SetSelectors', () => {
         });
 
         test('1 if filled', () => {
-            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => false);
+            SetEmptyCheck.hasEmptyFields = (set) => false;
             const state = {
                 sets: {
                     workoutData: [{}, {}, {}, {}]
@@ -607,9 +582,9 @@ describe('SetSelectors', () => {
             const result = sut.getNumHistoryReps(state);
 
             expect(result).toBe(0);
-    });
+        });
 
-    test('0 when sets have none', () => {
+        test('0 when sets have none', () => {
             const state = {
                 sets: {
                     historyData: {
@@ -665,18 +640,12 @@ describe('SetSelectors', () => {
     });
 
     describe('getNumHistoryWorkouts', () => {
-        let startTimeSpy = null;
-
+        const realHasEmptyFields = SetEmptyCheck.hasEmptyFields;
+        const realStartTime = SetTimeCalculator.startTime;
+        
         afterEach(() => {
-            if (startTimeSpy) {
-                startTimeSpy.mockReset();
-            }
-        });
-
-        afterAll(() => {
-            if (startTimeSpy) {
-                startTimeSpy.mockRestore();
-            }
+            SetEmptyCheck.hasEmptyFields = realHasEmptyFields;
+            SetTimeCalculator.startTime = realStartTime;
         });
 
         test('0 if no sets', () => {
@@ -693,7 +662,7 @@ describe('SetSelectors', () => {
         });
 
         test('1', () => {
-            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => false);
+            SetEmptyCheck.hasEmptyFields = (set) => false;
             const state = {
                 sets: {
                     historyData: {
@@ -710,8 +679,8 @@ describe('SetSelectors', () => {
         });
 
         test('3', () => {
-            hasEmptyFieldsSpy = jest.spyOn(SetEmptyCheck, 'hasEmptyFields').mockImplementation((set) => false);
-            startTimeSpy = jest.spyOn(SetTimeCalculator, 'startTime').mockImplementation((set) => 1);
+            SetEmptyCheck.hasEmptyFields = (set) => false;
+            SetTimeCalculator.startTime = (set) => 1;            
             const state = {
                 sets: {
                     historyData: {

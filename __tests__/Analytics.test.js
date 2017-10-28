@@ -20,11 +20,11 @@ import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
 describe('Analytics', () => {
     let params = null;
-    const origTron = console.tron;
-    const origGetScreenStatus = AppStateSelectors.getScreenStatus;
-    const origGetScannedDevices = ScannedDevicesSelectors.getScannedDevices;
-    const origGetConnectedDeviceStatus = ConnectedDeviceStatusSelectors.getConnectedDeviceStatus;
-    const origGetIsWorkoutEmpty = SetsSelectors.getIsWorkoutEmpty;
+    const realTron = console.tron;
+    const realGetScreenStatus = AppStateSelectors.getScreenStatus;
+    const realGetScannedDevices = ScannedDevicesSelectors.getScannedDevices;
+    const realGetConnectedDeviceStatus = ConnectedDeviceStatusSelectors.getConnectedDeviceStatus;
+    const realGetIsWorkoutEmpty = SetsSelectors.getIsWorkoutEmpty;
 
     beforeAll(() => {
         console.tron = console.tron = {
@@ -38,14 +38,14 @@ describe('Analytics', () => {
     });
 
     afterEach(() => {
-        AppStateSelectors.getScreenStatus = origGetScreenStatus;
-        ScannedDevicesSelectors.getScannedDevices = origGetScannedDevices;
-        ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = origGetConnectedDeviceStatus;
-        SetsSelectors.getIsWorkoutEmpty = origGetIsWorkoutEmpty;
+        AppStateSelectors.getScreenStatus = realGetScreenStatus;
+        ScannedDevicesSelectors.getScannedDevices = realGetScannedDevices;
+        ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = realGetConnectedDeviceStatus;
+        SetsSelectors.getIsWorkoutEmpty = realGetIsWorkoutEmpty;
     });
 
     afterAll(() => {
-        console.tron = origTron;
+        console.tron = realTron;
     });
 
     describe('logEventWithAppState', () => {

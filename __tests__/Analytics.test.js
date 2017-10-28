@@ -74,19 +74,18 @@ describe('Analytics', () => {
         });
 
         describe('is_app_active', () => {
-            let originalAppCurrentState = null;
+            let realAppCurrentState = null;
 
             beforeEach(() => {
-                originalAppCurrentState = AppState.currentState;
+                realAppCurrentState = AppState.currentState;
                 AppStateSelectors.getScreenStatus = () => '';
                 ScannedDevicesSelectors.getScannedDevices = () => [];
                 ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = () => '';
                 SetsSelectors.getIsWorkoutEmpty = () => true;
-                params = {};
             });
 
             afterEach(() => {
-                AppState.currentState = originalAppCurrentState;
+                AppState.currentState = realAppCurrentState;
             });
 
             test('true if active', () => {
@@ -123,19 +122,18 @@ describe('Analytics', () => {
         });
 
         describe('is_app_in_background', () => {
-            let originalAppCurrentState = null;
+            let realAppCurrentState = null;
             
             beforeEach(() => {
-                originalAppCurrentState = AppState.currentState;
+                realAppCurrentState = AppState.currentState;
                 AppStateSelectors.getScreenStatus = () => '';
                 ScannedDevicesSelectors.getScannedDevices = () => [];
                 ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = () => '';
                 SetsSelectors.getIsWorkoutEmpty = () => true;
-                params = {};
             });
 
             afterEach(() => {
-                AppState.currentState = originalAppCurrentState;
+                AppState.currentState = realAppCurrentState;
             });
 
             test('false if active', () => {
@@ -172,19 +170,18 @@ describe('Analytics', () => {
         });
 
         describe('is_app_inactive', () => {
-            let originalAppCurrentState = null;
+            let realAppCurrentState = null;
             
             beforeEach(() => {
-                originalAppCurrentState = AppState.currentState;
+                realAppCurrentState = AppState.currentState;
                 AppStateSelectors.getScreenStatus = () => '';
                 ScannedDevicesSelectors.getScannedDevices = () => [];
                 ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = () => '';
                 SetsSelectors.getIsWorkoutEmpty = () => true;
-                params = {};
             });
 
             afterEach(() => {
-                AppState.currentState = originalAppCurrentState;
+                AppState.currentState = realAppCurrentState;
             });
 
             test('false if active', () => {

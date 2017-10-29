@@ -2,7 +2,7 @@ import {
     DELETE_HISTORY_VIDEO,
     DISMISS_HISTORY_VIDEO_PLAYER
 } from 'app/ActionTypes';
-import * as Analytics from 'app/utility/Analytics';
+import * as Analytics from 'app/services/Analytics';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
 
 export const deleteVideo = (setID) => (dispatch, getState) => {

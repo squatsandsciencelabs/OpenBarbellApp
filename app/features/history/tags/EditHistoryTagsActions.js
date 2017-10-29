@@ -2,7 +2,7 @@ import {
     DISMISS_HISTORY_TAGS,
     SAVE_HISTORY_SET_TAGS
 } from 'app/ActionTypes';
-import * as Analytics from 'app/utility/Analytics';
+import * as Analytics from 'app/services/Analytics';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
 
 export const dismissTags = () => {

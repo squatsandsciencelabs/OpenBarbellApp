@@ -12,7 +12,7 @@ import {
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
-import * as Analytics from 'app/utility/Analytics';
+import * as Analytics from 'app/services/Analytics';
 
 export const getDefaultMetric = () => (dispatch, getState) => {
     var state = getState();

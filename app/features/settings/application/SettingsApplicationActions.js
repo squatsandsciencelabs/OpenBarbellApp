@@ -2,7 +2,7 @@ import {
     PRESENT_END_SET_TIMER,
     PRESENT_DEFAULT_METRIC
 } from 'app/ActionTypes';
-import * as Analytics from 'app/utility/Analytics';
+import * as Analytics from 'app/services/Analytics';
 
 export const presentEndSetTimer = () => {
     Analytics.setCurrentScreen('edit_end_set_timer');

@@ -3,7 +3,7 @@ import {
     DISMISS_WORKOUT_VIDEO_PLAYER
 } from 'app/ActionTypes';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
-import * as Analytics from 'app/utility/Analytics';
+import * as Analytics from 'app/services/Analytics';
 
 export const deleteVideo = (setID) => (dispatch, getState) => {
     var state = getState();

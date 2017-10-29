@@ -11,7 +11,7 @@ jest.mock('app/services/Firebase', () => {
     };
 });
 
-import * as sut from 'app/utility/Analytics';
+import * as sut from 'app/services/Analytics';
 import { AppState } from 'react-native';
 import * as AppStateSelectors from 'app/redux/selectors/AppStateSelectors';
 import * as ScannedDevicesSelectors from 'app/redux/selectors/ScannedDevicesSelectors';

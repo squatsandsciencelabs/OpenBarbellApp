@@ -4,6 +4,7 @@
 import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
+import * as RepDataMap from 'app/utility/transforms/RepDataMap';
 
 const stateRoot = (state) => state.sets;
 
@@ -257,6 +258,37 @@ export const getIsUploading = (state) => stateRoot(state).setIDsBeingUploaded.le
 export const hasChangesToSync = (state) => {
     const root = stateRoot(state);
     return (root.setIDsToUpload.length > 0 || root.setIDsBeingUploaded.length > 0);
+};
+
+// collapsed metrics
+
+export const getBestAvgVelocityEver = (state, set) => {
+    let historySets = getHistorySetsChronological(state);
+
+    // find all instances of this exercise with weight and reps
+    let matchedSets = historySets.filter(historySet => historySet.exercise === set.exercise && historySet.weight === set.weight &&  historySet.metric === set.metric && historySet.reps.length === set.reps.length);
+
+    let avgVels = matchedSets.map((matchedSet) => {
+        let velocities = [];
+
+        for (let i = 0; i < matchedSet.reps.length; i++) {
+            let rep = matchedSet.reps[i];
+            
+            if (rep.isValid == true) {
+                let repData = rep.data;
+    
+                velocities.push(RepDataMap.averageVelocity(repData));
+            }            
+        };
+        
+        return velocities;
+    });
+
+    avgVels = avgVels.reduce((a, b) => a.concat(b), []);
+    
+    let avgVelsNums = avgVels.map(vel => Number(vel));
+
+    return Math.max(...avgVelsNums);
 };
 
 export const getRevision = (state) => stateRoot(state).revision;

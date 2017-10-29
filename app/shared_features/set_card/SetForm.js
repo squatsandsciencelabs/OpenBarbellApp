@@ -108,9 +108,11 @@ class SetForm extends Component {
 
     _toggleMetric() {
         if (this.state.metric === 'kgs') {
-            this.setState({metric: 'lbs'})
+            this.setState({metric: 'lbs'});
+            this.props.toggleMetric(this.props.setID);
         } else if (this.state.metric === 'lbs') {
-            this.setState({metric: 'kgs'})
+            this.setState({metric: 'kgs'});
+            this.props.toggleMetric(this.props.setID);
         }
     }
 

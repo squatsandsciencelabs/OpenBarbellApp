@@ -5,6 +5,7 @@ import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
+import * as CollapsedMetrics from 'app/utility/transforms/CollapsedMetrics';
 
 const stateRoot = (state) => state.sets;
 
@@ -280,27 +281,13 @@ export const getBestAvgVelocityEver = (state, set) => {
     // find all instances of this exercise with weight and reps
     let matchedSets = historySets.filter(historySet => historySet.exercise === set.exercise && historySet.weight === set.weight &&  historySet.metric === set.metric && historySet.reps.length === set.reps.length);
 
-    let avgVels = matchedSets.map((matchedSet) => {
-        let velocities = [];
-
-        for (let i = 0; i < matchedSet.reps.length; i++) {
-            let rep = matchedSet.reps[i];
-            
-            if (rep.isValid == true) {
-                let repData = rep.data;
-    
-                velocities.push(RepDataMap.averageVelocity(repData));
-            }            
-        };
-        
-        return velocities;
+    let avgVs = matchedSets.map((matchedSet) => {
+        CollapsedMetrics.getAvgVelocities(matchedSet);
     });
 
-    avgVels = avgVels.reduce((a, b) => a.concat(b), []);
+    avgVs = avgVs.reduce((a, b) => a.concat(b), []);
     
-    let avgVelsNums = avgVels.map(vel => Number(vel));
-
-    return Math.max(...avgVelsNums);
+    return Math.max(...avgVs);
 };
 
 export const getRevision = (state) => stateRoot(state).revision;

@@ -1,3 +1,4 @@
+// TODO: NavigationConfig info should ideally be passed in from the screen rather than pulled from the view
 // TODO: Fix Kill Switch bug on rotation
 // TODO: move the kill switch UI (not the logic) to another file, it doesn't belong in the Application
 // TODO: Kill switch should link to the app store to make it easier to update

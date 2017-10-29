@@ -15,12 +15,9 @@ import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
 
 export const presentExercise = (setID, exercise, bias) => (dispatch, getState) => {
-    var state = getState();
-
+    const state = getState();
     Analytics.setCurrentScreen('edit_workout_exercise_name');
-
     logEditExerciseNameAnalytics(setID, exercise, state);
-
     dispatch({
         type: PRESENT_WORKOUT_EXERCISE,
         setID: setID,
@@ -31,29 +28,31 @@ export const presentExercise = (setID, exercise, bias) => (dispatch, getState) =
 
 export const toggleMetric = (setID) => (dispatch, getState) => {
     const state = getState();
-    Analytics.logEventWithAppState('toggle_weight_metric', {}, state);
-    dispatch({ type: TOGGLE_WORKOUT_METRIC });
+    logToggleMetricAnalytics(setID, state);
+    dispatch({
+        type: TOGGLE_WORKOUT_METRIC
+    });
 };
 
 export const editRPE = (setID) => (dispatch, getState) => {
-    var state = getState();
-
+    const state = getState();
     logEditRPEAnalytics(setID, state);
-
     dispatch({
         type: START_EDITING_WORKOUT_RPE
     });
 };
 
-export const editWeight = () => ({
-    type: START_EDITING_WORKOUT_WEIGHT
-});
+export const editWeight = (setID) => (dispatch, getState) => {
+    const state = getState();
+    logEditWeightAnalytics(setID, state);
+    dispatch({
+        type: START_EDITING_WORKOUT_WEIGHT
+    });
+};
 
 export const dismissRPE = (setID) => (dispatch, getState) => {
-    var state = getState();
-
+    const state = getState();
     logSaveRPEAnalytics(setID, state);
-
     dispatch({
         type: END_EDITING_WORKOUT_RPE
     });
@@ -125,6 +124,14 @@ const logEditExerciseNameAnalytics = (setID, exercise, state) => {
     }, state);
 };
 
+const logToggleMetricAnalytics = (setID, state) => {
+    let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
+
+    Analytics.logEventWithAppState('toggle_weight_metric', {
+        is_working_set: is_working_set
+    }, state);    
+};
+
 const logSaveWeightAnalytics = (setID, state) => {
     let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
     let duration = DurationsSelectors.getEditWorkoutWeightDuration(state);
@@ -151,6 +158,14 @@ const logEditRPEAnalytics = (setID, state) => {
     let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 
     Analytics.logEventWithAppState('edit_rpe', {
+        is_working_set: is_working_set
+    }, state);       
+};
+
+const logEditWeightAnalytics = (setID, state) => {
+    let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
+    
+    Analytics.logEventWithAppState('edit_weight', {
         is_working_set: is_working_set
     }, state);       
 };

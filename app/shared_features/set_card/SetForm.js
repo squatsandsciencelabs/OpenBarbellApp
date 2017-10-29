@@ -187,7 +187,7 @@ class SetForm extends Component {
                     value={this.state.weight}
 
                     onEndEditing={() => this._onEndEditWeight() }
-                    onFocus={() => this.props.tapWeight()}
+                    onFocus={() => this.props.tapWeight(this.props.setID) }
                     onChangeText={(weight) => this._onChangeWeight(weight) }
                 />
                 <View style={styles.fieldDetails}>

@@ -4,7 +4,7 @@ import {
     DISMISS_HISTORY_VIDEO_RECORDER,
     SAVE_HISTORY_VIDEO
 } from 'app/ActionTypes';
-import * as Analytics from 'app/utility/Analytics';
+import * as Analytics from 'app/services/Analytics';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
 
 export const startRecording = (setID) => ({

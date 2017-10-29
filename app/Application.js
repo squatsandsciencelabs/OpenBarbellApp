@@ -7,8 +7,8 @@ import Store from 'app/redux/Store';
 import ApplicationScreen from 'app/features/application/ApplicationScreen';
 import * as GoogleSignInSetup from 'app/services/GoogleSignInSetup';
 import Bluetooth from 'app/services/Bluetooth';
-import AppState from 'app/utility/AppState';
-import * as Analytics from 'app/utility/Analytics';
+import AppState from 'app/services/AppState';
+import * as Analytics from 'app/services/Analytics';
 import Permissions from 'app/services/Permissions';
 
 // initialize the store

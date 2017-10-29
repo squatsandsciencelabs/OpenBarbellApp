@@ -15,7 +15,7 @@ import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators
 import * as KillSwitchActionCreators from 'app/redux/shared_actions/KillSwitchActionCreators';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
 import * as StoreActionCreators from 'app/redux/shared_actions/StoreActionCreators';
-import * as Analytics from 'app/utility/Analytics';
+import * as Analytics from 'app/services/Analytics';
 
 export default initializeStore = () => {
     // create the store

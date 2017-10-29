@@ -8,7 +8,7 @@ import {
     END_EDITING_HISTORY_RPE,
     END_EDITING_HISTORY_WEIGHT,    
 } from 'app/ActionTypes';
-import * as Analytics from 'app/utility/Analytics';
+import * as Analytics from 'app/services/Analytics';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';

@@ -1,6 +1,6 @@
 import { Alert, Linking } from 'react-native';
 import { GoogleSignin } from 'react-native-google-signin';
-import * as Analytics from 'app/utility/Analytics';
+import * as Analytics from 'app/services/Analytics';
 
 import {
     LOGIN_REQUEST,

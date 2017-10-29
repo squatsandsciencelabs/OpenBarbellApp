@@ -24,7 +24,7 @@ import * as SetsActionCreators from './SetsActionCreators';
 import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDeviceStatusSelectors';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
-import * as Analytics from 'app/utility/Analytics';
+import * as Analytics from 'app/services/Analytics';
 
 const RFDuinoLib = NativeModules.RFDuinoLib;
 

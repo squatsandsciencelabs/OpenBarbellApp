@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         saveSetMultipleInput: Actions.saveTags,
         closeModal: Actions.dismissTags,
-        cancelTags: Actions.cancelTags,
+        cancelModal: Actions.cancelTags,
         tappedPill: Actions.tappedPill,
     }, dispatch);
 };

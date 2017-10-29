@@ -1,5 +1,6 @@
 import {
     PRESENT_WORKOUT_EXERCISE,
+    TOGGLE_WORKOUT_METRIC,
     PRESENT_WORKOUT_TAGS,
     START_EDITING_WORKOUT_RPE,
     START_EDITING_WORKOUT_WEIGHT,
@@ -26,6 +27,12 @@ export const presentExercise = (setID, exercise, bias) => (dispatch, getState) =
         exercise: exercise,
         bias: bias
     });
+};
+
+export const toggleMetric = (setID) => (dispatch, getState) => {
+    const state = getState();
+    Analytics.logEventWithAppState('toggle_weight_metric', {}, state);
+    dispatch({ type: TOGGLE_WORKOUT_METRIC });
 };
 
 export const editRPE = (setID) => (dispatch, getState) => {

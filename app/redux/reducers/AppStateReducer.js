@@ -3,16 +3,22 @@ import {
     LOCKED_SCREEN,
     MULTI_TASK_SCREEN,
     END_WORKOUT,
+    CHANGE_TAB
 } from 'app/ActionTypes';
 
 const defaultState = {
     screenStatus: 'active',
     lockedCounter: 0,
     multiTaskCounter: 0,
+    tabIndex: 2
 }
 
 const AppStateReducer = (state = defaultState, action) => {
     switch (action.type) {
+        case CHANGE_TAB:
+            return Object.assign({}, state, {
+                tabIndex: action.tabIndex,
+            });
         case UNLOCKED_SCREEN:
             return Object.assign({}, state, {
                 screenStatus: 'active',

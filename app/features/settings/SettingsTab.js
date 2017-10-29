@@ -3,6 +3,7 @@ import {
     TouchableHighlight,
     Text,
     StyleSheet,
+    ScrollView,
     View,
     ListView
 } from 'react-native';
@@ -15,12 +16,14 @@ class SettingsTab extends Component {
             
     render() {
         return (
-            <View style={{ flex: 1, flexDirection: 'column', justifyContent:'flex-start' }}>
-                <SettingsDeviceScreen />
-                <SettingsApplicationScreen />
-                <SettingsAccountScreen />
-                <SettingsFeedbackScreen />
-            </View>
+            <ScrollView style={{flex: 1}}>
+                <View style={{ flex: 1, flexDirection: 'column', justifyContent:'flex-start' }}>
+                    <SettingsDeviceScreen />
+                    <SettingsApplicationScreen />
+                    <SettingsAccountScreen />
+                    <SettingsFeedbackScreen />
+                </View>
+            </ScrollView>
         );
     }
 }

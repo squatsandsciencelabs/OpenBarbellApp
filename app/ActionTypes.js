@@ -51,7 +51,7 @@ export const STOP_END_SET_TIMER = 'STOP_END_SET_TIMER';
 export const STORE_INITIALIZED = 'STORE_INITIALIZED';
 
 // tab
-export const CHANGED_TAB = 'CHANGED_TAB';
+export const CHANGE_TAB = 'CHANGE_TAB';
 
 // suggestions
 export const UPDATE_SUGGESTIONS = 'UPDATE_SUGGESTIONS';

@@ -24,7 +24,7 @@ class EditTextModal extends Component {
             text: this.props.text,
             inputs: [],
         };
-    }     
+    }
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.setID === this.props.setID) {

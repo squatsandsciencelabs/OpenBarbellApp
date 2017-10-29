@@ -13,7 +13,7 @@ export const dismissExercise = (setID, exercise) => {
 };
 
 export const cancelExercise = (setID) => (dispatch, getState) => {
-    var state = getState();
+    const state = getState();
 
     Analytics.setCurrentScreen('workout');
 
@@ -25,7 +25,7 @@ export const cancelExercise = (setID) => (dispatch, getState) => {
 };
 
 export const saveExerciseName = (setID, exercise) => (dispatch, getState) => {
-    var state = getState();
+    const state = getState();
     
     logSaveExerciseNameAnalytics(setID, exercise, state);
     
@@ -33,8 +33,8 @@ export const saveExerciseName = (setID, exercise) => (dispatch, getState) => {
 };
 
 const logSaveExerciseNameAnalytics = (setID, exercise, state) => {
-    let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
-    let duration = DurationsSelectors.getEditWorkoutExerciseDuration(state);
+    const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
+    const duration = DurationsSelectors.getEditWorkoutExerciseDuration(state);
 
     Analytics.logEventWithAppState('save_exercise_name', {
         value: duration,
@@ -44,8 +44,8 @@ const logSaveExerciseNameAnalytics = (setID, exercise, state) => {
 };
 
 const logCancelEditExerciseNameAnalytics = (setID, state) => {
-    let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
-    let duration = DurationsSelectors.getEditWorkoutExerciseDuration(state); 
+    const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
+    const duration = DurationsSelectors.getEditWorkoutExerciseDuration(state); 
 
     Analytics.logEventWithAppState('cancel_edit_exercise_name', {
         value: duration,

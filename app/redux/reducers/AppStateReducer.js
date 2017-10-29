@@ -5,12 +5,13 @@ import {
     END_WORKOUT,
     CHANGE_TAB
 } from 'app/ActionTypes';
+import * as NavigationConfig from 'app/configs/NavigationConfig';
 
 const defaultState = {
     screenStatus: 'active',
     lockedCounter: 0,
     multiTaskCounter: 0,
-    tabIndex: 2
+    tabIndex: NavigationConfig.initialIndex
 }
 
 const AppStateReducer = (state = defaultState, action) => {

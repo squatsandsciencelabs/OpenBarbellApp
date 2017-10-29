@@ -63,6 +63,8 @@ class EditTextModal extends Component {
             return;
         }
 
+        this.props.addPill(this.state.setID);        
+
         if (resetText) {
             var text = '';
             this.setState({
@@ -148,7 +150,6 @@ class EditTextModal extends Component {
         if (this.props.multipleInput) {
             // this is android only, iOS instead uses the \n check in onChangeText
             this._addNewPill(this.state.text, true);
-            this.props.addPill(this.state.setID);
         } else {
             this._tappedDone();
         }

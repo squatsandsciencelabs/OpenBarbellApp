@@ -1,10 +1,12 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import * as AppStateSelectors from 'app/redux/selectors/AppStateSelectors';
 import * as Actions from './ApplicationActions';
 import ApplicationView from './ApplicationView';
 
 const mapStateToProps = (state) => ({
+    tabIndex: AppStateSelectors.getTabIndex(state),
     killSwitch: state.killSwitch,
 });
 

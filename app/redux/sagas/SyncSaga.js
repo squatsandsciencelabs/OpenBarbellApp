@@ -3,7 +3,7 @@ import { take, call, select, put, fork, cancelled, cancel } from 'redux-saga/eff
 import {
     LOGOUT,
     TOKENS_READY,
-    CHANGED_TAB,
+    CHANGE_TAB,
     END_WORKOUT,
     SAVE_WORKOUT_REP,
     SAVE_HISTORY_REP,
@@ -35,7 +35,7 @@ function* executeSync() {
     while (true) {
         yield take([
             TOKENS_READY,
-            CHANGED_TAB,
+            CHANGE_TAB,
             END_WORKOUT,
             SAVE_WORKOUT_SET,
             SAVE_HISTORY_SET,

@@ -11,81 +11,33 @@ import {
     Alert,
     Platform
 } from 'react-native';
-import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
+import { TabViewAnimated, TabBar, SceneMap } from 'react-native-tab-view';
 
 import WorkoutScreen from 'app/features/workout/WorkoutScreen';
 import SettingsTab from 'app/features/settings/SettingsTab';
 import HistoryScreen from 'app/features/history/HistoryScreen';
 
 class ApplicationView extends Component {
+    state = {
+        index: 2,
+        routes: [
+            { key: 'workout', title: 'WORKOUT' },
+            { key: 'history', title: 'HISTORY' },
+            { key: 'settings', title: 'SETTINGS' },            
+        ],
+    };
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.tabIndex !== this.state.index) {
+            this.setState({index: nextProps.tabIndex});
+        }
+    }
 
     componentDidMount() {
         this._checkIfOutdated();
     }
 
-    render() {
-        // TODO: Fix Kill Switch bug on rotation
-        // TODO: move the kill switch UI (not the logic) to another file, it doesn't belong in the Application
-        // TODO: Kill switch should link to the app store to make it easier to update
-        // TODO: recommended but NOT required update
-        var { height, width } = Dimensions.get('window');
-        var killSwitchStatus = this.props.killSwitch.status;
-
-        if (killSwitchStatus == 'KILLED') {
-            return (
-                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
-                        <Text style={{ textAlign: 'center' }}>
-                            ᕦ[ . ◕ ͜ ʖ ◕ . ]ᕤ
-                        </Text>
-                    </View>
-                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                        <Text style={{ textAlign: 'center' }}>
-                            Please update to the latest version! This version is no longer supported.
-                        </Text>
-                    </View>
-                </View>
-            );
-        } else {
-            if (Platform.OS === 'ios') {
-                var statusBarBG = (
-                    <View style={[{width: 9001}, styles.statusBar]}></View>
-                );
-            } else {
-                var statusBarBG = null;
-            }
-
-            return (
-                <View style={[{flex: 1}, styles.container]}>
-                    <StatusBar
-                        backgroundColor="black"
-                        barStyle="light-content"
-                    />
-                    { statusBarBG }
-                    <ScrollableTabView
-                        style={{flex: 1}}
-                        tabBarBackgroundColor={"#333333"}
-                        tabBarTextStyle={{color: 'white'}}
-                        tabBarUnderlineStyle={{backgroundColor: "#e76161"}}
-                        contentProps={{ keyboardShouldPersistTaps: 'always', keyboardDismissMode: 'on-drag' }}
-                        renderTabBar={() => <DefaultTabBar />}
-                        initialPage={ 2 }
-                        onChangeTab={ ({ i, ref }) => { this.props.changeTab(i) } }>
-                        <View style={styles.tabView} tabLabel='WORKOUT'>
-                            <WorkoutScreen />
-                        </View>
-                        <View style={styles.tabView} tabLabel='HISTORY'>
-                            <HistoryScreen />
-                        </View>
-                        <ScrollView style={styles.tabView} tabLabel='SETTINGS'>
-                            <SettingsTab />
-                        </ScrollView>
-
-                    </ScrollableTabView>
-                </View>
-            );
-        }
-    }
+    // KILL SWITCH FUNCTIONS
 
     _checkIfOutdated() {
         if (this.props.killSwitch.status == 'OUTDATED') {
@@ -100,14 +52,85 @@ class ApplicationView extends Component {
         }
     }
 
+    _renderKillSwitch() {
+        return (
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'flex-end' }}>
+                    <Text style={{ textAlign: 'center' }}>
+                        ᕦ[ . ◕ ͜ ʖ ◕ . ]ᕤ
+                    </Text>
+                </View>
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ textAlign: 'center' }}>
+                        Please update to the latest version! This version is no longer supported.
+                    </Text>
+                </View>
+            </View>
+        );
+    }
+
+    // TAB BAR FUNCTIONS
+
+    _handleIndexChange(index) {
+        this.props.changeTab(index);
+    }
+    
+    _renderScene = SceneMap({
+        'workout': () => <WorkoutScreen />,
+        'history': () => <HistoryScreen />,
+        'settings': () => <SettingsTab />
+    });
+
+    _renderHeader = props => <TabBar indicatorStyle={{backgroundColor: '#e76161'}} style={{backgroundColor: '#333333'}} {...props} />;
+
+    _renderApplication() {
+        if (Platform.OS === 'ios') {
+            var statusBarBG = (
+                <View style={[{width: 9001}, styles.statusBar]}></View>
+            );
+        } else {
+            var statusBarBG = null;
+        }
+
+        return (
+            <View style={[{flex: 1}, styles.container]}>
+                <StatusBar
+                    backgroundColor="black"
+                    barStyle="light-content"
+                />
+                { statusBarBG }
+
+                <TabViewAnimated
+                    style={{flex: 1}}
+                    navigationState={this.state}
+                    renderScene={this._renderScene}
+                    renderHeader={this._renderHeader}
+                    onIndexChange={(index) => this.props.changeTab(index) }
+                />
+
+            </View>
+        );
+    }
+
+    // RENDER
+
+    render() {
+        // TODO: Fix Kill Switch bug on rotation
+        // TODO: move the kill switch UI (not the logic) to another file, it doesn't belong in the Application
+        // TODO: Kill switch should link to the app store to make it easier to update
+        // TODO: recommended but NOT required update
+        var { height, width } = Dimensions.get('window');
+        var killSwitchStatus = this.props.killSwitch.status;
+
+        if (killSwitchStatus == 'KILLED') {
+            return this._renderKillSwitch();
+        } else {
+            return this._renderApplication();
+        }
+    }
 }
 
 const styles = StyleSheet.create({
-    tabView: {
-        flex: 1,
-        padding: 0,
-        backgroundColor: '#f2f2f2'
-    },
     container: {
         backgroundColor: '#f2f2f2'
     },

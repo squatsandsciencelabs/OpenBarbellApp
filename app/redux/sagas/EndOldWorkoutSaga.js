@@ -2,7 +2,7 @@ import { takeEvery, select, put, call, all } from 'redux-saga/effects';
 import { Alert } from 'react-native';
 
 import {
-    CHANGED_TAB,
+    CHANGE_TAB,
     STORE_INITIALIZED
 } from 'app/ActionTypes';
 
@@ -14,7 +14,7 @@ import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 
 const EndOldWorkoutSaga = function * EndOldWorkoutSaga() {
     yield all([
-        takeEvery(CHANGED_TAB, endOldWorkout),
+        takeEvery(CHANGE_TAB, endOldWorkout),
         takeEvery(STORE_INITIALIZED, endOldWorkout)        
     ]);
 };

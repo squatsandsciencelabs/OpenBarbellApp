@@ -21,6 +21,7 @@ const mapDispatchToProps = (dispatch) => {
         saveSetMultipleInput: Actions.saveTags,
         closeModal: Actions.dismissTags,
         cancelTags: Actions.cancelTags,
+        tappedPill: Actions.tappedPill,
     }, dispatch);
 };
 

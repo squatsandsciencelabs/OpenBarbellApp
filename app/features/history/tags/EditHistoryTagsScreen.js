@@ -22,6 +22,7 @@ const mapDispatchToProps = (dispatch) => {
         closeModal: Actions.dismissTags,
         cancelModal: Actions.cancelTags,
         tappedPill: Actions.tappedPill,
+        addPill: Actions.addPill,
     }, dispatch);
 };
 

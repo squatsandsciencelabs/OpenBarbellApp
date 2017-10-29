@@ -3,11 +3,11 @@ import * as Analytics from 'app/utility/Analytics';
 import { HISTORY_VIEWED } from 'app/ActionTypes';
 
 import {
-    CHANGED_TAB
+    CHANGE_TAB
 } from 'app/ActionTypes';
 
-export const changeTab = (i) => (dispatch) => {
-    switch(i) {
+export const changeTab = (tabIndex) => (dispatch) => {
+    switch(tabIndex) {
         case 0:
             Analytics.setCurrentScreen('workout');
             break;
@@ -20,5 +20,8 @@ export const changeTab = (i) => (dispatch) => {
             break;
     }
     Keyboard.dismiss();    
-    dispatch({ type: CHANGED_TAB });
+    dispatch({
+        type: CHANGE_TAB,
+        tabIndex: tabIndex
+    });
 };

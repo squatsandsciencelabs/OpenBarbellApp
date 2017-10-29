@@ -1,7 +1,7 @@
 import { takeEvery, select, put, call, all } from 'redux-saga/effects';
 
 import {
-    CHANGED_TAB,
+    CHANGE_TAB,
     STORE_INITIALIZED
 } from 'app/ActionTypes';
 
@@ -13,7 +13,7 @@ import * as DateUtils from 'app/utility/transforms/DateUtils';
 
 const TokenSaga = function * TokenSaga() {
     yield all([
-        takeEvery(CHANGED_TAB, obtainNewTokens),
+        takeEvery(CHANGE_TAB, obtainNewTokens),
         takeEvery(STORE_INITIALIZED, obtainNewTokens)        
     ]);
 };

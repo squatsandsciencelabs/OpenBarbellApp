@@ -1,12 +1,13 @@
 import {
     PRESENT_HISTORY_EXERCISE,
+    TOGGLE_HISTORY_METRIC,
     PRESENT_HISTORY_TAGS,
     PRESENT_HISTORY_VIDEO_RECORDER,
     PRESENT_HISTORY_VIDEO_PLAYER,
     START_EDITING_HISTORY_RPE,
     START_EDITING_HISTORY_WEIGHT,
     END_EDITING_HISTORY_RPE,
-    END_EDITING_HISTORY_WEIGHT,    
+    END_EDITING_HISTORY_WEIGHT,
 } from 'app/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
@@ -26,6 +27,12 @@ export const presentExercise = (setID, exercise, bias) => (dispatch, getState) =
         exercise: exercise,
         bias: bias
     });
+};
+
+export const toggleMetric = (setID) => (dispatch, getState) => {
+    const state = getState();
+    Analytics.logEventWithAppState('toggle_weight_metric', {}, state);
+    dispatch({ type: TOGGLE_HISTORY_METRIC });
 };
 
 export const editRPE = (setID) => (dispatch, getState) => {

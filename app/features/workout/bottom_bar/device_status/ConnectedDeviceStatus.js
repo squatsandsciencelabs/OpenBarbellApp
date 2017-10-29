@@ -5,31 +5,38 @@ import {
     Stylesheet,
     Image,
     StyleSheet,
-    TouchableHighlight
+    TouchableHighlight,
+    TouchableOpacity
 } from 'react-native';
 
 class ConnectedDeviceStatus extends Component {
 
     render() {
         if (this.props.deviceStatus === 'CONNECTED') {
-            return (
+            var statusView = (
                 <View style={styles.statusBar}>
-                    <Image style={styles.imageStyle} source={require('app/appearance/images/icon_connected.png')} /><Text style={styles.textStyle}> {this.props.deviceName} </Text>
-                </View>
-            );
+                    <Image style={styles.imageStyle} source={require('app/appearance/images/icon_connected.png')} />
+                    <Text style={styles.textStyle}> {this.props.deviceName} </Text>
+                </View>);
         } else if (this.props.deviceStatus === 'RECONNECTING') {
-            return (
+            var statusView = (
                 <View style={styles.statusBar}>
-                    <Image style={styles.imageStyle} source={require('app/appearance/images/icon_disconnected.png')} /><Text style={styles.textStyle}> RECONNECTING</Text>
-                </View>
-            );
+                    <Image style={styles.imageStyle} source={require('app/appearance/images/icon_disconnected.png')} />
+                    <Text style={styles.textStyle}> RECONNECTING</Text>
+                </View>);
         } else {
-            return (
+            var statusView = (
                 <View style={styles.statusBar}>
-                    <Image style={styles.imageStyle} source={require('app/appearance/images/icon_disconnected.png')} /><Text style={styles.textStyle}> NOT CONNECTED</Text>
-                </View>
-            );
+                    <Image style={styles.imageStyle} source={require('app/appearance/images/icon_disconnected.png')} />
+                    <Text style={styles.textStyle}> NOT CONNECTED</Text>
+                </View>);
         }
+
+        return (
+            <TouchableOpacity onPress={() => this.props.tappedDevice()}>
+                {statusView}
+            </TouchableOpacity>
+        );
     }
 }
 

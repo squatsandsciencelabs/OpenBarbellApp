@@ -1,7 +1,7 @@
 jest.mock('app/services/Firebase', () => {});
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
-import * as Analytics from 'app/utility/Analytics';
+import * as Analytics from 'app/services/Analytics';
 import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';

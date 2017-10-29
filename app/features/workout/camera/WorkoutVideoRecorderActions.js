@@ -6,7 +6,7 @@ import {
     SAVE_VIDEO_ERROR,
 } from 'app/ActionTypes';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
-import * as Analytics from 'app/utility/Analytics';
+import * as Analytics from 'app/services/Analytics';
 
 export const startRecording = (setID) => ({
     type: START_RECORDING_WORKOUT,

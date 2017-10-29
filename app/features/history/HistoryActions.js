@@ -3,6 +3,7 @@ import {
     LOADING_HISTORY,
     SAVE_HISTORY_REP
 } from 'app/ActionTypes';
+import * as Analytics from 'app/services/Analytics';
 
 export const presentExpanded = (setID) => ({
     type: PRESENT_HISTORY_EXPANDED,
@@ -14,16 +15,38 @@ export const finishLoading = () => ({
     isLoading: false
 });
 
-export const removeRep = (setID, repIndex) => ({
-    type: SAVE_HISTORY_REP,
-    setID: setID,
-    repIndex: repIndex,
-    removed: true
-});
+export const removeRep = (setID, repIndex) => (dispatch, getState) => {
+    const state = getState();
+    logRemoveRepAnalytics(state, setID);
 
-export const restoreRep = (setID, repIndex) => ({
-    type: SAVE_HISTORY_REP,
-    setID: setID,
-    repIndex: repIndex,
-    removed: false
-});
+    dispatch({
+        type: SAVE_HISTORY_REP,
+        setID: setID,
+        repIndex: repIndex,
+        removed: true
+    });
+};
+
+export const restoreRep = (setID, repIndex) => (dispatch, getState) => {
+    const state = getState();
+    logRestoreRepAnalytics(state, setID);
+
+    dispatch({
+        type: SAVE_HISTORY_REP,
+        setID: setID,
+        repIndex: repIndex,
+        removed: false
+    });
+};
+
+const logRemoveRepAnalytics = (state, setID) => {
+    Analytics.logEventWithAppState('remove_rep', {
+        is_working_set: false
+    }, state);
+};
+
+const logRestoreRepAnalytics = (state, setID) => {
+    Analytics.logEventWithAppState('restore_rep', {
+        is_working_set: false
+    }, state);
+};

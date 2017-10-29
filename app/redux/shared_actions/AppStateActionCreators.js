@@ -7,6 +7,7 @@ import {
 import { Keyboard } from 'react-native';
 import * as Analytics from 'app/utility/Analytics';
 import { HISTORY_VIEWED } from 'app/ActionTypes';
+import * as AppStateSelectors from 'app/redux/selectors/AppStateSelectors';
 
 export const unlockedScreen = () => ({
     type: UNLOCKED_SCREEN
@@ -20,7 +21,16 @@ export const multiTask = () => ({
     type: MULTI_TASK_SCREEN
 })
 
-export const changeTab = (tabIndex) => (dispatch) => {
+export const changeTab = (tabIndex) => (dispatch, getState) => {
+    // analytics for leave history
+    if (tabIndex !== 1) {
+        const state = getState();
+        if (AppStateSelectors.getTabIndex(state) === 1) {
+            Analytics.logEventWithAppState('leave_history', {}, state);
+        }
+    }
+    
+    // screens and history viewed
     switch(tabIndex) {
         case 0:
             Analytics.setCurrentScreen('workout');
@@ -33,7 +43,11 @@ export const changeTab = (tabIndex) => (dispatch) => {
             Analytics.setCurrentScreen('settings');
             break;
     }
-    Keyboard.dismiss();    
+
+    // keyboard
+    Keyboard.dismiss();
+
+    // action
     dispatch({
         type: CHANGE_TAB,
         tabIndex: tabIndex

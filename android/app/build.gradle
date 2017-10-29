@@ -108,6 +108,12 @@ android {
         }
     }
 	signingConfigs {
+        debug {
+			storeFile file("openbarbell.keystore")
+			storePassword "openbarbell"
+			keyAlias "openbarbell"
+			keyPassword "openbarbell"
+		}
 		release {
 			storeFile file("openbarbell.keystore")
 			storePassword "openbarbell"
@@ -124,6 +130,11 @@ android {
         }
     }
     buildTypes {
+        debug {
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+			signingConfig signingConfigs.release
+        }
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"

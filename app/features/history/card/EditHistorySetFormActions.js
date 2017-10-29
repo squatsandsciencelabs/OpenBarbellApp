@@ -31,39 +31,39 @@ export const presentExercise = (setID, exercise, bias) => (dispatch, getState) =
 
 export const toggleMetric = (setID) => (dispatch, getState) => {
     const state = getState();
-    Analytics.logEventWithAppState('toggle_weight_metric', {}, state);
-    dispatch({ type: TOGGLE_HISTORY_METRIC });
+    logToggleMetricAnalytics(setID, state);
+    dispatch({
+        type: TOGGLE_HISTORY_METRIC
+    });
 };
 
 export const editRPE = (setID) => (dispatch, getState) => {
-    var state = getState();
-
+    const state = getState();
     logEditRPEAnalytics(setID, state);
-
     dispatch({
         type: START_EDITING_HISTORY_RPE
     });
 };
 
-export const editWeight = () => ({
-    type: START_EDITING_HISTORY_WEIGHT
-});
+export const editWeight = (setID) => (dispatch, getState) => {
+    const state = getState();
+    logEditWeightAnalytics(setID, state);
+    dispatch({
+        type: START_EDITING_HISTORY_WEIGHT
+    });
+};
 
 export const dismissRPE = (setID) => (dispatch, getState) => {
-    var state = getState();
-
+    const state = getState();
     logSaveRPEAnalytics(setID, state);
-
     dispatch({
         type: END_EDITING_HISTORY_RPE
     });
 };
 
 export const dismissWeight = (setID) => (dispatch, getState) => {
-    var state = getState();
-
+    const state = getState();
     logSaveWeightAnalytics(setID, state);
-
     dispatch({
         type: END_EDITING_HISTORY_WEIGHT
     });
@@ -123,6 +123,12 @@ const logEditExerciseNameAnalytics = (setID, exercise, state) => {
     }, state);
 };
 
+const logToggleMetricAnalytics = (setID, state) => {
+    Analytics.logEventWithAppState('toggle_weight_metric', {
+        is_working_set: false
+    }, state);    
+};
+
 const logSaveWeightAnalytics = (setID, state) => {
     let duration = DurationsSelectors.getEditHistoryWeightDuration(state);
 
@@ -145,6 +151,12 @@ const logSaveRPEAnalytics = (setID, state) => {
 
 const logEditRPEAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('edit_rpe', {
+        is_working_set: false
+    }, state);       
+};
+
+const logEditWeightAnalytics = (setID, state) => {
+    Analytics.logEventWithAppState('edit_weight', {
         is_working_set: false
     }, state);       
 };

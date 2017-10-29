@@ -1,6 +1,7 @@
 import {
     DISMISS_HISTORY_TAGS,
-    SAVE_HISTORY_SET_TAGS
+    SAVE_HISTORY_SET_TAGS,
+    REMOVE_HISTORY_TAG,
 } from 'app/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
@@ -14,10 +15,8 @@ export const dismissTags = () => {
 };
 
 export const cancelTags = () => (dispatch, getState) => {
-    var state = getState();
-
+    const state = getState();
     Analytics.setCurrentScreen('history');
-
     logCancelEditTagsAnalytics(state);
 
     dispatch({
@@ -26,8 +25,7 @@ export const cancelTags = () => (dispatch, getState) => {
 };
 
 export const saveTags = (setID, tags = []) => (dispatch, getState) => {
-    var state = getState();
-
+    const state = getState();
     logSaveTagsAnalytics(state);
 
     dispatch({
@@ -37,8 +35,16 @@ export const saveTags = (setID, tags = []) => (dispatch, getState) => {
     });
 };
 
+export const tappedPill = (setID) => (dispatch, getState) => {
+    const state = getState();
+    logRemovedTagAnalytics(state);
+    dispatch({
+        type: REMOVE_HISTORY_TAG,
+    });
+};
+
 const logSaveTagsAnalytics = (state) => {
-    let duration = DurationsSelectors.getEditHistoryTagsDuration(state);
+    const duration = DurationsSelectors.getEditHistoryTagsDuration(state);
 
     Analytics.logEventWithAppState('save_tags', {
         value: duration,
@@ -47,10 +53,15 @@ const logSaveTagsAnalytics = (state) => {
 };
 
 const logCancelEditTagsAnalytics = (state) => {
-    let duration = DurationsSelectors.getEditHistoryTagsDuration(state);
+    const duration = DurationsSelectors.getEditHistoryTagsDuration(state);
 
     Analytics.logEventWithAppState('cancel_edit_tags', {
         value: duration,
         duration: duration
+    }, state);
+};
+
+const logRemovedTagAnalytics = (state) => {
+    Analytics.logEventWithAppState('remove_tag', {
     }, state);
 };

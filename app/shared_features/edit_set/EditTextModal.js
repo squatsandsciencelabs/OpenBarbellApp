@@ -155,6 +155,7 @@ class EditTextModal extends Component {
 
     _tappedPill(index) {
         this._removePill(index);
+        this.props.tappedPill(this.state.setID);
     }
 
     // RENDER

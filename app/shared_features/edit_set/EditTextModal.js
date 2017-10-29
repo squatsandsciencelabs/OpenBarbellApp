@@ -148,6 +148,7 @@ class EditTextModal extends Component {
         if (this.props.multipleInput) {
             // this is android only, iOS instead uses the \n check in onChangeText
             this._addNewPill(this.state.text, true);
+            this.props.addPill(this.state.setID);
         } else {
             this._tappedDone();
         }

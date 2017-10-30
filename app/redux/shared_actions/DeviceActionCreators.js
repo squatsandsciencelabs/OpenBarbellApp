@@ -86,6 +86,7 @@ export const connectDevice = (device) => (dispatch, getState) => {
             // disconnect
             dispatch(disconnectDevice()); // in case it's trying to connect, ensure it's actually disconnecting
             dispatch(disconnectedFromDevice()); // in case it can never find it, visually update
+            logConnectedToDeviceTimedOutAnalytics(false, state);
         }
     }, 5000);
 
@@ -115,6 +116,7 @@ export const reconnectDevice = (device, identifier) => (dispatch, getState) => {
             // disconnect
             dispatch(disconnectDevice()); // in case it's trying to connect, ensure it's actually disconnecting
             dispatch(disconnectedFromDevice(device, identifier)); // in case it can never find it, visually update and trigger another reconnect
+            logConnectedToDeviceTimedOutAnalytics(true, state);
         }
     }, 7000);
 
@@ -164,7 +166,7 @@ export const connectedToDevice = (name, identifier) => (dispatch, getState) => {
     Analytics.setUserProp('connected_device_id', name);
     checkOBVersion(name);
     const state = getState();
-    logConnectedToDevice(state);
+    logConnectedToDeviceAnalytics(state);
 
     dispatch({
         type: CONNECTED_TO_DEVICE,
@@ -252,13 +254,19 @@ const logCompletedScanAnalytics = (state) => {
     }, state);
 };
 
-const logAttemptConnectDeviceAnalytics = (isReconnecting, state) => {
+const logAttemptConnectDeviceAnalytics = (isReconnect, state) => {
     Analytics.logEventWithAppState('attempt_connect_device', {
-        is_reconnect: isReconnecting
+        is_reconnect: isReconnect
     }, state);
 };
 
-const logConnectedToDevice = (state) => {
+const logConnectedToDeviceAnalytics = (state) => {
     Analytics.logEventWithAppState('connected_to_device', {
+    }, state);
+};
+
+const logConnectedToDeviceTimedOutAnalytics = (isReconnect, state) => {
+    Analytics.logEventWithAppState('connect_to_device_timed_out', {
+        is_reconnect: isReconnect
     }, state);
 };

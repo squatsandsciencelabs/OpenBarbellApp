@@ -25,8 +25,11 @@ export const signIn = () => (dispatch, getState) => {
     });
 };
 
-export const signOut = () => {
-    return AuthActionCreators.logout();
+export const signOut = () => (dispatch, getState) => {
+    const state = getState();
+    logAttemptLogoutAnalytics(state);
+    
+    dispatch(AuthActionCreators.logout());
 };
 
 export const cancelSignOut = () => (dispatch, getState) => {
@@ -168,6 +171,11 @@ const logExportCSVErrorAnalytics = (state) => {
         num_workouts: num_workouts,
         time_since_last_workout: time_since_last_workout,
         time_since_last_export: time_since_last_export,
+    }, state);
+};
+
+const logAttemptLogoutAnalytics = (state) => {
+    Analytics.logEventWithAppState('attempt_logout', {
     }, state);
 };
 

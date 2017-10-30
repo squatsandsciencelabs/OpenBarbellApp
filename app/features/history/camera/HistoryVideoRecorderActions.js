@@ -22,9 +22,9 @@ export const stopRecording = () => ({
     type: STOP_RECORDING_HISTORY
 });
 
-export const dismissRecording = () => (dispatch, getState) => {
+export const dismissRecording = (setID) => (dispatch, getState) => {
     const state = getState();
-    logCancelRecordVideoAnalytics(state);
+    logCancelRecordVideoAnalytics(setID, state);
     Analytics.setCurrentScreen('history');
     
     dispatch({
@@ -34,7 +34,7 @@ export const dismissRecording = () => (dispatch, getState) => {
 
 export const saveVideo = (setID, videoFileURL, videoType) => (dispatch, getState) => {
     const state = getState();
-    logSaveVideoAnalytics(state);
+    logSaveVideoAnalytics(setID, state);
 
     dispatch({
         type: SAVE_HISTORY_VIDEO,
@@ -56,32 +56,36 @@ export const saveVideoError = (setID) => (dispatch, getState) => {
 const logStartRecordingVideoAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('start_recording_video', {
         is_working_set: false,
+        set_id: setID,
     }, state);
 };
 
-const logSaveVideoAnalytics = (state) => {
+const logSaveVideoAnalytics = (setID, state) => {
     const duration = DurationsSelectors.getHistoryVideoRecorderDuration(state);
     
     Analytics.logEventWithAppState('save_video', {
         duration: duration,
         is_working_set: false,
+        set_id: setID,
     }, state);    
 };
 
-const logCancelRecordVideoAnalytics = (state) => {
+const logCancelRecordVideoAnalytics = (setID, state) => {
     const duration = DurationsSelectors.getHistoryVideoRecorderDuration(state);
 
     Analytics.logEventWithAppState('cancel_record_video', {
         duration: duration,
-        is_working_set: false,        
+        is_working_set: false,
+        set_id: setID,
     }, state);    
 };
 
-const logSaveVideoErrorAnalytics = (state) => {
+const logSaveVideoErrorAnalytics = (setID, state) => {
     const duration = DurationsSelectors.getHistoryVideoRecorderDuration(state);
 
     Analytics.logEventWithAppState('save_video_error', {
         duration: duration,
-        is_working_set: false,        
+        is_working_set: false,
+        set_id: setID,
     }, state);    
 };

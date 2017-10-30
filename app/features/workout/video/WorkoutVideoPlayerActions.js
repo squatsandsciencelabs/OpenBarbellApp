@@ -33,6 +33,7 @@ const logDeleteVideoAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('delete_video', {
         duration: duration,
         is_working_set: is_working_set,
+        set_id: setID,
     }, state);        
 }
 
@@ -43,5 +44,6 @@ const logCancelWatchVideoAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('cancel_watch_video', {
         duration: duration,
         is_working_set: is_working_set,
+        set_id: setID,
     }, state);    
 };

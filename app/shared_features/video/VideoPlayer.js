@@ -30,7 +30,7 @@ class VideoPlayer extends Component {
                     />
 
                     <View style={styles.cancelButton}>
-                        <TouchableOpacity onPress={()=>this.props.closeModal()}>
+                        <TouchableOpacity onPress={()=>this.props.closeModal(this.props.setID)}>
                             <Text style={styles.cancelText}>Cancel</Text>
                         </TouchableOpacity>
                     </View>

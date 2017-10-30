@@ -70,10 +70,8 @@ export const dismissWeight = (setID) => (dispatch, getState) => {
 };
 
 export const presentTags = (setID, tags) => (dispatch, getState) => {
-    var state = getState();
-
+    const state = getState();
     Analytics.setCurrentScreen('edit_history_tags');
-
     logEditTagsAnalytics(setID, state);
 
     dispatch({
@@ -87,34 +85,40 @@ export const saveSet = (setID, exercise = null, weight = null, metric = null, rp
     return SetsActionCreators.saveHistorySet(setID, exercise, weight, metric, rpe);
 };
 
-export const presentRecordVideo = (setID) => {
+export const presentRecordVideo = (setID) => (dispatch, getState) => {
+    const state = getState();
     Analytics.setCurrentScreen('history_record_video');
+    logVideoRecorderAnalytics(setID, state);
 
-    return {
+    dispatch({
         type: PRESENT_HISTORY_VIDEO_RECORDER,
         setID: setID,
         isCommentary: false
-    }
+    });
 };
 
-export const presentRecordCommentary = (setID) => {
+export const presentRecordCommentary = (setID) => (dispatch, getState) => {
+    const state = getState();    
     Analytics.setCurrentScreen('history_record_video_log');
-
-    return {
+    logVideoLogRecorderAnalytics(setID, state);
+    
+    dispatch({
         type: PRESENT_HISTORY_VIDEO_RECORDER,
         setID: setID,
         isCommentary: true
-    }
+    });
 };
 
-export const presentWatchVideo = (setID, videoFileURL) => {
+export const presentWatchVideo = (setID, videoFileURL) => (dispatch, getState) => {
+    const state = getState();
     Analytics.setCurrentScreen('history_watch_video');
+    logWatchVideoAnalytics(setID, state);
 
-    return {
+    dispatch({
         type: PRESENT_HISTORY_VIDEO_PLAYER,
         setID: setID,
         videoFileURL: videoFileURL
-    }
+    });
 };
 
 const logEditExerciseNameAnalytics = (setID, exercise, state) => {
@@ -126,7 +130,7 @@ const logEditExerciseNameAnalytics = (setID, exercise, state) => {
 const logToggleMetricAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('toggle_weight_metric', {
         is_working_set: false
-    }, state);    
+    }, state);
 };
 
 const logSaveWeightAnalytics = (setID, state) => {
@@ -136,7 +140,7 @@ const logSaveWeightAnalytics = (setID, state) => {
         value: duration,
         duration: duration,
         is_working_set: false
-    }, state);    
+    }, state);
 };
 
 const logSaveRPEAnalytics = (setID, state) => {
@@ -146,23 +150,41 @@ const logSaveRPEAnalytics = (setID, state) => {
         value: duration,
         duration: duration,
         is_working_set: false
-    }, state);    
+    }, state);
 };
 
 const logEditRPEAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('edit_rpe', {
         is_working_set: false
-    }, state);       
+    }, state);
 };
 
 const logEditWeightAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('edit_weight', {
         is_working_set: false
-    }, state);       
+    }, state);
 };
 
 const logEditTagsAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('edit_tags', {
         is_working_set: false
-    }, state);       
+    }, state);
+};
+
+const logVideoRecorderAnalytics = (setID, state) => {
+    Analytics.logEventWithAppState('video_recorder', {
+        is_working_set: false
+    }, state);
+};
+
+const logVideoLogRecorderAnalytics = (setID, state) => {
+    Analytics.logEventWithAppState('video_log_recorder', {
+        is_working_set: false
+    }, state);
+};
+
+const logWatchVideoAnalytics = (setID, state) => {
+    Analytics.logEventWithAppState('watch_video', {
+        is_working_set: false
+    }, state);
 };

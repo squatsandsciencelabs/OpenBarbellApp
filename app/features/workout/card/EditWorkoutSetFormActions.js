@@ -86,34 +86,40 @@ export const saveSet = (setID, exercise = null, weight = null, metric = null, rp
     return SetsActionCreators.saveWorkoutSet(setID, exercise, weight, metric, rpe);
 };
 
-export const presentRecordVideo = (setID) => {
+export const presentRecordVideo = (setID) => (dispatch, getState) => {
+    const state = getState();
     Analytics.setCurrentScreen('workout_record_video');
+    logVideoRecorderAnalytics(setID, state);
 
-    return {
+    dispatch({
         type: PRESENT_WORKOUT_VIDEO_RECORDER,
         setID: setID,
         isCommentary: false
-    }
+    });
 };
 
-export const presentRecordCommentary = (setID) => {
+export const presentRecordCommentary = (setID) => (dispatch, getState) => {
+    const state = getState();
     Analytics.setCurrentScreen('workout_record_video_log');
-
-    return {
+    logVideoLogRecorderAnalytics(setID, state);
+    
+    dispatch({
         type: PRESENT_WORKOUT_VIDEO_RECORDER,
         setID: setID,
         isCommentary: true
-    }
+    });
 };
 
-export const presentWatchVideo = (setID, videoFileURL) => {
+export const presentWatchVideo = (setID, videoFileURL) => (dispatch, getState) => {
+    const state = getState();
     Analytics.setCurrentScreen('workout_watch_video');
-
-    return {
+    logWatchVideoAnalytics(setID, state);
+    
+    dispatch({
         type: PRESENT_WORKOUT_VIDEO_PLAYER,
         setID: setID,
         videoFileURL: videoFileURL
-    }
+    });
 };
 
 const logEditExerciseNameAnalytics = (setID, exercise, state) => {
@@ -176,4 +182,28 @@ const logEditTagsAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('edit_tags', {
         is_working_set: is_working_set
     }, state);       
+};
+
+const logVideoRecorderAnalytics = (setID, state) => {
+    const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
+    
+    Analytics.logEventWithAppState('video_recorder', {
+        is_working_set: is_working_set
+    }, state);
+};
+
+const logVideoLogRecorderAnalytics = (setID, state) => {
+    const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
+    
+    Analytics.logEventWithAppState('video_log_recorder', {
+        is_working_set: is_working_set
+    }, state);
+};
+
+const logWatchVideoAnalytics = (setID, state) => {
+    const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
+    
+    Analytics.logEventWithAppState('watch_video', {
+        is_working_set: is_working_set
+    }, state);
 };

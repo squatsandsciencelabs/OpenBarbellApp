@@ -14,7 +14,7 @@ class SettingsFeedbackPanel extends Component {
                 <Text style={ SETTINGS_PANEL_STYLES.headerText }>
                     Tell us how we can improve {"\n"}
                 </Text>    
-                <TouchableOpacity onPress={() => Linking.openURL('mailto:contact@squatsandscience.com?subject=A%20really%20nice%20comment%20from%20an%20app%20user&body=')}>
+                <TouchableOpacity onPress={() => this.props.tappedFeedback()}>
                     <Text style={ [SETTINGS_PANEL_STYLES.tappableText, { fontSize: 14 }]}>
                         contact@squatsandscience.com
                     </Text>

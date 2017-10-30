@@ -19,6 +19,7 @@ import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsActionCreators';
 import Validator from 'app/utility/transforms/Validator';
+import * as Analytics from 'app/services/Analytics';
 
 const SyncSaga = function * SyncSaga() {
     while (true) {
@@ -50,6 +51,8 @@ function* executeSync() {
         const isLoggedIn = yield select(AuthSelectors.getIsLoggedIn);    
         if (!isLoggedIn)  {
             console.tron.log("Not logged in, backing out of sync");
+            const state = yield select();
+            logSyncIgnoredAnalytics(state);
         } else {
             // actions
             yield call(pushUpdates);
@@ -120,5 +123,12 @@ function* pullUpdates(previousRevision=null) {
         console.tron.log(JSON.stringify(error));
     }
 }
+
+// ANALYTICS
+
+const logSyncIgnoredAnalytics = (state) => {
+    Analytics.logEventWithAppState('sync_ignored', {
+    }, state);
+};    
 
 export default SyncSaga;

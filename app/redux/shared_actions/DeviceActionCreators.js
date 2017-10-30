@@ -42,12 +42,14 @@ const clearTimers = () => {
 
 // SCANNING
 
-export const startDeviceScan = () => {
+export const startDeviceScan = () => (dispatch, getState) => {
     RFDuinoLib.startScan();
+    const state = getState();
+    logAttemptScanAnalytics(state);
 
-    return {
+    dispatch({
         type: START_DEVICE_SCAN
-    };
+    });
 };
 
 export const stopDeviceScan = () => {
@@ -225,4 +227,12 @@ function checkOBVersion(name) {
     } else if (name.charAt(3) === '3') {
         Analytics.setUserProp('device_version', 'v3');
     }    
+};
+
+// ANALYTICS
+
+const logAttemptScanAnalytics = (state) => {
+    Analytics.logEventWithAppState('attempt_scan', {
+
+    }, state);
 };

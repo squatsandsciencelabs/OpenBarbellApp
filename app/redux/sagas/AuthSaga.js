@@ -47,8 +47,12 @@ function* executeLogin() {
         yield put(AuthActionCreators.loginSucceeded(json.accessToken, json.refreshToken, user.email, new Date(), json.revision, json.sets));
     } catch(error) {
         console.tron.log("ERROR " + error);
-        if (error.code !== -5) { // -5 is when the user cancels the sign in
+        // TODO: fix the error code check for android as it's different from iOS now
+        if (error.code !== -5) {
             showGenericAlert();
+        } else {
+            // -5 is when the user cancels the sign in on iOS
+            logCancelLoginAnalytics();
         }
         yield put(AuthActionCreators.logout());
     } finally {
@@ -95,6 +99,11 @@ const logAttemptLoginGoogleAnalytics = (state) => {
 
 const logAttemptLoginOpenBarbellAnalytics = (state) => {
     Analytics.logEventWithAppState('attempt_login_openbarbell', {
+    }, state);
+};
+
+const logCancelLoginAnalytics = (state) => {
+    Analytics.logEventWithAppState('cancel_login', {
     }, state);
 };
 

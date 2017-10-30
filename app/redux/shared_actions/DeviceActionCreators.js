@@ -71,8 +71,9 @@ export const foundDevice = (name, identifier) => ({
 // DEVICE
 
 export const connectDevice = (device) => (dispatch, getState) => {
-
     RFDuinoLib.connectDevice(device);
+    const state = getState();
+    logAttemptConnectDeviceAnalytics(false, state);
 
     // HACK: ideally this is a connect timeout saga
     // but it requires both background timer and access to actions
@@ -95,6 +96,9 @@ export const connectDevice = (device) => (dispatch, getState) => {
 };
 
 export const reconnectDevice = (device, identifier) => (dispatch, getState) => {
+    const state = getState();
+    logAttemptConnectDeviceAnalytics(true, state);
+
     // reconnect after a second as V2s have issues
     reconnectTimer = BackgroundTimer.setTimeout(() => {
         RFDuinoLib.connectDevice(device);
@@ -153,17 +157,17 @@ export const connectingToDevice = (name, identifier) => ({
     deviceIdentifier: identifier
 });
 
-export const connectedToDevice = (name, identifier) => {
+export const connectedToDevice = (name, identifier) => (dispatch, getState) => {
     clearTimers();
     Analytics.setUserProp('connected_device_id', name);
 
     checkOBVersion(name);
     
-    return {
+    dispatch({
         type: CONNECTED_TO_DEVICE,
         deviceName: name,
         deviceIdentifier: identifier
-    };
+    });
 };
 
 export const reconnectingToDevice = (name) => {
@@ -242,5 +246,11 @@ const logAttemptScanAnalytics = (state) => {
 const logCompletedScanAnalytics = (state) => {
     Analytics.logEventWithAppState('completed_scan', {
 
+    }, state);
+};
+
+const logAttemptConnectDeviceAnalytics = (isReconnecting, state) => {
+    Analytics.logEventWithAppState('attempt_connect_device', {
+        is_reconnect: isReconnecting
     }, state);
 };

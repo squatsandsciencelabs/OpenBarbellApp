@@ -10,6 +10,7 @@ import API from 'app/services/API';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
 import * as DateUtils from 'app/utility/transforms/DateUtils';
+import * as Analytics from 'app/services/Analytics';
 
 const TokenSaga = function * TokenSaga() {
     yield all([
@@ -33,10 +34,20 @@ function* obtainNewTokens() {
         console.tron.log("hasn't been long enough to refresh " + lastRefreshDate + " " + OpenBarbellConfig.obtainTokenTimer + " vs " + Math.abs(new Date() - lastRefreshDate));
     } else {
         console.tron.log("refreshing tokens");
+
         try {
+            // refresh
+            let state = yield select();
+            logAttemptRefreshTokenAnalytics(state);
             const json = yield call(API.obtainNewTokens, refreshToken);
+
+            // success
+            state = yield select();
+            logRefreshedTokenAnalytics(state);
             yield put(AuthActionCreators.saveTokens(json.accessToken, json.refreshToken, new Date()));
         } catch(error) {
+            let state = yield select();
+            logRefreshTokenErrorAnalytics(state);
             if (error.type !== undefined) {
                 yield put(error);
             }
@@ -49,5 +60,22 @@ function* obtainNewTokens() {
 }
 
 const shouldRequestNewToken = (lastRefreshDate) => lastRefreshDate === null || Math.abs(new Date() - lastRefreshDate) > OpenBarbellConfig.obtainTokenTimer;
+
+// ANALYTICS
+
+const logAttemptRefreshTokenAnalytics = (state) => {
+    Analytics.logEventWithAppState('attempt_refresh_token', {
+    }, state);
+};
+
+const logRefreshTokenErrorAnalytics = (state) => {
+    Analytics.logEventWithAppState('refresh_token_error', {
+    }, state);
+};
+
+const logRefreshedTokenAnalytics = (state) => {
+    Analytics.logEventWithAppState('refreshed_token', {
+    }, state);
+};
 
 export default TokenSaga;

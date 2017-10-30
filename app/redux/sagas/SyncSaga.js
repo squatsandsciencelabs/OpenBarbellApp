@@ -70,6 +70,9 @@ function* pushUpdates() {
         yield put(SetsActionCreators.beginUploadingSets());
         try {
             // upload
+            let state = yield select();
+            logAttemptPushDataAnalytics(state);
+
             const initialRevision = yield select(SetsSelectors.getRevision);            
             const accessToken = yield select(AuthSelectors.getAccessToken);
             const lastRefreshDate = yield select(AuthSelectors.getLastRefreshDate);
@@ -151,6 +154,11 @@ const logPullDataSucceededAnalytics = (state) => {
 
 const logPullDataErrorAnalytics = (state) => {
     Analytics.logEventWithAppState('pull_data_error', {
+    }, state);
+};
+
+const logAttemptPushDataAnalytics = (state) => {
+    Analytics.logEventWithAppState('attempt_push_data', {
     }, state);
 };
 

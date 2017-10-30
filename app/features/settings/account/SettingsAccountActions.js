@@ -41,15 +41,25 @@ export const cancelSignOut = () => (dispatch, getState) => {
     });
 };
 
-export const showRemovedData = () => ({
-    type: UPDATE_HISTORY_FILTER,
-    showRemoved: true
-});
+export const showRemovedData = () => (dispatch, getState) => {
+    const state = getState();
+    logShowDeletedAnalytics(state);
 
-export const hideRemovedData = () => ({
-    type: UPDATE_HISTORY_FILTER,
-    showRemoved: false
-});
+    dispatch({
+        type: UPDATE_HISTORY_FILTER,
+        showRemoved: true,
+    });
+};
+
+export const hideRemovedData = () => (dispatch, getState) => {
+    const state = getState();
+    logHideDeletedAnalytics(state);
+
+    dispatch({
+        type: UPDATE_HISTORY_FILTER,
+        showRemoved: false
+    });
+};
 
 // TODO: refactor this into a saga
 export const exportCSV = () => (dispatch, getState) => {
@@ -181,5 +191,15 @@ const logAttemptLogoutAnalytics = (state) => {
 
 const logLogoutCancelledAnalytics = (state) => {
     Analytics.logEventWithAppState('logout_cancelled', {
+    }, state);
+};
+
+const logShowDeletedAnalytics = (state) => {
+    Analytics.logEventWithAppState('show_deleted', {
+    }, state);
+};
+
+const logHideDeletedAnalytics = (state) => {
+    Analytics.logEventWithAppState('hide_deleted', {
     }, state);
 };

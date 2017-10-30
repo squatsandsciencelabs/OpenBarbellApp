@@ -23,7 +23,7 @@ export const stopRecording = () => ({
     type: STOP_RECORDING_WORKOUT
 });
 
-export const dismissRecording = () => (dispatch, getState) => {
+export const dismissRecording = (setID) => (dispatch, getState) => {
     const state = getState();
     logCancelRecordVideoAnalytics(setID, state);
     Analytics.setCurrentScreen('workout');
@@ -59,6 +59,7 @@ const logStartRecordingVideoAnalytics = (setID, state) => {
     
     Analytics.logEventWithAppState('start_recording_video', {
         is_working_set: is_working_set,
+        set_id: setID,
     }, state);
 };
 
@@ -69,6 +70,7 @@ const logSaveVideoAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('save_video', {
         duration: duration,
         is_working_set: is_working_set,
+        set_id: setID,
     }, state);
 };
 
@@ -79,6 +81,7 @@ const logCancelRecordVideoAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('cancel_record_video', {
         duration: duration,
         is_working_set: is_working_set,
+        set_id: setID,
     }, state);
 };
 
@@ -89,5 +92,6 @@ const logSaveVideoErrorAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('save_video_error', {
         duration: duration,
         is_working_set: is_working_set,
+        set_id: setID,
     }, state);
 };

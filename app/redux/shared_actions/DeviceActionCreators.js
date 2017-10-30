@@ -85,7 +85,7 @@ export const connectDevice = (device) => (dispatch, getState) => {
         if (status === 'CONNECTING') {
             // disconnect
             logConnectedToDeviceTimedOutAnalytics(false, state);            
-            disconnectDevice(false); // in case it's trying to connect, ensure it's actually disconnecting
+            dispatch(disconnectDevice(false)); // in case it's trying to connect, ensure it's actually disconnecting
             dispatch(disconnectedFromDevice()); // in case it can never find it, visually update
         }
     }, 5000);
@@ -114,7 +114,7 @@ export const reconnectDevice = (device, identifier) => (dispatch, getState) => {
         const status = ConnectedDeviceStatusSelectors.getConnectedDeviceStatus(state);
         if (status !== 'CONNECTED') {
             // disconnect
-            disconnectDevice(false); // in case it's trying to connect, ensure it's actually disconnecting
+            dispatch(disconnectDevice(false)); // in case it's trying to connect, ensure it's actually disconnecting
             dispatch(disconnectedFromDevice(device, identifier)); // in case it can never find it, visually update and trigger another reconnect
             logConnectedToDeviceTimedOutAnalytics(true, state);
         }

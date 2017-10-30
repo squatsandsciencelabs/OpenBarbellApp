@@ -34,7 +34,7 @@ export const cancelSignOut = () => (dispatch, getState) => {
     logLogoutCancelledAnalytics(state);
 
     dispatch({
-        CANCEL_LOGOUT
+        type: CANCEL_LOGOUT
     });
 };
 

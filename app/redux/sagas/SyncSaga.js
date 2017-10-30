@@ -112,6 +112,10 @@ function* pullUpdates(previousRevision=null) {
         let state = yield select();
         logAttemptPullDataAnalytics(state);
         const json = yield call(API.sync, revision, validator);
+
+        // success
+        state = yield select();
+        logPullDataSucceededAnalytics(state);
         if (json !== undefined) {
             yield put(SetsActionCreators.updateSetDataFromServer(json.revision, json.sets));
         } else {
@@ -135,6 +139,11 @@ const logSyncIgnoredAnalytics = (state) => {
 
 const logAttemptPullDataAnalytics = (state) => {
     Analytics.logEventWithAppState('attempt_pull_data', {
+    }, state);
+};
+
+const logPullDataSucceededAnalytics = (state) => {
+    Analytics.logEventWithAppState('pull_data_succeeded', {
     }, state);
 };
 

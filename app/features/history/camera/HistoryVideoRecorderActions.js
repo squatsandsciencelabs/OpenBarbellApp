@@ -2,7 +2,8 @@ import {
     START_RECORDING_HISTORY,
     STOP_RECORDING_HISTORY,
     DISMISS_HISTORY_VIDEO_RECORDER,
-    SAVE_HISTORY_VIDEO
+    SAVE_HISTORY_VIDEO,
+    SAVE_VIDEO_ERROR,
 } from 'app/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
@@ -17,10 +18,8 @@ export const stopRecording = () => ({
 });
 
 export const dismissRecording = () => (dispatch, getState) => {
-    var state = getState();
-
+    const state = getState();
     logCancelRecordVideoAnalytics(state);
-
     Analytics.setCurrentScreen('history');
     
     dispatch({
@@ -29,8 +28,7 @@ export const dismissRecording = () => (dispatch, getState) => {
 };
 
 export const saveVideo = (setID, videoFileURL, videoType) => (dispatch, getState) => {
-    var state = getState();
-
+    const state = getState();
     logSaveVideoAnalytics(state);
 
     dispatch({
@@ -42,8 +40,7 @@ export const saveVideo = (setID, videoFileURL, videoType) => (dispatch, getState
 };
 
 export const saveVideoError = (setID) => (dispatch, getState) => {
-    var state = getState();
-
+    const state = getState();
     logSaveVideoErrorAnalytics(state);
 
     dispatch({
@@ -51,28 +48,29 @@ export const saveVideoError = (setID) => (dispatch, getState) => {
     });
 }
 
-// TODO: check that the duration calculation operates properly
-
 const logSaveVideoAnalytics = (state) => {
-    let duration = DurationsSelectors.getHistoryVideoRecorderDuration(state);
+    const duration = DurationsSelectors.getHistoryVideoRecorderDuration(state);
     
     Analytics.logEventWithAppState('save_video', {
-        duration: duration
+        duration: duration,
+        is_working_set: false,
     }, state);    
 };
 
 const logCancelRecordVideoAnalytics = (state) => {
-    let duration = DurationsSelectors.getHistoryVideoRecorderDuration(state);
+    const duration = DurationsSelectors.getHistoryVideoRecorderDuration(state);
 
     Analytics.logEventWithAppState('cancel_record_video', {
-        duration: duration
+        duration: duration,
+        is_working_set: false,        
     }, state);    
 };
 
 const logSaveVideoErrorAnalytics = (state) => {
-    let duration = DurationsSelectors.getHistoryVideoRecorderDuration(state);
+    const duration = DurationsSelectors.getHistoryVideoRecorderDuration(state);
 
     Analytics.logEventWithAppState('save_video_error', {
-        duration: duration
+        duration: duration,
+        is_working_set: false,        
     }, state);    
 };

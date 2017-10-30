@@ -53,7 +53,7 @@ export const addPill = (setID) => (dispatch, getState) => {
 };
 
 const logSaveTagsAnalytics = (state, setID) => {
-    let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
+    const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
     const duration = DurationsSelectors.getEditWorkoutTagsDuration(state);
 
     Analytics.logEventWithAppState('save_tags', {
@@ -64,7 +64,7 @@ const logSaveTagsAnalytics = (state, setID) => {
 };
 
 const logCancelEditTagsAnalytics = (state, setID) => {
-    let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
+    const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
     const duration = DurationsSelectors.getEditWorkoutTagsDuration(state);
 
     Analytics.logEventWithAppState('cancel_edit_tags', {
@@ -75,7 +75,7 @@ const logCancelEditTagsAnalytics = (state, setID) => {
 };
 
 const logRemovedTagAnalytics = (state, setID) => {
-    let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
+    const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 
     Analytics.logEventWithAppState('remove_tag', {
         is_working_set: is_working_set,
@@ -83,7 +83,7 @@ const logRemovedTagAnalytics = (state, setID) => {
 };
 
 const logAddTagAnalytics = (state, setID) => {
-    let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
+    const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
     
     Analytics.logEventWithAppState('add_tag', {
         is_working_set: is_working_set,

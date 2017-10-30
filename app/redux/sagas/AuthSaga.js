@@ -54,6 +54,8 @@ function* executeLogin() {
             logCancelLoginAnalytics(state);
         } else {
             showGenericAlert();
+            let state = yield select();
+            logLoginError(state);
         }
         yield put(AuthActionCreators.logout());
     } finally {
@@ -105,6 +107,11 @@ const logAttemptLoginOpenBarbellAnalytics = (state) => {
 
 const logCancelLoginAnalytics = (state) => {
     Analytics.logEventWithAppState('cancel_login', {
+    }, state);
+};
+
+const logLoginError = (state) => {
+    Analytics.logEventWithAppState('login_error', {
     }, state);
 };
 

@@ -24,7 +24,7 @@ class SettingsAccountPanel extends Component {
             'Are you sure?',
             message,
             [
-                {text: 'Nevermind', onPress: null, style: 'cancel'},
+                {text: 'Nevermind', onPress: () => this.props.cancelSignOut(), style: 'cancel'},
                 {text: 'Logout', onPress: () => this.props.signOut() },
             ]
         );

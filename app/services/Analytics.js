@@ -19,6 +19,22 @@ export const setInitialAnalytics = () => {
     setCurrentScreen('settings');
 };
 
+// User ID
+
+// user ID defaults to the mobile identifier for anonymous users
+export const setUserID = (userID=DeviceInfo.getUniqueID()) => {
+    
+    firebase.analytics().setUserId(userID);
+
+    console.tron.display({
+        name: 'UserID',
+        value: userID,
+        preview: userID,
+        important: true,
+        image: 'https://firebase.google.com/_static/images/firebase/touchicon-180.png'
+    });
+};
+
 // Screens
 
 export const setCurrentScreen = (screen) => {
@@ -30,7 +46,7 @@ export const setCurrentScreen = (screen) => {
         preview: screen,
         important: true,
         image: 'https://firebase.google.com/_static/images/firebase/touchicon-180.png'
-    })
+    });
 };
 
 // User Properties
@@ -44,7 +60,7 @@ export const setUserProp = (name, value) => {
         preview: name + " = " + value,
         important: true,
         image: 'https://firebase.google.com/_static/images/firebase/touchicon-180.png'
-    })    
+    });
 };
 
 // Log Events
@@ -58,7 +74,7 @@ export const logEvent = (event, params) => {
         preview: event,
         important: true,
         image: 'https://firebase.google.com/_static/images/firebase/touchicon-180.png'
-    })    
+    });
 };
 
 export const logEventWithAppState = (event, params, state) => {

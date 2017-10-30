@@ -1,4 +1,4 @@
-import { take, put, cancel, fork } from 'redux-saga/effects';
+import { take, put, cancel, fork, select } from 'redux-saga/effects';
 import { Alert } from 'react-native';
 
 import {
@@ -35,7 +35,6 @@ function* executeReconnect() {
         Alert.alert("Reconnecting!", "It looks like you disconnected, make sure your phone is within range and reduce interference from other bluetooth devices.");
 
         // analytics
-        // TODO: see if this needs to be done differently in a saga
         const state = yield select();
         logAttemptReconnectAnalytics(state);
 

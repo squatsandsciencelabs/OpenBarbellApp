@@ -251,8 +251,6 @@ function checkOBVersion(name) {
     }    
 };
 
-// ANALYTICS
-
 const logAttemptScanAnalytics = (state) => {
     Analytics.logEventWithAppState('attempt_scan', {
 

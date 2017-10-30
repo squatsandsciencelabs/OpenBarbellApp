@@ -72,19 +72,25 @@ function* pushUpdates() {
             // upload
             let state = yield select();
             logAttemptPushDataAnalytics(state);
-
             const initialRevision = yield select(SetsSelectors.getRevision);            
             const accessToken = yield select(AuthSelectors.getAccessToken);
             const lastRefreshDate = yield select(AuthSelectors.getLastRefreshDate);
             const validator = new Validator(accessToken, lastRefreshDate);
-           
             const json = yield call(API.postUpdatedSetData, sets, validator);
+
+            // success
+            state = yield select();
+            logPushDataSucceededAnalytics(state);
             yield put(SetsActionCreators.finishedUploadingSets(json.revision));
+
+            // sanity check
             yield call(pullUpdates, initialRevision);
         } catch(error) {
             // error
             yield put(SetsActionCreators.failedUploadSets());
             if (error.type !== undefined) {
+                let state = yield select();
+                logPushDataErrorAnalytics(state);
                 yield put(error);
             }
             console.tron.log(JSON.stringify(error));            
@@ -161,5 +167,15 @@ const logAttemptPushDataAnalytics = (state) => {
     Analytics.logEventWithAppState('attempt_push_data', {
     }, state);
 };
+
+const logPushDataSucceededAnalytics = (state) => {
+    Analytics.logEventWithAppState('push_data_succeeded', {
+    }, state);
+};
+
+const logPushDataErrorAnalytics = (state) => {
+    Analytics.logEventWithAppState('push_data_error', {
+    }, state);
+}; 
 
 export default SyncSaga;

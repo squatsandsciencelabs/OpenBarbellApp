@@ -44,7 +44,7 @@ export const presentTroubleshootingTips = () => (dispatch, getState) => {
     logTroubleshootingTipsAnalytics(state);
 
     dispatch({
-        TROUBLESHOOTING_TIPS
+        type: TROUBLESHOOTING_TIPS
     });
 };
 

@@ -15,7 +15,7 @@ export const setInitialAnalytics = () => {
     // set initial user props analytics
     setUserProp('connected_device_id', null);
     setUserProp('mobile_identifier', mobileID);
-    setUserProp('device_version', null);    
+    setUserProp('device_version', null);
     setCurrentScreen('settings');
 };
 

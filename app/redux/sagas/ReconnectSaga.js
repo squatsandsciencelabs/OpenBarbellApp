@@ -7,6 +7,7 @@ import {
     STOP_RECONNECT
 } from 'app/ActionTypes';
 import * as DeviceActionCreators from 'app/redux/shared_actions/DeviceActionCreators';
+import * as Analytics from 'app/services/Analytics';
 
 const ReconnectSaga = function * ReconnectSaga() {
     while (true) {
@@ -32,6 +33,11 @@ function* executeReconnect() {
 
         // alert
         Alert.alert("Reconnecting!", "It looks like you disconnected, make sure your phone is within range and reduce interference from other bluetooth devices.");
+
+        // analytics
+        // TODO: see if this needs to be done differently in a saga
+        const state = yield select();
+        logAttemptReconnectAnalytics(state);
 
         // set reconnect mode and scan
         yield put(DeviceActionCreators.reconnectingToDevice(reconnectDevice));
@@ -60,5 +66,10 @@ function* restartReconnect() {
         yield put(DeviceActionCreators.startDeviceScan());
     }
 }
+
+const logAttemptReconnectAnalytics = (state) => {
+    Analytics.logEventWithAppState('attempt_reconnect', {
+    }, state);
+};
 
 export default ReconnectSaga;

@@ -43,6 +43,7 @@ function* executeLogin() {
         const user = yield apply(GoogleSignin, GoogleSignin.signIn);
 
         // sign into our servers
+        Analytics.setUserID(user.id);
         state = yield select();
         logAttemptLoginOpenBarbellAnalytics(state);
         let json = yield call(API.login, user.idToken);

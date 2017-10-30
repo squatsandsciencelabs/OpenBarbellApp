@@ -34,7 +34,7 @@ class VideoRecorder extends Component {
 
     _closeModal() {
         if (!this.timer) {
-            this.props.closeModal();
+            this.props.closeModal(this.props.setID);
         }
     }
 

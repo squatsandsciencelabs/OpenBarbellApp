@@ -35,10 +35,12 @@ function* executeLogin() {
 
         // sign into google
         let state = yield select();
-        logAttemptLoginGoogleAnalytics(state);        
+        logAttemptLoginGoogleAnalytics(state);
         const user = yield apply(GoogleSignin, GoogleSignin.signIn);
 
         // sign into our servers
+        state = yield select();
+        logAttemptLoginOpenBarbellAnalytics(state);
         let json = yield call(API.login, user.idToken);
 
         // success
@@ -88,6 +90,11 @@ const alert = (title, message) => {
 
 const logAttemptLoginGoogleAnalytics = (state) => {
     Analytics.logEventWithAppState('attempt_login_google', {
+    }, state);
+};
+
+const logAttemptLoginOpenBarbellAnalytics = (state) => {
+    Analytics.logEventWithAppState('attempt_login_openbarbell', {
     }, state);
 };
 

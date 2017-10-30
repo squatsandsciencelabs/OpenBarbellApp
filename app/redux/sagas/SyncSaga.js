@@ -87,10 +87,10 @@ function* pushUpdates() {
             yield call(pullUpdates, initialRevision);
         } catch(error) {
             // error
+            let state = yield select();
+            logPushDataErrorAnalytics(state);
             yield put(SetsActionCreators.failedUploadSets());
             if (error.type !== undefined) {
-                let state = yield select();
-                logPushDataErrorAnalytics(state);
                 yield put(error);
             }
             console.tron.log(JSON.stringify(error));            
@@ -132,9 +132,9 @@ function* pullUpdates(previousRevision=null) {
         }
     } catch(error) {
         // error
+        let state = yield select();
+        logPullDataErrorAnalytics(state);
         if (error.type !== undefined) {
-            let state = yield select();
-            logPullDataErrorAnalytics(state);
             yield put(error);
         }
         console.tron.log(JSON.stringify(error));

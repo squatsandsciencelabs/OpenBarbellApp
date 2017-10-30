@@ -25,6 +25,8 @@ const AuthSaga = function * AuthSaga() {
             yield apply(GoogleSignin, GoogleSignin.signOut);
         } catch(error) {
             console.tron.log("LOGOUT SIGN OUT ERROR " + error);
+            let state = yield select();
+            logLogoutErrorAnalytics(state);
         }
     }
 };
@@ -119,6 +121,11 @@ const logLoginErrorAnalytics = (state) => {
 
 const logLoginAnalytics = (state) => {
     Analytics.logEventWithAppState('login', {
+    }, state);
+};
+
+const logLogoutErrorAnalytics = (state) => {
+    Analytics.logEventWithAppState('logout_error', {
     }, state);
 };
 

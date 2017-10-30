@@ -20,7 +20,8 @@ class SettingsDevicePanel extends Component {
                     scannedDevices={ this.props.scannedDevices }
                     startDeviceScan={ this.props.startDeviceScan }
                     stopDeviceScan={ this.props.stopDeviceScan }
-                    connectDevice={ this.props.connectDevice }/>;
+                    connectDevice={ this.props.connectDevice }
+                    tappedTroubleshooting={ this.props.tappedTroubleshooting }/>;
             case 'CONNECTING':
                 return <SettingsDevicePanelConnecting
                     device={ this.props.deviceName }

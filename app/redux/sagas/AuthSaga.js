@@ -46,13 +46,14 @@ function* executeLogin() {
         // success
         yield put(AuthActionCreators.loginSucceeded(json.accessToken, json.refreshToken, user.email, new Date(), json.revision, json.sets));
     } catch(error) {
-        console.tron.log("ERROR " + error);
-        // TODO: fix the error code check for android as it's different from iOS now
-        if (error.code !== -5) {
-            showGenericAlert();
-        } else {
+        console.tron.log("ERROR CODE " + error.code + " ERROR " + error);
+        if (error.code === -5 || error.code === 12501) {
             // -5 is when the user cancels the sign in on iOS
-            logCancelLoginAnalytics();
+            // 12501 is when the user cancels the sign in on Android
+            let state = yield select();
+            logCancelLoginAnalytics(state);
+        } else {
+            showGenericAlert();
         }
         yield put(AuthActionCreators.logout());
     } finally {

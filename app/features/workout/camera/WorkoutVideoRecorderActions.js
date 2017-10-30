@@ -7,6 +7,7 @@ import {
 } from 'app/ActionTypes';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
 import * as Analytics from 'app/services/Analytics';
+import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
 export const startRecording = (setID) => ({
     type: START_RECORDING_WORKOUT,
@@ -18,10 +19,8 @@ export const stopRecording = () => ({
 });
 
 export const dismissRecording = () => (dispatch, getState) => {
-    var state = getState();
-
+    const state = getState();
     logCancelRecordVideoAnalytics(state);
-
     Analytics.setCurrentScreen('workout');
     
     dispatch({
@@ -30,8 +29,7 @@ export const dismissRecording = () => (dispatch, getState) => {
 };
 
 export const saveVideo = (setID, videoFileURL, videoType) => (dispatch, getState) => {
-    var state = getState();
-
+    const state = getState();
     logSaveVideoAnalytics(state);
 
     dispatch({
@@ -43,8 +41,7 @@ export const saveVideo = (setID, videoFileURL, videoType) => (dispatch, getState
 };
 
 export const saveVideoError = (setID) => (dispatch, getState) => {
-    var state = getState();
-
+    const state = getState();
     logSaveVideoErrorAnalytics(state);
 
     dispatch({
@@ -53,26 +50,31 @@ export const saveVideoError = (setID) => (dispatch, getState) => {
 }
 
 const logSaveVideoAnalytics = (state) => {
-    let duration = DurationsSelectors.getWorkoutVideoRecorderDuration(state);
+    const duration = DurationsSelectors.getWorkoutVideoRecorderDuration(state);
+    const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 
     Analytics.logEventWithAppState('save_video', {
-        duration: duration
-    }, state);    
+        duration: duration,
+        is_working_set: is_working_set,
+    }, state);
 };
 
 const logCancelRecordVideoAnalytics = (state) => {
-    let duration = DurationsSelectors.getWorkoutVideoRecorderDuration(state);
+    const duration = DurationsSelectors.getWorkoutVideoRecorderDuration(state);
+    const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 
     Analytics.logEventWithAppState('cancel_record_video', {
-        duration: duration
-    }, state);    
+        duration: duration,
+        is_working_set: is_working_set,
+    }, state);
 };
 
 const logSaveVideoErrorAnalytics = (state) => {
-    let duration = DurationsSelectors.getWorkoutVideoRecorderDuration(state);
+    const duration = DurationsSelectors.getWorkoutVideoRecorderDuration(state);
+    const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 
     Analytics.logEventWithAppState('save_video_error', {
-        duration: duration
-    }, state);    
+        duration: duration,
+        is_working_set: is_working_set,
+    }, state);
 };
-

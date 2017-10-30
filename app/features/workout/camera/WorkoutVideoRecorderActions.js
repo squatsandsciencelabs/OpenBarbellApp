@@ -25,7 +25,7 @@ export const stopRecording = () => ({
 
 export const dismissRecording = () => (dispatch, getState) => {
     const state = getState();
-    logCancelRecordVideoAnalytics(state);
+    logCancelRecordVideoAnalytics(setID, state);
     Analytics.setCurrentScreen('workout');
     
     dispatch({
@@ -35,7 +35,7 @@ export const dismissRecording = () => (dispatch, getState) => {
 
 export const saveVideo = (setID, videoFileURL, videoType) => (dispatch, getState) => {
     const state = getState();
-    logSaveVideoAnalytics(state);
+    logSaveVideoAnalytics(setID, state);
 
     dispatch({
         type: SAVE_WORKOUT_VIDEO,
@@ -47,7 +47,7 @@ export const saveVideo = (setID, videoFileURL, videoType) => (dispatch, getState
 
 export const saveVideoError = (setID) => (dispatch, getState) => {
     const state = getState();
-    logSaveVideoErrorAnalytics(state);
+    logSaveVideoErrorAnalytics(setID, state);
 
     dispatch({
         type: SAVE_VIDEO_ERROR,
@@ -62,7 +62,7 @@ const logStartRecordingVideoAnalytics = (setID, state) => {
     }, state);
 };
 
-const logSaveVideoAnalytics = (state) => {
+const logSaveVideoAnalytics = (setID, state) => {
     const duration = DurationsSelectors.getWorkoutVideoRecorderDuration(state);
     const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 
@@ -72,7 +72,7 @@ const logSaveVideoAnalytics = (state) => {
     }, state);
 };
 
-const logCancelRecordVideoAnalytics = (state) => {
+const logCancelRecordVideoAnalytics = (setID, state) => {
     const duration = DurationsSelectors.getWorkoutVideoRecorderDuration(state);
     const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 
@@ -82,7 +82,7 @@ const logCancelRecordVideoAnalytics = (state) => {
     }, state);
 };
 
-const logSaveVideoErrorAnalytics = (state) => {
+const logSaveVideoErrorAnalytics = (setID, state) => {
     const duration = DurationsSelectors.getWorkoutVideoRecorderDuration(state);
     const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 

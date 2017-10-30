@@ -6,6 +6,7 @@ import {
     SAVE_TOKENS,
     TOKENS_READY
 } from 'app/ActionTypes';
+import * as Analytics from 'app/services/Analytics';
 
 export const loginSucceeded = (accessToken, refreshToken, email, date = new Date(), revision = null, sets = null) => ({
     type: LOGIN_SUCCESS,
@@ -17,14 +18,16 @@ export const loginSucceeded = (accessToken, refreshToken, email, date = new Date
     sets: sets
 });
 
-export const logout = (showMessage = false) => {
-    if (showMessage) {
-        Alert.alert("Important", "As it's been awhile since you've signed on, you've been logged out! Please login again.");
+export const logout = (forceLogout=false) => (dispatch, getState) => {
+    if (forceLogout) {
+        const state = getState();
+        logForceLogoutAnalytics(state);
+        Alert.alert("Important", "As it's been awhile since you've signed on, you've been logged out! Please login again.");        
     }
 
-    return {
+    dispatch({
         type: LOGOUT
-    };
+    });
 };
 
 export const saveTokens = (accessToken, refreshToken, lastRefreshDate) => ({
@@ -36,3 +39,9 @@ export const saveTokens = (accessToken, refreshToken, lastRefreshDate) => ({
 
 export const tokensReady = () => ({ type: TOKENS_READY });
 
+// ANALYTICS
+
+const logForceLogoutAnalytics = (state) => {
+    Analytics.logEventWithAppState('force_logout', {
+    }, state);
+};

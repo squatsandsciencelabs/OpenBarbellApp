@@ -2,7 +2,7 @@ import * as sut from 'app/redux/selectors/SetsSelectors';
 import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 
-describe('SetSelectors', () => {
+describe('SetsSelectors', () => {
     describe('lastWorkoutRepTime', () => {
         const realEndTime = SetTimeCalculator.endTime;
 

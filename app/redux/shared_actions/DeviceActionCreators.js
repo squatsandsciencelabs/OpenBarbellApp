@@ -52,12 +52,14 @@ export const startDeviceScan = () => (dispatch, getState) => {
     });
 };
 
-export const stopDeviceScan = () => {
+export const stopDeviceScan = () => (dispatch, getState) => {
     RFDuinoLib.stopScan();
+    const state = getState();
+    logCompletedScanAnalytics(state);
 
-    return {
+    dispatch({
         type: STOP_DEVICE_SCAN
-    };
+    });
 };
 
 export const foundDevice = (name, identifier) => ({
@@ -233,6 +235,12 @@ function checkOBVersion(name) {
 
 const logAttemptScanAnalytics = (state) => {
     Analytics.logEventWithAppState('attempt_scan', {
+
+    }, state);
+};
+
+const logCompletedScanAnalytics = (state) => {
+    Analytics.logEventWithAppState('completed_scan', {
 
     }, state);
 };

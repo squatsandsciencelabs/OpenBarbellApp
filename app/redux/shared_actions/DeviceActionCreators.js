@@ -159,10 +159,13 @@ export const connectingToDevice = (name, identifier) => ({
 
 export const connectedToDevice = (name, identifier) => (dispatch, getState) => {
     clearTimers();
-    Analytics.setUserProp('connected_device_id', name);
 
+    // analytics
+    Analytics.setUserProp('connected_device_id', name);
     checkOBVersion(name);
-    
+    const state = getState();
+    logConnectedToDevice(state);
+
     dispatch({
         type: CONNECTED_TO_DEVICE,
         deviceName: name,
@@ -252,5 +255,10 @@ const logCompletedScanAnalytics = (state) => {
 const logAttemptConnectDeviceAnalytics = (isReconnecting, state) => {
     Analytics.logEventWithAppState('attempt_connect_device', {
         is_reconnect: isReconnecting
+    }, state);
+};
+
+const logConnectedToDevice = (state) => {
+    Analytics.logEventWithAppState('connected_to_device', {
     }, state);
 };

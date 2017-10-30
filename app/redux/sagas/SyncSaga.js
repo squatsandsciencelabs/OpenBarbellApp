@@ -123,7 +123,9 @@ function* pullUpdates(previousRevision=null) {
         }
     } catch(error) {
         // error
-        if (error.type !== undefined) {            
+        if (error.type !== undefined) {
+            let state = yield select();
+            logPullDataErrorAnalytics(state);
             yield put(error);
         }
         console.tron.log(JSON.stringify(error));
@@ -144,6 +146,11 @@ const logAttemptPullDataAnalytics = (state) => {
 
 const logPullDataSucceededAnalytics = (state) => {
     Analytics.logEventWithAppState('pull_data_succeeded', {
+    }, state);
+};
+
+const logPullDataErrorAnalytics = (state) => {
+    Analytics.logEventWithAppState('pull_data_error', {
     }, state);
 };
 

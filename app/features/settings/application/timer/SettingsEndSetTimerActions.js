@@ -6,7 +6,7 @@ import * as Analytics from 'app/services/Analytics';
 
 export const saveEndSetTimer = (duration = 30) => (dispatch, getState) => {
     const state = getState();
-    logChangeEndSetTimerAnalytics(state);
+    logChangeEndSetTimerAnalytics(duration, state);
 
     dispatch({
         type: SAVE_END_SET_TIMER,
@@ -24,7 +24,8 @@ export const dismissEndSetTimer = () => {
 
 // ANALYTICS
 
-const logChangeEndSetTimerAnalytics = (state) => {
+const logChangeEndSetTimerAnalytics = (duration, state) => {
     Analytics.logEventWithAppState('change_end_set_timer', {
+        to_timer: duration,
     }, state);
 };

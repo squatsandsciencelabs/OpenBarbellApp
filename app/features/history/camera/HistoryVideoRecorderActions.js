@@ -8,10 +8,15 @@ import {
 import * as Analytics from 'app/services/Analytics';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
 
-export const startRecording = (setID) => ({
-    type: START_RECORDING_HISTORY,
-    setID: setID
-});
+export const startRecording = (setID) => (dispatch, getState) => {
+    const state = getState();
+    logStartRecordingVideoAnalytics(setID, state);
+
+    dispatch({
+        type: START_RECORDING_HISTORY,
+        setID: setID
+    });
+};
 
 export const stopRecording = () => ({
     type: STOP_RECORDING_HISTORY
@@ -47,6 +52,12 @@ export const saveVideoError = (setID) => (dispatch, getState) => {
         type: SAVE_VIDEO_ERROR,
     });
 }
+
+const logStartRecordingVideoAnalytics = (setID, state) => {
+    Analytics.logEventWithAppState('start_recording_video', {
+        is_working_set: false,
+    }, state);
+};
 
 const logSaveVideoAnalytics = (state) => {
     const duration = DurationsSelectors.getHistoryVideoRecorderDuration(state);

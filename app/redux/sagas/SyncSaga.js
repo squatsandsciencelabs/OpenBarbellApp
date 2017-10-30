@@ -109,6 +109,8 @@ function* pullUpdates(previousRevision=null) {
 
     try {
         // sync
+        let state = yield select();
+        logAttemptPullDataAnalytics(state);
         const json = yield call(API.sync, revision, validator);
         if (json !== undefined) {
             yield put(SetsActionCreators.updateSetDataFromServer(json.revision, json.sets));
@@ -129,6 +131,11 @@ function* pullUpdates(previousRevision=null) {
 const logSyncIgnoredAnalytics = (state) => {
     Analytics.logEventWithAppState('sync_ignored', {
     }, state);
-};    
+};
+
+const logAttemptPullDataAnalytics = (state) => {
+    Analytics.logEventWithAppState('attempt_pull_data', {
+    }, state);
+};
 
 export default SyncSaga;

@@ -24,9 +24,22 @@ export const disconnectDevice = () => (dispatch, getState) => {
     dispatch(DeviceActionCreators.disconnectDevice());
 };
 
-export const stopReconnect = () => ({ type: STOP_RECONNECT });
+export const stopReconnect = () => (dispatch, getState) => {
+    const state = getState();
+    logCancelReconnectAnalytics(state);
+
+    dispatch({
+        type: STOP_RECONNECT
+    });
+}
 
 const logAttemptDisconnectDeviceAnalytics = (state) => {
     Analytics.logEventWithAppState('attempt_disconnect_device', {
+    }, state);
+};
+
+const logCancelReconnectAnalytics = (state) => {
+    Analytics.logEventWithAppState('cancel_reconnect', {
+
     }, state);
 };

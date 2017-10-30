@@ -65,25 +65,25 @@ export const logEventWithAppState = (event, params, state) => {
     const screenStatus = AppStateSelectors.getScreenStatus(state);
     const currentAppState = AppState.currentState;
 
-    if (screenStatus === 'active') {
-        params.is_screen_locked = false;
-    } else {
-        params.is_screen_locked = true;
-    }
+    // if (screenStatus === 'active') {
+    //     params.is_screen_locked = false;
+    // } else {
+    //     params.is_screen_locked = true;
+    // }
 
-    if (currentAppState === 'active') {
-        params.is_app_active = true;
-        params.is_app_in_background = false;
-        params.is_app_inactive = false;
-    } else if (currentAppState === 'background') {
-        params.is_app_active = false;
-        params.is_app_in_background = true;
-        params.is_app_inactive = false;
-    } else if (currentAppState === 'inactive') {
-        params.is_app_active = false;
-        params.is_app_in_background = true;
-        params.is_app_inactive = true;        
-    }
+    // if (currentAppState === 'active') {
+    //     params.is_app_active = true;
+    //     params.is_app_in_background = false;
+    //     params.is_app_inactive = false;
+    // } else if (currentAppState === 'background') {
+    //     params.is_app_active = false;
+    //     params.is_app_in_background = true;
+    //     params.is_app_inactive = false;
+    // } else if (currentAppState === 'inactive') {
+    //     params.is_app_active = false;
+    //     params.is_app_in_background = true;
+    //     params.is_app_inactive = true;        
+    // }
 
     let devices = ScannedDevicesSelectors.getScannedDevices(state);
     const connectedDeviceStatus = ConnectedDeviceStatusSelectors.getConnectedDeviceStatus(state);
@@ -99,7 +99,7 @@ export const logEventWithAppState = (event, params, state) => {
         
     params.num_scanned_devices = devices.length;  
     
-    params.is_bluetooth_on = connectedDeviceStatus !== 'BLUETOOTH_OFF';
+    // params.is_bluetooth_on = connectedDeviceStatus !== 'BLUETOOTH_OFF';
 
     params.is_workout_in_progress = !isWorkoutEmpty;
     

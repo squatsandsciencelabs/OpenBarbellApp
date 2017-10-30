@@ -6,7 +6,6 @@ import {
     SAVE_TOKENS,
     TOKENS_READY
 } from 'app/ActionTypes';
-import * as Analytics from 'app/services/Analytics';
 
 export const loginSucceeded = (accessToken, refreshToken, email, date = new Date(), revision = null, sets = null) => ({
     type: LOGIN_SUCCESS,
@@ -18,17 +17,14 @@ export const loginSucceeded = (accessToken, refreshToken, email, date = new Date
     sets: sets
 });
 
-export const logout = (showMessage = false) => (dispatch, getState) => {
+export const logout = (showMessage = false) => {
     if (showMessage) {
         Alert.alert("Important", "As it's been awhile since you've signed on, you've been logged out! Please login again.");
     }
 
-    const state = getState();
-    logAttemptLogoutAnalytics(state);
-
-    dispatch({
+    return {
         type: LOGOUT
-    });
+    };
 };
 
 export const saveTokens = (accessToken, refreshToken, lastRefreshDate) => ({
@@ -40,9 +36,3 @@ export const saveTokens = (accessToken, refreshToken, lastRefreshDate) => ({
 
 export const tokensReady = () => ({ type: TOKENS_READY });
 
-// ANALYTICS
-
-const logAttemptLogoutAnalytics = (state) => {
-    Analytics.logEventWithAppState('attempt_logout', {
-    }, state);
-};

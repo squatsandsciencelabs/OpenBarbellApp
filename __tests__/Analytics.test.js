@@ -49,7 +49,7 @@ describe('Analytics', () => {
     });
 
     describe('logEventWithAppState', () => {
-        describe('is_screen_locked', () => {
+        describe.skip('is_screen_locked', () => {
             beforeEach(() => {
                 ScannedDevicesSelectors.getScannedDevices = () => [];
                 ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = () => '';
@@ -73,7 +73,7 @@ describe('Analytics', () => {
             });
         });
 
-        describe('is_app_active', () => {
+        describe.skip('is_app_active', () => {
             let realAppCurrentState = null;
 
             beforeEach(() => {
@@ -121,7 +121,7 @@ describe('Analytics', () => {
             });
         });
 
-        describe('is_app_in_background', () => {
+        describe.skip('is_app_in_background', () => {
             let realAppCurrentState = null;
             
             beforeEach(() => {
@@ -169,7 +169,7 @@ describe('Analytics', () => {
             });
         });
 
-        describe('is_app_inactive', () => {
+        describe.skip('is_app_inactive', () => {
             let realAppCurrentState = null;
             
             beforeEach(() => {
@@ -329,7 +329,7 @@ describe('Analytics', () => {
             });
         });
 
-        describe('is_bluetooth_on', () => {
+        describe.skip('is_bluetooth_on', () => {
 
             beforeEach(() => {
                 AppStateSelectors.getScreenStatus = () => '';

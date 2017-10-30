@@ -5,7 +5,8 @@ import {
     LOGIN_REQUEST,
     UPDATE_HISTORY_FILTER,
     ATTEMPT_EXPORTING_CSV,
-    EXPORTING_CSV
+    EXPORTING_CSV,
+    CANCEL_LOGOUT,
 } from 'app/ActionTypes';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
 import * as GoogleDriveUploader from 'app/services/GoogleDriveUploader';
@@ -26,6 +27,15 @@ export const signIn = () => (dispatch, getState) => {
 
 export const signOut = () => {
     return AuthActionCreators.logout();
+};
+
+export const cancelSignOut = () => (dispatch, getState) => {
+    const state = getState();
+    logLogoutCancelledAnalytics(state);
+
+    dispatch({
+        CANCEL_LOGOUT
+    });
 };
 
 export const showRemovedData = () => ({
@@ -95,6 +105,15 @@ export const exportCSV = () => (dispatch, getState) => {
 
 const updateIsExportingCSV = (isExportingCSV) => ({ type: EXPORTING_CSV, isExportingCSV: isExportingCSV });
 
+const getTimeSinceLastExport = (state) => {
+    const startDate = SettingsSelectors.getLastExportCSVDate(state);
+    if (Boolean(startDate)) {
+        return Date.parse(new Date()) - Date.parse(startDate);
+    } else {
+        return 0;
+    }
+};
+
 // ANALYTICS
 
 const logTapGoogleSignInAnalytics = (state) => {
@@ -152,11 +171,7 @@ const logExportCSVErrorAnalytics = (state) => {
     }, state);
 };
 
-const getTimeSinceLastExport = (state) => {
-    const startDate = SettingsSelectors.getLastExportCSVDate(state);
-    if (Boolean(startDate)) {
-        return Date.parse(new Date()) - Date.parse(startDate);
-    } else {
-        return 0;
-    }
+const logLogoutCancelledAnalytics = (state) => {
+    Analytics.logEventWithAppState('logout_cancelled', {
+    }, state);
 };

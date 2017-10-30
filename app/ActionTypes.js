@@ -22,6 +22,7 @@ export const DISCONNECT_DEVICE = 'DISCONNECT_DEVICE';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGOUT = 'LOGOUT';
+export const CANCEL_LOGOUT = 'CANCEL_LOGOUT';
 export const SAVE_TOKENS = 'SAVE_TOKENS';
 export const TOKENS_READY = 'TOKENS_READY';
 

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {
     Alert,
     TouchableOpacity,
+    TouchableHighlight,
     View,
     Text,
     Switch,
@@ -67,20 +68,18 @@ class SettingsAccountPanel extends Component {
         var isExportingCSV = this.props.isExportingCSV;
         if (isExportingCSV) {
             return (
-                <View>
-                    <Text style={{color:'gray', marginTop: 10}}>Data:</Text>
+                <View style={[SETTINGS_PANEL_STYLES.blueButton, {width: 180, height: 40}]}>
                     <ActivityIndicator
-                        style={{marginLeft: 10, width: 100}}
-                        color="gray"
+                        style={{flex: 1}}
+                        color="white"
                     />
                 </View>
             );
         } else {
             return (
                 <View>
-                    <Text style={{color:'gray', marginTop: 10}}>Data:</Text>                
-                    <TouchableOpacity style={{justifyContent: 'center'}} onPress={ () => this._onPressCSV() } >
-                        <Text style={[SETTINGS_PANEL_STYLES.blueButton, {padding: 5, width: 100}]}>Export CSV</Text>
+                    <TouchableOpacity style={[SETTINGS_PANEL_STYLES.blueButton, {width: 180, height: 40}]} onPress={ () => this._onPressCSV() } >
+                        <Text style={[SETTINGS_PANEL_STYLES.buttonText]}>Download My Data</Text>
                     </TouchableOpacity>
                 </View>
             );
@@ -105,19 +104,25 @@ class SettingsAccountPanel extends Component {
     _renderLoggedIn() {
         return (
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flex: 1, flexDirection:'column', justifyContent:'space-between' }] }>
-                <Text style={{color:'gray'}}>Logged in as:</Text>
-                <Text>{this.props.email}</Text>
+                <Text style={{textAlign: 'center', fontSize: 20, marginBottom: 13}}>Account</Text>
 
-                <Text style={{color:'gray', marginTop: 10}}>Last synced to the cloud:</Text>
-                <Text>{this.props.syncDate}</Text>
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={{color:'gray'}}>Logged in as </Text>
+                    <Text style={{fontWeight: 'bold'}}>{this.props.email}</Text>
+                </View>
+
+                <View style={{flexDirection: 'row', marginTop: 10, marginBottom: 15}}>
+                    <Text style={{color:'gray'}}>Last data sync was </Text>
+                    <Text>{this.props.syncDate}</Text>
+                </View>
 
                 { this._renderExportCSV() }
-
-                { this._renderShowDeleted() }
                 
-                <TouchableOpacity style={{width: 100, marginTop: 20}} onPress={ () => this._onPressSignOut() }>
-                    <Text style={[SETTINGS_PANEL_STYLES.blueButton, {padding: 5}]}>Logout</Text>
-                </TouchableOpacity>
+                <View style={{marginTop: 10}}>
+                    <TouchableOpacity style={[SETTINGS_PANEL_STYLES.blueButton, {width: 180, height: 40}]} onPress={ () => this._onPressSignOut() }>
+                        <Text style={SETTINGS_PANEL_STYLES.buttonText}>Log Out</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     }

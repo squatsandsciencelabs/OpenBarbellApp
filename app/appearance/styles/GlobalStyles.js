@@ -11,7 +11,7 @@ export const SETTINGS_PANEL_STYLES = StyleSheet.create({
         marginBottom: 10,
         marginLeft: 13,
         marginRight: 13,
-        padding: 30,
+        padding: 20,
         backgroundColor: 'white',
         elevation: 3,
         shadowColor: "#000000",
@@ -97,8 +97,14 @@ export const SETTINGS_PANEL_STYLES = StyleSheet.create({
     },
     blueButton: {
         backgroundColor: 'rgba(47, 128, 237, 1)',
-        color: 'white',
-        padding: 15,
-        textAlign: 'center',
+        borderRadius: 3,
+        borderWidth: 3,
+        borderColor: 'rgba(47, 128, 237, 1)',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
+    buttonText: {
+        textAlign: 'center',
+        color: 'white',
+    }
 });

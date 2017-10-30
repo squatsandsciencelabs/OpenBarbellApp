@@ -5,6 +5,7 @@ import {
     ListView,
     Image,
     TouchableOpacity,
+    ActivityIndicator,
 } from 'react-native';
 
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
@@ -71,8 +72,7 @@ class SettingsDevicePanelDisconnected extends Component {
 
                 {this._renderRefreshButton()}
 
-
-                <View style={ [SETTINGS_PANEL_STYLES.content, { flex: 2, marginTop: 50 }] }>
+                <View style={ [SETTINGS_PANEL_STYLES.content, { flex: 2 }] }>
                     { this.props.scannedDevices.scanning ? this._renderScanningMessage() : this._renderDeviceList() }
                 </View>
             </View>
@@ -81,16 +81,19 @@ class SettingsDevicePanelDisconnected extends Component {
 
     _renderRefreshButton() {
         if (this.props.scannedDevices.scanning) {
-            return null;
+            return (<ActivityIndicator
+                style={{flex: 1, height: 50}}
+                color="gray"
+            />)
         }
 
         return (
-            <View style={{ flex: 1 }}>
-                <Text style={[SETTINGS_PANEL_STYLES.blueButton, {margin: 10}]}
-                     onPress={ () => this._scanForDevices(REFRESH_SCAN) }
-                     disabled={ this.props.scannedDevices.scanning }>
-                        REFRESH
-                </Text>
+            <View style={{ flex: 1, marginBottom: 50 }}>
+                <TouchableOpacity style={[SETTINGS_PANEL_STYLES.blueButton, {height: 50}]}
+                    disabled={ this.props.scannedDevices.scanning }
+                    onPress={ () => this._scanForDevices(REFRESH_SCAN) }>
+                        <Text style={SETTINGS_PANEL_STYLES.buttonText}>REFRESH</Text>
+                </TouchableOpacity>
             </View>
         );
     }

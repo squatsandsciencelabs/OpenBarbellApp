@@ -21,6 +21,7 @@ const AuthSaga = function * AuthSaga() {
         yield take(LOGOUT);
         yield cancel(task);
         try {
+            Analytics.setUserID();
             const user = yield apply(GoogleSignin, GoogleSignin.currentUserAsync);
             yield apply(GoogleSignin, GoogleSignin.signOut);
             let state = yield select();

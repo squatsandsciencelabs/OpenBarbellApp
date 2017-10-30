@@ -6,8 +6,7 @@ import * as Analytics from 'app/services/Analytics';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
 
 export const deleteVideo = (setID) => (dispatch, getState) => {
-    var state = getState();
-
+    const state = getState();
     logDeleteVideoAnalytics(state);
 
     dispatch({
@@ -16,11 +15,9 @@ export const deleteVideo = (setID) => (dispatch, getState) => {
     });
 };
 
-export const closeModal = () => (dispatch, getState) => {
-    var state = getState();
-
-    logCancelWatchVideoAnalytics(state);    
-
+export const closeModal = (setID) => (dispatch, getState) => {
+    const state = getState();
+    logCancelWatchVideoAnalytics(state);
     Analytics.setCurrentScreen('history');
     
     dispatch({
@@ -29,10 +26,11 @@ export const closeModal = () => (dispatch, getState) => {
 };
 
 const logDeleteVideoAnalytics = (state) => {
-    let duration = DurationsSelectors.getHistoryVideoPlayerDuration(state);
+    const duration = DurationsSelectors.getHistoryVideoPlayerDuration(state);
 
     Analytics.logEventWithAppState('delete_video', {
-        duration: duration
+        duration: duration,
+        is_working_set: false,
     }, state);        
 }
 
@@ -40,6 +38,7 @@ const logCancelWatchVideoAnalytics = (state) => {
     let duration = DurationsSelectors.getHistoryVideoPlayerDuration(state);
 
     Analytics.logEventWithAppState('cancel_watch_video', {
-        duration: duration
+        duration: duration,
+        is_working_set: false,
     }, state);    
 };

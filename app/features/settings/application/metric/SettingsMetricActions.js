@@ -5,8 +5,11 @@ import * as Analytics from 'app/services/Analytics';
 import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsActionCreators';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 
-export const saveDefaultMetricSetting = (metric = 'kgs') => {
-    return SettingsActionCreators.saveDefaultMetric(metric);
+export const saveDefaultMetricSetting = (metric = 'kgs') => (dispatch, getState) => {
+    const state = getState();
+    logChangeDefaultMetricAnalytics(state);
+    
+    dispatch(SettingsActionCreators.saveDefaultMetric(metric));
 };
 
 export const dismissDefaultMetricSetter = () => {
@@ -15,4 +18,11 @@ export const dismissDefaultMetricSetter = () => {
     return {
         type: DISMISS_DEFAULT_METRIC,    
     }
+};
+
+// ANALYTICS
+
+const logChangeDefaultMetricAnalytics = (state) => {
+    Analytics.logEventWithAppState('change_default_metric', {
+    }, state);
 };

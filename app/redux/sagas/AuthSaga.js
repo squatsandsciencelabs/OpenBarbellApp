@@ -1,6 +1,6 @@
 // This scheme was built on the assumption that users log in EACH TIME manually, and that's patently untrue
 
-import { take, call, put, cancelled, cancel, fork, apply } from 'redux-saga/effects';
+import { take, call, put, cancelled, cancel, fork, apply, select } from 'redux-saga/effects';
 import { Alert, Platform } from 'react-native';
 import { GoogleSignin } from 'react-native-google-signin';
 
@@ -8,9 +8,9 @@ import {
     LOGIN_REQUEST,
     LOGOUT,
 } from 'app/ActionTypes';
-
 import API from 'app/services/API';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
+import * as Analytics from 'app/services/Analytics';
 
 const AuthSaga = function * AuthSaga() {
     while (true) {
@@ -32,8 +32,16 @@ const AuthSaga = function * AuthSaga() {
 function* executeLogin() {
     try {
         yield take(LOGIN_REQUEST);
+
+        // sign into google
+        let state = yield select();
+        logAttemptLoginGoogleAnalytics(state);        
         const user = yield apply(GoogleSignin, GoogleSignin.signIn);
+
+        // sign into our servers
         let json = yield call(API.login, user.idToken);
+
+        // success
         yield put(AuthActionCreators.loginSucceeded(json.accessToken, json.refreshToken, user.email, new Date(), json.revision, json.sets));
     } catch(error) {
         console.tron.log("ERROR " + error);
@@ -50,6 +58,8 @@ function* executeLogin() {
         }
     }
 }
+
+// ALERTS
 
 const showGenericAlert = () => {
     alert("Oops!", "Something went wrong during the signin process, please try again.");
@@ -72,6 +82,13 @@ const alert = (title, message) => {
             message,
         );
     }
+};
+
+// ANALYTICS
+
+const logAttemptLoginGoogleAnalytics = (state) => {
+    Analytics.logEventWithAppState('attempt_login_google', {
+    }, state);
 };
 
 export default AuthSaga;

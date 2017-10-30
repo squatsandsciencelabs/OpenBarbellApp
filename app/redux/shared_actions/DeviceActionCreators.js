@@ -140,17 +140,20 @@ export const bluetoothIsOff = () => ({
     type: BLUETOOTH_OFF
 });
 
-export const disconnectedFromDevice = (name=null, identifier=null) => {
+export const disconnectedFromDevice = (name=null, identifier=null) => (dispatch, getState) => {
     clearTimers();
 
     Analytics.setUserProp('connected_device_id', null);
     Analytics.setUserProp('device_version', null);
+    const state = getState();
+    const isIntentional = (name === null && identifier === null); // when name and identifier exist, it's unintentional
+    logDisconnectedFromDeviceAnalytics(isIntentional, state);
 
-    return {
+    dispatch({
         type: DISCONNECTED_FROM_DEVICE,
         device: name,
         deviceIdentifier: identifier
-    };
+    });
 };
 
 export const connectingToDevice = (name, identifier) => ({
@@ -268,5 +271,11 @@ const logConnectedToDeviceAnalytics = (state) => {
 const logConnectedToDeviceTimedOutAnalytics = (isReconnect, state) => {
     Analytics.logEventWithAppState('connect_to_device_timed_out', {
         is_reconnect: isReconnect
+    }, state);
+};
+
+const logDisconnectedFromDeviceAnalytics = (isIntentional, state) => {
+    Analytics.logEventWithAppState('disconnected_from_device', {
+        is_intentional: isIntentional
     }, state);
 };

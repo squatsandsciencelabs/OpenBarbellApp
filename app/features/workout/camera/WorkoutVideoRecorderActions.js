@@ -9,10 +9,15 @@ import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
 import * as Analytics from 'app/services/Analytics';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
-export const startRecording = (setID) => ({
-    type: START_RECORDING_WORKOUT,
-    setID: setID
-});
+export const startRecording = (setID) => (dispatch, getState) => {
+    const state = getState();
+    logStartRecordingVideoAnalytics(setID, state);
+
+    dispatch({
+        type: START_RECORDING_WORKOUT,
+        setID: setID
+    });
+};
 
 export const stopRecording = () => ({
     type: STOP_RECORDING_WORKOUT
@@ -47,7 +52,15 @@ export const saveVideoError = (setID) => (dispatch, getState) => {
     dispatch({
         type: SAVE_VIDEO_ERROR,
     });
-}
+};
+
+const logStartRecordingVideoAnalytics = (setID, state) => {
+    const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
+    
+    Analytics.logEventWithAppState('start_recording_video', {
+        is_working_set: is_working_set,
+    }, state);
+};
 
 const logSaveVideoAnalytics = (state) => {
     const duration = DurationsSelectors.getWorkoutVideoRecorderDuration(state);

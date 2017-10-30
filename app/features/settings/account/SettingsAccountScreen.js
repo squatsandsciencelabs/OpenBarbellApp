@@ -24,6 +24,7 @@ const mapDispatchToProps = (dispatch) => {
         showRemoved: Actions.showRemovedData,
         hideRemoved: Actions.hideRemovedData,
         exportCSV: Actions.exportCSV,
+        cancelSignOut: Actions.cancelSignOut,
     }, dispatch);
 };
 

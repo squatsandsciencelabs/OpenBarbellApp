@@ -44,6 +44,8 @@ function* executeLogin() {
         let json = yield call(API.login, user.idToken);
 
         // success
+        state = yield select();
+        logLoginAnalytics(state);
         yield put(AuthActionCreators.loginSucceeded(json.accessToken, json.refreshToken, user.email, new Date(), json.revision, json.sets));
     } catch(error) {
         console.tron.log("ERROR CODE " + error.code + " ERROR " + error);
@@ -55,7 +57,7 @@ function* executeLogin() {
         } else {
             showGenericAlert();
             let state = yield select();
-            logLoginError(state);
+            logLoginErrorAnalytics(state);
         }
         yield put(AuthActionCreators.logout());
     } finally {
@@ -110,8 +112,13 @@ const logCancelLoginAnalytics = (state) => {
     }, state);
 };
 
-const logLoginError = (state) => {
+const logLoginErrorAnalytics = (state) => {
     Analytics.logEventWithAppState('login_error', {
+    }, state);
+};
+
+const logLoginAnalytics = (state) => {
+    Analytics.logEventWithAppState('login', {
     }, state);
 };
 

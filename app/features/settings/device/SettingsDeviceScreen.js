@@ -20,6 +20,7 @@ const mapDispatchToProps = (dispatch) => {
         connectDevice: Actions.connectDevice,
         disconnectDevice: Actions.disconnectDevice,
         stopReconnect: Actions.stopReconnect,
+        tappedTroubleshooting: Actions.presentTroubleshootingTips,
     }, dispatch);
 };
 

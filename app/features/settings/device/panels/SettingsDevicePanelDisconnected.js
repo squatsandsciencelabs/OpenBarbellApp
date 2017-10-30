@@ -10,6 +10,7 @@ import {
 
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 
+// TODO: move these into the config file
 const INITIAL_SCAN = 5 * 1000;
 const REFRESH_SCAN = 5 * 1000;
 

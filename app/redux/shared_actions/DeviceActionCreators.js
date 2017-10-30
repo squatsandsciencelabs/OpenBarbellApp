@@ -150,7 +150,6 @@ export const disconnectedFromDevice = (name=null, identifier=null) => (dispatch,
 
     const state = getState();
     const deviceStatus = ConnectedDeviceStatusSelectors.getConnectedDeviceStatus(state);
-    console.tron.log(deviceStatus);
     if (deviceStatus === 'CONNECTED' || deviceStatus === 'DISCONNECTING') {
         const isIntentional = deviceStatus === 'DISCONNECTING';
         logDisconnectedFromDeviceAnalytics(isIntentional, state);

@@ -17,7 +17,7 @@ const ReconnectSaga = function * ReconnectSaga() {
         // cancel
         yield take(STOP_RECONNECT);
         yield cancel(task);
-        yield put(DeviceActionCreators.disconnectDevice());
+        yield put(DeviceActionCreators.disconnectDevice(false));
         yield put(DeviceActionCreators.disconnectedFromDevice());
     }
 };

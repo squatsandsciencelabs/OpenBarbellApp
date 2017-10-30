@@ -84,9 +84,9 @@ export const connectDevice = (device) => (dispatch, getState) => {
         const status = ConnectedDeviceStatusSelectors.getConnectedDeviceStatus(state);
         if (status === 'CONNECTING') {
             // disconnect
-            dispatch(disconnectDevice()); // in case it's trying to connect, ensure it's actually disconnecting
+            logConnectedToDeviceTimedOutAnalytics(false, state);            
+            disconnectDevice(false); // in case it's trying to connect, ensure it's actually disconnecting
             dispatch(disconnectedFromDevice()); // in case it can never find it, visually update
-            logConnectedToDeviceTimedOutAnalytics(false, state);
         }
     }, 5000);
 
@@ -114,7 +114,7 @@ export const reconnectDevice = (device, identifier) => (dispatch, getState) => {
         const status = ConnectedDeviceStatusSelectors.getConnectedDeviceStatus(state);
         if (status !== 'CONNECTED') {
             // disconnect
-            dispatch(disconnectDevice()); // in case it's trying to connect, ensure it's actually disconnecting
+            disconnectDevice(false); // in case it's trying to connect, ensure it's actually disconnecting
             dispatch(disconnectedFromDevice(device, identifier)); // in case it can never find it, visually update and trigger another reconnect
             logConnectedToDeviceTimedOutAnalytics(true, state);
         }
@@ -126,12 +126,14 @@ export const reconnectDevice = (device, identifier) => (dispatch, getState) => {
     });
 };
 
-export const disconnectDevice = () => {
+export const disconnectDevice = (performAction=true) => (dispatch) => {
     RFDuinoLib.disconnectDevice();
 
-    return {
-        type: DISCONNECT_DEVICE
-    };
+    if (performAction) {
+        dispatch({
+            type: DISCONNECT_DEVICE
+        });
+    }
 };
 
 // DEVICE STATUS
@@ -145,9 +147,14 @@ export const disconnectedFromDevice = (name=null, identifier=null) => (dispatch,
 
     Analytics.setUserProp('connected_device_id', null);
     Analytics.setUserProp('device_version', null);
+
     const state = getState();
-    const isIntentional = (name === null && identifier === null); // when name and identifier exist, it's unintentional
-    logDisconnectedFromDeviceAnalytics(isIntentional, state);
+    const deviceStatus = ConnectedDeviceStatusSelectors.getConnectedDeviceStatus(state);
+    console.tron.log(deviceStatus);
+    if (deviceStatus === 'CONNECTED' || deviceStatus === 'DISCONNECTING') {
+        const isIntentional = deviceStatus === 'DISCONNECTING';
+        logDisconnectedFromDeviceAnalytics(isIntentional, state);
+    }
 
     dispatch({
         type: DISCONNECTED_FROM_DEVICE,
@@ -207,6 +214,8 @@ export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, g
 
     dispatch(TimerActionCreators.startEndSetTimer());
 };
+
+// ANALYTICS
 
 const logAddRepAnalytics = (state) => {
     let currentSet = SetsSelectors.getWorkingSet(state);

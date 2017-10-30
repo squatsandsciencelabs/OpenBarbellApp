@@ -5,7 +5,6 @@ import {
     ListView,
     Image,
     TouchableOpacity,
-    Linking
 } from 'react-native';
 
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
@@ -40,6 +39,8 @@ class SettingsDevicePanelDisconnected extends Component {
         }
     }
 
+    // ACTIONS
+
     _scanForDevices(time) {
         this.props.startDeviceScan();
         this.setState({ devicesDS: this._getDataSource(this.props.scannedDevices.devices) });
@@ -50,6 +51,12 @@ class SettingsDevicePanelDisconnected extends Component {
             this.timer = null;
         }, time);
     }
+
+    _tappedTroubleshooting() {
+        this.props.tappedTroubleshooting();
+    }
+
+    // RENDER
 
     render() {
         return (
@@ -91,7 +98,7 @@ class SettingsDevicePanelDisconnected extends Component {
     _renderDeviceList() {
         if (this.props.scannedDevices.devices.length < 1) {
             return (
-                <TouchableOpacity onPress={ () => Linking.openURL("http://www.squatsandscience.com/troubleshoot/") }>
+                <TouchableOpacity onPress={ () => this.props.tappedTroubleshooting() }>
                     <Text style= {{ textDecorationLine: 'underline'}} >Troubleshooting Tips</Text>
                 </TouchableOpacity>
             );

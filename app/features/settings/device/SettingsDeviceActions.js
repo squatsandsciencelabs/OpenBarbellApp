@@ -1,7 +1,11 @@
-import { NativeModules } from 'react-native';
+import {
+    NativeModules,
+    Linking,
+} from 'react-native';
 
 import {
-    STOP_RECONNECT
+    STOP_RECONNECT,
+    TROUBLESHOOTING_TIPS,
 } from 'app/ActionTypes';
 import * as DeviceActionCreators from 'app/redux/shared_actions/DeviceActionCreators';
 import * as Analytics from 'app/services/Analytics';
@@ -33,6 +37,17 @@ export const stopReconnect = () => (dispatch, getState) => {
     });
 }
 
+export const presentTroubleshootingTips = () => (dispatch, getState) => {
+    Linking.openURL("http://www.squatsandscience.com/troubleshoot/");
+
+    const state = getState();
+    logTroubleshootingTipsAnalytics(state);
+
+    dispatch({
+        TROUBLESHOOTING_TIPS
+    });
+};
+
 const logAttemptDisconnectDeviceAnalytics = (state) => {
     Analytics.logEventWithAppState('attempt_disconnect_device', {
     }, state);
@@ -41,5 +56,10 @@ const logAttemptDisconnectDeviceAnalytics = (state) => {
 const logCancelReconnectAnalytics = (state) => {
     Analytics.logEventWithAppState('cancel_reconnect', {
 
+    }, state);
+};
+
+const logTroubleshootingTipsAnalytics = (state) => {
+    Analytics.logEventWithAppState('troubleshooting_tips', {
     }, state);
 };

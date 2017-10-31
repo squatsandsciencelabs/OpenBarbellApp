@@ -84,15 +84,9 @@ class SettingsAccountPanel extends Component {
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flex: 1, flexDirection:'column', justifyContent:'space-between' }] }>
                 <Text style={{textAlign: 'center', fontSize: 20, marginBottom: 13}}>Account</Text>
 
-                <View style={{flexDirection: 'row'}}>
-                    <Text style={{color:'gray'}}>Logged in as </Text>
-                    <Text style={{fontWeight: 'bold'}}>{this.props.email}</Text>
-                </View>
+                <Text style={{color:'gray', flexWrap: 'wrap', flex: 1, marginBottom: 7}}>Logged in as <Text style={{fontWeight: 'bold', color: 'black'}}>{this.props.email}</Text></Text>
 
-                <View style={{flexDirection: 'row', marginTop: 10, marginBottom: 15}}>
-                    <Text style={{color:'gray'}}>Last data sync was </Text>
-                    <Text>{this.props.syncDate}</Text>
-                </View>
+                <Text style={{color:'gray', flexWrap: 'wrap', flex: 1, marginBottom: 15}}>Last data sync was {this.props.syncDate}</Text>
 
                 { this._renderExportCSV() }
                 

@@ -86,7 +86,7 @@ class SettingsAccountPanel extends Component {
 
                 <Text style={{color:'gray', flexWrap: 'wrap', flex: 1, marginBottom: 7}}>Logged in as <Text style={{fontWeight: 'bold', color: 'black'}}>{this.props.email}</Text></Text>
 
-                <Text style={{color:'gray', flexWrap: 'wrap', flex: 1, marginBottom: 15}}>Last data sync was {this.props.syncDate}</Text>
+                <Text style={{color:'gray', flexWrap: 'wrap', flex: 1, marginBottom: 20}}>Last data sync was {this.props.syncDate}</Text>
 
                 { this._renderExportCSV() }
                 

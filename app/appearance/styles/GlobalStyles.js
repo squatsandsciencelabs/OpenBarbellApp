@@ -47,7 +47,7 @@ export const SETTINGS_PANEL_STYLES = StyleSheet.create({
     tappableText: {
         fontSize: 16,
         textAlign: 'center',
-        color: 'blue'
+        color: 'rgba(47, 128, 237, 1)'
     },
     content: {
         flex: 1,
@@ -75,7 +75,7 @@ export const SETTINGS_PANEL_STYLES = StyleSheet.create({
     contentItemRowText: {
         flex: 3,
         textAlign: 'left',
-        color: 'mediumblue',
+        color: 'rgba(47, 128, 237, 1)',
         fontSize: 22,
         paddingLeft: 10
     },

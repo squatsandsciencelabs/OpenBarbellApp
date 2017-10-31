@@ -109,9 +109,9 @@ class SettingsDevicePanelDisconnected extends Component {
 
         return (
             <ListView style={ SETTINGS_PANEL_STYLES.contentItemList }
-                      dataSource={ this.state.devicesDS }
-                      renderRow={ (device) => this._renderDeviceRow(device) }
-                      enableEmptySections={ true } />
+                dataSource={ this.state.devicesDS }
+                renderRow={ (device) => this._renderDeviceRow(device) }
+                enableEmptySections={ true } />
         );
     }
 

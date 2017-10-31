@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {
     Alert,
     TouchableOpacity,
-    TouchableHighlight,
     View,
     Text,
     ActivityIndicator

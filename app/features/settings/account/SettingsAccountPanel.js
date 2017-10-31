@@ -5,7 +5,6 @@ import {
     TouchableHighlight,
     View,
     Text,
-    Switch,
     ActivityIndicator
 } from 'react-native';
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
@@ -35,13 +34,7 @@ class SettingsAccountPanel extends Component {
         this.props.exportCSV();
     }
 
-    _onPressSwitch(isSwitchOn) {
-        if (isSwitchOn) {
-            this.props.showRemoved();
-        } else {
-            this.props.hideRemoved();
-        }
-    }
+    // RENDER
 
     _renderLoggedOut() {
         return (
@@ -84,21 +77,6 @@ class SettingsAccountPanel extends Component {
                 </View>
             );
         }
-    }
-
-    _renderShowDeleted() {
-        return (
-            <View>            
-            <Text style={{color:'gray', marginTop: 10}}>Show Deleted:</Text>
-            <Switch
-                style={{backgroundColor: 'white', marginLeft: 3, marginRight: 5}}
-                value={this.props.shouldShowRemoved}
-                onValueChange={(isSwitchOn) => this._onPressSwitch(isSwitchOn)}
-                onTintColor='rgba(47, 128, 237, 1)'
-                thumbTintColor='lightgray'
-                tintColor='rgba(47, 128, 237, 1)'/>
-            </View>
-        );
     }
 
     _renderLoggedIn() {

@@ -39,7 +39,7 @@ class SettingsApplicationPanel extends Component {
         if (Platform.OS === 'ios') {
             return (
                 <View>            
-                    <Text style={{fontSize: 16}}>Show deleted reps</Text>
+                    <Text style={{fontSize: 16, marginBottom: 2}}>Show deleted reps</Text>
                     <Switch
                         style={{backgroundColor: 'white', marginLeft: 3, marginRight: 5}}
                         value={this.props.shouldShowRemoved}
@@ -51,9 +51,9 @@ class SettingsApplicationPanel extends Component {
             );
         } else {
             return (
-                <View style={{flex: 1, flexDirection: 'column'}}>            
+                <View style={{flex: 1, flexDirection: 'column', marginTop: 4}}>            
                     <Text style={{fontSize: 16, marginLeft: 7}}>Show deleted reps</Text>
-                    <View style={{width: 55, marginTop: 10}}>
+                    <View style={{width: 55, marginTop: 7}}>
                         <Switch
                             value={this.props.shouldShowRemoved}
                             onValueChange={(isSwitchOn) => this._tappedSwitch(isSwitchOn)}
@@ -73,7 +73,7 @@ class SettingsApplicationPanel extends Component {
                     <Text style={{textAlign: 'center', fontSize: 20, marginBottom: 20}}>Settings</Text>
                     <View>
                         <TouchableOpacity onPress={() => this._tappedSetTimer()}>
-                            <Text style={{fontSize: 16}}>
+                            <Text style={{fontSize: 16, marginBottom: 2}}>
                                 Time to start new set
                             </Text>
                             <Text style={{fontSize: 16, color: 'rgba(47, 128, 237, 1)'}}>
@@ -84,7 +84,7 @@ class SettingsApplicationPanel extends Component {
                     <SettingsEndSetTimerScreen />
                     <View style={{marginBottom: 15}}>
                         <TouchableOpacity onPress={() => this._tapDefaultMetric()}>
-                            <Text style={{fontSize: 16}}>
+                            <Text style={{fontSize: 16, marginBottom: 2}}>
                                 Default units
                             </Text>
                             <Text style={{fontSize: 16, color: 'rgba(47, 128, 237, 1)'}}>
@@ -99,15 +99,15 @@ class SettingsApplicationPanel extends Component {
         } else {
             return (
                 <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
-                    <Text style={{textAlign: 'center', fontSize: 20, marginBottom: 13}}>Settings</Text>
+                    <Text style={{textAlign: 'center', fontSize: 20, marginBottom: 20}}>Settings</Text>
                     <View>
-                        <Text style={{fontSize: 16, marginLeft: 7}}>
+                        <Text style={{fontSize: 16, marginLeft: 7, marginBottom: -10}}>
                             Time to start new set
                         </Text>
                     </View>
                     <SettingsEndSetTimerScreen />
                     <View style={{marginTop: 10}}>
-                        <Text style={{fontSize: 16, marginLeft: 7}}>
+                        <Text style={{fontSize: 16, marginLeft: 7, marginBottom: -10}}>
                             Set default metric
                         </Text>
                     </View>

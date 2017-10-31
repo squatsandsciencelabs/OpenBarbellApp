@@ -48,7 +48,7 @@ function* obtainNewTokens() {
         } catch(error) {
             let state = yield select();
             logRefreshTokenErrorAnalytics(state);
-            if (error.type !== undefined) {
+            if (error.type !== undefined || typeof error === 'function') {
                 yield put(error);
             }
             console.tron.log(JSON.stringify(error));

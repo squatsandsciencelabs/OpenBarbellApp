@@ -90,7 +90,7 @@ function* pushUpdates() {
             let state = yield select();
             logPushDataErrorAnalytics(state);
             yield put(SetsActionCreators.failedUploadSets());
-            if (error.type !== undefined) {
+            if (error.type !== undefined || typeof error === 'function') {
                 yield put(error);
             }
             console.tron.log(JSON.stringify(error));            
@@ -134,7 +134,7 @@ function* pullUpdates(previousRevision=null) {
         // error
         let state = yield select();
         logPullDataErrorAnalytics(state);
-        if (error.type !== undefined) {
+        if (error.type !== undefined || typeof error === 'function') {
             yield put(error);
         }
         console.tron.log(JSON.stringify(error));

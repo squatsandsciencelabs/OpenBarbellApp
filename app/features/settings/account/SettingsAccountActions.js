@@ -3,7 +3,6 @@ import { GoogleSignin } from 'react-native-google-signin';
 
 import {
     LOGIN_REQUEST,
-    UPDATE_HISTORY_FILTER,
     ATTEMPT_EXPORTING_CSV,
     EXPORTING_CSV,
     CANCEL_LOGOUT,
@@ -38,26 +37,6 @@ export const cancelSignOut = () => (dispatch, getState) => {
 
     dispatch({
         type: CANCEL_LOGOUT
-    });
-};
-
-export const showRemovedData = () => (dispatch, getState) => {
-    const state = getState();
-    logShowDeletedAnalytics(state);
-
-    dispatch({
-        type: UPDATE_HISTORY_FILTER,
-        showRemoved: true,
-    });
-};
-
-export const hideRemovedData = () => (dispatch, getState) => {
-    const state = getState();
-    logHideDeletedAnalytics(state);
-
-    dispatch({
-        type: UPDATE_HISTORY_FILTER,
-        showRemoved: false
     });
 };
 
@@ -191,15 +170,5 @@ const logAttemptLogoutAnalytics = (state) => {
 
 const logLogoutCancelledAnalytics = (state) => {
     Analytics.logEventWithAppState('logout_cancelled', {
-    }, state);
-};
-
-const logShowDeletedAnalytics = (state) => {
-    Analytics.logEventWithAppState('show_deleted', {
-    }, state);
-};
-
-const logHideDeletedAnalytics = (state) => {
-    Analytics.logEventWithAppState('hide_deleted', {
     }, state);
 };

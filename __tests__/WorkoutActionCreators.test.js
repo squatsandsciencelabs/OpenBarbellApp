@@ -205,4 +205,34 @@ describe('endWorkout analytics', () => {
             expect(params.percent_sets_fields).toBe(100);
         });        
     });
+
+    describe('workout_duration', () => {
+        const realWorkoutDuration = SetsSelectors.getWorkoutDuration;
+
+        afterAll(() => {
+            SetsSelectors.getWorkoutDuration = realWorkoutDuration;
+        });
+
+        test('0', () => {
+            SetsSelectors.getWorkoutDuration = () => 0;
+
+            store.dispatch(sut.endWorkout());
+
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('end_workout');
+            expect(params.workout_duration).toBe(0);
+        });
+
+        test('9001', () => {
+            SetsSelectors.getWorkoutDuration = () => 9001;
+            
+            store.dispatch(sut.endWorkout());
+
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('end_workout');
+            expect(params.workout_duration).toBe(9001);
+        });
+    });
 });

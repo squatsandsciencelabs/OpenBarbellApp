@@ -353,8 +353,56 @@ describe('SetsSelectors', () => {
         });
     });
 
-    describe.skip('getWorkoutDuration', () => {
-        // skipping, revisit later
+    describe('getWorkoutDuration', () => {
+        const realNow = Date.now;
+        const realStartTime = SetTimeCalculator.startTime;
+
+        afterAll(() => {
+            Date.now = realNow;
+            SetTimeCalculator.startTime = realStartTime;
+        });
+
+        test('0', () => {
+            const state = {
+                sets: {
+                    workoutData: []
+                }
+            };
+            SetTimeCalculator.startTime = () => new Date(0);
+            Date.now = () => new Date(0);
+
+            const result = sut.getWorkoutDuration(state);
+
+            expect(result).toBe(0);
+        });
+
+        test('1000', () => {
+            const state = {
+                sets: {
+                    workoutData: []
+                }
+            };
+            SetTimeCalculator.startTime = () => new Date(5000);
+            Date.now = () => new Date(6000);
+
+            const result = sut.getWorkoutDuration(state);
+
+            expect(result).toBe(1000);
+        });
+
+        test('5000', () => {
+            const state = {
+                sets: {
+                    workoutData: []
+                }
+            };
+            SetTimeCalculator.startTime = () => new Date(3000);
+            Date.now = () => new Date(8000);
+
+            const result = sut.getWorkoutDuration(state);
+
+            expect(result).toBe(5000);
+        });
     });
 
     describe.skip('getWorkingSet', () => {

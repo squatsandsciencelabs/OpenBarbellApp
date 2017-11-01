@@ -18,7 +18,8 @@ export const upload = async (accessToken, name, content, completionHandler) => {
             'Authorization': 'Bearer ' + accessToken
         },
         body: JSON.stringify({
-            "name": name
+            "name": name,
+            "mimeType": 'application/vnd.google-apps.spreadsheet'
         })
     });
     let status = await response.status;

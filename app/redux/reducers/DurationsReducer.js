@@ -41,51 +41,51 @@ const DurationsReducer = (state = defaultState, action) => {
     switch (action.type) {
         case PRESENT_WORKOUT_EXERCISE:
             return Object.assign({}, state, {
-                editWorkoutExerciseStart: new Date()
+                editWorkoutExerciseStart: Date.now()
             });
         case PRESENT_HISTORY_EXERCISE:
             return Object.assign({}, state, {
-                editHistoryExerciseStart: new Date()
+                editHistoryExerciseStart: Date.now()
             });
         case START_EDITING_WORKOUT_RPE:
             return Object.assign({}, state, {
-                editWorkoutRPEStart: new Date()
+                editWorkoutRPEStart: Date.now()
             });
         case START_EDITING_HISTORY_RPE:
             return Object.assign({}, state, {
-                editHistoryRPEStart: new Date()
+                editHistoryRPEStart: Date.now()
             });
         case START_EDITING_WORKOUT_WEIGHT: 
             return Object.assign({}, state, {
-                editWorkoutWeightStart: new Date()
+                editWorkoutWeightStart: Date.now()
             });
         case START_EDITING_HISTORY_WEIGHT: 
             return Object.assign({}, state, {
-                editHistoryWeightStart: new Date()
+                editHistoryWeightStart: Date.now()
             });
         case PRESENT_WORKOUT_TAGS:
             return Object.assign({}, state, {
-                editWorkoutTagsStart: new Date()
+                editWorkoutTagsStart: Date.now()
             });
         case PRESENT_HISTORY_TAGS:
             return Object.assign({}, state, {
-                editHistoryTagsStart: new Date()
+                editHistoryTagsStart: Date.now()
             });
         case PRESENT_WORKOUT_VIDEO_RECORDER:
             return Object.assign({}, state, {
-                workoutVideoRecorderStart: new Date()
+                workoutVideoRecorderStart: Date.now()
             });
         case PRESENT_HISTORY_VIDEO_RECORDER:
             return Object.assign({}, state, {
-                historyVideoRecorderStart: new Date()
+                historyVideoRecorderStart: Date.now()
             });
         case PRESENT_WORKOUT_VIDEO_PLAYER: 
             return Object.assign({}, state, {
-                workoutVideoPlayerStart: new Date()
+                workoutVideoPlayerStart: Date.now()
             });
         case PRESENT_HISTORY_VIDEO_PLAYER:
             return Object.assign({}, state, {
-                historyVideoPlayerStart: new Date()
+                historyVideoPlayerStart: Date.now()
             });
         default:
             return state;                                                                                                                                  

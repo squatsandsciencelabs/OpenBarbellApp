@@ -768,10 +768,10 @@ describe('SetsSelectors', () => {
     });
 
     describe('getTimeSinceLastWorkout', () => {
-        const origNow = Date.now;
+        const realNow = Date.now;
 
         afterAll(() => {
-            Date.now = origNow;
+            Date.now = realNow;
         });
 
         test('null if no sets', () => {

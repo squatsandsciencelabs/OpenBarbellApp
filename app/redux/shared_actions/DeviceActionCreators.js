@@ -196,12 +196,10 @@ export const reconnectingToDevice = (name) => {
 // DATA
 
 export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, getState) => {
-    var state = getState();
-
+    const state = getState();
     logAddRepAnalytics(state);
 
     dispatch(TimerActionCreators.sanityCheckTimer());
-
     dispatch({
         type: ADD_REP_DATA,
         isValid: isValid,
@@ -210,14 +208,13 @@ export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, g
         deviceIdentifier: state.connectedDevice.deviceIdentifier,
         time: time
     });
-
     dispatch(TimerActionCreators.startEndSetTimer());
 };
 
 // ANALYTICS
 
 const logAddRepAnalytics = (state) => {
-    let currentSet = SetsSelectors.getWorkingSet(state);
+    const currentSet = SetsSelectors.getWorkingSet(state);
     let set_id = currentSet.set_id;
     let rep_count = currentSet.reps.length;
     let has_exercise_name = Boolean(currentSet.exercise);
@@ -226,7 +223,7 @@ const logAddRepAnalytics = (state) => {
     let has_tags = Boolean(currentSet.tags.length);
     let has_video = Boolean(currentSet.videoFileUrl);
     let has_reps = Boolean(SetsSelectors.getNumWorkoutReps(state));
-    let end_set_time_left = SettingsSelectors.endSetTimeLeft(state);
+    let end_set_time_left = SettingsSelectors.getEndSetTimeLeft(state);
 
     Analytics.logEventWithAppState('add_rep', {
         set_id: set_id,

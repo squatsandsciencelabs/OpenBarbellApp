@@ -14,12 +14,10 @@ export const getIsExportingCSV = (state) => stateRoot(state).isExportingCSV;
 
 export const getShowRemoved = (state) => stateRoot(state).showRemoved;
 
-export const endSetTimeLeft = (state) => {
+export const getEndSetTimeLeft = (state) => {
     const endSetTimerDuration = getEndSetTimerDuration(state);
-    const currentTime = new Date();
-    const timeLeft = Math.abs(endSetTimerDuration - currentTime.getTime())
-
-    return timeLeft;
+    const currentTime = Date.now();
+    return Math.abs(endSetTimerDuration - currentTime.getTime());
 }
 
 export const getLastExportCSVDate = (state) => stateRoot(state).lastExportCSVDate;

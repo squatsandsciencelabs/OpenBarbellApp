@@ -50,8 +50,6 @@ const logEndWorkoutAnalytics = (manuallyEnded, state) => {
     let num_reps = SetsSelectors.getNumWorkoutReps(state);    
     let num_removes = WorkoutSelectors.getRemovedCounter(state);
     let num_restores = WorkoutSelectors.getRestoredCounter(state);
-    let num_screen_locks = AppStateSelectors.getNumLocks(state);
-    let num_multitask = AppStateSelectors.getNumMultiTask(state);
     let num_disconnects = ConnectedDeviceStatusSelectors.getNumDisconnects(state);
     let num_auto_reconnects = ConnectedDeviceStatusSelectors.getNumReconnects(state);
     let num_history_views = HistorySelectors.getHistoryViewedCounter(state);
@@ -59,8 +57,6 @@ const logEndWorkoutAnalytics = (manuallyEnded, state) => {
 
     Analytics.logEventWithAppState('end_workout', {
         value: null,
-        num_screen_locks: num_screen_locks,
-        num_multitask: num_multitask,
         percent_app_active: null,
         num_history_views: num_history_views,
         num_disconnects: num_disconnects,

@@ -7,10 +7,12 @@ import Permissions from 'react-native-permissions';
 import { Platform } from 'react-native';
 
 export default function() {
-    Permissions.request('photo');
-    Permissions.request('camera');
-    Permissions.request('microphone');
-    if (Platform.OS !== 'ios') {        
-        Permissions.request('storage');
-    }
+    Permissions.request('photo')
+    .then(Permissions.request('camera'))
+    .then(Permissions.request('microphone'))
+    .then(() => {
+        if (Platform.OS !== 'ios') {        
+            Permissions.request('storage');
+        }
+    });
 };

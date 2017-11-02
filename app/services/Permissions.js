@@ -8,11 +8,11 @@ import { Platform } from 'react-native';
 
 export default function() {
     Permissions.request('photo')
-    .then(Permissions.request('camera'))
-    .then(Permissions.request('microphone'))
+    .then(Permissions.request('camera')
+    .then(Permissions.request('microphone')
     .then(() => {
         if (Platform.OS !== 'ios') {        
             Permissions.request('storage');
         }
-    });
+    })));
 };

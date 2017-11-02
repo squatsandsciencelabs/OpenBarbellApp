@@ -107,23 +107,8 @@ public class RFDuinoServiceModule extends ReactContextBaseJavaModule implements 
     // called when app is navigated to
     @Override
     public void onHostResume() {
-        obtainLocationPermission();
         registerReceivers();
         sendDeviceStateReactEvent();
-    }
-
-    private void obtainLocationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Activity currentActivity = getCurrentActivity();
-            if (currentActivity != null) {
-                if (ContextCompat.checkSelfPermission(currentActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    if (!ActivityCompat.shouldShowRequestPermissionRationale(currentActivity, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                        Toast.makeText(getReactApplicationContext(), "You must allow location to find your device.", Toast.LENGTH_SHORT).show();
-                        ActivityCompat.requestPermissions(currentActivity, new String[]{ Manifest.permission.ACCESS_COARSE_LOCATION}, 405);
-                    }
-                }
-            }
-        }
     }
 
     private void registerReceivers() {

@@ -101,7 +101,7 @@ android {
         applicationId "com.openbarbellapp"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 20
+        versionCode 21
         versionName "3.1.2"
         ndk {
             abiFilters "armeabi-v7a", "x86"

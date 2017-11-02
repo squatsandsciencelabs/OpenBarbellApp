@@ -10,7 +10,7 @@ import { Platform, PermissionsAndroid } from 'react-native';
 export default function() {
     if (Platform.OS !== 'ios') {
         PermissionsAndroid.requestMultiple([
-            PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+            PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
             PermissionsAndroid.PERMISSIONS.CAMERA,
             PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
             PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE

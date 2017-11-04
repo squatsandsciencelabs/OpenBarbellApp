@@ -3,7 +3,9 @@ import SetsReducer from './SetsReducer';
 import ScannedDevicesReducer from './ScannedDevicesReducer';
 import ConnectedDeviceReducer from './ConnectedDeviceReducer';
 import WorkoutReducer from './WorkoutReducer';
+import WorkoutCollapsedReducer from './WorkoutCollapsedReducer';
 import HistoryReducer from './HistoryReducer';
+import HistoryCollapsedReducer from './HistoryCollapsedReducer';
 import KillSwitchReducer from './KillSwitchReducer';
 import AuthReducer from './AuthReducer';
 import SettingsReducer from './SettingsReducer';
@@ -16,7 +18,9 @@ export default reducers = combineReducers({
     scannedDevices: ScannedDevicesReducer,
     connectedDevice: ConnectedDeviceReducer,
     workout: WorkoutReducer,
+    workoutCollapsed: WorkoutCollapsedReducer,
     history: HistoryReducer,
+    historyCollapsed: HistoryCollapsedReducer,
     killSwitch: KillSwitchReducer,
     auth: AuthReducer,
     suggestions: SuggestionsReducer,

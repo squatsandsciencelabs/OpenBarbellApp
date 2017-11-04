@@ -53,6 +53,7 @@ export default initializeStore = () => {
             'durations'
         ],
         // note, everything in sets is to be persisted so not blacklisting or transforming them
+        // note, everything in workoutCollapsed and historyCollapsed are to be persisted so not blacklisting or transforming
         transforms: [
             createFilter('auth', ['accessToken', 'refreshToken', 'lastRefreshDate', 'email']),
             createFilter('settings', ['defaultMetric', 'endSetTimerDuration', 'syncDate', 'wasTimerEdited', 'wasMetricEdited', 'lastExportCSVDate']),

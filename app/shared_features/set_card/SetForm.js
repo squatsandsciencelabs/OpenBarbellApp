@@ -183,7 +183,7 @@ class SetForm extends Component {
                     underlineColorAndroid={'transparent'}
                     editable = {true}
                     placeholder="Enter"
-                    placeholderTextColor={'lightgray'}
+                    placeholderTextColor={'rgba(189, 189, 189, 1)'}
                     value={this.state.weight}
 
                     onEndEditing={() => this._onEndEditWeight() }
@@ -212,7 +212,7 @@ class SetForm extends Component {
                     editable = {true}
                     placeholder="Enter"
                     onEndEditing={() => this._onEndEditRPE() }
-                    placeholderTextColor={'lightgray'}
+                    placeholderTextColor={'rgba(189, 189, 189, 1)'}
                     value = {this.state.rpe}
                     onFocus={() => this.props.tapRPE(this.props.setID) }
                     onChangeText={(rpe) => this._onChangeRPE(rpe) }
@@ -237,22 +237,27 @@ class SetForm extends Component {
     render() {
         return (
             <View style={{flex: 1, flexDirection: 'column'}}>
-                <View style={styles.upperShadow} />
-                <View style={[styles.shadow, {flex: 1, flexDirection: 'column', padding: 5}]}>
-                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <View style={{flex: 1}}>
-                            { this._renderExercise() }
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                                { this._renderWeight() }
-                                { this._renderRPE() }
+                <View style={[styles.border, {height: 1}]} />
+                <View style={{flexDirection: 'row'}}>
+                    <View style={[styles.border, {width: 1}]} />
+                    <View style={[{flex: 1, flexDirection: 'column', paddingLeft: 12, paddingRight: 12, paddingTop: 12, paddingBottom: 7}]}>
+                        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <View style={{flex: 1}}>
+                                { this._renderExercise() }
+                                <View style={{flex: 1, flexDirection: 'row'}}>
+                                    { this._renderWeight() }
+                                    { this._renderRPE() }
+                                </View>
                             </View>
+
+                            <View>{ this.props.renderDetailComponent() }</View>
                         </View>
 
-                        <View>{ this.props.renderDetailComponent() }</View>
+                        <View>{ this._renderTags() }</View>
                     </View>
-
-                    <View>{ this._renderTags() }</View>
+                    <View style={[styles.border, {width: 1}]} />
                 </View>
+                <View style={[styles.border, {height: 1}]} />
             </View>
         );
     }
@@ -297,32 +302,17 @@ const styles = StyleSheet.create({
         paddingRight: 0,
     },
     placeholderText: {
-        color: 'lightgray'
+        color: 'rgba(189, 189, 189, 1)'
     },
     detailText: {
         fontSize: 12,
         color: 'gray',
         backgroundColor: 'rgba(0, 0, 0, 0)'
     },
-    upperShadow: {
-        shadowColor: "#000000",
-        shadowRadius: 2,
-        shadowOpacity: 1,
-        shadowOffset: {
-            height: 1,
-            weight: 0
-        },
-        height: 1,
-        backgroundColor: 'white'
-    },
-    shadow: {
-        shadowColor: "#000000",
-        shadowOpacity: 0.2,
-        shadowRadius: 2,
-        shadowOffset: {
-            height: 4,
-            width: 0
-        },
+    border: {
+        backgroundColor: '#e0e0e0',
+        padding: 0,
+        margin: 0
     }
 });
 

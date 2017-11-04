@@ -177,19 +177,19 @@ class EditTextModal extends Component {
                 <View style={{position: 'absolute', left: 0, top: 0}}>
                     <TouchableOpacity onPress={() => this.props.cancelModal(this.state.setID)}>
                         <View style={styles.nav}>
-                            <Text style={[styles.boldFont, {color: 'rgba(47, 128, 237, 1)'}]}>Cancel</Text>
+                            <Text style={[{color: 'rgba(47, 128, 237, 1)'}]}>Cancel</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
 
                 <View style={styles.navTitle}>
-                    <Text style={styles.boldFont}>{this.props.title}</Text>
+                    <Text style={{color: 'rgba(77, 77, 77, 1)'}}>{this.props.title}</Text>
                 </View>
 
                 <View style={{position: 'absolute', right: 0, top: 0}}>
                     <TouchableOpacity onPress={() => this._tappedDone() }>
                         <View style={styles.nav}>
-                            <Text style={[styles.boldFont, {color: 'rgba(47, 128, 237, 1)'}]}>Done</Text>
+                            <Text style={[{color: 'rgba(47, 128, 237, 1)'}]}>Done</Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -245,9 +245,10 @@ class EditTextModal extends Component {
 
         return (
             <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
-                <View style={[{flex: 1, height: 50, marginHorizontal: 10, backgroundColor: 'white'}, styles.shadow]}>
+                <View style={[{flex: 1, height: 50, marginHorizontal: 10, backgroundColor: 'white', borderWidth: 1, borderColor: '#e0e0e0'}]}>
                     <TextInput
-                        style={[{height: 35, margin: 10}, styles.boldFont]}
+                        style={[{height: 35, margin: 10}, {color: 'rgba(77, 77, 77, 1)', fontSize: 14, paddingBottom: Platform.os === 'ios' ? 0 : 10 }]}
+                        placeholderTextColor={'rgba(189, 189, 189, 1)'}
                         underlineColorAndroid={'transparent'}
                         editable = {true}
                         autoFocus={true}
@@ -285,7 +286,7 @@ class EditTextModal extends Component {
         return (
             <TouchableHighlight onPress={() => this._tappedRow(item.key)}>
                 <View style={[{backgroundColor: 'white', height: 50, justifyContent: 'center'}, styles.rowShadow]}>
-                    <Text style={{marginHorizontal: 10}}>{item.key}</Text>
+                    <Text style={{marginHorizontal: 10, color: 'rgba(77, 77, 77, 1)'}}>{item.key}</Text>
                 </View>
             </TouchableHighlight>
         );
@@ -342,15 +343,6 @@ const styles = StyleSheet.create({
     addText: {
         color: 'white'
     },
-    shadow: {
-        shadowColor: "#000000",
-        shadowOpacity: 0.2,
-        shadowRadius: 2,
-        shadowOffset: {
-            height: 1,
-            width: 0
-        },
-    },
     rowShadow: {
         shadowColor: "#000000",
         shadowOpacity: 0.2,
@@ -360,9 +352,6 @@ const styles = StyleSheet.create({
             width: 0
         },
     },
-    boldFont: {
-        fontWeight: 'bold'
-    }
 });
 
 export default EditTextModal;

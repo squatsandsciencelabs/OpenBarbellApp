@@ -24,8 +24,8 @@ class Pill extends PureComponent {
 
 const styles = StyleSheet.create({
     pill: {
-        borderColor: 'rgba(47, 128, 237, 1)',
-        backgroundColor: 'rgba(47, 128, 237, 1)',
+        borderColor: 'rgba(176, 208, 252, 1)',
+        backgroundColor: 'rgba(176, 208, 252, 1)',
         borderWidth: 5,
         borderRadius: 15
     },
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         paddingTop: 2,
         paddingBottom: 2,
         paddingLeft: 5,
-        paddingRight: 5
+        paddingRight: 5,
     }
 });
 

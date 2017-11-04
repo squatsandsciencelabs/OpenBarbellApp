@@ -128,6 +128,18 @@ export const getIsWorkingSet = (state, setID) => {
     return setID === currentSet.setID;
 };
 
+export const getSetIDs = (state) => {
+    const sets = getWorkoutSets(state);
+    const currentSet = getWorkingSet(state);
+    let setIDs = {};
+
+    sets.forEach((set) => {
+        setIDs[set.setID] = false;
+    });    
+
+    return setIDs;
+}
+
 export const getWorkoutPreviousSetHasEmptyReps = (state) => {
     const workoutData = stateRoot(state).workoutData;
 
@@ -197,7 +209,7 @@ export const getNumHistoryReps = (state) => {
     });
     
     return num_reps;    
-}
+};
 
 const getHistoryWorkoutIDs = (state) => {
     let sets = getHistorySetsChronological(state);
@@ -215,7 +227,7 @@ const getHistoryWorkoutIDs = (state) => {
     }
 
     return workoutIDs;
-}
+};
 
 export const getNumHistoryWorkouts = (state) => {
     return getHistoryWorkoutIDs(state).length;

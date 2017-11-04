@@ -10,6 +10,7 @@ import SettingsReducer from './SettingsReducer';
 import SuggestionsReducer from './SuggestionsReducer';
 import AppStateReducer from './AppStateReducer';
 import DurationsReducer from './DurationsReducer';
+import CollapsedModelReducer from './CollapsedModelReducer';
 
 export default reducers = combineReducers({
     sets: SetsReducer,
@@ -23,4 +24,5 @@ export default reducers = combineReducers({
     settings: SettingsReducer,
     appState: AppStateReducer,
     durations: DurationsReducer,
+    collapsedModels: CollapsedModelReducer,
 });

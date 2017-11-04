@@ -73,6 +73,8 @@ export const saveHistorySet = (setID, exercise = null, weight = null, metric = n
 export const endSet = (manuallyStarted=false, wasSanityCheck=false) => (dispatch, getState) => {
     const state = getState();
     const set = SetsSelectors.getWorkingSet(state);
+    const sets = SetsSelectors.getWorkoutSets(state);
+    let setIDs = SetsSelectors.getSetIDs(state);
 
     // check if set form has any data
     if (!SetEmptyCheck.isUntouched(set)) {
@@ -81,7 +83,8 @@ export const endSet = (manuallyStarted=false, wasSanityCheck=false) => (dispatch
 
         dispatch({
             type: END_SET,
-            defaultMetric: defaultMetric
+            defaultMetric: defaultMetric,
+            sets: setIDs
         });
     }
 };

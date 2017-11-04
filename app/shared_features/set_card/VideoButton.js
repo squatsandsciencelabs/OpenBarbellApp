@@ -22,7 +22,7 @@ class VideoButton extends Component {
                 return (
                     <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this.props.tappedRecord(this.props.setID) }>
                         <View style={[{flex:1, flexDirection:'column'}, styles.button, styles.greenButton]}>
-                            <Icon name="camera" size={20} color='white' style={{marginTop: 10, marginBottom: 5}} />
+                            <Icon name="camera" size={20} color='rgba(47, 128, 227, 1)' style={{marginTop: 10, marginBottom: 5}} />
                             <Text style={styles.whiteText}>Record</Text>
                             <Text style={styles.whiteText}>Video</Text>
                         </View>
@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     greenButton: {
-        backgroundColor: 'green',
-        borderColor: 'green',
+        backgroundColor: 'rgba(176, 208, 252, 1)',
+        borderColor: 'rgba(176, 208, 252, 1)',
     },
     grayButton: {
         backgroundColor: 'rgba(239, 239, 239, 1)',
@@ -95,8 +95,9 @@ const styles = StyleSheet.create({
         borderColor: 'black',
     },
     whiteText: {
-        color: 'white',
-        fontSize: 11
+        color: 'rgba(47, 128, 227, 1)',
+        fontSize: 11,
+        fontWeight: '500'
     },
     grayText: {
         color: 'gray',

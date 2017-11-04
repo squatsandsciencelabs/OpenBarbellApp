@@ -85,7 +85,7 @@ const ConnectedDeviceReducer = ( state = defaultState, action) => {
             return Object.assign({}, state, {
                 numReconnects: 0,
                 numDisconnects: 0,
-            })
+            });
         default:
             return state;
     }

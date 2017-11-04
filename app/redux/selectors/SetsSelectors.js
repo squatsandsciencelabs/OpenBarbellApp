@@ -156,7 +156,7 @@ export const getIsPreviousWorkoutSetFilled = (state) => {
     }
     
     return -1;
-}
+};
 
 // Dictionary to Array
 
@@ -197,7 +197,7 @@ export const getNumHistoryReps = (state) => {
     });
     
     return num_reps;    
-}
+};
 
 const getHistoryWorkoutIDs = (state) => {
     let sets = getHistorySetsChronological(state);
@@ -215,7 +215,7 @@ const getHistoryWorkoutIDs = (state) => {
     }
 
     return workoutIDs;
-}
+};
 
 export const getNumHistoryWorkouts = (state) => {
     return getHistoryWorkoutIDs(state).length;

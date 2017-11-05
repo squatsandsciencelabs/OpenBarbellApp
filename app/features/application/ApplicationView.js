@@ -75,7 +75,11 @@ class ApplicationView extends Component {
         this.props.changeTab(index);
     }
 
-    _renderHeader = props => <TabBar indicatorStyle={{backgroundColor: '#e76161'}} style={{backgroundColor: '#333333'}} {...props} />;
+    _renderHeader = props => <TabBar
+        indicatorStyle={{backgroundColor: '#eb5757', height: 2}}
+        style={{backgroundColor: '#333333'}}
+        labelStyle={{fontWeight: '500'}}
+        {...props} />;
 
     _renderApplication() {
         if (Platform.OS === 'ios') {

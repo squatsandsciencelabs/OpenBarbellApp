@@ -26,8 +26,11 @@ const styles = StyleSheet.create({
     pill: {
         borderColor: 'rgba(176, 208, 252, 1)',
         backgroundColor: 'rgba(176, 208, 252, 1)',
-        borderWidth: 5,
-        borderRadius: 15
+        borderTopWidth: 2,
+        borderBottomWidth: 2,
+        borderLeftWidth: 5,
+        borderRightWidth: 5,        
+        borderRadius: 15,
     },
     pillText: {
         color: 'blue',

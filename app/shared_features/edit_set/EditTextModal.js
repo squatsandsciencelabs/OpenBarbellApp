@@ -276,6 +276,8 @@ class EditTextModal extends Component {
                 keyboardShouldPersistTaps='always'
                 initialNumToRender={13}
                 data={data}
+                ListHeaderComponent={this._renderHorizontalBorder}
+                ListFooterComponent={this._renderHorizontalBorder}
                 renderItem={({item}) => this._renderRow(item)}
                 ItemSeparatorComponent = {this._renderSeparator}
             />
@@ -285,7 +287,7 @@ class EditTextModal extends Component {
     _renderRow(item) {
         return (
             <TouchableHighlight onPress={() => this._tappedRow(item.key)}>
-                <View style={[{backgroundColor: 'white', height: 50, justifyContent: 'center'}, styles.rowShadow]}>
+                <View style={[{backgroundColor: 'white', height: 50, justifyContent: 'center'}, styles.rowBorders]}>
                     <Text style={{marginHorizontal: 10, color: 'rgba(77, 77, 77, 1)'}}>{item.key}</Text>
                 </View>
             </TouchableHighlight>
@@ -295,10 +297,17 @@ class EditTextModal extends Component {
     // TODO: move 242 gray from global stylesheet
     _renderSeparator() {
         return (
-            <View style={{ backgroundColor: 'white'}}>
+            <View style={[{ backgroundColor: 'white'}, styles.rowBorders]}>
                 <View style={{marginHorizontal: 10, backgroundColor: 'rgba(242, 242, 242, 1)', height: 1}}></View>
             </View>
-        )
+        );
+    }
+
+    _renderHorizontalBorder() {
+        console.tron.log("wtf");
+        return (
+            <View style={{ backgroundColor: '#e0e0e0', flex: 1, height: 1}} />
+        );
     }
 
     // TODO: move 242 gray from global stylesheet
@@ -343,15 +352,11 @@ const styles = StyleSheet.create({
     addText: {
         color: 'white'
     },
-    rowShadow: {
-        shadowColor: "#000000",
-        shadowOpacity: 0.2,
-        shadowRadius: 2,
-        shadowOffset: {
-            height: 4,
-            width: 0
-        },
-    },
+    rowBorders: {
+        borderColor: '#e0e0e0',
+        borderLeftWidth: 1,
+        borderRightWidth: 1,
+    }
 });
 
 export default EditTextModal;

@@ -10,7 +10,7 @@ import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 class SettingsFeedbackPanel extends Component {
     render() {
         return (
-            <View style={ [SETTINGS_PANEL_STYLES.panel, { flex: 1, flexDirection:'column', justifyContent:'space-between' }] }>
+            <View style={ [SETTINGS_PANEL_STYLES.panel, SETTINGS_PANEL_STYLES.lastPanel, { flex: 1, flexDirection:'column', justifyContent:'space-between' }] }>
                 <Text style={ SETTINGS_PANEL_STYLES.headerText }>
                     Tell us how we can improve {"\n"}
                 </Text>    

@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import {
     Text,
     View,
-    ListView,
     Image,
     TouchableOpacity,
     ActivityIndicator,
+    StyleSheet
 } from 'react-native';
 
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
@@ -19,14 +19,7 @@ class SettingsDevicePanelDisconnected extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            devicesDS: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
-        }
         this.timer = null;
-    }
-
-    _getDataSource(array) {
-        return this.state.devicesDS.cloneWithRows(array);
     }
 
     componentDidMount() {
@@ -44,11 +37,9 @@ class SettingsDevicePanelDisconnected extends Component {
 
     _scanForDevices(time) {
         this.props.startDeviceScan();
-        this.setState({ devicesDS: this._getDataSource(this.props.scannedDevices.devices) });
 
         this.timer = setTimeout(() => {
             this.props.stopDeviceScan();
-            this.setState({ devicesDS: this._getDataSource(this.props.scannedDevices.devices) });
             this.timer = null;
         }, time);
     }
@@ -61,7 +52,7 @@ class SettingsDevicePanelDisconnected extends Component {
 
     render() {
         return (
-            <View style={ [SETTINGS_PANEL_STYLES.panel, { flex:3 }] }>
+            <View style={ [SETTINGS_PANEL_STYLES.panel] }>
                 <View style={ SETTINGS_PANEL_STYLES.header }>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={ SETTINGS_PANEL_STYLES.headerText }>
@@ -72,7 +63,7 @@ class SettingsDevicePanelDisconnected extends Component {
 
                 {this._renderRefreshButton()}
 
-                <View style={ [SETTINGS_PANEL_STYLES.content, { flex: 2 }] }>
+                <View style={ [SETTINGS_PANEL_STYLES.content, {alignItems: 'stretch'}] }>
                     { this.props.scannedDevices.scanning ? this._renderScanningMessage() : this._renderDeviceList() }
                 </View>
             </View>
@@ -88,7 +79,7 @@ class SettingsDevicePanelDisconnected extends Component {
         }
 
         return (
-            <View style={{ flex: 1, marginBottom: 50 }}>
+            <View style={{ flex: 1 }}>
                 <TouchableOpacity style={[SETTINGS_PANEL_STYLES.blueButton, {height: 50}]}
                     disabled={ this.props.scannedDevices.scanning }
                     onPress={ () => this._scanForDevices(REFRESH_SCAN) }>
@@ -107,26 +98,19 @@ class SettingsDevicePanelDisconnected extends Component {
             );
         }
 
+        const deviceRows = this.props.scannedDevices.devices.map((device) => this._renderDeviceRow(device));
         return (
-            <ListView style={ SETTINGS_PANEL_STYLES.contentItemList }
-                dataSource={ this.state.devicesDS }
-                renderRow={ (device) => this._renderDeviceRow(device) }
-                enableEmptySections={ true } />
+            <View style={{flex: 1, flexDirection: 'column'}}>{deviceRows}</View>
         );
     }
 
     _renderDeviceRow(device) {
         return (
-            <TouchableOpacity style={ SETTINGS_PANEL_STYLES.contentItemRowConnect }
+            <TouchableOpacity style={[{flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}, styles.deviceRow]}
                 alphaOpactity={1}
                 onPress={ () => this.props.connectDevice(device) }>
-
-                <View style={ SETTINGS_PANEL_STYLES.contentItemRow }>
-                    <Text style={ SETTINGS_PANEL_STYLES.contentItemRowText }>
-                        { device }
-                    </Text>
+                    <View><Text style={styles.deviceRowText}>{ device }</Text></View>
                     <Image source={require('app/appearance/images/icon_bluetooth_available.png')}/>
-                </View>
             </TouchableOpacity>
         );
     }
@@ -140,5 +124,16 @@ class SettingsDevicePanelDisconnected extends Component {
     }
 
 }
+
+const styles = StyleSheet.create({
+    deviceRow: {
+        borderColor: '#e0e0e0',
+        borderBottomWidth: 1,
+    },
+    deviceRowText: {
+        color: 'rgba(47, 128, 237, 1)',
+        fontSize: 20,
+    },
+});
 
 export default SettingsDevicePanelDisconnected;

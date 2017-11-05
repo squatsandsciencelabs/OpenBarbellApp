@@ -8,19 +8,13 @@ import {
 export const SETTINGS_PANEL_STYLES = StyleSheet.create({
     panel: {
         marginTop: 10,
-        marginBottom: 10,
+        marginBottom: 0,
         marginLeft: 13,
         marginRight: 13,
         padding: 20,
         backgroundColor: 'white',
-        elevation: 3,
-        shadowColor: "#000000",
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
-        shadowOffset: {
-            height: 1,
-            width: 0
-        },
+        borderColor: '#e0e0e0',
+        borderWidth: 1,
     },
     lastPanel: {
         marginBottom: 30
@@ -51,36 +45,17 @@ export const SETTINGS_PANEL_STYLES = StyleSheet.create({
     },
     content: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         padding: 10,
         paddingLeft: 5,
-        paddingRight: 5
+        paddingRight: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     contentItemList: {
         flex: 1,
         alignSelf: 'stretch',
         paddingLeft: 10,
         paddingRight: 10
-    },
-    contentItemRow: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row',
-        paddingBottom: 5,
-        borderColor: 'lightgray',
-        borderBottomWidth: StyleSheet.hairlineWidth
-    },
-    contentItemRowText: {
-        flex: 3,
-        textAlign: 'left',
-        color: 'rgba(47, 128, 237, 1)',
-        fontSize: 22,
-        paddingLeft: 10
-    },
-    contentItemRowConnect: {
-        flex: 1
     },
     footer: {
         flex: 1,

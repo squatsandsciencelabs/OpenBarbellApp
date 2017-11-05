@@ -120,14 +120,14 @@ class SetForm extends Component {
 
     _displayExercise() {
         if (this.state.exercise === null || this.state.exercise === '') {
-            return (<Text style={[styles.exerciseText, styles.placeholderText]}>Enter Exercise</Text>);
+            return (<Text style={[styles.exerciseText, styles.placeholderText]}>Exercise</Text>);
         }
         return (<Text style={styles.exerciseText}>{this.state.exercise}</Text>);
     }
 
     _displayTags() {
         if (this.state.tags === undefined || this.state.tags === null || this.state.tags.length === 0) {
-            return (<Text style={[styles.exerciseText, styles.placeholderText]}>Enter Tags</Text>);
+            return (<Text style={[styles.exerciseText, styles.placeholderText]}>Tags</Text>);
         }
 
         var pills = [];
@@ -135,7 +135,7 @@ class SetForm extends Component {
         this.state.tags.map((tag) => {
             let key = position;
             pills.push(
-                <Pill key={key} text={tag} style={{paddingRight: 5, paddingBottom: 3}} />
+                <Pill key={key} text={tag} style={{paddingRight: 5, paddingBottom: 3, paddingTop: 3}} />
             );
             position++;
         });
@@ -176,13 +176,13 @@ class SetForm extends Component {
 
     _renderWeight() {
         return (
-            <View style={[styles.field, {flex: 1, marginRight: 5}]}>
+            <View style={[styles.field, {flex: 3, marginRight: 5}]}>
                 <TextInput
                     style={styles.fieldText}
                     keyboardType={'numeric'}
                     underlineColorAndroid={'transparent'}
                     editable = {true}
-                    placeholder="Enter"
+                    placeholder="Weight"
                     placeholderTextColor={'rgba(189, 189, 189, 1)'}
                     value={this.state.weight}
 
@@ -204,13 +204,13 @@ class SetForm extends Component {
 
     _renderRPE() {
         return (
-            <View style={[styles.field, {flex: 1}]}>
+            <View style={[styles.field, {flex: 2}]}>
                 <TextInput
                     style={styles.fieldText}
                     keyboardType={'numeric'}
                     underlineColorAndroid={'transparent'}
                     editable = {true}
-                    placeholder="Enter"
+                    placeholder="RPE"
                     onEndEditing={() => this._onEndEditRPE() }
                     placeholderTextColor={'rgba(189, 189, 189, 1)'}
                     value = {this.state.rpe}
@@ -236,28 +236,22 @@ class SetForm extends Component {
 
     render() {
         return (
-            <View style={{flex: 1, flexDirection: 'column'}}>
-                <View style={[styles.border, {height: 1}]} />
-                <View style={{flexDirection: 'row'}}>
-                    <View style={[styles.border, {width: 1}]} />
-                    <View style={[{flex: 1, flexDirection: 'column', paddingLeft: 12, paddingRight: 12, paddingTop: 12, paddingBottom: 7}]}>
-                        <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
-                            <View style={{flex: 1}}>
-                                { this._renderExercise() }
-                                <View style={{flex: 1, flexDirection: 'row'}}>
-                                    { this._renderWeight() }
-                                    { this._renderRPE() }
-                                </View>
+            <View style={[{flex: 1, flexDirection: 'column'}, styles.borderPartial]}>
+                <View style={[{flex: 1, flexDirection: 'column', paddingLeft: 12, paddingRight: 12, paddingTop: 12, paddingBottom: 7}]}>
+                    <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+                        <View style={{flex: 1}}>
+                            { this._renderExercise() }
+                            <View style={{flex: 1, flexDirection: 'row'}}>
+                                { this._renderWeight() }
+                                { this._renderRPE() }
                             </View>
-
-                            <View>{ this.props.renderDetailComponent() }</View>
                         </View>
 
-                        <View>{ this._renderTags() }</View>
+                        <View>{ this.props.renderDetailComponent() }</View>
                     </View>
-                    <View style={[styles.border, {width: 1}]} />
+
+                    <View>{ this._renderTags() }</View>
                 </View>
-                <View style={[styles.border, {height: 1}]} />
             </View>
         );
     }
@@ -309,10 +303,15 @@ const styles = StyleSheet.create({
         color: 'gray',
         backgroundColor: 'rgba(0, 0, 0, 0)'
     },
-    border: {
-        backgroundColor: '#e0e0e0',
-        padding: 0,
-        margin: 0
+    borderPartial: {
+        borderColor: '#e0e0e0',
+        borderLeftWidth: 1,
+        borderRightWidth: 1,
+        borderTopWidth: 1,
+    },
+    borderAllRound: {
+        borderColor: '#e0e0e0',
+        borderWidth: 1
     }
 });
 

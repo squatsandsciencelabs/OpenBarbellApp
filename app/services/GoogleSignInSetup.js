@@ -7,7 +7,7 @@ import * as Analytics from 'app/services/Analytics';
 export const configure = () => {
     GoogleSignin.hasPlayServices({ autoResolve: true })
     .then(GoogleSignin.configure({
-        scopes: ["https://www.googleapis.com/auth/drive"],
+        scopes: ["https://www.googleapis.com/auth/drive.file"],
         iosClientId: OpenBarbellConfig.iOSGoogleClientID,
         webClientId: OpenBarbellConfig.webGoogleClientID
     }))

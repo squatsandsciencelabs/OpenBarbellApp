@@ -18,7 +18,7 @@ class UserLoggedOutPanel extends Component {
                 </View>
                 <View style={{paddingTop:20, paddingBottom: 50}}>
                     <Text style={ SETTINGS_PANEL_STYLES.subtitleText }>
-                        To access your data from the cloud, please go to Settings and log in with your Google account.
+                        To access features like storing your data in the cloud, please go to Settings and log in with your Google account.
                     </Text>
                 </View>
             </View>

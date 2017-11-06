@@ -10,15 +10,15 @@ class UserLoggedOutPanel extends Component {
     render() {
         let subtitle = this.props.subtitle
         return (
-            <View style={ { flex: 1, flexDirection: 'column', marginTop: 225, margin: 20 } }>
+            <View style={ { flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: 20} }>
                 <View>
                     <Text style={ SETTINGS_PANEL_STYLES.headerText }>
-                        Sorry, this feature is not available.
+                        Sign in Required
                     </Text>
                 </View>
-                <View style={{paddingTop:8}}>
+                <View style={{paddingTop:20, paddingBottom: 50}}>
                     <Text style={ SETTINGS_PANEL_STYLES.subtitleText }>
-                        { subtitle }
+                        To access your data from the cloud, please go to Settings and log in with your Google account.
                     </Text>
                 </View>
             </View>

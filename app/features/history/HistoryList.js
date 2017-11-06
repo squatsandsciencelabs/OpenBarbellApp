@@ -135,12 +135,10 @@ class HistoryList extends Component {
             );
         } else {
             return (
-                <View style={{ flex: 1, flexDirection: 'column', backgroundColor: '#f2f2f2' }}>
-                    <ScrollView>
-                        <UserLoggedOutPanel subtitle='The access the history screen, go to settings and log in with a Google account.'/>
-                    </ScrollView>
-                </View>
-            )
+                <ScrollView style={{flex: 1, backgroundColor: '#f2f2f2'}} contentContainerStyle={{flexGrow: 1}}>
+                    <UserLoggedOutPanel />
+                </ScrollView>
+            );
         }
     }
 }

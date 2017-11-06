@@ -36,7 +36,7 @@ class SetDataRow extends PureComponent {
         var dataStyle = this.props.item.removed ? styles.removedData : styles.data;
         
         return (
-            <View style={[styles.border, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
+            <View style={[styles.border, {flex:1, alignItems:'stretch', backgroundColor:'white'}]}>
                 <TouchableOpacity style={{flex:1}} onPress={ () => this._onPressRow() } >
                     <View style={styles.bar}>
                         <Text style={dataStyle}> { this.props.item.repDisplay } </Text>
@@ -71,8 +71,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         height: 40,
         padding: 0,
-        paddingLeft: 5,
-        marginRight: 5,
+        marginRight: 0,
         overflow: 'hidden'
     },
     data: {

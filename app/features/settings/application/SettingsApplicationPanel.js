@@ -46,7 +46,7 @@ class SettingsApplicationPanel extends Component {
                         value={this.props.shouldShowRemoved}
                         onValueChange={(isSwitchOn) => this._tappedSwitch(isSwitchOn)}
                         onTintColor='rgba(47, 128, 237, 1)'
-                        thumbTintColor='lightgray'
+                        thumbTintColor='#e0e0e0'
                         tintColor='rgba(47, 128, 237, 1)'/>
                 </View>
             );
@@ -59,7 +59,7 @@ class SettingsApplicationPanel extends Component {
                             value={this.props.shouldShowRemoved}
                             onValueChange={(isSwitchOn) => this._tappedSwitch(isSwitchOn)}
                             onTintColor='rgba(47, 128, 237, 1)'
-                            thumbTintColor='lightgray'
+                            thumbTintColor='#e0e0e0'
                             tintColor='rgba(47, 128, 237, 1)'/>
                     </View>
                 </View>

@@ -36,7 +36,7 @@ function* endOldWorkout() {
     const isLoggedIn = yield select(AuthSelectors.getIsLoggedIn);    
     // error
     if (timeDifference >= OpenBarbellConfig.endWorkoutTimer && isLoggedIn) {
-        yield call(Alert.alert, "Ending workout! You can find your last workout on the History screen.");
+        Alert.alert("Ending Workout", "You can find your last workout on the History screen.");
         yield put(WorkoutActionCreators.autoEndWorkout());
     }
 };

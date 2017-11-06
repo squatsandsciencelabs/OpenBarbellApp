@@ -4,6 +4,7 @@ import {
     Text,
     StyleSheet,
     TouchableOpacity,
+    TouchableHighlight,
     Image,
     Platform
 } from 'react-native';
@@ -30,13 +31,17 @@ class VideoButton extends Component {
                 );
             case 'commentary':
                 return (
-                    <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this.props.tappedCommentary(this.props.setID) }>
-                        <View style={[{flex:1, flexDirection:'column'}, styles.button, styles.grayButton]}>
-                            <Icon name="camera" size={20} color='gray' style={{marginTop: 10, marginBottom: 5}} />
-                            <Text style={styles.grayText}>Add</Text>
-                            <Text style={styles.grayText}>Video Log</Text>
+                    <View style={{paddingLeft: 5}}>
+                        <View style={[{flex:1}, styles.button, styles.grayButton]}>
+                            <TouchableHighlight onPress={()=> this.props.tappedCommentary(this.props.setID) } underlayColor='#e0e0e0'>
+                                <View style={[styles.buttonContent, {flex:1, flexDirection:'column'}]}>
+                                    <Icon name="camera" size={20} color='gray' style={{marginTop: 10, marginBottom: 5}} />
+                                    <Text style={styles.grayText}>Add</Text>
+                                    <Text style={styles.grayText}>Video Log</Text>
+                                </View>
+                            </TouchableHighlight>
                         </View>
-                    </TouchableOpacity>
+                    </View>
                 );
             case 'watch':
                 // TODO: see if can make this a true image preview instead of a full video
@@ -83,6 +88,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         borderWidth: 5,
         borderRadius: 5,
+    },
+    buttonContent: {
+        width: 65,
+        height: 75,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     imagePreview: {
         width: 75,

@@ -164,7 +164,7 @@ class SetForm extends Component {
     _renderExercise() {
         return (
             <View style={styles.field}>
-                <TouchableHighlight onPress={() => this.props.tapExercise(this.props.setID, this.state.exercise, this.props.bias)} underlayColor='lightgray'>
+                <TouchableHighlight onPress={() => this.props.tapExercise(this.props.setID, this.state.exercise, this.props.bias)} underlayColor='#e0e0e0'>
                     {this._displayExercise()}
                 </TouchableHighlight>
                 <View style={styles.fieldDetails} pointerEvents='none'>
@@ -227,7 +227,7 @@ class SetForm extends Component {
     _renderTags() {
         return (
             <View style={[styles.field, {flex: 1}]}>
-                <TouchableHighlight onPress={() => this.props.tapTags(this.props.setID, this.state.tags)} underlayColor='lightgray'>
+                <TouchableHighlight onPress={() => this.props.tapTags(this.props.setID, this.state.tags)} underlayColor='#e0e0e0'>
                     {this._displayTags()}
                 </TouchableHighlight>
             </View>

@@ -251,7 +251,7 @@ class EditTextModal extends Component {
             <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
                 <View style={[{flex: 1, height: 50, marginHorizontal: 10, backgroundColor: 'white', borderWidth: 1, borderColor: '#e0e0e0'}]}>
                     <TextInput
-                        style={[{height: 35, margin: 10}, {color: 'rgba(77, 77, 77, 1)', fontSize: 14, paddingBottom: Platform.os === 'ios' ? 0 : 10 }]}
+                        style={styles.textField}
                         placeholderTextColor={'rgba(189, 189, 189, 1)'}
                         underlineColorAndroid={'transparent'}
                         editable = {true}
@@ -284,8 +284,8 @@ class EditTextModal extends Component {
                 keyboardShouldPersistTaps='always'
                 initialNumToRender={13}
                 data={data}
-                ListHeaderComponent={this._renderHorizontalBorder}
-                ListFooterComponent={this._renderHorizontalBorder}
+                ListHeaderComponent={this._renderTopBorder}
+                ListFooterComponent={this._renderBottomBorder}
                 renderItem={({item}) => this._renderRow(item)}
                 ItemSeparatorComponent = {this._renderSeparator}
             />
@@ -311,10 +311,15 @@ class EditTextModal extends Component {
         );
     }
 
-    _renderHorizontalBorder() {
-        console.tron.log("wtf");
+    _renderTopBorder() {
         return (
             <View style={{ backgroundColor: '#e0e0e0', flex: 1, height: 1}} />
+        );
+    }
+
+    _renderBottomBorder() {
+        return (
+            <View style={{ backgroundColor: '#e0e0e0', flex: 1, height: 1, marginBottom: 20}} />
         );
     }
 
@@ -335,6 +340,13 @@ class EditTextModal extends Component {
 }
 
 const styles = StyleSheet.create({
+    textField: {
+        height: 35,
+        margin: 10,
+        color: 'rgba(77, 77, 77, 1)',
+        fontSize: 14,
+        paddingBottom: Platform.os === 'ios' ? 0 : 10,
+    },
     container: {
         height: Platform.OS === 'ios' ? 70 : 50,
         alignItems: 'center'

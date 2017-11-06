@@ -38,7 +38,7 @@ class SettingsAccountPanel extends Component {
     _renderLoggedOut() {
         return (
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flex: 1 }] }>
-                <Text style={{color:'gray', marginBottom: 15, textAlign: 'center'}}>Sign in to sync data to the cloud</Text>
+                <Text style={{color:'rgba(77, 77, 77, 1)', marginBottom: 15, textAlign: 'center'}}>Sign in to sync data to the cloud</Text>
                 <TouchableOpacity onPress={ () => this.props.signIn() }>
                     <View pointerEvents="none" style={{alignItems:'center'}}>
                         <GoogleSigninButton style={{width: 212, height: 48}} size={GoogleSigninButton.Size.Standard} color={GoogleSigninButton.Color.Light} />
@@ -81,9 +81,9 @@ class SettingsAccountPanel extends Component {
     _renderLoggedIn() {
         return (
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flex: 1, flexDirection:'column', justifyContent:'space-between' }] }>
-                <Text style={{textAlign: 'center', fontSize: 20, marginBottom: 13}}>Account</Text>
+                <Text style={{textAlign: 'center', fontSize: 20, marginBottom: 13, color: 'rgba(77, 77, 77, 1)'}}>Account</Text>
 
-                <Text style={{color:'gray', flexWrap: 'wrap', flex: 1, marginBottom: 7}}>Logged in as <Text style={{fontWeight: 'bold', color: 'black'}}>{this.props.email}</Text></Text>
+                <Text style={{color:'gray', flexWrap: 'wrap', flex: 1, marginBottom: 7}}>Logged in as <Text style={{fontWeight: 'bold', color: 'rgba(77, 77, 77, 1)'}}>{this.props.email}</Text></Text>
 
                 <Text style={{color:'gray', flexWrap: 'wrap', flex: 1, marginBottom: 20}}>Last data sync was {this.props.syncDate}</Text>
 

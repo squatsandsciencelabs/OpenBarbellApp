@@ -56,7 +56,7 @@ class SettingsDevicePanelDisconnected extends Component {
                 <View style={ SETTINGS_PANEL_STYLES.header }>
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={ SETTINGS_PANEL_STYLES.headerText }>
-                            Tap Unit # Below to Connect
+                            Tap Unit # to Connect
                         </Text>
                     </View>
                 </View>
@@ -92,8 +92,8 @@ class SettingsDevicePanelDisconnected extends Component {
     _renderDeviceList() {
         if (this.props.scannedDevices.devices.length < 1) {
             return (
-                <TouchableOpacity style={{alignItems: 'center'}} onPress={ () => this.props.tappedTroubleshooting() }>
-                    <Text style= {{ textDecorationLine: 'underline'}} >Troubleshooting Tips</Text>
+                <TouchableOpacity style={{alignItems: 'center', marginTop: 10}} onPress={ () => this.props.tappedTroubleshooting() }>
+                    <Text style= {[{ textDecorationLine: 'underline'}, styles.centeredText]} >Troubleshooting Tips</Text>
                 </TouchableOpacity>
             );
         }
@@ -117,7 +117,7 @@ class SettingsDevicePanelDisconnected extends Component {
 
     _renderScanningMessage() {
         return (
-            <Text style={{ textAlign: 'center' }}>
+            <Text style={styles.centeredText}>
                 Scanning for OpenBarbell Devices...
             </Text>
         );
@@ -126,6 +126,10 @@ class SettingsDevicePanelDisconnected extends Component {
 }
 
 const styles = StyleSheet.create({
+    centeredText: {
+        color: 'rgba(77, 77, 77, 1)',
+        textAlign: 'center',
+    },
     deviceRow: {
         borderColor: '#e0e0e0',
         borderBottomWidth: 1,

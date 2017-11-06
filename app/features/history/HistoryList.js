@@ -43,7 +43,7 @@ class HistoryList extends Component {
         return (
             <View>
                 <View style={{height:40, justifyContent: 'flex-end', alignItems: 'center'}}>
-                    <Text>{section.key}</Text>
+                    <Text style={{color: 'rgba(77, 77, 77, 1)'}}>{section.key}</Text>
                 </View>
             </View>
         );

@@ -35,8 +35,8 @@ const generateAutocompleteExerciseModel = (historyData) => {
     let model = createDefaultState().exerciseModel;
     let sets = dictToArray(historyData);
 
-    // ignore nulls
-    sets = sets.filter((set) => set.exercise !== null);
+    // ignore nulls and empty strings
+    sets = sets.filter((set) => set.exercise !== null && set.exercise !== '');
 
     // generate dictionary with counts
     sets.map((set) => {

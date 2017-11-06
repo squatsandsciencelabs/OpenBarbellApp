@@ -32,11 +32,12 @@ export const SETTINGS_PANEL_STYLES = StyleSheet.create({
         textAlign: 'center'
     },
     headerText: {
-        fontSize: 16,
+        fontSize: 20,
         textAlign: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        color: 'rgba(77, 77, 77, 1)',
     },
     tappableText: {
         fontSize: 16,

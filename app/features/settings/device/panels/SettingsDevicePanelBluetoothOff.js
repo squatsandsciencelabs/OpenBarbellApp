@@ -14,7 +14,7 @@ class SettingsDevicePanelBluetoothOff extends Component {
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flex: 1 }] }>
                 <View style={ SETTINGS_PANEL_STYLES.header }>
                     <Text style={ SETTINGS_PANEL_STYLES.headerText }>
-                        Tap Unit # Below to Connect
+                        Tap Unit # to Connect
                     </Text>
                 </View>
                 <View style={ SETTINGS_PANEL_STYLES.content }>

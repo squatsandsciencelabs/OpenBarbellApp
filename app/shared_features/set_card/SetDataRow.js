@@ -77,7 +77,8 @@ const styles = StyleSheet.create({
     },
     data: {
         width: 45,
-        textAlign: 'center'
+        textAlign: 'center',
+        color: 'rgba(77, 77, 77, 1)',
     },
     removedData: {
         width: 45,

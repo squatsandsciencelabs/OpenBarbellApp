@@ -59,10 +59,12 @@ class VideoButton extends Component {
                     );
                 } else {
                     return (
-                        <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo() }>                        
+                        <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo() }>
+                        <View style={[styles.button, styles.blackButton]}>
                             <Image
-                                style={[{flex:1, flexDirection:'column'}, styles.button, styles.blackButton]}
+                                style={[{flex:1, flexDirection:'column'}, styles.imagePreview]}
                                 source={{uri: this.props.videoFileURL}} />
+                        </View>
                         </TouchableOpacity>
                     );
                 }
@@ -82,6 +84,10 @@ const styles = StyleSheet.create({
         borderWidth: 5,
         borderRadius: 5,
     },
+    imagePreview: {
+        width: 75,
+        height: 75,
+    },
     activeButton: {
         backgroundColor: 'rgba(176, 208, 252, 1)',
         borderColor: 'rgba(176, 208, 252, 1)',
@@ -100,7 +106,7 @@ const styles = StyleSheet.create({
         fontWeight: '500'
     },
     grayText: {
-        color: 'gray',
+        color: 'rgba(77, 77, 77, 1)',
         fontSize: 11
     },
 });

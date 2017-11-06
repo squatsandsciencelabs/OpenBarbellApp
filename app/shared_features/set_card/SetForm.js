@@ -283,7 +283,8 @@ const styles = StyleSheet.create({
         paddingLeft: 4,
         paddingTop: 4,
         paddingBottom: 5,
-        paddingRight: 30,        
+        paddingRight: 30,
+        color: 'rgba(77, 77, 77, 1)',
     },
     exerciseText: {
         height: 29,
@@ -291,7 +292,7 @@ const styles = StyleSheet.create({
         paddingLeft: 4,
         fontSize: 13,
         paddingRight: 30,
-        color: 'black',
+        color: 'rgba(77, 77, 77, 1)',
     },
     tagField: {
         flexDirection: 'row',

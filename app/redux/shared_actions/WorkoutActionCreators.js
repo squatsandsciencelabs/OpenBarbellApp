@@ -24,8 +24,8 @@ export const endWorkout = () => (dispatch, getState) => {
             'Heads up!',
             "You are not logged in, the data from this workout will be lost,\nPlease sign in under settings to save your data to the cloud",
             [
-              {text: 'Continue', onPress: () => dispatch({ type: END_WORKOUT })},
-              {text: 'Nevermind', style: 'cancel'},,
+              {text: 'Delete Workout', style: 'destructive', onPress: () => dispatch({ type: END_WORKOUT })},
+              {text: 'Cancel', style: 'cancel'},,
             ],
             { cancelable: false }
           )                    

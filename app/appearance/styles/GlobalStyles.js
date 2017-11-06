@@ -29,7 +29,8 @@ export const SETTINGS_PANEL_STYLES = StyleSheet.create({
     },
     subtitleText: {
         fontSize: 14,
-        textAlign: 'center'
+        textAlign: 'center',
+        color: 'rgba(77, 77, 77, 1)',        
     },
     headerText: {
         fontSize: 20,

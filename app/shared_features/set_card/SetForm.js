@@ -235,8 +235,10 @@ class SetForm extends Component {
     }
 
     render() {
+        const borderStyle = this.props.isTopBorderHidden ? styles.borderPartial : styles.borderAllRound;
+
         return (
-            <View style={[{flex: 1, flexDirection: 'column'}, styles.borderPartial]}>
+            <View style={[{flex: 1, flexDirection: 'column'}, borderStyle]}>
                 <View style={[{flex: 1, flexDirection: 'column', paddingLeft: 12, paddingRight: 12, paddingTop: 12, paddingBottom: 7}]}>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                         <View style={{flex: 1}}>
@@ -266,32 +268,35 @@ const styles = StyleSheet.create({
         borderRadius: 3,
         marginBottom: 5,
         zIndex: 2,
-        minHeight: (Platform.OS === 'ios') ? 30 : 40,
+        minHeight: 35,
     },
     fieldDetails: {
         position: 'absolute',
         right: 5,
-        top: 0,
+        top: -1,
         bottom: 0,
         justifyContent: 'center',
     },
     fieldText: {
-        height: (Platform.OS === 'ios') ? 30 : 40,
-        fontSize: 15,
-        paddingRight: 30
+        height: 29,
+        fontSize: 13,
+        paddingLeft: 4,
+        paddingTop: 4,
+        paddingBottom: 5,
+        paddingRight: 30,        
     },
     exerciseText: {
-        height: (Platform.OS === 'ios') ? 30 : 40,
-        paddingTop: (Platform.OS === 'ios') ? 6 : 8,
-        paddingLeft: (Platform.OS === 'ios') ? 0 : 4,
-        fontSize: 15,
+        height: 29,
+        paddingTop: 6,
+        paddingLeft: 4,
+        fontSize: 13,
         paddingRight: 30,
-        color: 'black'
+        color: 'black',
     },
     tagField: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        minHeight: (Platform.OS === 'ios') ? 30 : 40,
+        minHeight: 29,
         paddingLeft: 2,
         paddingRight: 0,
     },
@@ -299,7 +304,7 @@ const styles = StyleSheet.create({
         color: 'rgba(189, 189, 189, 1)'
     },
     detailText: {
-        fontSize: 12,
+        fontSize: 13,
         color: 'gray',
         backgroundColor: 'rgba(0, 0, 0, 0)'
     },
@@ -307,11 +312,12 @@ const styles = StyleSheet.create({
         borderColor: '#e0e0e0',
         borderLeftWidth: 1,
         borderRightWidth: 1,
-        borderTopWidth: 1,
     },
     borderAllRound: {
         borderColor: '#e0e0e0',
-        borderWidth: 1
+        borderLeftWidth: 1,
+        borderRightWidth: 1,
+        borderTopWidth: 1,
     }
 });
 

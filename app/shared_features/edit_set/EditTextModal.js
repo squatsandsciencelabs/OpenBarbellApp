@@ -213,11 +213,15 @@ class EditTextModal extends Component {
             );
         });
 
-        return (
-            <View style={{flexDirection: 'row', flexWrap: 'wrap', paddingLeft: 10, paddingRight: 5, marginBottom: 5}}>
-                {pills}
-            </View>
-        );
+        if (pills.length === 0) {
+            return;
+        } else {
+            return (
+                <View style={{flexDirection: 'row', flexWrap: 'wrap', paddingLeft: 10, paddingRight: 5, marginBottom: 5}}>
+                    {pills}
+                </View>
+            );
+        }
     }
 
     _renderTextField() {
@@ -255,7 +259,7 @@ class EditTextModal extends Component {
                         placeholder={this.props.placeholder}
                         returnKeyType={returnKeyType}
                         value={this.state.text}
-                        multiline={this.props.multipleInput}
+                        multiline={Platform.os === 'ios' ? this.props.multipleInput : false } //Android multiline screws up spacing
                         onSubmitEditing = {() => this._tappedEnter()}
                         onChangeText={(text) => this._onChangeText(text) }
                         clearButtonMode = {'while-editing'}
@@ -268,6 +272,10 @@ class EditTextModal extends Component {
 
     _renderList() {
         let data = this.state.suggestions;
+
+        if (data && data.length === 0) {
+            return null;
+        }
 
         return (
             <FlatList

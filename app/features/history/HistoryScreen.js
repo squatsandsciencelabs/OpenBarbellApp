@@ -91,14 +91,19 @@ const createViewModels = (sets, shouldShowRemoved) => {
         if (isInitialSet) {
             // new set, reset the end time
             lastSetEndTime = set.removed ? null : SetTimeCalculator.endTime(set);
+            array.push(createBorder(set));
         } else if (!set.removed && set.reps.length > 0) { // ignore removed sets in rest calculations
             // add footer if valid
             if (lastSetEndTime !== null) {
                 array.push(createFooterVM(set, lastSetEndTime));
+            } else {
+                array.push(createBorder(set));
             }
 
             // update variable for calculation purposes
             lastSetEndTime = SetTimeCalculator.endTime(set);
+        } else {
+            array.push(createBorder(set));
         }
 
         // insert set card data
@@ -126,7 +131,7 @@ const createHeaderViewModel = (set, setNumber) => ({
     metric: set.metric,
     rpe: set.rpe,
     videoFileURL: set.videoFileURL,
-    videoType: set.videoType
+    videoType: set.videoType,
 });
 
 const createRowViewModels = (set, shouldShowRemoved) => {
@@ -209,6 +214,11 @@ const createFooterVM = (set, lastSetEndTime) => {
     };
     return footerVM;
 };
+
+const createBorder = (set) => ({
+    type: "border",
+    key: set.setID + 'border'
+});
 
 const mapStateToProps = (state) => {
     // declare vars

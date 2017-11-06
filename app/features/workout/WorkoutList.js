@@ -89,6 +89,7 @@ class WorkoutList extends Component {
                                 onFocus={() => {
                                     this.sectionList.scrollToLocation({sectionIndex: section.position, itemIndex: index});
                                 }}
+                                isTopBorderHidden={item.isWorkingSet}
                                 renderDetailComponent={()=> {
                                     if (item.videoFileURL !== null && item.videoFileURL !== undefined) {
                                         return (<WorkoutVideoButtonScreen setID={item.setID} mode='watch' videoFileURL={item.videoFileURL} />);
@@ -118,6 +119,8 @@ class WorkoutList extends Component {
                         <TimerProgressBarScreen />
                     </View>
                 );
+            case "border":
+                return (<View style={{flex: 1, backgroundColor: '#e0e0e0', height: 1}} />);
             case "working set footer":
                 return (<LiveRestRow restStartTimeMS={item.restStartTimeMS} />);
             default:

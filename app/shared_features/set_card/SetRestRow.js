@@ -9,7 +9,7 @@ class SetRestRow extends PureComponent {
 
     render() {
         return (
-            <View style={[styles.shadow, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
+            <View style={[styles.border, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
                 <Text style={{flex: 1, textAlign: 'center', marginTop: 15, color: 'gray', marginBottom: 15}}>{ this.props.item.rest }</Text>
             </View>
         );
@@ -18,14 +18,11 @@ class SetRestRow extends PureComponent {
 }
 
 const styles = StyleSheet.create({
-    shadow: {
-        shadowColor: "#000000",
-        shadowOpacity: 0.2,
-        shadowRadius: 2,
-        shadowOffset: {
-            height: 4,
-            width: 0
-        },
+    border: {
+        borderColor: '#e0e0e0',
+        borderLeftWidth: 1,
+        borderRightWidth: 1,
+        borderBottomWidth: 1,
     },
 });
 

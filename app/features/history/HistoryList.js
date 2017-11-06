@@ -94,6 +94,8 @@ class HistoryList extends Component {
                         />);
             case "footer":
                 return (<SetRestRow item={item} />);
+            case "border":
+                return (<View style={{flex: 1, backgroundColor: '#e0e0e0', height: 1}} />);
             default:
                 break;
         }

@@ -164,7 +164,7 @@ export const disconnectedFromDevice = (name=null, identifier=null) => (dispatch,
 
 export const connectingToDevice = (name, identifier) => ({
     type: CONNECTING_TO_DEVICE,
-    device: name,
+    deviceName: name,
     deviceIdentifier: identifier
 });
 

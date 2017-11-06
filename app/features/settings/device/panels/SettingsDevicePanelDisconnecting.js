@@ -14,7 +14,7 @@ class SettingsDevicePanelDisconnecting extends Component {
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flex: 1 }] }>
                 <View style={ SETTINGS_PANEL_STYLES.header }>
                     <Text style={ SETTINGS_PANEL_STYLES.headerText }>
-                        Disconnecting from { this.props.device }...
+                        Disconnecting...
                     </Text>
                 </View>
                 <View style={ SETTINGS_PANEL_STYLES.content }>

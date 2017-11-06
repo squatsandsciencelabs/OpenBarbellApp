@@ -64,17 +64,22 @@ const createViewModels = (sets) => {
         if (isInitialSet) {
             // new set, reset the end time
             lastSetEndTime = set.removed ? null : SetTimeCalculator.endTime(set);
+            array.push(createBorder(set));
         } else if (!set.removed && set.reps.length > 0) { // ignore removed sets in rest calculations
             // add footer if valid
             if (lastSetEndTime !== null) {
                 array.push(createFooterVM(set, lastSetEndTime));
+            } else {
+                array.push(createBorder(set));
             }
 
             // update variable for calculation purposes
             lastSetEndTime = SetTimeCalculator.endTime(set);
-        } if (isLastSet && lastSetEndTime !== null && set.reps.length === 0) {
+        } else if (isLastSet && lastSetEndTime !== null && set.reps.length === 0) {
             // working set, live rest mode
             array.push(createWorkingSetFooterVM(set, lastSetEndTime));
+        } else {
+            array.push(createBorder(set));
         }
 
         // insert set card data
@@ -108,7 +113,7 @@ const createHeaderViewModel = (set, setNumber, bias=null, isLastSet=false) => ({
     bias: bias,
     videoFileURL: set.videoFileURL,
     videoType: set.videoType,
-    isWorkingSet: isLastSet
+    isWorkingSet: isLastSet,
 });
 
 const createRowViewModels = (set) => {
@@ -186,6 +191,11 @@ const createFooterVM = (set, lastSetEndTime) => {
     };
     return footerVM;
 };
+
+const createBorder = (set) => ({
+    type: "border",
+    key: set.setID + 'border'
+});
 
 const createWorkingSetFooterVM = (set, restStartTime) => {
     let footerVM = {

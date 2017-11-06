@@ -50,8 +50,8 @@ class TimerProgressBar extends Component {
         const barAnimation = this.state.barAnimations;
 
         return (
-            <View style={[{flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
-                <Animated.View style={{flex: barAnimation, height: 2, backgroundColor: 'green'}}></Animated.View>
+            <View style={[{flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'#e0e0e0'}]}>
+                <Animated.View style={{flex: barAnimation, height: 1, backgroundColor: 'green'}}></Animated.View>
             </View>
         );
     }

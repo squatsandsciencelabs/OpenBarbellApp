@@ -92,7 +92,7 @@ class SettingsDevicePanelDisconnected extends Component {
     _renderDeviceList() {
         if (this.props.scannedDevices.devices.length < 1) {
             return (
-                <TouchableOpacity onPress={ () => this.props.tappedTroubleshooting() }>
+                <TouchableOpacity style={{alignItems: 'center'}} onPress={ () => this.props.tappedTroubleshooting() }>
                     <Text style= {{ textDecorationLine: 'underline'}} >Troubleshooting Tips</Text>
                 </TouchableOpacity>
             );

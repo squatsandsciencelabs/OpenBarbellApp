@@ -20,8 +20,8 @@ import UserLoggedOutPanel from './logged_out/UserLoggedOutPanel';
 import HistorySetExpandedScreen from './expanded/HistorySetExpandedScreen';
 import ListLoadingFooter from '../history/loading/ListLoadingFooter';
 
-import SetDataLabelRow from 'app/shared_features/set_card/SetDataLabelRow';
-import SetDataRow from 'app/shared_features/set_card/SetDataRow';
+import SetDataLabelRow from 'app/shared_features/set_card/expanded/SetDataLabelRow';
+import SetDataRow from 'app/shared_features/set_card/expanded/SetDataRow';
 import SetRestRow from 'app/shared_features/set_card/SetRestRow';
 import HistoryVideoButtonScreen from './card/HistoryVideoButtonScreen';
 import HistoryVideoRecorderScreen from './camera/HistoryVideoRecorderScreen';

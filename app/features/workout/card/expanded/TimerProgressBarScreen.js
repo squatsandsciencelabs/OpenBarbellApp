@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import TimerProgressBar from 'app/shared_features/set_card/TimerProgressBar';
+import TimerProgressBar from 'app/shared_features/set_card/expanded/TimerProgressBar';
 import * as WorkoutSelectors from 'app/redux/selectors/WorkoutSelectors';
 
 const mapStateToProps = (state) => ({

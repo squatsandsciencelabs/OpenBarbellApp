@@ -12,19 +12,20 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import WorkoutBottomBarScreen from './bottom_bar/WorkoutBottomBarScreen';
-import EditWorkoutSetFormScreen from './card/EditWorkoutSetFormScreen';
+import EditWorkoutTitleExpandedScreen from './card/expanded/title/EditWorkoutTitleExpandedScreen';
+import EditWorkoutSetFormScreen from './card/expanded/form/EditWorkoutSetFormScreen';
 import EditWorkoutExerciseScreen from './exercise_name/EditWorkoutExerciseScreen';
 import EditWorkoutTagsScreen from './tags/EditWorkoutTagsScreen';
 import WorkoutSetExpandedScreen from './expanded/WorkoutSetExpandedScreen';
-import SetDataLabelRow from 'app/shared_features/set_card/SetDataLabelRow';
-import SetDataRow from 'app/shared_features/set_card/SetDataRow';
+import SetDataLabelRow from 'app/shared_features/set_card/expanded/SetDataLabelRow';
+import SetDataRow from 'app/shared_features/set_card/expanded/SetDataRow';
 import SetRestRow from 'app/shared_features/set_card/SetRestRow';
-import LiveRestRow from 'app/shared_features/set_card/LiveRestRow';
-import WorkoutVideoButtonScreen from './card/WorkoutVideoButtonScreen';
+import LiveRestRow from 'app/shared_features/set_card/expanded/LiveRestRow';
+import WorkoutVideoButtonScreen from './card/expanded/form/WorkoutVideoButtonScreen';
 import WorkoutVideoRecorderScreen from './camera/WorkoutVideoRecorderScreen';
 import WorkoutVideoPlayerScreen from './video/WorkoutVideoPlayerScreen';
 import ListLoadingFooter from '../history/loading/ListLoadingFooter';
-import TimerProgressBarScreen from 'app/features/workout/card/TimerProgressBarScreen';
+import TimerProgressBarScreen from 'app/features/workout/card/expanded/TimerProgressBarScreen';
 
 class WorkoutList extends Component {
 
@@ -73,23 +74,29 @@ class WorkoutList extends Component {
 
     _renderRow(section, index, item) {
         switch (item.type) {
-            case "header":
+            case "title header":
                 const margin = item.isWorkingSet ? 0 : 15;
-                return (<View style={{marginTop: margin, backgroundColor: 'white'}}>
+                return (<View style={{marginTop: margin}}>
+                            <EditWorkoutTitleExpandedScreen
+                                setID={item.setID}
+                                exercise={item.exercise}
+                                isTopBorderHidden={item.isWorkingSet}
+                                bias={item.bias}
+                                removed={item.removed} />
+                        </View>);
+            case "header":
+                return (<View style={{backgroundColor: 'white'}}>
                             <EditWorkoutSetFormScreen
                                 setNumber={item.setNumber}
                                 setID={item.setID}
                                 removed={item.removed}
-                                exercise={item.exercise}
                                 tags={item.tags}
                                 weight={item.weight}
                                 metric={item.metric}
                                 rpe={item.rpe}
-                                bias={item.bias}
                                 onFocus={() => {
                                     this.sectionList.scrollToLocation({sectionIndex: section.position, itemIndex: index});
                                 }}
-                                isTopBorderHidden={item.isWorkingSet}
                                 renderDetailComponent={()=> {
                                     if (item.videoFileURL !== null && item.videoFileURL !== undefined) {
                                         return (<WorkoutVideoButtonScreen setID={item.setID} mode='watch' videoFileURL={item.videoFileURL} />);

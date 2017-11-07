@@ -51,7 +51,8 @@ const createViewModels = (sets) => {
         if (isLastSet) {
             array.push({type: 'working set header', key: set.setID+'end set timer'});
         }
-        array.push(createHeaderViewModel(set, setNumber, lastExerciseName, isLastSet));
+        array.push(createTitleHeaderViewModel(set, setNumber, lastExerciseName, isLastSet));        
+        array.push(createHeaderViewModel(set, setNumber));
         if (set.reps.length > 0) {
             array.push({type: "subheader", key: set.setID+"subheader"});
         }
@@ -99,7 +100,17 @@ const createViewModels = (sets) => {
     return sections;
 }
 
-const createHeaderViewModel = (set, setNumber, bias=null, isLastSet=false) => ({
+const createTitleHeaderViewModel = (set, setNumber, bias=null, isLastSet=false) => ({
+    type: 'title header',
+    key: set.setID+'titleheader',
+    setNumber: setNumber,
+    exercise: set.exercise,
+    setID: set.setID,
+    isWorkingSet: isLastSet,
+    bias: bias,    
+});
+
+const createHeaderViewModel = (set, setNumber) => ({
     type: 'header',
     key: set.setID+'header',
     setID: set.setID,
@@ -110,10 +121,8 @@ const createHeaderViewModel = (set, setNumber, bias=null, isLastSet=false) => ({
     weight: set.weight,
     metric: set.metric,
     rpe: set.rpe,
-    bias: bias,
     videoFileURL: set.videoFileURL,
     videoType: set.videoType,
-    isWorkingSet: isLastSet,
 });
 
 const createRowViewModels = (set) => {

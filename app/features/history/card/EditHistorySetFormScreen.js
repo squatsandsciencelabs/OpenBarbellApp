@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import SetForm from 'app/shared_features/set_card/SetForm';
+import SetForm from 'app/shared_features/set_card/expanded/SetForm';
 import * as Actions from './EditHistorySetFormActions';
 
 const mapDispatchToProps = (dispatch) => {

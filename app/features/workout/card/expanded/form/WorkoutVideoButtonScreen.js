@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import VideoButton from 'app/shared_features/set_card/VideoButton';
+import VideoButton from 'app/shared_features/set_card/expanded/VideoButton';
 import * as Actions from './EditWorkoutSetFormActions';
 
 const mapDispatchToProps = (dispatch) => {

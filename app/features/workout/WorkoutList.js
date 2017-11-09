@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import WorkoutBottomBarScreen from './bottom_bar/WorkoutBottomBarScreen';
 import EditWorkoutTitleExpandedScreen from './card/expanded/title/EditWorkoutTitleExpandedScreen';
+import EditWorkoutTitleCollapsedScreen from './card/collapsed/EditWorkoutTitleCollapsedScreen';
 import EditWorkoutSetFormScreen from './card/expanded/form/EditWorkoutSetFormScreen';
 import EditWorkoutExerciseScreen from './exercise_name/EditWorkoutExerciseScreen';
 import EditWorkoutTagsScreen from './tags/EditWorkoutTagsScreen';
@@ -76,14 +77,24 @@ class WorkoutList extends Component {
         switch (item.type) {
             case "title header":
                 const margin = item.isWorkingSet ? 0 : 15;
-                return (<View style={{marginTop: margin}}>
-                            <EditWorkoutTitleExpandedScreen
-                                setID={item.setID}
-                                exercise={item.exercise}
-                                isTopBorderHidden={item.isWorkingSet}
-                                bias={item.bias}
-                                removed={item.removed} />
-                        </View>);
+                if (!item.isCollapsed) {
+                    return (<View style={{marginTop: margin}}>
+                                <EditWorkoutTitleExpandedScreen
+                                    setID={item.setID}
+                                    exercise={item.exercise}
+                                    isTopBorderHidden={item.isWorkingSet}
+                                    bias={item.bias}
+                                    removed={item.removed} />
+                            </View>);
+                } else {
+                    return (<View style={{marginTop: margin}}>
+                                <EditWorkoutTitleCollapsedScreen
+                                    setID={item.setID}
+                                    exercise={item.exercise}
+                                    isTopBorderHidden={item.isWorkingSet}
+                                    removed={item.removed} />
+                            </View>);
+                }
             case "header":
                 return (<View style={{backgroundColor: 'white'}}>
                             <EditWorkoutSetFormScreen

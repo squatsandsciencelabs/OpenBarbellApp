@@ -10,9 +10,10 @@ import WorkoutList from './WorkoutList';
 import * as Actions from './WorkoutActions';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
+import * as WorkoutCollapsedSelectors from 'app/redux/selectors/WorkoutCollapsedSelectors';
 
 // assumes chronological sets
-const createViewModels = (sets) => {
+const createViewModels = (state, sets) => {
     // declare variables
     let section = { key: 1, data: [] }; // contains the actual data
     let sections = [section]; // the return value
@@ -51,7 +52,7 @@ const createViewModels = (sets) => {
         if (isLastSet) {
             array.push({type: 'working set header', key: set.setID+'end set timer'});
         }
-        array.push(createTitleHeaderViewModel(set, setNumber, lastExerciseName, isLastSet));        
+        array.push(createTitleHeaderViewModel(state, set, setNumber, lastExerciseName, isLastSet));        
         array.push(createHeaderViewModel(set, setNumber));
         if (set.reps.length > 0) {
             array.push({type: "subheader", key: set.setID+"subheader"});
@@ -100,14 +101,15 @@ const createViewModels = (sets) => {
     return sections;
 }
 
-const createTitleHeaderViewModel = (set, setNumber, bias=null, isLastSet=false) => ({
+const createTitleHeaderViewModel = (state, set, setNumber, bias=null, isLastSet=false) => ({
     type: 'title header',
     key: set.setID+'titleheader',
     setNumber: setNumber,
     exercise: set.exercise,
     setID: set.setID,
     isWorkingSet: isLastSet,
-    bias: bias,    
+    bias: bias,
+    isCollapsed: WorkoutCollapsedSelectors.getIsCollapsed(state, set.setID),
 });
 
 const createHeaderViewModel = (set, setNumber) => ({
@@ -224,7 +226,7 @@ const mapStateToProps = (state) => {
     }
 
     return {
-        sections: createViewModels(sets),
+        sections: createViewModels(state, sets),
         sets: sets,
         isAddEnabled: isAddEnabled
     }

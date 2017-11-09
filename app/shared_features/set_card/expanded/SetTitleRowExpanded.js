@@ -53,6 +53,7 @@ class SetTitleRowExpanded extends Component {
     }
 
     render() {
+        console.tron.log("PROPS " + this.props);
         return (
             <View style={[styles.container, styles.borderAllRound]}>
                 <View style={[styles.field, {flex: 1}]}>
@@ -63,7 +64,9 @@ class SetTitleRowExpanded extends Component {
                         <Text style={styles.detailText}>{this._renderSetNumber()}</Text>
                     </View>
                 </View>
-                {this._renderChevron()}
+                <TouchableHighlight onPress={() => this.props.tapCollapse(this.props.setID)}>
+                    {this._renderChevron()}
+                </TouchableHighlight>
             </View>
         );
     }

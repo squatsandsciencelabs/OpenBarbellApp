@@ -1,20 +1,20 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import SetTitleRowExpanded from 'app/shared_features/set_card/expanded/SetTitleRowExpanded';
-import * as Actions from './EditWorkoutTitleExpandedActions';
+import SetTitleRowCollapsed from 'app/shared_features/set_card/collapsed/SetTitleRowCollapsed';
+import * as Actions from './EditWorkoutTitleCollapsedActions';
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         saveSet: Actions.saveSet,
         tapExercise: Actions.presentExercise,
-        tapCollapse: Actions.tapCollapse,
+        tapExpand: Actions.tapExpand,
     }, dispatch);
 };
 
 const EditWorkoutTitleExpandedScreen = connect(
     null,
     mapDispatchToProps
-)(SetTitleRowExpanded);
+)(SetTitleRowCollapsed);
 
 export default EditWorkoutTitleExpandedScreen;

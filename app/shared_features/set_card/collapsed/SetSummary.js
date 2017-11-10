@@ -10,6 +10,7 @@ class SetSummary extends Component {
     render() {
         return (
             <View style={[styles.border, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
+                <Text>HELLO WORLD</Text>
             </View>
         );
     }

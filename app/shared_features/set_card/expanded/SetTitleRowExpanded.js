@@ -55,7 +55,7 @@ class SetTitleRowExpanded extends Component {
 
     render() {
         return (
-            <View style={[styles.container, styles.borderAllRound]}>
+            <View style={[styles.container, styles.border]}>
                 <View style={[styles.field, {flex: 1}]}>
                     <TouchableHighlight onPress={() => this.props.tapExercise(this.props.setID, this.state.exercise, this.props.bias)} underlayColor='#e0e0e0'>
                         {this._renderExercise()}
@@ -112,17 +112,11 @@ const styles = StyleSheet.create({
     placeholderText: {
         color: 'rgba(189, 189, 189, 1)'
     },
-    borderPartial: {
+    border: {
         borderColor: '#e0e0e0',
         borderLeftWidth: 1,
         borderRightWidth: 1,
     },
-    borderAllRound: {
-        borderColor: '#e0e0e0',
-        borderLeftWidth: 1,
-        borderRightWidth: 1,
-        borderTopWidth: 1,
-    }
 });
 
 export default SetTitleRowExpanded;

@@ -12,11 +12,11 @@ const HistoryCollapsedReducer = (state = defaultState, action) => {
     switch (action.type) {
         case EXPAND_HISTORY_SET:
             changes = {};
-            changes[action.setID] = true;
+            changes[action.setID] = false;
             return Object.assign({}, state, changes);
         case COLLAPSE_HISTORY_SET:
             changes = {};
-            changes[action.setID] = false;
+            changes[action.setID] = true;
             return Object.assign({}, state, changes);
         default:
             return state;

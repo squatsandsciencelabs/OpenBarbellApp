@@ -11,15 +11,17 @@ import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 import * as Actions from './HistoryActions';
 import HistoryList from './HistoryList';
 import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
+import * as HistoryCollapsedSelectors from 'app/redux/selectors/HistoryCollapsedSelectors';
 
 // NOTE: this means that every history screen accesses previous values as singletons
 var storedSections = null; // the actual data
 var storedHistoryData = null; // for comparison purposes
+var storedHistoryCollapsed = null;
 var storedHistorySets = null; // to remove the need to fetch the sets again in chronological order
 var storedShouldShowRemoved = null; // for comparison purposes
 
 // assumes chronological sets
-const createViewModels = (sets, shouldShowRemoved) => {
+const createViewModels = (state, sets, shouldShowRemoved) => {
     // declare variables
     let sections = []; // the return value
     let section = null; // contains the actual data
@@ -29,7 +31,8 @@ const createViewModels = (sets, shouldShowRemoved) => {
     let workoutStartTime = null; // to help calculate rest time and display section header
     let lastSetEndTime = null; // to help calculate rest time
     let isInitialSet = false; // to help determine when to display rest time
-
+    let isCollapsed = false;
+    
     // ignore if initialStartTime is null as that was a bug, it's supposed to be undefined or an actual date
     sets = sets.filter((set) => set.initialStartTime !== null);
 
@@ -67,6 +70,9 @@ const createViewModels = (sets, shouldShowRemoved) => {
         // set card data
         let array = [0, 0];
 
+        // set collapsed state
+        isCollapsed = HistoryCollapsedSelectors.getIsCollapsed(state, set.setID);
+        
         // card header
         if (isInitialSet) {
             lastExerciseName = null;
@@ -78,32 +84,41 @@ const createViewModels = (sets, shouldShowRemoved) => {
                 setNumber = 1;
             }
         }
-        array.push(createHeaderViewModel(set, setNumber));
-        if (!SetEmptyCheck.hasEmptyReps(set)) {
-            array.push({type: "subheader", key: set.setID+"subheader"});
+        array.push(createTitleViewModel(state, set, setNumber, isCollapsed));
+        if (!isCollapsed) {
+            array.push(createFormViewModel(set, setNumber));
+            array.push(createAnalysisViewModel(set));            
+            if (set.reps.length > 0) {
+                array.push({type: "subheader", key: set.setID+"subheader"});
+            }
+        } else {
+            array.push(createSummaryViewModel(set));            
+            array.push(createAnalysisViewModel(set));            
         }
         lastExerciseName = set.exercise;
 
         // reps
-        Array.prototype.push.apply(array, createRowViewModels(set, shouldShowRemoved));
+        if (!isCollapsed) {            
+            Array.prototype.push.apply(array, createRowViewModels(set, shouldShowRemoved));
+        }
 
         // rest footer
         if (isInitialSet) {
             // new set, reset the end time
             lastSetEndTime = set.removed ? null : SetTimeCalculator.endTime(set);
-            array.push(createBorder(set));
+            array.push(createBottomBorder(set));
         } else if (!set.removed && set.reps.length > 0) { // ignore removed sets in rest calculations
             // add footer if valid
             if (lastSetEndTime !== null) {
                 array.push(createFooterVM(set, lastSetEndTime));
             } else {
-                array.push(createBorder(set));
+                array.push(createBottomBorder(set));
             }
 
             // update variable for calculation purposes
             lastSetEndTime = SetTimeCalculator.endTime(set);
         } else {
-            array.push(createBorder(set));
+            array.push(createBottomBorder(set));
         }
 
         // insert set card data
@@ -119,9 +134,18 @@ const createViewModels = (sets, shouldShowRemoved) => {
     return sections;
 }
 
-const createHeaderViewModel = (set, setNumber) => ({
-    type: 'header',
-    key: set.setID+'header',
+const createTitleViewModel = (state, set, setNumber, isCollapsed=false) => ({
+    type: 'title',
+    key: set.setID+'title',
+    setNumber: setNumber,
+    exercise: set.exercise,
+    setID: set.setID,
+    isCollapsed: isCollapsed,
+});
+
+const createFormViewModel = (set, setNumber) => ({
+    type: 'form',
+    key: set.setID+'form',
     setID: set.setID,
     removed: set.removed,
     setNumber: setNumber,
@@ -132,6 +156,16 @@ const createHeaderViewModel = (set, setNumber) => ({
     rpe: set.rpe,
     videoFileURL: set.videoFileURL,
     videoType: set.videoType,
+});
+
+const createSummaryViewModel = (set) => ({
+    type: 'summary',
+    key: set.setID+'summary',
+});
+
+const createAnalysisViewModel = (set) => ({
+    type: 'analysis',
+    key: set.setID+'analysis',
 });
 
 const createRowViewModels = (set, shouldShowRemoved) => {
@@ -215,15 +249,17 @@ const createFooterVM = (set, lastSetEndTime) => {
     return footerVM;
 };
 
-const createBorder = (set) => ({
-    type: "border",
-    key: set.setID + 'border'
+const createBottomBorder = (set) => ({
+    type: "bottom border",
+    key: set.setID + 'bottomborder',
 });
 
+// TODO: use reselect instead perhaps?
 const mapStateToProps = (state) => {
     // declare vars
     let shouldShowRemoved = SettingsSelectors.getShowRemoved(state);
     let historyData = state.sets.historyData;
+    let historyCollapsed = HistoryCollapsedSelectors.getCollapsedModel(state);
     let rebuildViewModels = false;
 
     // determine rebuilding of viewmodels
@@ -236,10 +272,15 @@ const mapStateToProps = (state) => {
         // toggled with no data changed, just rebuild viewmodels
         rebuildViewModels = true;
     }
+    if (historyCollapsed !== storedHistoryCollapsed) {
+        // toggled with no data changed, rebuild vms and save
+        storedHistoryCollapsed = historyCollapsed;
+        rebuildViewModels = true;
+    }
 
     // rebuild if needed
     if (rebuildViewModels) {
-        storedSections = createViewModels(storedHistorySets, shouldShowRemoved);
+        storedSections = createViewModels(state, storedHistorySets, shouldShowRemoved);
         storedShouldShowRemoved = shouldShowRemoved;
     }
 

@@ -1,5 +1,5 @@
 import {
-    EXPAND_WORKOUT_SET,
+    EXPAND_HISTORY_SET,
 } from 'app/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 
@@ -7,7 +7,7 @@ export const tapExpand = (setID) => (dispatch, getState) => {
     // TODO: analytics
 
     dispatch({
-        type: EXPAND_WORKOUT_SET,
+        type: EXPAND_HISTORY_SET,
         setID: setID,
     });
 };

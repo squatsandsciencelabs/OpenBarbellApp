@@ -10,6 +10,7 @@ class SetAnalysis extends Component {
     render() {
         return (
             <View style={[styles.border, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
+                <Text>TODO: analysis goes here</Text>
             </View>
         );
     }

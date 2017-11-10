@@ -76,9 +76,8 @@ class WorkoutList extends Component {
     _renderRow(section, index, item) {
         switch (item.type) {
             case "title header":
-                const margin = item.isWorkingSet ? 0 : 15;
                 if (!item.isCollapsed) {
-                    return (<View style={{marginTop: margin}}>
+                    return (<View>
                                 <EditWorkoutTitleExpandedScreen
                                     setID={item.setID}
                                     exercise={item.exercise}
@@ -87,7 +86,7 @@ class WorkoutList extends Component {
                                     removed={item.removed} />
                             </View>);
                 } else {
-                    return (<View style={{marginTop: margin}}>
+                    return (<View>
                                 <EditWorkoutTitleCollapsedScreen
                                     setID={item.setID}
                                     exercise={item.exercise}
@@ -130,17 +129,25 @@ class WorkoutList extends Component {
                             onPressRow={() => this.props.tapCard(item.setID) }
                         />);
             case "footer":
-                return (<SetRestRow item={item} />);
+                return (
+                    <View style={{marginBottom: 15}}>
+                        <SetRestRow item={item} />
+                    </View>);
             case "working set header":
                 return (
                     <View style={{marginTop: 15}}>
                         <TimerProgressBarScreen />
                     </View>
                 );
-            case "border":
+            case "top border":
                 return (<View style={{flex: 1, backgroundColor: '#e0e0e0', height: 1}} />);
+            case "bottom border":
+                return (<View style={{flex: 1, backgroundColor: '#e0e0e0', height: 1, marginBottom: 15}} />);
             case "working set footer":
-                return (<LiveRestRow restStartTimeMS={item.restStartTimeMS} />);
+                return (
+                    <View style={{marginBottom: 15}}>
+                        <LiveRestRow restStartTimeMS={item.restStartTimeMS} />
+                    </View>);
             default:
                 break;
         }

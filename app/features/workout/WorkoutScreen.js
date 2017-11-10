@@ -39,7 +39,7 @@ const createViewModels = (state, sets) => {
         let array = [0, 0];
 
         // set collapsed state
-        isCollapsed = WorkoutCollapsedSelectors.getIsCollapsed(state, set.setID);
+        isCollapsed = isLastSet ? false : WorkoutCollapsedSelectors.getIsCollapsed(state, set.setID);
 
         // card header
         if (isInitialSet) {
@@ -60,6 +60,7 @@ const createViewModels = (state, sets) => {
         array.push(createTitleViewModel(state, set, setNumber, lastExerciseName, isLastSet, isCollapsed));
         if (!isCollapsed) {
             array.push(createFormViewModel(set, setNumber));
+            array.push(createAnalysisViewModel(set));            
             if (set.reps.length > 0) {
                 array.push({type: "subheader", key: set.setID+"subheader"});
             }

@@ -26,7 +26,7 @@ const parseData = (repData, position) => {
     }
 
     return sanitizedData;
-}
+};
 
 export const repNumber = (repData) => parseData(repData, map.repNumberPosition);
 

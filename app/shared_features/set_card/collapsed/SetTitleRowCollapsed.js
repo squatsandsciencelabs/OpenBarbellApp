@@ -4,7 +4,8 @@ import {
     Text,
     StyleSheet,
     TouchableHighlight,
-    Platform
+    Platform,
+    TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 
@@ -46,8 +47,8 @@ class SetTitleRowCollapsed extends Component {
 
     _renderChevron() {
         return (
-            <View style={{backgroundColor: 'white', width: 82, paddingLeft: 50}}>
-                <Icon name="chevron-with-circle-up" size={20} color='rgba(170, 170, 170, 1)' style={{marginTop: 5, marginBottom: 10}} />
+            <View style={{backgroundColor: 'white', marginLeft: 50, marginTop: 5, marginBottom: 10}}>
+                <Icon name="chevron-with-circle-up" size={20} color='rgba(170, 170, 170, 1)' />
             </View>
         );
     }
@@ -61,9 +62,9 @@ class SetTitleRowCollapsed extends Component {
                         <Text style={styles.detailText}>{this._renderSetNumber()}</Text>
                     </View>
                 </View>
-                <TouchableHighlight onPress={() => this.props.tapExpand(this.props.setID)}>
+                <TouchableOpacity onPress={() => this.props.tapExpand(this.props.setID)}>
                     {this._renderChevron()}
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
         );
     }

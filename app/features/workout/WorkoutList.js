@@ -27,6 +27,8 @@ import WorkoutVideoRecorderScreen from './camera/WorkoutVideoRecorderScreen';
 import WorkoutVideoPlayerScreen from './video/WorkoutVideoPlayerScreen';
 import ListLoadingFooter from '../history/loading/ListLoadingFooter';
 import TimerProgressBarScreen from 'app/features/workout/card/expanded/TimerProgressBarScreen';
+import SetSummary from 'app/shared_features/set_card/collapsed/SetSummary';
+import SetAnalysis from 'app/shared_features/set_card/SetAnalysis';
 
 class WorkoutList extends Component {
 
@@ -75,26 +77,33 @@ class WorkoutList extends Component {
 
     _renderRow(section, index, item) {
         switch (item.type) {
-            case "title header":
+            case "title":
                 if (!item.isCollapsed) {
                     return (<View>
                                 <EditWorkoutTitleExpandedScreen
                                     setID={item.setID}
                                     exercise={item.exercise}
-                                    isTopBorderHidden={item.isWorkingSet}
                                     bias={item.bias}
-                                    removed={item.removed} />
+                                    removed={item.removed}
+                                    isCollapsable={!item.isWorkingSet} />
                             </View>);
                 } else {
                     return (<View>
                                 <EditWorkoutTitleCollapsedScreen
                                     setID={item.setID}
                                     exercise={item.exercise}
-                                    isTopBorderHidden={item.isWorkingSet}
                                     removed={item.removed} />
                             </View>);
                 }
-            case "header":
+            case "summary":
+                return (
+                    <SetSummary />
+                );
+            case "analysis":
+                return (
+                    <SetAnalysis />
+                );
+            case "form":
                 return (<View style={{backgroundColor: 'white'}}>
                             <EditWorkoutSetFormScreen
                                 setNumber={item.setNumber}

@@ -23,6 +23,7 @@ const createViewModels = (state, sets) => {
     let isInitialSet = true; // to help determine when to display rest time and split up the sections properly
     let count = 0;
     let isLastSet = false; // to set up the live set footer
+    let isCollapsed = false;
 
     // build view models
     sets.map((set) => {
@@ -36,6 +37,9 @@ const createViewModels = (state, sets) => {
 
         // set card data
         let array = [0, 0];
+
+        // set collapsed state
+        isCollapsed = WorkoutCollapsedSelectors.getIsCollapsed(state, set.setID);        
 
         // card header
         if (isInitialSet) {
@@ -52,15 +56,19 @@ const createViewModels = (state, sets) => {
         if (isLastSet) {
             array.push({type: 'working set header', key: set.setID+'end set timer'});
         }
-        array.push(createTitleHeaderViewModel(state, set, setNumber, lastExerciseName, isLastSet));        
-        array.push(createHeaderViewModel(set, setNumber));
-        if (set.reps.length > 0) {
-            array.push({type: "subheader", key: set.setID+"subheader"});
+        array.push(createTitleHeaderViewModel(state, set, setNumber, lastExerciseName, isLastSet, isCollapsed));
+        if (!isCollapsed) {
+            array.push(createHeaderViewModel(set, setNumber));
+            if (set.reps.length > 0) {
+                array.push({type: "subheader", key: set.setID+"subheader"});
+            }
         }
         lastExerciseName = set.exercise;
 
         // reps
-        Array.prototype.push.apply(array, createRowViewModels(set));
+        if (!isCollapsed) {
+            Array.prototype.push.apply(array, createRowViewModels(set));
+        }
 
         // rest footer
         if (isInitialSet) {
@@ -101,7 +109,7 @@ const createViewModels = (state, sets) => {
     return sections;
 }
 
-const createTitleHeaderViewModel = (state, set, setNumber, bias=null, isLastSet=false) => ({
+const createTitleHeaderViewModel = (state, set, setNumber, bias=null, isLastSet=false, isCollapsed=false) => ({
     type: 'title header',
     key: set.setID+'titleheader',
     setNumber: setNumber,
@@ -109,7 +117,7 @@ const createTitleHeaderViewModel = (state, set, setNumber, bias=null, isLastSet=
     setID: set.setID,
     isWorkingSet: isLastSet,
     bias: bias,
-    isCollapsed: WorkoutCollapsedSelectors.getIsCollapsed(state, set.setID),
+    isCollapsed: isCollapsed,
 });
 
 const createHeaderViewModel = (set, setNumber) => ({

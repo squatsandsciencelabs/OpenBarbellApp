@@ -57,12 +57,15 @@ const createViewModels = (state, sets) => {
         } else {
             array.push(createTopBorder(set));
         }
-        array.push(createTitleHeaderViewModel(state, set, setNumber, lastExerciseName, isLastSet, isCollapsed));
+        array.push(createTitleViewModel(state, set, setNumber, lastExerciseName, isLastSet, isCollapsed));
         if (!isCollapsed) {
-            array.push(createHeaderViewModel(set, setNumber));
+            array.push(createFormViewModel(set, setNumber));
             if (set.reps.length > 0) {
                 array.push({type: "subheader", key: set.setID+"subheader"});
             }
+        } else {
+            array.push(createSummaryViewModel(set));            
+            array.push(createAnalysisViewModel(set));            
         }
         lastExerciseName = set.exercise;
 
@@ -110,9 +113,14 @@ const createViewModels = (state, sets) => {
     return sections;
 }
 
-const createTitleHeaderViewModel = (state, set, setNumber, bias=null, isLastSet=false, isCollapsed=false) => ({
-    type: 'title header',
-    key: set.setID+'titleheader',
+const createTopBorder = (set) => ({
+    type: "top border",
+    key: set.setID + 'topborder',
+});
+
+const createTitleViewModel = (state, set, setNumber, bias=null, isLastSet=false, isCollapsed=false) => ({
+    type: 'title',
+    key: set.setID+'title',
     setNumber: setNumber,
     exercise: set.exercise,
     setID: set.setID,
@@ -121,9 +129,9 @@ const createTitleHeaderViewModel = (state, set, setNumber, bias=null, isLastSet=
     isCollapsed: isCollapsed,
 });
 
-const createHeaderViewModel = (set, setNumber) => ({
-    type: 'header',
-    key: set.setID+'header',
+const createFormViewModel = (set, setNumber) => ({
+    type: 'form',
+    key: set.setID+'form',
     setID: set.setID,
     removed: set.removed,
     setNumber: setNumber,
@@ -134,6 +142,16 @@ const createHeaderViewModel = (set, setNumber) => ({
     rpe: set.rpe,
     videoFileURL: set.videoFileURL,
     videoType: set.videoType,
+});
+
+const createSummaryViewModel = (set) => ({
+    type: 'summary',
+    key: set.setID+'summary',
+});
+
+const createAnalysisViewModel = (set) => ({
+    type: 'analysis',
+    key: set.setID+'analysis',
 });
 
 const createRowViewModels = (set) => {
@@ -202,6 +220,15 @@ const createRowViewModels = (set) => {
     return array;
 };
 
+const createWorkingSetFooterVM = (set, restStartTime) => {
+    let footerVM = {
+        type: "working set footer",
+        restStartTimeMS: (new Date(restStartTime)).getTime(),
+        key: set.setID + 'live rest'
+    };
+    return footerVM;
+};
+
 const createFooterVM = (set, lastSetEndTime) => {
     let restInMS = new Date(SetTimeCalculator.startTime(set)) - new Date(lastSetEndTime);
     let footerVM = {
@@ -211,25 +238,10 @@ const createFooterVM = (set, lastSetEndTime) => {
     };
     return footerVM;
 };
-
-const createTopBorder = (set) => ({
-    type: "top border",
-    key: set.setID + 'topborder',
-});
-
 const createBottomBorder = (set) => ({
     type: "bottom border",
     key: set.setID + 'bottomborder',
 });
-
-const createWorkingSetFooterVM = (set, restStartTime) => {
-    let footerVM = {
-        type: "working set footer",
-        restStartTimeMS: (new Date(restStartTime)).getTime(),
-        key: set.setID + 'live rest'
-    };
-    return footerVM;
-};
 
 const mapStateToProps = (state) => {
     let sets = SetsSelectors.getWorkoutSets(state);

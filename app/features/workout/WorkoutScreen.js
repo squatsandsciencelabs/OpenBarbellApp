@@ -39,13 +39,12 @@ const createViewModels = (state, sets) => {
         let array = [0, 0];
 
         // set collapsed state
-        isCollapsed = WorkoutCollapsedSelectors.getIsCollapsed(state, set.setID);        
+        isCollapsed = WorkoutCollapsedSelectors.getIsCollapsed(state, set.setID);
 
         // card header
         if (isInitialSet) {
             lastExerciseName = null;
             setNumber = 1;
-
         } else if (!set.removed) {
             if (lastExerciseName !== null && lastExerciseName === set.exercise) {
                 setNumber++;
@@ -55,6 +54,8 @@ const createViewModels = (state, sets) => {
         }
         if (isLastSet) {
             array.push({type: 'working set header', key: set.setID+'end set timer'});
+        } else {
+            array.push(createTopBorder(set));
         }
         array.push(createTitleHeaderViewModel(state, set, setNumber, lastExerciseName, isLastSet, isCollapsed));
         if (!isCollapsed) {
@@ -74,13 +75,13 @@ const createViewModels = (state, sets) => {
         if (isInitialSet) {
             // new set, reset the end time
             lastSetEndTime = set.removed ? null : SetTimeCalculator.endTime(set);
-            array.push(createBorder(set));
+            array.push(createBottomBorder(set));
         } else if (!set.removed && set.reps.length > 0) { // ignore removed sets in rest calculations
             // add footer if valid
             if (lastSetEndTime !== null) {
                 array.push(createFooterVM(set, lastSetEndTime));
             } else {
-                array.push(createBorder(set));
+                array.push(createBottomBorder(set));
             }
 
             // update variable for calculation purposes
@@ -89,7 +90,7 @@ const createViewModels = (state, sets) => {
             // working set, live rest mode
             array.push(createWorkingSetFooterVM(set, lastSetEndTime));
         } else {
-            array.push(createBorder(set));
+            array.push(createBottomBorder(set));
         }
 
         // insert set card data
@@ -211,9 +212,14 @@ const createFooterVM = (set, lastSetEndTime) => {
     return footerVM;
 };
 
-const createBorder = (set) => ({
-    type: "border",
-    key: set.setID + 'border'
+const createTopBorder = (set) => ({
+    type: "top border",
+    key: set.setID + 'topborder',
+});
+
+const createBottomBorder = (set) => ({
+    type: "bottom border",
+    key: set.setID + 'bottomborder',
 });
 
 const createWorkingSetFooterVM = (set, restStartTime) => {

@@ -55,7 +55,7 @@ class SetTitleRowCollapsed extends Component {
 
     render() {
         return (
-            <View style={[styles.container, styles.borderAllRound]}>
+            <View style={[styles.container, styles.border]}>
                 <View style={[styles.field, {flex: 1}]}>
                     {this._renderExercise()}
                     <View style={styles.fieldDetails} pointerEvents='none'>
@@ -110,17 +110,11 @@ const styles = StyleSheet.create({
     placeholderText: {
         color: 'rgba(189, 189, 189, 1)'
     },
-    borderPartial: {
+    border: {
         borderColor: '#e0e0e0',
         borderLeftWidth: 1,
         borderRightWidth: 1,
     },
-    borderAllRound: {
-        borderColor: '#e0e0e0',
-        borderLeftWidth: 1,
-        borderRightWidth: 1,
-        borderTopWidth: 1,
-    }
 });
 
 export default SetTitleRowCollapsed;

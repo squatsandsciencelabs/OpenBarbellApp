@@ -87,18 +87,17 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
         array.push(createTitleViewModel(state, set, setNumber, isCollapsed));
         if (!isCollapsed) {
             array.push(createFormViewModel(set, setNumber));
-            array.push(createAnalysisViewModel(set));            
             if (set.reps.length > 0) {
                 array.push({type: "subheader", key: set.setID+"subheader"});
             }
         } else {
-            array.push(createSummaryViewModel(set));            
-            array.push(createAnalysisViewModel(set));            
+            array.push(createSummaryViewModel(set));
+            array.push(createAnalysisViewModel(set));
         }
         lastExerciseName = set.exercise;
 
         // reps
-        if (!isCollapsed) {            
+        if (!isCollapsed) {
             Array.prototype.push.apply(array, createRowViewModels(set, shouldShowRemoved));
         }
 

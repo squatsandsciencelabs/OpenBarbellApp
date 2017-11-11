@@ -1,5 +1,7 @@
 import * as sut from 'app/utility/transforms/CollapsedMetrics';
 
+// Velocity
+
 describe('getAvgVelocities', () => {
 
     test('[] when empty', () => {
@@ -276,7 +278,7 @@ describe('getMaxAvgVelocity', () => {
         expect(result).toBe(null);        
     });
     
-    test('returns min avg velocity', () => {
+    test('returns max avg velocity', () => {
         let set = {
             reps: [
                 {
@@ -300,5 +302,310 @@ describe('getMaxAvgVelocity', () => {
         let result = sut.getMaxAvgVelocity(set);
     
         expect(result).toBe(1.83);
+    });
+});
+
+// ROM
+
+describe('getROMs', () => {
+    
+        test('[] when empty', () => {
+            let set = {
+                reps: [],
+            };
+    
+            let result = sut.getROMs(set);
+    
+            expect(result).toEqual([]);
+        });
+    
+        test('returns roms from set with reps', () => {
+            let set = {
+                reps: [
+                    {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.833368, 200]
+                    }, 
+                    {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 38, 1.821198, 250]
+                    }, 
+                    {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 39, 1.08, 300]
+                    },
+                ]
+            }
+    
+            let result = sut.getROMs(set);
+    
+            expect(result).toEqual([200, 250, 300]);
+        });
+    
+        test('return [] when rep is invalid', () => {
+            let set = {
+                reps: [
+                    {
+                        isValid: false,
+                        removed: false,
+                    }
+                ]
+            }
+    
+            let result = sut.getROMs(set);
+    
+            expect(result).toEqual([]);
+        });
+    
+        test('return [] when rep is removed', () => {
+            let set = {
+                reps: [
+                    {
+                        isValid: true,
+                        removed: true,
+                    }
+                ]
+            }
+    
+            let result = sut.getROMs(set);
+    
+            expect(result).toEqual([]);
+    });        
+});
+
+describe('getAvgofROMs', () => {
+    
+        test('null when no reps', () => {
+            let set = {
+                reps: [],
+            }
+    
+            let result = sut.getAvgofROMs(set);
+    
+            expect(result).toBe(null);
+        });
+    
+        test('return avg of roms', () => {
+            let set = {
+                reps: [
+                    {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.833368, 200]
+                    }, 
+                    {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 38, 1.821198, 250]
+                    }, 
+                    {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 39, 1.08, 300]
+                    },
+                ]
+            }
+    
+            let result = sut.getAvgofROMs(set);
+    
+            expect(result).toBe("250.00");
+        });
+    });
+
+describe('getAbsLossROM', () => {
+        
+        test('return null when roms empty', () => {
+            let set = {
+                reps: [],
+            };
+                
+            let result = sut.getAbsLossROM(set);
+                
+            expect(result).toBe(null);        
+        });
+        
+        test('returns abslossROM', () => {
+            let set = {
+                reps: [
+                    {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.833368, 200]
+                    }, 
+                    {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 38, 1.821198, 250]
+                    }, 
+                    {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 39, 1.08, 300]
+                    },
+                ]
+            }
+                
+            let result = sut.getAbsLossROM(set);
+        
+            expect(result).toBe(100);
+        });
+});    
+
+describe('getFirstRepROM', () => {
+    
+    test('return null when roms empty', () => {
+        let set = {
+            reps: [],
+        };
+            
+        let result = sut.getFirstRepROM(set);
+            
+        expect(result).toBe(null);        
+    });
+    
+    test('returns first rep avg velocity', () => {
+        let set = {
+            reps: [
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 37, 1.833368, 200]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 38, 1.821198, 250]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 39, 1.08, 300]
+                },
+            ]
+        }
+            
+        let result = sut.getFirstRepROM(set);
+    
+        expect(result).toBe(200);
+    });
+});
+
+describe('getLastRepROM', () => {
+    
+    test('return null when avgVs empty', () => {
+        let set = {
+            reps: [],
+        };
+            
+        let result = sut.getLastRepROM(set);
+            
+        expect(result).toBe(null);        
+    });
+    
+    test('returns last rep avg velocity', () => {
+        let set = {
+            reps: [
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 37, 1.833368, 200]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 38, 1.821198, 250]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 39, 1.08, 300]
+                },
+            ]
+        };
+            
+        let result = sut.getLastRepROM(set);
+    
+        expect(result).toBe(300);
+    });
+});
+
+describe('getMinROM', () => {
+    
+    test('return null when roms empty', () => {
+        let set = {
+            reps: [],
+        };
+            
+        let result = sut.getMinROM(set);
+            
+        expect(result).toBe(null);        
+    });
+    
+    test('returns min rom', () => {
+        let set = {
+            reps: [
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 37, 1.833368, 200]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 38, 1.821198, 250]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 39, 1.08, 300]
+                },
+            ]
+        };
+            
+        let result = sut.getMinROM(set);
+    
+        expect(result).toBe(200);
+    });
+});
+
+describe('getMaxROM', () => {
+    
+    test('return null when avgVs empty', () => {
+        let set = {
+            reps: [],
+        };
+            
+        let result = sut.getMaxROM(set);
+            
+        expect(result).toBe(null);        
+    });
+    
+    test('returns max avg velocity', () => {
+        let set = {
+            reps: [
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 37, 1.833368, 200]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 38, 1.821198, 250]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 39, 1.08, 300]
+                },
+            ]
+        };
+            
+        let result = sut.getMaxROM(set);
+    
+        expect(result).toBe(300);
     });
 });

@@ -325,3 +325,85 @@ export const getMaxPKH = (set) => {
         return null;
     }
 };
+
+// duration
+
+export const getDurations = (set) => {
+    let durations = [];
+    
+    for (let i = 0; i < set.reps.length; i++) {
+        let rep = set.reps[i];
+                
+        if (rep.isValid === true && rep.removed === false) {
+            let repData = rep.data;
+        
+            durations.push(Number(RepDataMap.durationOfLift(repData)));
+        }            
+    };
+
+    return durations;
+};
+
+export const getAvgofDurations = (set) => {
+    let durations = getDurations(set);
+
+    if (durations.length > 0) {
+        let sum = durations.reduce((previous, current) => current + previous);
+        return (sum / durations.length).toFixed(2);
+    } else {
+        return null;
+    }  
+};
+
+export const getAbsLossDuration = (set) => {
+    let durations = getDurations(set);
+
+    if (durations.length > 0) {
+        let maxV = Math.max(...durations);
+        let minV = Math.min(...durations);
+        
+        return maxV - minV;
+    } else {
+        return null;
+    }
+};
+
+export const getFirstRepDuration = (set) => {
+    let durations = getDurations(set);
+    
+    if (durations.length > 0) {
+        return durations[0];
+    } else {
+        return null;
+    }
+};
+
+export const getLastRepDuration = (set) => {
+    let durations = getDurations(set);
+    
+    if (durations.length > 0) {
+        return durations[durations.length - 1];
+    } else {
+        return null;
+    }
+};
+
+export const getMinDuration = (set) => {
+    let durations = getDurations(set);
+
+    if (durations.length > 0) {
+        return Math.min(...durations);
+    } else {
+        return null;
+    }
+};
+
+export const getMaxDuration = (set) => {
+    let durations = getDurations(set);
+    
+    if (durations.length > 0) {
+        return Math.max(...durations);    
+    } else {
+        return null;
+    }
+};

@@ -1219,3 +1219,308 @@ describe('getMaxPKH', () => {
         expect(result).toBe(40);
     });
 });
+
+// duration
+
+describe('getDurations', () => {
+    
+    test('[] when empty', () => {
+        let set = {
+            reps: [],
+        };
+
+        let result = sut.getDurations(set);
+
+        expect(result).toEqual([]);
+    });
+
+    test('returns durations from set with reps', () => {
+        let set = {
+            reps: [
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 37, 1.833368, 200, 20, 30, 1, 3]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 38, 1.821198, 250, 25, 35, 1, 5]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 39, 1.08, 300, 30, 40, 1, 4]
+                },
+            ]
+        }
+
+        let result = sut.getDurations(set);
+
+        expect(result).toEqual([3,5,4]);
+    });
+    
+    test('return [] when rep is invalid', () => {
+        let set = {
+            reps: [
+                {
+                    isValid: false,
+                    removed: false,
+                }
+            ]
+        }
+
+        let result = sut.getDurations(set);
+
+        expect(result).toEqual([]);
+    });
+
+    test('return [] when rep is removed', () => {
+        let set = {
+            reps: [
+                {
+                    isValid: true,
+                    removed: true,
+                }
+            ]
+        }
+
+        let result = sut.getDurations(set);
+
+        expect(result).toEqual([]);
+    });        
+});
+
+describe('getAvgofDurations', () => {
+    
+    test('null when no reps', () => {
+        let set = {
+            reps: [],
+        }
+
+        let result = sut.getAvgofDurations(set);
+
+        expect(result).toBe(null);
+    });
+
+    test('return avg of durations', () => {
+        let set = {
+            reps: [
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 37, 1.833368, 200, 20, 30, 1, 3]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 38, 1.821198, 250, 25, 35, 1, 5]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 39, 1.08, 300, 30, 40, 1, 4]
+                },
+            ]
+        }
+
+        let result = sut.getAvgofDurations(set);
+
+        expect(result).toBe("4.00");
+    });
+});
+
+describe('getAbsLossDuration', () => {
+        
+    test('return null when durations empty', () => {
+        let set = {
+            reps: [],
+        };
+            
+        let result = sut.getAbsLossDuration(set);
+            
+        expect(result).toBe(null);        
+    });
+    
+    test('returns abslossDuration', () => {
+        let set = {
+            reps: [
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 37, 1.833368, 200, 20, 30, 1, 3]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 38, 1.821198, 250, 25, 35, 1, 2]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 39, 1.08, 300, 30, 40, 1, 6]
+                },
+            ]
+        }
+            
+        let result = sut.getAbsLossDuration(set);
+    
+        expect(result).toBe(4);
+    });
+});    
+
+describe('getFirstRepDuration', () => {
+    
+    test('return null when durations empty', () => {
+        let set = {
+            reps: [],
+        };
+            
+        let result = sut.getFirstRepDuration(set);
+            
+        expect(result).toBe(null);        
+    });
+    
+    test('returns first rep duration', () => {
+        let set = {
+            reps: [
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 37, 1.833368, 200, 20, 30, 1, 3]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 38, 1.821198, 250, 25, 35, 1, 4]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 39, 1.08, 300, 30, 40, 1, 7]
+                },
+            ]
+        };
+            
+        let result = sut.getFirstRepDuration(set);
+    
+        expect(result).toBe(3);
+    });
+});
+
+describe('getLastRepDuration', () => {
+    
+    test('return null when durations empty', () => {
+        let set = {
+            reps: [],
+        };
+            
+        let result = sut.getLastRepDuration(set);
+            
+        expect(result).toBe(null);        
+    });
+    
+    test('returns last rep duration', () => {
+        let set = {
+            reps: [
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 37, 1.833368, 200, 20, 30, 1, 3]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 38, 1.821198, 250, 25, 35, 1, 4]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 39, 1.08, 300, 30, 40, 1, 7]
+                },
+            ]
+        };
+            
+        let result = sut.getLastRepDuration(set);
+    
+        expect(result).toBe(7);
+    });
+});
+
+describe('getMinDuration', () => {
+    
+    test('return null when durations empty', () => {
+        let set = {
+            reps: [],
+        };
+            
+        let result = sut.getMinDuration(set);
+            
+        expect(result).toBe(null);        
+    });
+    
+    test('returns min duration', () => {
+        let set = {
+            reps: [
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 37, 1.833368, 200, 20, 30, 1, 3]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 38, 1.821198, 250, 25, 35, 1, 5]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 39, 1.08, 300, 30, 40, 1, 8]
+                },
+            ]
+        };
+            
+        let result = sut.getMinDuration(set);
+    
+        expect(result).toBe(3);
+    });
+});
+
+describe('getMaxDuration', () => {
+    
+    test('return null when durations empty', () => {
+        let set = {
+            reps: [],
+        };
+            
+        let result = sut.getMaxDuration(set);
+            
+        expect(result).toBe(null);        
+    });
+    
+    test('returns max duration', () => {
+        let set = {
+            reps: [
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 37, 1.833368, 200, 20, 30, 1, 5]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 38, 1.821198, 250, 25, 35, 1, 2]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 39, 1.08, 300, 30, 40, 2, 9]
+                },
+            ]
+        };
+            
+        let result = sut.getMaxDuration(set);
+    
+        expect(result).toBe(9);
+    });
+});

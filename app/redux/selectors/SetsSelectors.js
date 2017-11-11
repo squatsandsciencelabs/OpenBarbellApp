@@ -320,6 +320,8 @@ export const getBestPKVEver = (state, set) => {
     }
 };
 
+// PKH
+
 export const getBestPKHEver = (state, set) => {
     let historySets = getHistorySetsChronological(state);
 
@@ -334,6 +336,27 @@ export const getBestPKHEver = (state, set) => {
     
     if (pkhs.length > 0) {
         return Math.max(...pkhs);
+    } else {
+        return null;
+    }
+};
+
+// Duration
+
+export const getBestDurationEver = (state, set) => {
+    let historySets = getHistorySetsChronological(state);
+
+    // find all instances of this exercise with weight and reps
+    let matchedSets = historySets.filter(historySet => historyFilter(historySet, set));
+
+    let durations = matchedSets.map((matchedSet) => {
+        return CollapsedMetrics.getDurations(matchedSet);
+    });
+
+    durations = durations.reduce((a, b) => a.concat(b), []);
+    
+    if (durations.length > 0) {
+        return Math.max(...durations);
     } else {
         return null;
     }

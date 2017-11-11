@@ -960,6 +960,8 @@ describe('getBestAvgVelocityEver', () => {
     });
 });
 
+// ROM
+
 describe('getBestROMEver', () => {
 
     test('get best rom ever', () => {
@@ -1237,6 +1239,290 @@ describe('getBestPKVEver', () => {
         };
 
         let result = sut.getBestPKVEver(state, set);
+
+        expect(result).toBe(null);
+    });
+});          
+
+// PKH
+
+describe('getBestPKHEver', () => {
+    
+    test('get best pkh ever', () => {
+        const state = {
+            sets: {
+                historyData: {
+                    a: {
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.833368, 200, 20, 10]
+                        }, 
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.433368, 250, 25, 15]
+                        },
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.533368, 400, 40, 30]
+                        }
+                    ]},
+                    b: {
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.933368, 388, 38, 28]
+                        }],
+                    },
+                    c: {
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.733368, 288, 28, 18]
+                        }],
+                    },
+                    d: {
+                        exercise: 'Bench',
+                        weight: 200,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.833368, 188, 18, 8]
+                        }],
+                    },
+                    e: {
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.3, 100, 10, 5]
+                        }, 
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.9, 300, 30, 20]
+                        },
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 2.4, 230, 23, 13]
+                        }
+                    ]},
+                }
+            }
+        };
+
+        let set = {
+            exercise: 'Bench',
+            weight: 100,
+            metric: 'lbs',
+            reps: [{
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.333368, 388, 38, 18]
+            }, 
+            {
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.033368, 378, 37, 17]
+            },
+            {
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.453368, 328, 32, 22]
+            }],
+        };
+
+        let result = sut.getBestPKHEver(state, set);
+
+        expect(result).toBe(30);
+    });
+
+    test('return null when no history data', () => {
+        const state = {
+            sets: {
+                historyData: {}
+            }
+        };
+
+        let set = {
+            exercise: 'Bench',
+            weight: 100,
+            metric: 'lbs',
+            reps: [{
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.333368, 388, 38, 28]
+            }, 
+            {
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.033368, 388, 38, 28]
+            },
+            {
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.453368, 388, 38, 28]
+            }],
+        };
+
+        let result = sut.getBestPKHEver(state, set);
+
+        expect(result).toBe(null);
+    });
+});                
+
+// duration
+
+describe('getBestDurationEver', () => {
+    
+    test('get best duration ever', () => {
+        const state = {
+            sets: {
+                historyData: {
+                    a: {
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.833368, 200, 20, 10, 1, 5]
+                        }, 
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.433368, 250, 25, 15, 1, 10]
+                        },
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.533368, 400, 40, 30, 1, 20]
+                        }
+                    ]},
+                    b: {
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.933368, 388, 38, 28, 1, 18]
+                        }],
+                    },
+                    c: {
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.733368, 288, 28, 18, 1, 8]
+                        }],
+                    },
+                    d: {
+                        exercise: 'Bench',
+                        weight: 200,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.833368, 188, 18, 8, 1, 4]
+                        }],
+                    },
+                    e: {
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.3, 100, 10, 5, 1, 3]
+                        }, 
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.9, 300, 30, 20, 1, 10]
+                        },
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 2.4, 230, 23, 13, 1, 3]
+                        }
+                    ]},
+                }
+            }
+        };
+
+        let set = {
+            exercise: 'Bench',
+            weight: 100,
+            metric: 'lbs',
+            reps: [{
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.333368, 388, 38, 18, 1, 8]
+            }, 
+            {
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.033368, 378, 37, 17, 1, 7]
+            },
+            {
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.453368, 328, 32, 22, 1, 12]
+            }],
+        };
+
+        let result = sut.getBestDurationEver(state, set);
+
+        expect(result).toBe(20);
+    });
+
+    test('return null when no history data', () => {
+        const state = {
+            sets: {
+                historyData: {}
+            }
+        };
+
+        let set = {
+            exercise: 'Bench',
+            weight: 100,
+            metric: 'lbs',
+            reps: [{
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.333368, 388, 38, 28, 1, 18]
+            }, 
+            {
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.033368, 388, 38, 28, 1, 18]
+            },
+            {
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.453368, 388, 38, 28, 1, 18]
+            }],
+        };
+
+        let result = sut.getBestDurationEver(state, set);
 
         expect(result).toBe(null);
     });

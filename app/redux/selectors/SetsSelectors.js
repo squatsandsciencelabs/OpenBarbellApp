@@ -279,15 +279,42 @@ export const getBestAvgVelocityEver = (state, set) => {
     let historySets = getHistorySetsChronological(state);
 
     // find all instances of this exercise with weight and reps
-    let matchedSets = historySets.filter(historySet => historySet.exercise === set.exercise && historySet.weight === set.weight &&  historySet.metric === set.metric && historySet.reps.length === set.reps.length);
+    let matchedSets = historySets.filter(historySet => historyFilter(historySet, set));
 
     let avgVs = matchedSets.map((matchedSet) => {
-        CollapsedMetrics.getAvgVelocities(matchedSet);
+        return CollapsedMetrics.getAvgVelocities(matchedSet);
     });
 
     avgVs = avgVs.reduce((a, b) => a.concat(b), []);
     
-    return Math.max(...avgVs);
+    if (avgVs.length > 0) {
+        return Math.max(...avgVs);
+    } else {
+        return null;
+    }
+};
+
+export const getBestROMEver = (state, set) => {
+    let historySets = getHistorySetsChronological(state);
+
+    // find all instances of this exercise with weight and reps
+    let matchedSets = historySets.filter(historySet => historyFilter(historySet, set));
+
+    let roms = matchedSets.map((matchedSet) => {
+        return CollapsedMetrics.getROMs(matchedSet);
+    });
+
+    roms = roms.reduce((a, b) => a.concat(b), []);
+    
+    if (roms.length > 0) {
+        return Math.max(...roms);
+    } else {
+        return null;
+    }
 };
 
 export const getRevision = (state) => stateRoot(state).revision;
+
+function historyFilter(historySet, set) {
+    return historySet.exercise === set.exercise && historySet.weight === set.weight &&  historySet.metric === set.metric && historySet.reps.length === set.reps.length;
+};

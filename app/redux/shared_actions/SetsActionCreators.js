@@ -73,7 +73,7 @@ export const saveHistorySet = (setID, exercise = null, weight = null, metric = n
 export const endSet = (manuallyStarted=false, wasSanityCheck=false) => (dispatch, getState) => {
     const state = getState();
     const set = SetsSelectors.getWorkingSet(state);
-
+    
     // check if set form has any data
     if (!SetEmptyCheck.isUntouched(set)) {
         logEndSetAnalytics(manuallyStarted, wasSanityCheck, state);

@@ -4,6 +4,8 @@
 import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
+import * as RepDataMap from 'app/utility/transforms/RepDataMap';
+import * as CollapsedMetrics from 'app/utility/transforms/CollapsedMetrics';
 
 const stateRoot = (state) => state.sets;
 
@@ -259,4 +261,86 @@ export const hasChangesToSync = (state) => {
     return (root.setIDsToUpload.length > 0 || root.setIDsBeingUploaded.length > 0);
 };
 
+// collapsed metrics
+
+export const getBestAvgVelocityEver = (state, set) => {
+    let historySets = getHistorySetsChronological(state);
+
+    // find all instances of this exercise with weight and reps
+    let matchedSets = historySets.filter(historySet => historyFilter(historySet, set));
+
+    let avgVs = matchedSets.map((matchedSet) => {
+        return CollapsedMetrics.getAvgVelocities(matchedSet);
+    });
+
+    avgVs = avgVs.reduce((a, b) => a.concat(b), []);
+    
+    if (avgVs.length > 0) {
+        return Math.max(...avgVs);
+    } else {
+        return null;
+    }
+};
+
+export const getBestROMEver = (state, set) => {
+    let historySets = getHistorySetsChronological(state);
+
+    // find all instances of this exercise with weight and reps
+    let matchedSets = historySets.filter(historySet => historyFilter(historySet, set));
+
+    let roms = matchedSets.map((matchedSet) => {
+        return CollapsedMetrics.getROMs(matchedSet);
+    });
+
+    roms = roms.reduce((a, b) => a.concat(b), []);
+    
+    if (roms.length > 0) {
+        return Math.max(...roms);
+    } else {
+        return null;
+    }
+};
+
+export const getBestPKVEver = (state, set) => {
+    let historySets = getHistorySetsChronological(state);
+
+    // find all instances of this exercise with weight and reps
+    let matchedSets = historySets.filter(historySet => historyFilter(historySet, set));
+
+    let pkvs = matchedSets.map((matchedSet) => {
+        return CollapsedMetrics.getPKVs(matchedSet);
+    });
+
+    pkvs = pkvs.reduce((a, b) => a.concat(b), []);
+    
+    if (pkvs.length > 0) {
+        return Math.max(...pkvs);
+    } else {
+        return null;
+    }
+};
+
+export const getBestPKHEver = (state, set) => {
+    let historySets = getHistorySetsChronological(state);
+
+    // find all instances of this exercise with weight and reps
+    let matchedSets = historySets.filter(historySet => historyFilter(historySet, set));
+
+    let pkhs = matchedSets.map((matchedSet) => {
+        return CollapsedMetrics.getPKHs(matchedSet);
+    });
+
+    pkhs = pkhs.reduce((a, b) => a.concat(b), []);
+    
+    if (pkhs.length > 0) {
+        return Math.max(...pkhs);
+    } else {
+        return null;
+    }
+};
+
 export const getRevision = (state) => stateRoot(state).revision;
+
+function historyFilter(historySet, set) {
+    return historySet.exercise === set.exercise && historySet.weight === set.weight &&  historySet.metric === set.metric && historySet.reps.length === set.reps.length;
+};

@@ -80,6 +80,8 @@ export const getMaxAvgVelocity = (set) => {
     }
 };
 
+// ROM
+
 export const getROMs = (set) => {
     let roms = [];
     
@@ -161,3 +163,83 @@ export const getMaxROM = (set) => {
 };
 
 // peak velocity
+
+export const getPKVs = (set) => {
+    let pkvs = [];
+    
+    for (let i = 0; i < set.reps.length; i++) {
+        let rep = set.reps[i];
+                
+        if (rep.isValid === true && rep.removed === false) {
+            let repData = rep.data;
+        
+            pkvs.push(Number(RepDataMap.peakVelocity(repData)));
+        }            
+    };
+
+    return pkvs;
+};
+
+export const getAvgofPKVs = (set) => {
+    let pkvs = getPKVs(set);
+
+    if (pkvs.length > 0) {
+        let sum = pkvs.reduce((previous, current) => current + previous);
+        return (sum / pkvs.length).toFixed(2);
+    } else {
+        return null;
+    }  
+};
+
+export const getAbsLossPKV = (set) => {
+    let pkvs = getPKVs(set);
+
+    if (pkvs.length > 0) {
+        let maxV = Math.max(...pkvs);
+        let minV = Math.min(...pkvs);
+        
+        return maxV - minV;
+    } else {
+        return null;
+    }
+};
+
+export const getFirstRepPKV = (set) => {
+    let pkvs = getPKVs(set);
+    
+    if (pkvs.length > 0) {
+        return pkvs[0];
+    } else {
+        return null;
+    }
+};
+
+export const getLastRepPKV = (set) => {
+    let pkvs = getPKVs(set);
+    
+    if (pkvs.length > 0) {
+        return pkvs[pkvs.length - 1];
+    } else {
+        return null;
+    }
+};
+
+export const getMinPKV = (set) => {
+    let pkvs = getPKVs(set);
+
+    if (pkvs.length > 0) {
+        return Math.min(...pkvs);
+    } else {
+        return null;
+    }
+};
+
+export const getMaxPKV = (set) => {
+    let pkvs = getPKVs(set);
+    
+    if (pkvs.length > 0) {
+        return Math.max(...pkvs);    
+    } else {
+        return null;
+    }
+};

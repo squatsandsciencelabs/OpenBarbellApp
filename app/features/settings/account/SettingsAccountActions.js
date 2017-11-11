@@ -6,6 +6,7 @@ import {
     ATTEMPT_EXPORTING_CSV,
     EXPORTING_CSV,
     CANCEL_LOGOUT,
+    EXPORTING_CSV_ERROR,
 } from 'app/ActionTypes';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
 import * as GoogleDriveUploader from 'app/services/GoogleDriveUploader';
@@ -52,7 +53,7 @@ export const exportCSV = () => (dispatch, getState) => {
     GoogleSignin.currentUserAsync().then(async (user) => {
         if (user === null) {
             dispatch({ type: EXPORTING_CSV_ERROR });
-            Alert.alert('Error Exporting CSV', 'Tip: Is your internet connection working?\n\nTip: Try Logging out then logging in again as this feature requires additional Google Drive permissions.');
+            Alert.alert('Error Exporting CSV', 'Tip: Is your internet connection working?\n\nTip: Try Logging out then logging in again as this feature may require updated Google Drive permissions.');
         } else {
             //ATTEMPT
             logAttemptCSVAnalytics(state);
@@ -90,7 +91,7 @@ export const exportCSV = () => (dispatch, getState) => {
     })
     .catch((err) => {
         // error here
-        console.tron.log("EXPORT HISTORY ERROR " + err);
+        console.tron.log("EXPORT CSV ERROR " + err);
     })
     .done();
 };

@@ -243,3 +243,85 @@ export const getMaxPKV = (set) => {
         return null;
     }
 };
+
+// peak height
+
+export const getPKHs = (set) => {
+    let pkhs = [];
+    
+    for (let i = 0; i < set.reps.length; i++) {
+        let rep = set.reps[i];
+                
+        if (rep.isValid === true && rep.removed === false) {
+            let repData = rep.data;
+        
+            pkhs.push(Number(RepDataMap.peakVelocityLocation(repData)));
+        }            
+    };
+
+    return pkhs;
+};
+
+export const getAvgofPKHs = (set) => {
+    let pkhs = getPKHs(set);
+
+    if (pkhs.length > 0) {
+        let sum = pkhs.reduce((previous, current) => current + previous);
+        return (sum / pkhs.length).toFixed(2);
+    } else {
+        return null;
+    }  
+};
+
+export const getAbsLossPKH = (set) => {
+    let pkhs = getPKHs(set);
+
+    if (pkhs.length > 0) {
+        let maxV = Math.max(...pkhs);
+        let minV = Math.min(...pkhs);
+        
+        return maxV - minV;
+    } else {
+        return null;
+    }
+};
+
+export const getFirstRepPKH = (set) => {
+    let pkhs = getPKHs(set);
+    
+    if (pkhs.length > 0) {
+        return pkhs[0];
+    } else {
+        return null;
+    }
+};
+
+export const getLastRepPKH = (set) => {
+    let pkhs = getPKHs(set);
+    
+    if (pkhs.length > 0) {
+        return pkhs[pkhs.length - 1];
+    } else {
+        return null;
+    }
+};
+
+export const getMinPKH = (set) => {
+    let pkhs = getPKHs(set);
+
+    if (pkhs.length > 0) {
+        return Math.min(...pkhs);
+    } else {
+        return null;
+    }
+};
+
+export const getMaxPKH = (set) => {
+    let pkhs = getPKHs(set);
+    
+    if (pkhs.length > 0) {
+        return Math.max(...pkhs);    
+    } else {
+        return null;
+    }
+};

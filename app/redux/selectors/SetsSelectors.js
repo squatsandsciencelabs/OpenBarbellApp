@@ -320,6 +320,25 @@ export const getBestPKVEver = (state, set) => {
     }
 };
 
+export const getBestPKHEver = (state, set) => {
+    let historySets = getHistorySetsChronological(state);
+
+    // find all instances of this exercise with weight and reps
+    let matchedSets = historySets.filter(historySet => historyFilter(historySet, set));
+
+    let pkhs = matchedSets.map((matchedSet) => {
+        return CollapsedMetrics.getPKHs(matchedSet);
+    });
+
+    pkhs = pkhs.reduce((a, b) => a.concat(b), []);
+    
+    if (pkhs.length > 0) {
+        return Math.max(...pkhs);
+    } else {
+        return null;
+    }
+};
+
 export const getRevision = (state) => stateRoot(state).revision;
 
 function historyFilter(historySet, set) {

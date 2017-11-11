@@ -466,7 +466,7 @@ describe('getFirstRepROM', () => {
         expect(result).toBe(null);        
     });
     
-    test('returns first rep avg velocity', () => {
+    test('returns first rep rom', () => {
         let set = {
             reps: [
                 {
@@ -495,7 +495,7 @@ describe('getFirstRepROM', () => {
 
 describe('getLastRepROM', () => {
     
-    test('return null when avgVs empty', () => {
+    test('return null when roms empty', () => {
         let set = {
             reps: [],
         };
@@ -505,7 +505,7 @@ describe('getLastRepROM', () => {
         expect(result).toBe(null);        
     });
     
-    test('returns last rep avg velocity', () => {
+    test('returns last rep rom', () => {
         let set = {
             reps: [
                 {
@@ -573,7 +573,7 @@ describe('getMinROM', () => {
 
 describe('getMaxROM', () => {
     
-    test('return null when avgVs empty', () => {
+    test('return null when roms empty', () => {
         let set = {
             reps: [],
         };
@@ -607,5 +607,310 @@ describe('getMaxROM', () => {
         let result = sut.getMaxROM(set);
     
         expect(result).toBe(300);
+    });
+});
+
+// peak velocity
+
+describe('getPKVs', () => {
+    
+        test('[] when empty', () => {
+            let set = {
+                reps: [],
+            };
+    
+            let result = sut.getPKVs(set);
+    
+            expect(result).toEqual([]);
+        });
+    
+        test('returns pkvs from set with reps', () => {
+            let set = {
+                reps: [
+                    {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.833368, 200, 20]
+                    }, 
+                    {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 38, 1.821198, 250, 25]
+                    }, 
+                    {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 39, 1.08, 300, 30]
+                    },
+                ]
+            }
+    
+            let result = sut.getPKVs(set);
+    
+            expect(result).toEqual([20, 25, 30]);
+        });
+    
+        test('return [] when rep is invalid', () => {
+            let set = {
+                reps: [
+                    {
+                        isValid: false,
+                        removed: false,
+                    }
+                ]
+            }
+    
+            let result = sut.getPKVs(set);
+    
+            expect(result).toEqual([]);
+        });
+    
+        test('return [] when rep is removed', () => {
+            let set = {
+                reps: [
+                    {
+                        isValid: true,
+                        removed: true,
+                    }
+                ]
+            }
+    
+            let result = sut.getPKVs(set);
+    
+            expect(result).toEqual([]);
+    });        
+});
+
+describe('getAvgofPKVs', () => {
+    
+        test('null when no reps', () => {
+            let set = {
+                reps: [],
+            }
+    
+            let result = sut.getAvgofPKVs(set);
+    
+            expect(result).toBe(null);
+        });
+    
+        test('return avg of pkvs', () => {
+            let set = {
+                reps: [
+                    {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.833368, 200, 20]
+                    }, 
+                    {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 38, 1.821198, 250, 25]
+                    }, 
+                    {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 39, 1.08, 300, 30]
+                    },
+                ]
+            }
+    
+            let result = sut.getAvgofPKVs(set);
+    
+            expect(result).toBe("25.00");
+        });
+    });
+
+describe('getAbsLossPKV', () => {
+        
+        test('return null when pkvs empty', () => {
+            let set = {
+                reps: [],
+            };
+                
+            let result = sut.getAbsLossPKV(set);
+                
+            expect(result).toBe(null);        
+        });
+        
+        test('returns abslossPKV', () => {
+            let set = {
+                reps: [
+                    {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.833368, 200, 20]
+                    }, 
+                    {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 38, 1.821198, 250, 25]
+                    }, 
+                    {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 39, 1.08, 300, 30]
+                    },
+                ]
+            }
+                
+            let result = sut.getAbsLossPKV(set);
+        
+            expect(result).toBe(10);
+        });
+});    
+
+describe('getFirstRepPKV', () => {
+    
+    test('return null when pkvs empty', () => {
+        let set = {
+            reps: [],
+        };
+            
+        let result = sut.getFirstRepPKV(set);
+            
+        expect(result).toBe(null);        
+    });
+    
+    test('returns first rep pkv', () => {
+        let set = {
+            reps: [
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 37, 1.833368, 200, 20]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 38, 1.821198, 250, 25]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 39, 1.08, 300, 30]
+                },
+            ]
+        }
+            
+        let result = sut.getFirstRepPKV(set);
+    
+        expect(result).toBe(20);
+    });
+});
+
+describe('getLastRepPKV', () => {
+    
+    test('return null when avgVs empty', () => {
+        let set = {
+            reps: [],
+        };
+            
+        let result = sut.getLastRepPKV(set);
+            
+        expect(result).toBe(null);        
+    });
+    
+    test('returns last rep pkv', () => {
+        let set = {
+            reps: [
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 37, 1.833368, 200, 20]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 38, 1.821198, 250, 25]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 39, 1.08, 300, 30]
+                },
+            ]
+        };
+            
+        let result = sut.getLastRepPKV(set);
+    
+        expect(result).toBe(30);
+    });
+});
+
+describe('getMinPKV', () => {
+    
+    test('return null when pkvs empty', () => {
+        let set = {
+            reps: [],
+        };
+            
+        let result = sut.getMinPKV(set);
+            
+        expect(result).toBe(null);        
+    });
+    
+    test('returns min pkv', () => {
+        let set = {
+            reps: [
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 37, 1.833368, 200, 20]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 38, 1.821198, 250, 25]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 39, 1.08, 300, 30]
+                },
+            ]
+        };
+            
+        let result = sut.getMinPKV(set);
+    
+        expect(result).toBe(20);
+    });
+});
+
+describe('getMaxPKV', () => {
+    
+    test('return null when pkvs empty', () => {
+        let set = {
+            reps: [],
+        };
+            
+        let result = sut.getMaxPKV(set);
+            
+        expect(result).toBe(null);        
+    });
+    
+    test('returns max pkv', () => {
+        let set = {
+            reps: [
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 37, 1.833368, 200, 20]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 38, 1.821198, 250, 25]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 39, 1.08, 300, 30]
+                },
+            ]
+        };
+            
+        let result = sut.getMaxPKV(set);
+    
+        expect(result).toBe(30);
     });
 });

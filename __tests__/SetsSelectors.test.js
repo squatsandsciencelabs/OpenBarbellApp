@@ -1098,7 +1098,147 @@ describe('SetsSelectors', () => {
         
                     expect(result).toBe(null);
                 });
-            });    
+            });
+            
+describe('getBestPKVEver', () => {
+
+    test('get best pkv ever', () => {
+        const state = {
+            sets: {
+                historyData: {
+                    a: {
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.833368, 200, 20]
+                        }, 
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.433368, 250, 25]
+                        },
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.533368, 400, 40]
+                        }
+                    ]},
+                    b: {
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.933368, 388, 38]
+                        }],
+                    },
+                    c: {
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.733368, 288, 28]
+                        }],
+                    },
+                    d: {
+                        exercise: 'Bench',
+                        weight: 200,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.833368, 188, 18]
+                        }],
+                    },
+                    e: {
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.3, 100, 10]
+                        }, 
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.9, 300, 30]
+                        },
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 2.4, 230, 23]
+                        }
+                    ]},
+                }
+            }
+        };
+
+        let set = {
+            exercise: 'Bench',
+            weight: 100,
+            metric: 'lbs',
+            reps: [{
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.333368, 388, 38]
+            }, 
+            {
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.033368, 378, 37]
+            },
+            {
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.453368, 328, 32]
+            }],
+        };
+
+        let result = sut.getBestPKVEver(state, set);
+
+        expect(result).toBe(40);
+    });
+
+    test('return null when no history data', () => {
+        const state = {
+            sets: {
+                historyData: {}
+            }
+        };
+
+        let set = {
+            exercise: 'Bench',
+            weight: 100,
+            metric: 'lbs',
+            reps: [{
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.333368, 388, 38]
+            }, 
+            {
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.033368, 388, 38]
+            },
+            {
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.453368, 388, 38]
+            }],
+        };
+
+        let result = sut.getBestPKVEver(state, set);
+
+        expect(result).toBe(null);
+    });
+});                
 
     describe.skip('getSetsToUpload', () => {
         // skipping as focused on analytics, revisit later

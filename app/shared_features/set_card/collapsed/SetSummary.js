@@ -23,7 +23,7 @@ class SetSummary extends Component {
                     showsHorizontalScrollIndicator={false}
                     style={{flex:1, backgroundColor: 'white'}}>
                         <View style={{flexDirection: 'row'}}>
-                            <View style={{marginLeft: 5, justifyContent: 'center'}}>
+                            <View style={{marginLeft: 20, justifyContent: 'center'}}>
                                 <Text style={styles.text}>{this.props.weight} {this.props.metric} x {this.props.numReps}</Text>
                             </View>
                             

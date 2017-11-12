@@ -241,7 +241,7 @@ export const getTimeSinceLastWorkout = (state) => {
     } else {
         const lastSet = sets[sets.length-1];
         const startTime = Date.parse(SetTimeCalculator.startTime(lastSet));
-        return Date.parse(Date.now()) - startTime;
+        return Date.now() - startTime;
     }
 };
 

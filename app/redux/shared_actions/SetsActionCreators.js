@@ -24,7 +24,13 @@ export const getDefaultMetric = () => (dispatch, getState) => {
     });
 }
 
-export const saveWorkoutSet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {   
+export const saveWorkoutExerciseName = (setID, exercise = null) => saveWorkoutSet(setID, exercise);
+
+export const saveWorkoutForm = (setID, weight = null, metric = null, rpe = null) => {
+    return saveWorkoutSet(setID, null, weight, metric, rpe);
+}        
+
+const saveWorkoutSet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {   
     var action  = {
         type: SAVE_WORKOUT_SET
     };
@@ -47,7 +53,13 @@ export const saveWorkoutSet = (setID, exercise = null, weight = null, metric = n
     return action;
 };
 
-export const saveHistorySet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {
+export const saveHistoryExerciseName = (setID, exercise = null) => saveHistorySet(setID, exercise);
+
+export const saveHistoryForm = (setID, weight = null, metric = null, rpe = null) => {
+    return saveHistorySet(setID, null, weight, metric, rpe);
+}    
+
+const saveHistorySet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {
     var action = {
         type: SAVE_HISTORY_SET
     };

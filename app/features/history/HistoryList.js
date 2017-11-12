@@ -96,10 +96,8 @@ class HistoryList extends Component {
                 // technically an action to scroll should be application state and therefore should go through the global store
                 return (<View style={{backgroundColor: 'white'}}>
                             <EditHistorySetFormScreen
-                                setNumber={item.setNumber}
                                 setID={item.setID}
                                 removed={item.removed}
-                                exercise={item.exercise}
                                 tags={item.tags}
                                 weight={item.weight}
                                 metric={item.metric}

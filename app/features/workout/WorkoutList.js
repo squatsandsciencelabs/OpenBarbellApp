@@ -111,7 +111,6 @@ class WorkoutList extends Component {
             case "form":
                 return (<View style={{backgroundColor: 'white'}}>
                             <EditWorkoutSetFormScreen
-                                setNumber={item.setNumber}
                                 setID={item.setID}
                                 removed={item.removed}
                                 tags={item.tags}

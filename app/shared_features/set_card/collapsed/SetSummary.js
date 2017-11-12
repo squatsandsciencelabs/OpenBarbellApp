@@ -21,9 +21,9 @@ class SetSummary extends Component {
                 <ScrollView horizontal={true}
                     scrollEnabled={true}
                     showsHorizontalScrollIndicator={false}
-                    style={{flex:1, backgroundColor: 'white'}}>
+                    style={{flex:1}}>
                         <View style={{flexDirection: 'row'}}>
-                            <View style={{marginLeft: 20, justifyContent: 'center'}}>
+                            <View style={{marginLeft: 12, justifyContent: 'center'}}>
                                 <Text style={styles.text}>{this.props.weight} {this.props.metric} x {this.props.numReps}</Text>
                             </View>
                             
@@ -39,8 +39,10 @@ class SetSummary extends Component {
 const styles = StyleSheet.create({
     border: {
         borderColor: '#e0e0e0',
-        borderLeftWidth: 1,
-        borderRightWidth: 1,
+        borderWidth: 1,
+        paddingTop: 5,
+        paddingBottom: 5,
+        backgroundColor: 'white'
     },
     text: {
         color: 'rgba(77, 77, 77, 1)',

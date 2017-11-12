@@ -91,7 +91,8 @@ class WorkoutList extends Component {
                                 <EditWorkoutTitleCollapsedScreen
                                     setID={item.setID}
                                     exercise={item.exercise}
-                                    removed={item.removed} />
+                                    removed={item.removed}
+                                    videoFileURL={item.videoFileURL} />
                             </View>);
                 }
             case "summary":

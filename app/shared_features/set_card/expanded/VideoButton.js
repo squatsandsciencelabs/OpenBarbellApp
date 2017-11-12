@@ -48,7 +48,7 @@ class VideoButton extends Component {
                 // probably requires RCTCameraRoll
                 if (Platform.OS === 'ios') {
                     return (
-                        <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo(this.props.setID, this.props.videoFileURL) }>
+                        <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo() }>
                             <View style={[{flex: 1}, styles.button, styles.blackButton]}>
                                 <Video
                                     ref={(ref) => {
@@ -65,11 +65,11 @@ class VideoButton extends Component {
                 } else {
                     return (
                         <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo() }>
-                        <View style={[styles.button, styles.blackButton]}>
-                            <Image
-                                style={[{flex:1, flexDirection:'column'}, styles.imagePreview]}
-                                source={{uri: this.props.videoFileURL}} />
-                        </View>
+                            <View style={[styles.button, styles.blackButton]}>
+                                <Image
+                                    style={[{flex:1, flexDirection:'column'}, styles.imagePreview]}
+                                    source={{uri: this.props.videoFileURL}} />
+                            </View>
                         </TouchableOpacity>
                     );
                 }

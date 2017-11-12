@@ -7,8 +7,8 @@ import * as Actions from './EditWorkoutTitleCollapsedActions';
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         saveSet: Actions.saveSet,
-        tapExercise: Actions.presentExercise,
-        tapExpand: Actions.tapExpand,
+        tappedExpand: Actions.expandCard,
+        tappedWatch: Actions.presentWatchVideo,
     }, dispatch);
 };
 

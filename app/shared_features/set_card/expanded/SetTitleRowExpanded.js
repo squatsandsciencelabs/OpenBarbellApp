@@ -44,14 +44,14 @@ class SetTitleRowExpanded extends Component {
         return (
             <View style={[styles.container, styles.border]}>
                 <View style={[styles.field, {flex: 1}]}>
-                    <TouchableHighlight onPress={() => this.props.tapExercise(this.props.setID, this.props.exercise, this.props.bias)} underlayColor='#e0e0e0'>
+                    <TouchableHighlight onPress={() => this.props.tappedExercise(this.props.setID, this.props.exercise, this.props.bias)} underlayColor='#e0e0e0'>
                         {this._renderExercise()}
                     </TouchableHighlight>
                     <View style={styles.fieldDetails} pointerEvents='none'>
                         <Text style={styles.detailText}>{this._renderSetNumber()}</Text>
                     </View>
                 </View>
-                <TouchableOpacity onPress={() => this.props.tapCollapse(this.props.setID)}>
+                <TouchableOpacity onPress={() => this.props.tappedCollapse(this.props.setID)}>
                     {this._renderChevron()}
                 </TouchableOpacity>
             </View>

@@ -160,6 +160,10 @@ const createFormViewModel = (set, setNumber) => ({
 const createSummaryViewModel = (set) => ({
     type: 'summary',
     key: set.setID+'summary',
+    weight: set.weight ? set.weight : 0,
+    numReps: set.reps.length ? set.reps.length : '0 reps',
+    metric: set.metric,
+    tags: set.tags,
 });
 
 const createAnalysisViewModel = (set) => ({

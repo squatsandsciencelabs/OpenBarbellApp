@@ -17,7 +17,7 @@ export const getShowRemoved = (state) => stateRoot(state).showRemoved;
 export const getEndSetTimeLeft = (state) => {
     const endSetTimerDuration = getEndSetTimerDuration(state);
     const currentTime = Date.now();
-    return Math.abs(endSetTimerDuration - Date.parse(currentTime));
+    return Math.abs(endSetTimerDuration - currentTime);
 }
 
 export const getLastExportCSVDate = (state) => stateRoot(state).lastExportCSVDate;

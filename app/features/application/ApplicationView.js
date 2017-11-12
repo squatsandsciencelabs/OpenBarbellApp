@@ -12,7 +12,6 @@ import {
     StyleSheet,
     View,
     ListView,
-    ScrollView,
     Dimensions,
     Alert,
     Platform

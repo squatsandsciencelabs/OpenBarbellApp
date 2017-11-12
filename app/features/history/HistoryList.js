@@ -79,7 +79,12 @@ class HistoryList extends Component {
                 }
             case "summary":
                 return (
-                    <SetSummary />
+                    <SetSummary
+                        weight={item.weight}
+                        metric={item.metric}
+                        numReps={item.numReps}
+                        tags={item.tags}
+                    />
                 );
             case "analysis":
                 return (

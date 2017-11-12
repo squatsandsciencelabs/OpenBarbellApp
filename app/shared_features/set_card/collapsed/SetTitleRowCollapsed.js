@@ -47,24 +47,21 @@ class SetTitleRowCollapsed extends Component {
 
     _renderChevron() {
         return (
-            <View style={{backgroundColor: 'white', marginLeft: 50, marginTop: 5, marginBottom: 10}}>
-                <Icon name="chevron-with-circle-up" size={20} color='rgba(170, 170, 170, 1)' />
-            </View>
+            <TouchableOpacity style={{position: 'absolute', right: 10, top: 15}}
+                onPress={() => this.props.tapExpand(this.props.setID)}>            
+                    <View>
+                        <Icon name="chevron-with-circle-up" size={20} color='rgba(170, 170, 170, 1)' />
+                    </View>
+            </TouchableOpacity>
         );
     }
 
     render() {
         return (
             <View style={[styles.container, styles.border]}>
-                <View style={[styles.field, {flex: 1}]}>
-                    {this._renderExercise()}
-                    <View style={styles.fieldDetails} pointerEvents='none'>
-                        <Text style={styles.detailText}>{this._renderSetNumber()}</Text>
-                    </View>
-                </View>
-                <TouchableOpacity onPress={() => this.props.tapExpand(this.props.setID)}>
-                    {this._renderChevron()}
-                </TouchableOpacity>
+                {this._renderExercise()}
+                <Text style={styles.detailText}> {this._renderSetNumber()}</Text>
+                {this._renderChevron()}
             </View>
         );
     }
@@ -73,39 +70,23 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
         paddingLeft: 12,
-        paddingTop: 10,
-        paddingRight: 10,
+        paddingRight: 10,        
+        paddingTop: 15,
+        paddingBottom: 15,
         flex: 1,
         flexDirection: 'row',
-    },
-    field: {
-        backgroundColor: 'white',
-        borderColor: 'white',
-        borderWidth: 3,
-        borderRadius: 3,
-        marginBottom: 5,
-        zIndex: 2,
-        minHeight: 35,
+        alignItems: 'center',
     },
     fieldText: {
-        height: 29,
-        paddingTop: 6,
-        paddingLeft: 4,
-        fontSize: 13,
-        paddingRight: 30,
+        fontSize: 17,
         color: 'rgba(77, 77, 77, 1)',
-    },
-    fieldDetails: {
-        position: 'absolute',
-        right: 5,
-        top: -1,
-        bottom: 0,
-        justifyContent: 'center',
+        fontWeight: 'bold',
     },
     detailText: {
-        fontSize: 13,
+        fontSize: 17,
         color: 'gray',
-        backgroundColor: 'rgba(0, 0, 0, 0)'
+        backgroundColor: 'rgba(0, 0, 0, 0)',
+        fontWeight: 'bold',
     },
     placeholderText: {
         color: 'rgba(189, 189, 189, 1)'

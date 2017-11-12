@@ -40,7 +40,7 @@ class SetTitleRowCollapsed extends Component {
         if (Platform.OS === 'ios') {
             return (
                 <TouchableOpacity style={styles.videoButton} onPress={()=> this.props.tappedWatch(this.props.setID, this.props.videoFileURL) }>
-                    <View style={[{flex: 1}, styles.button, styles.blackButton]}>
+                    <View style={[{flex: 1}]}>
                         <Video
                             ref={(ref) => {
                                 this.player = ref
@@ -75,7 +75,7 @@ class SetTitleRowCollapsed extends Component {
     _renderChevron() {
         return (
             <TouchableOpacity style={{position: 'absolute', right: 10, top: 15}}
-                onPress={() => this.props.tapExpand(this.props.setID)}>            
+                onPress={() => this.props.tappedExpand(this.props.setID)}>            
                     <View>
                         <Icon name="chevron-with-circle-up" size={20} color='rgba(170, 170, 170, 1)' />
                     </View>

@@ -74,7 +74,8 @@ class HistoryList extends Component {
                                 <EditHistoryTitleCollapsedScreen
                                     setID={item.setID}
                                     exercise={item.exercise}
-                                    removed={item.removed} />
+                                    removed={item.removed}
+                                    videoFileURL={item.videoFileURL} />
                             </View>);
                 }
             case "summary":

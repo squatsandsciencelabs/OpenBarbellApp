@@ -8,41 +8,68 @@ import {
     TouchableOpacity
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
+import Video from 'react-native-video';
 
 class SetTitleRowCollapsed extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            setNumber: this.props.setNumber,
-            exercise: this.props.exercise,
-            removed: this.props.removed,
-        };
-    }
-
-    componentWillReceiveProps(nextProps) {
-        this.setState({
-            setNumber: nextProps.setNumber,
-            exercise: nextProps.exercise,
-            removed: nextProps.removed,
-        });
-    }
 
     _renderExercise() {
-        if (this.state.exercise === null || this.state.exercise === '') {
+        if (this.props.exercise === null || this.props.exercise === '') {
             return (<Text style={[styles.fieldText, styles.placeholderText]}>Exercise</Text>);
         }
-        return (<Text style={styles.fieldText}>{this.state.exercise}</Text>);
+        return (<Text style={styles.fieldText}>{this.props.exercise}</Text>);
     }
 
     _renderSetNumber() {
-        if (this.state.removed) {
+        if (this.props.removed) {
             return null;
         }
-        if (this.state.setNumber === null || this.state.setNumber === undefined) {
-            return '#1';
+        if (this.props.setNumber === null || this.props.setNumber === undefined) {
+            var text = '#1';
+        } else {
+            var text = '#' + this.props.setNumber;
         }
-        return '#' + this.state.setNumber;
+        return (<Text style={styles.detailText}> {text}</Text>);
+    }
+
+    // TODO: make this into its own component
+    _renderVideo() {
+        if (this.props.videoFileURL === null || this.props.videoFileURL === undefined) {
+            return null;
+        }
+
+        if (Platform.OS === 'ios') {
+            return (
+                <TouchableOpacity style={styles.videoButton} onPress={()=> this.props.tappedWatch(this.props.setID, this.props.videoFileURL) }>
+                    <View style={[{flex: 1}, styles.button, styles.blackButton]}>
+                        <Video
+                            ref={(ref) => {
+                                this.player = ref
+                            }}
+                            style={styles.videoPlayer}
+                            source={{uri: this.props.videoFileURL}}
+                            paused={true}
+                            repeat={true}
+                        />
+                    </View>
+                </TouchableOpacity>
+            );
+        } else {
+            return (
+                <TouchableOpacity style={styles.videoButton} onPress={()=> this.props.tappedWatch(this.props.setID, this.props.videoFileURL) }>
+                    <View style={[styles.button, styles.blackButton]}>
+                        <Image
+                            style={[{flex:1, flexDirection:'column'}, styles.imagePreview]}
+                            source={{uri: this.props.videoFileURL}} />
+                    </View>
+                </TouchableOpacity>
+            );
+        }
+
+        return (
+            <TouchableOpacity style={{position: 'absolute', right: 10, top: 15}}>
+                <Text>Video Goes Here</Text>
+            </TouchableOpacity>
+        );
     }
 
     _renderChevron() {
@@ -60,7 +87,8 @@ class SetTitleRowCollapsed extends Component {
         return (
             <View style={[styles.container, styles.border]}>
                 {this._renderExercise()}
-                <Text style={styles.detailText}> {this._renderSetNumber()}</Text>
+                {this._renderSetNumber()}
+                {this._renderVideo()}
                 {this._renderChevron()}
             </View>
         );
@@ -91,10 +119,24 @@ const styles = StyleSheet.create({
     placeholderText: {
         color: 'rgba(189, 189, 189, 1)'
     },
+    videoButton: {
+        position: 'absolute',
+        right: 40,
+        top: 15,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        overflow: 'hidden',
+    },
     border: {
         borderColor: '#e0e0e0',
         borderLeftWidth: 1,
         borderRightWidth: 1,
+    },
+    videoPlayer: {
+        width: 20,
+        height: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 });
 

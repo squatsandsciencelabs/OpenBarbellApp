@@ -140,6 +140,7 @@ const createTitleViewModel = (state, set, setNumber, isCollapsed=false) => ({
     exercise: set.exercise,
     setID: set.setID,
     isCollapsed: isCollapsed,
+    videoFileURL: set.videoFileURL,
 });
 
 const createFormViewModel = (set, setNumber) => ({

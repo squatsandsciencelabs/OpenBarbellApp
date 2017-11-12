@@ -7,8 +7,8 @@ import * as Actions from './EditHistoryTitleExpandedActions';
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         saveSet: Actions.saveSet,
-        tapExercise: Actions.presentExercise,
-        tapCollapse: Actions.tapCollapse,
+        tappedExercise: Actions.presentExercise,
+        tappedCollapse: Actions.tapCollapse,
     }, dispatch);
 };
 

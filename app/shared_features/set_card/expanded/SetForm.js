@@ -22,7 +22,6 @@ class SetForm extends Component {
         super(props);
 
         this.state = {
-            exercise: this.props.exercise,
             tags: this.props.tags,
             weight: this.props.weight,
             didChangeWeight: false,
@@ -53,6 +52,7 @@ class SetForm extends Component {
     }
 
     componentWillUnmount() {
+        this._save();
         this.keyboardDidHideListener.remove();
     }
 
@@ -93,11 +93,10 @@ class SetForm extends Component {
     }
 
     _save() {
-        if (this.props.exercise !== this.state.exercise
-            || this.props.weight !== this.state.weight
+        if (this.props.weight !== this.state.weight
             || this.props.metric !== this.state.metric
             || this.props.rpe !== this.state.rpe) {
-            this.props.saveSet(this.props.setID, this.state.exercise, this.state.weight, this.state.metric, this.state.rpe);
+            this.props.saveSet(this.props.setID, this.state.weight, this.state.metric, this.state.rpe);
         }
     }
 

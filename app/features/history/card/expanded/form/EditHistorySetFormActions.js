@@ -65,8 +65,8 @@ export const presentTags = (setID, tags) => (dispatch, getState) => {
     });
 };
 
-export const saveSet = (setID, exercise = null, weight = null, metric = null, rpe = null) => {
-    return SetsActionCreators.saveHistorySet(setID, exercise, weight, metric, rpe);
+export const saveSet = (setID, weight = null, metric = null, rpe = null) => {
+    return SetsActionCreators.saveHistoryForm(setID, weight, metric, rpe);
 };
 
 export const presentRecordVideo = (setID) => (dispatch, getState) => {

@@ -101,7 +101,7 @@ const updateIsExportingCSV = (isExportingCSV) => ({ type: EXPORTING_CSV, isExpor
 const getTimeSinceLastExport = (state) => {
     const startDate = SettingsSelectors.getLastExportCSVDate(state);
     if (Boolean(startDate)) {
-        return Date.parse(new Date()) - Date.parse(startDate);
+        return Date.now() - Date.parse(startDate);
     } else {
         return 0;
     }

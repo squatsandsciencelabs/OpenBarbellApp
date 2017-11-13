@@ -20,7 +20,7 @@ var isPaused = false;
 
 const runTimer = (duration, dispatch) => {
     console.tron.log("Running timer with duration " + duration);
-    startTime = (new Date()).getTime();
+    startTime = Date.now();
     isPaused = false;    
     timer = BackgroundTimer.setTimeout(() => {
         console.tron.log("End set timer executed with duration " + duration + "! time to end set");
@@ -48,7 +48,7 @@ export const startEndSetTimer = () => (dispatch, getState) => {
     } else if (isEditing) {
         timeRemaining = durationInSeconds * 1000;
         isPaused = true;
-        startTime = (new Date()).getTime();
+        startTime = Date.now();
         // start it paused
         dispatch({
             type: START_END_SET_TIMER,
@@ -63,7 +63,7 @@ export const startEndSetTimer = () => (dispatch, getState) => {
     } else {
         timeRemaining = durationInSeconds * 1000;
         runTimer(timeRemaining, dispatch);
-        let projectedEndSetTime = (new Date()).getTime() + timeRemaining;
+        let projectedEndSetTime = Date.now() + timeRemaining;
         // start it normal
         dispatch({
             type: START_END_SET_TIMER,
@@ -87,7 +87,7 @@ export const resumeEndSetTimer = () => (dispatch) => {
         timeRemaining = 10000;
     }
     runTimer(timeRemaining, dispatch);
-    let projectedEndSetTime = (new Date()).getTime() + timeRemaining;    
+    let projectedEndSetTime = Date.now() + timeRemaining;    
     dispatch({
         type: RESUME_END_SET_TIMER,
         projectedEndSetTime: projectedEndSetTime,
@@ -105,7 +105,7 @@ export const pauseEndSetTimer = () => (dispatch) => {
     timer = null;
     isPaused = true;
 
-    let currentTime = (new Date()).getTime();
+    let currentTime = Date.now();
     let timeElapsed = currentTime - startTime;
     timeRemaining -= timeElapsed;
     console.tron.log("Pause timer, time elapsed " + timeElapsed + " time remaining " + timeRemaining);
@@ -133,7 +133,7 @@ export const sanityCheckTimer = () => (dispatch, getState) => {
     if (Platform.OS === 'ios') {
         let state = getState();        
         let projectedEndSetTime = WorkoutSelectors.getProjectedEndSetTime(state);
-        let currentTime = (new Date()).getTime();
+        let currentTime = Date.now();
         if (projectedEndSetTime !== null && currentTime >= projectedEndSetTime) {
             dispatch(SetsActionCreators.endSet(false, true));
         }

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {
     View,
     Text,
+    Image,
     StyleSheet,
     TouchableHighlight,
     Platform,
@@ -39,8 +40,8 @@ class SetTitleRowCollapsed extends Component {
 
         if (Platform.OS === 'ios') {
             return (
-                <TouchableOpacity style={styles.videoButton} onPress={()=> this.props.tappedWatch(this.props.setID, this.props.videoFileURL) }>
-                    <View style={[{flex: 1}]}>
+                <TouchableOpacity style={styles.videoButtonContainer} onPress={()=> this.props.tappedWatch(this.props.setID, this.props.videoFileURL) }>
+                    <View style={styles.videoButton}>
                         <Video
                             ref={(ref) => {
                                 this.player = ref
@@ -55,26 +56,20 @@ class SetTitleRowCollapsed extends Component {
             );
         } else {
             return (
-                <TouchableOpacity style={styles.videoButton} onPress={()=> this.props.tappedWatch(this.props.setID, this.props.videoFileURL) }>
-                    <View style={[styles.button, styles.blackButton]}>
+                <TouchableOpacity style={styles.videoButtonContainer} onPress={()=> this.props.tappedWatch(this.props.setID, this.props.videoFileURL) }>
+                    <View style={styles.videoButton}>
                         <Image
-                            style={[{flex:1, flexDirection:'column'}, styles.imagePreview]}
+                            style={[{flex:1, flexDirection:'column'}, styles.videoPlayer]}
                             source={{uri: this.props.videoFileURL}} />
                     </View>
                 </TouchableOpacity>
             );
         }
-
-        return (
-            <TouchableOpacity style={{position: 'absolute', right: 10, top: 15}}>
-                <Text>Video Goes Here</Text>
-            </TouchableOpacity>
-        );
     }
 
     _renderChevron() {
         return (
-            <TouchableOpacity style={{position: 'absolute', right: 10, top: 15}}
+            <TouchableOpacity style={styles.chevronContainer}
                 onPress={() => this.props.tappedExpand(this.props.setID)}>            
                     <View>
                         <Icon name="chevron-with-circle-up" size={20} color='rgba(170, 170, 170, 1)' />
@@ -119,24 +114,45 @@ const styles = StyleSheet.create({
     placeholderText: {
         color: 'rgba(189, 189, 189, 1)'
     },
-    videoButton: {
+    videoButtonContainer: {
         position: 'absolute',
         right: 40,
-        top: 15,
+        top: 0,
+        width: 40,
+        height: 50,
+        backgroundColor: 'white',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    videoButton: {
         backgroundColor: 'white',
         borderRadius: 10,
         overflow: 'hidden',
+        width: 20,
+        height: 20,
+    },
+    videoPlayer: {
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        overflow: 'hidden',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    chevronContainer: {
+        position: 'absolute',
+        right: 0,
+        top: 0,
+        width: 40,
+        height: 50,
+        backgroundColor: 'white',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     border: {
         borderColor: '#e0e0e0',
         borderLeftWidth: 1,
         borderRightWidth: 1,
-    },
-    videoPlayer: {
-        width: 20,
-        height: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
 });
 

@@ -13,7 +13,7 @@ describe('SettingsSelectors', () => {
                 endSetTimerDuration: 1000
             }
         }
-        Date.now = () => new Date(3000);
+        Date.now = () => 3000;
 
         const result = sut.getEndSetTimeLeft(state);
 

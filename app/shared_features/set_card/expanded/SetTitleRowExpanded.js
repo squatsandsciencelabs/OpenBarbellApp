@@ -31,7 +31,7 @@ class SetTitleRowExpanded extends Component {
     _renderChevron() {
         if (this.props.isCollapsable) {
             return (
-                <View style={{backgroundColor: 'white', marginLeft: 50, marginTop: 5, marginBottom: 10}}>
+                <View>
                     <Icon name="chevron-with-circle-down" size={20} color='rgba(170, 170, 170, 1)' />
                 </View>
             );
@@ -51,7 +51,7 @@ class SetTitleRowExpanded extends Component {
                         <Text style={styles.detailText}>{this._renderSetNumber()}</Text>
                     </View>
                 </View>
-                <TouchableOpacity onPress={() => this.props.tappedCollapse(this.props.setID)}>
+                <TouchableOpacity style={styles.chevronContainer} onPress={() => this.props.tappedCollapse(this.props.setID)}>
                     {this._renderChevron()}
                 </TouchableOpacity>
             </View>
@@ -62,8 +62,6 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: 'white',
         paddingLeft: 12,
-        paddingTop: 10,
-        paddingRight: 10,
         flex: 1,
         flexDirection: 'row',
     },
@@ -73,6 +71,8 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         borderRadius: 3,
         marginBottom: 5,
+        marginTop: 10,
+        marginRight: 10,
         zIndex: 2,
         minHeight: 35,
     },
@@ -98,6 +98,13 @@ const styles = StyleSheet.create({
     },
     placeholderText: {
         color: 'rgba(189, 189, 189, 1)'
+    },
+    chevronContainer: {
+        width: 40,
+        height: 50,
+        backgroundColor: 'white',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     border: {
         borderColor: '#e0e0e0',

@@ -12,9 +12,11 @@ class SetSummary extends Component {
 
     render() {
         let pills = [];
-        this.props.tags.forEach((tag) => {
-            pills.push(<Pill text={tag} style={styles.pill} />);
-        });
+        if (this.props.tags) {
+            this.props.tags.forEach((tag) => {
+                pills.push(<Pill text={tag} style={styles.pill} />);
+            });
+        }
 
         return (
             <View style={[styles.border, {flex: 1}]}>

@@ -573,6 +573,48 @@ describe('SetsSelectors', () => {
             expect(result[2]).toBe(b);
             expect(result.length).toBe(3);
         });
+
+        test('string initialStartTime dates', () => {
+            let a = {
+                setID: 'a',
+                initialStartTime: '2017-11-14T04:06:12.640Z',
+                reps: []
+            };
+            let b = {
+                setID: 'b',
+                initialStartTime: '2017-11-14T04:06:27.169Z',
+                reps: []
+            };
+            let c = {
+                setID: 'c',
+                initialStartTime: '2017-11-14T04:06:23.367Z',
+                reps: []
+            };
+            let d = {
+                setID: 'd',
+                initialStartTime: '2017-11-13T09:24:52.812Z',
+                reps: []
+            }
+            const state = {
+                sets: {
+                    historyData: {
+                        a: a,
+                        b: b,
+                        c: c,
+                        d: d,
+                    }
+                }
+            };
+
+            console.log("TEST BEGIN");
+            const result = sut.getHistorySetsChronological(state);
+
+            expect(result[0]).toBe(d);
+            expect(result[1]).toBe(a);
+            expect(result[2]).toBe(c);
+            expect(result[3]).toBe(b);
+            expect(result.length).toBe(4);
+        });
     });
 
     describe('getNumHistorySets', () => {

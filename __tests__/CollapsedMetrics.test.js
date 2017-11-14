@@ -32,6 +32,11 @@ describe('getAvgVelocities', () => {
                     removed: false,
                     data: [-3456, 39, 1.08]
                 },
+                {
+                    isValid: false,
+                    removed: true,
+                    data: [-3456, 40, 2.15]
+                }
             ]
         }
 
@@ -95,6 +100,11 @@ describe('getAvgofAvgVelocities', () => {
                     isValid: true,
                     removed: false,
                     data: [-3456, 38, 1.821198]
+                },
+                {
+                    isValid: false,
+                    removed: true,
+                    data: [-3456, 40, 2.15]
                 }, 
                 {
                     isValid: true,
@@ -106,7 +116,7 @@ describe('getAvgofAvgVelocities', () => {
 
         let result = sut.getAvgofAvgVelocities(set);
 
-        expect(result).toBe("1.58");
+        expect(result).toBe(1.58);
     });
 });
 
@@ -126,6 +136,16 @@ describe('getAbsLossVelocity', () => {
         let set = {
             reps: [
                 {
+                    isValid: false,
+                    removed: true,
+                    data: [-3456, 40, 1.15]
+                },
+                {
+                    isValid: false,
+                    removed: true,
+                    data: [-3456, 40, 3.15]
+                },
+                {
                     isValid: true,
                     removed: false,
                     data: [-3456, 37, 1.833368]
@@ -134,7 +154,12 @@ describe('getAbsLossVelocity', () => {
                     isValid: true,
                     removed: false,
                     data: [-3456, 38, 1.821198]
-                }, 
+                },
+                {
+                    isValid: false,
+                    removed: true,
+                    data: [-3456, 40, 2.15]
+                },
                 {
                     isValid: true,
                     removed: false,
@@ -175,6 +200,11 @@ describe('getFirstRepAvgVelocity', () => {
                     data: [-3456, 38, 1.821198]
                 }, 
                 {
+                    isValid: false,
+                    removed: true,
+                    data: [-3456, 40, 2.15]
+                },
+                {
                     isValid: true,
                     removed: false,
                     data: [-3456, 39, 1.08]
@@ -212,7 +242,17 @@ describe('getLastRepAvgVelocity', () => {
                     isValid: true,
                     removed: false,
                     data: [-3456, 38, 1.821198]
-                }, 
+                },
+                {
+                    isValid: false,
+                    removed: true,
+                    data: [-3456, 40, 2.15]
+                },
+                {
+                    isValid: false,
+                    removed: true,
+                    data: [-3456, 40, 1.00]
+                },  
                 {
                     isValid: true,
                     removed: false,
@@ -251,6 +291,11 @@ describe('getMinAvgVelocity', () => {
                     isValid: true,
                     removed: false,
                     data: [-3456, 38, 1.821198]
+                },
+                {
+                    isValid: false,
+                    removed: true,
+                    data: [-3456, 40, 2.15]
                 }, 
                 {
                     isValid: true,
@@ -290,6 +335,11 @@ describe('getMaxAvgVelocity', () => {
                     isValid: true,
                     removed: false,
                     data: [-3456, 38, 1.821198]
+                },
+                {
+                    isValid: false,
+                    removed: true,
+                    data: [-3456, 40, 2.15]
                 }, 
                 {
                     isValid: true,
@@ -331,6 +381,11 @@ describe('getROMs', () => {
                         isValid: true,
                         removed: false,
                         data: [-3456, 38, 1.821198, 250]
+                    },
+                    {
+                        isValid: false,
+                        removed: true,
+                        data: [-3456, 40, 2.15]
                     }, 
                     {
                         isValid: true,
@@ -378,42 +433,57 @@ describe('getROMs', () => {
 
 describe('getAvgofROMs', () => {
     
-        test('null when no reps', () => {
-            let set = {
-                reps: [],
-            }
-    
-            let result = sut.getAvgofROMs(set);
-    
-            expect(result).toBe(null);
-        });
-    
-        test('return avg of roms', () => {
-            let set = {
-                reps: [
-                    {
-                        isValid: true,
-                        removed: false,
-                        data: [-3456, 37, 1.833368, 200]
-                    }, 
-                    {
-                        isValid: true,
-                        removed: false,
-                        data: [-3456, 38, 1.821198, 250]
-                    }, 
-                    {
-                        isValid: true,
-                        removed: false,
-                        data: [-3456, 39, 1.08, 300]
-                    },
-                ]
-            }
-    
-            let result = sut.getAvgofROMs(set);
-    
-            expect(result).toBe("250.00");
-        });
+    test('null when no reps', () => {
+        let set = {
+            reps: [],
+        }
+
+        let result = sut.getAvgofROMs(set);
+
+        expect(result).toBe(null);
     });
+
+    test('return avg of roms', () => {
+        let set = {
+            reps: [
+                {
+                    isValid: false,
+                    removed: true,
+                    data: [-3456, 40, 4.15]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 37, 1.833368, 200]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 37, 1.833368, 220]
+                },                     
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 38, 1.821198, 250]
+                },
+                {
+                    isValid: false,
+                    removed: true,
+                    data: [-3456, 40, 2.15]
+                }, 
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 39, 1.08, 300]
+                },
+            ]
+        }
+
+        let result = sut.getAvgofROMs(set);
+
+        expect(result).toBe(242.5);
+    });
+});
 
 describe('getAbsLossROM', () => {
         
@@ -434,6 +504,11 @@ describe('getAbsLossROM', () => {
                         isValid: true,
                         removed: false,
                         data: [-3456, 37, 1.833368, 200]
+                    },
+                    {
+                        isValid: false,
+                        removed: true,
+                        data: [-3456, 40, 2.15]
                     }, 
                     {
                         isValid: true,
@@ -445,6 +520,11 @@ describe('getAbsLossROM', () => {
                         removed: false,
                         data: [-3456, 39, 1.08, 300]
                     },
+                    {
+                        isValid: false,
+                        removed: true,
+                        data: [-3456, 40, 5.15]
+                    }, 
                 ]
             }
                 
@@ -473,6 +553,11 @@ describe('getFirstRepROM', () => {
                     isValid: true,
                     removed: false,
                     data: [-3456, 37, 1.833368, 200]
+                },
+                {
+                    isValid: false,
+                    removed: true,
+                    data: [-3456, 40, 2.15]
                 }, 
                 {
                     isValid: true,
@@ -512,6 +597,11 @@ describe('getLastRepROM', () => {
                     isValid: true,
                     removed: false,
                     data: [-3456, 37, 1.833368, 200]
+                },
+                {
+                    isValid: false,
+                    removed: true,
+                    data: [-3456, 40, 2.15]
                 }, 
                 {
                     isValid: true,
@@ -551,6 +641,11 @@ describe('getMinROM', () => {
                     isValid: true,
                     removed: false,
                     data: [-3456, 37, 1.833368, 200]
+                },
+                {
+                    isValid: false,
+                    removed: true,
+                    data: [-3456, 40, 2.15]
                 }, 
                 {
                     isValid: true,
@@ -590,6 +685,11 @@ describe('getMaxROM', () => {
                     isValid: true,
                     removed: false,
                     data: [-3456, 37, 1.833368, 200]
+                },
+                {
+                    isValid: false,
+                    removed: true,
+                    data: [-3456, 40, 2.15]
                 }, 
                 {
                     isValid: true,

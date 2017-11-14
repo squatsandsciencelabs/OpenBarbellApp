@@ -13,8 +13,11 @@ class SetSummary extends Component {
     render() {
         let pills = [];
         if (this.props.tags) {
+            let position = 0;
             this.props.tags.forEach((tag) => {
-                pills.push(<Pill text={tag} style={styles.pill} />);
+                let key = position;
+                pills.push(<Pill key={position} text={tag} style={styles.pill} />);
+                position++;
             });
         }
 

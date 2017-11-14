@@ -1,34 +1,32 @@
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
 
 export const getAvgVelocities = (set) => {
-    let velocities = [];
+    const velocities = [];
     
-    for (let i = 0; i < set.reps.length; i++) {
-        let rep = set.reps[i];
-                
+    set.reps.forEach((rep) => {                
         if (rep.isValid === true && rep.removed === false) {
             let repData = rep.data;
         
             velocities.push(Number(RepDataMap.averageVelocity(repData)));
         }            
-    };
+    });
 
     return velocities;
 };
 
 export const getAvgofAvgVelocities = (set) => {
-    let avgVs = getAvgVelocities(set);
+    const avgVs = getAvgVelocities(set);
 
     if (avgVs.length > 0) {
         let sum = avgVs.reduce((previous, current) => current + previous);
-        return (sum / avgVs.length).toFixed(2);
+        return Number((sum / avgVs.length).toFixed(2));
     } else {
         return null;
     }  
 };
 
 export const getAbsLossVelocity = (set) => {
-    let avgVs = getAvgVelocities(set);
+    const avgVs = getAvgVelocities(set);
 
     if (avgVs.length > 0) {
         let maxV = Math.max(...avgVs);
@@ -41,7 +39,7 @@ export const getAbsLossVelocity = (set) => {
 };
 
 export const getFirstRepAvgVelocity = (set) => {
-    let avgVs = getAvgVelocities(set);
+    const avgVs = getAvgVelocities(set);
     
     if (avgVs.length > 0) {
         return avgVs[0];
@@ -51,7 +49,7 @@ export const getFirstRepAvgVelocity = (set) => {
 };
 
 export const getLastRepAvgVelocity = (set) => {
-    let avgVs = getAvgVelocities(set);
+    const avgVs = getAvgVelocities(set);
     
     if (avgVs.length > 0) {
         return avgVs[avgVs.length - 1];
@@ -61,7 +59,7 @@ export const getLastRepAvgVelocity = (set) => {
 };
 
 export const getMinAvgVelocity = (set) => {
-    let avgVs = getAvgVelocities(set);
+    const avgVs = getAvgVelocities(set);
 
     if (avgVs.length > 0) {
         return Math.min(...avgVs);
@@ -71,7 +69,7 @@ export const getMinAvgVelocity = (set) => {
 };
 
 export const getMaxAvgVelocity = (set) => {
-    let avgVs = getAvgVelocities(set);
+    const avgVs = getAvgVelocities(set);
     
     if (avgVs.length > 0) {
         return Math.max(...avgVs);    
@@ -83,15 +81,13 @@ export const getMaxAvgVelocity = (set) => {
 export const getROMs = (set) => {
     let roms = [];
     
-    for (let i = 0; i < set.reps.length; i++) {
-        let rep = set.reps[i];
-                
+    set.reps.forEach((rep) => {                
         if (rep.isValid === true && rep.removed === false) {
             let repData = rep.data;
         
             roms.push(Number(RepDataMap.rangeOfMotion(repData)));
         }            
-    };
+    });
 
     return roms;
 };
@@ -101,7 +97,7 @@ export const getAvgofROMs = (set) => {
 
     if (roms.length > 0) {
         let sum = roms.reduce((previous, current) => current + previous);
-        return (sum / roms.length).toFixed(2);
+        return Number((sum / roms.length).toFixed(2));
     } else {
         return null;
     }  

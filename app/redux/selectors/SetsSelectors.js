@@ -173,9 +173,21 @@ const dictToArray = (dictionary) => {
 // History
 
 export const getHistorySetsChronological = (state) => {
-    let sets = stateRoot(state);
+    const sets = stateRoot(state);
     var array = dictToArray(sets.historyData);
-    array.sort((set1, set2) => Date.parse(SetTimeCalculator.startTime(set1)) - Date.parse(SetTimeCalculator.startTime(set2)));
+    array.sort((set1, set2) => {
+        let set1Start = SetTimeCalculator.startTime(set1);
+        if (set1Start !== null) {
+            set1Start = Date.parse(set1Start);
+        }
+
+        let set2Start = SetTimeCalculator.startTime(set2);
+        if (set2Start !== null) {
+            set2Start = Date.parse(set2Start);
+        }
+
+        return set1Start - set2Start;
+    });
     return array;
 };
 

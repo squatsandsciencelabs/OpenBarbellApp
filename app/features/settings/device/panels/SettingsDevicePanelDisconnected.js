@@ -106,7 +106,7 @@ class SettingsDevicePanelDisconnected extends Component {
 
     _renderDeviceRow(device) {
         return (
-            <TouchableOpacity style={[{flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}, styles.deviceRow]}
+            <TouchableOpacity key={device} style={[{flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}, styles.deviceRow]}
                 alphaOpactity={1}
                 onPress={ () => this.props.connectDevice(device) }>
                     <View><Text style={styles.deviceRowText}>{ device }</Text></View>

@@ -40,4 +40,37 @@ describe('DurationCalculator', () => {
 
         expect(actual).toBe(expected);
     });
+
+    test('two date strings', () => {
+        const start = '03-20-1995';
+        const end = '03-21-1995';
+
+        const expected = 86400000;
+
+        const actual = sut.getDurationBetween(start, end);
+
+        expect(actual).toBe(expected);
+    });
+    
+    test('two date numbers', () => {
+        const start = 5000;
+        const end = 10000;
+
+        const expected = 5000;
+
+        const actual = sut.getDurationBetween(start, end);
+
+        expect(actual).toBe(expected);
+    });
+
+    test('two date objects', () => {
+        const start = new Date('03-20-1995');
+        const end = new Date('03-21-1995');
+
+        const expected = 86400000;
+
+        const actual = sut.getDurationBetween(start, end);
+
+        expect(actual).toBe(expected);
+    });    
 });

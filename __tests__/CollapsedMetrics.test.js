@@ -308,6 +308,21 @@ describe('getLastRepAvgVelocity', () => {
                     removed: false,
                     data: [-3456, 39, 1.08]
                 },
+                {
+                    isValid: false,
+                    removed: false,
+                    data: [-3456, 40, 3.15]
+                },
+                {
+                    isValid: true,
+                    removed: true,
+                    data: [-3456, 40, 0.15]
+                },
+                {
+                    isValid: false,
+                    removed: true,
+                    data: [-3456, 40, 1.12]
+                },  
             ]
         };
             

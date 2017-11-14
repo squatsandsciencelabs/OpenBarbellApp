@@ -175,7 +175,7 @@ const dictToArray = (dictionary) => {
 export const getHistorySetsChronological = (state) => {
     let sets = stateRoot(state);
     var array = dictToArray(sets.historyData);
-    array.sort((set1, set2) => SetTimeCalculator.startTime(set1) - SetTimeCalculator.startTime(set2));
+    array.sort((set1, set2) => Date.parse(SetTimeCalculator.startTime(set1)) - Date.parse(SetTimeCalculator.startTime(set2)));
     return array;
 };
 

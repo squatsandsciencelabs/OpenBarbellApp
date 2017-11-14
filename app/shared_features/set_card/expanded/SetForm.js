@@ -22,8 +22,6 @@ class SetForm extends Component {
         super(props);
 
         this.state = {
-            setNumber: this.props.setNumber,
-            exercise: this.props.exercise,
             tags: this.props.tags,
             weight: this.props.weight,
             didChangeWeight: false,
@@ -31,16 +29,12 @@ class SetForm extends Component {
             rpe: this.props.rpe,
             didChangeRPE: false,
             removed: this.props.removed,
-            editingExercise: false,
-            suggestions: []
         };
     }
 
     // this uses didChange flags to prevent overwriting of values while you're still typing while still allowing sync to update it
     componentWillReceiveProps(nextProps) {
         this.setState({
-            setNumber: nextProps.setNumber,
-            exercise: nextProps.exercise,
             tags: nextProps.tags,
             weight: this.state.didChangeWeight ? this.state.weight : nextProps.weight,
             didChangeWeight: false,
@@ -58,6 +52,7 @@ class SetForm extends Component {
     }
 
     componentWillUnmount() {
+        this._save();
         this.keyboardDidHideListener.remove();
     }
 
@@ -98,11 +93,10 @@ class SetForm extends Component {
     }
 
     _save() {
-        if (this.props.exercise !== this.state.exercise
-            || this.props.weight !== this.state.weight
+        if (this.props.weight !== this.state.weight
             || this.props.metric !== this.state.metric
             || this.props.rpe !== this.state.rpe) {
-            this.props.saveSet(this.props.setID, this.state.exercise, this.state.weight, this.state.metric, this.state.rpe);
+            this.props.saveSet(this.props.setID, this.state.weight, this.state.metric, this.state.rpe);
         }
     }
 
@@ -118,16 +112,9 @@ class SetForm extends Component {
 
     // RENDER
 
-    _displayExercise() {
-        if (this.state.exercise === null || this.state.exercise === '') {
-            return (<Text style={[styles.exerciseText, styles.placeholderText]}>Exercise</Text>);
-        }
-        return (<Text style={styles.exerciseText}>{this.state.exercise}</Text>);
-    }
-
     _displayTags() {
         if (this.state.tags === undefined || this.state.tags === null || this.state.tags.length === 0) {
-            return (<Text style={[styles.exerciseText, styles.placeholderText]}>Tags</Text>);
+            return (<Text style={[styles.tagText, styles.placeholderText]}>Tags</Text>);
         }
 
         var pills = [];
@@ -143,35 +130,12 @@ class SetForm extends Component {
         return (<View style={styles.tagField}>{pills}</View>);
     }
 
-    _displaySetNumber() {
-        if (this.state.removed) {
-            return null;
-        }
-        if (this.state.setNumber === null || this.state.setNumber === undefined) {
-            return '#1';
-        }
-        return '#' + this.state.setNumber;
-    }
-
     _displayMetric() {
         if (this.state.metric === 'kgs') {
             return "KGs";
         } else if (this.state.metric === 'lbs') {
             return "LBs";
         }
-    }
-
-    _renderExercise() {
-        return (
-            <View style={styles.field}>
-                <TouchableHighlight onPress={() => this.props.tapExercise(this.props.setID, this.state.exercise, this.props.bias)} underlayColor='#e0e0e0'>
-                    {this._displayExercise()}
-                </TouchableHighlight>
-                <View style={styles.fieldDetails} pointerEvents='none'>
-                    <Text style={styles.detailText}>{this._displaySetNumber()}</Text>
-                </View>
-            </View>
-        );
     }
 
     _renderWeight() {
@@ -235,24 +199,20 @@ class SetForm extends Component {
     }
 
     render() {
-        const borderStyle = this.props.isTopBorderHidden ? styles.borderPartial : styles.borderAllRound;
-
         return (
-            <View style={[{flex: 1, flexDirection: 'column'}, borderStyle]}>
-                <View style={[{flex: 1, flexDirection: 'column', paddingLeft: 12, paddingRight: 12, paddingTop: 12, paddingBottom: 7}]}>
+            <View style={[{flex: 1, flexDirection: 'column'}, styles.border]}>
+                <View style={[{flex: 1, flexDirection: 'column', paddingLeft: 12, paddingRight: 12, paddingTop: 0, paddingBottom: 7}]}>
                     <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
                         <View style={{flex: 1}}>
-                            { this._renderExercise() }
                             <View style={{flex: 1, flexDirection: 'row'}}>
                                 { this._renderWeight() }
                                 { this._renderRPE() }
                             </View>
+                            <View>{ this._renderTags() }</View>
                         </View>
 
                         <View>{ this.props.renderDetailComponent() }</View>
                     </View>
-
-                    <View>{ this._renderTags() }</View>
                 </View>
             </View>
         );
@@ -286,7 +246,7 @@ const styles = StyleSheet.create({
         paddingRight: 30,
         color: 'rgba(77, 77, 77, 1)',
     },
-    exerciseText: {
+    tagText: {
         height: 29,
         paddingTop: 6,
         paddingLeft: 4,
@@ -309,17 +269,11 @@ const styles = StyleSheet.create({
         color: 'gray',
         backgroundColor: 'rgba(0, 0, 0, 0)'
     },
-    borderPartial: {
+    border: {
         borderColor: '#e0e0e0',
         borderLeftWidth: 1,
         borderRightWidth: 1,
     },
-    borderAllRound: {
-        borderColor: '#e0e0e0',
-        borderLeftWidth: 1,
-        borderRightWidth: 1,
-        borderTopWidth: 1,
-    }
 });
 
 export default SetForm;

@@ -10,9 +10,10 @@ import WorkoutList from './WorkoutList';
 import * as Actions from './WorkoutActions';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
+import * as WorkoutCollapsedSelectors from 'app/redux/selectors/WorkoutCollapsedSelectors';
 
 // assumes chronological sets
-const createViewModels = (sets) => {
+const createViewModels = (state, sets) => {
     // declare variables
     let section = { key: 1, data: [] }; // contains the actual data
     let sections = [section]; // the return value
@@ -22,6 +23,7 @@ const createViewModels = (sets) => {
     let isInitialSet = true; // to help determine when to display rest time and split up the sections properly
     let count = 0;
     let isLastSet = false; // to set up the live set footer
+    let isCollapsed = false;
 
     // build view models
     sets.map((set) => {
@@ -36,11 +38,13 @@ const createViewModels = (sets) => {
         // set card data
         let array = [0, 0];
 
+        // set collapsed state
+        isCollapsed = isLastSet ? false : WorkoutCollapsedSelectors.getIsCollapsed(state, set.setID);
+
         // card header
         if (isInitialSet) {
             lastExerciseName = null;
             setNumber = 1;
-
         } else if (!set.removed) {
             if (lastExerciseName !== null && lastExerciseName === set.exercise) {
                 setNumber++;
@@ -50,27 +54,40 @@ const createViewModels = (sets) => {
         }
         if (isLastSet) {
             array.push({type: 'working set header', key: set.setID+'end set timer'});
+        } else {
+            array.push(createTopBorder(set));
         }
-        array.push(createHeaderViewModel(set, setNumber, lastExerciseName, isLastSet));
-        if (set.reps.length > 0) {
-            array.push({type: "subheader", key: set.setID+"subheader"});
+        array.push(createTitleViewModel(state, set, setNumber, lastExerciseName, isLastSet, isCollapsed));
+        if (!isCollapsed) {
+            array.push(createFormViewModel(set, setNumber));
+            if (isLastSet) {
+                array.push(createAnalysisViewModel(set));
+            }
+            if (set.reps.length > 0) {
+                array.push({type: "subheader", key: set.setID+"subheader"});
+            }
+        } else {
+            array.push(createSummaryViewModel(set));
+            array.push(createAnalysisViewModel(set));
         }
         lastExerciseName = set.exercise;
 
         // reps
-        Array.prototype.push.apply(array, createRowViewModels(set));
+        if (!isCollapsed) {
+            Array.prototype.push.apply(array, createRowViewModels(set));
+        }
 
         // rest footer
         if (isInitialSet) {
             // new set, reset the end time
             lastSetEndTime = set.removed ? null : SetTimeCalculator.endTime(set);
-            array.push(createBorder(set));
+            array.push(createBottomBorder(set));
         } else if (!set.removed && set.reps.length > 0) { // ignore removed sets in rest calculations
             // add footer if valid
             if (lastSetEndTime !== null) {
                 array.push(createFooterVM(set, lastSetEndTime));
             } else {
-                array.push(createBorder(set));
+                array.push(createBottomBorder(set));
             }
 
             // update variable for calculation purposes
@@ -79,7 +96,7 @@ const createViewModels = (sets) => {
             // working set, live rest mode
             array.push(createWorkingSetFooterVM(set, lastSetEndTime));
         } else {
-            array.push(createBorder(set));
+            array.push(createBottomBorder(set));
         }
 
         // insert set card data
@@ -99,9 +116,26 @@ const createViewModels = (sets) => {
     return sections;
 }
 
-const createHeaderViewModel = (set, setNumber, bias=null, isLastSet=false) => ({
-    type: 'header',
-    key: set.setID+'header',
+const createTopBorder = (set) => ({
+    type: "top border",
+    key: set.setID + 'topborder',
+});
+
+const createTitleViewModel = (state, set, setNumber, bias=null, isLastSet=false, isCollapsed=false) => ({
+    type: 'title',
+    key: set.setID+'title',
+    setNumber: setNumber,
+    exercise: set.exercise,
+    setID: set.setID,
+    isWorkingSet: isLastSet,
+    bias: bias,
+    isCollapsed: isCollapsed,
+    videoFileURL: set.videoFileURL,
+});
+
+const createFormViewModel = (set, setNumber) => ({
+    type: 'form',
+    key: set.setID+'form',
     setID: set.setID,
     removed: set.removed,
     setNumber: setNumber,
@@ -110,10 +144,22 @@ const createHeaderViewModel = (set, setNumber, bias=null, isLastSet=false) => ({
     weight: set.weight,
     metric: set.metric,
     rpe: set.rpe,
-    bias: bias,
     videoFileURL: set.videoFileURL,
     videoType: set.videoType,
-    isWorkingSet: isLastSet,
+});
+
+const createSummaryViewModel = (set) => ({
+    type: 'summary',
+    key: set.setID+'summary',
+    weight: set.weight ? set.weight : 0,
+    numReps: set.reps.length ? set.reps.length : '0 reps',
+    metric: set.metric,
+    tags: set.tags,
+});
+
+const createAnalysisViewModel = (set) => ({
+    type: 'analysis',
+    key: set.setID+'analysis',
 });
 
 const createRowViewModels = (set) => {
@@ -182,6 +228,15 @@ const createRowViewModels = (set) => {
     return array;
 };
 
+const createWorkingSetFooterVM = (set, restStartTime) => {
+    let footerVM = {
+        type: "working set footer",
+        restStartTimeMS: (new Date(restStartTime)).getTime(),
+        key: set.setID + 'live rest'
+    };
+    return footerVM;
+};
+
 const createFooterVM = (set, lastSetEndTime) => {
     let restInMS = new Date(SetTimeCalculator.startTime(set)) - new Date(lastSetEndTime);
     let footerVM = {
@@ -191,20 +246,10 @@ const createFooterVM = (set, lastSetEndTime) => {
     };
     return footerVM;
 };
-
-const createBorder = (set) => ({
-    type: "border",
-    key: set.setID + 'border'
+const createBottomBorder = (set) => ({
+    type: "bottom border",
+    key: set.setID + 'bottomborder',
 });
-
-const createWorkingSetFooterVM = (set, restStartTime) => {
-    let footerVM = {
-        type: "working set footer",
-        restStartTimeMS: (new Date(restStartTime)).getTime(),
-        key: set.setID + 'live rest'
-    };
-    return footerVM;
-};
 
 const mapStateToProps = (state) => {
     let sets = SetsSelectors.getWorkoutSets(state);
@@ -215,7 +260,7 @@ const mapStateToProps = (state) => {
     }
 
     return {
-        sections: createViewModels(sets),
+        sections: createViewModels(state, sets),
         sets: sets,
         isAddEnabled: isAddEnabled
     }

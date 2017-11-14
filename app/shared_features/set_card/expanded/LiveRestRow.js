@@ -15,7 +15,7 @@ class LiveRestRow extends Component {
 
     componentDidMount() {
         this.interval = setInterval(() => {
-            const restInMS = (new Date()).getTime() - this.props.restStartTimeMS;
+            const restInMS = Date.now() - this.props.restStartTimeMS;
             const restString = DateUtils.restInShortenedClockFormat(restInMS);
             this.setState({
                 rest: restString

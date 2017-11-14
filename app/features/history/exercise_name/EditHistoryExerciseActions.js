@@ -29,7 +29,7 @@ export const saveExerciseName = (setID, exercise) => (dispatch, getState) => {
     
     logSaveExerciseNameAnalytics(setID, exercise, state);
     
-    dispatch(SetsActionCreators.saveHistorySet(setID, exercise));
+    dispatch(SetsActionCreators.saveHistoryExerciseName(setID, exercise));
 };
 
 const logSaveExerciseNameAnalytics = (setID, exercise, state) => {

@@ -369,7 +369,7 @@ describe('SetsSelectors', () => {
                 }
             };
             SetTimeCalculator.startTime = () => new Date(0);
-            Date.now = () => new Date(0);
+            Date.now = () => 0;
 
             const result = sut.getWorkoutDuration(state);
 
@@ -383,7 +383,7 @@ describe('SetsSelectors', () => {
                 }
             };
             SetTimeCalculator.startTime = () => new Date(5000);
-            Date.now = () => new Date(6000);
+            Date.now = () => 6000;
 
             const result = sut.getWorkoutDuration(state);
 
@@ -397,7 +397,7 @@ describe('SetsSelectors', () => {
                 }
             };
             SetTimeCalculator.startTime = () => new Date(3000);
-            Date.now = () => new Date(8000);
+            Date.now = () => 8000;
 
             const result = sut.getWorkoutDuration(state);
 
@@ -788,7 +788,7 @@ describe('SetsSelectors', () => {
         });
 
         test('time difference if sets', () => {
-            Date.now = () => new Date(6000);
+            Date.now = () => 6000;
             const state = {
                 sets: {
                     historyData: {

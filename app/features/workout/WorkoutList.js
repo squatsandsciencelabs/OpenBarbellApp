@@ -5,26 +5,29 @@ import {
     StyleSheet,
     View,
     SectionList,
-    ScrollView,
     Dimensions,
     ListItem
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import WorkoutBottomBarScreen from './bottom_bar/WorkoutBottomBarScreen';
-import EditWorkoutSetFormScreen from './card/EditWorkoutSetFormScreen';
+import EditWorkoutTitleExpandedScreen from './card/expanded/title/EditWorkoutTitleExpandedScreen';
+import EditWorkoutTitleCollapsedScreen from './card/collapsed/EditWorkoutTitleCollapsedScreen';
+import EditWorkoutSetFormScreen from './card/expanded/form/EditWorkoutSetFormScreen';
 import EditWorkoutExerciseScreen from './exercise_name/EditWorkoutExerciseScreen';
 import EditWorkoutTagsScreen from './tags/EditWorkoutTagsScreen';
 import WorkoutSetExpandedScreen from './expanded/WorkoutSetExpandedScreen';
-import SetDataLabelRow from 'app/shared_features/set_card/SetDataLabelRow';
-import SetDataRow from 'app/shared_features/set_card/SetDataRow';
+import SetDataLabelRow from 'app/shared_features/set_card/expanded/SetDataLabelRow';
+import SetDataRow from 'app/shared_features/set_card/expanded/SetDataRow';
 import SetRestRow from 'app/shared_features/set_card/SetRestRow';
-import LiveRestRow from 'app/shared_features/set_card/LiveRestRow';
-import WorkoutVideoButtonScreen from './card/WorkoutVideoButtonScreen';
+import LiveRestRow from 'app/shared_features/set_card/expanded/LiveRestRow';
+import WorkoutVideoButtonScreen from './card/expanded/form/WorkoutVideoButtonScreen';
 import WorkoutVideoRecorderScreen from './camera/WorkoutVideoRecorderScreen';
 import WorkoutVideoPlayerScreen from './video/WorkoutVideoPlayerScreen';
 import ListLoadingFooter from '../history/loading/ListLoadingFooter';
-import TimerProgressBarScreen from 'app/features/workout/card/TimerProgressBarScreen';
+import TimerProgressBarScreen from 'app/features/workout/card/expanded/TimerProgressBarScreen';
+import SetSummary from 'app/shared_features/set_card/collapsed/SetSummary';
+import SetAnalysis from 'app/shared_features/set_card/SetAnalysis';
 
 class WorkoutList extends Component {
 
@@ -73,23 +76,50 @@ class WorkoutList extends Component {
 
     _renderRow(section, index, item) {
         switch (item.type) {
-            case "header":
-                const margin = item.isWorkingSet ? 0 : 15;
-                return (<View style={{marginTop: margin, backgroundColor: 'white'}}>
+            case "title":
+                if (!item.isCollapsed) {
+                    return (<View>
+                                <EditWorkoutTitleExpandedScreen
+                                    setID={item.setID}
+                                    exercise={item.exercise}
+                                    bias={item.bias}
+                                    removed={item.removed}
+                                    isCollapsable={!item.isWorkingSet} />
+                            </View>);
+                } else {
+                    return (<View>
+                                <EditWorkoutTitleCollapsedScreen
+                                    setID={item.setID}
+                                    exercise={item.exercise}
+                                    removed={item.removed}
+                                    videoFileURL={item.videoFileURL} />
+                            </View>);
+                }
+            case "summary":
+                return (
+                    <SetSummary
+                        weight={item.weight}
+                        metric={item.metric}
+                        numReps={item.numReps}
+                        tags={item.tags}
+                    />
+                );
+            case "analysis":
+                return (
+                    <SetAnalysis />
+                );
+            case "form":
+                return (<View style={{backgroundColor: 'white'}}>
                             <EditWorkoutSetFormScreen
-                                setNumber={item.setNumber}
                                 setID={item.setID}
                                 removed={item.removed}
-                                exercise={item.exercise}
                                 tags={item.tags}
                                 weight={item.weight}
                                 metric={item.metric}
                                 rpe={item.rpe}
-                                bias={item.bias}
                                 onFocus={() => {
                                     this.sectionList.scrollToLocation({sectionIndex: section.position, itemIndex: index});
                                 }}
-                                isTopBorderHidden={item.isWorkingSet}
                                 renderDetailComponent={()=> {
                                     if (item.videoFileURL !== null && item.videoFileURL !== undefined) {
                                         return (<WorkoutVideoButtonScreen setID={item.setID} mode='watch' videoFileURL={item.videoFileURL} />);
@@ -112,17 +142,25 @@ class WorkoutList extends Component {
                             onPressRow={() => this.props.tapCard(item.setID) }
                         />);
             case "footer":
-                return (<SetRestRow item={item} />);
+                return (
+                    <View style={{marginBottom: 15}}>
+                        <SetRestRow item={item} />
+                    </View>);
             case "working set header":
                 return (
                     <View style={{marginTop: 15}}>
                         <TimerProgressBarScreen />
                     </View>
                 );
-            case "border":
+            case "top border":
                 return (<View style={{flex: 1, backgroundColor: '#e0e0e0', height: 1}} />);
+            case "bottom border":
+                return (<View style={{flex: 1, backgroundColor: '#e0e0e0', height: 1, marginBottom: 15}} />);
             case "working set footer":
-                return (<LiveRestRow restStartTimeMS={item.restStartTimeMS} />);
+                return (
+                    <View style={{marginBottom: 15}}>
+                        <LiveRestRow restStartTimeMS={item.restStartTimeMS} />
+                    </View>);
             default:
                 break;
         }

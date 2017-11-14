@@ -12,20 +12,23 @@ import {
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import EditHistorySetFormScreen from './card/EditHistorySetFormScreen';
+import EditHistorySetFormScreen from './card/expanded/form/EditHistorySetFormScreen';
+import EditHistoryTitleExpandedScreen from './card/expanded/title/EditHistoryTitleExpandedScreen';
+import EditHistoryTitleCollapsedScreen from './card/collapsed/EditHistoryTitleCollapsedScreen';
 import HistoryLoadingFooterScreen from './loading/HistoryLoadingFooterScreen';
 import EditHistoryExerciseScreen from './exercise_name/EditHistoryExerciseScreen';
 import EditHistoryTagsScreen from './tags/EditHistoryTagsScreen';
 import UserLoggedOutPanel from './logged_out/UserLoggedOutPanel';
 import HistorySetExpandedScreen from './expanded/HistorySetExpandedScreen';
 import ListLoadingFooter from '../history/loading/ListLoadingFooter';
-
-import SetDataLabelRow from 'app/shared_features/set_card/SetDataLabelRow';
-import SetDataRow from 'app/shared_features/set_card/SetDataRow';
+import SetDataLabelRow from 'app/shared_features/set_card/expanded/SetDataLabelRow';
+import SetDataRow from 'app/shared_features/set_card/expanded/SetDataRow';
 import SetRestRow from 'app/shared_features/set_card/SetRestRow';
-import HistoryVideoButtonScreen from './card/HistoryVideoButtonScreen';
+import HistoryVideoButtonScreen from './card/expanded/form/HistoryVideoButtonScreen';
 import HistoryVideoRecorderScreen from './camera/HistoryVideoRecorderScreen';
 import HistoryVideoPlayerScreen from './video/HistoryVideoPlayerScreen';
+import SetSummary from 'app/shared_features/set_card/collapsed/SetSummary';
+import SetAnalysis from 'app/shared_features/set_card/SetAnalysis';
 
 class HistoryList extends Component {
 
@@ -57,15 +60,44 @@ class HistoryList extends Component {
 
     _renderRow(section, index, item) {
         switch (item.type) {
-            case "header":
+            case "title":
+                if (!item.isCollapsed) {
+                    return (<View style={{borderTopWidth: 1, borderColor: '#e0e0e0'}}>
+                                <EditHistoryTitleExpandedScreen
+                                    setID={item.setID}
+                                    exercise={item.exercise}
+                                    removed={item.removed}
+                                    isCollapsable={true} />
+                            </View>);
+                } else {
+                    return (<View style={{borderTopWidth: 1, borderColor: '#e0e0e0'}}>
+                                <EditHistoryTitleCollapsedScreen
+                                    setID={item.setID}
+                                    exercise={item.exercise}
+                                    removed={item.removed}
+                                    videoFileURL={item.videoFileURL} />
+                            </View>);
+                }
+            case "summary":
+                return (
+                    <SetSummary
+                        weight={item.weight}
+                        metric={item.metric}
+                        numReps={item.numReps}
+                        tags={item.tags}
+                    />
+                );
+            case "analysis":
+                return (
+                    <SetAnalysis />
+                );
+            case "form":
                 // note: on focus will avoid the Redux store for simplicity and just do it through the callback function
                 // technically an action to scroll should be application state and therefore should go through the global store
-                return (<View style={{marginTop: 15, backgroundColor: 'white'}}>
+                return (<View style={{backgroundColor: 'white'}}>
                             <EditHistorySetFormScreen
-                                setNumber={item.setNumber}
                                 setID={item.setID}
                                 removed={item.removed}
-                                exercise={item.exercise}
                                 tags={item.tags}
                                 weight={item.weight}
                                 metric={item.metric}
@@ -93,9 +125,12 @@ class HistoryList extends Component {
                             onPressRow={() => this.props.tapCard(item.setID) }
                         />);
             case "footer":
-                return (<SetRestRow item={item} />);
-            case "border":
-                return (<View style={{flex: 1, backgroundColor: '#e0e0e0', height: 1}} />);
+                return (
+                    <View style={{marginBottom: 15}}>                    
+                        <SetRestRow item={item} />
+                    </View>);
+            case "bottom border":
+                return (<View style={{flex: 1, backgroundColor: '#e0e0e0', height: 1, marginBottom: 15}} />);
             default:
                 break;
         }

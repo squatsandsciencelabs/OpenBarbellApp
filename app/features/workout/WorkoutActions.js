@@ -1,10 +1,26 @@
 import {
     PRESENT_WORKOUT_EXPANDED,
-    SAVE_WORKOUT_REP
+    SAVE_WORKOUT_REP,
+    COLLAPSE_WORKOUT_SET,
+    EXPAND_WORKOUT_SET,
 } from 'app/ActionTypes';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as Analytics from 'app/services/Analytics';
+
+export const collapseSet = (setID) => (dispatch, getState) => {
+    dispatch({
+        type: COLLAPSE_WORKOUT_SET,
+        setID: setID,
+    });
+};
+
+export const expandSet = (setID) => (dispatch, getState) => {
+    dispatch({
+        type: EXPAND_WORKOUT_SET,
+        setID: setID,
+    });
+};
 
 export const presentExpanded = (setID) => ({
     type: PRESENT_WORKOUT_EXPANDED,

@@ -606,7 +606,6 @@ describe('SetsSelectors', () => {
                 }
             };
 
-            console.log("TEST BEGIN");
             const result = sut.getHistorySetsChronological(state);
 
             expect(result[0]).toBe(d);

@@ -825,6 +825,44 @@ describe('getBestAvgVelocityEver', () => {
     test('get best avg velocity ever', () => {
         const state = {
             sets: {
+                workoutData: [
+                    {
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.333368, 388]
+                        }, 
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.033368, 388]
+                        },
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.453368, 388]
+                        }],
+                    },
+                    {
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.103368, 388]
+                        },
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.6368, 388]
+                        }],
+                    }                                              
+                ],
                 historyData: {
                     a: {
                         exercise: 'Bench',
@@ -931,9 +969,10 @@ describe('getBestAvgVelocityEver', () => {
         expect(result).toBe(2.4);
     });
 
-    test('return null when no history data', () => {
+    test('return null when no history or workout data', () => {
         const state = {
             sets: {
+                workoutData: [],
                 historyData: {}
             }
         };
@@ -970,6 +1009,45 @@ describe('getBestROMEver', () => {
     test('get best rom ever', () => {
         const state = {
             sets: {
+                workoutData: [
+                    {
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.433368, 288]
+                        }, 
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.234368, 178]
+                        },
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 0.483368, 28]
+                        }],
+                    },
+                    {
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.753368, 328]
+                        },
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.353368, 328]
+                        },
+                    ],
+                    }                    
+                ],
                 historyData: {
                     a: {
                         exercise: 'Bench',
@@ -1076,9 +1154,10 @@ describe('getBestROMEver', () => {
         expect(result).toBe(300);
     });
 
-    test('return null when no history data', () => {
+    test('return null when no history or workout data', () => {
         const state = {
             sets: {
+                workoutData: [],
                 historyData: {}
             }
         };

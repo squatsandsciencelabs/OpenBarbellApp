@@ -265,10 +265,11 @@ export const hasChangesToSync = (state) => {
 
 export const getBestAvgVelocityEver = (state, set) => {
     let historySets = getHistorySetsChronological(state);
+    let workoutSets = getWorkoutSets(state);
 
     // find all instances of this exercise with weight and reps
-    let matchedSets = historySets.filter(historySet => historyFilter(historySet, set));
-
+    let matchedSets = historySets.concat(workoutSets).filter(historySet => areSetsComparable(historySet, set));
+    
     let avgVs = matchedSets.map((matchedSet) => {
         return CollapsedMetrics.getAvgVelocities(matchedSet);
     });
@@ -284,10 +285,11 @@ export const getBestAvgVelocityEver = (state, set) => {
 
 export const getBestROMEver = (state, set) => {
     let historySets = getHistorySetsChronological(state);
+    let workoutSets = getWorkoutSets(state);
 
     // find all instances of this exercise with weight and reps
-    let matchedSets = historySets.filter(historySet => historyFilter(historySet, set));
-
+    let matchedSets = historySets.concat(workoutSets).filter(historySet => areSetsComparable(historySet, set));
+    
     let roms = matchedSets.map((matchedSet) => {
         return CollapsedMetrics.getROMs(matchedSet);
     });
@@ -303,6 +305,6 @@ export const getBestROMEver = (state, set) => {
 
 export const getRevision = (state) => stateRoot(state).revision;
 
-function historyFilter(historySet, set) {
+function areSetsComparable(historySet, set) {
     return historySet.exercise === set.exercise && historySet.weight === set.weight &&  historySet.metric === set.metric && historySet.reps.length === set.reps.length;
 };

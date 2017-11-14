@@ -12,21 +12,25 @@ import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 class SettingsAccountPanel extends Component {
 
     _onPressSignOut() {
-        var message = "";
         if (this.props.hasChangesToSync) {
-            message = "WARNING: You have changes that haven't been synced to the cloud. Logging out will cause you to lose them.";
+            Alert.alert(
+                'WARNING',
+                "You have changes that haven't been synced to the cloud! Logging out WILL cause you to lose some data stored on your phone.",
+                [
+                    {text: 'Cancel', onPress: () => this.props.cancelSignOut(), style: 'cancel'},
+                    {text: 'Delete Data and Logout', onPress: () => this.props.signOut(), style: 'destructive'},
+                ]
+            );
         } else {
-            message = "History data on this phone will be cleared.";
+            Alert.alert(
+                'Are you sure?',
+                "All your data is safely on the cloud, so when you log back in you'll get access to your old history again.",
+                [
+                    {text: 'Cancel', onPress: () => this.props.cancelSignOut(), style: 'cancel'},
+                    {text: 'Logout', onPress: () => this.props.signOut()},
+                ]
+            );
         }
-
-        Alert.alert(
-            'Are you sure?',
-            message,
-            [
-                {text: 'Nevermind', onPress: () => this.props.cancelSignOut(), style: 'cancel'},
-                {text: 'Logout', onPress: () => this.props.signOut() },
-            ]
-        );
     }
 
     _onPressCSV() {

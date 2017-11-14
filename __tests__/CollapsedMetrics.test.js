@@ -18,6 +18,16 @@ describe('getAvgVelocities', () => {
         let set = {
             reps: [
                 {
+                    isValid: false,
+                    removed: false,
+                    data: [-3456, 40, 3.15]
+                },
+                {
+                    isValid: true,
+                    removed: true,
+                    data: [-3456, 40, 1.15]
+                },
+                {
                     isValid: true,
                     removed: false,
                     data: [-3456, 37, 1.833368]
@@ -92,6 +102,16 @@ describe('getAvgofAvgVelocities', () => {
         let set = {
             reps: [
                 {
+                    isValid: false,
+                    removed: false,
+                    data: [-3456, 40, 3.15]
+                },
+                {
+                    isValid: true,
+                    removed: true,
+                    data: [-3456, 40, 1.15]
+                },
+                {
                     isValid: true,
                     removed: false,
                     data: [-3456, 37, 1.833368]
@@ -135,6 +155,16 @@ describe('getAbsLossVelocity', () => {
     test('returns abslossvelocity', () => {
         let set = {
             reps: [
+                {
+                    isValid: false,
+                    removed: false,
+                    data: [-3456, 40, 3.15]
+                },
+                {
+                    isValid: true,
+                    removed: true,
+                    data: [-3456, 40, 1.10]
+                },
                 {
                     isValid: false,
                     removed: true,
@@ -190,6 +220,16 @@ describe('getFirstRepAvgVelocity', () => {
         let set = {
             reps: [
                 {
+                    isValid: false,
+                    removed: false,
+                    data: [-3456, 40, 3.15]
+                },
+                {
+                    isValid: true,
+                    removed: true,
+                    data: [-3456, 40, 1.15]
+                },
+                {
                     isValid: true,
                     removed: false,
                     data: [-3456, 37, 1.833368]
@@ -233,6 +273,16 @@ describe('getLastRepAvgVelocity', () => {
     test('returns last rep avg velocity', () => {
         let set = {
             reps: [
+                {
+                    isValid: false,
+                    removed: false,
+                    data: [-3456, 40, 3.15]
+                },
+                {
+                    isValid: true,
+                    removed: true,
+                    data: [-3456, 40, 1.15]
+                },
                 {
                     isValid: true,
                     removed: false,
@@ -283,6 +333,16 @@ describe('getMinAvgVelocity', () => {
         let set = {
             reps: [
                 {
+                    isValid: false,
+                    removed: false,
+                    data: [-3456, 40, 3.15]
+                },
+                {
+                    isValid: true,
+                    removed: true,
+                    data: [-3456, 40, 1.15]
+                },
+                {
                     isValid: true,
                     removed: false,
                     data: [-3456, 37, 1.833368]
@@ -326,6 +386,16 @@ describe('getMaxAvgVelocity', () => {
     test('returns max avg velocity', () => {
         let set = {
             reps: [
+                {
+                    isValid: false,
+                    removed: false,
+                    data: [-3456, 40, 3.15]
+                },
+                {
+                    isValid: true,
+                    removed: true,
+                    data: [-3456, 40, 1.15]
+                },
                 {
                     isValid: true,
                     removed: false,
@@ -372,6 +442,16 @@ describe('getROMs', () => {
         test('returns roms from set with reps', () => {
             let set = {
                 reps: [
+                    {
+                        isValid: false,
+                        removed: false,
+                        data: [-3456, 40, 5.15]
+                    },
+                    {
+                        isValid: true,
+                        removed: true,
+                        data: [-3456, 40, 1.15]
+                    },
                     {
                         isValid: true,
                         removed: false,
@@ -448,6 +528,16 @@ describe('getAvgofROMs', () => {
             reps: [
                 {
                     isValid: false,
+                    removed: false,
+                    data: [-3456, 40, 3.15]
+                },
+                {
+                    isValid: true,
+                    removed: true,
+                    data: [-3456, 40, 1.15]
+                },
+                {
+                    isValid: false,
                     removed: true,
                     data: [-3456, 40, 4.15]
                 }, 
@@ -501,6 +591,16 @@ describe('getAbsLossROM', () => {
             let set = {
                 reps: [
                     {
+                        isValid: false,
+                        removed: false,
+                        data: [-3456, 40, 3.15]
+                    },
+                    {
+                        isValid: true,
+                        removed: true,
+                        data: [-3456, 40, 1.15]
+                    },
+                    {
                         isValid: true,
                         removed: false,
                         data: [-3456, 37, 1.833368, 200]
@@ -550,6 +650,16 @@ describe('getFirstRepROM', () => {
         let set = {
             reps: [
                 {
+                    isValid: false,
+                    removed: false,
+                    data: [-3456, 40, 3.15, 150]
+                },
+                {
+                    isValid: true,
+                    removed: true,
+                    data: [-3456, 40, 1.15, 300]
+                },
+                {
                     isValid: true,
                     removed: false,
                     data: [-3456, 37, 1.833368, 200]
@@ -593,6 +703,16 @@ describe('getLastRepROM', () => {
     test('returns last rep avg velocity', () => {
         let set = {
             reps: [
+                {
+                    isValid: false,
+                    removed: false,
+                    data: [-3456, 40, 3.15, 150]
+                },
+                {
+                    isValid: true,
+                    removed: true,
+                    data: [-3456, 40, 1.15, 300]
+                },
                 {
                     isValid: true,
                     removed: false,
@@ -638,6 +758,16 @@ describe('getMinROM', () => {
         let set = {
             reps: [
                 {
+                    isValid: false,
+                    removed: false,
+                    data: [-3456, 40, 3.15, 150]
+                },
+                {
+                    isValid: true,
+                    removed: true,
+                    data: [-3456, 40, 1.15, 300]
+                },
+                {
                     isValid: true,
                     removed: false,
                     data: [-3456, 37, 1.833368, 200]
@@ -681,6 +811,16 @@ describe('getMaxROM', () => {
     test('returns max avg velocity', () => {
         let set = {
             reps: [
+                {
+                    isValid: false,
+                    removed: false,
+                    data: [-3456, 40, 3.15, 150]
+                },
+                {
+                    isValid: true,
+                    removed: true,
+                    data: [-3456, 40, 1.15, 300]
+                },
                 {
                     isValid: true,
                     removed: false,

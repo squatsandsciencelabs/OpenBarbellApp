@@ -361,6 +361,11 @@ describe('getMinAvgVelocity', () => {
                     isValid: true,
                     removed: false,
                     data: [-3456, 37, 1.833368]
+                },
+                {
+                    isValid: true,
+                    removed: false,
+                    data: [-3456, 36, 1.03]
                 }, 
                 {
                     isValid: true,
@@ -382,7 +387,7 @@ describe('getMinAvgVelocity', () => {
             
         let result = sut.getMinAvgVelocity(set);
     
-        expect(result).toBe(1.08);
+        expect(result).toBe(1.03);
     });
 });
 
@@ -661,7 +666,7 @@ describe('getFirstRepROM', () => {
         expect(result).toBe(null);        
     });
     
-    test('returns first rep avg velocity', () => {
+    test('returns first rep ROM', () => {
         let set = {
             reps: [
                 {
@@ -705,7 +710,7 @@ describe('getFirstRepROM', () => {
 
 describe('getLastRepROM', () => {
     
-    test('return null when avgVs empty', () => {
+    test('return null when roms empty', () => {
         let set = {
             reps: [],
         };
@@ -715,7 +720,7 @@ describe('getLastRepROM', () => {
         expect(result).toBe(null);        
     });
     
-    test('returns last rep avg velocity', () => {
+    test('returns last rep avg ROM', () => {
         let set = {
             reps: [
                 {
@@ -726,7 +731,7 @@ describe('getLastRepROM', () => {
                 {
                     isValid: true,
                     removed: true,
-                    data: [-3456, 40, 1.15, 300]
+                    data: [-3456, 40, 1.15, 312]
                 },
                 {
                     isValid: true,
@@ -747,6 +752,16 @@ describe('getLastRepROM', () => {
                     isValid: true,
                     removed: false,
                     data: [-3456, 39, 1.08, 300]
+                },
+                {
+                    isValid: false,
+                    removed: false,
+                    data: [-3456, 40, 3.15, 150]
+                },
+                {
+                    isValid: true,
+                    removed: true,
+                    data: [-3456, 40, 1.15, 210]
                 },
             ]
         };
@@ -813,7 +828,7 @@ describe('getMinROM', () => {
 
 describe('getMaxROM', () => {
     
-    test('return null when avgVs empty', () => {
+    test('return null when roms empty', () => {
         let set = {
             reps: [],
         };
@@ -823,7 +838,7 @@ describe('getMaxROM', () => {
         expect(result).toBe(null);        
     });
     
-    test('returns max avg velocity', () => {
+    test('returns max rom', () => {
         let set = {
             reps: [
                 {

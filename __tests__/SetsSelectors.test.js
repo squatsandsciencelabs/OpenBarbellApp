@@ -1017,6 +1017,26 @@ describe('getBestROMEver', () => {
                         reps: [{
                             isValid: true,
                             removed: false,
+                            data: [-3456, 37, 1.333368, 388]
+                        }, 
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.033368, 378]
+                        },
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.453368, 328]
+                        }],
+                    },
+                    {
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
                             data: [-3456, 37, 1.433368, 288]
                         }, 
                         {
@@ -1151,7 +1171,7 @@ describe('getBestROMEver', () => {
 
         let result = sut.getBestROMEver(state, set);
 
-        expect(result).toBe(300);
+        expect(result).toBe(388);
     });
 
     test('return null when no history or workout data', () => {

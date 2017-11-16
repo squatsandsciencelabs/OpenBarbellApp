@@ -43,4 +43,14 @@ export const numFieldsEntered = (set) => {
     });
     
     return num_fields_entered;
-}
+};
+
+export const numValidUnremovedReps = (set) => {
+    return set.reps.reduce((sum, rep) => {
+        if (rep.isValid === false || rep.removed === true) {
+            return sum;
+        } else {
+            return sum+1;
+        }
+    }, 0);
+};

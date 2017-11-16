@@ -825,57 +825,57 @@ describe('SetsSelectors', () => {
         var state = {
             sets: {
                 workoutData: [{
-                        exercise: 'Squat',
-                        weight: 100,
-                        metric: 'lbs',
-                        reps: [{
-                            isValid: true,
-                            removed: false,
-                            data: [-3456, 37, 1.333368, 388, 65, 24, 9, 12]
-                        }, {
-                            isValid: true,
-                            removed: false,
-                            data: [-3456, 37, 1.033368, 378, 43, 69, 13, 8]
-                        }, {
-                            isValid: true,
-                            removed: false,
-                            data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
-                        }],
+                    exercise: 'Squat',
+                    weight: 100,
+                    metric: 'lbs',
+                    reps: [{
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.333368, 388, 65, 24, 9, 12]
                     }, {
-                        exercise: 'Bench',
-                        weight: 100,
-                        metric: 'lbs',
-                        reps: [{
-                            isValid: true,
-                            removed: false,
-                            data: [-3456, 37, 1.433368, 288, 34, 14, 2, 7]
-                        }, {
-                            isValid: true,
-                            removed: false,
-                            data: [-3456, 37, 1.234368, 178, 26, 11, 4, 9]
-                        }, {
-                            isValid: true,
-                            removed: false,
-                            data: [-3456, 37, 0.483368, 28, 48, 13, 3, 5]
-                        }],
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.033368, 378, 43, 69, 13, 8]
                     }, {
-                        exercise: 'Deadlift',
-                        weight: 100,
-                        metric: 'lbs',
-                        reps: [{
-                            isValid: true,
-                            removed: false,
-                            data: [-3456, 37, 1.333368, 388, 38, 18, 1, 8]
-                        }, {
-                            isValid: true,
-                            removed: false,
-                            data: [-3456, 37, 1.033368, 378, 37, 17, 1, 7]
-                        }, {
-                            isValid: true,
-                            removed: false,
-                            data: [-3456, 37, 1.453368, 328, 32, 22, 1, 12]
-                        }],
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
                     }],
+                }, {
+                    exercise: 'Bench',
+                    weight: 100,
+                    metric: 'lbs',
+                    reps: [{
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.433368, 288, 34, 14, 2, 7]
+                    }, {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.234368, 178, 26, 11, 4, 9]
+                    }, {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 0.483368, 28, 48, 13, 3, 5]
+                    }],
+                }, {
+                    exercise: 'Deadlift',
+                    weight: 100,
+                    metric: 'lbs',
+                    reps: [{
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.333368, 388, 38, 18, 1, 8]
+                    }, {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.033368, 378, 37, 17, 1, 7]
+                    }, {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.453368, 328, 32, 22, 1, 12]
+                    }],
+                }],
                 historyData: {
                     a: {
                         exercise: 'Bench',
@@ -885,18 +885,24 @@ describe('SetsSelectors', () => {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 1.833368, 200, 20, 10, 1, 5]
-                        }, 
-                        {
+                        }, {
+                            isValid: false,
+                            removed: false,
+                            data: [-3456, 37, 10.533368, 500, 70, 80, 1, 70]
+                        }, {
                             isValid: true,
                             removed: false,
-                            data: [-3456, 37, 1.433368, 250, 25, 15, 1, 10]
-                        },
-                        {
+                            data: [-3456, 37, 2.433368, 250, 25, 15, 1, 10]
+                        }, {
+                            isValid: true,
+                            removed: true,
+                            data: [-3456, 37, 0.533368, 50, 10, 20, 1, 2]
+                        }, {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 1.533368, 400, 40, 30, 1, 20]
-                        }
-                    ]},
+                        }]
+                    },
                     b: {
                         exercise: 'Squat',
                         weight: 100,
@@ -945,8 +951,8 @@ describe('SetsSelectors', () => {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 2.4, 230, 23, 13, 1, 3]
-                        }
-                    ]},
+                        }]
+                    },
                 }
             }
         };
@@ -958,17 +964,21 @@ describe('SetsSelectors', () => {
             reps: [{
                 isValid: true,
                 removed: false,
-                data: [-3456, 37, 1.333368, 388, 38, 18, 1, 8]
-            }, 
-            {
+            }, {
                 isValid: true,
                 removed: false,
-                data: [-3456, 37, 1.033368, 378, 37, 17, 1, 7]
-            },
-            {
+            }, {
                 isValid: true,
                 removed: false,
-                data: [-3456, 37, 1.453368, 328, 32, 22, 1, 12]
+            }, {
+                isValid: true,
+                removed: true,
+            }, {
+                isValid: false,
+                removed: true,
+            }, {
+                isValid: false,
+                removed: false,
             }],
         };
 
@@ -977,7 +987,7 @@ describe('SetsSelectors', () => {
             test('get best AvgVelocity ever', () => {
                 const result = sut.getBestAvgVelocityEver(state, set);
         
-                expect(result).toBe(1.83);
+                expect(result).toBe(2.43);
             });
         
             test('return null when no history or workout data', () => {

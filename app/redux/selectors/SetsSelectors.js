@@ -281,11 +281,16 @@ export const hasChangesToSync = (state) => {
 // collapsed metrics
 
 const getBestEverOfMetric = (state, set, metricFunction) => {
-    let historySets = getHistorySets(state);
-    let workoutSets = getWorkoutSets(state);
+    // null if not enough data entered
+    if (!isSetComparable(set)) {
+        return null;
+    }
+
+    const historySets = getHistorySets(state);
+    const workoutSets = getWorkoutSets(state);
 
     // find all instances of this exercise with weight and reps
-    let matchedSets = historySets.concat(workoutSets).filter(historySet => areSetsComparable(historySet, set));
+    const matchedSets = historySets.concat(workoutSets).filter(historySet => areSetsComparable(historySet, set));
     
     let metrics = matchedSets.map((matchedSet) => {
         return metricFunction(matchedSet);
@@ -301,7 +306,30 @@ const getBestEverOfMetric = (state, set, metricFunction) => {
 };
 
 const areSetsComparable = (historySet, set) => {
+    if (!isSetComparable(set)) {
+        return false;
+    }
     return historySet.exercise === set.exercise && historySet.weight === set.weight && historySet.metric === set.metric && historySet.reps.length === set.reps.length;
+};
+
+const isSetComparable = (set) => {
+    if (!set.exercise || set.exercise === '') {
+        return false;
+    }
+
+    if (!set.weight || set.weight === '') {
+        return false;
+    }
+
+    if (!set.metric || set.metric === '') {
+        return false;
+    }
+
+    if (set.reps.length <= 0) {
+        return false;
+    }
+
+    return true;
 };
 
 export const getBestAvgVelocityEver = (state, set) => {

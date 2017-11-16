@@ -175,8 +175,7 @@ const dictToArray = (dictionary) => {
 // History
 
 export const getHistorySetsChronological = (state) => {
-    const sets = stateRoot(state);
-    var array = dictToArray(sets.historyData);
+    var array = getHistorySets(state);
     array.sort((set1, set2) => {
         let set1Start = SetTimeCalculator.startTime(set1);
         if (set1Start !== null) {
@@ -194,7 +193,7 @@ export const getHistorySetsChronological = (state) => {
 };
 
 export const getHistorySets = (state) => {
-    let sets = stateRoot(state);
+    const sets = stateRoot(state);
     var array = dictToArray(sets.historyData);
     return array;
 };

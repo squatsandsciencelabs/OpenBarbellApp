@@ -11,12 +11,12 @@ describe('collapsed metrics', () => {
             {
                 isValid: true,
                 removed: false,
-                data: [-3456, 37, 1.833368, 205, 43, 41, 1, 5]
+                data: [-3456, 37, 1.833368, 280, 43, 41, 1, 5]
             },
             {
                 isValid: true,
                 removed: false,
-                data: [-3456, 39, 1.03, 280, 34, 28, 3, 7]
+                data: [-3456, 39, 1.03, 205, 34, 28, 3, 7]
             },            
             {
                 isValid: false,
@@ -196,7 +196,7 @@ describe('collapsed metrics', () => {
         test('return ROMs from set with reps', () => {
             const result = sut.getROMs(set);
     
-            expect(result).toEqual([205, 280, 300, 280]);
+            expect(result).toEqual([280, 205, 300, 280]);
         });
 
         test('return [] when rep is invalid', () => {
@@ -700,7 +700,7 @@ describe('collapsed metrics', () => {
         test('returns first rep ROMs', () => {
             const result = sut.getFirstROM(set);
         
-            expect(result).toBe(205);
+            expect(result).toBe(280);
         });
 
     });

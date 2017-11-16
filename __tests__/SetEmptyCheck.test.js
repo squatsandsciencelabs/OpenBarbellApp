@@ -12,79 +12,79 @@ describe('hasEmptyFields', () => {
     // note: not testing for every undefined / null case as too many possibilities
     // note: not testing for combinations as too many possibilities
     test('true when null', () => {
-        let set = {
+        const set = {
             exercise: null,
             weight: null,
             rpe: null,
             tags: [],
         };
 
-        let result = sut.hasEmptyFields(set);
+        const result = sut.hasEmptyFields(set);
 
         expect(result).toBe(true);;
     });
 
     test('true when empty', () => {
-        let set = {
+        const set = {
             exercise: '',
             weight: '',
             rpe: '',
             tags: [],
         };
 
-        let result = sut.hasEmptyFields(set);
+        const result = sut.hasEmptyFields(set);
 
         expect(result).toBe(true);;
     });
 
     test('false w/ exercise name', () => {
-        let set = {
+        const set = {
             exercise: 'derp',
             weight: '',
             rpe: '',
             tags: [],
         };
 
-        let result = sut.hasEmptyFields(set);
+        const result = sut.hasEmptyFields(set);
 
         expect(result).toBe(false);
     });
 
     test('false w/ weight', () => {
-        let set = {
+        const set = {
             exercise: '',
             weight: '300',
             rpe: '',
             tags: [],
         };
 
-        let result = sut.hasEmptyFields(set);
+        const result = sut.hasEmptyFields(set);
 
         expect(result).toBe(false);
     });
 
     test('false w/ rpe', () => {
-        let set = {
+        const set = {
             exercise: '',
             weight: '',
             rpe: '5.5',
             tags: [],
         };
 
-        let result = sut.hasEmptyFields(set);
+        const result = sut.hasEmptyFields(set);
 
         expect(result).toBe(false);
     });
 
     test('false w/ tag', () => {
-        let set = {
+        const set = {
             exercise: '',
             weight: '',
             rpe: '',
             tags: [{}],
         };
 
-        let result = sut.hasEmptyFields(set);
+        const result = sut.hasEmptyFields(set);
 
         expect(result).toBe(false);
     });
@@ -94,7 +94,7 @@ describe('hasEmptyData', () => {
     // note: not testing for every undefined / null case as too many possibilities
     // note: not testing for combinations as too many possibilities
     test('true when null', () => {
-        let set = {
+        const set = {
             exercise: null,
             weight: null,
             rpe: null,
@@ -102,13 +102,13 @@ describe('hasEmptyData', () => {
             videoFileURL: null
         };
 
-        let result = sut.hasEmptyData(set);
+        const result = sut.hasEmptyData(set);
 
         expect(result).toBe(true);;
     });
 
     test('true when empty', () => {
-        let set = {
+        const set = {
             exercise: '',
             weight: '',
             rpe: '',
@@ -116,13 +116,13 @@ describe('hasEmptyData', () => {
             videoFileURL: ''
         };
 
-        let result = sut.hasEmptyData(set);
+        const result = sut.hasEmptyData(set);
 
         expect(result).toBe(true);;
     });
 
     test('false w/ exercise name', () => {
-        let set = {
+        const set = {
             exercise: 'derp',
             weight: '',
             rpe: '',
@@ -130,13 +130,13 @@ describe('hasEmptyData', () => {
             videoFileURL: ''
         };
 
-        let result = sut.hasEmptyData(set);
+        const result = sut.hasEmptyData(set);
 
         expect(result).toBe(false);
     });
 
     test('false w/ weight', () => {
-        let set = {
+        const set = {
             exercise: '',
             weight: '300',
             rpe: '',
@@ -144,13 +144,13 @@ describe('hasEmptyData', () => {
             videoFileURL: ''
         };
 
-        let result = sut.hasEmptyData(set);
+        const result = sut.hasEmptyData(set);
 
         expect(result).toBe(false);
     });
 
     test('false w/ rpe', () => {
-        let set = {
+        const set = {
             exercise: '',
             weight: '',
             rpe: '5.5',
@@ -158,13 +158,13 @@ describe('hasEmptyData', () => {
             videoFileURL: ''
         };
 
-        let result = sut.hasEmptyData(set);
+        const result = sut.hasEmptyData(set);
 
         expect(result).toBe(false);
     });
 
     test('false w/ tag', () => {
-        let set = {
+        const set = {
             exercise: '',
             weight: '',
             rpe: '',
@@ -172,13 +172,13 @@ describe('hasEmptyData', () => {
             videoFileURL: ''
         };
 
-        let result = sut.hasEmptyData(set);
+        const result = sut.hasEmptyData(set);
 
         expect(result).toBe(false);
     });
 
     test('false w/ video', () => {
-        let set = {
+        const set = {
             exercise: '',
             weight: '',
             rpe: '',
@@ -186,7 +186,7 @@ describe('hasEmptyData', () => {
             videoFileURL: 'hello'
         };
 
-        let result = sut.hasEmptyData(set);
+        const result = sut.hasEmptyData(set);
 
         expect(result).toBe(false);
     });
@@ -194,40 +194,40 @@ describe('hasEmptyData', () => {
 
 describe('hasNoReps', () => {
     test('0 reps true', () => {
-        let set = {
+        const set = {
             reps: []
         };
 
-        let result = sut.hasNoReps(set);
+        const result = sut.hasNoReps(set);
 
         expect(result).toBe(true);;
     });
 
     test('undefined true', () => {
-        let set = {
+        const set = {
         };
 
-        let result = sut.hasNoReps(set);
+        const result = sut.hasNoReps(set);
 
         expect(result).toBe(true);;
     });
 
     test('null true', () => {
-        let set = {
+        const set = {
             reps: null
         };
 
-        let result = sut.hasNoReps(set);
+        const result = sut.hasNoReps(set);
 
         expect(result).toBe(true);;
     });
 
     test('false', () => {
-        let set = {
+        const set = {
             reps: [{}]
         };
 
-        let result = sut.hasNoReps(set);
+        const result = sut.hasNoReps(set);
 
         expect(result).toBe(false);
     });
@@ -235,60 +235,60 @@ describe('hasNoReps', () => {
 
 describe('hasEmptyReps', () => {
     test('0 reps true', () => {
-        let set = {
+        const set = {
             reps: []
         };
 
-        let result = sut.hasEmptyReps(set);
+        const result = sut.hasEmptyReps(set);
 
         expect(result).toBe(true);;
     });
 
     test('undefined true', () => {
-        let set = {
+        const set = {
         };
 
-        let result = sut.hasEmptyReps(set);
+        const result = sut.hasEmptyReps(set);
 
         expect(result).toBe(true);;
     });
 
     test('null true', () => {
-        let set = {
+        const set = {
             reps: null
         };
 
-        let result = sut.hasEmptyReps(set);
+        const result = sut.hasEmptyReps(set);
 
         expect(result).toBe(true);;
     });
 
     test('true when only undefined removes', () => {
-        let set = {
+        const set = {
             reps: [{}, {}]
         };
 
-        let result = sut.hasEmptyReps(set);
+        const result = sut.hasEmptyReps(set);
 
         expect(result).toBe(true);;
     });
 
     test('true when everything is removed', () => {
-        let set = {
+        const set = {
             reps: [{removed: true}, {removed: true}]
         };
 
-        let result = sut.hasEmptyReps(set);
+        const result = sut.hasEmptyReps(set);
 
         expect(result).toBe(true);;
     });
 
     test('false when at least one not removed', () => {
-        let set = {
+        const set = {
             reps: [{removed: true}, {}, {removed: false}]
         };
 
-        let result = sut.hasEmptyReps(set);
+        const result = sut.hasEmptyReps(set);
 
         expect(result).toBe(false);
     });
@@ -296,210 +296,256 @@ describe('hasEmptyReps', () => {
 
 describe('numFieldsEntered', () => {
     test('0 when none', () => {
-        let set = {
+        const set = {
             exercise: '',
             weight: '',
             rpe: '',
             tags: [],
         };
 
-        let result = sut.numFieldsEntered(set);
+        const result = sut.numFieldsEntered(set);
 
         expect(result).toBe(0);
     });
 
     test('1 when exercise', () => {
-        let set = {
+        const set = {
             exercise: ' ',
             weight: '',
             rpe: '',
             tags: [],
         };
 
-        let result = sut.numFieldsEntered(set);
+        const result = sut.numFieldsEntered(set);
 
         expect(result).toBe(1);
     });
 
     test('1 when weight', () => {
-        let set = {
+        const set = {
             exercise: '',
             weight: ' ',
             rpe: '',
             tags: [],
         };
 
-        let result = sut.numFieldsEntered(set);
+        const result = sut.numFieldsEntered(set);
 
         expect(result).toBe(1);
     });
 
     test('1 when rpe', () => {
-        let set = {
+        const set = {
             exercise: '',
             weight: '',
             rpe: ' ',
             tags: [],
         };
 
-        let result = sut.numFieldsEntered(set);
+        const result = sut.numFieldsEntered(set);
 
         expect(result).toBe(1);
     });
 
     test('1 when tags', () => {
-        let set = {
+        const set = {
             exercise: '',
             weight: '',
             rpe: '',
             tags: [{}],
         };
 
-        let result = sut.numFieldsEntered(set);
+        const result = sut.numFieldsEntered(set);
 
         expect(result).toBe(1);
     });
 
     test('2 when exercise weight', () => {
-        let set = {
+        const set = {
             exercise: ' ',
             weight: ' ',
             rpe: '',
             tags: [],
         };
 
-        let result = sut.numFieldsEntered(set);
+        const result = sut.numFieldsEntered(set);
 
         expect(result).toBe(2);
     });
 
     test('2 when exercise rpe', () => {
-        let set = {
+        const set = {
             exercise: ' ',
             weight: '',
             rpe: ' ',
             tags: [],
         };
 
-        let result = sut.numFieldsEntered(set);
+        const result = sut.numFieldsEntered(set);
 
         expect(result).toBe(2);
     });
 
     test('2 when exercise tags', () => {
-        let set = {
+        const set = {
             exercise: ' ',
             weight: '',
             rpe: '',
             tags: [{}],
         };
 
-        let result = sut.numFieldsEntered(set);
+        const result = sut.numFieldsEntered(set);
 
         expect(result).toBe(2);
     });
 
     test('2 when weight rpe', () => {
-        let set = {
+        const set = {
             exercise: '',
             weight: ' ',
             rpe: ' ',
             tags: [],
         };
 
-        let result = sut.numFieldsEntered(set);
+        const result = sut.numFieldsEntered(set);
 
         expect(result).toBe(2);
     });
 
     test('2 when weight tags', () => {
-        let set = {
+        const set = {
             exercise: '',
             weight: ' ',
             rpe: '',
             tags: [{}],
         };
 
-        let result = sut.numFieldsEntered(set);
+        const result = sut.numFieldsEntered(set);
 
         expect(result).toBe(2);
     });
 
     test('2 when rpe tags', () => {
-        let set = {
+        const set = {
             exercise: '',
             weight: '',
             rpe: ' ',
             tags: [{}],
         };
 
-        let result = sut.numFieldsEntered(set);
+        const result = sut.numFieldsEntered(set);
 
         expect(result).toBe(2);
     });
 
     test('3 when exercise weight rpe', () => {
-        let set = {
+        const set = {
             exercise: ' ',
             weight: ' ',
             rpe: ' ',
             tags: [],
         };
 
-        let result = sut.numFieldsEntered(set);
+        const result = sut.numFieldsEntered(set);
 
         expect(result).toBe(3);
     });
 
     test('3 when exercise weight tags', () => {
-        let set = {
+        const set = {
             exercise: ' ',
             weight: ' ',
             rpe: '',
             tags: [{}],
         };
 
-        let result = sut.numFieldsEntered(set);
+        const result = sut.numFieldsEntered(set);
 
         expect(result).toBe(3);
     });
 
     test('3 when exercise rpe tags', () => {
-        let set = {
+        const set = {
             exercise: ' ',
             weight: '',
             rpe: ' ',
             tags: [{}],
         };
 
-        let result = sut.numFieldsEntered(set);
+        const result = sut.numFieldsEntered(set);
 
         expect(result).toBe(3);
     });
 
     test('3 when weight rpe tags', () => {
-        let set = {
+        const set = {
             exercise: '',
             weight: ' ',
             rpe: ' ',
             tags: [{}],
         };
 
-        let result = sut.numFieldsEntered(set);
+        const result = sut.numFieldsEntered(set);
 
         expect(result).toBe(3);
     });
 
     test('4 when exercise weight rpe tags', () => {
-        let set = {
+        const set = {
             exercise: ' ',
             weight: ' ',
             rpe: ' ',
             tags: [{}],
         };
 
-        let result = sut.numFieldsEntered(set);
+        const result = sut.numFieldsEntered(set);
 
         expect(result).toBe(4);
+    });
+});
+
+describe('numValidUnremovedReps', () => {
+    test('0 when empty', () => {
+        const set = {
+            exercise: 'Bench',
+            weight: 100,
+            metric: 'lbs',
+            reps: [],
+        };
+
+        const result = sut.numValidUnremovedReps(set);
+
+        expect(result).toBe(0);
+    });
+
+    test('ignores empty and invalid properly', () => {
+        const set = {
+            exercise: 'Bench',
+            weight: 100,
+            metric: 'lbs',
+            reps: [{
+                isValid: false,
+                removed: false,
+            }, {
+                isValid: true,
+                removed: false,
+            }, {
+                isValid: true,
+                removed: false,
+            }, {
+                isValid: true,
+                removed: true,
+            }, {
+                isValid: false,
+                removed: true,
+            }, {
+                isValid: true,
+                removed: false,
+            }],
+        };
+
+        const result = sut.numValidUnremovedReps(set);
+
+        expect(result).toBe(3);
     });
 });

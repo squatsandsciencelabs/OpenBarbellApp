@@ -309,7 +309,10 @@ const areSetsComparable = (historySet, set) => {
     if (!isSetComparable(set)) {
         return false;
     }
-    return historySet.exercise === set.exercise && historySet.weight === set.weight && historySet.metric === set.metric && historySet.reps.length === set.reps.length;
+    return historySet.exercise === set.exercise &&
+        historySet.weight === set.weight &&
+        historySet.metric === set.metric &&
+        SetEmptyCheck.numValidUnremovedReps(historySet) === SetEmptyCheck.numValidUnremovedReps(set);
 };
 
 const isSetComparable = (set) => {
@@ -326,6 +329,10 @@ const isSetComparable = (set) => {
     }
 
     if (set.reps.length <= 0) {
+        return false;
+    }
+
+    if (SetEmptyCheck.numValidUnremovedReps(set) <= 0) {
         return false;
     }
 

@@ -85,8 +85,6 @@ const saveHistorySet = (setID, exercise = null, weight = null, metric = null, rp
 export const endSet = (manuallyStarted=false, wasSanityCheck=false) => (dispatch, getState) => {
     const state = getState();
     const set = SetsSelectors.getWorkingSet(state);
-
-    const test = SetsSelectors.getBestAvgVelocityEver(state, set);
     
     // check if set form has any data
     if (!SetEmptyCheck.isUntouched(set)) {

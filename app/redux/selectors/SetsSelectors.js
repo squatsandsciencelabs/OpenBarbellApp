@@ -193,6 +193,12 @@ export const getHistorySetsChronological = (state) => {
     return array;
 };
 
+export const getHistorySets = (state) => {
+    let sets = stateRoot(state);
+    var array = dictToArray(sets.historyData);
+    return array;
+};
+
 export const getNumHistorySets = (state) => {
     let sets = stateRoot(state);
     var array = dictToArray(sets.historyData);
@@ -275,44 +281,44 @@ export const hasChangesToSync = (state) => {
 
 // collapsed metrics
 
-export const getBestAvgVelocityEver = (state, set) => {
-    let historySets = getHistorySetsChronological(state);
+const getBestEverOfMetric = (state, set, metricFunction) => {
+    let historySets = getHistorySets(state);
     let workoutSets = getWorkoutSets(state);
 
     // find all instances of this exercise with weight and reps
     let matchedSets = historySets.concat(workoutSets).filter(historySet => areSetsComparable(historySet, set));
     
-    let avgVs = matchedSets.map((matchedSet) => {
-        return CollapsedMetrics.getAvgVelocities(matchedSet);
+    let metrics = matchedSets.map((matchedSet) => {
+        return metricFunction(matchedSet);
     });
 
-    avgVs = avgVs.reduce((a, b) => a.concat(b), []);
+    metrics = metrics.reduce((a, b) => a.concat(b), []);
     
-    if (avgVs.length > 0) {
-        return Math.max(...avgVs);
+    if (metrics.length > 0) {
+        return Math.max(...metrics);
     } else {
         return null;
     }
 };
 
+export const getBestAvgVelocityEver = (state, set) => {
+    return getBestEverOfMetric(state, set, CollapsedMetrics.getAvgVelocities);
+};
+
+export const getBestPKVEver = (state, set) => {
+    return getBestEverOfMetric(state, set, CollapsedMetrics.getPKVs);
+};
+
+export const getBestPKHEver = (state, set) => {
+    return getBestEverOfMetric(state, set, CollapsedMetrics.getPKHs);
+};
+
 export const getBestROMEver = (state, set) => {
-    let historySets = getHistorySetsChronological(state);
-    let workoutSets = getWorkoutSets(state);
+    return getBestEverOfMetric(state, set, CollapsedMetrics.getROMs);
+};
 
-    // find all instances of this exercise with weight and reps
-    let matchedSets = historySets.concat(workoutSets).filter(historySet => areSetsComparable(historySet, set));
-    
-    let roms = matchedSets.map((matchedSet) => {
-        return CollapsedMetrics.getROMs(matchedSet);
-    });
-
-    roms = roms.reduce((a, b) => a.concat(b), []);
-    
-    if (roms.length > 0) {
-        return Math.max(...roms);
-    } else {
-        return null;
-    }
+export const getBestDurationEver = (state, set) => {
+    return getBestEverOfMetric(state, set, CollapsedMetrics.getDurations);
 };
 
 export const getRevision = (state) => stateRoot(state).revision;

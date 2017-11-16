@@ -347,14 +347,6 @@ export const getBestPKVEver = (state, set) => {
     return getBestEverOfMetric(state, set, CollapsedMetrics.getPKVs);
 };
 
-export const getBestPKHEver = (state, set) => {
-    return getBestEverOfMetric(state, set, CollapsedMetrics.getPKHs);
-};
-
-export const getBestROMEver = (state, set) => {
-    return getBestEverOfMetric(state, set, CollapsedMetrics.getROMs);
-};
-
 export const getBestDurationEver = (state, set) => {
     return getBestEverOfMetric(state, set, CollapsedMetrics.getDurations);
 };

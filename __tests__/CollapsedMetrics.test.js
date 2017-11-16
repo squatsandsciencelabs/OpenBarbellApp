@@ -522,46 +522,6 @@ describe('collapsed metrics', () => {
     });
     
     // PKH
-
-    describe('getAvgPKH', () => {
-        
-        test('null when no PKHs', () => {
-            const set = {
-                reps: [],
-            }
-    
-            const result = sut.getAvgPKH(set);
-    
-            expect(result).toBe(null);
-        });
-    
-        test('return avg of avg PKHs', () => {
-            const result = sut.getAvgPKH(set);
-    
-            expect(result).toBe(41.5);
-        });
-
-    });
-        
-    describe('getAbsLossOfPKHs', () => {
-    
-        test('return null when PKHs empty', () => {
-            const set = {
-                reps: [],
-            };
-            
-            const result = sut.getAbsLossOfPKHs(set);
-            
-            expect(result).toBe(null);
-        });
-    
-        test('returns abslossPKHs', () => {
-            const result = sut.getAbsLossOfPKHs(set);
-    
-            expect(result).toBe(37);
-        });
-
-    });
     
     describe('getFirstPKH', () => {
         

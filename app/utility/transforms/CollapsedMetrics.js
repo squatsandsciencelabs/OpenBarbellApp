@@ -57,11 +57,6 @@ export const getAvgPKV = (set) => {
     return getAvgOfMetrics(pkvs);
 };
 
-export const getAvgPKH = (set) => {
-    const pkhs = getPKHs(set);
-    return getAvgOfMetrics(pkhs);
-};
-
 export const getAvgROM = (set) => {
     const roms = getROMs(set);
     return getAvgOfMetrics(roms);
@@ -93,11 +88,6 @@ export const getAbsLossOfAvgVelocities = (set) => {
 export const getAbsLossOfPKVs = (set) => {
     const pkvs = getPKVs(set);
     return getAbsLossOfMetrics(pkvs);
-};
-
-export const getAbsLossOfPKHs = (set) => {
-    const pkhs = getPKHs(set);
-    return getAbsLossOfMetrics(pkhs);
 };
 
 export const getAbsLossOfROMs = (set) => {

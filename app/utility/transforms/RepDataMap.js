@@ -46,6 +46,7 @@ export const peakAcceleration = (repData) => {
 
     return parseData(repData, map.peakAccelerationPosition);
 };
+
 export const durationOfLift = (repData) => {
     if (parseData(repData, 0) === -1234) {
         return null;

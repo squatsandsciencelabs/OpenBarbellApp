@@ -268,7 +268,7 @@ export const hasChangesToSync = (state) => {
 
 // collapsed metrics
 
-const getBestEverOfMetric = (state, set, metricFunction) => {
+const getBestEverOfMetric = (state, set, metricFunction, isMax=true) => {
     // null if not enough data entered
     if (!isSetComparable(set)) {
         return null;
@@ -287,7 +287,11 @@ const getBestEverOfMetric = (state, set, metricFunction) => {
     metrics = metrics.reduce((a, b) => a.concat(b), []);
     
     if (metrics.length > 0) {
-        return Math.max(...metrics);
+        if (isMax) {
+            return Math.max(...metrics);
+        } else {
+            return Math.min(...metrics);
+        }
     } else {
         return null;
     }
@@ -336,7 +340,7 @@ export const getBestPKVEver = (state, set) => {
 };
 
 export const getBestDurationEver = (state, set) => {
-    return getBestEverOfMetric(state, set, CollapsedMetrics.getDurations);
+    return getBestEverOfMetric(state, set, CollapsedMetrics.getDurations, false);
 };
 
 export const getRevision = (state) => stateRoot(state).revision;

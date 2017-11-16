@@ -910,7 +910,7 @@ describe('SetsSelectors', () => {
                         reps: [{
                             isValid: true,
                             removed: false,
-                            data: [-3456, 37, 1.833368, 200, 20, 10, 1, 5]
+                            data: [-3456, 37, 1.833368, 200, 20, 10, 1, 4]
                         }, {
                             isValid: false,
                             removed: false,
@@ -1146,13 +1146,13 @@ describe('SetsSelectors', () => {
             test('best duration found in history', () => {
                 const result = sut.getBestDurationEver(state, setAnswerHistory);
         
-                expect(result).toBe(20);
+                expect(result).toBe(4);
             });
 
             test('best duration found in workout', () => {
                 const result = sut.getBestDurationEver(state, setAnswerWorkout);
         
-                expect(result).toBe(36);
+                expect(result).toBe(18);
             });
         
             test('return null when no history or workout data', () => {

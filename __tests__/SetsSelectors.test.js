@@ -985,7 +985,7 @@ describe('SetsSelectors', () => {
         describe('getBestAvgVelocityEver', () => {
 
             test('get best AvgVelocity ever', () => {
-                const result = sut.getBestAvgVelocityEver(state, set, CollapsedMetrics.getAvgVelocities);
+                const result = sut.getBestAvgVelocityEver(state, set);
         
                 expect(result).toBe(1.83);
             });
@@ -998,7 +998,7 @@ describe('SetsSelectors', () => {
                     }
                 };
         
-                const result = sut.getBestAvgVelocityEver(state, set, CollapsedMetrics.getAvgVelocities);
+                const result = sut.getBestAvgVelocityEver(state, set);
         
                 expect(result).toBe(null);
             });
@@ -1011,7 +1011,7 @@ describe('SetsSelectors', () => {
                     reps: [],
                 };
 
-                const result = sut.getBestAvgVelocityEver(state, set, CollapsedMetrics.getAvgVelocities);
+                const result = sut.getBestAvgVelocityEver(state, set);
         
                 expect(result).toBe(null);
             });
@@ -1021,7 +1021,7 @@ describe('SetsSelectors', () => {
         describe('getBestPKVEver', () => {
 
             test('get best PKV ever', () => {
-                const result = sut.getBestPKVEver(state, set, CollapsedMetrics.getPKVs);
+                const result = sut.getBestPKVEver(state, set);
         
                 expect(result).toBe(48);
             });
@@ -1034,7 +1034,7 @@ describe('SetsSelectors', () => {
                     }
                 };
         
-                const result = sut.getBestPKVEver(state, set, CollapsedMetrics.getPKVs);
+                const result = sut.getBestPKVEver(state, set);
         
                 expect(result).toBe(null);
             });
@@ -1047,7 +1047,7 @@ describe('SetsSelectors', () => {
                     reps: [],
                 };
 
-                const result = sut.getBestPKVEver(state, set, CollapsedMetrics.getAvgVelocities);
+                const result = sut.getBestPKVEver(state, set);
         
                 expect(result).toBe(null);
             });
@@ -1057,7 +1057,7 @@ describe('SetsSelectors', () => {
         describe('getBestPKHEver', () => {
 
             test('get best PKH ever', () => {
-                const result = sut.getBestPKHEver(state, set, CollapsedMetrics.getPKHs);
+                const result = sut.getBestPKHEver(state, set);
         
                 expect(result).toBe(30);
             });
@@ -1070,7 +1070,7 @@ describe('SetsSelectors', () => {
                     }
                 };
         
-                const result = sut.getBestPKHEver(state, set, CollapsedMetrics.getPKHs);
+                const result = sut.getBestPKHEver(state, set);
         
                 expect(result).toBe(null);
             });
@@ -1083,7 +1083,7 @@ describe('SetsSelectors', () => {
                     reps: [],
                 };
 
-                const result = sut.getBestPKHEver(state, set, CollapsedMetrics.getAvgVelocities);
+                const result = sut.getBestPKHEver(state, set);
         
                 expect(result).toBe(null);
             });
@@ -1093,7 +1093,7 @@ describe('SetsSelectors', () => {
         describe('getBestROMEver', () => {
 
             test('get best ROM ever', () => {
-                const result = sut.getBestROMEver(state, set, CollapsedMetrics.getROMs);
+                const result = sut.getBestROMEver(state, set);
         
                 expect(result).toBe(400);
             });
@@ -1107,7 +1107,7 @@ describe('SetsSelectors', () => {
                     }
                 };
         
-                const result = sut.getBestROMEver(state, set, CollapsedMetrics.getROMs);
+                const result = sut.getBestROMEver(state, set);
         
                 expect(result).toBe(null);
             });
@@ -1120,7 +1120,7 @@ describe('SetsSelectors', () => {
                     reps: [],
                 };
 
-                const result = sut.getBestROMEver(state, set, CollapsedMetrics.getAvgVelocities);
+                const result = sut.getBestROMEver(state, set);
         
                 expect(result).toBe(null);
             });
@@ -1130,7 +1130,7 @@ describe('SetsSelectors', () => {
         describe('getBestDurationEver', () => {
 
             test('get best duration ever', () => {
-                const result = sut.getBestDurationEver(state, set, CollapsedMetrics.getDurations);
+                const result = sut.getBestDurationEver(state, set);
         
                 expect(result).toBe(20);
             });
@@ -1143,7 +1143,7 @@ describe('SetsSelectors', () => {
                     }
                 };
         
-                const result = sut.getBestDurationEver(state, set, CollapsedMetrics.getDurations);
+                const result = sut.getBestDurationEver(state, set);
         
                 expect(result).toBe(null);
             });
@@ -1156,7 +1156,7 @@ describe('SetsSelectors', () => {
                     reps: [],
                 };
 
-                const result = sut.getBestDurationEver(state, set, CollapsedMetrics.getAvgVelocities);
+                const result = sut.getBestDurationEver(state, set);
         
                 expect(result).toBe(null);
             });

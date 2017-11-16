@@ -6,13 +6,8 @@ describe('collapsed metrics', () => {
             {
                 isValid: false,
                 removed: false,
-                data: [-3456, 37, 1.833368, 110, 20, 35, 1, 5]
-            }, 
-            {
-                isValid: false,
-                removed: true,
-                data: [-3456, 37, 1.833368, 210, 20, 32, 1, 5]
-            }, 
+                data: [-3456, 37, 2.833368, 110, 20, 35, 1, 5]
+            },
             {
                 isValid: true,
                 removed: false,
@@ -26,7 +21,7 @@ describe('collapsed metrics', () => {
             {
                 isValid: false,
                 removed: true,
-                data: [-3456, 37, 1.833368, 410, 21, 26, 1, 5]
+                data: [-3456, 37, 3.833368, 410, 21, 26, 1, 5]
             }, 
             {
                 isValid: true,
@@ -37,6 +32,11 @@ describe('collapsed metrics', () => {
                 isValid: true,
                 removed: false,
                 data: [-3456, 39, 1.08, 280, 31, 32, 2, 2]
+            },
+            {
+                isValid: false,
+                removed: true,
+                data: [-3456, 37, 4.833368, 210, 20, 32, 1, 5]
             },
         ]
     };
@@ -279,86 +279,80 @@ describe('collapsed metrics', () => {
 
     // avg velocities
 
-    describe('getAvgofAvgVelocities', () => {
+    describe('getAvgOfAvgVelocities', () => {
 
         test('null when no avg velocities', () => {
             const set = {
                 reps: [],
             };
-            const velocities = sut.getAvgVelocities(set);
     
-            const result = sut.getAvgOfMetrics(velocities);
+            const result = sut.getAvgOfAvgVelocities(set);
     
             expect(result).toBe(null);
         });
     
         test('return avg of avg velocities', () => {
-            const velocities = sut.getAvgVelocities(set);
-            
-            const result = sut.getAvgOfMetrics(velocities);
+            const result = sut.getAvgOfAvgVelocities(set);
     
             expect(result).toBe(1.44);
         });
 
     });
 
-    describe('getAbsLossVelocity', () => {
+    describe('getAbsLossOfAvgVelocities', () => {
     
         test('return null when avgVs empty', () => {
             const set = {
                 reps: [],
             };
-            const velocities = sut.getAvgVelocities(set);
             
-            const result = sut.getAbsLossOfMetrics(velocities);
+            const result = sut.getAbsLossOfAvgVelocities(set);
             
             expect(result).toBe(null);
         });
     
         test('returns abslossvelocity', () => {
-            const velocities = sut.getAvgVelocities(set);
-
-            const result = sut.getAbsLossOfMetrics(velocities);
+            const result = sut.getAbsLossOfAvgVelocities(set);
     
             expect(result).toBe(0.8);
         });
 
     });
     
-    describe('getFirstRepAvgVelocity', () => {
+    describe('getFirstAvgVelocity', () => {
         
         test('return null when avgVs empty', () => {
             const set = {
                 reps: [],
             };
             
-            const result = sut.getFirstRepofMetrics(sut.getAvgVelocities(set));
+            const result = sut.getFirstAvgVelocity(set);
             
             expect(result).toBe(null);
         });
         
         test('returns first rep avg velocity', () => {
-            const result = sut.getFirstRepofMetrics(sut.getAvgVelocities(set));
+            const result = sut.getFirstAvgVelocity(set);
         
             expect(result).toBe(1.83);
         });
 
     });
         
-    describe('getLastRepAvgVelocity', () => {
+    describe('getLastAvgVelocity', () => {
         
         test('return null when avgVs empty', () => {
             const set = {
                 reps: [],
             };
             
-            const result = sut.getLastRepMetrics(sut.getAvgVelocities(set));
+            const result = sut.getLastAvgVelocity(set);
             
             expect(result).toBe(null);
         });
         
         test('returns last rep avg velocity', () => {
-            const result = sut.getLastRepMetrics(sut.getAvgVelocities(set));
+            const result = sut.getLastAvgVelocity(set);
         
             expect(result).toBe(1.08);
         });
@@ -372,13 +366,13 @@ describe('collapsed metrics', () => {
                 reps: [],
             };
             
-            const result = sut.getMinMetrics(sut.getAvgVelocities(set));
+            const result = sut.getMinAvgVelocity(set);
             
             expect(result).toBe(null);
         });
         
         test('returns min avg velocity', () => {
-            const result = sut.getMinMetrics(sut.getAvgVelocities(set));
+            const result = sut.getMinAvgVelocity(set);
         
             expect(result).toBe(1.03);
         });
@@ -392,13 +386,13 @@ describe('collapsed metrics', () => {
                 reps: [],
             };
             
-            const result = sut.getMaxMetrics(sut.getAvgVelocities(set));
+            const result = sut.getMaxAvgVelocity(set);
             
             expect(result).toBe(null);
         });
         
         test('returns max avg velocity', () => {
-            const result = sut.getMaxMetrics(sut.getAvgVelocities(set));
+            const result = sut.getMaxAvgVelocity(set);
         
             expect(result).toBe(1.83);
         });
@@ -407,80 +401,84 @@ describe('collapsed metrics', () => {
 
     // best pkvs
 
-    describe('getAvgofPKVs', () => {
+    describe('getAvgPKV', () => {
         
         test('null when no PKVs', () => {
             const set = {
                 reps: [],
             };
     
-            const result = sut.getAvgOfMetrics(sut.getPKVs(set));
+            const result = sut.getAvgPKV(set);
     
             expect(result).toBe(null);
         });
     
         test('return avg of avg PKVs', () => {
-            const result = sut.getAvgOfMetrics(sut.getPKVs(set));
+            const result = sut.getAvgPKV(set);
     
             expect(result).toBe(41.25);
         });
+
     });
     
-    describe('getAbsLossPKVs', () => {
+    describe('getAbsLossOfPKVs', () => {
     
         test('return null when PKVs empty', () => {
             const set = {
                 reps: [],
             };
             
-            const result = sut.getAbsLossOfMetrics(sut.getPKVs(set));
+            const result = sut.getAbsLossOfPKVs(set);
             
             expect(result).toBe(null);
         });
     
         test('returns abslossPKVs', () => {
-            const result = sut.getAbsLossOfMetrics(sut.getPKVs(set));
+            const result = sut.getAbsLossOfPKVs(set);
     
             expect(result).toBe(26);
         });
+
     });
     
-    describe('getFirstRepPKVs', () => {
+    describe('getFirstPKV', () => {
         
         test('return null when PKVs empty', () => {
             const set = {
                 reps: [],
             };
             
-            const result = sut.getFirstRepofMetrics(sut.getPKVs(set));
+            const result = sut.getFirstPKV(set);
             
             expect(result).toBe(null);
         });
         
         test('returns first rep PKVs', () => {
-            const result = sut.getFirstRepofMetrics(sut.getPKVs(set));
+            const result = sut.getFirstPKV(set);
         
             expect(result).toBe(43);
         });
+
     });
         
-    describe('getLastRepPKV', () => {
+    describe('getLastPKV', () => {
         
         test('return null when PKVs empty', () => {
             const set = {
                 reps: [],
             };
             
-            const result = sut.getLastRepMetrics(sut.getPKVs(set));
+            const result = sut.getLastPKV(set);
             
             expect(result).toBe(null);
         });
         
         test('returns last rep PKV', () => {
-            const result = sut.getLastRepMetrics(sut.getPKVs(set));
+            const result = sut.getLastPKV(set);
         
             expect(result).toBe(31);
         });
+
     });
     
     describe('getMinPKV', () => {
@@ -490,16 +488,17 @@ describe('collapsed metrics', () => {
                 reps: [],
             };
             
-            const result = sut.getMinMetrics(sut.getPKVs(set));
+            const result = sut.getMinPKV(set);
             
             expect(result).toBe(null);
         });
         
         test('returns min PKV', () => {
-            const result = sut.getMinMetrics(sut.getPKVs(set));
+            const result = sut.getMinPKV(set);
         
             expect(result).toBe(31);
         });
+
     });
     
     describe('getMaxPKV', () => {
@@ -509,94 +508,95 @@ describe('collapsed metrics', () => {
                 reps: [],
             };
             
-            const result = sut.getMaxMetrics(sut.getPKVs(set));
+            const result = sut.getMaxPKV(set);
             
             expect(result).toBe(null);
         });
         
         test('returns max PKV', () => {
-            const result = sut.getMaxMetrics(sut.getPKVs(set));
+            const result = sut.getMaxPKV(set);
         
             expect(result).toBe(57);
         });
+
     });
     
     // PKH
 
-    describe('getAvgofPKHs', () => {
+    describe('getAvgPKH', () => {
         
         test('null when no PKHs', () => {
             const set = {
                 reps: [],
             }
     
-            const result = sut.getAvgOfMetrics(sut.getPKHs(set));
+            const result = sut.getAvgPKH(set);
     
             expect(result).toBe(null);
         });
     
         test('return avg of avg PKHs', () => {
-            const result = sut.getAvgOfMetrics(sut.getPKHs(set));
+            const result = sut.getAvgPKH(set);
     
             expect(result).toBe(41.5);
         });
 
     });
         
-    describe('getAbsLossPKHs', () => {
+    describe('getAbsLossOfPKHs', () => {
     
         test('return null when PKHs empty', () => {
             const set = {
                 reps: [],
             };
             
-            const result = sut.getAbsLossOfMetrics(sut.getPKHs(set));
+            const result = sut.getAbsLossOfPKHs(set);
             
             expect(result).toBe(null);
         });
     
         test('returns abslossPKHs', () => {
-            const result = sut.getAbsLossOfMetrics(sut.getPKHs(set));
+            const result = sut.getAbsLossOfPKHs(set);
     
             expect(result).toBe(37);
         });
 
     });
     
-    describe('getFirstRepPKHs', () => {
+    describe('getFirstPKH', () => {
         
         test('return null when PKHs empty', () => {
             const set = {
                 reps: [],
             };
             
-            const result = sut.getFirstRepofMetrics(sut.getPKHs(set));
+            const result = sut.getFirstPKH(set);
             
             expect(result).toBe(null);
         });
         
         test('returns first rep PKHs', () => {
-            const result = sut.getFirstRepofMetrics(sut.getPKHs(set));
+            const result = sut.getFirstPKH(set);
         
             expect(result).toBe(41);
         });
 
     });
         
-    describe('getLastRepPKH', () => {
+    describe('getLastPKH', () => {
         
         test('return null when PKHs empty', () => {
             const set = {
                 reps: [],
             };
             
-            const result = sut.getLastRepMetrics(sut.getPKHs(set));
+            const result = sut.getLastPKH(set);
             
             expect(result).toBe(null);
         });
         
         test('returns last rep PKH', () => {
-            const result = sut.getLastRepMetrics(sut.getPKHs(set));
+            const result = sut.getLastPKH(set);
         
             expect(result).toBe(32);
         });
@@ -610,13 +610,13 @@ describe('collapsed metrics', () => {
                 reps: [],
             };
             
-            const result = sut.getMinMetrics(sut.getPKHs(set));
+            const result = sut.getMinPKH(set);
             
             expect(result).toBe(null);
         });
         
         test('returns min PKH', () => {
-            const result = sut.getMinMetrics(sut.getPKHs(set));
+            const result = sut.getMinPKH(set);
         
             expect(result).toBe(28);
         });
@@ -630,13 +630,13 @@ describe('collapsed metrics', () => {
                 reps: [],
             };
             
-            const result = sut.getMaxMetrics(sut.getPKHs(set));
+            const result = sut.getMaxPKH(set);
             
             expect(result).toBe(null);
         });
         
         test('returns max PKH', () => {
-            const result = sut.getMaxMetrics(sut.getPKHs(set));
+            const result = sut.getMaxPKH(set);
         
             expect(result).toBe(65);
         });
@@ -645,80 +645,80 @@ describe('collapsed metrics', () => {
 
     // ROMs
     
-    describe('getAvgofROMs', () => {
+    describe('getAvgROM', () => {
         
         test('null when no ROMs', () => {
             const set = {
                 reps: [],
             }
     
-            const result = sut.getAvgOfMetrics(sut.getROMs(set));
+            const result = sut.getAvgROM(set);
     
             expect(result).toBe(null);
         });
     
         test('return avg of avg ROMs', () => {
-            const result = sut.getAvgOfMetrics(sut.getROMs(set));
+            const result = sut.getAvgROM(set);
     
             expect(result).toBe(266.25);
         });
 
     });
         
-    describe('getAbsLossROMs', () => {
+    describe('getAbsLossOfROMs', () => {
     
         test('return null when ROMs empty', () => {
             const set = {
                 reps: [],
             };
             
-            const result = sut.getAbsLossOfMetrics(sut.getROMs(set));
+            const result = sut.getAbsLossOfROMs(set);
             
             expect(result).toBe(null);
         });
     
         test('returns abslossROMs', () => {
-            const result = sut.getAbsLossOfMetrics(sut.getROMs(set));
+            const result = sut.getAbsLossOfROMs(set);
     
             expect(result).toBe(95);
         });
 
     });
     
-    describe('getFirstRepROMs', () => {
+    describe('getFirstROM', () => {
         
         test('return null when ROMs empty', () => {
             const set = {
                 reps: [],
             };
                 
-            const result = sut.getFirstRepofMetrics(sut.getROMs(set));
+            const result = sut.getFirstROM(set);
                 
             expect(result).toBe(null);
         });
         
         test('returns first rep ROMs', () => {
-            const result = sut.getFirstRepofMetrics(sut.getROMs(set));
+            const result = sut.getFirstROM(set);
         
             expect(result).toBe(205);
         });
 
     });
         
-    describe('getLastRepROM', () => {
+    describe('getLastROM', () => {
         
         test('return null when ROMs empty', () => {
             const set = {
                 reps: [],
             };
             
-            const result = sut.getLastRepMetrics(sut.getROMs(set));
+            const result = sut.getLastROM(set);
             
             expect(result).toBe(null);
         });
         
         test('returns last rep ROM', () => {
-            const result = sut.getLastRepMetrics(sut.getROMs(set));
+            const result = sut.getLastROM(set);
         
             expect(result).toBe(280);
         });
@@ -732,13 +732,13 @@ describe('collapsed metrics', () => {
                 reps: [],
             };
             
-            const result = sut.getMinMetrics(sut.getROMs(set));
+            const result = sut.getMinROM(set);
             
             expect(result).toBe(null);        
         });
         
         test('returns min ROM', () => {
-            const result = sut.getMinMetrics(sut.getROMs(set));
+            const result = sut.getMinROM(set);
         
             expect(result).toBe(205);
         });
@@ -752,13 +752,13 @@ describe('collapsed metrics', () => {
                 reps: [],
             };
             
-            const result = sut.getMaxMetrics(sut.getROMs(set));
+            const result = sut.getMaxROM(set);
             
             expect(result).toBe(null);
         });
         
         test('returns max ROM', () => {
-            const result = sut.getMaxMetrics(sut.getROMs(set));
+            const result = sut.getMaxROM(set);
         
             expect(result).toBe(300);
         });
@@ -767,80 +767,80 @@ describe('collapsed metrics', () => {
     
     // Durations
 
-    describe('getAvgofDurations', () => {
+    describe('getAvgDuration', () => {
         
         test('null when no Durations', () => {
             const set = {
                 reps: [],
             }
     
-            const result = sut.getAvgOfMetrics(sut.getDurations(set));
+            const result = sut.getAvgDuration(set);
     
             expect(result).toBe(null);
         });
     
         test('return avg of avg Durations', () => {
-            const result = sut.getAvgOfMetrics(sut.getDurations(set));
+            const result = sut.getAvgDuration(set);
     
             expect(result).toBe(5.75);
         });
 
     });
         
-    describe('getAbsLossDurations', () => {
+    describe('getAbsLossOfDurations', () => {
     
         test('return null when Durations empty', () => {
             const set = {
                 reps: [],
             };
             
-            const result = sut.getAbsLossOfMetrics(sut.getDurations(set));
+            const result = sut.getAbsLossOfDurations(set);
             
             expect(result).toBe(null);
         });
     
         test('returns abslossDurations', () => {
-            const result = sut.getAbsLossOfMetrics(sut.getDurations(set));
+            const result = sut.getAbsLossOfDurations(set);
     
             expect(result).toBe(7);
         });
 
     });
     
-    describe('getFirstRepDurations', () => {
+    describe('getFirstDuration', () => {
         
         test('return null when Durations empty', () => {
             const set = {
                 reps: [],
             };
             
-            const result = sut.getFirstRepofMetrics(sut.getDurations(set));
+            const result = sut.getFirstDuration(set);
             
             expect(result).toBe(null);
         });
         
         test('returns first rep Durations', () => {
-            const result = sut.getFirstRepofMetrics(sut.getDurations(set));
+            const result = sut.getFirstDuration(set);
         
             expect(result).toBe(5);
         });
 
     });
         
-    describe('getLastRepDuration', () => {
+    describe('getLastDuration', () => {
         
         test('return null when Durations empty', () => {
             const set = {
                 reps: [],
             };
             
-            const result = sut.getLastRepMetrics(sut.getDurations(set));
+            const result = sut.getLastDuration(set);
             
             expect(result).toBe(null);
         });
         
         test('returns last rep Duration', () => {
-            const result = sut.getLastRepMetrics(sut.getDurations(set));
+            const result = sut.getLastDuration(set);
         
             expect(result).toBe(2);
         });
@@ -854,13 +854,13 @@ describe('collapsed metrics', () => {
                 reps: [],
             };
             
-            const result = sut.getMinMetrics(sut.getDurations(set));
+            const result = sut.getMinDuration(set);
             
             expect(result).toBe(null);
         });
         
         test('returns min Duration', () => {
-            const result = sut.getMinMetrics(sut.getDurations(set));
+            const result = sut.getMinDuration(set);
         
             expect(result).toBe(2);
         });
@@ -874,16 +874,17 @@ describe('collapsed metrics', () => {
                 reps: [],
             };
             
-            const result = sut.getMaxMetrics(sut.getDurations(set));
+            const result = sut.getMaxDuration(set);
             
             expect(result).toBe(null);
         });
         
         test('returns max Duration', () => {
-            const result = sut.getMaxMetrics(sut.getDurations(set));
+            const result = sut.getMaxDuration(set);
             
             expect(result).toBe(9);
         });
 
     });
+
 });

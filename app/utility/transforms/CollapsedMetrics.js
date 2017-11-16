@@ -7,9 +7,9 @@ const getMetrics = (set, metricFunction) => {
     
     set.reps.forEach((rep) => {                
         if (rep.isValid === true && rep.removed === false) {
-            let repData = rep.data;
-        
-            metrics.push(Number(metricFunction(repData)));
+            const repData = rep.data;
+            const metric = Number(metricFunction(repData));
+            metrics.push(metric);
         }
     });
 
@@ -36,9 +36,9 @@ export const getDurations = (set) => {
     return getMetrics(set, RepDataMap.durationOfLift);
 };
 
-// Quantifiers
+// Average Quantifiers
 
-export const getAvgOfMetrics = (metrics) => {
+const getAvgOfMetrics = (metrics) => {
     if (metrics.length <= 0) {
         return null;
     }
@@ -47,7 +47,34 @@ export const getAvgOfMetrics = (metrics) => {
     return Number((sum / metrics.length).toFixed(2));
 };
 
-export const getAbsLossOfMetrics = (metrics) => {
+export const getAvgOfAvgVelocities = (set) => {
+    const velocities = getAvgVelocities(set);
+    return getAvgOfMetrics(velocities);
+};
+
+export const getAvgPKV = (set) => {
+    const pkvs = getPKVs(set);
+    return getAvgOfMetrics(pkvs);
+};
+
+export const getAvgPKH = (set) => {
+    const pkhs = getPKHs(set);
+    return getAvgOfMetrics(pkhs);
+};
+
+export const getAvgROM = (set) => {
+    const roms = getROMs(set);
+    return getAvgOfMetrics(roms);
+};
+
+export const getAvgDuration = (set) => {
+    const durations = getDurations(set);
+    return getAvgOfMetrics(durations);
+};
+
+// Absolute Loss Quantifiers
+
+const getAbsLossOfMetrics = (metrics) => {
     if (metrics.length <= 0) {
         return null;
     }
@@ -58,7 +85,34 @@ export const getAbsLossOfMetrics = (metrics) => {
     return maxV - minV;
 };
 
-export const getFirstRepofMetrics = (metrics) => {
+export const getAbsLossOfAvgVelocities = (set) => {
+    const velocities = getAvgVelocities(set);
+    return getAbsLossOfMetrics(velocities);
+};
+
+export const getAbsLossOfPKVs = (set) => {
+    const pkvs = getPKVs(set);
+    return getAbsLossOfMetrics(pkvs);
+};
+
+export const getAbsLossOfPKHs = (set) => {
+    const pkhs = getPKHs(set);
+    return getAbsLossOfMetrics(pkhs);
+};
+
+export const getAbsLossOfROMs = (set) => {
+    const roms = getROMs(set);
+    return getAbsLossOfMetrics(roms);
+};
+
+export const getAbsLossOfDurations = (set) => {
+    const durations = getDurations(set);
+    return getAbsLossOfMetrics(durations);
+};
+
+// First Rep Quantifiers
+
+const getFirstRepOfMetrics = (metrics) => {
     if (metrics.length <= 0) {
         return null;
     }
@@ -66,7 +120,34 @@ export const getFirstRepofMetrics = (metrics) => {
     return metrics[0];
 };
 
-export const getLastRepMetrics = (metrics) => {
+export const getFirstAvgVelocity = (set) => {
+    const velocities = getAvgVelocities(set);
+    return getFirstRepOfMetrics(velocities);
+};
+
+export const getFirstPKV = (set) => {
+    const pkvs = getPKVs(set);
+    return getFirstRepOfMetrics(pkvs);
+};
+
+export const getFirstPKH = (set) => {
+    const pkhs = getPKHs(set);
+    return getFirstRepOfMetrics(pkhs);
+};
+
+export const getFirstROM = (set) => {
+    const roms = getROMs(set);
+    return getFirstRepOfMetrics(roms);
+};
+
+export const getFirstDuration = (set) => {
+    const durations = getDurations(set);
+    return getFirstRepOfMetrics(durations);
+};
+
+// Last Rep Quantifiers
+
+const getLastRepMetrics = (metrics) => {
     if (metrics.length <= 0) {
         return null;
     }
@@ -74,7 +155,34 @@ export const getLastRepMetrics = (metrics) => {
     return metrics[metrics.length - 1];
 };
 
-export const getMinMetrics = (metrics) => {
+export const getLastAvgVelocity = (set) => {
+    const velocities = getAvgVelocities(set);
+    return getLastRepMetrics(velocities);
+};
+
+export const getLastPKV = (set) => {
+    const pkvs = getPKVs(set);
+    return getLastRepMetrics(pkvs);
+};
+
+export const getLastPKH = (set) => {
+    const pkhs = getPKHs(set);
+    return getLastRepMetrics(pkhs);
+};
+
+export const getLastROM = (set) => {
+    const roms = getROMs(set);
+    return getLastRepMetrics(roms);
+};
+
+export const getLastDuration = (set) => {
+    const durations = getDurations(set);
+    return getLastRepMetrics(durations);
+};
+
+// Get Min Quantifiers
+
+const getMinMetrics = (metrics) => {
     if (metrics.length <= 0) {
         return null;
     }
@@ -82,10 +190,62 @@ export const getMinMetrics = (metrics) => {
     return Math.min(...metrics);
 };
 
-export const getMaxMetrics = (metrics) => {
+export const getMinAvgVelocity = (set) => {
+    const velocities = getAvgVelocities(set);
+    return getMinMetrics(velocities);
+};
+
+export const getMinPKV = (set) => {
+    const pkvs = getPKVs(set);
+    return getMinMetrics(pkvs);
+};
+
+export const getMinPKH = (set) => {
+    const pkhs = getPKHs(set);
+    return getMinMetrics(pkhs);
+};
+
+export const getMinROM = (set) => {
+    const roms = getROMs(set);
+    return getMinMetrics(roms);
+};
+
+export const getMinDuration = (set) => {
+    const durations = getDurations(set);
+    return getMinMetrics(durations);
+};
+
+// Get Max Quantifiers
+
+const getMaxMetrics = (metrics) => {
     if (metrics.length <= 0) {
         return null;
     }
 
     return Math.max(...metrics);
+};
+
+export const getMaxAvgVelocity = (set) => {
+    const velocities = getAvgVelocities(set);
+    return getMaxMetrics(velocities);
+};
+
+export const getMaxPKV = (set) => {
+    const pkvs = getPKVs(set);
+    return getMaxMetrics(pkvs);
+};
+
+export const getMaxPKH = (set) => {
+    const pkhs = getPKHs(set);
+    return getMaxMetrics(pkhs);
+};
+
+export const getMaxROM = (set) => {
+    const roms = getROMs(set);
+    return getMaxMetrics(roms);
+};
+
+export const getMaxDuration = (set) => {
+    const durations = getDurations(set);
+    return getMaxMetrics(durations);
 };

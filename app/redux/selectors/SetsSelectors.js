@@ -300,7 +300,7 @@ const getBestEverOfMetric = (state, set, metricFunction) => {
     }
 };
 
-const  areSetsComparable = (historySet, set) => {
+const areSetsComparable = (historySet, set) => {
     return historySet.exercise === set.exercise && historySet.weight === set.weight &&  historySet.metric === set.metric && historySet.reps.length === set.reps.length;
 };
 

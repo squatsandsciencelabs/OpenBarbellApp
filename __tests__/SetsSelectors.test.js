@@ -842,6 +842,32 @@ describe('SetsSelectors', () => {
                         data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
                     }],
                 }, {
+                    exercise: 'Squat',
+                    weight: 200,
+                    metric: 'kgs',
+                    reps: [{
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.933368, 188, 18, 18, 1, 18]
+                    }, {
+                        isValid: false,
+                        removed: false,
+                        data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
+                    }, {
+                        isValid: true,
+                        removed: true,
+                        data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
+                    }],
+                }, {
+                    exercise: 'Squat',
+                    weight: 200,
+                    metric: 'kgs',
+                    reps: [{
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 3.933368, 312, 34, 35, 1, 36]
+                    }],
+                }, {
                     exercise: 'Bench',
                     weight: 100,
                     metric: 'lbs',
@@ -905,7 +931,7 @@ describe('SetsSelectors', () => {
                     },
                     b: {
                         exercise: 'Squat',
-                        weight: 100,
+                        weight: 200,
                         metric: 'lbs',
                         reps: [{
                             isValid: true,
@@ -934,7 +960,7 @@ describe('SetsSelectors', () => {
                         }],
                     },
                     e: {
-                        exercise: 'Sumo Deadlift',
+                        exercise: 'Squat',
                         weight: 100,
                         metric: 'lbs',
                         reps: [{
@@ -953,11 +979,41 @@ describe('SetsSelectors', () => {
                             data: [-3456, 37, 2.4, 230, 23, 13, 1, 3]
                         }]
                     },
+                    f: {
+                        exercise: 'Squat',
+                        weight: 200,
+                        metric: 'kgs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.3, 100, 10, 5, 1, 3]
+                        }, 
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.9, 300, 30, 20, 1, 10]
+                        },
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 2.4, 230, 23, 13, 1, 3]
+                        }]
+                    },
+                    g: {
+                        exercise: 'Squat',
+                        weight: 200,
+                        metric: 'kgs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 2.933368, 288, 28, 28, 1, 28]
+                        }]
+                    },
                 }
             }
         };
 
-        var set = {
+        var setAnswerHistory = {
             exercise: 'Bench',
             weight: 100,
             metric: 'lbs',
@@ -982,12 +1038,37 @@ describe('SetsSelectors', () => {
             }],
         };
 
+        var setAnswerWorkout = {
+            exercise: 'Squat',
+            weight: 200,
+            metric: 'kgs',
+            reps: [{
+                isValid: false,
+                removed: true,
+            }, {
+                isValid: true,
+                removed: true,
+            }, {
+                isValid: true,
+                removed: false,
+            }, {
+                isValid: false,
+                removed: false,
+            }],
+        };
+
         describe('getBestAvgVelocityEver', () => {
 
-            test('get best AvgVelocity ever', () => {
-                const result = sut.getBestAvgVelocityEver(state, set);
+            test('best avg vel found in history', () => {
+                const result = sut.getBestAvgVelocityEver(state, setAnswerHistory);
         
                 expect(result).toBe(2.43);
+            });
+
+            test('best avg vel found in workout', () => {
+                const result = sut.getBestAvgVelocityEver(state, setAnswerWorkout);
+        
+                expect(result).toBe(3.93);
             });
         
             test('return null when no history or workout data', () => {
@@ -998,7 +1079,7 @@ describe('SetsSelectors', () => {
                     }
                 };
         
-                const result = sut.getBestAvgVelocityEver(state, set);
+                const result = sut.getBestAvgVelocityEver(state, setAnswerHistory);
         
                 expect(result).toBe(null);
             });
@@ -1020,10 +1101,16 @@ describe('SetsSelectors', () => {
         
         describe('getBestPKVEver', () => {
 
-            test('get best PKV ever', () => {
-                const result = sut.getBestPKVEver(state, set);
+            test('best pkv found in history', () => {
+                const result = sut.getBestPKVEver(state, setAnswerHistory);
         
                 expect(result).toBe(48);
+            });
+
+            test('best pkv found in workout', () => {
+                const result = sut.getBestPKVEver(state, setAnswerWorkout);
+        
+                expect(result).toBe(34);
             });
         
             test('return null when no history or workout data', () => {
@@ -1034,7 +1121,7 @@ describe('SetsSelectors', () => {
                     }
                 };
         
-                const result = sut.getBestPKVEver(state, set);
+                const result = sut.getBestPKVEver(state, setAnswerHistory);
         
                 expect(result).toBe(null);
             });
@@ -1056,10 +1143,16 @@ describe('SetsSelectors', () => {
         
         describe('getBestPKHEver', () => {
 
-            test('get best PKH ever', () => {
-                const result = sut.getBestPKHEver(state, set);
+            test('best pkh found in history', () => {
+                const result = sut.getBestPKHEver(state, setAnswerHistory);
         
                 expect(result).toBe(30);
+            });
+
+            test('best pkh found in workout', () => {
+                const result = sut.getBestPKHEver(state, setAnswerWorkout);
+        
+                expect(result).toBe(35);
             });
         
             test('return null when no history or workout data', () => {
@@ -1070,7 +1163,7 @@ describe('SetsSelectors', () => {
                     }
                 };
         
-                const result = sut.getBestPKHEver(state, set);
+                const result = sut.getBestPKHEver(state, setAnswerHistory);
         
                 expect(result).toBe(null);
             });
@@ -1092,14 +1185,19 @@ describe('SetsSelectors', () => {
         
         describe('getBestROMEver', () => {
 
-            test('get best ROM ever', () => {
-                const result = sut.getBestROMEver(state, set);
+            test('best ROM found in history', () => {
+                const result = sut.getBestROMEver(state, setAnswerHistory);
         
                 expect(result).toBe(400);
             });
+
+            test('best ROM found in workout', () => {
+                const result = sut.getBestROMEver(state, setAnswerWorkout);
+        
+                expect(result).toBe(312);
+            });
         
             test('return null when no history or workout data', () => {
-
                 const state = {
                     sets: {
                         workoutData: [],
@@ -1107,7 +1205,7 @@ describe('SetsSelectors', () => {
                     }
                 };
         
-                const result = sut.getBestROMEver(state, set);
+                const result = sut.getBestROMEver(state, setAnswerHistory);
         
                 expect(result).toBe(null);
             });
@@ -1126,13 +1224,19 @@ describe('SetsSelectors', () => {
             });
 
         });     
-
+        
         describe('getBestDurationEver', () => {
 
-            test('get best duration ever', () => {
-                const result = sut.getBestDurationEver(state, set);
+            test('best duration found in history', () => {
+                const result = sut.getBestDurationEver(state, setAnswerHistory);
         
                 expect(result).toBe(20);
+            });
+
+            test('best duration found in workout', () => {
+                const result = sut.getBestDurationEver(state, setAnswerWorkout);
+        
+                expect(result).toBe(36);
             });
         
             test('return null when no history or workout data', () => {
@@ -1143,7 +1247,7 @@ describe('SetsSelectors', () => {
                     }
                 };
         
-                const result = sut.getBestDurationEver(state, set);
+                const result = sut.getBestDurationEver(state, setAnswerHistory);
         
                 expect(result).toBe(null);
             });

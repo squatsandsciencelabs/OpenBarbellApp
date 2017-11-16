@@ -1044,6 +1044,19 @@ describe('SetsSelectors', () => {
                 expect(result).toBe(null);
             });
 
+            test('null when set is not filled out', () => {
+                const set = {
+                    exercise: null,
+                    weight: null,
+                    metric: 'lbs',
+                    reps: [],
+                };
+
+                const result = sut.getBestAvgVelocityEver(state, set, CollapsedMetrics.getAvgVelocities);
+        
+                expect(result).toBe(null);
+            });
+
         });
         
         describe('getBestPKVEver', () => {
@@ -1067,6 +1080,19 @@ describe('SetsSelectors', () => {
                 expect(result).toBe(null);
             });
 
+            test('null when set is not filled out', () => {
+                const set = {
+                    exercise: null,
+                    weight: null,
+                    metric: 'lbs',
+                    reps: [],
+                };
+
+                const result = sut.getBestPKVEver(state, set, CollapsedMetrics.getAvgVelocities);
+        
+                expect(result).toBe(null);
+            });
+
         });
         
         describe('getBestPKHEver', () => {
@@ -1086,6 +1112,19 @@ describe('SetsSelectors', () => {
                 };
         
                 const result = sut.getBestPKHEver(state, set, CollapsedMetrics.getPKHs);
+        
+                expect(result).toBe(null);
+            });
+
+            test('null when set is not filled out', () => {
+                const set = {
+                    exercise: null,
+                    weight: null,
+                    metric: 'lbs',
+                    reps: [],
+                };
+
+                const result = sut.getBestPKHEver(state, set, CollapsedMetrics.getAvgVelocities);
         
                 expect(result).toBe(null);
             });
@@ -1114,6 +1153,19 @@ describe('SetsSelectors', () => {
                 expect(result).toBe(null);
             });
 
+            test('null when set is not filled out', () => {
+                const set = {
+                    exercise: null,
+                    weight: null,
+                    metric: 'lbs',
+                    reps: [],
+                };
+
+                const result = sut.getBestROMEver(state, set, CollapsedMetrics.getAvgVelocities);
+        
+                expect(result).toBe(null);
+            });
+
         });     
 
         describe('getBestDurationEver', () => {
@@ -1136,7 +1188,20 @@ describe('SetsSelectors', () => {
         
                 expect(result).toBe(null);
             });
-            
+
+            test('null when set is not filled out', () => {
+                const set = {
+                    exercise: null,
+                    weight: null,
+                    metric: 'lbs',
+                    reps: [],
+                };
+
+                const result = sut.getBestDurationEver(state, set, CollapsedMetrics.getAvgVelocities);
+        
+                expect(result).toBe(null);
+            });
+
         });
     });
 

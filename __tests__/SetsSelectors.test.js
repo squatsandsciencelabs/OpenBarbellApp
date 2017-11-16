@@ -862,11 +862,10 @@ describe('SetsSelectors', () => {
         });
     });
 
-    describe('getBestofMetrics', () => {
+    describe('getBestOfMetrics', () => {
         var state = {
             sets: {
-                workoutData: [
-                    {
+                workoutData: [{
                         exercise: 'Squat',
                         weight: 100,
                         metric: 'lbs',
@@ -874,19 +873,16 @@ describe('SetsSelectors', () => {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 1.333368, 388, 65, 24, 9, 12]
-                        }, 
-                        {
+                        }, {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 1.033368, 378, 43, 69, 13, 8]
-                        },
-                        {
+                        }, {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
                         }],
-                    },
-                    {
+                    }, {
                         exercise: 'Bench',
                         weight: 100,
                         metric: 'lbs',
@@ -894,19 +890,16 @@ describe('SetsSelectors', () => {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 1.433368, 288, 34, 14, 2, 7]
-                        }, 
-                        {
+                        }, {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 1.234368, 178, 26, 11, 4, 9]
-                        },
-                        {
+                        }, {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 0.483368, 28, 48, 13, 3, 5]
                         }],
-                    },
-                    {
+                    }, {
                         exercise: 'Deadlift',
                         weight: 100,
                         metric: 'lbs',
@@ -914,19 +907,16 @@ describe('SetsSelectors', () => {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 1.333368, 388, 38, 18, 1, 8]
-                        }, 
-                        {
+                        }, {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 1.033368, 378, 37, 17, 1, 7]
-                        },
-                        {
+                        }, {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 1.453368, 328, 32, 22, 1, 12]
                         }],
-                    }              
-                ],
+                    }],
                 historyData: {
                     a: {
                         exercise: 'Bench',

@@ -2,7 +2,7 @@ import * as RepDataMap from 'app/utility/transforms/RepDataMap';
 
 // unique metrics
 
-export const getAvgVelocities = (set, metrics) => {
+export const getAvgVelocities = (set) => {
     const velocities = [];
     
     set.reps.forEach((rep) => {                
@@ -16,6 +16,33 @@ export const getAvgVelocities = (set, metrics) => {
     return velocities;
 };
 
+export const getPKVs = (set) => {
+    let pkvs = [];
+    
+    set.reps.forEach((rep) => {                
+        if (rep.isValid === true && rep.removed === false) {
+            let repData = rep.data;
+        
+            pkvs.push(Number(RepDataMap.peakVelocity(repData)));
+        }            
+    });
+
+    return pkvs;
+};
+
+export const getPKHs = (set) => {
+    let pkhs = [];
+    
+    set.reps.forEach((rep) => {                
+        if (rep.isValid === true && rep.removed === false) {
+            let repData = rep.data;
+        
+            pkhs.push(Number(RepDataMap.peakVelocityLocation(repData)));
+        }            
+    });
+
+    return pkhs;
+};
 
 export const getROMs = (set) => {
     let roms = [];
@@ -31,6 +58,19 @@ export const getROMs = (set) => {
     return roms;
 };
 
+export const getDurations = (set) => {
+    let durations = [];
+    
+    set.reps.forEach((rep) => {                
+        if (rep.isValid === true && rep.removed === false) {
+            let repData = rep.data;
+        
+            durations.push(Number(RepDataMap.durationOfLift(repData)));
+        }            
+    });
+
+    return durations;
+};
 
 // Quantifiers
 

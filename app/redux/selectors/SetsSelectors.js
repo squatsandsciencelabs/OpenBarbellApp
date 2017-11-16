@@ -175,14 +175,13 @@ const dictToArray = (dictionary) => {
 // History
 
 export const getHistorySetsChronological = (state) => {
-    let sets = stateRoot(state);
-    var array = dictToArray(sets.historyData);
+    var array = getHistorySets(state);
     array.sort((set1, set2) => SetTimeCalculator.startTime(set1) - SetTimeCalculator.startTime(set2));
     return array;
 };
 
 export const getHistorySets = (state) => {
-    let sets = stateRoot(state);
+    const sets = stateRoot(state);
     var array = dictToArray(sets.historyData);
     return array;
 };

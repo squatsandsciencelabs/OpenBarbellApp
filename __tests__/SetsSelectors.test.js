@@ -1002,136 +1002,142 @@ describe('SetsSelectors', () => {
             }
         };
 
-            var set = {
-                exercise: 'Bench',
-                weight: 100,
-                metric: 'lbs',
-                reps: [{
-                    isValid: true,
-                    removed: false,
-                    data: [-3456, 37, 1.333368, 388, 38, 18, 1, 8]
-                }, 
-                {
-                    isValid: true,
-                    removed: false,
-                    data: [-3456, 37, 1.033368, 378, 37, 17, 1, 7]
-                },
-                {
-                    isValid: true,
-                    removed: false,
-                    data: [-3456, 37, 1.453368, 328, 32, 22, 1, 12]
-                }],
-            };
+        var set = {
+            exercise: 'Bench',
+            weight: 100,
+            metric: 'lbs',
+            reps: [{
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.333368, 388, 38, 18, 1, 8]
+            }, 
+            {
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.033368, 378, 37, 17, 1, 7]
+            },
+            {
+                isValid: true,
+                removed: false,
+                data: [-3456, 37, 1.453368, 328, 32, 22, 1, 12]
+            }],
+        };
 
-            describe('getBestAvgVelocityEver', () => {            
-                test('get best AvgVelocity ever', () => {
-            
-                    let result = sut.getBestAvgVelocityEver(state, set, CollapsedMetrics.getAvgVelocities);
-            
-                    expect(result).toBe(1.83);
-                });
-            
-                test('return null when no history or workout data', () => {
-                    const state = {
-                        sets: {
-                            workoutData: [],
-                            historyData: {}
-                        }
-                    };
-            
-                    let result = sut.getBestAvgVelocityEver(state, set, CollapsedMetrics.getAvgVelocities);
-            
-                    expect(result).toBe(null);
-                });
-            });
-            
-            describe('getBestPKVEver', () => {            
-                test('get best PKV ever', () => {
-            
-                    let result = sut.getBestPKVEver(state, set, CollapsedMetrics.getPKVs);
-            
-                    expect(result).toBe(48);
-                });
-            
-                test('return null when no history or workout data', () => {
-                    const state = {
-                        sets: {
-                            workoutData: [],
-                            historyData: {}
-                        }
-                    };
-            
-                    let result = sut.getBestPKVEver(state, set, CollapsedMetrics.getPKVs);
-            
-                    expect(result).toBe(null);
-                });
-            });
-            
-            describe('getBestPKHEver', () => {            
-                test('get best PKH ever', () => {
-            
-                    let result = sut.getBestPKHEver(state, set, CollapsedMetrics.getPKHs);
-            
-                    expect(result).toBe(30);
-                });
-            
-                test('return null when no history or workout data', () => {
-                    const state = {
-                        sets: {
-                            workoutData: [],
-                            historyData: {}
-                        }
-                    };
-            
-                    let result = sut.getBestPKHEver(state, set, CollapsedMetrics.getPKHs);
-            
-                    expect(result).toBe(null);
-                });
-            });
-            
-            describe('getBestROMEver', () => {            
-                test('get best ROM ever', () => {
-            
-                    let result = sut.getBestROMEver(state, set, CollapsedMetrics.getROMs);
-            
-                    expect(result).toBe(400);
-                });
-            
-                test('return null when no history or workout data', () => {
-                    const state = {
-                        sets: {
-                            workoutData: [],
-                            historyData: {}
-                        }
-                    };
-            
-                    let result = sut.getBestROMEver(state, set, CollapsedMetrics.getROMs);
-            
-                    expect(result).toBe(null);
-                });
-            });     
+        describe('getBestAvgVelocityEver', () => {
 
-            describe('getBestDurationEver', () => {            
-                test('get best duration ever', () => {
+            test('get best AvgVelocity ever', () => {
+                const result = sut.getBestAvgVelocityEver(state, set, CollapsedMetrics.getAvgVelocities);
+        
+                expect(result).toBe(1.83);
+            });
+        
+            test('return null when no history or workout data', () => {
+                const state = {
+                    sets: {
+                        workoutData: [],
+                        historyData: {}
+                    }
+                };
+        
+                const result = sut.getBestAvgVelocityEver(state, set, CollapsedMetrics.getAvgVelocities);
+        
+                expect(result).toBe(null);
+            });
+
+        });
+        
+        describe('getBestPKVEver', () => {
+
+            test('get best PKV ever', () => {
+                const result = sut.getBestPKVEver(state, set, CollapsedMetrics.getPKVs);
+        
+                expect(result).toBe(48);
+            });
+        
+            test('return null when no history or workout data', () => {
+                const state = {
+                    sets: {
+                        workoutData: [],
+                        historyData: {}
+                    }
+                };
+        
+                const result = sut.getBestPKVEver(state, set, CollapsedMetrics.getPKVs);
+        
+                expect(result).toBe(null);
+            });
+
+        });
+        
+        describe('getBestPKHEver', () => {
+
+            test('get best PKH ever', () => {
+                const result = sut.getBestPKHEver(state, set, CollapsedMetrics.getPKHs);
+        
+                expect(result).toBe(30);
+            });
+        
+            test('return null when no history or workout data', () => {
+                const state = {
+                    sets: {
+                        workoutData: [],
+                        historyData: {}
+                    }
+                };
+        
+                const result = sut.getBestPKHEver(state, set, CollapsedMetrics.getPKHs);
+        
+                expect(result).toBe(null);
+            });
+
+        });
+        
+        describe('getBestROMEver', () => {
+
+            test('get best ROM ever', () => {
+                const result = sut.getBestROMEver(state, set, CollapsedMetrics.getROMs);
+        
+                expect(result).toBe(400);
+            });
+        
+            test('return null when no history or workout data', () => {
+
+                const state = {
+                    sets: {
+                        workoutData: [],
+                        historyData: {}
+                    }
+                };
+        
+                const result = sut.getBestROMEver(state, set, CollapsedMetrics.getROMs);
+        
+                expect(result).toBe(null);
+            });
+
+        });     
+
+        describe('getBestDurationEver', () => {
+
+            test('get best duration ever', () => {
+                const result = sut.getBestDurationEver(state, set, CollapsedMetrics.getDurations);
+        
+                expect(result).toBe(20);
+            });
+        
+            test('return null when no history or workout data', () => {
+                const state = {
+                    sets: {
+                        workoutData: [],
+                        historyData: {}
+                    }
+                };
+        
+                const result = sut.getBestDurationEver(state, set, CollapsedMetrics.getDurations);
+        
+                expect(result).toBe(null);
+            });
             
-                    let result = sut.getBestDurationEver(state, set, CollapsedMetrics.getDurations);
-            
-                    expect(result).toBe(20);
-                });
-            
-                test('return null when no history or workout data', () => {
-                    const state = {
-                        sets: {
-                            workoutData: [],
-                            historyData: {}
-                        }
-                    };
-            
-                    let result = sut.getBestDurationEver(state, set, CollapsedMetrics.getDurations);
-            
-                    expect(result).toBe(null);
-                });
-            });                    
+        });
     });
 
     describe.skip('getSetsToUpload', () => {

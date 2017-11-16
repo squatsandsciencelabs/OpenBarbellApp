@@ -288,6 +288,10 @@ const getBestEverOfMetric = (state, set, metricFunction) => {
     }
 };
 
+const  areSetsComparable = (historySet, set) => {
+    return historySet.exercise === set.exercise && historySet.weight === set.weight &&  historySet.metric === set.metric && historySet.reps.length === set.reps.length;
+};
+
 export const getBestAvgVelocityEver = (state, set) => {
     return getBestEverOfMetric(state, set, CollapsedMetrics.getAvgVelocities);
 };
@@ -309,7 +313,3 @@ export const getBestDurationEver = (state, set) => {
 };
 
 export const getRevision = (state) => stateRoot(state).revision;
-
-function areSetsComparable(historySet, set) {
-    return historySet.exercise === set.exercise && historySet.weight === set.weight &&  historySet.metric === set.metric && historySet.reps.length === set.reps.length;
-};

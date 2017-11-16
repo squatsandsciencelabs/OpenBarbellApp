@@ -304,14 +304,14 @@ describe('collapsed metrics', () => {
                     reps: [],
                 }
         
-                let result = sut.getAvgofMetrics(sut.getAvgVelocities(set));
+                let result = sut.getAvgOfMetrics(sut.getAvgVelocities(set));
         
                 expect(result).toBe(null);
             });
         
             test('return avg of avg velocities', () => {
         
-                let result = sut.getAvgofMetrics(sut.getAvgVelocities(set));
+                let result = sut.getAvgOfMetrics(sut.getAvgVelocities(set));
         
                 expect(result).toBe(1.44);
             });
@@ -426,14 +426,14 @@ describe('collapsed metrics', () => {
                         reps: [],
                     }
             
-                    let result = sut.getAvgofMetrics(sut.getPKVs(set));
+                    let result = sut.getAvgOfMetrics(sut.getPKVs(set));
             
                     expect(result).toBe(null);
                 });
             
                 test('return avg of avg PKVs', () => {
             
-                    let result = sut.getAvgofMetrics(sut.getPKVs(set));
+                    let result = sut.getAvgOfMetrics(sut.getPKVs(set));
             
                     expect(result).toBe(41.25);
                 });
@@ -548,14 +548,14 @@ describe('collapsed metrics', () => {
                         reps: [],
                     }
             
-                    let result = sut.getAvgofMetrics(sut.getPKHs(set));
+                    let result = sut.getAvgOfMetrics(sut.getPKHs(set));
             
                     expect(result).toBe(null);
                 });
             
                 test('return avg of avg PKHs', () => {
             
-                    let result = sut.getAvgofMetrics(sut.getPKHs(set));
+                    let result = sut.getAvgOfMetrics(sut.getPKHs(set));
             
                     expect(result).toBe(41.5);
                 });
@@ -670,14 +670,14 @@ describe('collapsed metrics', () => {
                         reps: [],
                     }
             
-                    let result = sut.getAvgofMetrics(sut.getROMs(set));
+                    let result = sut.getAvgOfMetrics(sut.getROMs(set));
             
                     expect(result).toBe(null);
                 });
             
                 test('return avg of avg ROMs', () => {
             
-                    let result = sut.getAvgofMetrics(sut.getROMs(set));
+                    let result = sut.getAvgOfMetrics(sut.getROMs(set));
             
                     expect(result).toBe(266.25);
                 });
@@ -792,14 +792,14 @@ describe('collapsed metrics', () => {
                         reps: [],
                     }
             
-                    let result = sut.getAvgofMetrics(sut.getDurations(set));
+                    let result = sut.getAvgOfMetrics(sut.getDurations(set));
             
                     expect(result).toBe(null);
                 });
             
                 test('return avg of avg Durations', () => {
             
-                    let result = sut.getAvgofMetrics(sut.getDurations(set));
+                    let result = sut.getAvgOfMetrics(sut.getDurations(set));
             
                     expect(result).toBe(5.75);
                 });

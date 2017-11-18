@@ -14,7 +14,7 @@ import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 // assumes chronological sets
 const createViewModels = (sets) => {
     // declare variables
-    let section = { key: 1, data: [] }; // contains the actual data
+    let section = { key: 1, data: [], isLast: true }; // contains the actual data
     let sections = [section]; // the return value
     let lastExerciseName = null; // to help calculate set numbers
     let setNumber = 1; // set number to display
@@ -28,7 +28,7 @@ const createViewModels = (sets) => {
         // last section check, splitting the "current set" out for footer purposes
         // TODO: depending on design for "finish current set", can put all the data in one section instead
         if (count === sets.length-1) {
-            section = { key: 0, data: [], position: -1 };
+            section = { key: 0, data: [], position: -1, isLast: false };
             sections.splice(0, 0, section); // insert at beginning
             isLastSet = true;
         }

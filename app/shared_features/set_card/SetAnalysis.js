@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import CollapsedMetrics from 'app/utility/transforms/CollapsedMetrics';
 import {
     View,
     StyleSheet,

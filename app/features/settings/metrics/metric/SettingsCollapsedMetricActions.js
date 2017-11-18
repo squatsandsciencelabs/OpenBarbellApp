@@ -5,11 +5,11 @@ import * as Analytics from 'app/services/Analytics';
 import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsActionCreators';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 
-export const saveDefaulCollapsedMetricSetting = (position = 'metric1', metric = 'avg velocity') => (dispatch, getState) => {
+export const saveDefaulCollapsedMetricSetting = (metric = 'avg velocity') => (dispatch, getState) => {
     const state = getState();
     // logChangeDefaultMetricAnalytics(metric, state);
 
-    dispatch(SettingsActionCreators.saveCollapsedMetric(position, metric));
+    dispatch(SettingsActionCreators.saveCollapsedMetric(metric));
 };
 
 export const dismissCollapsedMetricSetter = () => {

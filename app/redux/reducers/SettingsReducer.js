@@ -29,7 +29,7 @@ const defaultState = {
     showRemoved: false,
     isExportingCSV: false,
     lastExportCSVDate: null,
-    metric1: 'Avg Velocities',
+    metric1: 'Avg Velocity',
     quantifier1: 'Last Set',
     metric2: 'Min Avg Velocity',
     quantifier2: 'Last Set',
@@ -40,9 +40,9 @@ const defaultState = {
     metric5: 'Avg Duration',
     quantifier5: 'Last Set',
     isEditingCollapsedMetric: false,
-    currentMetricEditing: null,
+    currentMetricPosition: null,
     isEditingQuantifier: false,
-    currentQuantifierEditing: false
+    currentQuantifierPosition: null
 };
 
 const SettingsReducer = (state = defaultState, action) => {
@@ -64,29 +64,27 @@ const SettingsReducer = (state = defaultState, action) => {
         case PRESENT_COLLAPSED_METRICS: 
             return Object.assign({}, state, {
                 isEditingCollapsedMetric: true,
-                currentMetricEditing: action.metricPosition
+                currentMetricPosition: action.metricPosition
             });
         case DISMISS_COLLAPSED_METRICS: 
             return Object.assign({}, state, {
                 isEditingCollapsedMetric: false,
-                currentMetricEditing: null
             });
         case PRESENT_QUANTIFIERS: 
             return Object.assign({}, state, {
                 isEditingQuantifier: true,
-                currentQuantifierEditing: action.quantifierPosition
+                currentQuantifierPosition: action.quantifierPosition
             });
         case DISMISS_QUANTIFIERS: 
             return Object.assign({}, state, {
                 isEditingQuantifier: false,
-                currentQuantifierEditing: null
             });
         case SAVE_COLLAPSED_METRIC:
             changes = {}
             changes[action.position] = action.metric
             return Object.assign({}, state, changes);
         case SAVE_QUANTIFIER:
-            changes = {}
+            changes = { currentQuantifierPosition: action.position }
             changes[action.position] = action.quantifier
             return Object.assign({}, state, changes);                                      
         case SAVE_END_SET_TIMER:           

@@ -9,7 +9,7 @@ import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 const mapStateToProps = (state) => ({
     isModalShowing: SettingsSelectors.getIsEditingCollapsedMetric(state),
     items: [
-        {label: 'Avg Velocities', value: 'Avg Velocities'},
+        {label: 'Avg Velocity', value: 'Avg Velocity'},
         {label: 'Avg PKV', value: 'Avg PKV'},
         {label: 'Avg PKH', value: 'Avg PKH'},        
         {label: 'Avg ROM', value: 'Avg ROM'},
@@ -41,7 +41,7 @@ const mapStateToProps = (state) => ({
         {label: 'Max Duration', value: 'Max Duration'}
     ],
     
-    selectedValue: SettingsSelectors.getDefaultCollapsedMetric(state.currentMetricEditing, state)
+    selectedValue: SettingsSelectors.getcurrentMetricPosition(state.currentMetricPosition, state)
 });
 
 const mapDispatchToProps = (dispatch) => {

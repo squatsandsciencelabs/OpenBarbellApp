@@ -277,11 +277,11 @@ describe('collapsed metrics', () => {
 
     // quantifiers
 
-    // avg velocities
+    // Avg Velocity
 
     describe('getAvgOfAvgVelocities', () => {
 
-        test('null when no avg velocities', () => {
+        test('null when no Avg Velocity', () => {
             const set = {
                 reps: [],
             };
@@ -291,7 +291,7 @@ describe('collapsed metrics', () => {
             expect(result).toBe(null);
         });
     
-        test('return avg of avg velocities', () => {
+        test('return avg of Avg Velocity', () => {
             const result = sut.getAvgOfAvgVelocities(set);
     
             expect(result).toBe(1.44);

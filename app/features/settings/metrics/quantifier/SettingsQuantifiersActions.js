@@ -1,22 +1,22 @@
 import {
-    DISMISS_QUANTIFIER
+    DISMISS_QUANTIFIERS
 } from 'app/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsActionCreators';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 
-export const saveDefaulQuantifierSetting = (position = 'quantifier1', quantifier = 'Last Set') => (dispatch, getState) => {
+export const saveDefaulQuantifierSetting = (quantifier = 'Last Set') => (dispatch, getState) => {
     const state = getState();
     // logChangeDefaultMetricAnalytics(metric, state);
 
-    dispatch(SettingsActionCreators.saveQuantifier(position, quantifier));
+    dispatch(SettingsActionCreators.saveQuantifier(quantifier));
 };
 
 export const dismissQuantifierSetter = () => {
     Analytics.setCurrentScreen('settings');
     
     return {
-        type: DISMISS_QUANTIFIER,    
+        type: DISMISS_QUANTIFIERS,    
     }
 };
 

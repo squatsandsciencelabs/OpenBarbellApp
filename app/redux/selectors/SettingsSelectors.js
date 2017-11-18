@@ -26,6 +26,6 @@ export const getIsEditingCollapsedMetric = (state) => stateRoot(state).isEditing
 
 export const getIsEditingQuantifier = (state) => stateRoot(state).isEditingQuantifier;
 
-export const getDefaultCollapsedMetric = (metricPosition, state) => stateRoot(state)[metricPosition];
+export const getcurrentMetricPosition = (metricPosition, state) => stateRoot(state)[metricPosition];
 
-export const getDefaultQuantifier = (quantifierPosition, state) => stateRoot(state)[quantifierPosition];
+export const getcurrentQuantifier = (quantifierPostion, state) => stateRoot(state)[quantifierPostion];

@@ -21,3 +21,11 @@ export const getEndSetTimeLeft = (state) => {
 }
 
 export const getLastExportCSVDate = (state) => stateRoot(state).lastExportCSVDate;
+
+export const getIsEditingCollapsedMetric = (state) => stateRoot(state).isEditingCollapsedMetric;
+
+export const getIsEditingQuantifier = (state) => stateRoot(state).isEditingQuantifier;
+
+export const getDefaultCollapsedMetric = (metricPosition, state) => stateRoot(state)[metricPosition];
+
+export const getDefaultQuantifier = (quantifierPosition, state) => stateRoot(state)[quantifierPosition];

@@ -67,7 +67,7 @@ class WorkoutList extends Component {
 
     _renderSectionFooter(section) {
         if (section.key !== 0) {
-            return <ListLoadingFooter />
+            return <ListLoadingFooter isLargeFooter={section.isLast} />
         }
     }
 

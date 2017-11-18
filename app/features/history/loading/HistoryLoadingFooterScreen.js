@@ -5,6 +5,7 @@ import ListLoadingFooter from './ListLoadingFooter';
 
 const mapStateToProps = (state) => ({
     isLoading: state.history.isLoadingHistory,
+    isLargeFooter: true,
 });
 
 const HistoryLoadingFooterScreen = connect(

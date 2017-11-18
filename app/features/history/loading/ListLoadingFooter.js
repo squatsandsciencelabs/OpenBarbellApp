@@ -9,8 +9,10 @@ class ListLoadingFooter extends PureComponent {
             indicator = (<ActivityIndicator color="gray" />);
         }
 
+        var padding = this.props.isLargeFooter ? 100 : 0;
+
         return (
-            <View style={{flex: 1, alignItems: 'center', marginTop: 10, marginBottom: 15}}>
+            <View style={{flex: 1, alignItems: 'center', marginTop: 10, marginBottom: 15, paddingTop: padding, paddingBottom: padding}}>
                 {indicator}
             </View>
         );

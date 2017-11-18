@@ -6,7 +6,7 @@ export const startTime = (set) => {
     if (set.startTime === undefined) {
         // time of first rep
         let validReps = set.reps.filter((rep) => !rep.removed && rep.isValid);        
-        if (validReps.length > 0) {
+        if (validReps.length > 0 && validReps[0].time !== undefined) {
             return validReps[0].time;
         } else if (set.initialStartTime !== undefined) {
             return set.initialStartTime;

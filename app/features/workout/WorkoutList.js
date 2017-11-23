@@ -27,7 +27,7 @@ import WorkoutVideoPlayerScreen from './video/WorkoutVideoPlayerScreen';
 import ListLoadingFooter from '../history/loading/ListLoadingFooter';
 import TimerProgressBarScreen from 'app/features/workout/card/expanded/TimerProgressBarScreen';
 import SetSummary from 'app/shared_features/set_card/collapsed/SetSummary';
-import SetAnalysis from 'app/shared_features/set_card/SetAnalysis';
+import SetAnalysisScreen from 'app/shared_features/set_card/analysis/SetAnalysisScreen';
 
 class WorkoutList extends Component {
 
@@ -106,7 +106,7 @@ class WorkoutList extends Component {
                 );
             case "analysis":
                 return (
-                    <SetAnalysis />
+                    <SetAnalysisScreen set={item.set}/>
                 );
             case "form":
                 return (<View style={{backgroundColor: 'white'}}>

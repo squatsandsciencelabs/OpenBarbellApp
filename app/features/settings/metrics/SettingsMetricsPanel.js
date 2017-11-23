@@ -11,19 +11,41 @@ import {
 
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 import * as DateUtils from 'app/utility/transforms/DateUtils';
-import SettingsCollapsedMetric from './metric/SettingsCollapsedMetric';
+import SettingsCollapsedLastRepMetrics from './metric/SettingsCollapsedLastRepMetrics';
+import SettingsCollapsedBestEverMetrics from './metric/SettingsCollapsedBestEverMetrics';
 import SettingsQuantifiers from './quantifier/SettingsQuantifiers';
 
 class SettingsMetricsPanel extends Component {
 
     // ACTIONS
 
-    _tapcurrentMetricPosition(metricPosition) {
-        this.props.tapMetric(metricPosition)
+    _tapcurrentMetricPosition(metricPosition, quantifier) {
+        this.props.tapMetric(metricPosition, quantifier)
     }
 
-    _tapcurrentQuantifierPosition(quantifierPosition) {
-        this.props.tapQuantifier(quantifierPosition)
+    _tapcurrentQuantifierPosition(metricPosition, quantifierPosition) {
+        this.props.tapQuantifier(metricPosition, quantifierPosition)
+    }
+
+    _renderMetric(metric, metricPosition, quantifier) {
+        let num = metricPosition.substr(metricPosition.length - 1);
+        return (
+            <TouchableOpacity onPress={() => this._tapcurrentMetricPosition(metricPosition, quantifier)}>
+                <Text style={{fontSize: 16, color: 'rgba(47, 128, 237, 1)'}}>
+                    {num}. {metric}  
+                </Text>
+            </TouchableOpacity>
+        );
+    }
+
+    _renderQuantifier(metricPosition, quantifier, quantifierPosition) {
+        return (
+            <TouchableOpacity onPress={() => this._tapcurrentQuantifierPosition(metricPosition, quantifierPosition)}>
+                <Text style={{fontSize: 16, color: 'rgba(47, 128, 237, 1)'}}>
+                    {quantifier}    
+                </Text>
+            </TouchableOpacity>
+        );
     }
 
     render() {
@@ -33,62 +55,23 @@ class SettingsMetricsPanel extends Component {
                     <Text style={[{marginBottom: 20}, styles.titleText]}>Metrics</Text>
                         <View style={{flexDirection: 'row'}}>
                             <View style={{marginBottom: 15}}>
-                                <TouchableOpacity onPress={() => this._tapcurrentMetricPosition('metric1')}>
-                                    <Text style={{fontSize: 16, color: 'rgba(47, 128, 237, 1)'}}>
-                                        {this.props.metric1}    
-                                    </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this._tapcurrentMetricPosition('metric2')}>
-                                    <Text style={{fontSize: 16, color: 'rgba(47, 128, 237, 1)'}}>
-                                        {this.props.metric2}            
-                                    </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this._tapcurrentMetricPosition('metric3')}>
-                                    <Text style={{fontSize: 16, color: 'rgba(47, 128, 237, 1)'}}>
-                                        {this.props.metric3}            
-                                    </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this._tapcurrentMetricPosition('metric4')}>
-                                    <Text style={{fontSize: 16, color: 'rgba(47, 128, 237, 1)'}}>
-                                        {this.props.metric4}
-                                    </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this._tapcurrentMetricPosition('metric5')}>
-                                    <Text style={{fontSize: 16, color: 'rgba(47, 128, 237, 1)'}}>
-                                        {this.props.metric5}
-                                    </Text>
-                                </TouchableOpacity>
+                                {this._renderMetric(this.props.metric1, 'metric1', this.props.quantifier1)}
+                                {this._renderMetric(this.props.metric2, 'metric2', this.props.quantifier2)}
+                                {this._renderMetric(this.props.metric3, 'metric3', this.props.quantifier3)}
+                                {this._renderMetric(this.props.metric4, 'metric4', this.props.quantifier4)}
+                                {this._renderMetric(this.props.metric5, 'metric5', this.props.quantifier5)}
                             </View>
-                        <SettingsCollapsedMetric />
+                            <SettingsCollapsedLastRepMetrics />
+                            <SettingsCollapsedBestEverMetrics />
                             <View style={{marginBottom: 15, marginLeft: 50}}>
-                                <TouchableOpacity onPress={() => this._tapcurrentQuantifierPosition('quantifier1')}>
-                                    <Text style={{fontSize: 16, color: 'rgba(47, 128, 237, 1)'}}>
-                                        {this.props.quantifier1}    
-                                    </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this._tapcurrentQuantifierPosition('quantifier2')}>
-                                    <Text style={{fontSize: 16, color: 'rgba(47, 128, 237, 1)'}}>
-                                        {this.props.quantifier2}            
-                                    </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this._tapcurrentQuantifierPosition('quantifier3')}>
-                                    <Text style={{fontSize: 16, color: 'rgba(47, 128, 237, 1)'}}>
-                                        {this.props.quantifier3}            
-                                    </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this._tapcurrentQuantifierPosition('quantifier4')}>
-                                    <Text style={{fontSize: 16, color: 'rgba(47, 128, 237, 1)'}}>
-                                        {this.props.quantifier4}
-                                    </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => this._tapcurrentQuantifierPosition('quantifier5')}>
-                                    <Text style={{fontSize: 16, color: 'rgba(47, 128, 237, 1)'}}>
-                                        {this.props.quantifier5}
-                                    </Text>
-                            </TouchableOpacity>
-                        </View>
-                    <SettingsQuantifiers />
-                </View>
+                                {this._renderQuantifier('metric1', this.props.quantifier1, 'quantifier1')}
+                                {this._renderQuantifier('metric2', this.props.quantifier2, 'quantifier2')}
+                                {this._renderQuantifier('metric3', this.props.quantifier3, 'quantifier3')}
+                                {this._renderQuantifier('metric4', this.props.quantifier4, 'quantifier4')}
+                                {this._renderQuantifier('metric5', this.props.quantifier5, 'quantifier5')}
+                            </View>
+                            <SettingsQuantifiers />
+                    </View>
                 </View>
             );
         } else {

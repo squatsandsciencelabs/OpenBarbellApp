@@ -24,7 +24,7 @@ export const saveCollapsedMetric = (metric = 'Avg Velocity') => (dispatch, getSt
     });
 };
 
-export const saveQuantifier = (quantifier = 'Last Set') => (dispatch, getState) => {
+export const saveQuantifier = (quantifier = 'Last Rep') => (dispatch, getState) => {
     var state = getState();
     let position = state.settings.currentQuantifierPosition;
 

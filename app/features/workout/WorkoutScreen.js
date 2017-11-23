@@ -160,6 +160,7 @@ const createSummaryViewModel = (set) => ({
 const createAnalysisViewModel = (set) => ({
     type: 'analysis',
     key: set.setID+'analysis',
+    set: set,
 });
 
 const createRowViewModels = (set) => {

@@ -56,7 +56,7 @@ export default initializeStore = () => {
         // note, everything in workoutCollapsed and historyCollapsed are to be persisted so not blacklisting or transforming
         transforms: [
             createFilter('auth', ['accessToken', 'refreshToken', 'lastRefreshDate', 'email']),
-            createFilter('settings', ['defaultMetric', 'endSetTimerDuration', 'syncDate', 'wasTimerEdited', 'wasMetricEdited', 'lastExportCSVDate']),
+            createFilter('settings', ['defaultMetric', 'endSetTimerDuration', 'syncDate', 'wasTimerEdited', 'wasMetricEdited', 'lastExportCSVDate', 'metric1', 'quantifier1', 'metric2', 'quantifier2', 'metric3', 'quantifier3', 'metric4', 'quantifier4', 'metric5', 'quantifier5']),
             createFilter('workout', ['removedCounter', 'restoredCounter']),
             createFilter('history', ['viewedCounter']),
             createFilter('appState', ['multiTaskCounter', 'lockedCounter']),

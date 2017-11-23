@@ -7,16 +7,14 @@ import * as Actions from './SettingsCollapsedMetricActions';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 
 const mapStateToProps = (state) => ({
-    isModalShowing: SettingsSelectors.getIsEditingCollapsedMetric(state),
+    isModalShowing: SettingsSelectors.getIsEditingLastRepMetric(state),
     items: [
         {label: 'Avg Velocity', value: 'Avg Velocity'},
-        {label: 'Avg PKV', value: 'Avg PKV'},
-        {label: 'Avg PKH', value: 'Avg PKH'},        
+        {label: 'Avg PKV', value: 'Avg PKV'},       
         {label: 'Avg ROM', value: 'Avg ROM'},
         {label: 'Avg Duration', value: 'Avg Duration'},
         {label: 'Abs Loss of Velocities', value: 'Abs Loss Velocities'},
         {label: 'Abs Loss of PKV', value: 'Abs Loss of PKV'},
-        {label: 'Abs Loss of PKH', value: 'Abs Loss of PKH'},
         {label: 'Abs Loss of ROM', value: 'Abs Loss of ROM'},
         {label: 'Abs Loss of Duration', value: 'Abs Loss of Duration'},
         {label: 'First Rep Velocity', value: 'First Rep Velocity'},
@@ -41,7 +39,7 @@ const mapStateToProps = (state) => ({
         {label: 'Max Duration', value: 'Max Duration'}
     ],
     
-    selectedValue: SettingsSelectors.getcurrentMetricPosition(state.currentMetricPosition, state)
+    selectedValue: SettingsSelectors.getCurrentMetric(state)
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -51,9 +49,9 @@ const mapDispatchToProps = (dispatch) => {
     }, dispatch);
 };
 
-const SettingsCollapsedMetric = connect(
+const SettingsCollapsedLastRepMetrics = connect(
     mapStateToProps,
     mapDispatchToProps
 )(PickerModal);
 
-export default SettingsCollapsedMetric;
+export default SettingsCollapsedLastRepMetrics;

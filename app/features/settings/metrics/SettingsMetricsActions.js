@@ -4,28 +4,18 @@ import {
 } from 'app/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 
-export const presentCollapsedMetrics = (metricPosition) => {
+export const presentCollapsedMetrics = (metricPosition, quantifier) => {
     return {
         metricPosition: metricPosition,
+        quantifier: quantifier,
         type: PRESENT_COLLAPSED_METRICS
     }
 };
 
-export const presentQuantifiers = (quantifierPosition) => {   
+export const presentQuantifiers = (metricPosition, quantifierPosition) => {   
     return {
+        metricPosition: metricPosition,
         quantifierPosition: quantifierPosition,
 	    type: PRESENT_QUANTIFIERS
     }
 };
-
-// ANALYTICS
-
-// const logShowDeletedAnalytics = (state) => {
-//     Analytics.logEventWithAppState('show_deleted', {
-//     }, state);
-// };
-
-// const logHideDeletedAnalytics = (state) => {
-//     Analytics.logEventWithAppState('hide_deleted', {
-//     }, state);
-// };

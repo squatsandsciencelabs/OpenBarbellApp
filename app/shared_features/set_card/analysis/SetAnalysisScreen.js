@@ -1,9 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import SettingsMetricsPanel from './SettingsMetricsPanel';
-import * as Actions from './SettingsMetricsActions';
-import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
+import SetAnalysis from './SetAnalysis';
 
 const mapStateToProps = (state) => ({
     metric1: state.settings.metric1,
@@ -16,19 +14,12 @@ const mapStateToProps = (state) => ({
     quantifier4: state.settings.quantifier4,
     metric5: state.settings.metric5,
     quantifier5: state.settings.quantifier5,
-    metricMode: state.settings.metricMode
+    state: state
 });
 
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({
-        tapMetric: Actions.presentCollapsedMetrics,
-        tapQuantifier: Actions.presentQuantifiers
-    }, dispatch);
-};
-
-const SettingsMetricsScreen = connect(
+const SetAnalysisScreen = connect(
     mapStateToProps,
-    mapDispatchToProps
-)(SettingsMetricsPanel);
+    null
+)(SetAnalysis);
 
-export default SettingsMetricsScreen;
+export default SetAnalysisScreen;

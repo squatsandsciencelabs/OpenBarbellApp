@@ -9,9 +9,9 @@ import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 const mapStateToProps = (state) => ({
     isModalShowing: SettingsSelectors.getIsEditingBestEverMetric(state),
     items: [
-        {label: 'Velocity', value: 'Velocity'},
-        {label: 'PKV', value: 'PKV'},       
-        {label: 'Duration', value: 'Duration'}
+        {label: 'Best Ever Velocity', value: 'Best Ever Velocity'},
+        {label: 'Best Ever PKV', value: 'Best Ever PKV'},       
+        {label: 'Best Ever Duration', value: 'Best Ever Duration'}
     ],
     
     selectedValue: SettingsSelectors.getCurrentMetric(state)

@@ -98,7 +98,7 @@ const SettingsReducer = (state = defaultState, action) => {
             if (action.quantifier === 'Last Rep') {
                 changes[state.currentMetricPosition] = 'Avg Velocity'
             } else {
-                changes[state.currentMetricPosition] = 'Velocity'
+                changes[state.currentMetricPosition] = 'Best Ever Velocity'
             }
             return Object.assign({}, state, changes);                                      
         case SAVE_END_SET_TIMER:           

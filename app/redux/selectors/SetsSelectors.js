@@ -352,7 +352,8 @@ export const getBestPKVEver = (state, set) => {
 };
 
 export const getBestDurationEver = (state, set) => {
-    return getBestEverOfMetric(state, set, CollapsedMetrics.getDurations, false);
+    const bestEver = getBestEverOfMetric(state, set, CollapsedMetrics.getDurations, false);
+    return Math.round(bestEver * 100) / 100;
 };
 
 export const getRevision = (state) => stateRoot(state).revision;

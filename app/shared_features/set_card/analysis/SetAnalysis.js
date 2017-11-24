@@ -9,91 +9,116 @@ import {
 
 class SetAnalysis extends Component {
 
-    _renderAnalysis(metricFunction) {
+    _renderAnalysis(metric, metricFunction) {
         if (!metricFunction) {
-            return '-';
+            return (
+                <View style={{flex: 1, flexDirection: 'column'}}>
+                    <Text style={styles.text}> - </Text>
+                    <Text style={styles.metric}>
+                        {metric}
+                    </Text>
+                </View>
+                );
         } else {
-            return metricFunction;
+            return (
+                <View style={{flex: 1, flexDirection: 'column'}}>
+                    <Text style={styles.text}>
+                        {metricFunction}
+                    </Text>
+                    <Text style={styles.metric}>
+                        {metric}
+                    </Text>
+                </View>
+            );
         }
     }
 
     _renderMetric(metric, quantifier) {
         switch (metric) {
             case 'Avg Velocity': 
-                 return this._renderAnalysis(CollapsedMetrics.getAvgOfAvgVelocities(this.props.set));
+                 return this._renderAnalysis(metric, CollapsedMetrics.getAvgOfAvgVelocities(this.props.set));
             case 'Avg PKV': 
-                return this._renderAnalysis(CollapsedMetrics.getAvgPKV(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getAvgPKV(this.props.set));
             case 'Avg ROM':
-                return this._renderAnalysis(CollapsedMetrics.getAvgROM(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getAvgROM(this.props.set));
             case 'Avg Duration': 
-                return this._renderAnalysis(CollapsedMetrics.getAvgDuration(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getAvgDuration(this.props.set));
             case 'Abs Loss of Velocity': 
-                return this._renderAnalysis(CollapsedMetrics.getAbsLossOfAvgVelocities(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getAbsLossOfAvgVelocities(this.props.set));
             case 'Abs Loss of PKV': 
-                return this._renderAnalysis(CollapsedMetrics.getAbsLossOfPKVs(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getAbsLossOfPKVs(this.props.set));
             case 'Abs Loss of ROM':
-                return this._renderAnalysis(CollapsedMetrics.getAbsLossOfROMs(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getAbsLossOfROMs(this.props.set));
             case 'Abs Loss of Duration': 
-                return this._renderAnalysis(CollapsedMetrics.getAbsLossOfDurations(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getAbsLossOfDurations(this.props.set));
             case 'First Rep Velocity': 
-                return this._renderAnalysis(CollapsedMetrics.getFirstAvgVelocity(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getFirstAvgVelocity(this.props.set));
             case 'First Rep PKV': 
-                return this._renderAnalysis(CollapsedMetrics.getFirstPKV(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getFirstPKV(this.props.set));
             case 'First Rep PKH': 
-                return this._renderAnalysis(CollapsedMetrics.getFirstPKH(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getFirstPKH(this.props.set));
             case 'First Rep ROM':
-                return this._renderAnalysis(CollapsedMetrics.getFirstROM(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getFirstROM(this.props.set));
             case 'First Rep Duration': 
-                return this._renderAnalysis(CollapsedMetrics.getFirstDuration(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getFirstDuration(this.props.set));
             case 'Last Rep Velocity': 
-                return this._renderAnalysis(CollapsedMetrics.getLastAvgVelocity(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getLastAvgVelocity(this.props.set));
             case 'Last Rep PKV': 
-                return this._renderAnalysis(CollapsedMetrics.getLastPKV(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getLastPKV(this.props.set));
             case 'Last Rep PKH': 
-                return this._renderAnalysis(CollapsedMetrics.getLastPKH(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getLastPKH(this.props.set));
             case 'Last Rep ROM':
-                return this._renderAnalysis(CollapsedMetrics.getLastROM(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getLastROM(this.props.set));
             case 'Last Rep Duration': 
-                return this._renderAnalysis(CollapsedMetrics.getLastDuration(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getLastDuration(this.props.set));
             case 'Min Velocity': 
-                return this._renderAnalysis(CollapsedMetrics.getMinAvgVelocity(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getMinAvgVelocity(this.props.set));
             case 'Min PKV': 
-                return this._renderAnalysis(CollapsedMetrics.getMinPKV(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getMinPKV(this.props.set));
             case 'Min PKH': 
-                return this._renderAnalysis(CollapsedMetrics.getMinPKH(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getMinPKH(this.props.set));
             case 'Min ROM':
-                return this._renderAnalysis(CollapsedMetrics.getMinROM(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getMinROM(this.props.set));
             case 'Min Duration': 
-                return this._renderAnalysis(CollapsedMetrics.getMinDuration(this.props.set));          
+                return this._renderAnalysis(metric, CollapsedMetrics.getMinDuration(this.props.set));          
             case 'Max Velocity': 
-                return this._renderAnalysis(CollapsedMetrics.getMaxAvgVelocity(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getMaxAvgVelocity(this.props.set));
             case 'Max PKV': 
-                return this._renderAnalysis(CollapsedMetrics.getMaxPKV(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getMaxPKV(this.props.set));
             case 'Max PKH': 
-                return this._renderAnalysis(CollapsedMetrics.getMaxPKH(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getMaxPKH(this.props.set));
             case 'Max ROM':
-                return this._renderAnalysis(CollapsedMetrics.getMaxROM(this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getMaxROM(this.props.set));
             case 'Max Duration': 
-                return this._renderAnalysis(CollapsedMetrics.getMaxDuration(this.props.set));
-            case 'Velocity':
-                return this._renderAnalysis(SetsSelectors.getBestAvgVelocityEver(this.props.state, this.props.set));
-            case 'PKV':
-                return this._renderAnalysis(SetsSelectors.getBestPKVEver(this.props.state, this.props.set));
-            case 'Duration':
-                return this._renderAnalysis(SetsSelectors.getBestDurationEver(this.props.state, this.props.set));
+                return this._renderAnalysis(metric, CollapsedMetrics.getMaxDuration(this.props.set));
+            case 'Best Ever Velocity':
+                return this._renderAnalysis(metric, SetsSelectors.getBestAvgVelocityEver(this.props.state, this.props.set));
+            case 'Best Ever PKV':
+                return this._renderAnalysis(metric, SetsSelectors.getBestPKVEver(this.props.state, this.props.set));
+            case 'Best Ever Duration':
+                return this._renderAnalysis(metric, SetsSelectors.getBestDurationEver(this.props.state, this.props.set));
             default:
-                return '-'
+                return (
+                    <View style={{flex: 1, flexDirection: 'column'}}>
+                        <Text style={styles.text}>
+                            -
+                        </Text>
+                        <Text style={styles.metric}>
+                            {metric}
+                        </Text>
+                    </View>
+                );
         }
     }
 
     render() {
         return (
             <View style={[styles.border, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
-                <Text> 1. {this._renderMetric(this.props.metric1, this.props.quantifier1)}</Text>
-                <Text> 2. {this._renderMetric(this.props.metric2, this.props.quantifier2)}</Text>
-                <Text> 3. {this._renderMetric(this.props.metric3, this.props.quantifier3)}</Text>
-                <Text> 4. {this._renderMetric(this.props.metric4, this.props.quantifier4)}</Text>
-                <Text> 5. {this._renderMetric(this.props.metric5, this.props.quantifier5)}</Text>
+                {this._renderMetric(this.props.metric1, this.props.quantifier1)}
+                {this._renderMetric(this.props.metric2, this.props.quantifier2)}
+                {this._renderMetric(this.props.metric3, this.props.quantifier3)}
+                {this._renderMetric(this.props.metric4, this.props.quantifier4)}
+                {this._renderMetric(this.props.metric5, this.props.quantifier5)}
             </View>
         );
     }
@@ -105,7 +130,21 @@ const styles = StyleSheet.create({
         borderColor: '#e0e0e0',
         borderLeftWidth: 1,
         borderRightWidth: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
+    text: {
+        fontSize: 17,
+        fontWeight: 'bold',
+        marginTop: 15,
+        marginLeft: 10
+    },
+    metric: {
+        fontSize: 12,
+        marginLeft: 10,
+        marginBottom: 10,
+        marginTop: 2
+    }
 });
 
 export default SetAnalysis;

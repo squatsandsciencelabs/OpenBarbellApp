@@ -28,7 +28,7 @@ import HistoryVideoButtonScreen from './card/expanded/form/HistoryVideoButtonScr
 import HistoryVideoRecorderScreen from './camera/HistoryVideoRecorderScreen';
 import HistoryVideoPlayerScreen from './video/HistoryVideoPlayerScreen';
 import SetSummary from 'app/shared_features/set_card/collapsed/SetSummary';
-import SetAnalysis from 'app/shared_features/set_card/SetAnalysis';
+import SetAnalysisScreen from 'app/shared_features/set_card/analysis/SetAnalysisScreen';
 
 class HistoryList extends Component {
 
@@ -89,7 +89,7 @@ class HistoryList extends Component {
                 );
             case "analysis":
                 return (
-                    <SetAnalysis />
+                    <SetAnalysisScreen set={item.set} />
                 );
             case "form":
                 // note: on focus will avoid the Redux store for simplicity and just do it through the callback function

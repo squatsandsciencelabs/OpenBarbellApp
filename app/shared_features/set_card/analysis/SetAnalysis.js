@@ -10,7 +10,7 @@ import {
 class SetAnalysis extends Component {
 
     _renderAnalysis(metric, metricFunction, quantifier, bigMetric) {
-        if (!metricFunction) {
+        if (!metricFunction || metricFunction === '0.00') {
             if (bigMetric) {
                 return (
                     <View style={styles.bigMetricBackground}>
@@ -115,7 +115,7 @@ class SetAnalysis extends Component {
                     case 'Maximum':
                         return this._renderAnalysis(metric, CollapsedMetrics.getMaxROM(this.props.set), quantifier, bigMetric);
                 }
-            case 'Duration': 
+            case 'Dur': 
                 switch(quantifier) {
                     case 'Average':
                         return this._renderAnalysis(metric, CollapsedMetrics.getAvgDuration(this.props.set), quantifier, bigMetric);
@@ -167,14 +167,14 @@ const styles = StyleSheet.create({
         borderRightWidth: 1,
     },
     text: {
-        marginLeft: 10,
+        marginLeft: 5,
         color: '#4d4d4d',
         fontSize: 18,
         fontWeight: 'bold',
         marginTop: 35,
     },
     metric: {
-        marginLeft: 10,
+        marginLeft: 5,
         color: '#4d4d4d',
         maxWidth: 50,
         fontSize: 13,

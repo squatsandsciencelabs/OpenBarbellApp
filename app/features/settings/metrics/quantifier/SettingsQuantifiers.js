@@ -9,7 +9,12 @@ import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 const mapStateToProps = (state) => ({
     isModalShowing: SettingsSelectors.getIsEditingQuantifier(state),
     items: [
+        {label: 'Average', value: 'Average'},
+        {label: 'Abs Loss', value: 'Abs Loss'},
+        {label: 'First Rep', value: 'First Rep'},
         {label: 'Last Rep', value: 'Last Rep'},
+        {label: 'Minimum', value: 'Minimum'},
+        {label: 'Maximum', value: 'Maximum'},
         {label: 'Best Ever', value: 'Best Ever'},
     ],
     

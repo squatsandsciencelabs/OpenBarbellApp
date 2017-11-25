@@ -8,6 +8,8 @@ import {
     UPDATE_SYNC_DATE
 } from 'app/ActionTypes';
 
+import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
+
 export const saveDefaultMetric = (metric = 'kgs') => ({
     type: SAVE_DEFAULT_METRIC,
     defaultMetric: metric,
@@ -15,7 +17,7 @@ export const saveDefaultMetric = (metric = 'kgs') => ({
 
 export const saveCollapsedMetric = (metric = 'Avg Velocity') => (dispatch, getState) => {
     var state = getState();
-    let position = state.settings.currentMetricPosition;
+    let position = SettingsSelectors.getCurrentMetricPosition(state);
 
     dispatch({
         type: SAVE_COLLAPSED_METRIC,
@@ -26,7 +28,7 @@ export const saveCollapsedMetric = (metric = 'Avg Velocity') => (dispatch, getSt
 
 export const saveQuantifier = (quantifier = 'Last Rep') => (dispatch, getState) => {
     var state = getState();
-    let position = state.settings.currentQuantifierPosition;
+    let position = SettingsSelectors.getCurrentQuantifierPosition(state);
 
     dispatch({
         type: SAVE_QUANTIFIER,

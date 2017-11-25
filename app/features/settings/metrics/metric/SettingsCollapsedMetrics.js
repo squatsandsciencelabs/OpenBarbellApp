@@ -7,10 +7,12 @@ import * as Actions from './SettingsCollapsedMetricActions';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 
 const mapStateToProps = (state) => ({
-    isModalShowing: SettingsSelectors.getIsEditingBestEverMetric(state),
+    isModalShowing: SettingsSelectors.getIsEditingMetric(state),
     items: [
         {label: 'Velocity', value: 'Velocity'},
-        {label: 'PKV', value: 'PKV'},       
+        {label: 'PKV', value: 'PKV'},
+        {label: 'PKH', value: 'PKH'},
+        {label: 'ROM', value: 'ROM'},
         {label: 'Duration', value: 'Duration'}
     ],
     
@@ -24,9 +26,9 @@ const mapDispatchToProps = (dispatch) => {
     }, dispatch);
 };
 
-const SettingsCollapsedBestEverMetrics = connect(
+const SettingsCollapsedMetrics = connect(
     mapStateToProps,
     mapDispatchToProps
 )(PickerModal);
 
-export default SettingsCollapsedBestEverMetrics;
+export default SettingsCollapsedMetrics;

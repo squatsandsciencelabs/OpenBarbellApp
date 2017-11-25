@@ -29,17 +29,18 @@ const defaultState = {
     showRemoved: false,
     isExportingCSV: false,
     lastExportCSVDate: null,
-    metric1: 'Avg Velocity',
+    metric1: 'Velocity',
     quantifier1: 'Last Rep',
-    metric2: 'Min Avg Velocity',
+    metric2: 'PKV',
     quantifier2: 'Last Rep',
-    metric3: 'Avg PKH',
+    metric3: 'PKH',
     quantifier3: 'Last Rep',
-    metric4: 'Avg ROM',
+    metric4: 'ROM',
     quantifier4: 'Last Rep',
-    metric5: 'Avg Duration',
+    metric5: 'Duration',
     quantifier5: 'Last Rep',
-    isEditingLastRepMetric: false,
+    isEditingMetric: false,
+    isEditingAvgMetric: false,
     isEditingBestEverMetric: false,
     isEditingQuantifier: false,
     currentMetricPosition: null,
@@ -64,15 +65,18 @@ const SettingsReducer = (state = defaultState, action) => {
             });
         case PRESENT_COLLAPSED_METRICS: 
             changes = { currentMetricPosition: action.metricPosition }
-            if (action.quantifier === 'Last Rep') {
-                changes.isEditingLastRepMetric = true;
-            } else {
-                changes.isEditingBestEverMetric = true;
-            }
+                if (action.quantifier === 'Average' || action.quantifier === 'Abs Loss') {
+                    changes.isEditingAvgMetric = true;
+                } else if (action.quantifier === 'Best Ever') {
+                    changes.isEditingBestEverMetric = true;
+                } else {
+                    changes.isEditingMetric = true;
+                }
             return Object.assign({}, state, changes);
         case DISMISS_COLLAPSED_METRICS: 
             return Object.assign({}, state, {
-                isEditingLastRepMetric: false,
+                isEditingMetric: false,
+                isEditingAvgMetric: false,
                 isEditingBestEverMetric: false,
                 currentMetricPosition: null
             });
@@ -95,11 +99,7 @@ const SettingsReducer = (state = defaultState, action) => {
         case SAVE_QUANTIFIER:
             changes = {}
             changes[action.position] = action.quantifier
-            if (action.quantifier === 'Last Rep') {
-                changes[state.currentMetricPosition] = 'Avg Velocity'
-            } else {
-                changes[state.currentMetricPosition] = 'Best Ever Velocity'
-            }
+            changes[state.currentMetricPosition] = 'Velocity'
             return Object.assign({}, state, changes);                                      
         case SAVE_END_SET_TIMER:           
             return Object.assign({}, state, {

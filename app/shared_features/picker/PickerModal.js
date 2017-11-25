@@ -14,7 +14,6 @@ class PickerModal extends Component {
     // ACTIONS
 
     _onValueChange(value) {
-        console.tron.log(this.props);
         this.props.selectValue(value);
     }
 

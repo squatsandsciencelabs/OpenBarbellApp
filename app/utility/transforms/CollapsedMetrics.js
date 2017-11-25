@@ -64,8 +64,7 @@ export const getAvgROM = (set) => {
 
 export const getAvgDuration = (set) => {
     const durations = getDurations(set);
-    const avg = getAvgOfMetrics(durations);
-    return Math.round(avg * 100) / 100;
+    return (getAvgOfMetrics(durations) / 1000000.0).toFixed(2)
 };
 
 // Absolute Loss Quantifiers
@@ -98,8 +97,7 @@ export const getAbsLossOfROMs = (set) => {
 
 export const getAbsLossOfDurations = (set) => {
     const durations = getDurations(set);
-    const loss = getAbsLossOfMetrics(durations)
-    return Math.round(loss * 100) / 100;
+    return (getAbsLossOfMetrics(durations) / 1000000.0).toFixed(2)
 };
 
 // First Rep Quantifiers
@@ -135,7 +133,7 @@ export const getFirstROM = (set) => {
 export const getFirstDuration = (set) => {
     const durations = getDurations(set);
     const first = getFirstRepOfMetrics(durations)
-    return Math.round(first * 100) / 100;
+    return (getFirstRepOfMetrics(durations) / 1000000.0).toFixed(2)
 };
 
 // Last Rep Quantifiers
@@ -170,8 +168,7 @@ export const getLastROM = (set) => {
 
 export const getLastDuration = (set) => {
     const durations = getDurations(set);
-    const last = getLastRepMetrics(durations)
-    return Math.round(last * 100) / 100;
+    return (getLastRepMetrics(durations) / 1000000.0).toFixed(2)
 };
 
 // Get Min Quantifiers
@@ -206,8 +203,7 @@ export const getMinROM = (set) => {
 
 export const getMinDuration = (set) => {
     const durations = getDurations(set);
-    const min = getMinMetrics(durations);
-    return Math.round(min * 100) / 100;
+    return (getMinMetrics(durations) / 1000000.0).toFixed(2)
 };
 
 // Get Max Quantifiers
@@ -242,6 +238,5 @@ export const getMaxROM = (set) => {
 
 export const getMaxDuration = (set) => {
     const durations = getDurations(set);
-    const max = getMaxMetrics(durations)
-    return Math.round(max * 100) / 100;
+    return (getMaxMetrics(durations) / 1000000.0).toFixed(2)
 };

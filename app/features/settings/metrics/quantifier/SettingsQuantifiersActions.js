@@ -7,7 +7,7 @@ import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators
 
 export const saveDefaulQuantifierSetting = (quantifier = 'Last Rep') => (dispatch, getState) => {
     const state = getState();
-    // logChangeDefaultMetricAnalytics(metric, state);
+    logChangeQuantifierAnalytics(quantifier, state);
 
     dispatch(SettingsActionCreators.saveQuantifier(quantifier));
 };
@@ -22,8 +22,8 @@ export const dismissQuantifierSetter = () => {
 
 // ANALYTICS
 
-// const logChangeDefaultMetricAnalytics = (metric, state) => {
-//     Analytics.logEventWithAppState('change_default_metric', {
-//         to_metric: metric,
-//     }, state);
-// };
+const logChangeQuantifierAnalytics = (quantifier, state) => {
+    Analytics.logEventWithAppState('change_quantifier', {
+        to_quantifier: quantifier,
+    }, state);
+};

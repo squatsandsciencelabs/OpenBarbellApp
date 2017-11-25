@@ -12,7 +12,8 @@ import Icon from 'react-native-vector-icons/FontAwesome'
 
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 import * as DateUtils from 'app/utility/transforms/DateUtils';
-import SettingsCollapsedLastRepMetrics from './metric/SettingsCollapsedLastRepMetrics';
+import SettingsCollapsedMetrics from './metric/SettingsCollapsedMetrics';
+import SettingsCollapsedAvgMetrics from './metric/SettingsCollapsedAvgMetrics';
 import SettingsCollapsedBestEverMetrics from './metric/SettingsCollapsedBestEverMetrics';
 import SettingsQuantifiers from './quantifier/SettingsQuantifiers';
 
@@ -50,13 +51,25 @@ class SettingsMetricsPanel extends Component {
 
     _renderRow(metric, metricPosition, quantifier, quantifierPosition) {
         let num = metricPosition.substr(metricPosition.length - 1);
-        return (
-            <View style={{flexDirection: 'row'}}>
-                <Text style={styles.numberLabel}>{num}.</Text>
-                {this._renderMetric(metric, metricPosition, quantifier)}
-                {this._renderQuantifier(metricPosition, quantifier, quantifierPosition)}
-            </View>            
-        );   
+        if (num === '1') {
+            return (
+                <View style={{flexDirection: 'row'}}>
+                    <View style={styles.bigMetricBackground}>
+                        <Text style={styles.bigMetricNumber}>{num}</Text>
+                    </View>
+                    {this._renderMetric(metric, metricPosition, quantifier)}
+                    {this._renderQuantifier(metricPosition, quantifier, quantifierPosition)}
+                </View>            
+            );   
+        } else {
+            return (
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={styles.numberLabel}>{num}</Text>
+                    {this._renderMetric(metric, metricPosition, quantifier)}
+                    {this._renderQuantifier(metricPosition, quantifier, quantifierPosition)}
+                </View>            
+            ); 
+        }
     }
 
     render() {
@@ -71,7 +84,8 @@ class SettingsMetricsPanel extends Component {
                             {this._renderRow(this.props.metric4, 'metric4', this.props.quantifier4, 'quantifier4')}
                             {this._renderRow(this.props.metric5, 'metric5', this.props.quantifier5, 'quantifier5')}
                         </View>
-                    <SettingsCollapsedLastRepMetrics />
+                    <SettingsCollapsedMetrics />
+                    <SettingsCollapsedAvgMetrics />
                     <SettingsCollapsedBestEverMetrics />
                     <SettingsQuantifiers />
                 </View>
@@ -106,8 +120,23 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'rgba(77, 77, 77, 1)',
     },
+    bigMetricNumber: {
+        textAlign: 'center',
+        fontSize: 15,
+        color: '#f0565a',
+    },
+    bigMetricBackground: {
+        marginLeft: -5,
+        backgroundColor: '#fddddd',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 25,
+        height: 25,
+        borderRadius: 25 / 2,
+        borderColor: '#fddddd'
+    },
     numberLabel: {
-        fontSize: 16,
+        fontSize: 15,
         marginRight: 10,
         marginTop: 5
     }

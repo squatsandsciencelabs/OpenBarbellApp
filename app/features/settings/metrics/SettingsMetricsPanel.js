@@ -51,7 +51,7 @@ class SettingsMetricsPanel extends Component {
 
     _renderRow(metric, metricPosition, quantifier, quantifierPosition) {
         let num = metricPosition.substr(metricPosition.length - 1);
-        if (num === '1') {
+        if (num === '1' && metric !== 'RPE') {
             return (
                 <View style={{flexDirection: 'row'}}>
                     <View style={styles.bigMetricBackground}>
@@ -61,6 +61,22 @@ class SettingsMetricsPanel extends Component {
                     {this._renderQuantifier(metricPosition, quantifier, quantifierPosition)}
                 </View>            
             );   
+        } else if (num === '1' && metric === 'RPE') {
+            return (
+                <View style={{flexDirection: 'row'}}>
+                    <View style={styles.bigMetricBackground}>
+                        <Text style={styles.bigMetricNumber}>{num}</Text>
+                    </View>
+                    {this._renderMetric(metric, metricPosition, quantifier)}
+                </View>            
+            );              
+        } else if (metric === 'RPE') {
+            return (
+                <View style={{flexDirection: 'row'}}>
+                    <Text style={styles.numberLabel}>{num}</Text>
+                    {this._renderMetric(metric, metricPosition, quantifier)}
+                </View>            
+            ); 
         } else {
             return (
                 <View style={{flexDirection: 'row'}}>

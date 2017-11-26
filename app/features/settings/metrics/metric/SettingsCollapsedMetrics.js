@@ -13,7 +13,8 @@ const mapStateToProps = (state) => ({
         {label: 'PKV', value: 'PKV'},
         {label: 'PKH', value: 'PKH'},
         {label: 'ROM', value: 'ROM'},
-        {label: 'Dur', value: 'Dur'}
+        {label: 'Dur', value: 'Dur'},
+        {label: 'RPE', value: 'RPE'}
     ],
     
     selectedValue: SettingsSelectors.getCurrentMetric(state)

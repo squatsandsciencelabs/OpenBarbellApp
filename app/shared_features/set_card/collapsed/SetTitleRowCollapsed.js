@@ -72,7 +72,7 @@ class SetTitleRowCollapsed extends Component {
             <TouchableOpacity style={styles.chevronContainer}
                 onPress={() => this.props.tappedExpand(this.props.setID)}>            
                     <View>
-                        <Icon name="chevron-with-circle-up" size={20} color='rgba(170, 170, 170, 1)' />
+                        <Icon name="chevron-with-circle-down" size={20} color='rgba(170, 170, 170, 1)' />
                     </View>
             </TouchableOpacity>
         );

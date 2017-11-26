@@ -114,7 +114,7 @@ class SetAnalysis extends Component {
                     case 'Maximum':
                         return this._renderAnalysis(metric, CollapsedMetrics.getMaxAvgVelocity(this.props.set), quantifier, quantifier, bigMetric);
                     case 'Best Ever':
-                        return this._renderAnalysis(metric, SetsSelectors.getBestAvgVelocityEver(this.props.state, this.props.set), quantifier, bigMetric);
+                        return this._renderAnalysis(metric, this.props.getBestAvgVelocityEver, quantifier, bigMetric);
                     }
             case 'PKV':
                 switch(quantifier) {
@@ -131,7 +131,7 @@ class SetAnalysis extends Component {
                     case 'Maximum':
                         return this._renderAnalysis(metric, CollapsedMetrics.getMaxPKV(this.props.set), quantifier, bigMetric);
                     case 'Best Ever':
-                        return this._renderAnalysis(metric, SetsSelectors.getBestPKVEver(this.props.state, this.props.set), quantifier, bigMetric);
+                        return this._renderAnalysis(metric, this.props.getBestPKVEver, quantifier, bigMetric);
                 }
             case 'PKH':
                 switch(quantifier) {
@@ -174,7 +174,7 @@ class SetAnalysis extends Component {
                     case 'Maximum':
                         return this._renderAnalysis(metric, CollapsedMetrics.getMaxDuration(this.props.set), quantifier, bigMetric);
                     case 'Best Ever':
-                        return this._renderAnalysis(metric, SetsSelectors.getBestDurationEver(this.props.state, this.props.set), quantifier, bigMetric);
+                        return this._renderAnalysis(metric, this.props.getBestDurationEver, quantifier, bigMetric);
                     }
             case 'RPE': 
                 return this._renderRPE(metric, CollapsedMetrics.getRPE(this.props.set), bigMetric);

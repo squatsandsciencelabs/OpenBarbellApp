@@ -16,23 +16,23 @@ export const saveDefaultMetric = (metric = 'kgs') => ({
 });
 
 export const saveCollapsedMetric = (metric = 'Avg Velocity') => (dispatch, getState) => {
-    var state = getState();
-    let position = SettingsSelectors.getCurrentMetricPosition(state);
+    const state = getState();
+    const metricType = SettingsSelectors.getCurrentMetricPosition(state);
 
     dispatch({
         type: SAVE_COLLAPSED_METRIC,
-        position: position,
+        metricType: metricType,
         metric: metric
     });
 };
 
 export const saveQuantifier = (quantifier = 'Last Rep') => (dispatch, getState) => {
-    var state = getState();
-    let position = SettingsSelectors.getCurrentQuantifierPosition(state);
+    const state = getState();
+    const quantifierType = SettingsSelectors.getCurrentQuantifierPosition(state);
 
     dispatch({
         type: SAVE_QUANTIFIER,
-        position: position,
+        quantfierType: quantifierType,
         quantifier: quantifier
     });
 };

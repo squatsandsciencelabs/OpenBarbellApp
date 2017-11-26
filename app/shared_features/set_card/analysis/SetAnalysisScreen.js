@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 
 import SetAnalysis from './SetAnalysis';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
+import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
     metric1: SettingsSelectors.getMetric1(state),
     quantifier1: SettingsSelectors.getQuantifier1(state),
     metric2: SettingsSelectors.getMetric2(state),
@@ -15,7 +16,9 @@ const mapStateToProps = (state) => ({
     quantifier4: SettingsSelectors.getQuantifier4(state),
     metric5: SettingsSelectors.getMetric5(state),
     quantifier5: SettingsSelectors.getQuantifier5(state),
-    state: state
+    getBestAvgVelocityEver: SetsSelectors.getBestAvgVelocityEver(state, ownProps.set),
+    getBestPKVEver: SetsSelectors.getBestPKVEver(state, ownProps.set),
+    getBestDurationEver: SetsSelectors.getBestDurationEver(state, ownProps.set),
 });
 
 const SetAnalysisScreen = connect(

@@ -12,6 +12,7 @@ import * as Actions from './HistoryActions';
 import HistoryList from './HistoryList';
 import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 import * as HistoryCollapsedSelectors from 'app/redux/selectors/HistoryCollapsedSelectors';
+import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 
 // NOTE: this means that every history screen accesses previous values as singletons
 var storedSections = null; // the actual data
@@ -233,7 +234,7 @@ const createRowViewModels = (set, shouldShowRemoved) => {
             // obv2 properties
             let duration = RepDataMap.durationOfLift(repData)
             if (duration !== null) {
-                vm.duration = (duration / 1000000.0).toFixed(2);
+                vm.duration = DurationCalculator.displayDuration(duration);
             } else {
                 vm.duration = "obv2 only";
             }

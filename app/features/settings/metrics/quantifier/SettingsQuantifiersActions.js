@@ -6,7 +6,7 @@ import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsAction
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 
-export const saveDefaulQuantifierSetting = (quantifier = 'Last Rep') => (dispatch, getState) => {
+export const saveDefaultQuantifierSetting = (quantifier = 'Last Rep') => (dispatch, getState) => {
     const state = getState();
     const quantifierType = SettingsSelectors.getCurrentQuantifierType(state);
 

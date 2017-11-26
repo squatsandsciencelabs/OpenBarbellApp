@@ -115,7 +115,7 @@ class SettingsMetricsPanel extends Component {
         if (Platform.OS === 'ios') {
             return (
                 <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
-                    <Text style={[{marginBottom: 20}, styles.titleText]}>Metrics</Text>
+                    <Text style={[{marginBottom: 20}, styles.titleText]}>Big Metrics</Text>
                         <View style={{marginBottom: 15}}>
                             {this._renderRow(1, this.props.quantifier1, this.props.metric1)}
                             {this._renderRow(2, this.props.quantifier2, this.props.metric2)}
@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
         borderRadius: 3,
         marginLeft: 5,
         marginBottom: 5,
+        height: 40,
     },
     titleText: {
         color: 'rgba(77, 77, 77, 1)',
@@ -202,7 +203,7 @@ const styles = StyleSheet.create({
         width: 25,
         height: 25,
         marginLeft: -5,
-        marginTop: Platform.OS === 'ios' ? 2 : 11,
+        marginTop: Platform.OS === 'ios' ? 2 : 13,
     },
     numberLabel: {
         textAlign: 'center',

@@ -30,6 +30,7 @@ const generateItems = (quantifier) => {
     switch (quantifier) {
         case BEST_EVER_QUANTIFIER:
             return [
+                pickerItem(EMPTY_METRIC),
                 pickerItem(AVG_VELOCITY_METRIC),
                 pickerItem(PKV_METRIC),
                 pickerItem(DURATION_METRIC),
@@ -38,6 +39,7 @@ const generateItems = (quantifier) => {
         case AVG_QUANTIFIER:
         case ABS_LOSS_QUANTIFIER:
             return [
+                pickerItem(EMPTY_METRIC),
                 pickerItem(AVG_VELOCITY_METRIC),
                 pickerItem(PKV_METRIC),
                 pickerItem(ROM_METRIC),
@@ -46,6 +48,7 @@ const generateItems = (quantifier) => {
             ];
         default:
             return [
+                pickerItem(EMPTY_METRIC),
                 pickerItem(AVG_VELOCITY_METRIC),
                 pickerItem(PKV_METRIC),
                 pickerItem(PKH_METRIC),

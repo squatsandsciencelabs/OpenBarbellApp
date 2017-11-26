@@ -88,6 +88,7 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
         array.push(createTitleViewModel(state, set, setNumber, isCollapsed));
         if (!isCollapsed) {
             array.push(createFormViewModel(set, setNumber));
+            array.push(createAnalysisViewModel(set));
             if (set.reps.length > 0) {
                 array.push({type: "subheader", key: set.setID+"subheader"});
             }

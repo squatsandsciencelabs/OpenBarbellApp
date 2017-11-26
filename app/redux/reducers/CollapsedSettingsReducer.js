@@ -64,14 +64,19 @@ const CollapsedSettingsReducer = (state = defaultState, action) => {
             switch (state.currentMetricRank) {
                 case 1:
                     changes.metric1 = action.metric;
+                    break;
                 case 2:
                     changes.metric2 = action.metric;
+                    break;
                 case 3:
                     changes.metric3 = action.metric;
+                    break;
                 case 4:
                     changes.metric4 = action.metric;
+                    break;
                 case 5:
                     changes.metric5 = action.metric;
+                    break;
                 default:
                     return state;
             }
@@ -82,28 +87,33 @@ const CollapsedSettingsReducer = (state = defaultState, action) => {
                 case 1:
                     changes.quantifier1 = action.quantifier;
                     if (shouldResetMetric(action.quantifier, state.metric1)) {
-                        changes.metric1 = BLANK_METRIC;
+                        changes.metric1 = EMPTY_METRIC;
                     }
+                    break;
                 case 2:
                     changes.quantifier2 = action.quantifier;
                     if (shouldResetMetric(action.quantifier, state.metric2)) {
-                        changes.metric2 = BLANK_METRIC;
+                        changes.metric2 = EMPTY_METRIC;
                     }
+                    break;
                 case 3:
                     changes.quantifier3 = action.quantifier;
                     if (shouldResetMetric(action.quantifier, state.metric3)) {
-                        changes.metric3 = BLANK_METRIC;
+                        changes.metric3 = EMPTY_METRIC;
                     }
+                    break;
                 case 4:
                     changes.quantifier4 = action.quantifier;
                     if (shouldResetMetric(action.quantifier, state.metric4)) {
-                        changes.metric4 = BLANK_METRIC;
+                        changes.metric4 = EMPTY_METRIC;
                     }
+                    break;
                 case 5:
                     changes.quantifier5 = action.quantifier;
                     if (shouldResetMetric(action.quantifier, state.metric5)) {
-                        changes.metric5 = BLANK_METRIC;
+                        changes.metric5 = EMPTY_METRIC;
                     }
+                    break;
                 default:
                     return state;
             }

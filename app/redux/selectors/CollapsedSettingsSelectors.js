@@ -25,34 +25,36 @@ export const getIsEditingMetric = (state) => stateRoot(state).currentMetricRank 
 export const getIsEditingQuantifier = (state) => stateRoot(state).currentQuantifierRank !== null;
 
 export const getCurrentMetric = (state) => {
-    switch (state.currentMetricRank) {
+    const root = stateRoot(state);
+    switch (root.currentMetricRank) {
         case 1:
-            return state.metric1;
+            return root.metric1;
         case 2:
-            return state.metric2;
+            return root.metric2;
         case 3:
-            return state.metric3;
+            return root.metric3;
         case 4:
-            return state.metric4;
+            return root.metric4;
         case 5:
-            return state.metric5;
+            return root.metric5;
         default:
             return null;
     }
 };
 
 export const getCurrentQuantifier = (state) => {
-    switch (state.currentQuantifierRank) {
+    const root = stateRoot(state);
+    switch (root.currentQuantifierRank) {
         case 1:
-            return state.quantifier1;
+            return root.quantifier1;
         case 2:
-            return state.quantifier2;
+            return root.quantifier2;
         case 3:
-            return state.quantifier3;
+            return root.quantifier3;
         case 4:
-            return state.quantifier4;
+            return root.quantifier4;
         case 5:
-            return state.quantifier5;
+            return root.quantifier5;
         default:
             return null;
     }

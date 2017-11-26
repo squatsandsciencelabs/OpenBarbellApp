@@ -79,11 +79,38 @@ const mapStateToProps = (state, ownProps) => {
     }
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({
-        selectValue: Actions.saveDefaultQuantifierSetting,
-        closeModal: Actions.dismissQuantifierSetter
-    }, dispatch);
+const mapDispatchToProps = (dispatch, ownProps) => {
+    if (Platform.OS === 'ios') {
+        return bindActionCreators({
+            selectValue: Actions.saveQuantifierSetting,
+            closeModal: Actions.dismissQuantifierSetter
+        }, dispatch);
+    } else {
+        switch(ownProps.rank) {
+            case 1:
+                return bindActionCreators({
+                    selectValue: Actions.saveQuantifier1Setting,
+                }, dispatch);
+            case 2:
+                return bindActionCreators({
+                    selectValue: Actions.saveQuantifier2Setting,
+                }, dispatch);
+            case 3:
+                return bindActionCreators({
+                    selectValue: Actions.saveQuantifier3Setting,
+                }, dispatch);
+            case 4:
+                return bindActionCreators({
+                    selectValue: Actions.saveQuantifier4Setting,
+                }, dispatch);
+            case 5:
+                return bindActionCreators({
+                    selectValue: Actions.saveQuantifier5Setting,
+                }, dispatch);
+            default:
+                return {};
+        }
+    }
 };
 
 const SettingsEditQuantifiersScreen = connect(

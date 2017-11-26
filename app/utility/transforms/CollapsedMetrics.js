@@ -1,4 +1,21 @@
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
+import {
+    EMPTY_METRIC,
+    AVG_VELOCITY_METRIC,
+    RPE_METRIC,
+    DURATION_METRIC,
+    ROM_METRIC,
+    PKH_METRIC,
+    PKV_METRIC,
+    EMPTY_QUANTIFIER,
+    FIRST_REP_QUANTIFIER,
+    LAST_REP_QUANTIFIER,
+    MIN_QUANTIFIER,
+    MAX_QUANTIFIER,
+    AVG_QUANTIFIER,
+    ABS_LOSS_QUANTIFIER,
+    BEST_EVER_QUANTIFIER,
+} from 'app/constants/CollapsedMetricTypes';
 
 // unique metrics
 
@@ -243,4 +260,50 @@ export const getMaxROM = (set) => {
 export const getMaxDuration = (set) => {
     const durations = getDurations(set);
     return (getMaxMetrics(durations) / 1000000.0).toFixed(2)
+};
+
+// To String
+
+export const metricToString = (metric) => {
+    switch (metric) {
+        case EMPTY_METRIC:
+            return '';
+        case AVG_VELOCITY_METRIC:
+            return 'VEL';
+        case RPE_METRIC:
+            return 'RPE';
+        case DURATION_METRIC:
+            return 'DUR';
+        case ROM_METRIC:
+            return 'ROM';
+        case PKH_METRIC:
+            return 'PKH';
+        case PKV_METRIC:
+            return 'PKV';
+        default:
+            return null;
+    };
+};
+
+export const quantifierToString = (quantifier) => {
+    switch (quantifier) {
+        case EMPTY_QUANTIFIER:
+            return '';
+        case FIRST_REP_QUANTIFIER:
+            return 'First';
+        case LAST_REP_QUANTIFIER:
+            return 'Last';
+        case MIN_QUANTIFIER:
+            return 'Min';
+        case MAX_QUANTIFIER:
+            return 'Max';
+        case AVG_QUANTIFIER:
+            return 'Average';
+        case ABS_LOSS_QUANTIFIER:
+            return 'Abs Loss';
+        case BEST_EVER_QUANTIFIER:
+            return 'Best Ever';
+        default:
+            return null;
+    };
 };

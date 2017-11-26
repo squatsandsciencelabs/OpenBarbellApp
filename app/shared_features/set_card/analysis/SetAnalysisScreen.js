@@ -24,94 +24,128 @@ import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as CollapsedMetrics from 'app/utility/transforms/CollapsedMetrics';
 
 const metricValue = (state, set, quantifier, metric) => {
+    let returnValue = null;
+
     switch (metric) {
         case AVG_VELOCITY_METRIC:
             switch (quantifier) {
                 case FIRST_REP_QUANTIFIER:
-                    return CollapsedMetrics.getFirstAvgVelocity(set);
+                    returnValue = CollapsedMetrics.getFirstAvgVelocity(set);
+                    break;
                 case LAST_REP_QUANTIFIER:
-                    return CollapsedMetrics.getLastAvgVelocity(set);
+                    returnValue = CollapsedMetrics.getLastAvgVelocity(set);
+                    break;
                 case MIN_QUANTIFIER:
-                    return CollapsedMetrics.getMinAvgVelocity(set);
+                    returnValue = CollapsedMetrics.getMinAvgVelocity(set);
+                    break;
                 case MAX_QUANTIFIER:
-                    return CollapsedMetrics.getMaxAvgVelocity(set);
+                    returnValue = CollapsedMetrics.getMaxAvgVelocity(set);
+                    break;
                 case AVG_QUANTIFIER:
-                    return CollapsedMetrics.getAvgOfAvgVelocities(set);
+                    returnValue = CollapsedMetrics.getAvgOfAvgVelocities(set);
+                    break;
                 case ABS_LOSS_QUANTIFIER:
-                    return CollapsedMetrics.getAbsLossOfAvgVelocities(set);
+                    returnValue = CollapsedMetrics.getAbsLossOfAvgVelocities(set);
+                    break;
                 case BEST_EVER_QUANTIFIER:
-                    return SetsSelectors.getBestAvgVelocityEver(state, set);
+                    returnValue = SetsSelectors.getBestAvgVelocityEver(state, set);
+                    break;
             }
             break;
         case DURATION_METRIC:
             switch (quantifier) {
                 case FIRST_REP_QUANTIFIER:
-                    return CollapsedMetrics.getFirstDuration(set);
+                    returnValue = CollapsedMetrics.getFirstDuration(set);
+                    break;
                 case LAST_REP_QUANTIFIER:
-                    return CollapsedMetrics.getLastDuration(set);
+                    returnValue = CollapsedMetrics.getLastDuration(set);
+                    break;
                 case MIN_QUANTIFIER:
-                    return CollapsedMetrics.getMinDuration(set);
+                    returnValue = CollapsedMetrics.getMinDuration(set);
+                    break;
                 case MAX_QUANTIFIER:
-                    return CollapsedMetrics.getMaxDuration(set);
+                    returnValue = CollapsedMetrics.getMaxDuration(set);
+                    break;
                 case AVG_QUANTIFIER:
-                    return CollapsedMetrics.getAvgDuration(set);
+                    returnValue = CollapsedMetrics.getAvgDuration(set);
+                    break;
                 case ABS_LOSS_QUANTIFIER:
-                    return CollapsedMetrics.getAbsLossOfDurations(set);
+                    returnValue = CollapsedMetrics.getAbsLossOfDurations(set);
+                    break;
                 case BEST_EVER_QUANTIFIER:
-                    return SetsSelectors.getBestDurationEver(state, set);
+                    returnValue = SetsSelectors.getBestDurationEver(state, set);
+                    break;
             }
             break;
         case ROM_METRIC:
             switch (quantifier) {
                 case FIRST_REP_QUANTIFIER:
-                    return CollapsedMetrics.getFirstROM(set);
+                    returnValue = CollapsedMetrics.getFirstROM(set);
+                    break;
                 case LAST_REP_QUANTIFIER:
-                    return CollapsedMetrics.getLastROM(set);
+                    returnValue = CollapsedMetrics.getLastROM(set);
+                    break;
                 case MIN_QUANTIFIER:
-                    return CollapsedMetrics.getMinROM(set);
+                    returnValue = CollapsedMetrics.getMinROM(set);
+                    break;
                 case MAX_QUANTIFIER:
-                    return CollapsedMetrics.getMaxROM(set);
+                    returnValue = CollapsedMetrics.getMaxROM(set);
+                    break;
                 case AVG_QUANTIFIER:
-                    return CollapsedMetrics.getAvgROM(set);
+                    returnValue = CollapsedMetrics.getAvgROM(set);
+                    break;
                 case ABS_LOSS_QUANTIFIER:
-                    return CollapsedMetrics.getAbsLossOfROMs(set);
+                    returnValue = CollapsedMetrics.getAbsLossOfROMs(set);
+                    break;
             }
             break;
         case PKH_METRIC:
             switch (quantifier) {
                 case FIRST_REP_QUANTIFIER:
-                    return CollapsedMetrics.getFirstPKH(set);
+                    returnValue = CollapsedMetrics.getFirstPKH(set);
+                    break;
                 case LAST_REP_QUANTIFIER:
-                    return CollapsedMetrics.getLastPKH(set);
+                    returnValue = CollapsedMetrics.getLastPKH(set);
+                    break;
                 case MIN_QUANTIFIER:
-                    return CollapsedMetrics.getMinPKH(set);
+                    returnValue = CollapsedMetrics.getMinPKH(set);
+                    break;
                 case MAX_QUANTIFIER:
-                    return CollapsedMetrics.getMaxPKH(set);
+                    returnValue = CollapsedMetrics.getMaxPKH(set);
+                    break;
             }
             break;
         case PKV_METRIC:
             switch (quantifier) {
                 case FIRST_REP_QUANTIFIER:
-                    return CollapsedMetrics.getFirstPKV(set);
+                    returnValue = CollapsedMetrics.getFirstPKV(set);
+                    break;
                 case LAST_REP_QUANTIFIER:
-                    return CollapsedMetrics.getLastPKV(set);
+                    returnValue = CollapsedMetrics.getLastPKV(set);
+                    break;
                 case MIN_QUANTIFIER:
-                    return CollapsedMetrics.getMinPKV(set);
+                    returnValue = CollapsedMetrics.getMinPKV(set);
+                    break;
                 case MAX_QUANTIFIER:
-                    return CollapsedMetrics.getMaxPKV(set);
+                    returnValue = CollapsedMetrics.getMaxPKV(set);
+                    break;
                 case AVG_QUANTIFIER:
-                    return CollapsedMetrics.getAvgPKV(set);
+                    returnValue = CollapsedMetrics.getAvgPKV(set);
+                    break;
                 case ABS_LOSS_QUANTIFIER:
-                    return CollapsedMetrics.getAbsLossOfPKVs(set);
+                    returnValue = CollapsedMetrics.getAbsLossOfPKVs(set);
+                    break;
                 case BEST_EVER_QUANTIFIER:
-                    return SetsSelectors.getBestPKVEver(state, set);
+                    returnValue = SetsSelectors.getBestPKVEver(state, set);
+                    break;
             }
             break;
         case RPE_METRIC:
-            return CollapsedMetrics.getRPE(set);
+            returnValue = CollapsedMetrics.getRPE(set);
+            break;
     }
 
-    return '---';    
+    return returnValue ? returnValue : '---';    
 };
 
 const metricDescription = (quantifier, metric) => {
@@ -134,6 +168,8 @@ const mapStateToProps = (state, ownProps) => {
     const quantifier4 = CollapsedSettingsSelectors.getQuantifier4(state);
     const metric5 = CollapsedSettingsSelectors.getMetric5(state);
     const quantifier5 = CollapsedSettingsSelectors.getQuantifier5(state);
+
+    console.tron.log("q1" + quantifier1 + " m1" + metric1 + " v1" + metricValue(state, set, quantifier1, metric1));
 
     // display values
     return {

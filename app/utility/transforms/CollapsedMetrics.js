@@ -85,7 +85,7 @@ export const getAvgROM = (set) => {
 
 export const getAvgDuration = (set) => {
     let durations = getDurations(set);
-    durations = durations.map((duration) => duration / 1000000.0);
+    // durations = durations.map((duration) => duration / 1000000.0);
     return getAvgOfMetrics(durations);
 };
 
@@ -99,7 +99,7 @@ const getAbsLossOfMetrics = (metrics) => {
     const maxV = Math.max(...metrics);
     const minV = Math.min(...metrics);
     
-    return (maxV - minV).toFixed(2);
+    return Number((maxV - minV).toFixed(2));
 };
 
 export const getAbsLossOfAvgVelocities = (set) => {
@@ -119,7 +119,7 @@ export const getAbsLossOfROMs = (set) => {
 
 export const getAbsLossOfDurations = (set) => {
     let durations = getDurations(set);
-    durations = durations.map((duration) => duration / 1000000.0);
+    // durations = durations.map((duration) => duration / 1000000.0);
     return getAbsLossOfMetrics(durations);    
 };
 
@@ -130,7 +130,7 @@ const getFirstRepOfMetrics = (metrics) => {
         return null;
     }
 
-    return metrics[0].toFixed(2);
+    return Number((metrics[0]).toFixed(2));
 };
 
 export const getFirstAvgVelocity = (set) => {
@@ -155,7 +155,7 @@ export const getFirstROM = (set) => {
 
 export const getFirstDuration = (set) => {
     let durations = getDurations(set);
-    durations = durations.map((duration) => duration / 1000000.0);
+    // durations = durations.map((duration) => duration / 1000000.0);
     return getFirstRepOfMetrics(durations);
 };
 
@@ -166,7 +166,7 @@ const getLastRepMetrics = (metrics) => {
         return null;
     }
 
-    return metrics[metrics.length - 1].toFixed(2);
+    return Number((metrics[metrics.length - 1]).toFixed(2));
 };
 
 export const getLastAvgVelocity = (set) => {
@@ -191,7 +191,7 @@ export const getLastROM = (set) => {
 
 export const getLastDuration = (set) => {
     let durations = getDurations(set);
-    durations = durations.map((duration) => duration / 1000000.0);
+    // durations = durations.map((duration) => duration / 1000000.0);
     return getLastRepMetrics(durations);
 };
 
@@ -202,7 +202,7 @@ const getMinMetrics = (metrics) => {
         return null;
     }
 
-    return Math.min(...metrics).toFixed(2);
+    return Number(Math.min(...metrics).toFixed(2));
 };
 
 export const getMinAvgVelocity = (set) => {
@@ -227,7 +227,7 @@ export const getMinROM = (set) => {
 
 export const getMinDuration = (set) => {
     let durations = getDurations(set);
-    durations = durations.map((duration) => duration / 1000000.0);
+    // durations = durations.map((duration) => duration / 1000000.0);
     return getMinMetrics(durations);
 };
 
@@ -238,7 +238,7 @@ const getMaxMetrics = (metrics) => {
         return null;
     }
 
-    return Math.max(...metrics).toFixed(2);
+    return Number(Math.max(...metrics).toFixed(2));
 };
 
 export const getMaxAvgVelocity = (set) => {
@@ -263,7 +263,7 @@ export const getMaxROM = (set) => {
 
 export const getMaxDuration = (set) => {
     let durations = getDurations(set);
-    durations = durations.map((duration) => duration / 1000000.0);
+    // durations = durations.map((duration) => duration / 1000000.0);
     return getMaxMetrics(durations);
 };
 

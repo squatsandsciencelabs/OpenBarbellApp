@@ -42,7 +42,7 @@ class SettingsMetricsPanel extends Component {
     _renderMetric(row, metric) {
         return (
             <TouchableOpacity
-                style={[SETTINGS_PANEL_STYLES.blueButton, {width: 100, height: 30, marginLeft: 10, marginBottom: 10}]}
+                style={[SETTINGS_PANEL_STYLES.blueButton, {width: 90, height: 30, marginLeft: 10, marginBottom: 10}]}
                 onPress={() => this._tapCurrentMetric(row)}>
                 <Text style={SETTINGS_PANEL_STYLES.buttonText}>
                     {CollapsedMetricsUtility.metricAbbreviation(metric)}
@@ -55,7 +55,7 @@ class SettingsMetricsPanel extends Component {
     _renderQuantifier(row, quantifier) {
         return (
             <TouchableOpacity
-                style={[SETTINGS_PANEL_STYLES.blueButton, {width: 120, height: 30, marginLeft: 10, marginBottom: 10}]}
+                style={[SETTINGS_PANEL_STYLES.blueButton, {width: 130, height: 30, marginLeft: 10, marginBottom: 10}]}
                 onPress={() => this._tapCurrentQuantifier(row)}>
                 <Text style={SETTINGS_PANEL_STYLES.buttonText}>
                     {CollapsedMetricsUtility.quantifierString(quantifier)}

@@ -4,10 +4,13 @@ import {
 import * as Analytics from 'app/services/Analytics';
 import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsActionCreators';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
+import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 
 export const saveDefaulQuantifierSetting = (quantifier = 'Last Rep') => (dispatch, getState) => {
     const state = getState();
-    logChangeQuantifierAnalytics(quantifier, state);
+    const quantifierType = SettingsSelectors.getCurrentQuantifierType(state);
+
+    logChangeQuantifierAnalytics(quantifier, quantifierType, state);
 
     dispatch(SettingsActionCreators.saveQuantifier(quantifier));
 };
@@ -22,8 +25,9 @@ export const dismissQuantifierSetter = () => {
 
 // ANALYTICS
 
-const logChangeQuantifierAnalytics = (quantifier, state) => {
+const logChangeQuantifierAnalytics = (quantifier, quantifierType, state) => {
     Analytics.logEventWithAppState('change_quantifier', {
+        quantifier: quantiferType,
         to_quantifier: quantifier,
     }, state);
 };

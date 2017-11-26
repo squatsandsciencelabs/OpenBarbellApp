@@ -17,7 +17,7 @@ export const saveDefaultMetric = (metric = 'kgs') => ({
 
 export const saveCollapsedMetric = (metric = 'Avg Velocity') => (dispatch, getState) => {
     const state = getState();
-    const metricType = SettingsSelectors.getCurrentMetricPosition(state);
+    const metricType = SettingsSelectors.getCurrentMetricType(state);
 
     dispatch({
         type: SAVE_COLLAPSED_METRIC,
@@ -28,7 +28,7 @@ export const saveCollapsedMetric = (metric = 'Avg Velocity') => (dispatch, getSt
 
 export const saveQuantifier = (quantifier = 'Last Rep') => (dispatch, getState) => {
     const state = getState();
-    const quantifierType = SettingsSelectors.getCurrentQuantifierPosition(state);
+    const quantifierType = SettingsSelectors.getCurrentQuantifierType(state);
 
     dispatch({
         type: SAVE_QUANTIFIER,

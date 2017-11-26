@@ -263,7 +263,7 @@ export const getMaxDuration = (set) => {
 
 // To String
 
-export const metricToString = (metric) => {
+export const metricAbbreviation = (metric) => {
     switch (metric) {
         case EMPTY_METRIC:
             return '';
@@ -284,7 +284,51 @@ export const metricToString = (metric) => {
     };
 };
 
-export const quantifierToString = (quantifier) => {
+export const metricString = (metric) => {
+    switch (metric) {
+        case EMPTY_METRIC:
+            return '';
+        case AVG_VELOCITY_METRIC:
+            return 'Average Velocity';
+        case RPE_METRIC:
+            return 'RPE';
+        case DURATION_METRIC:
+            return 'Duration';
+        case ROM_METRIC:
+            return 'Range Of Motion';
+        case PKH_METRIC:
+            return 'Peak Height';
+        case PKV_METRIC:
+            return 'Peak Velocity';
+        default:
+            return null;
+    };
+};
+
+export const quantifierAbbreviation = (quantifier) => {
+    switch (quantifier) {
+        case EMPTY_QUANTIFIER:
+            return '';
+        case FIRST_REP_QUANTIFIER:
+            return 'FIRST';
+        case LAST_REP_QUANTIFIER:
+            return 'LAST';
+        case MIN_QUANTIFIER:
+            return 'MIN';
+        case MAX_QUANTIFIER:
+            return 'MAX';
+        case AVG_QUANTIFIER:
+            return 'AVG';
+        case ABS_LOSS_QUANTIFIER:
+            return 'ABS LOSS';
+        case BEST_EVER_QUANTIFIER:
+            return 'Best';
+        default:
+            return null;
+    };
+};
+
+export const quantifierString = (quantifier) => {
     switch (quantifier) {
         case EMPTY_QUANTIFIER:
             return '';
@@ -293,13 +337,13 @@ export const quantifierToString = (quantifier) => {
         case LAST_REP_QUANTIFIER:
             return 'Last Rep';
         case MIN_QUANTIFIER:
-            return 'Min';
+            return 'Minimum';
         case MAX_QUANTIFIER:
-            return 'Max';
+            return 'Maximum';
         case AVG_QUANTIFIER:
             return 'Average';
         case ABS_LOSS_QUANTIFIER:
-            return 'Abs Loss';
+            return 'Absolute Loss';
         case BEST_EVER_QUANTIFIER:
             return 'Best Ever';
         default:

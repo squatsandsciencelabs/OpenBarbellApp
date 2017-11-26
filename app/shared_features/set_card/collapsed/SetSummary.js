@@ -22,7 +22,7 @@ class SetSummary extends Component {
         }
 
         return (
-            <View style={[styles.border, {flex: 1}]}>
+            <View style={[styles.border, {flex: 1, height: 38}]}>
                 <ScrollView horizontal={true}
                     scrollEnabled={true}
                     showsHorizontalScrollIndicator={false}

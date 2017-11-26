@@ -42,7 +42,7 @@ class SettingsMetricsPanel extends Component {
     _renderMetric(row, metric) {
         return (
             <TouchableOpacity
-                style={[SETTINGS_PANEL_STYLES.blueButton, {width: 150, height: 30, marginLeft: 10, marginBottom: 10}]}
+                style={[SETTINGS_PANEL_STYLES.blueButton, {width: 100, height: 30, marginLeft: 10, marginBottom: 10}]}
                 onPress={() => this._tapCurrentMetric(row)}>
                 <Text style={SETTINGS_PANEL_STYLES.buttonText}>
                     {CollapsedMetricsUtility.metricAbbreviation(metric)}  <Icon name="caret-down" size={10} color='white' />
@@ -54,7 +54,7 @@ class SettingsMetricsPanel extends Component {
     _renderQuantifier(row, quantifier) {
         return (
             <TouchableOpacity
-                style={[SETTINGS_PANEL_STYLES.blueButton, {width: 100, height: 30, marginLeft: 15, marginBottom: 10}]}
+                style={[SETTINGS_PANEL_STYLES.blueButton, {width: 120, height: 30, marginLeft: 10, marginBottom: 10}]}
                 onPress={() => this._tapCurrentQuantifier(row)}>
                 <Text style={SETTINGS_PANEL_STYLES.buttonText}>
                     {CollapsedMetricsUtility.quantifierString(quantifier)}  <Icon name="caret-down" size={10} color='white' />  
@@ -89,14 +89,18 @@ class SettingsMetricsPanel extends Component {
             if (metric === 'RPE') {
                 return (
                     <View style={{flexDirection: 'row'}}>
-                        <Text style={styles.numberLabel}>{row}</Text>
+                        <View style={styles.numberBackground}>
+                            <Text style={styles.numberLabel}>{row}</Text>
+                        </View>
                         {this._renderMetric(row, metric)}
                     </View>            
                 );
             } else {
                 return (
                     <View style={{flexDirection: 'row'}}>
-                        <Text style={styles.numberLabel}>{row}</Text>
+                        <View style={styles.numberBackground}>
+                            <Text style={styles.numberLabel}>{row}</Text>
+                        </View>
                         {this._renderQuantifier(row, quantifier)}
                         {this._renderMetric(row, metric)}
                     </View>            
@@ -156,19 +160,27 @@ const styles = StyleSheet.create({
         color: '#f0565a',
     },
     bigMetricBackground: {
-        marginLeft: -5,
         backgroundColor: '#fddddd',
         alignItems: 'center',
         justifyContent: 'center',
         width: 25,
         height: 25,
         borderRadius: 25 / 2,
-        borderColor: '#fddddd'
+        borderColor: '#fddddd',
+        marginLeft: -5,
+        marginTop: 2,        
+    },
+    numberBackground: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 25,
+        height: 25,
+        marginLeft: -5,
+        marginTop: 2,        
     },
     numberLabel: {
+        textAlign: 'center',        
         fontSize: 15,
-        marginRight: 10,
-        marginTop: 5
     }
 });
 

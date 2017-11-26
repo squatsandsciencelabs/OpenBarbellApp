@@ -12,3 +12,7 @@ export const getDurationBetween = (startDate, endDate) => {
 
     return Math.abs(endDate - startDate);
 };
+
+export const displayDuration = (duration) => {
+    return Number((duration / 1000000.0).toFixed(2));
+};

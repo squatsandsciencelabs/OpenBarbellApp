@@ -84,8 +84,7 @@ export const getAvgROM = (set) => {
 };
 
 export const getAvgDuration = (set) => {
-    let durations = getDurations(set);
-    // durations = durations.map((duration) => duration / 1000000.0);
+    const durations = getDurations(set);
     return getAvgOfMetrics(durations);
 };
 
@@ -118,8 +117,7 @@ export const getAbsLossOfROMs = (set) => {
 };
 
 export const getAbsLossOfDurations = (set) => {
-    let durations = getDurations(set);
-    // durations = durations.map((duration) => duration / 1000000.0);
+    const durations = getDurations(set);
     return getAbsLossOfMetrics(durations);    
 };
 
@@ -154,8 +152,7 @@ export const getFirstROM = (set) => {
 };
 
 export const getFirstDuration = (set) => {
-    let durations = getDurations(set);
-    // durations = durations.map((duration) => duration / 1000000.0);
+    const durations = getDurations(set);
     return getFirstRepOfMetrics(durations);
 };
 
@@ -190,8 +187,7 @@ export const getLastROM = (set) => {
 };
 
 export const getLastDuration = (set) => {
-    let durations = getDurations(set);
-    // durations = durations.map((duration) => duration / 1000000.0);
+    const durations = getDurations(set);
     return getLastRepMetrics(durations);
 };
 
@@ -226,8 +222,7 @@ export const getMinROM = (set) => {
 };
 
 export const getMinDuration = (set) => {
-    let durations = getDurations(set);
-    // durations = durations.map((duration) => duration / 1000000.0);
+    const durations = getDurations(set);
     return getMinMetrics(durations);
 };
 
@@ -262,8 +257,7 @@ export const getMaxROM = (set) => {
 };
 
 export const getMaxDuration = (set) => {
-    let durations = getDurations(set);
-    // durations = durations.map((duration) => duration / 1000000.0);
+    const durations = getDurations(set);
     return getMaxMetrics(durations);
 };
 

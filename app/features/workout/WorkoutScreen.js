@@ -5,6 +5,7 @@ import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as DateUtils from 'app/utility/transforms/DateUtils';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
 import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
+import * as DurationCalculator from 'app/utility/transforms/DurationCalculator'
 
 import WorkoutList from './WorkoutList';
 import * as Actions from './WorkoutActions';
@@ -218,7 +219,7 @@ const createRowViewModels = (set) => {
             // obv2 properties
             let duration = RepDataMap.durationOfLift(repData)
             if (duration !== null) {
-                vm.duration = (duration / 1000000.0).toFixed(2);
+                vm.duration = DurationCalculator.displayDuration(duration);
             } else {
                 vm.duration = "obv2 only";
             }

@@ -7,6 +7,7 @@ import * as RepDataMap from 'app/utility/transforms/RepDataMap';
 import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import SetExpandedView from 'app/shared_features/expanded_set/SetExpandedView';
+import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 
 const mapStateToProps = (state) => {
     var setID = HistorySelectors.getExpandedSetID(state);
@@ -25,7 +26,7 @@ const mapStateToProps = (state) => {
 
             var duration = RepDataMap.durationOfLift(data);
             if (duration !== null) {
-                duration = (duration / 1000000.0).toFixed(2);
+                duration = DurationCalculator.displayDuration(duration);
             } else {
                 duration = "obv2 only";
             }

@@ -22,6 +22,7 @@ import SetAnalysis from './SetAnalysis';
 import * as CollapsedSettingsSelectors from 'app/redux/selectors/CollapsedSettingsSelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as CollapsedMetrics from 'app/utility/transforms/CollapsedMetrics';
+import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 
 const metricValue = (state, set, quantifier, metric) => {
     let returnValue = null;
@@ -75,6 +76,9 @@ const metricValue = (state, set, quantifier, metric) => {
                 case BEST_EVER_QUANTIFIER:
                     returnValue = SetsSelectors.getBestDurationEver(state, set);
                     break;
+            }
+            if (returnValue !== null) {
+                returnValue = DurationCalculator.displayDuration(returnValue);
             }
             break;
         case ROM_METRIC:

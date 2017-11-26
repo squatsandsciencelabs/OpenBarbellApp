@@ -159,7 +159,7 @@ const metricDescription = (quantifier, metric) => {
     if (quantifier === EMPTY_QUANTIFIER || metric === EMPTY_METRIC) {
         return '';
     }
-    return CollapsedMetrics.quantifierAbbreviation(quantifier) + " " + CollapsedMetrics.metricAbbreviation(metric);
+    return CollapsedMetrics.quantifierAbbreviation(quantifier) + "\n" + CollapsedMetrics.metricAbbreviation(metric) + " " + CollapsedMetrics.metricUnit(metric);
 }
 
 const mapStateToProps = (state, ownProps) => {

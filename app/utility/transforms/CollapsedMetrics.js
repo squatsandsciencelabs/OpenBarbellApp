@@ -305,6 +305,25 @@ export const metricString = (metric) => {
     };
 };
 
+export const metricUnit = (metric) => {
+    switch (metric) {
+        case EMPTY_METRIC:
+            return '';
+        case AVG_VELOCITY_METRIC:
+            return 'm/s';
+        case DURATION_METRIC:
+            return 'sec';
+        case ROM_METRIC:
+            return 'mm';
+        case PKH_METRIC:
+            return '%';
+        case PKV_METRIC:
+            return 'm/s';
+        default:
+            return null;
+    };
+};
+
 export const quantifierAbbreviation = (quantifier) => {
     switch (quantifier) {
         case EMPTY_QUANTIFIER:

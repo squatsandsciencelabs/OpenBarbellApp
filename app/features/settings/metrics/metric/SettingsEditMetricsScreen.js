@@ -12,6 +12,7 @@ import {
     EMPTY_QUANTIFIER,
     AVG_QUANTIFIER,
     BEST_EVER_QUANTIFIER,
+    ABS_LOSS_QUANTIFIER,
 } from 'app/constants/CollapsedMetricTypes';
 
 import PickerModal from 'app/shared_features/picker/PickerModal';
@@ -35,6 +36,7 @@ const mapStateToProps = (state) => {
             ];
             break;
         case AVG_QUANTIFIER:
+        case ABS_LOSS_QUANTIFIER:
             var items = [
                 pickerItem(AVG_VELOCITY_METRIC),
                 pickerItem(PKV_METRIC),

@@ -66,18 +66,33 @@ const CollapsedSettingsReducer = (state = defaultState, action) => {
             switch (state.currentCollapsedMetricRank) {
                 case 1:
                     changes.metric1 = action.metric;
+                    if (shouldResetQuantifier(state.quantifier1, action.metric)) {
+                        changes.quantifier1 = EMPTY_QUANTIFIER;
+                    }
                     break;
                 case 2:
                     changes.metric2 = action.metric;
+                    if (shouldResetQuantifier(state.quantifier2, action.metric)) {
+                        changes.quantifier2 = EMPTY_QUANTIFIER;
+                    }
                     break;
                 case 3:
                     changes.metric3 = action.metric;
+                    if (shouldResetQuantifier(state.quantifier3, action.metric)) {
+                        changes.quantifier3 = EMPTY_QUANTIFIER;
+                    }
                     break;
                 case 4:
                     changes.metric4 = action.metric;
+                    if (shouldResetQuantifier(state.quantifier4, action.metric)) {
+                        changes.quantifier4 = EMPTY_QUANTIFIER;
+                    }
                     break;
                 case 5:
                     changes.metric5 = action.metric;
+                    if (shouldResetQuantifier(state.quantifier5, action.metric)) {
+                        changes.quantifier5 = EMPTY_QUANTIFIER;
+                    }
                     break;
                 default:
                     return state;
@@ -123,6 +138,13 @@ const CollapsedSettingsReducer = (state = defaultState, action) => {
         default:
             return state;
     }
+};
+
+const shouldResetQuantifier = (quantifier, metric) => {
+    if (metric === RPE_METRIC) {
+        return true;
+    }
+    return false;
 };
 
 const shouldResetMetric = (quantifier, metric) => {

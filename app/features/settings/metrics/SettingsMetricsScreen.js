@@ -22,6 +22,7 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         tapMetric: Actions.presentCollapsedMetric,
         tapQuantifier: Actions.presentQuantifier,
+        tappedBigMetricsInfo: Actions.presentBigMetricsInfo,
     }, dispatch);
 };
 

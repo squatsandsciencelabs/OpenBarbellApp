@@ -126,7 +126,7 @@ const CollapsedSettingsReducer = (state = defaultState, action) => {
 };
 
 const shouldResetMetric = (quantifier, metric) => {
-    if (quantifier === AVG_QUANTIFIER && metric === PKH_METRIC) {
+    if ((quantifier === AVG_QUANTIFIER || quantifier === ABS_LOSS_QUANTIFIER) && metric === PKH_METRIC) {
         return true;
     }
     if (quantifier === BEST_EVER_QUANTIFIER && (metric === PKH_METRIC || metric === ROM_METRIC)) {

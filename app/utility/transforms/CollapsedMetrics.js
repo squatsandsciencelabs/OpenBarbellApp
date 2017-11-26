@@ -339,9 +339,9 @@ export const quantifierAbbreviation = (quantifier) => {
         case AVG_QUANTIFIER:
             return 'AVG';
         case ABS_LOSS_QUANTIFIER:
-            return 'ABS LOSS';
+            return 'ABSL';
         case BEST_EVER_QUANTIFIER:
-            return 'Best';
+            return 'BEST';
         default:
             return null;
     };

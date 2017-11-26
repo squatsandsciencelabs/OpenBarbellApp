@@ -159,8 +159,10 @@ const metricDescription = (quantifier, metric) => {
     if (quantifier === EMPTY_QUANTIFIER || metric === EMPTY_METRIC) {
         return '';
     }
-    return CollapsedMetrics.quantifierAbbreviation(quantifier) + " " + CollapsedMetrics.metricAbbreviation(metric) + "\n" + CollapsedMetrics.metricUnit(metric);
-}
+    return CollapsedMetrics.quantifierAbbreviation(quantifier) + " " + CollapsedMetrics.metricAbbreviation(metric);
+};
+
+const unit = (metric) => CollapsedMetrics.metricUnit(metric);
 
 const mapStateToProps = (state, ownProps) => {
     // raw values
@@ -179,15 +181,20 @@ const mapStateToProps = (state, ownProps) => {
     // display values
     return {
         value1: metricValue(state, set, quantifier1, metric1),
+        unit1: unit(metric1),
         description1: metricDescription(quantifier1, metric1),
         value2: metricValue(state, set, quantifier2, metric2),
         description2: metricDescription(quantifier2, metric2),
+        unit2: unit(metric2),        
         value3: metricValue(state, set, quantifier3, metric3),
         description3: metricDescription(quantifier3, metric3),
+        unit3: unit(metric3),        
         value4: metricValue(state, set, quantifier4, metric4),
         description4: metricDescription(quantifier4, metric4),
+        unit4: unit(metric4),        
         value5: metricValue(state, set, quantifier5, metric5),
         description5: metricDescription(quantifier5, metric5),
+        unit5: unit(metric5),        
     };
 };
 

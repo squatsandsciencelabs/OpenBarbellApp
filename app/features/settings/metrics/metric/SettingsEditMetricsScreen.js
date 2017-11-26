@@ -22,7 +22,7 @@ import * as CollapsedSettingsSelectors from 'app/redux/selectors/CollapsedSettin
 import * as CollapsedMetricsUtility from 'app/utility/transforms/CollapsedMetrics';
 
 const pickerItem = (metric) => ({
-    label: CollapsedMetricsUtility.metricString(metric),
+    label: Platform.OS === 'ios' ? CollapsedMetricsUtility.metricString(metric) : CollapsedMetricsUtility.metricAbbreviation(metric),
     value: metric,
 });
 

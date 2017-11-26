@@ -132,16 +132,26 @@ class SettingsMetricsPanel extends Component {
                 <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
                     <Text style={[{marginBottom: 20}, styles.titleText]}>Metrics</Text>
                         <View style={{marginBottom: 15}}>
-                            <SettingsEditQuantifiersScreen rank={1} />
-                            <SettingsEditMetricsScreen rank={1} />
-                            <SettingsEditQuantifiersScreen rank={2} />
-                            <SettingsEditMetricsScreen rank={2} />
-                            <SettingsEditQuantifiersScreen rank={3} />
-                            <SettingsEditMetricsScreen rank={3} />
-                            <SettingsEditQuantifiersScreen rank={4} />
-                            <SettingsEditMetricsScreen rank={4} />
-                            <SettingsEditQuantifiersScreen rank={5} />
-                            <SettingsEditMetricsScreen rank={5} />
+                            <View style={{flex: 1, flexDirection: 'row'}}>
+                                <View style={[{flex: 2}, styles.dropdownButton]}><SettingsEditQuantifiersScreen color={'white'} rank={1} /></View>
+                                <View style={[{flex: 1}, styles.dropdownButton]}><SettingsEditMetricsScreen color={'white'} rank={1} /></View>
+                            </View>
+                            <View style={{flex: 1, flexDirection: 'row'}}>
+                                <View style={[{flex: 2}, styles.dropdownButton]}><SettingsEditQuantifiersScreen color={'white'} rank={2} /></View>
+                                <View style={[{flex: 1}, styles.dropdownButton]}><SettingsEditMetricsScreen color={'white'} rank={2} /></View>
+                            </View>
+                            <View style={{flex: 1, flexDirection: 'row'}}>
+                                <View style={[{flex: 2}, styles.dropdownButton]}><SettingsEditQuantifiersScreen color={'white'} rank={3} /></View>
+                                <View style={[{flex: 1}, styles.dropdownButton]}><SettingsEditMetricsScreen color={'white'} rank={3} /></View>
+                            </View>
+                            <View style={{flex: 1, flexDirection: 'row'}}>
+                                <View style={[{flex: 2}, styles.dropdownButton]}><SettingsEditQuantifiersScreen color={'white'} rank={4} /></View>
+                                <View style={[{flex: 1}, styles.dropdownButton]}><SettingsEditMetricsScreen color={'white'} rank={4} /></View>
+                            </View>
+                            <View style={{flex: 1, flexDirection: 'row'}}>
+                                <View style={[{flex: 2}, styles.dropdownButton]}><SettingsEditQuantifiersScreen color={'white'} rank={5} /></View>
+                                <View style={[{flex: 1}, styles.dropdownButton]}><SettingsEditMetricsScreen color={'white'} rank={5} /></View>
+                            </View>
                     </View>
                 </View>
             );
@@ -150,6 +160,12 @@ class SettingsMetricsPanel extends Component {
 }
 
 const styles = StyleSheet.create({
+    dropdownButton: {
+        backgroundColor: 'rgba(47, 128, 237, 1)',
+        borderRadius: 3,
+        marginLeft: 5,
+        marginBottom: 5,
+    },
     titleText: {
         color: 'rgba(77, 77, 77, 1)',
         textAlign: 'center',

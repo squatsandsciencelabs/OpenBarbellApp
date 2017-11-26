@@ -19,7 +19,7 @@ import {
     BEST_EVER_QUANTIFIER,
 } from 'app/constants/CollapsedMetricTypes';
 import PickerModal from 'app/shared_features/picker/PickerModal';
-import * as Actions from './SettingsQuantifiersActions';
+import * as Actions from './SettingsEditQuantifiersActions';
 import * as CollapsedSettingsSelectors from 'app/redux/selectors/CollapsedSettingsSelectors';
 import * as CollapsedMetricsUtility from 'app/utility/transforms/CollapsedMetrics';
 
@@ -49,9 +49,9 @@ const mapDispatchToProps = (dispatch) => {
     }, dispatch);
 };
 
-const SettingsQuantifiers = connect(
+const SettingsEditQuantifiersScreen = connect(
     mapStateToProps,
     mapDispatchToProps
 )(PickerModal);
 
-export default SettingsQuantifiers;
+export default SettingsEditQuantifiersScreen;

@@ -21,8 +21,8 @@ import {
 } from 'app/constants/CollapsedMetricTypes';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 import * as DateUtils from 'app/utility/transforms/DateUtils';
-import SettingsCollapsedMetrics from './metric/SettingsCollapsedMetrics';
-import SettingsQuantifiers from './quantifier/SettingsQuantifiers';
+import SettingsEditMetricsScreen from './metric/SettingsEditMetricsScreen';
+import SettingsEditQuantifiersScreen from './quantifier/SettingsEditQuantifiersScreen';
 import * as CollapsedMetricsUtility from 'app/utility/transforms/CollapsedMetrics';
 
 class SettingsMetricsPanel extends Component {
@@ -117,8 +117,8 @@ class SettingsMetricsPanel extends Component {
                             {this._renderRow(4, this.props.quantifier4, this.props.metric4)}
                             {this._renderRow(5, this.props.quantifier5, this.props.metric5)}
                         </View>
-                    <SettingsCollapsedMetrics />
-                    <SettingsQuantifiers />
+                    <SettingsEditMetricsScreen />
+                    <SettingsEditQuantifiersScreen />
                 </View>
             );
         } else {
@@ -132,8 +132,8 @@ class SettingsMetricsPanel extends Component {
                             {this._renderRow(4, this.props.quantifier4, this.props.metric4)}
                             {this._renderRow(5, this.props.quantifier5, this.props.metric5)}
                     </View>
-                    <SettingsCollapsedMetrics />
-                    <SettingsQuantifiers />
+                    <SettingsEditMetricsScreen />
+                    <SettingsEditQuantifiersScreen />
                 </View>
             );
         }

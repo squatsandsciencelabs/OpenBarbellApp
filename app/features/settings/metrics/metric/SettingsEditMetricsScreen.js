@@ -15,7 +15,7 @@ import {
 } from 'app/constants/CollapsedMetricTypes';
 
 import PickerModal from 'app/shared_features/picker/PickerModal';
-import * as Actions from './SettingsCollapsedMetricActions';
+import * as Actions from './SettingsEditMetricsActions';
 import * as CollapsedSettingsSelectors from 'app/redux/selectors/CollapsedSettingsSelectors';
 import * as CollapsedMetricsUtility from 'app/utility/transforms/CollapsedMetrics';
 
@@ -33,6 +33,7 @@ const mapStateToProps = (state) => {
                 pickerItem(DURATION_METRIC),
                 pickerItem(RPE_METRIC),
             ];
+            break;
         case AVG_QUANTIFIER:
             var items = [
                 pickerItem(AVG_VELOCITY_METRIC),
@@ -41,6 +42,7 @@ const mapStateToProps = (state) => {
                 pickerItem(DURATION_METRIC),
                 pickerItem(RPE_METRIC),
             ];
+            break;
         default:
             var items = [
                 pickerItem(AVG_VELOCITY_METRIC),
@@ -66,9 +68,9 @@ const mapDispatchToProps = (dispatch) => {
     }, dispatch);
 };
 
-const SettingsCollapsedMetrics = connect(
+const SettingsEditMetricsScreen = connect(
     mapStateToProps,
     mapDispatchToProps
 )(PickerModal);
 
-export default SettingsCollapsedMetrics;
+export default SettingsEditMetricsScreen;

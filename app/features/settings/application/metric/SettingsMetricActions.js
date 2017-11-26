@@ -7,6 +7,7 @@ import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators
 
 export const saveDefaultMetricSetting = (metric = 'kgs') => (dispatch, getState) => {
     const state = getState();
+    
     logChangeDefaultMetricAnalytics(metric, state);
 
     dispatch(CollapsedSettingsActionCreators.saveDefaultMetric(metric));

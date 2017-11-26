@@ -26,6 +26,10 @@ const pickerItem = (metric) => ({
     value: metric,
 });
 
+// NOTE: To avoid an android picker bug, the item order is explicitly set to Empty -> PKH -> ROM -> others
+// Basically, if you don't do this, it's possible for the Picker to trigger each time Quantifier changes
+// See https://github.com/facebook/react-native/issues/16849 for more information
+// Once the bug is resolved, can redo the order into something that makes more sense
 const generateItems = (quantifier) => {
     switch (quantifier) {
         case BEST_EVER_QUANTIFIER:

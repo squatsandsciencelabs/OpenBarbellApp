@@ -32,7 +32,7 @@ class SetTitleRowExpanded extends Component {
         if (this.props.isCollapsable) {
             return (
                 <View>
-                    <Icon name="chevron-with-circle-down" size={20} color='rgba(170, 170, 170, 1)' />
+                    <Icon name="chevron-with-circle-up" size={20} color='rgba(170, 170, 170, 1)' />
                 </View>
             );
         } else {

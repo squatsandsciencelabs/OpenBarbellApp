@@ -16,6 +16,10 @@ const getMetrics = (set, metricFunction) => {
     return metrics;
 };
 
+export const getRPE = (set) => {
+    return set.rpe;
+}
+
 export const getAvgVelocities = (set) => {
     return getMetrics(set, RepDataMap.averageVelocity);
 };

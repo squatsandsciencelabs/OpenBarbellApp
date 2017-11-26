@@ -53,6 +53,50 @@ class SetAnalysis extends Component {
         }
     }
 
+    _renderRPE(metric, metricFunction, bigMetric) {
+        if (!metricFunction || metricFunction === '0.00') {
+            if (bigMetric) {
+                return (
+                    <View style={styles.bigMetricBackground}>
+                        <Text style={styles.bigMetricText}> --- </Text>
+                        <Text style={styles.bigMetric}>
+                            {metric} 
+                        </Text>
+                    </View>
+                );
+            } else {
+                return (
+                    <View style={{flexDirection: 'column'}}>
+                        <Text style={styles.text}> --- </Text>
+                        <Text style={styles.metric}>
+                            {metric}
+                        </Text>
+                    </View>
+                );                
+            }
+        } else {
+            if (bigMetric) {
+                return (
+                    <View style={styles.bigMetricBackground}>
+                        <Text style={styles.bigMetricText}>{metricFunction}</Text>
+                        <Text style={styles.bigMetric}> {metric}</Text>
+                    </View>
+                );
+            } else {
+                return (
+                    <View style={{flex: 1, flexDirection: 'column'}}>
+                        <Text style={styles.text}>
+                            {metricFunction}
+                        </Text>
+                        <Text style={styles.metric}>
+                            {metric}
+                        </Text>
+                    </View>  
+                );              
+            }
+        }        
+    };
+
     _renderMetric(metric, quantifier, bigMetric) {
         switch (metric) {
             case 'Velocity':
@@ -132,6 +176,8 @@ class SetAnalysis extends Component {
                     case 'Best Ever':
                         return this._renderAnalysis(metric, SetsSelectors.getBestDurationEver(this.props.state, this.props.set), quantifier, bigMetric);
                     }
+            case 'RPE': 
+                return this._renderRPE(metric, CollapsedMetrics.getRPE(this.props.set), bigMetric);
             default:
                 return (
                     <View style={{flex: 1, flexDirection: 'column'}}>

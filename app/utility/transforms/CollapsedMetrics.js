@@ -290,9 +290,9 @@ export const quantifierToString = (quantifier) => {
         case EMPTY_QUANTIFIER:
             return '';
         case FIRST_REP_QUANTIFIER:
-            return 'First';
+            return 'First Rep';
         case LAST_REP_QUANTIFIER:
-            return 'Last';
+            return 'Last Rep';
         case MIN_QUANTIFIER:
             return 'Min';
         case MAX_QUANTIFIER:

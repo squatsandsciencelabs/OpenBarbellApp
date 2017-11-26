@@ -23,6 +23,7 @@ import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 import * as DateUtils from 'app/utility/transforms/DateUtils';
 import SettingsCollapsedMetrics from './metric/SettingsCollapsedMetrics';
 import SettingsQuantifiers from './quantifier/SettingsQuantifiers';
+import * as CollapsedMetricsUtility from 'app/utility/transforms/CollapsedMetrics';
 
 class SettingsMetricsPanel extends Component {
 
@@ -44,7 +45,7 @@ class SettingsMetricsPanel extends Component {
                 style={[SETTINGS_PANEL_STYLES.blueButton, {width: 150, height: 30, marginLeft: 10, marginBottom: 10}]}
                 onPress={() => this._tapCurrentMetric(row)}>
                 <Text style={SETTINGS_PANEL_STYLES.buttonText}>
-                    {metric}  <Icon name="caret-down" size={10} color='white' />
+                    {CollapsedMetricsUtility.metricToString(metric)}  <Icon name="caret-down" size={10} color='white' />
                 </Text>
             </TouchableOpacity>
         );
@@ -56,7 +57,7 @@ class SettingsMetricsPanel extends Component {
                 style={[SETTINGS_PANEL_STYLES.blueButton, {width: 100, height: 30, marginLeft: 15, marginBottom: 10}]}
                 onPress={() => this._tapCurrentQuantifier(row)}>
                 <Text style={SETTINGS_PANEL_STYLES.buttonText}>
-                    {quantifier}  <Icon name="caret-down" size={10} color='white' />  
+                    {CollapsedMetricsUtility.quantifierToString(quantifier)}  <Icon name="caret-down" size={10} color='white' />  
                 </Text>
             </TouchableOpacity>
         );

@@ -55,7 +55,7 @@ const mapStateToProps = (state) => {
     return {
         isModalShowing: CollapsedSettingsSelectors.getIsEditingMetric(state),
         items: items,
-        selectedValue: CollapsedSettingsSelectors.getCurrentMetric(state)
+        selectedValue: CollapsedSettingsSelectors.getCurrentMetric(state),
     };
 };
 

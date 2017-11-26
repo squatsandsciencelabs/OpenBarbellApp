@@ -23,7 +23,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        selectValue: Actions.saveDefaulQuantifierSetting,
+        selectValue: Actions.saveDefaultQuantifierSetting,
         closeModal: Actions.dismissQuantifierSetter
     }, dispatch);
 };

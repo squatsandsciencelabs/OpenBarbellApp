@@ -51,9 +51,14 @@ class PickerModal extends Component {
                 </Modal>
             );
         } else {
+            if (!this.props.color) {
+                var color = 'rgba(47, 128, 237, 1)';
+            } else {
+                var color = this.props.color;
+            }
             return (
                 <Picker
-                    style={{color: 'rgba(47, 128, 237, 1)'}}
+                    style={{color: color}}
                     selectedValue={this.props.selectedValue}
                     onValueChange={(value) => this._onValueChange(value)}>
                     { this._renderItems() }

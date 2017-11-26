@@ -154,9 +154,9 @@ const metricValue = (state, set, quantifier, metric) => {
 
 const metricDescription = (quantifier, metric) => {
     if (metric === RPE_METRIC) {
-        return CollapsedMetrics.metricToString(metric);
+        return CollapsedMetrics.metricAbbreviation(metric);
     }
-    return CollapsedMetrics.quantifierToString(quantifier) + " " + CollapsedMetrics.metricToString(metric);
+    return CollapsedMetrics.quantifierAbbreviation(quantifier) + " " + CollapsedMetrics.metricAbbreviation(metric);
 }
 
 const mapStateToProps = (state, ownProps) => {

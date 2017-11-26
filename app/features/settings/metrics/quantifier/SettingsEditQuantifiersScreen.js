@@ -24,7 +24,7 @@ import * as CollapsedSettingsSelectors from 'app/redux/selectors/CollapsedSettin
 import * as CollapsedMetricsUtility from 'app/utility/transforms/CollapsedMetrics';
 
 const pickerItem = (quantifier) => ({
-    label: CollapsedMetricsUtility.quantifierToString(quantifier),
+    label: CollapsedMetricsUtility.quantifierString(quantifier),
     value: quantifier,
 });
 

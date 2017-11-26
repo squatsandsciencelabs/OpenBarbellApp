@@ -43,8 +43,8 @@ const defaultState = {
     isEditingAvgMetric: false,
     isEditingBestEverMetric: false,
     isEditingQuantifier: false,
-    currentMetricPosition: null,
-    currentQuantifierPosition: null
+    currentMetricType: null,
+    currentQuantifierType: null
 };
 
 const SettingsReducer = (state = defaultState, action) => {
@@ -64,7 +64,7 @@ const SettingsReducer = (state = defaultState, action) => {
                 isEditingDefaultMetric: false,
             });
         case PRESENT_COLLAPSED_METRICS: 
-            changes = { currentMetricPosition: action.metricPosition }
+            changes = { currentMetricType: action.metricPosition }
                 if (action.quantifier === 'Average' || action.quantifier === 'Abs Loss') {
                     changes.isEditingAvgMetric = true;
                 } else if (action.quantifier === 'Best Ever') {
@@ -78,28 +78,28 @@ const SettingsReducer = (state = defaultState, action) => {
                 isEditingMetric: false,
                 isEditingAvgMetric: false,
                 isEditingBestEverMetric: false,
-                currentMetricPosition: null
+                currentMetricType: null
             });
         case PRESENT_QUANTIFIERS: 
             return Object.assign({}, state, {
                 isEditingQuantifier: true,
-                currentQuantifierPosition: action.quantifierPosition,
-                currentMetricPosition: action.metricPosition
+                currentQuantifierType: action.quantifierPosition,
+                currentMetricType: action.metricPosition
             });
         case DISMISS_QUANTIFIERS: 
             return Object.assign({}, state, {
                 isEditingQuantifier: false,
-                currentMetricPosition: null,
-                currentQuantifierPosition: null
+                currentMetricType: null,
+                currentQuantifierType: null
             });
         case SAVE_COLLAPSED_METRIC:
             changes = {}
-            changes[action.position] = action.metric
+            changes[action.metricType] = action.metric
             return Object.assign({}, state, changes);
         case SAVE_QUANTIFIER:
             changes = {}
-            changes[action.position] = action.quantifier
-            changes[state.currentMetricPosition] = 'Velocity'
+            changes[action.quantifierType] = action.quantifier
+            changes[state.currentMetricType] = 'Velocity'
             return Object.assign({}, state, changes);                                      
         case SAVE_END_SET_TIMER:           
             return Object.assign({}, state, {

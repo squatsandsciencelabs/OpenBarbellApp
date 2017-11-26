@@ -21,17 +21,17 @@ class SettingsMetricsPanel extends Component {
 
     // ACTIONS
 
-    _tapcurrentMetricPosition(metricPosition, quantifier) {
+    _tapCurrentMetricPosition(metricPosition, quantifier) {
         this.props.tapMetric(metricPosition, quantifier)
     }
 
-    _tapcurrentQuantifierPosition(metricPosition, quantifierPosition) {
+    _tapCurrentQuantifierPosition(metricPosition, quantifierPosition) {
         this.props.tapQuantifier(metricPosition, quantifierPosition)
     }
 
     _renderMetric(metric, metricPosition, quantifier) {
         return (
-            <TouchableOpacity style={[SETTINGS_PANEL_STYLES.blueButton, {width: 150, height: 30, marginLeft: 10, marginBottom: 10}]} onPress={() => this._tapcurrentMetricPosition(metricPosition, quantifier)}>
+            <TouchableOpacity style={[SETTINGS_PANEL_STYLES.blueButton, {width: 150, height: 30, marginLeft: 10, marginBottom: 10}]} onPress={() => this._tapCurrentMetricPosition(metricPosition, quantifier)}>
                 <Text style={SETTINGS_PANEL_STYLES.buttonText}>
                     {metric}  <Icon name="caret-down" size={10} color='white' />
                 </Text>
@@ -41,7 +41,7 @@ class SettingsMetricsPanel extends Component {
 
     _renderQuantifier(metricPosition, quantifier, quantifierPosition) {
         return (
-            <TouchableOpacity style={[SETTINGS_PANEL_STYLES.blueButton, {width: 100, height: 30, marginLeft: 15, marginBottom: 10}]} onPress={() => this._tapcurrentQuantifierPosition(metricPosition, quantifierPosition)}>
+            <TouchableOpacity style={[SETTINGS_PANEL_STYLES.blueButton, {width: 100, height: 30, marginLeft: 15, marginBottom: 10}]} onPress={() => this._tapCurrentQuantifierPosition(metricPosition, quantifierPosition)}>
                 <Text style={SETTINGS_PANEL_STYLES.buttonText}>
                     {quantifier}  <Icon name="caret-down" size={10} color='white' />  
                 </Text>
@@ -49,9 +49,8 @@ class SettingsMetricsPanel extends Component {
         );
     }
 
-    _renderRow(metric, metricPosition, quantifier, quantifierPosition) {
-        let num = metricPosition.substr(metricPosition.length - 1);
-        if (num === '1' && metric !== 'RPE') {
+    _renderRow(metric, metricPosition, quantifier, quantifierPosition, num) {
+        if (num === 1 && metric !== 'RPE') {
             return (
                 <View style={{flexDirection: 'row'}}>
                     <View style={styles.bigMetricBackground}>
@@ -61,7 +60,7 @@ class SettingsMetricsPanel extends Component {
                     {this._renderQuantifier(metricPosition, quantifier, quantifierPosition)}
                 </View>            
             );   
-        } else if (num === '1' && metric === 'RPE') {
+        } else if (num === 1 && metric === 'RPE') {
             return (
                 <View style={{flexDirection: 'row'}}>
                     <View style={styles.bigMetricBackground}>
@@ -94,11 +93,11 @@ class SettingsMetricsPanel extends Component {
                 <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
                     <Text style={[{marginBottom: 20}, styles.titleText]}>Metrics</Text>
                         <View style={{marginBottom: 15}}>
-                            {this._renderRow(this.props.metric1, 'metric1', this.props.quantifier1, 'quantifier1')}
-                            {this._renderRow(this.props.metric2, 'metric2', this.props.quantifier2, 'quantifier2')}
-                            {this._renderRow(this.props.metric3, 'metric3', this.props.quantifier3, 'quantifier3')}
-                            {this._renderRow(this.props.metric4, 'metric4', this.props.quantifier4, 'quantifier4')}
-                            {this._renderRow(this.props.metric5, 'metric5', this.props.quantifier5, 'quantifier5')}
+                            {this._renderRow(this.props.metric1, 'metric1', this.props.quantifier1, 'quantifier1', 1)}
+                            {this._renderRow(this.props.metric2, 'metric2', this.props.quantifier2, 'quantifier2', 2)}
+                            {this._renderRow(this.props.metric3, 'metric3', this.props.quantifier3, 'quantifier3', 3)}
+                            {this._renderRow(this.props.metric4, 'metric4', this.props.quantifier4, 'quantifier4', 4)}
+                            {this._renderRow(this.props.metric5, 'metric5', this.props.quantifier5, 'quantifier5', 5)}
                         </View>
                     <SettingsCollapsedMetrics />
                     <SettingsCollapsedAvgMetrics />

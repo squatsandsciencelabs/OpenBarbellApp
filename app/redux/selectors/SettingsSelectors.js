@@ -50,10 +50,10 @@ export const getIsEditingBestEverMetric = (state) => stateRoot(state).isEditingB
 
 export const getIsEditingQuantifier = (state) => stateRoot(state).isEditingQuantifier;
 
-export const getCurrentMetricPosition = (state) => stateRoot(state).currentMetricPosition;
+export const getCurrentMetricPosition = (state) => stateRoot(state).currentMetricType;
 
-export const getCurrentQuantifierPosition = (state) => stateRoot(state).currentQuantifierPosition;
+export const getCurrentQuantifierPosition = (state) => stateRoot(state).currentQuantifierType;
 
-export const getCurrentMetric = (state) => stateRoot(state)[stateRoot(state).currentMetricPosition];
+export const getCurrentMetric = (state) => stateRoot(state)[stateRoot(state).currentMetricType];
 
-export const getCurrentQuantifier = (state) => stateRoot(state)[stateRoot(state).currentQuantifierPosition];
+export const getCurrentQuantifier = (state) => stateRoot(state)[stateRoot(state).currentQuantifierType];

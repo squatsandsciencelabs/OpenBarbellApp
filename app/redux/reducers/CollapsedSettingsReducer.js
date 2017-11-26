@@ -36,8 +36,9 @@ const defaultState = {
     quantifier4: LAST_REP_QUANTIFIER,
     metric5: DURATION_METRIC,
     quantifier5: LAST_REP_QUANTIFIER,
-    currentMetricRank: null,
-    currentQuantifierRank: null,
+    currentCollapsedMetricRank: null,
+    isEditingMetric: false,
+    isEditingQuantifier: false,
 };
 
 const CollapsedSettingsReducer = (state = defaultState, action) => {
@@ -45,23 +46,24 @@ const CollapsedSettingsReducer = (state = defaultState, action) => {
     switch (action.type) {
         case PRESENT_COLLAPSED_METRIC:
             return Object.assign({}, state, {
-                currentMetricRank: action.metricRank,
-            });
-        case DISMISS_COLLAPSED_METRIC:
-            return Object.assign({}, state, {
-                currentMetricRank: null,
+                currentCollapsedMetricRank: action.metricRank,
+                isEditingMetric: true,
             });
         case PRESENT_QUANTIFIER:
             return Object.assign({}, state, {
-                currentQuantifierRank: action.quantifierRank
+                currentCollapsedMetricRank: action.quantifierRank,
+                isEditingQuantifier: true,
             });
-        case DISMISS_QUANTIFIER: 
+        case DISMISS_COLLAPSED_METRIC:
+        case DISMISS_QUANTIFIER:
             return Object.assign({}, state, {
-                currentQuantifierRank: null,
+                currentCollapsedMetricRank: null,
+                isEditingMetric: false,
+                isEditingQuantifier: false,
             });
         case SAVE_COLLAPSED_METRIC:
             changes = {};
-            switch (state.currentMetricRank) {
+            switch (state.currentCollapsedMetricRank) {
                 case 1:
                     changes.metric1 = action.metric;
                     break;
@@ -83,7 +85,7 @@ const CollapsedSettingsReducer = (state = defaultState, action) => {
             return Object.assign({}, state, changes);
         case SAVE_QUANTIFIER:
             changes = {};
-            switch (state.currentQuantifierRank) {
+            switch (state.currentCollapsedMetricRank) {
                 case 1:
                     changes.quantifier1 = action.quantifier;
                     if (shouldResetMetric(action.quantifier, state.metric1)) {

@@ -8,8 +8,8 @@ import * as CollapsedSettingsSelectors from 'app/redux/selectors/CollapsedSettin
 
 export const saveDefaultQuantifierSetting = (quantifier) => (dispatch, getState) => {
     const state = getState();
+    
     const prevQuantifier = CollapsedSettingsSelectors.getCurrentQuantifier(state);
-
     logChangeQuantifierAnalytics(prevQuantifier, quantifier, state);
 
     dispatch(CollapsedSettingsActionCreators.saveQuantifier(quantifier));

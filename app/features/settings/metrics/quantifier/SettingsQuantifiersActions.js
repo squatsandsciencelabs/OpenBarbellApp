@@ -27,7 +27,7 @@ export const dismissQuantifierSetter = () => {
 
 const logChangeQuantifierAnalytics = (quantifier, quantifierType, state) => {
     Analytics.logEventWithAppState('change_quantifier', {
-        quantifier: quantiferType,
+        quantifier: quantifierType,
         to_quantifier: quantifier,
     }, state);
 };

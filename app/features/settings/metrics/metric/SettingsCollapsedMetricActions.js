@@ -1,33 +1,33 @@
 import {
-    DISMISS_COLLAPSED_METRICS
+    DISMISS_COLLAPSED_METRIC
 } from 'app/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
-import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsActionCreators';
+import * as CollapsedSettingsActionCreators from 'app/redux/shared_actions/CollapsedSettingsActionCreators';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
-import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
+import * as CollapsedSettingsSelectors from 'app/redux/selectors/CollapsedSettingsSelectors';
 
-export const saveDefaultCollapsedMetricSetting = (metric = 'avg velocity') => (dispatch, getState) => {
+export const saveDefaultCollapsedMetricSetting = (metric) => (dispatch, getState) => {
     const state = getState();
-    const metricType = SettingsSelectors.getCurrentMetricType(state);
+    const prevMetric = CollapsedSettingsSelectors.getCurrentMetric(state);
 
-    logChangeCollapsedMetricAnalytics(metric, metricType, state);
+    logChangeCollapsedMetricAnalytics(prevMetric, metric, state);
 
-    dispatch(SettingsActionCreators.saveCollapsedMetric(metric));
+    dispatch(CollapsedSettingsActionCreators.saveCollapsedMetric(metric));
 };
 
 export const dismissCollapsedMetricSetter = () => {
     Analytics.setCurrentScreen('settings');
     
     return {
-        type: DISMISS_COLLAPSED_METRICS,    
-    }
+        type: DISMISS_COLLAPSED_METRIC,    
+    };
 };
 
 // ANALYTICS
 
-const logChangeCollapsedMetricAnalytics = (metric, metricType, state) => {
+const logChangeCollapsedMetricAnalytics = (prevMetric, metric, state) => {
     Analytics.logEventWithAppState('change_collapsed_metric', {
-        metric: metricType,
+        from_metric: prevMetric,
         to_metric: metric,
     }, state);
 };

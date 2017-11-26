@@ -1,17 +1,15 @@
 import {
-    PRESENT_COLLAPSED_METRICS,
-    PRESENT_QUANTIFIERS
+    PRESENT_COLLAPSED_METRIC,
+    PRESENT_QUANTIFIER,
 } from 'app/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 
-export const presentCollapsedMetrics = (metricPosition, quantifier) => ({
-    metricPosition: metricPosition,
-    quantifier: quantifier,
-    type: PRESENT_COLLAPSED_METRICS
+export const presentCollapsedMetric = (rank) => ({
+    type: PRESENT_COLLAPSED_METRIC,
+    metricRank: rank,
 });
 
-export const presentQuantifiers = (metricPosition, quantifierPosition) => ({   
-    metricPosition: metricPosition,
-    quantifierPosition: quantifierPosition,
-	type: PRESENT_QUANTIFIERS
+export const presentQuantifier = (rank) => ({
+    type: PRESENT_QUANTIFIER,    
+    quantifierRank: rank,
 });

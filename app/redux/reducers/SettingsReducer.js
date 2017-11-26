@@ -10,12 +10,6 @@ import {
     UPDATE_SYNC_DATE,
     EXPORTING_CSV,
     UPDATE_HISTORY_FILTER,
-    PRESENT_COLLAPSED_METRICS,
-    PRESENT_QUANTIFIERS,
-    DISMISS_COLLAPSED_METRICS,
-    DISMISS_QUANTIFIERS,
-    SAVE_COLLAPSED_METRIC,
-    SAVE_QUANTIFIER
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -29,27 +23,9 @@ const defaultState = {
     showRemoved: false,
     isExportingCSV: false,
     lastExportCSVDate: null,
-    metric1: 'Velocity',
-    quantifier1: 'Last Rep',
-    metric2: 'PKV',
-    quantifier2: 'Last Rep',
-    metric3: 'PKH',
-    quantifier3: 'Last Rep',
-    metric4: 'ROM',
-    quantifier4: 'Last Rep',
-    metric5: 'Duration',
-    quantifier5: 'Last Rep',
-    isEditingMetric: false,
-    isEditingAvgMetric: false,
-    isEditingBestEverMetric: false,
-    isEditingQuantifier: false,
-    currentMetricType: null,
-    currentQuantifierType: null
 };
 
 const SettingsReducer = (state = defaultState, action) => {
-    let changes = null;
-
     switch (action.type) {
         case SAVE_DEFAULT_METRIC: 
             return Object.assign({}, state, {
@@ -63,44 +39,6 @@ const SettingsReducer = (state = defaultState, action) => {
             return Object.assign({}, state, {
                 isEditingDefaultMetric: false,
             });
-        case PRESENT_COLLAPSED_METRICS: 
-            changes = { currentMetricType: action.metricPosition }
-                if (action.quantifier === 'Average' || action.quantifier === 'Abs Loss') {
-                    changes.isEditingAvgMetric = true;
-                } else if (action.quantifier === 'Best Ever') {
-                    changes.isEditingBestEverMetric = true;
-                } else {
-                    changes.isEditingMetric = true;
-                }
-            return Object.assign({}, state, changes);
-        case DISMISS_COLLAPSED_METRICS: 
-            return Object.assign({}, state, {
-                isEditingMetric: false,
-                isEditingAvgMetric: false,
-                isEditingBestEverMetric: false,
-                currentMetricType: null
-            });
-        case PRESENT_QUANTIFIERS: 
-            return Object.assign({}, state, {
-                isEditingQuantifier: true,
-                currentQuantifierType: action.quantifierPosition,
-                currentMetricType: action.metricPosition
-            });
-        case DISMISS_QUANTIFIERS: 
-            return Object.assign({}, state, {
-                isEditingQuantifier: false,
-                currentMetricType: null,
-                currentQuantifierType: null
-            });
-        case SAVE_COLLAPSED_METRIC:
-            changes = {}
-            changes[action.metricType] = action.metric
-            return Object.assign({}, state, changes);
-        case SAVE_QUANTIFIER:
-            changes = {}
-            changes[action.quantifierType] = action.quantifier
-            changes[state.currentMetricType] = 'Velocity'
-            return Object.assign({}, state, changes);                                      
         case SAVE_END_SET_TIMER:           
             return Object.assign({}, state, {
                 endSetTimerDuration: action.endSetTimerDuration,

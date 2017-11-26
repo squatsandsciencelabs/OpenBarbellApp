@@ -1,33 +1,33 @@
 import {
-    DISMISS_QUANTIFIERS
+    DISMISS_QUANTIFIER
 } from 'app/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
-import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsActionCreators';
+import * as CollapsedSettingsActionCreators from 'app/redux/shared_actions/CollapsedSettingsActionCreators';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
-import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
+import * as CollapsedSettingsSelectors from 'app/redux/selectors/CollapsedSettingsSelectors';
 
-export const saveDefaultQuantifierSetting = (quantifier = 'Last Rep') => (dispatch, getState) => {
+export const saveDefaultQuantifierSetting = (quantifier) => (dispatch, getState) => {
     const state = getState();
-    const quantifierType = SettingsSelectors.getCurrentQuantifierType(state);
+    const prevQuantifier = CollapsedSettingsSelectors.getCurrentQuantifier(state);
 
-    logChangeQuantifierAnalytics(quantifier, quantifierType, state);
+    logChangeQuantifierAnalytics(prevQuantifier, quantifier, state);
 
-    dispatch(SettingsActionCreators.saveQuantifier(quantifier));
+    dispatch(CollapsedSettingsActionCreators.saveQuantifier(quantifier));
 };
 
 export const dismissQuantifierSetter = () => {
     Analytics.setCurrentScreen('settings');
     
     return {
-        type: DISMISS_QUANTIFIERS,    
-    }
+        type: DISMISS_QUANTIFIER,
+    };
 };
 
 // ANALYTICS
 
-const logChangeQuantifierAnalytics = (quantifier, quantifierType, state) => {
+const logChangeQuantifierAnalytics = (prevQuantifier, quantifier, state) => {
     Analytics.logEventWithAppState('change_quantifier', {
-        quantifier: quantifierType,
+        from_quantifier: prevQuantifier,
         to_quantifier: quantifier,
     }, state);
 };

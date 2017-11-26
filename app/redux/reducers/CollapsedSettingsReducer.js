@@ -148,6 +148,9 @@ const shouldResetQuantifier = (quantifier, metric) => {
 };
 
 const shouldResetMetric = (quantifier, metric) => {
+    if (metric === RPE_METRIC) {
+        return true;
+    }
     if ((quantifier === AVG_QUANTIFIER || quantifier === ABS_LOSS_QUANTIFIER) && metric === PKH_METRIC) {
         return true;
     }

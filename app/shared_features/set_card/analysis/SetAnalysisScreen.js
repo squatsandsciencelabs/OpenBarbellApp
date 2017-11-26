@@ -156,6 +156,9 @@ const metricDescription = (quantifier, metric) => {
     if (metric === RPE_METRIC) {
         return CollapsedMetrics.metricAbbreviation(metric);
     }
+    if (quantifier === EMPTY_QUANTIFIER || metric === EMPTY_METRIC) {
+        return '';
+    }
     return CollapsedMetrics.quantifierAbbreviation(quantifier) + " " + CollapsedMetrics.metricAbbreviation(metric);
 }
 

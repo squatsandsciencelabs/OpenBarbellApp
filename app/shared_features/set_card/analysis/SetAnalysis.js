@@ -20,7 +20,7 @@ class SetAnalysis extends Component {
             );
         } else {
             return (
-                <View style={{flex: 1, flexDirection: 'column'}}>
+                <View style={{flex: 1, flexDirection: 'column', marginTop: -2, justifyContent: 'center'}}>
                     <Text style={styles.text}>{value}</Text>
                     <Text style={styles.metric}>{description}</Text>
                 </View>  
@@ -30,7 +30,7 @@ class SetAnalysis extends Component {
 
     render() {
         return (
-            <View style={[styles.border, {flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'white'}]}>
+            <View style={[styles.border, styles.container, {flex:1, flexDirection: 'row'}]}>
                 {this._renderAnalysis(this.props.value1, this.props.description1, true)}
                 {this._renderAnalysis(this.props.value2, this.props.description2, false)}
                 {this._renderAnalysis(this.props.value3, this.props.description3, false)}
@@ -43,6 +43,13 @@ class SetAnalysis extends Component {
 }
 
 const styles = StyleSheet.create({
+    container: {
+        overflow: 'hidden',
+        backgroundColor:'white',
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 5,
+    },
     border: {
         borderColor: '#e0e0e0',
         borderLeftWidth: 1,
@@ -51,46 +58,39 @@ const styles = StyleSheet.create({
     text: {
         marginLeft: 5,
         color: '#4d4d4d',
-        fontSize: 18,
+        fontSize: 15,
         fontWeight: 'bold',
-        marginTop: 35,
+        textAlign: 'center',
     },
     metric: {
-        marginLeft: 5,
         color: '#4d4d4d',
-        maxWidth: 50,
-        fontSize: 13,
+        fontSize: 9,
         fontWeight: "500",
-        marginBottom: 5,
-        marginTop: 2
+        textAlign: 'center',
     },
     bigMetricBackground: {
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'column',
-        marginVertical: 15,
-        marginHorizontal: 5,
-        marginRight: 10,
         backgroundColor: '#fddddd',
-        width: 100,
-        height: 100,
-        borderRadius: 100 / 2,
-        borderColor: '#fddddd'
+        width: 80,
+        height: 80,
+        borderRadius: 80 / 2,
+        borderColor: '#fddddd',
+        overflow: 'hidden',        
     },
     bigMetricText: {
         textAlign: 'center',
         color: '#f0565a',        
-        fontSize: 25,
+        fontSize: 20,
         fontWeight: 'bold',
-        marginTop: 15,
     }, 
     bigMetric: {
-        fontWeight: 'bold',
         textAlign: 'center',
         color: '#f0565a',
-        fontSize: 13,
-        marginBottom: 15,
-        marginTop: 2        
+        fontSize: 10,
+        marginTop: 2,
+        fontWeight: 'bold',        
     }
 });
 

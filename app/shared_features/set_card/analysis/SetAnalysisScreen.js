@@ -159,7 +159,7 @@ const metricDescription = (quantifier, metric) => {
     if (quantifier === EMPTY_QUANTIFIER || metric === EMPTY_METRIC) {
         return '';
     }
-    return CollapsedMetrics.quantifierAbbreviation(quantifier) + "\n" + CollapsedMetrics.metricAbbreviation(metric) + " " + CollapsedMetrics.metricUnit(metric);
+    return CollapsedMetrics.quantifierAbbreviation(quantifier) + " " + CollapsedMetrics.metricAbbreviation(metric) + "\n" + CollapsedMetrics.metricUnit(metric);
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -175,8 +175,6 @@ const mapStateToProps = (state, ownProps) => {
     const quantifier4 = CollapsedSettingsSelectors.getQuantifier4(state);
     const metric5 = CollapsedSettingsSelectors.getMetric5(state);
     const quantifier5 = CollapsedSettingsSelectors.getQuantifier5(state);
-
-    console.tron.log("q1" + quantifier1 + " m1" + metric1 + " v1" + metricValue(state, set, quantifier1, metric1));
 
     // display values
     return {

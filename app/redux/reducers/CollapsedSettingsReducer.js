@@ -4,7 +4,17 @@ import {
     DISMISS_COLLAPSED_METRIC,
     DISMISS_QUANTIFIER,
     SAVE_COLLAPSED_METRIC,
+    SAVE_COLLAPSED_METRIC_1,
+    SAVE_COLLAPSED_METRIC_2,
+    SAVE_COLLAPSED_METRIC_3,
+    SAVE_COLLAPSED_METRIC_4,
+    SAVE_COLLAPSED_METRIC_5,
     SAVE_QUANTIFIER,
+    SAVE_QUANTIFIER_1,
+    SAVE_QUANTIFIER_2,
+    SAVE_QUANTIFIER_3,
+    SAVE_QUANTIFIER_4,
+    SAVE_QUANTIFIER_5,
 } from 'app/ActionTypes';
 
 import {
@@ -98,6 +108,41 @@ const CollapsedSettingsReducer = (state = defaultState, action) => {
                     return state;
             }
             return Object.assign({}, state, changes);
+        case SAVE_COLLAPSED_METRIC_1:
+            changes = {};
+            changes.metric1 = action.metric;
+            if (shouldResetQuantifier(state.quantifier1, action.metric)) {
+                changes.quantifier1 = EMPTY_QUANTIFIER;
+            }
+            return Object.assign({}, state, changes);
+        case SAVE_COLLAPSED_METRIC_2:
+            changes = {};
+            changes.metric2 = action.metric;
+            if (shouldResetQuantifier(state.quantifier2, action.metric)) {
+                changes.quantifier2 = EMPTY_QUANTIFIER;
+            }
+            return Object.assign({}, state, changes);
+        case SAVE_COLLAPSED_METRIC_3:
+            changes = {};
+            changes.metric3 = action.metric;
+            if (shouldResetQuantifier(state.quantifier3, action.metric)) {
+                changes.quantifier3 = EMPTY_QUANTIFIER;
+            }
+            return Object.assign({}, state, changes);
+        case SAVE_COLLAPSED_METRIC_4:
+            changes = {};
+            changes.metric4 = action.metric;
+            if (shouldResetQuantifier(state.quantifier4, action.metric)) {
+                changes.quantifier4 = EMPTY_QUANTIFIER;
+            }
+            return Object.assign({}, state, changes);
+        case SAVE_COLLAPSED_METRIC_5:
+            changes = {};
+            changes.metric5 = action.metric;
+            if (shouldResetQuantifier(state.quantifier5, action.metric)) {
+                changes.quantifier5 = EMPTY_QUANTIFIER;
+            }
+            return Object.assign({}, state, changes);
         case SAVE_QUANTIFIER:
             changes = {};
             switch (state.currentCollapsedMetricRank) {
@@ -133,6 +178,41 @@ const CollapsedSettingsReducer = (state = defaultState, action) => {
                     break;
                 default:
                     return state;
+            }
+            return Object.assign({}, state, changes);
+        case SAVE_QUANTIFIER_1:
+            changes = {};
+            changes.quantifier1 = action.quantifier;
+            if (shouldResetMetric(action.quantifier, state.metric1)) {
+                changes.metric1 = EMPTY_METRIC;
+            }
+            return Object.assign({}, state, changes);
+        case SAVE_QUANTIFIER_2:
+            changes = {};
+            changes.quantifier2 = action.quantifier;
+            if (shouldResetMetric(action.quantifier, state.metric2)) {
+                changes.metric2 = EMPTY_METRIC;
+            }
+            return Object.assign({}, state, changes);
+        case SAVE_QUANTIFIER_3:
+            changes = {};
+            changes.quantifier3 = action.quantifier;
+            if (shouldResetMetric(action.quantifier, state.metric3)) {
+                changes.metric3 = EMPTY_METRIC;
+            }
+            return Object.assign({}, state, changes);
+        case SAVE_QUANTIFIER_4:
+            changes = {};
+            changes.quantifier4 = action.quantifier;
+            if (shouldResetMetric(action.quantifier, state.metric4)) {
+                changes.metric4 = EMPTY_METRIC;
+            }
+            return Object.assign({}, state, changes);
+        case SAVE_QUANTIFIER_5:
+            changes = {};
+            changes.quantifier5 = action.quantifier;
+            if (shouldResetMetric(action.quantifier, state.metric5)) {
+                changes.metric5 = EMPTY_METRIC;
             }
             return Object.assign({}, state, changes);
         default:

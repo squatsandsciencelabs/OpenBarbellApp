@@ -96,11 +96,38 @@ const mapStateToProps = (state, ownProps) => {
     }
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({
-        selectValue: Actions.saveDefaultCollapsedMetricSetting,
-        closeModal: Actions.dismissCollapsedMetricSetter
-    }, dispatch);
+const mapDispatchToProps = (dispatch, ownProps) => {
+    if (Platform.OS === 'ios') {
+        return bindActionCreators({
+            selectValue: Actions.saveCollapsedMetricSetting,
+            closeModal: Actions.dismissCollapsedMetricSetter
+        }, dispatch);
+    } else {
+        switch(ownProps.rank) {
+            case 1:
+                return bindActionCreators({
+                    selectValue: Actions.saveCollapsedMetricSetting1,
+                }, dispatch);
+            case 2:
+                return bindActionCreators({
+                    selectValue: Actions.saveCollapsedMetricSetting2,
+                }, dispatch);
+            case 3:
+                return bindActionCreators({
+                    selectValue: Actions.saveCollapsedMetricSetting3,
+                }, dispatch);
+            case 4:
+                return bindActionCreators({
+                    selectValue: Actions.saveCollapsedMetricSetting4,
+                }, dispatch);
+            case 5:
+                return bindActionCreators({
+                    selectValue: Actions.saveCollapsedMetricSetting5,
+                }, dispatch);
+            default:
+                return {};
+        }
+    }
 };
 
 const SettingsEditMetricsScreen = connect(

@@ -31,6 +31,7 @@ const pickerItem = (quantifier) => ({
 
 const mapStateToProps = (state, ownProps) => {
     const items = [
+        pickerItem(EMPTY_QUANTIFIER),
         pickerItem(AVG_QUANTIFIER),
         pickerItem(ABS_LOSS_QUANTIFIER),
         pickerItem(FIRST_REP_QUANTIFIER),

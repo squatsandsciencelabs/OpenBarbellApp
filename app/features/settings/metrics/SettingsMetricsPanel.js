@@ -116,13 +116,16 @@ class SettingsMetricsPanel extends Component {
             return (
                 <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
                     <Text style={[{marginBottom: 20}, styles.titleText]}>Big Metrics</Text>
-                        <View style={{marginBottom: 15}}>
-                            {this._renderRow(1, this.props.quantifier1, this.props.metric1)}
-                            {this._renderRow(2, this.props.quantifier2, this.props.metric2)}
-                            {this._renderRow(3, this.props.quantifier3, this.props.metric3)}
-                            {this._renderRow(4, this.props.quantifier4, this.props.metric4)}
-                            {this._renderRow(5, this.props.quantifier5, this.props.metric5)}
-                        </View>
+                    <View style={{marginBottom: 15}}>
+                        {this._renderRow(1, this.props.quantifier1, this.props.metric1)}
+                        {this._renderRow(2, this.props.quantifier2, this.props.metric2)}
+                        {this._renderRow(3, this.props.quantifier3, this.props.metric3)}
+                        {this._renderRow(4, this.props.quantifier4, this.props.metric4)}
+                        {this._renderRow(5, this.props.quantifier5, this.props.metric5)}
+                    </View>
+                    <TouchableOpacity style={{alignItems: 'center'}} onPress={ () => this.props.tappedBigMetricsInfo() }>
+                        <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >What are these metrics?</Text>
+                    </TouchableOpacity>
                     <SettingsEditMetricsScreen />
                     <SettingsEditQuantifiersScreen />
                 </View>

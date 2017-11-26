@@ -273,6 +273,7 @@ const styles = StyleSheet.create({
         borderColor: '#e0e0e0',
         borderLeftWidth: 1,
         borderRightWidth: 1,
+        borderBottomWidth: 1,
     },
 });
 

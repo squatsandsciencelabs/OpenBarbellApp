@@ -7,8 +7,9 @@ import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
 
-export const tapCollapse = (setID) => (dispatch, getState) => {
-    // TODO: analytics
+export const collapseCard = (setID) => (dispatch, getState) => {
+    const state = getState();
+    logCollapsedCardAnalytics(setID, state);
 
     dispatch({
         type: COLLAPSE_HISTORY_SET,
@@ -31,5 +32,11 @@ export const presentExercise = (setID, exercise, bias) => (dispatch, getState) =
 const logEditExerciseNameAnalytics = (setID, exercise, state) => {
     Analytics.logEventWithAppState('edit_exercise_name', {
         is_working_set: false
+    }, state);
+};
+
+const logCollapsedCardAnalytics = (setID, state) => {
+    Analytics.logEventWithAppState('collapsed_card', {
+        set_id: setID
     }, state);
 };

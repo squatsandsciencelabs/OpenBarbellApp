@@ -8,7 +8,7 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         saveSet: Actions.saveSet,
         tappedExercise: Actions.presentExercise,
-        tappedCollapse: Actions.tapCollapse,
+        tappedCollapse: Actions.collapseCard,
     }, dispatch);
 };
 

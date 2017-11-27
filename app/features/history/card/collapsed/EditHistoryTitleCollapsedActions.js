@@ -5,7 +5,8 @@ import {
 import * as Analytics from 'app/services/Analytics';
 
 export const expandCard = (setID) => (dispatch, getState) => {
-    // TODO: analytics
+    const state = getState();
+    logExpandCardAnalytics(setID, state);
 
     dispatch({
         type: EXPAND_HISTORY_SET,
@@ -29,5 +30,11 @@ const logWatchVideoAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('watch_video', {
         is_working_set: false,
         from_collapsed_card: true,
+    }, state);
+};
+
+const logExpandCardAnalytics = (setID, state) => {
+    Analytics.logEventWithAppState('expand_card', {
+        set_id: setID
     }, state);
 };

@@ -67,6 +67,7 @@ class HistoryList extends Component {
                                     setID={item.setID}
                                     exercise={item.exercise}
                                     removed={item.removed}
+                                    setNumber={item.setNumber}
                                     isCollapsable={true} />
                             </View>);
                 } else {
@@ -75,6 +76,7 @@ class HistoryList extends Component {
                                     setID={item.setID}
                                     exercise={item.exercise}
                                     removed={item.removed}
+                                    setNumber={item.setNumber}
                                     videoFileURL={item.videoFileURL} />
                             </View>);
                 }

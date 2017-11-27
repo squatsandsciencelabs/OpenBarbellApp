@@ -84,6 +84,7 @@ class WorkoutList extends Component {
                                     exercise={item.exercise}
                                     bias={item.bias}
                                     removed={item.removed}
+                                    setNumber={item.setNumber}
                                     isCollapsable={!item.isWorkingSet} />
                             </View>);
                 } else {
@@ -92,6 +93,7 @@ class WorkoutList extends Component {
                                     setID={item.setID}
                                     exercise={item.exercise}
                                     removed={item.removed}
+                                    setNumber={item.setNumber}
                                     videoFileURL={item.videoFileURL} />
                             </View>);
                 }

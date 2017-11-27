@@ -67,7 +67,6 @@ class PickerModal extends Component {
     }
 
     _renderItems() {
-        console.tron.log("render items");
         var count = 0;
         return this.props.items.map(function (item) {
             return (<Picker.Item key={count++} label={item.label} value={item.value} />);

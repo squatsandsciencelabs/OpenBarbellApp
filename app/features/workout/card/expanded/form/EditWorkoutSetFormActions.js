@@ -183,6 +183,7 @@ const logWatchVideoAnalytics = (setID, state) => {
     const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
     
     Analytics.logEventWithAppState('watch_video', {
-        is_working_set: is_working_set
+        is_working_set: is_working_set,
+        from_collapsed_card: false,
     }, state);
 };

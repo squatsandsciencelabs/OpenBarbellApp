@@ -22,7 +22,15 @@ export const presentQuantifier = (rank) => ({
 export const presentBigMetricsInfo = () => (dispatch, getState) => {
     Linking.openURL("http://www.squatsandscience.com/metrics/");    
 
+    const state = getState();
+    logMetricTipsAnalytics(state);
+
     dispatch({
         type: PRESENT_BIG_METRIC_INFO
     });
+};
+
+const logMetricTipsAnalytics = (state) => {
+    Analytics.logEventWithAppState('what_are_metric_tips', {
+    }, state);
 };

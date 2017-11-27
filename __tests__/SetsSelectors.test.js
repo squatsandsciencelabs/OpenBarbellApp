@@ -951,7 +951,7 @@ describe('SetsSelectors', () => {
                         reps: [{
                             isValid: true,
                             removed: false,
-                            data: [-3456, 37, 1.833368, 200, 20, 10, 1, 4]
+                            data: [-3456, 37, 1.833368, 200, 19, 10, 1, 4]
                         }, {
                             isValid: false,
                             removed: false,
@@ -967,7 +967,7 @@ describe('SetsSelectors', () => {
                         }, {
                             isValid: true,
                             removed: false,
-                            data: [-3456, 37, 1.533368, 400, 40, 30, 1, 20]
+                            data: [-3456, 37, 0.233368, 400, 40, 30, 1, 20]
                         }]
                     },
                     b: {
@@ -977,7 +977,7 @@ describe('SetsSelectors', () => {
                         reps: [{
                             isValid: true,
                             removed: false,
-                            data: [-3456, 37, 1.933368, 388, 38, 28, 1, 18]
+                            data: [-3456, 37, 1.943368, 388, 38, 28, 1, 18]
                         }],
                     },
                     c: {
@@ -1098,16 +1098,16 @@ describe('SetsSelectors', () => {
             }],
         };
 
-        describe('getBestAvgVelocityEver', () => {
+        describe('getFastestAvgVelocityEver', () => {
 
-            test('best avg vel found in history', () => {
-                const result = sut.getBestAvgVelocityEver(state, setAnswerHistory);
+            test('fastest avg vel found in history', () => {
+                const result = sut.getFastestAvgVelocityEver(state, setAnswerHistory);
         
                 expect(result).toBe(2.43);
             });
 
-            test('best avg vel found in workout', () => {
-                const result = sut.getBestAvgVelocityEver(state, setAnswerWorkout);
+            test('fastest avg vel found in workout', () => {
+                const result = sut.getFastestAvgVelocityEver(state, setAnswerWorkout);
         
                 expect(result).toBe(3.93);
             });
@@ -1120,7 +1120,7 @@ describe('SetsSelectors', () => {
                     }
                 };
         
-                const result = sut.getBestAvgVelocityEver(state, setAnswerHistory);
+                const result = sut.getFastestAvgVelocityEver(state, setAnswerHistory);
         
                 expect(result).toBe(null);
             });
@@ -1133,23 +1133,65 @@ describe('SetsSelectors', () => {
                     reps: [],
                 };
 
-                const result = sut.getBestAvgVelocityEver(state, set);
+                const result = sut.getFastestAvgVelocityEver(state, set);
+        
+                expect(result).toBe(null);
+            });
+
+        });
+
+        describe('getSlowestAvgVelocityEver', () => {
+            
+            test('slowest avg vel found in history', () => {
+                const result = sut.getSlowestAvgVelocityEver(state, setAnswerHistory);
+        
+                expect(result).toBe(0.23);
+            });
+
+            test('slowest avg vel found in workout', () => {
+                const result = sut.getSlowestAvgVelocityEver(state, setAnswerWorkout);
+        
+                expect(result).toBe(1.93);
+            });
+        
+            test('return null when no history or workout data', () => {
+                const state = {
+                    sets: {
+                        workoutData: [],
+                        historyData: {}
+                    }
+                };
+        
+                const result = sut.getSlowestAvgVelocityEver(state, setAnswerHistory);
+        
+                expect(result).toBe(null);
+            });
+
+            test('null when set is not filled out', () => {
+                const set = {
+                    exercise: null,
+                    weight: null,
+                    metric: 'lbs',
+                    reps: [],
+                };
+
+                const result = sut.getSlowestAvgVelocityEver(state, set);
         
                 expect(result).toBe(null);
             });
 
         });
         
-        describe('getBestPKVEver', () => {
+        describe('getFastestPKVEver', () => {
 
-            test('best pkv found in history', () => {
-                const result = sut.getBestPKVEver(state, setAnswerHistory);
+            test('fastest pkv found in history', () => {
+                const result = sut.getFastestPKVEver(state, setAnswerHistory);
         
                 expect(result).toBe(48);
             });
 
-            test('best pkv found in workout', () => {
-                const result = sut.getBestPKVEver(state, setAnswerWorkout);
+            test('fastest pkv found in workout', () => {
+                const result = sut.getFastestPKVEver(state, setAnswerWorkout);
         
                 expect(result).toBe(34);
             });
@@ -1162,7 +1204,7 @@ describe('SetsSelectors', () => {
                     }
                 };
         
-                const result = sut.getBestPKVEver(state, setAnswerHistory);
+                const result = sut.getFastestPKVEver(state, setAnswerHistory);
         
                 expect(result).toBe(null);
             });
@@ -1175,23 +1217,23 @@ describe('SetsSelectors', () => {
                     reps: [],
                 };
 
-                const result = sut.getBestPKVEver(state, set);
+                const result = sut.getFastestPKVEver(state, set);
         
                 expect(result).toBe(null);
             });
 
         });
-        
-        describe('getBestDurationEver', () => {
 
-            test('best duration found in history', () => {
-                const result = sut.getBestDurationEver(state, setAnswerHistory);
+        describe('getSlowestPKVEver', () => {
+            
+            test('slowest pkv found in history', () => {
+                const result = sut.getSlowestPKVEver(state, setAnswerHistory);
         
-                expect(result).toBe(4);
+                expect(result).toBe(19);
             });
 
-            test('best duration found in workout', () => {
-                const result = sut.getBestDurationEver(state, setAnswerWorkout);
+            test('slowest pkv found in workout', () => {
+                const result = sut.getSlowestPKVEver(state, setAnswerWorkout);
         
                 expect(result).toBe(18);
             });
@@ -1204,7 +1246,7 @@ describe('SetsSelectors', () => {
                     }
                 };
         
-                const result = sut.getBestDurationEver(state, setAnswerHistory);
+                const result = sut.getSlowestPKVEver(state, setAnswerHistory);
         
                 expect(result).toBe(null);
             });
@@ -1217,7 +1259,91 @@ describe('SetsSelectors', () => {
                     reps: [],
                 };
 
-                const result = sut.getBestDurationEver(state, set);
+                const result = sut.getSlowestPKVEver(state, set);
+        
+                expect(result).toBe(null);
+            });
+
+        });
+        
+        describe('getFastestDurationEver', () => {
+
+            test('fastest duration found in history', () => {
+                const result = sut.getFastestDurationEver(state, setAnswerHistory);
+        
+                expect(result).toBe(4);
+            });
+
+            test('fastest duration found in workout', () => {
+                const result = sut.getFastestDurationEver(state, setAnswerWorkout);
+        
+                expect(result).toBe(18);
+            });
+        
+            test('return null when no history or workout data', () => {
+                const state = {
+                    sets: {
+                        workoutData: [],
+                        historyData: {}
+                    }
+                };
+        
+                const result = sut.getFastestDurationEver(state, setAnswerHistory);
+        
+                expect(result).toBe(null);
+            });
+
+            test('null when set is not filled out', () => {
+                const set = {
+                    exercise: null,
+                    weight: null,
+                    metric: 'lbs',
+                    reps: [],
+                };
+
+                const result = sut.getFastestDurationEver(state, set);
+        
+                expect(result).toBe(null);
+            });
+
+        });
+
+        describe('getSlowestDurationEver', () => {
+            
+            test('slowest duration found in history', () => {
+                const result = sut.getSlowestDurationEver(state, setAnswerHistory);
+        
+                expect(result).toBe(20);
+            });
+
+            test('slowest duration found in workout', () => {
+                const result = sut.getSlowestDurationEver(state, setAnswerWorkout);
+        
+                expect(result).toBe(36);
+            });
+        
+            test('return null when no history or workout data', () => {
+                const state = {
+                    sets: {
+                        workoutData: [],
+                        historyData: {}
+                    }
+                };
+        
+                const result = sut.getSlowestDurationEver(state, setAnswerHistory);
+        
+                expect(result).toBe(null);
+            });
+
+            test('null when set is not filled out', () => {
+                const set = {
+                    exercise: null,
+                    weight: null,
+                    metric: 'lbs',
+                    reps: [],
+                };
+
+                const result = sut.getSlowestDurationEver(state, set);
         
                 expect(result).toBe(null);
             });

@@ -16,21 +16,24 @@ class SetAnalysis extends Component {
             return (
                 <View style={styles.bigMetricBackground}>
                     <Text style={styles.bigMetricText}>{value}</Text>
-                    <Text style={styles.bigMetric}>{description}</Text>
                     <Text style={styles.bigMetric}>{unit}</Text>
+                    <Text style={styles.bigMetric}>{description}</Text>
                 </View>
             );
         } else {
+            if (unit !== null && unit !== '') {
+                var text = unit + "\n" + description;
+            } else {
+                var text = description;
+            }
             return (
                 <View style={{flex: 1, marginTop: -2, justifyContent: 'center'}}>
                     <Text style={styles.text}>
                         {value}
-                        <Text style={styles.unit}> {unit}</Text>
-                        
                     </Text>
-                    <Text style={styles.metric}>{description}</Text>
+                    <Text style={styles.metric}>{text}</Text>
                 </View>  
-            );              
+            );
         }
     }
 
@@ -69,23 +72,31 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#4d4d4d',
-        fontSize: 15,
+        fontSize: 18,
         fontWeight: 'bold',
+        marginLeft: 5,
+        marginRight: 5,
+        marginTop: 5,
         textAlign: 'center',
+        paddingTop: 5,
+        paddingBottom: 5,
     },
     unit: {
         color: 'darkgray',
         fontSize: 10,
         fontWeight: "500",
-        textAlign: 'center',
-        marginTop: 8,
+        margin: 5,
     },
     metric: {
         color: '#4d4d4d',
         fontSize: 10,
         fontWeight: "500",
+        paddingTop: 3,
+        paddingBottom: 5,
+        marginTop: -8,
+        marginLeft: 5,
+        marginRight: 5,
         textAlign: 'center',
-        marginTop: 1,
     },
     bigMetricBackground: {
         alignItems: 'center',

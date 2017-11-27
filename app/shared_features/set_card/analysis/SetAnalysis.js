@@ -69,12 +69,12 @@ const styles = StyleSheet.create({
     },
     text: {
         color: '#4d4d4d',
-        fontSize: 18,
+        fontSize: 15,
         fontWeight: 'bold',
         textAlign: 'center',
     },
     unit: {
-        color: '#4d4d4d',
+        color: 'darkgray',
         fontSize: 10,
         fontWeight: "500",
         textAlign: 'center',

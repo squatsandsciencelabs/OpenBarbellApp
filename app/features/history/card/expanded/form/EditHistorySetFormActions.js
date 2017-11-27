@@ -163,6 +163,7 @@ const logVideoLogRecorderAnalytics = (setID, state) => {
 
 const logWatchVideoAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('watch_video', {
-        is_working_set: false
+        is_working_set: false,
+        from_collapsed_card: false,
     }, state);
 };

@@ -12,7 +12,8 @@ import {
     PKV_METRIC,
     EMPTY_QUANTIFIER,
     AVG_QUANTIFIER,
-    BEST_EVER_QUANTIFIER,
+    FASTEST_EVER_QUANTIFIER,
+    SLOWEST_EVER_QUANTIFIER,
     ABS_LOSS_QUANTIFIER,
 } from 'app/constants/CollapsedMetricTypes';
 
@@ -32,7 +33,8 @@ const pickerItem = (metric) => ({
 // Once the bug is resolved, can redo the order into something that makes more sense
 const generateItems = (quantifier) => {
     switch (quantifier) {
-        case BEST_EVER_QUANTIFIER:
+        case FASTEST_EVER_QUANTIFIER:
+        case SLOWEST_EVER_QUANTIFIER:
             return [
                 pickerItem(EMPTY_METRIC),
                 pickerItem(PKV_METRIC),

@@ -343,17 +343,28 @@ const isSetComparable = (set) => {
     return true;
 };
 
-export const getBestAvgVelocityEver = (state, set) => {
+export const getFastestAvgVelocityEver = (state, set) => {
     return getBestEverOfMetric(state, set, CollapsedMetrics.getAvgVelocities);
 };
 
-export const getBestPKVEver = (state, set) => {
+export const getFastestPKVEver = (state, set) => {
     return getBestEverOfMetric(state, set, CollapsedMetrics.getPKVs);
 };
 
-export const getBestDurationEver = (state, set) => {
-    const bestEver = getBestEverOfMetric(state, set, CollapsedMetrics.getDurations, false);
-    return bestEver;
+export const getFastestDurationEver = (state, set) => {
+    return getBestEverOfMetric(state, set, CollapsedMetrics.getDurations, false);
+};
+
+export const getSlowestAvgVelocityEver = (state, set) => {
+    return getBestEverOfMetric(state, set, CollapsedMetrics.getAvgVelocities, false);
+};
+
+export const getSlowestPKVEver = (state, set) => {
+    return getBestEverOfMetric(state, set, CollapsedMetrics.getPKVs, false);
+};
+
+export const getSlowestDurationEver = (state, set) => {
+    return getBestEverOfMetric(state, set, CollapsedMetrics.getDurations);
 };
 
 export const getRevision = (state) => stateRoot(state).revision;

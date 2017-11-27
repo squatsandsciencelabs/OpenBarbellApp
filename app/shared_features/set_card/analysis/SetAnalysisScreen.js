@@ -16,7 +16,8 @@ import {
     MAX_QUANTIFIER,
     AVG_QUANTIFIER,
     ABS_LOSS_QUANTIFIER,
-    BEST_EVER_QUANTIFIER,
+    FASTEST_EVER_QUANTIFIER,
+    SLOWEST_EVER_QUANTIFIER,
 } from 'app/constants/CollapsedMetricTypes';
 import SetAnalysis from './SetAnalysis';
 import * as CollapsedSettingsSelectors from 'app/redux/selectors/CollapsedSettingsSelectors';
@@ -48,8 +49,11 @@ const metricValue = (state, set, quantifier, metric) => {
                 case ABS_LOSS_QUANTIFIER:
                     returnValue = CollapsedMetrics.getAbsLossOfAvgVelocities(set);
                     break;
-                case BEST_EVER_QUANTIFIER:
-                    returnValue = SetsSelectors.getBestAvgVelocityEver(state, set);
+                case FASTEST_EVER_QUANTIFIER:
+                    returnValue = SetsSelectors.getFastestAvgVelocityEver(state, set);
+                    break;
+                case SLOWEST_EVER_QUANTIFIER:
+                    returnValue = SetsSelectors.getSlowestAvgVelocityEver(state, set);
                     break;
             }
             break;
@@ -73,8 +77,11 @@ const metricValue = (state, set, quantifier, metric) => {
                 case ABS_LOSS_QUANTIFIER:
                     returnValue = CollapsedMetrics.getAbsLossOfDurations(set);
                     break;
-                case BEST_EVER_QUANTIFIER:
-                    returnValue = SetsSelectors.getBestDurationEver(state, set);
+                case FASTEST_EVER_QUANTIFIER:
+                    returnValue = SetsSelectors.getFastestDurationEver(state, set);
+                    break;
+                case SLOWEST_EVER_QUANTIFIER:
+                    returnValue = SetsSelectors.getSlowestDurationEver(state, set);
                     break;
             }
             if (returnValue !== null) {
@@ -139,8 +146,11 @@ const metricValue = (state, set, quantifier, metric) => {
                 case ABS_LOSS_QUANTIFIER:
                     returnValue = CollapsedMetrics.getAbsLossOfPKVs(set);
                     break;
-                case BEST_EVER_QUANTIFIER:
-                    returnValue = SetsSelectors.getBestPKVEver(state, set);
+                case FASTEST_EVER_QUANTIFIER:
+                    returnValue = SetsSelectors.getFastestPKVEver(state, set);
+                    break;
+                case SLOWEST_EVER_QUANTIFIER:
+                    returnValue = SetsSelectors.getSlowestPKVEver(state, set);
                     break;
             }
             break;

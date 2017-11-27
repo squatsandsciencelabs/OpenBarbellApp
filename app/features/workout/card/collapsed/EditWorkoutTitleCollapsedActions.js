@@ -6,7 +6,8 @@ import * as Analytics from 'app/services/Analytics';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
 export const expandCard = (setID) => (dispatch, getState) => {
-    // TODO: analytics
+    const state = getState();
+    logExpandCardAnalytics(setID, state);
 
     dispatch({
         type: EXPAND_WORKOUT_SET,
@@ -32,5 +33,11 @@ const logWatchVideoAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('watch_video', {
         is_working_set: is_working_set,
         from_collapsed_card: true,
+    }, state);
+};
+
+const logExpandCardAnalytics = (setID, state) => {
+    Analytics.logEventWithAppState('expand_card', {
+        set_id: setID
     }, state);
 };

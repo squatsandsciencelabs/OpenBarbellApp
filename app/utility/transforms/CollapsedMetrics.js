@@ -14,7 +14,8 @@ import {
     MAX_QUANTIFIER,
     AVG_QUANTIFIER,
     ABS_LOSS_QUANTIFIER,
-    BEST_EVER_QUANTIFIER,
+    FASTEST_EVER_QUANTIFIER,
+    SLOWEST_EVER_QUANTIFIER,
 } from 'app/constants/CollapsedMetricTypes';
 
 // unique metrics
@@ -340,8 +341,10 @@ export const quantifierAbbreviation = (quantifier) => {
             return 'AVG';
         case ABS_LOSS_QUANTIFIER:
             return 'ABSL';
-        case BEST_EVER_QUANTIFIER:
-            return 'BEST';
+        case FASTEST_EVER_QUANTIFIER:
+            return 'FASTEST';
+        case SLOWEST_EVER_QUANTIFIER:
+            return 'SLOWEST';
         default:
             return null;
     };
@@ -363,8 +366,10 @@ export const quantifierString = (quantifier) => {
             return 'Average';
         case ABS_LOSS_QUANTIFIER:
             return 'Absolute Loss';
-        case BEST_EVER_QUANTIFIER:
-            return 'Best Ever';
+        case FASTEST_EVER_QUANTIFIER:
+            return 'Fastest Ever';
+        case SLOWEST_EVER_QUANTIFIER:
+            return 'Slowest Ever';
         default:
             return null;
     };

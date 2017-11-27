@@ -32,7 +32,8 @@ import {
     MAX_QUANTIFIER,
     AVG_QUANTIFIER,
     ABS_LOSS_QUANTIFIER,
-    BEST_EVER_QUANTIFIER,
+    FASTEST_EVER_QUANTIFIER,
+    SLOWEST_EVER_QUANTIFIER,
 } from 'app/constants/CollapsedMetricTypes';
 
 const defaultState = {
@@ -234,7 +235,7 @@ const shouldResetMetric = (quantifier, metric) => {
     if ((quantifier === AVG_QUANTIFIER || quantifier === ABS_LOSS_QUANTIFIER) && metric === PKH_METRIC) {
         return true;
     }
-    if (quantifier === BEST_EVER_QUANTIFIER && (metric === PKH_METRIC || metric === ROM_METRIC)) {
+    if ((quantifier === FASTEST_EVER_QUANTIFIER || quantifier === SLOWEST_EVER_QUANTIFIER) && (metric === PKH_METRIC || metric === ROM_METRIC)) {
         return true;
     }
     return false;

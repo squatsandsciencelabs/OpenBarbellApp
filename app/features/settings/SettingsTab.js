@@ -20,9 +20,9 @@ class SettingsTab extends Component {
             <ScrollView style={{flex: 1}}>
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent:'flex-start' }}>
                     <SettingsDeviceScreen />
+                    <SettingsAccountScreen />
                     <SettingsMetricsScreen />
                     <SettingsApplicationScreen />
-                    <SettingsAccountScreen />
                     <SettingsFeedbackScreen />
                 </View>
             </ScrollView>

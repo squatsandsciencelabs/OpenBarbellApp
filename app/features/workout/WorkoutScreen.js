@@ -84,7 +84,7 @@ const createViewModels = (state, sets) => {
         } else if (!set.removed && set.reps.length > 0) { // ignore removed sets in rest calculations
             // add footer if valid
             if (lastSetEndTime !== null) {
-                array.push(createFooterVM(set, lastSetEndTime));
+                array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
             } else {
                 array.push(createBottomBorder(set));
             }
@@ -240,12 +240,13 @@ const createWorkingSetFooterVM = (set, restStartTime) => {
     return footerVM;
 };
 
-const createFooterVM = (set, lastSetEndTime) => {
+const createFooterVM = (set, lastSetEndTime, isCollapsed) => {
     let restInMS = new Date(SetTimeCalculator.startTime(set)) - new Date(lastSetEndTime);
     let footerVM = {
         type: "footer",
         rest: DateUtils.restInSentenceFormat(restInMS),
-        key: set.setID + 'rest'
+        key: set.setID + 'rest',
+        isCollapsed: isCollapsed,
     };
     return footerVM;
 };

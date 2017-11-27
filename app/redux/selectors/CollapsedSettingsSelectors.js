@@ -1,5 +1,7 @@
 const stateRoot = (state) => state.collapsedSettings;
 
+export const getCurrentCollapsedMetricRank = (state) => stateRoot(state).currentCollapsedMetricRank;
+
 export const getMetric1 = (state) => stateRoot(state).metric1;
 
 export const getMetric2 = (state) => stateRoot(state).metric2;

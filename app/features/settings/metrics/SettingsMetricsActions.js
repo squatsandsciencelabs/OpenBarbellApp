@@ -43,6 +43,5 @@ export const presentBigMetricsInfo = () => (dispatch, getState) => {
 };
 
 const logMetricTipsAnalytics = (state) => {
-    Analytics.logEventWithAppState('what_are_metric_tips', {
-    }, state);
+    Analytics.logEventWithAppState('what_are_metric_tips', {}, state);
 };

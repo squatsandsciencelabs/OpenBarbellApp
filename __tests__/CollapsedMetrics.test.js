@@ -847,4 +847,41 @@ describe('collapsed metrics', () => {
 
     });
 
+    describe('peak-end', () => {
+        
+        test('peak-end returns null when empty', () => {
+            const set = {
+                reps: [],
+            };
+
+            const result = sut.getPeakEnd(set);
+
+            expect(result).toBe(null);
+        });
+        
+        test('peak-end averages slowest and last', () => {
+            const result = sut.getPeakEnd(set);
+
+            expect(result).toBe(1.06);
+        });
+    });
+
+    describe('set loss', () => {
+
+        test('set loss returns null when empty', () => {
+            const set = {
+                reps: [],
+            };
+
+            const result = sut.setLoss(set);
+
+            expect(result).toBe(null);
+        });
+
+        test('set loss calculates loss', () => {
+            const result = sut.setLoss(set);
+
+            expect(result).toBe(-0.75);
+        });
+    });
 });

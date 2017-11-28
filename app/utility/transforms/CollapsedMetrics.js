@@ -36,7 +36,7 @@ const getMetrics = (set, metricFunction) => {
 
 export const getRPE = (set) => {
     return set.rpe;
-}
+};
 
 export const getAvgVelocities = (set) => {
     return getMetrics(set, RepDataMap.averageVelocity);
@@ -260,6 +260,32 @@ export const getMaxROM = (set) => {
 export const getMaxDuration = (set) => {
     const durations = getDurations(set);
     return getMaxMetrics(durations);
+};
+
+// Peak-End
+
+export const getPeakEnd = (set) => {
+    const min = getMinAvgVelocity(set);
+    const velocities = getAvgVelocities(set);
+    const lastRepVelocity = velocities[velocities.length - 1];
+    
+    if (velocities.length > 0) {
+        return Number(((lastRepVelocity + min) / 2).toFixed(2));
+    } else {
+        return null;
+    }
+};
+
+// Set Loss
+
+export const setLoss = (set) => {
+    const velocities = getAvgVelocities(set);
+
+    if (velocities.length > 0) {
+        return velocities[velocities.length - 1] - velocities[0];
+    } else {
+        return null;
+    }
 };
 
 // To String

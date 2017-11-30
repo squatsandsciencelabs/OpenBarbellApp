@@ -24,9 +24,9 @@ const createDefaultState = () => ({
         'front squat' : {suggestion: 'Front Squat', seed: 10},
     },
     tagsModel: {
-        'bug': {suggestion: 'Bug', seed: 10},
         'belt' : {suggestion: 'Belt', seed: 10},
         'high bar' : {suggestion: 'High Bar', seed: 10},
+        'bug': {suggestion: 'Bug', seed: -1},
     }
 });
 

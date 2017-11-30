@@ -19,15 +19,15 @@ class VideoButton extends Component {
         this.props.tappedWatch(this.props.setID, this.props.videoFileURL);
     }
 
-    _checkPermission(tapFunction, setID) {
-        Permissions.check('camera').then(response => {
+    _checkCamPermission(tapFunction, setID) {
+        Permissions.checkMultiple(['camera', 'microphone']).then(response => {
             // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
-            if (response === 'authorized') {
+            if (response.camera === 'authorized' && response.microphone === 'authorized') {
                 return tapFunction(setID);
             } else {
                 Alert.alert(
-                    'Enable Camera Access',
-                    'Please allow camera access',
+                    'Enable Camera & Mic Access',
+                    'Please allow camera & microphone access',
                     [
                     {text: 'OK'},
                     ],
@@ -37,11 +37,31 @@ class VideoButton extends Component {
         });
     };
 
+    _tapWatchPhotoPermission() {
+        Permissions.check('photo').then(response => {
+            // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+            if (response === 'authorized') {
+                return this._tappedWatchVideo()
+            } else {
+                Alert.alert(
+                    'Enable Photo Access',
+                    'Please allow photo access',
+                    [
+                    {text: 'OK'},
+                    ],
+                    { cancelable: false }
+                );
+            };
+        });
+    }
+
+
+
     render() {
         switch (this.props.mode) {
             case 'record':
                 return (
-                    <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._checkPermission(this.props.tappedRecord, this.props.setID)}>
+                    <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._checkCamPermission(this.props.tappedRecord, this.props.setID)}>
                         <View style={[{flex:1, flexDirection:'column'}, styles.button, styles.activeButton]}>
                             <Icon name="camera" size={20} color='rgba(47, 128, 227, 1)' style={{marginTop: 10, marginBottom: 5}} />
                             <Text style={styles.activeText}>Record</Text>
@@ -53,7 +73,7 @@ class VideoButton extends Component {
                 return (
                     <View style={{paddingLeft: 5}}>
                         <View style={[{flex:1}, styles.button, styles.grayButton]}>
-                            <TouchableHighlight onPress={()=> this._checkPermission(this.props.tappedCommentary, this.props.setID)} underlayColor='#e0e0e0'>
+                            <TouchableHighlight onPress={()=> this._checkCamPermission(this.props.tappedCommentary, this.props.setID)} underlayColor='#e0e0e0'>
                                 <View style={[styles.buttonContent, {flex:1, flexDirection:'column'}]}>
                                     <Icon name="camera" size={20} color='gray' style={{marginTop: 10, marginBottom: 5}} />
                                     <Text style={styles.grayText}>Add</Text>
@@ -68,7 +88,7 @@ class VideoButton extends Component {
                 // probably requires RCTCameraRoll
                 if (Platform.OS === 'ios') {
                     return (
-                        <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo() }>
+                        <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tapWatchPhotoPermission() }>
                             <View style={[{flex: 1}, styles.button, styles.blackButton]}>
                                 <Video
                                     ref={(ref) => {
@@ -84,7 +104,7 @@ class VideoButton extends Component {
                     );
                 } else {
                     return (
-                        <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo() }>
+                        <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tapWatchPhotoPermission() }>
                             <View style={[styles.button, styles.blackButton]}>
                                 <Image
                                     style={[{flex:1, flexDirection:'column'}, styles.imagePreview]}

@@ -1151,7 +1151,7 @@ describe('SetsSelectors', () => {
             test('slowest avg vel found in workout', () => {
                 const result = sut.getSlowestAvgVelocityEver(state, setAnswerWorkout);
         
-                expect(result).toBe(1.93);
+                expect(result).toBe(1.3);
             });
         
             test('return null when no history or workout data', () => {
@@ -1235,7 +1235,7 @@ describe('SetsSelectors', () => {
             test('slowest pkv found in workout', () => {
                 const result = sut.getSlowestPKVEver(state, setAnswerWorkout);
         
-                expect(result).toBe(18);
+                expect(result).toBe(10);
             });
         
             test('return null when no history or workout data', () => {
@@ -1277,7 +1277,7 @@ describe('SetsSelectors', () => {
             test('fastest duration found in workout', () => {
                 const result = sut.getFastestDurationEver(state, setAnswerWorkout);
         
-                expect(result).toBe(18);
+                expect(result).toBe(3);
             });
         
             test('return null when no history or workout data', () => {

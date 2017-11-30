@@ -6,10 +6,12 @@ import {
     TouchableOpacity,
     TouchableHighlight,
     Image,
+    Alert,
     Platform
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Video from 'react-native-video';
+import Permissions from 'react-native-permissions';
 
 class VideoButton extends Component {
 
@@ -17,11 +19,29 @@ class VideoButton extends Component {
         this.props.tappedWatch(this.props.setID, this.props.videoFileURL);
     }
 
+    _checkPermission(tapFunction, setID) {
+        Permissions.check('camera').then(response => {
+            // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+            if (response === 'authorized') {
+                return tapFunction(setID);
+            } else {
+                Alert.alert(
+                    'Enable Camera Acess',
+                    'Please allow camera access',
+                    [
+                    {text: 'OK'},
+                    ],
+                    { cancelable: false }
+                );
+            };
+        });
+    };
+
     render() {
         switch (this.props.mode) {
             case 'record':
                 return (
-                    <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this.props.tappedRecord(this.props.setID) }>
+                    <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._checkPermission(this.props.tappedRecord, this.props.setID)}>
                         <View style={[{flex:1, flexDirection:'column'}, styles.button, styles.activeButton]}>
                             <Icon name="camera" size={20} color='rgba(47, 128, 227, 1)' style={{marginTop: 10, marginBottom: 5}} />
                             <Text style={styles.activeText}>Record</Text>
@@ -33,7 +53,7 @@ class VideoButton extends Component {
                 return (
                     <View style={{paddingLeft: 5}}>
                         <View style={[{flex:1}, styles.button, styles.grayButton]}>
-                            <TouchableHighlight onPress={()=> this.props.tappedCommentary(this.props.setID) } underlayColor='#e0e0e0'>
+                            <TouchableHighlight onPress={()=> this._checkPermission(this.props.tappedCommentary, this.props.setID)} underlayColor='#e0e0e0'>
                                 <View style={[styles.buttonContent, {flex:1, flexDirection:'column'}]}>
                                     <Icon name="camera" size={20} color='gray' style={{marginTop: 10, marginBottom: 5}} />
                                     <Text style={styles.grayText}>Add</Text>

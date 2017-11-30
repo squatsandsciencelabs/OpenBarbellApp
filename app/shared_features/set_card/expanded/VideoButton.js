@@ -20,9 +20,9 @@ class VideoButton extends Component {
     }
 
     _checkCamPermission(tapFunction, setID) {
-        Permissions.checkMultiple(['camera', 'microphone']).then(response => {
+        Permissions.checkMultiple(['camera', 'photo', 'microphone']).then(response => {
             // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
-            if (response.camera === 'authorized' && response.microphone === 'authorized') {
+            if (response.camera === 'authorized' && response.microphone === 'authorized' && response.photo === 'authorized') {
                 return tapFunction(setID);
             } else {
                 Alert.alert(

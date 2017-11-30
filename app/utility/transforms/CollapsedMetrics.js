@@ -334,11 +334,11 @@ export const quantifierAbbreviation = (quantifier) => {
         case LAST_REP_QUANTIFIER:
             return 'LAST';
         case MIN_QUANTIFIER:
-            return 'MIN';
+            return 'MINSET';
         case MAX_QUANTIFIER:
-            return 'MAX';
+            return 'MAXSET';
         case AVG_QUANTIFIER:
-            return 'AVG';
+            return 'AVGSET';
         case ABS_LOSS_QUANTIFIER:
             return 'ABSL';
         case FASTEST_EVER_QUANTIFIER:

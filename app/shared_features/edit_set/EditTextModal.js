@@ -293,13 +293,23 @@ class EditTextModal extends Component {
     }
 
     _renderRow(item) {
-        return (
-            <TouchableHighlight onPress={() => this._tappedRow(item.key)}>
-                <View style={[{backgroundColor: 'white', height: 50, justifyContent: 'center'}, styles.rowBorders]}>
-                    <Text style={{marginHorizontal: 10, color: 'rgba(77, 77, 77, 1)'}}>{item.key}</Text>
-                </View>
-            </TouchableHighlight>
-        );
+        if (item.key === 'Bug') {
+            return (
+                <TouchableHighlight onPress={() => this._tappedRow(item.key)}>
+                    <View style={[{backgroundColor: 'rgba(252, 176, 176, 1))', height: 50, justifyContent: 'center'}, styles.rowBorders]}>
+                        <Text style={{marginHorizontal: 10, color: 'red'}}>{item.key}</Text>
+                    </View>
+                </TouchableHighlight>
+            );            
+        } else {
+            return (
+                <TouchableHighlight onPress={() => this._tappedRow(item.key)}>
+                    <View style={[{backgroundColor: 'white', height: 50, justifyContent: 'center'}, styles.rowBorders]}>
+                        <Text style={{marginHorizontal: 10, color: 'rgba(77, 77, 77, 1)'}}>{item.key}</Text>
+                    </View>
+                </TouchableHighlight>
+            );
+        }
     }
 
     // TODO: move 242 gray from global stylesheet

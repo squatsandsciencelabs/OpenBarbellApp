@@ -264,10 +264,21 @@ export const getMaxDuration = (set) => {
 
 // Peak-End
 
-export const getPeakEnd = (set) => {
-    const min = getMinAvgVelocity(set);
-    const velocities = getAvgVelocities(set);
-    const lastRepVelocity = velocities[velocities.length - 1];
+export const getPeakEnd = (set, metric) => {
+    switch(metric) {
+        case 'VEL':
+            let metrics = getMetrics(set, RepDataMap.averageVelocity);
+        case 'PKV':
+            let metrics = getMetrics(set, RepDataMap.peakVelocity);
+        case 'PKH':
+            let metrics = getMetrics(set, RepDataMap.peakVelocityLocation);
+        case 'ROM':
+            let metrics = getMetrics(set, RepDataMap.rangeOfMotion);
+        case 'DUR':
+            let metrics = getMetrics(set, RepDataMap.durationOfLift);;
+    }
+    const min = getMinMetrics(metrics);
+    const lastRepMetric = getLastRepMetrics(metric);
     
     if (velocities.length > 0) {
         return Number(((lastRepVelocity + min) / 2).toFixed(2));
@@ -278,11 +289,25 @@ export const getPeakEnd = (set) => {
 
 // Set Loss
 
-export const setLoss = (set) => {
-    const velocities = getAvgVelocities(set);
+export const setLoss = (set, metric) => {
+    switch(metric) {
+        case 'VEL':
+            let metrics = getMetrics(set, RepDataMap.averageVelocity);
+        case 'PKV':
+            let metrics = getMetrics(set, RepDataMap.peakVelocity);
+        case 'PKH':
+            let metrics = getMetrics(set, RepDataMap.peakVelocityLocation);
+        case 'ROM':
+            let metrics = getMetrics(set, RepDataMap.rangeOfMotion);
+        case 'DUR':
+            let metrics = getMetrics(set, RepDataMap.durationOfLift);;
+    }
 
-    if (velocities.length > 0) {
-        return velocities[velocities.length - 1] - velocities[0];
+    const lastRepMetric = getLastRepMetrics(metric);
+    const firstRepMetric = getFirstRepOfMetrics(metrics);
+
+    if (metrics.length > 0) {
+        return lastRepMetric - firstRepMetric;
     } else {
         return null;
     }

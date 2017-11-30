@@ -26,7 +26,7 @@ class VideoButton extends Component {
                 return tapFunction(setID);
             } else {
                 Alert.alert(
-                    'Enable Camera Acess',
+                    'Enable Camera Access',
                     'Please allow camera access',
                     [
                     {text: 'OK'},

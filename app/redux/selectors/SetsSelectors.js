@@ -315,8 +315,7 @@ const areSetsComparable = (historySet, set) => {
     }
     return historySet.exercise === set.exercise &&
         historySet.weight === set.weight &&
-        historySet.metric === set.metric &&
-        SetEmptyCheck.numValidUnremovedReps(historySet) === SetEmptyCheck.numValidUnremovedReps(set);
+        historySet.metric === set.metric;
 };
 
 const isSetComparable = (set) => {

@@ -847,41 +847,156 @@ describe('collapsed metrics', () => {
 
     });
 
-    describe('peak-end', () => {
+    describe('getAvgVelocityPeakEnd', () => {
         
-        test('peak-end returns null when empty', () => {
+        test('return null when empty', () => {
             const set = {
                 reps: [],
             };
 
-            const result = sut.getPeakEnd(set);
+            const result = sut.getAvgVelocityPeakEnd(set);
 
             expect(result).toBe(null);
         });
         
-        test('peak-end averages slowest and last', () => {
-            const result = sut.getPeakEnd(set);
+        test('returns peak end velocity', () => {
+            const result = sut.getAvgVelocityPeakEnd(set);
 
             expect(result).toBe(1.06);
         });
     });
 
-    describe('set loss', () => {
-
-        test('set loss returns null when empty', () => {
+    describe('getPKVPeakEnd', () => {
+        
+        test('return null when empty', () => {
             const set = {
                 reps: [],
             };
 
-            const result = sut.setLoss(set);
+            const result = sut.getPKVPeakEnd(set);
+
+            expect(result).toBe(null);
+        });
+        
+        test('returns peak end PKV', () => {
+            const result = sut.getPKVPeakEnd(set);
+
+            expect(result).toBe(31);
+        });
+    });
+
+    describe('getROMPeakEnd', () => {
+        
+        test('return null when empty', () => {
+            const set = {
+                reps: [],
+            };
+
+            const result = sut.getROMPeakEnd(set);
+
+            expect(result).toBe(null);
+        });
+        
+        test('returns peak end ROM', () => {
+            const result = sut.getROMPeakEnd(set);
+
+            expect(result).toBe(242.5);
+        });
+    });
+
+    describe('getDurationPeakEnd', () => {
+        
+        test('return null when empty', () => {
+            const set = {
+                reps: [],
+            };
+
+            const result = sut.getDurationPeakEnd(set);
+
+            expect(result).toBe(null);
+        });
+        
+        test('returns peak end Duration', () => {
+            const result = sut.getDurationPeakEnd(set);
+
+            expect(result).toBe(2);
+        });
+    });    
+
+    describe('getAvgVelocitySetLoss', () => {
+
+        test('returns null when empty', () => {
+            const set = {
+                reps: [],
+            };
+
+            const result = sut.getAvgVelocitySetLoss(set);
 
             expect(result).toBe(null);
         });
 
-        test('set loss calculates loss', () => {
-            const result = sut.setLoss(set);
+        test('returns average velocity set loss', () => {
+            const result = sut.getAvgVelocitySetLoss(set);
 
             expect(result).toBe(-0.75);
         });
     });
+
+    describe('getPKVSetLoss', () => {
+        
+        test('returns null when empty', () => {
+            const set = {
+                reps: [],
+            };
+
+            const result = sut.getPKVSetLoss(set);
+
+            expect(result).toBe(null);
+        });
+
+        test('returns PKV set loss', () => {
+            const result = sut.getPKVSetLoss(set);
+
+            expect(result).toBe(-12);
+        });
+    });
+
+    describe('getROMSetLoss', () => {
+        
+        test('returns null when empty', () => {
+            const set = {
+                reps: [],
+            };
+
+            const result = sut.getROMSetLoss(set);
+
+            expect(result).toBe(null);
+        });
+
+        test('returns ROM set loss', () => {
+            const result = sut.getROMSetLoss(set);
+
+            expect(result).toBe(0);
+        });
+    });
+
+    describe('getDurationSetLoss', () => {
+        
+        test('returns null when empty', () => {
+            const set = {
+                reps: [],
+            };
+
+            const result = sut.getDurationSetLoss(set);
+
+            expect(result).toBe(null);
+        });
+
+        test('returns Duration set loss', () => {
+            const result = sut.getDurationSetLoss(set);
+
+            expect(result).toBe(-3);
+        });
+    });
+    
 });

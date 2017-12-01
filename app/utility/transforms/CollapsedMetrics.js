@@ -16,6 +16,8 @@ import {
     ABS_LOSS_QUANTIFIER,
     FASTEST_EVER_QUANTIFIER,
     SLOWEST_EVER_QUANTIFIER,
+    SET_LOSS_QUANTIFIER,
+    PEAK_END_QUANTIFIER,
 } from 'app/constants/CollapsedMetricTypes';
 
 // unique metrics
@@ -264,46 +266,41 @@ export const getMaxDuration = (set) => {
 
 // Peak-End
 
-export const getPeakEnd = (set, metric) => {
-    switch(metric) {
-        case 'VEL':
-            let metrics = getMetrics(set, RepDataMap.averageVelocity);
-        case 'PKV':
-            let metrics = getMetrics(set, RepDataMap.peakVelocity);
-        case 'PKH':
-            let metrics = getMetrics(set, RepDataMap.peakVelocityLocation);
-        case 'ROM':
-            let metrics = getMetrics(set, RepDataMap.rangeOfMotion);
-        case 'DUR':
-            let metrics = getMetrics(set, RepDataMap.durationOfLift);;
-    }
+const getPeakEnd = (metrics) => {
     const min = getMinMetrics(metrics);
-    const lastRepMetric = getLastRepMetrics(metric);
+    const lastRepMetric = getLastRepMetrics(metrics);
     
-    if (velocities.length > 0) {
-        return Number(((lastRepVelocity + min) / 2).toFixed(2));
+    if (metrics.length > 0) {
+        return Number(((lastRepMetric + min) / 2).toFixed(2));
     } else {
         return null;
     }
 };
 
+export const getAvgVelocityPeakEnd = (set) => {
+    const velocities = getAvgVelocities(set);
+    return getPeakEnd(velocities);
+};
+
+export const getPKVPeakEnd = (set) => {
+    const pkvs = getPKVs(set);
+    return getPeakEnd(pkvs);
+};
+
+export const getROMPeakEnd = (set) => {
+    const roms = getROMs(set);
+    return getPeakEnd(roms);
+};
+
+export const getDurationPeakEnd = (set) => {
+    const durations = getDurations(set);
+    return getPeakEnd(durations);
+};
+
 // Set Loss
 
-export const setLoss = (set, metric) => {
-    switch(metric) {
-        case 'VEL':
-            let metrics = getMetrics(set, RepDataMap.averageVelocity);
-        case 'PKV':
-            let metrics = getMetrics(set, RepDataMap.peakVelocity);
-        case 'PKH':
-            let metrics = getMetrics(set, RepDataMap.peakVelocityLocation);
-        case 'ROM':
-            let metrics = getMetrics(set, RepDataMap.rangeOfMotion);
-        case 'DUR':
-            let metrics = getMetrics(set, RepDataMap.durationOfLift);;
-    }
-
-    const lastRepMetric = getLastRepMetrics(metric);
+const getMetricSetLoss = (metrics) => {
+    const lastRepMetric = getLastRepMetrics(metrics);
     const firstRepMetric = getFirstRepOfMetrics(metrics);
 
     if (metrics.length > 0) {
@@ -311,6 +308,26 @@ export const setLoss = (set, metric) => {
     } else {
         return null;
     }
+};
+
+export const getAvgVelocitySetLoss = (set) => {
+    const velocities = getAvgVelocities(set);
+    return getMetricSetLoss(velocities);
+};
+
+export const getPKVSetLoss = (set) => {
+    const pkvs = getPKVs(set);
+    return getMetricSetLoss(pkvs);
+};
+
+export const getROMSetLoss = (set) => {
+    const roms = getROMs(set);
+    return getMetricSetLoss(roms);
+};
+
+export const getDurationSetLoss = (set) => {
+    const durations = getDurations(set);
+    return getMetricSetLoss(durations);
 };
 
 // To String
@@ -396,6 +413,10 @@ export const quantifierAbbreviation = (quantifier) => {
             return 'FASTEST';
         case SLOWEST_EVER_QUANTIFIER:
             return 'SLOWEST';
+        case SET_LOSS_QUANTIFIER:
+            return 'LOSS';
+        case PEAK_END_QUANTIFIER: 
+            return 'PKEND';
         default:
             return null;
     };
@@ -421,6 +442,10 @@ export const quantifierString = (quantifier) => {
             return 'Fastest Ever';
         case SLOWEST_EVER_QUANTIFIER:
             return 'Slowest Ever';
+        case SET_LOSS_QUANTIFIER:
+            return 'Set Loss';
+        case PEAK_END_QUANTIFIER: 
+            return 'Peak-End';
         default:
             return null;
     };

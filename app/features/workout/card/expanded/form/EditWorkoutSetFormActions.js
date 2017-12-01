@@ -9,6 +9,7 @@ import {
     PRESENT_WORKOUT_VIDEO_PLAYER,
 } from 'app/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
+import * as VideoPermissionsUtils from 'app/utility/VideoPermissionsUtils';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
@@ -74,39 +75,45 @@ export const saveSet = (setID, weight = null, metric = null, rpe = null) => {
 };
 
 export const presentRecordVideo = (setID) => (dispatch, getState) => {
-    const state = getState();
-    Analytics.setCurrentScreen('workout_record_video');
-    logVideoRecorderAnalytics(setID, state);
+    VideoPermissionsUtils.checkRecordingPermissions().then(() => {        
+        const state = getState();
+        Analytics.setCurrentScreen('workout_record_video');
+        logVideoRecorderAnalytics(setID, state);
 
-    dispatch({
-        type: PRESENT_WORKOUT_VIDEO_RECORDER,
-        setID: setID,
-        isCommentary: false
-    });
+        dispatch({
+            type: PRESENT_WORKOUT_VIDEO_RECORDER,
+            setID: setID,
+            isCommentary: false
+        });
+    }).catch(() => {});;
 };
 
 export const presentRecordCommentary = (setID) => (dispatch, getState) => {
-    const state = getState();
-    Analytics.setCurrentScreen('workout_record_video_log');
-    logVideoLogRecorderAnalytics(setID, state);
-    
-    dispatch({
-        type: PRESENT_WORKOUT_VIDEO_RECORDER,
-        setID: setID,
-        isCommentary: true
-    });
+    VideoPermissionsUtils.checkRecordingPermissions().then(() => {        
+        const state = getState();
+        Analytics.setCurrentScreen('workout_record_video_log');
+        logVideoLogRecorderAnalytics(setID, state);
+        
+        dispatch({
+            type: PRESENT_WORKOUT_VIDEO_RECORDER,
+            setID: setID,
+            isCommentary: true
+        });
+    }).catch(() => {});;
 };
 
 export const presentWatchVideo = (setID, videoFileURL) => (dispatch, getState) => {
-    const state = getState();
-    Analytics.setCurrentScreen('workout_watch_video');
-    logWatchVideoAnalytics(setID, state);
-    
-    dispatch({
-        type: PRESENT_WORKOUT_VIDEO_PLAYER,
-        setID: setID,
-        videoFileURL: videoFileURL
-    });
+    VideoPermissionsUtils.checkWatchVideoPermissions().then(() => {        
+        const state = getState();
+        Analytics.setCurrentScreen('workout_watch_video');
+        logWatchVideoAnalytics(setID, state);
+        
+        dispatch({
+            type: PRESENT_WORKOUT_VIDEO_PLAYER,
+            setID: setID,
+            videoFileURL: videoFileURL
+        });
+    }).catch(() => {});;
 };
 
 const logToggleMetricAnalytics = (setID, state) => {

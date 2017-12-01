@@ -266,7 +266,7 @@ export const getMaxDuration = (set) => {
 
 // Peak-End
 
-const getPeakEnd = (metrics) => {
+const getPeakEndMetrics = (metrics) => {
     const min = getMinMetrics(metrics);
     const lastRepMetric = getLastRepMetrics(metrics);
     
@@ -277,29 +277,29 @@ const getPeakEnd = (metrics) => {
     }
 };
 
-export const getAvgVelocityPeakEnd = (set) => {
+export const getPeakEndOfAvgVelocities = (set) => {
     const velocities = getAvgVelocities(set);
-    return getPeakEnd(velocities);
+    return getPeakEndMetrics(velocities);
 };
 
-export const getPKVPeakEnd = (set) => {
+export const getPeakEndOfPKVs = (set) => {
     const pkvs = getPKVs(set);
-    return getPeakEnd(pkvs);
+    return getPeakEndMetrics(pkvs);
 };
 
-export const getROMPeakEnd = (set) => {
+export const getPeakEndOfROMs = (set) => {
     const roms = getROMs(set);
-    return getPeakEnd(roms);
+    return getPeakEndMetrics(roms);
 };
 
-export const getDurationPeakEnd = (set) => {
+export const getPeakEndOfDurations = (set) => {
     const durations = getDurations(set);
-    return getPeakEnd(durations);
+    return getPeakEndMetrics(durations);
 };
 
 // Set Loss
 
-const getMetricSetLoss = (metrics) => {
+const getSetLossMetrics = (metrics) => {
     const lastRepMetric = getLastRepMetrics(metrics);
     const firstRepMetric = getFirstRepOfMetrics(metrics);
 
@@ -310,24 +310,24 @@ const getMetricSetLoss = (metrics) => {
     }
 };
 
-export const getAvgVelocitySetLoss = (set) => {
+export const getSetLossOfAvgVelocities = (set) => {
     const velocities = getAvgVelocities(set);
-    return getMetricSetLoss(velocities);
+    return getSetLossMetrics(velocities);
 };
 
-export const getPKVSetLoss = (set) => {
+export const getSetLossOfPKVs = (set) => {
     const pkvs = getPKVs(set);
-    return getMetricSetLoss(pkvs);
+    return getSetLossMetrics(pkvs);
 };
 
-export const getROMSetLoss = (set) => {
+export const getSetLossOfROMs = (set) => {
     const roms = getROMs(set);
-    return getMetricSetLoss(roms);
+    return getSetLossMetrics(roms);
 };
 
-export const getDurationSetLoss = (set) => {
+export const getSetLossOfDurations = (set) => {
     const durations = getDurations(set);
-    return getMetricSetLoss(durations);
+    return getSetLossMetrics(durations);
 };
 
 // To String
@@ -402,21 +402,21 @@ export const quantifierAbbreviation = (quantifier) => {
         case LAST_REP_QUANTIFIER:
             return 'LAST';
         case MIN_QUANTIFIER:
-            return 'MIN';
+            return 'MIN SET';
         case MAX_QUANTIFIER:
-            return 'MAX';
+            return 'MAX SET';
         case AVG_QUANTIFIER:
-            return 'AVG';
+            return 'AVG SET';
         case ABS_LOSS_QUANTIFIER:
-            return 'ABSL';
+            return 'A. LOSS';
         case FASTEST_EVER_QUANTIFIER:
             return 'FASTEST';
         case SLOWEST_EVER_QUANTIFIER:
             return 'SLOWEST';
         case SET_LOSS_QUANTIFIER:
-            return 'LOSS';
+            return 'S. LOSS';
         case PEAK_END_QUANTIFIER: 
-            return 'PKEND';
+            return 'PK-END';
         default:
             return null;
     };
@@ -431,11 +431,11 @@ export const quantifierString = (quantifier) => {
         case LAST_REP_QUANTIFIER:
             return 'Last Rep';
         case MIN_QUANTIFIER:
-            return 'Minimum';
+            return 'Minimum Set';
         case MAX_QUANTIFIER:
-            return 'Maximum';
+            return 'Maximum Set';
         case AVG_QUANTIFIER:
-            return 'Average';
+            return 'Average Set';
         case ABS_LOSS_QUANTIFIER:
             return 'Absolute Loss';
         case FASTEST_EVER_QUANTIFIER:

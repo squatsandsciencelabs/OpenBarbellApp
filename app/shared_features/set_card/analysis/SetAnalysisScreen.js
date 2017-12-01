@@ -52,10 +52,10 @@ const metricValue = (state, set, quantifier, metric) => {
                     returnValue = CollapsedMetrics.getAbsLossOfAvgVelocities(set);
                     break;
                 case SET_LOSS_QUANTIFIER:
-                    returnValue = CollapsedMetrics.getAvgVelocitySetLoss(set);
+                    returnValue = CollapsedMetrics.getSetLossOfAvgVelocities(set);
                     break;
                 case PEAK_END_QUANTIFIER:
-                    returnValue = CollapsedMetrics.getAvgVelocityPeakEnd(set);
+                    returnValue = CollapsedMetrics.getPeakEndOfAvgVelocities(set);
                     break;                    
                 case FASTEST_EVER_QUANTIFIER:
                     returnValue = SetsSelectors.getFastestAvgVelocityEver(state, set);
@@ -86,10 +86,10 @@ const metricValue = (state, set, quantifier, metric) => {
                     returnValue = CollapsedMetrics.getAbsLossOfDurations(set);
                     break;
                 case SET_LOSS_QUANTIFIER:
-                    returnValue = CollapsedMetrics.getDurationSetLoss(set);
+                    returnValue = CollapsedMetrics.getSetLossOfDurations(set);
                     break;
                 case PEAK_END_QUANTIFIER:
-                    returnValue = CollapsedMetrics.getDurationPeakEnd(set);
+                    returnValue = CollapsedMetrics.getPeakEndOfDurations(set);
                     break; 
                 case FASTEST_EVER_QUANTIFIER:
                     returnValue = SetsSelectors.getFastestDurationEver(state, set);
@@ -123,10 +123,10 @@ const metricValue = (state, set, quantifier, metric) => {
                     returnValue = CollapsedMetrics.getAbsLossOfROMs(set);
                     break;
                 case SET_LOSS_QUANTIFIER:
-                    returnValue = CollapsedMetrics.getROMSetLoss(set);
+                    returnValue = CollapsedMetrics.getSetLossOfROMs(set);
                     break;
                 case PEAK_END_QUANTIFIER:
-                    returnValue = CollapsedMetrics.getROMPeakEnd(set);
+                    returnValue = CollapsedMetrics.getPeakEndOfROMs(set);
                     break; 
             }
             break;
@@ -167,10 +167,10 @@ const metricValue = (state, set, quantifier, metric) => {
                     returnValue = CollapsedMetrics.getAbsLossOfPKVs(set);
                     break;
                 case SET_LOSS_QUANTIFIER:
-                    returnValue = CollapsedMetrics.getPKVSetLoss(set);
+                    returnValue = CollapsedMetrics.getSetLossOfPKVs(set);
                     break;
                 case PEAK_END_QUANTIFIER:
-                    returnValue = CollapsedMetrics.getPKVPeakEnd(set);
+                    returnValue = CollapsedMetrics.getPeakEndOfPKVs(set);
                     break; 
                 case FASTEST_EVER_QUANTIFIER:
                     returnValue = SetsSelectors.getFastestPKVEver(state, set);

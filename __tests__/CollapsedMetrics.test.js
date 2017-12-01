@@ -854,16 +854,17 @@ describe('collapsed metrics', () => {
                 reps: [],
             };
 
-            const result = sut.getAvgVelocityPeakEnd(set);
+            const result = sut.getPeakEndOfAvgVelocities(set);
 
             expect(result).toBe(null);
         });
         
         test('returns peak end velocity', () => {
-            const result = sut.getAvgVelocityPeakEnd(set);
+            const result = sut.getPeakEndOfAvgVelocities(set);
 
             expect(result).toBe(1.06);
         });
+
     });
 
     describe('getPKVPeakEnd', () => {
@@ -873,13 +874,13 @@ describe('collapsed metrics', () => {
                 reps: [],
             };
 
-            const result = sut.getPKVPeakEnd(set);
+            const result = sut.getPeakEndOfPKVs(set);
 
             expect(result).toBe(null);
         });
         
         test('returns peak end PKV', () => {
-            const result = sut.getPKVPeakEnd(set);
+            const result = sut.getPeakEndOfPKVs(set);
 
             expect(result).toBe(31);
         });
@@ -892,16 +893,17 @@ describe('collapsed metrics', () => {
                 reps: [],
             };
 
-            const result = sut.getROMPeakEnd(set);
+            const result = sut.getPeakEndOfROMs(set);
 
             expect(result).toBe(null);
         });
         
         test('returns peak end ROM', () => {
-            const result = sut.getROMPeakEnd(set);
+            const result = sut.getPeakEndOfROMs(set);
 
             expect(result).toBe(242.5);
         });
+
     });
 
     describe('getDurationPeakEnd', () => {
@@ -911,13 +913,13 @@ describe('collapsed metrics', () => {
                 reps: [],
             };
 
-            const result = sut.getDurationPeakEnd(set);
+            const result = sut.getPeakEndOfDurations(set);
 
             expect(result).toBe(null);
         });
         
         test('returns peak end Duration', () => {
-            const result = sut.getDurationPeakEnd(set);
+            const result = sut.getPeakEndOfDurations(set);
 
             expect(result).toBe(2);
         });
@@ -930,13 +932,13 @@ describe('collapsed metrics', () => {
                 reps: [],
             };
 
-            const result = sut.getAvgVelocitySetLoss(set);
+            const result = sut.getSetLossOfAvgVelocities(set);
 
             expect(result).toBe(null);
         });
 
         test('returns average velocity set loss', () => {
-            const result = sut.getAvgVelocitySetLoss(set);
+            const result = sut.getSetLossOfAvgVelocities(set);
 
             expect(result).toBe(-0.75);
         });
@@ -949,13 +951,13 @@ describe('collapsed metrics', () => {
                 reps: [],
             };
 
-            const result = sut.getPKVSetLoss(set);
+            const result = sut.getSetLossOfPKVs(set);
 
             expect(result).toBe(null);
         });
 
         test('returns PKV set loss', () => {
-            const result = sut.getPKVSetLoss(set);
+            const result = sut.getSetLossOfPKVs(set);
 
             expect(result).toBe(-12);
         });
@@ -968,13 +970,13 @@ describe('collapsed metrics', () => {
                 reps: [],
             };
 
-            const result = sut.getROMSetLoss(set);
+            const result = sut.getSetLossOfROMs(set);
 
             expect(result).toBe(null);
         });
 
         test('returns ROM set loss', () => {
-            const result = sut.getROMSetLoss(set);
+            const result = sut.getSetLossOfROMs(set);
 
             expect(result).toBe(0);
         });
@@ -987,13 +989,13 @@ describe('collapsed metrics', () => {
                 reps: [],
             };
 
-            const result = sut.getDurationSetLoss(set);
+            const result = sut.getSetLossOfDurations(set);
 
             expect(result).toBe(null);
         });
 
         test('returns Duration set loss', () => {
-            const result = sut.getDurationSetLoss(set);
+            const result = sut.getSetLossOfDurations(set);
 
             expect(result).toBe(-3);
         });

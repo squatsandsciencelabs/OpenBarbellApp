@@ -62,81 +62,81 @@ describe('collapsedMetric Analysis', () => {
     describe('change metric', () => {
 
         test('collapsedMetric changes to current rank', () => {
-            let metric = AVG_VELOCITY_METRIC;
+            const expectedMetric = AVG_VELOCITY_METRIC;
 
-            store.dispatch(sut.saveCollapsedMetricSetting(metric));
+            store.dispatch(sut.saveCollapsedMetricSetting(expectedMetric));
 
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('change_collapsed_metric');
             expect(params.rank).toBe(2);
             expect(params.from_metric).toBe(RPE_METRIC);   
-            expect(params.to_metric).toBe(metric);
+            expect(params.to_metric).toBe(expectedMetric);
         });
 
         test('metric1 changes', () => {
-            let metric = DURATION_METRIC;
+            const expectedMetric = DURATION_METRIC;
 
-            store.dispatch(sut.saveCollapsedMetricSetting1(metric));
+            store.dispatch(sut.saveCollapsedMetricSetting1(expectedMetric));
 
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('change_collapsed_metric');
             expect(params.rank).toBe(1);
             expect(params.from_metric).toBe(AVG_VELOCITY_METRIC);   
-            expect(params.to_metric).toBe(metric);
+            expect(params.to_metric).toBe(expectedMetric);
         });
 
         test('metric2 changes', () => {
-            let metric = AVG_VELOCITY_METRIC;
+            const expectedMetric = AVG_VELOCITY_METRIC;
 
-            store.dispatch(sut.saveCollapsedMetricSetting2(metric));
+            store.dispatch(sut.saveCollapsedMetricSetting2(expectedMetric));
 
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('change_collapsed_metric');
             expect(params.rank).toBe(2);
             expect(params.from_metric).toBe(RPE_METRIC);   
-            expect(params.to_metric).toBe(metric);
+            expect(params.to_metric).toBe(expectedMetric);
         });
 
         test('metric3 changes', () => {
-            let metric = PKH_METRIC;
+            const expectedMetric = PKH_METRIC;
 
-            store.dispatch(sut.saveCollapsedMetricSetting3(metric));
+            store.dispatch(sut.saveCollapsedMetricSetting3(expectedMetric));
 
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('change_collapsed_metric');
             expect(params.rank).toBe(3);
             expect(params.from_metric).toBe(ROM_METRIC);   
-            expect(params.to_metric).toBe(metric);
+            expect(params.to_metric).toBe(expectedMetric);
         });
 
         test('metric4 changes', () => {
-            let metric = PKV_METRIC;
+            const expectedMetric = PKV_METRIC;
 
-            store.dispatch(sut.saveCollapsedMetricSetting4(metric));
+            store.dispatch(sut.saveCollapsedMetricSetting4(expectedMetric));
 
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('change_collapsed_metric');
             expect(params.rank).toBe(4);
             expect(params.from_metric).toBe(DURATION_METRIC);   
-            expect(params.to_metric).toBe(metric);
+            expect(params.to_metric).toBe(expectedMetric);
         });
 
         test('metric5 changes', () => {
-            let metric = ROM_METRIC;
+            const expectedMetric = ROM_METRIC;
 
-            store.dispatch(sut.saveCollapsedMetricSetting5(metric));
+            store.dispatch(sut.saveCollapsedMetricSetting5(expectedMetric));
 
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('change_collapsed_metric');
             expect(params.rank).toBe(5);
             expect(params.from_metric).toBe(AVG_VELOCITY_METRIC);   
-            expect(params.to_metric).toBe(metric);
+            expect(params.to_metric).toBe(expectedMetric);
         });
     });
 

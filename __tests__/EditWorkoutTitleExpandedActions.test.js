@@ -27,13 +27,13 @@ describe('collapsed card', () => {
     });   
 
     test('log set id when collapsed', () => {
-        const setID = 3245;
+        const expectedSetID = 3245;
 
-        store.dispatch(sut.collapseCard(setID));
+        store.dispatch(sut.collapseCard(expectedSetID));
         
         const event = logEventSpy.mock.calls[0][0];
         const params = logEventSpy.mock.calls[0][1];
         expect(event).toEqual('collapsed_card');
-        expect(params.set_id).toEqual(3245);
+        expect(params.set_id).toEqual(expectedSetID);
     });
 });

@@ -27,13 +27,13 @@ describe('expand card', () => {
     });   
 
     test('log set id when expanded', () => {
-        const setID = 3527;
+        const expectedSetID = 3527;
 
-        store.dispatch(sut.expandCard(setID));
+        store.dispatch(sut.expandCard(expectedSetID));
         
         const event = logEventSpy.mock.calls[0][0];
         const params = logEventSpy.mock.calls[0][1];
         expect(event).toEqual('expand_card');
-        expect(params.set_id).toEqual(3527);
+        expect(params.set_id).toEqual(expectedSetID);
     });
 });

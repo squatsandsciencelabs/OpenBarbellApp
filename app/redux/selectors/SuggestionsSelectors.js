@@ -28,7 +28,7 @@ const generateSuggestions = (model, input, bias, ignore = []) => {
 
     // get all matches
     for (var property in model) {
-        if (model.hasOwnProperty(property) && !ignore.includes(property) && property.indexOf(lowercaseInput) !== -1) {
+        if (property !== '' && model.hasOwnProperty(property) && !ignore.includes(property) && property.indexOf(lowercaseInput) !== -1) {
             if (property === bias) {
                 //bias
                 var suggestion = Object.assign({}, model[property]);
@@ -54,11 +54,17 @@ const generateSuggestions = (model, input, bias, ignore = []) => {
 
     // hack - ensure bug is last
     // TODO: if we do more than just the special bug tag, make this a generic system instead so you can add more types
-    if (bias === null && ignore.filter((e) => e === 'bug').length <= 0) {
-        if (matches.length === 10) {
-            matches[9] = 'Bug';
-        } else {
-            matches[matches.length] = 'Bug';
+    if (bias === null) {
+        // remove all bugs from suggestions so you can re-add it at the end
+        matches = matches.filter((e) => e !== 'Bug');
+
+        // add Bug if possible
+        if (ignore.filter((e) => e === 'bug').length <= 0) {
+            if (matches.length === 10) {
+                matches[9] = 'Bug';
+            } else {
+                matches[matches.length] = 'Bug';
+            }
         }
     }
 

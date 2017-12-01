@@ -2,6 +2,7 @@ import {
     EXPAND_WORKOUT_SET,
     PRESENT_WORKOUT_VIDEO_PLAYER,
 } from 'app/ActionTypes';
+import * as VideoPermissionsUtils from 'app/utility/VideoPermissionsUtils';
 import * as Analytics from 'app/services/Analytics';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
@@ -16,15 +17,17 @@ export const expandCard = (setID) => (dispatch, getState) => {
 };
 
 export const presentWatchVideo = (setID, videoFileURL) => (dispatch, getState) => {
-    const state = getState();
-    Analytics.setCurrentScreen('workout_watch_video');
-    logWatchVideoAnalytics(setID, state);
-    
-    dispatch({
-        type: PRESENT_WORKOUT_VIDEO_PLAYER,
-        setID: setID,
-        videoFileURL: videoFileURL
-    });
+    VideoPermissionsUtils.checkWatchVideoPermissions().then(() => {
+        const state = getState();
+        Analytics.setCurrentScreen('workout_watch_video');
+        logWatchVideoAnalytics(setID, state);
+        
+        dispatch({
+            type: PRESENT_WORKOUT_VIDEO_PLAYER,
+            setID: setID,
+            videoFileURL: videoFileURL
+        });
+    }).catch(() => {});
 };
 
 const logWatchVideoAnalytics = (setID, state) => {

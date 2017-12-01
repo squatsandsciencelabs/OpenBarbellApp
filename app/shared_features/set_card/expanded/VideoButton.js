@@ -16,36 +16,14 @@ import Permissions from 'react-native-permissions';
 class VideoButton extends Component {
 
     _tappedWatchVideo() {
-        this.props.tappedWatch(this.props.setID, this.props.videoFileURL);
-    }
-
-    _checkCamPermission(tapFunction, setID) {
-        Permissions.checkMultiple(['camera', 'photo', 'microphone']).then(response => {
-            // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
-            if (response.camera === 'authorized' && response.microphone === 'authorized' && response.photo === 'authorized') {
-                return tapFunction(setID);
-            } else {
-                Alert.alert(
-                    'Enable Camera & Mic Access',
-                    'Please allow camera & microphone access',
-                    [
-                    {text: 'OK'},
-                    ],
-                    { cancelable: false }
-                );
-            };
-        });
-    };
-
-    _tapWatchPhotoPermission() {
         Permissions.check('photo').then(response => {
             // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
             if (response === 'authorized') {
-                return this._tappedWatchVideo()
+                this.props.tappedWatch(this.props.setID, this.props.videoFileURL);
             } else {
                 Alert.alert(
-                    'Enable Photo Access',
-                    'Please allow photo access',
+                    'Additional Permissions Required',
+                    'OpenBarbell needs Photo permissions to play videos on your phone. Please enable them for OpenBarbell in your phone Settings',
                     [
                     {text: 'OK'},
                     ],
@@ -55,13 +33,46 @@ class VideoButton extends Component {
         });
     }
 
+    _tappedRecord() {
+        this._checkCamPermission().then(() => {
+            this.props.tappedRecord(this.props.setID);
+        });
+    }
 
+    _tappedCommentary() {
+        this._checkCamPermission().then(() => {
+            this.props.tappedCommentary(this.props.setID);
+        });
+    }
+
+    _checkCamPermission() {
+        return new Promise(async (resolve, reject) => {
+            Permissions.checkMultiple(['camera', 'photo', 'microphone']).then(response => {
+                // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
+                if (response.camera === 'authorized' && response.microphone === 'authorized' && response.photo === 'authorized') {
+                    resolve();
+                } else {
+                    Alert.alert(
+                        'Additional Permissions Required',
+                        'OpenBarbell needs Camera, Microphone, and Photo permissions to record and store videos on your phone. Please enable them for OpenBarbell in your phone Settings',
+                        [
+                        {text: 'OK'},
+                        ],
+                        { cancelable: false }
+                    );
+                    reject();
+                };
+            }).catch((error) => {
+                reject();
+            });
+        });
+    };
 
     render() {
         switch (this.props.mode) {
             case 'record':
                 return (
-                    <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._checkCamPermission(this.props.tappedRecord, this.props.setID)}>
+                    <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedRecord()}>
                         <View style={[{flex:1, flexDirection:'column'}, styles.button, styles.activeButton]}>
                             <Icon name="camera" size={20} color='rgba(47, 128, 227, 1)' style={{marginTop: 10, marginBottom: 5}} />
                             <Text style={styles.activeText}>Record</Text>
@@ -73,7 +84,7 @@ class VideoButton extends Component {
                 return (
                     <View style={{paddingLeft: 5}}>
                         <View style={[{flex:1}, styles.button, styles.grayButton]}>
-                            <TouchableHighlight onPress={()=> this._checkCamPermission(this.props.tappedCommentary, this.props.setID)} underlayColor='#e0e0e0'>
+                            <TouchableHighlight onPress={()=> this._tappedCommentary()} underlayColor='#e0e0e0'>
                                 <View style={[styles.buttonContent, {flex:1, flexDirection:'column'}]}>
                                     <Icon name="camera" size={20} color='gray' style={{marginTop: 10, marginBottom: 5}} />
                                     <Text style={styles.grayText}>Add</Text>
@@ -88,7 +99,7 @@ class VideoButton extends Component {
                 // probably requires RCTCameraRoll
                 if (Platform.OS === 'ios') {
                     return (
-                        <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tapWatchPhotoPermission() }>
+                        <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo() }>
                             <View style={[{flex: 1}, styles.button, styles.blackButton]}>
                                 <Video
                                     ref={(ref) => {
@@ -104,7 +115,7 @@ class VideoButton extends Component {
                     );
                 } else {
                     return (
-                        <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tapWatchPhotoPermission() }>
+                        <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo() }>
                             <View style={[styles.button, styles.blackButton]}>
                                 <Image
                                     style={[{flex:1, flexDirection:'column'}, styles.imagePreview]}

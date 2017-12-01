@@ -19,6 +19,8 @@ import {
     ABS_LOSS_QUANTIFIER,
     FASTEST_EVER_QUANTIFIER,
     SLOWEST_EVER_QUANTIFIER,
+    SET_LOSS_QUANTIFIER,
+    PEAK_END_QUANTIFIER,
 } from 'app/constants/CollapsedMetricTypes';
 import PickerModal from 'app/shared_features/picker/PickerModal';
 import * as Actions from './SettingsEditQuantifiersActions';
@@ -41,6 +43,8 @@ const mapStateToProps = (state, ownProps) => {
         pickerItem(MAX_QUANTIFIER),
         pickerItem(FASTEST_EVER_QUANTIFIER),
         pickerItem(SLOWEST_EVER_QUANTIFIER),
+        pickerItem(SET_LOSS_QUANTIFIER),
+        pickerItem(PEAK_END_QUANTIFIER),
     ];
 
     if (Platform.OS === 'ios') {

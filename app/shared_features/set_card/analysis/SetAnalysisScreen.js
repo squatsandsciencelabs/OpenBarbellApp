@@ -18,6 +18,8 @@ import {
     ABS_LOSS_QUANTIFIER,
     FASTEST_EVER_QUANTIFIER,
     SLOWEST_EVER_QUANTIFIER,
+    SET_LOSS_QUANTIFIER,
+    PEAK_END_QUANTIFIER,
 } from 'app/constants/CollapsedMetricTypes';
 import SetAnalysis from './SetAnalysis';
 import * as CollapsedSettingsSelectors from 'app/redux/selectors/CollapsedSettingsSelectors';
@@ -49,6 +51,12 @@ const metricValue = (state, set, quantifier, metric) => {
                 case ABS_LOSS_QUANTIFIER:
                     returnValue = CollapsedMetrics.getAbsLossOfAvgVelocities(set);
                     break;
+                case SET_LOSS_QUANTIFIER:
+                    returnValue = CollapsedMetrics.getAvgVelocitySetLoss(set);
+                    break;
+                case PEAK_END_QUANTIFIER:
+                    returnValue = CollapsedMetrics.getAvgVelocityPeakEnd(set);
+                    break;                    
                 case FASTEST_EVER_QUANTIFIER:
                     returnValue = SetsSelectors.getFastestAvgVelocityEver(state, set);
                     break;
@@ -77,6 +85,12 @@ const metricValue = (state, set, quantifier, metric) => {
                 case ABS_LOSS_QUANTIFIER:
                     returnValue = CollapsedMetrics.getAbsLossOfDurations(set);
                     break;
+                case SET_LOSS_QUANTIFIER:
+                    returnValue = CollapsedMetrics.getDurationSetLoss(set);
+                    break;
+                case PEAK_END_QUANTIFIER:
+                    returnValue = CollapsedMetrics.getDurationPeakEnd(set);
+                    break; 
                 case FASTEST_EVER_QUANTIFIER:
                     returnValue = SetsSelectors.getFastestDurationEver(state, set);
                     break;
@@ -108,6 +122,12 @@ const metricValue = (state, set, quantifier, metric) => {
                 case ABS_LOSS_QUANTIFIER:
                     returnValue = CollapsedMetrics.getAbsLossOfROMs(set);
                     break;
+                case SET_LOSS_QUANTIFIER:
+                    returnValue = CollapsedMetrics.getROMSetLoss(set);
+                    break;
+                case PEAK_END_QUANTIFIER:
+                    returnValue = CollapsedMetrics.getROMPeakEnd(set);
+                    break; 
             }
             break;
         case PKH_METRIC:
@@ -146,6 +166,12 @@ const metricValue = (state, set, quantifier, metric) => {
                 case ABS_LOSS_QUANTIFIER:
                     returnValue = CollapsedMetrics.getAbsLossOfPKVs(set);
                     break;
+                case SET_LOSS_QUANTIFIER:
+                    returnValue = CollapsedMetrics.getPKVSetLoss(set);
+                    break;
+                case PEAK_END_QUANTIFIER:
+                    returnValue = CollapsedMetrics.getPKVPeakEnd(set);
+                    break; 
                 case FASTEST_EVER_QUANTIFIER:
                     returnValue = SetsSelectors.getFastestPKVEver(state, set);
                     break;

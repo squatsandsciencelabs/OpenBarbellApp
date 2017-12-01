@@ -6,107 +6,23 @@ import {
     TouchableOpacity,
     TouchableHighlight,
     Image,
-    Alert,
     Platform
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Video from 'react-native-video';
-import Permissions from 'react-native-permissions';
 
 class VideoButton extends Component {
 
     _tappedWatchVideo() {
-        Permissions.check('photo').then(response => {
-            // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
-            if (response === 'authorized') {
-                this.props.tappedWatch(this.props.setID, this.props.videoFileURL);
-            } else {
-                if (Platform.OS === 'ios') {
-                    var message = 'OpenBarbell needs Photo permissions to play videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
-                } else {
-                    var message = 'OpenBarbell needs Storage permissions to play videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';                    
-                }
-                Alert.alert(
-                    'Additional Permissions Required',
-                    message,
-                    [{text: 'OK'}],
-                    { cancelable: false }
-                );
-            };
-        });
+        this.props.tappedWatch(this.props.setID, this.props.videoFileURL);
     }
 
     _tappedRecord() {
-        this._checkCamPermission().then(() => {
-            this.props.tappedRecord(this.props.setID);
-        });
+        this.props.tappedRecord(this.props.setID);
     }
 
     _tappedCommentary() {
-        this._checkCamPermission().then(() => {
-            this.props.tappedCommentary(this.props.setID);
-        });
-    }
-
-    _checkCamPermission() {
-        return new Promise(async (resolve, reject) => {
-            Permissions.checkMultiple(['camera', 'photo', 'microphone']).then(response => {
-                // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
-                const isCameraAuthorized = response.camera === 'authorized';
-                const isMicrophoneAuthorized = response.microphone === 'authorized';
-                const isStorageAuthorized = response.photo === 'authorized';
-                if (isCameraAuthorized && isMicrophoneAuthorized && isStorageAuthorized) {
-                    resolve();
-                } else {
-                    Alert.alert(
-                        'Additional Permissions Required',
-                        this._cameraPermissionsErrorMessage(isCameraAuthorized, isMicrophoneAuthorized, isStorageAuthorized),
-                        [{text: 'OK'}],
-                        { cancelable: false }
-                    );
-                    reject();
-                };
-            }).catch((error) => {
-                reject();
-            });
-        });
-    };
-
-    _cameraPermissionsErrorMessage(isCameraAuthorized, isMicrophoneAuthorized, isStorageAuthorized) {
-        if (isCameraAuthorized && isMicrophoneAuthorized && isStorageAuthorized) {
-            return null;
-        }
-        if (isCameraAuthorized && isMicrophoneAuthorized) {
-            if (Platform.OS === 'ios') {
-                return 'OpenBarbell needs Photo permissions to store videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
-            } else {
-                return 'OpenBarbell needs Storage permissions to store videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
-            }
-        }
-        if (isMicrophoneAuthorized && isStorageAuthorized) {
-            return 'OpenBarbell needs Camera permissions to record videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
-        }
-        if (isCameraAuthorized && isStorageAuthorized) {
-            return 'OpenBarbell needs Microphone permissions to record videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
-        }
-        if (isCameraAuthorized) {
-            if (Platform.OS === 'ios') {                
-                return 'OpenBarbell needs Microphone and Photos permissions to record and store videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
-            } else {
-                return 'OpenBarbell needs Microphone and Storage permissions to record and store videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
-            }
-        }
-        if (isMicrophoneAuthorized) {
-            if (Platform.OS === 'ios') {                
-                return 'OpenBarbell needs Camera and Photos permissions to record and store videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
-            } else {
-                return 'OpenBarbell needs Camera and Storage permissions to record and store videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
-            }
-        }
-        if (isStorageAuthorized) {
-            return 'OpenBarbell needs Camera and Microphone permissions to record videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
-        }
-        return null;
+        this.props.tappedCommentary(this.props.setID);
     }
 
     render() {
@@ -213,6 +129,5 @@ const styles = StyleSheet.create({
         fontSize: 11
     },
 });
-
 
 export default VideoButton;

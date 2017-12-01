@@ -21,12 +21,15 @@ class VideoButton extends Component {
             if (response === 'authorized') {
                 this.props.tappedWatch(this.props.setID, this.props.videoFileURL);
             } else {
+                if (Platform.OS === 'ios') {
+                    var message = 'OpenBarbell needs Photo permissions to play videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
+                } else {
+                    var message = 'OpenBarbell needs Storage permissions to play videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';                    
+                }
                 Alert.alert(
                     'Additional Permissions Required',
-                    'OpenBarbell needs Photo permissions to play videos on your phone. Please enable them for OpenBarbell in your phone Settings',
-                    [
-                    {text: 'OK'},
-                    ],
+                    message,
+                    [{text: 'OK'}],
                     { cancelable: false }
                 );
             };
@@ -49,15 +52,16 @@ class VideoButton extends Component {
         return new Promise(async (resolve, reject) => {
             Permissions.checkMultiple(['camera', 'photo', 'microphone']).then(response => {
                 // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
-                if (response.camera === 'authorized' && response.microphone === 'authorized' && response.photo === 'authorized') {
+                const isCameraAuthorized = response.camera === 'authorized';
+                const isMicrophoneAuthorized = response.microphone === 'authorized';
+                const isStorageAuthorized = response.photo === 'authorized';
+                if (isCameraAuthorized && isMicrophoneAuthorized && isStorageAuthorized) {
                     resolve();
                 } else {
                     Alert.alert(
                         'Additional Permissions Required',
-                        'OpenBarbell needs Camera, Microphone, and Photo permissions to record and store videos on your phone. Please enable them for OpenBarbell in your phone Settings',
-                        [
-                        {text: 'OK'},
-                        ],
+                        this._cameraPermissionsErrorMessage(isCameraAuthorized, isMicrophoneAuthorized, isStorageAuthorized),
+                        [{text: 'OK'}],
                         { cancelable: false }
                     );
                     reject();
@@ -67,6 +71,43 @@ class VideoButton extends Component {
             });
         });
     };
+
+    _cameraPermissionsErrorMessage(isCameraAuthorized, isMicrophoneAuthorized, isStorageAuthorized) {
+        if (isCameraAuthorized && isMicrophoneAuthorized && isStorageAuthorized) {
+            return null;
+        }
+        if (isCameraAuthorized && isMicrophoneAuthorized) {
+            if (Platform.OS === 'ios') {
+                return 'OpenBarbell needs Photo permissions to store videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
+            } else {
+                return 'OpenBarbell needs Storage permissions to store videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
+            }
+        }
+        if (isMicrophoneAuthorized && isStorageAuthorized) {
+            return 'OpenBarbell needs Camera permissions to record videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
+        }
+        if (isCameraAuthorized && isStorageAuthorized) {
+            return 'OpenBarbell needs Microphone permissions to record videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
+        }
+        if (isCameraAuthorized) {
+            if (Platform.OS === 'ios') {                
+                return 'OpenBarbell needs Microphone and Photos permissions to record and store videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
+            } else {
+                return 'OpenBarbell needs Microphone and Storage permissions to record and store videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
+            }
+        }
+        if (isMicrophoneAuthorized) {
+            if (Platform.OS === 'ios') {                
+                return 'OpenBarbell needs Camera and Photos permissions to record and store videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
+            } else {
+                return 'OpenBarbell needs Camera and Storage permissions to record and store videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
+            }
+        }
+        if (isStorageAuthorized) {
+            return 'OpenBarbell needs Camera and Microphone permissions to record videos on your phone.\n\nPlease enable them for OpenBarbell in your phone Settings';
+        }
+        return null;
+    }
 
     render() {
         switch (this.props.mode) {

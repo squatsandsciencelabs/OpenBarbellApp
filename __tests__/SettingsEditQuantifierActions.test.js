@@ -44,7 +44,7 @@ describe('collapsedMetric Analysis', () => {
                 quantifier4: MIN_QUANTIFIER,
                 metric5: AVG_VELOCITY_METRIC,
                 quantifier5: ABS_LOSS_QUANTIFIER,
-                currentCollapsedMetricRank: null,
+                currentCollapsedMetricRank: 2,
                 isEditingMetric: false,
                 isEditingQuantifier: false,                
             }
@@ -60,70 +60,82 @@ describe('collapsedMetric Analysis', () => {
     });   
 
     describe('change quantifier', () => {
+        test('quantifier changes', () => {
+            const expectedQuantifier = DURATION_METRIC;
 
-        test('quantifier1 changes', () => {
-            let quantifier = DURATION_METRIC;
-
-            store.dispatch(sut.saveQuantifier1Setting(quantifier));
-
-            const event = logEventSpy.mock.calls[0][0];
-            const params = logEventSpy.mock.calls[0][1];
-            expect(event).toEqual('change_quantifier');
-            expect(params.rank).toBe(1);
-            expect(params.from_quantifier).toBe(LAST_REP_QUANTIFIER);   
-            expect(params.to_quantifier).toBe(DURATION_METRIC);
-        });
-
-        test('quantifier2 changes', () => {
-            let quantifier = ABS_LOSS_QUANTIFIER;
-
-            store.dispatch(sut.saveQuantifier2Setting(quantifier));
+            store.dispatch(sut.saveQuantifierSetting(expectedQuantifier));
 
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('change_quantifier');
             expect(params.rank).toBe(2);
             expect(params.from_quantifier).toBe(EMPTY_QUANTIFIER);   
-            expect(params.to_quantifier).toBe(ABS_LOSS_QUANTIFIER);
+            expect(params.to_quantifier).toBe(expectedQuantifier);
+        });
+
+        test('quantifier1 changes', () => {
+            const expectedQuantifier = DURATION_METRIC;
+
+            store.dispatch(sut.saveQuantifier1Setting(expectedQuantifier));
+
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('change_quantifier');
+            expect(params.rank).toBe(1);
+            expect(params.from_quantifier).toBe(LAST_REP_QUANTIFIER);   
+            expect(params.to_quantifier).toBe(expectedQuantifier);
+        });
+
+        test('quantifier2 changes', () => {
+            const expectedQuantifier = ABS_LOSS_QUANTIFIER;
+
+            store.dispatch(sut.saveQuantifier2Setting(expectedQuantifier));
+
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('change_quantifier');
+            expect(params.rank).toBe(2);
+            expect(params.from_quantifier).toBe(EMPTY_QUANTIFIER);   
+            expect(params.to_quantifier).toBe(expectedQuantifier);
         });
 
         test('quantifier3 changes', () => {
-            let quantifier = MAX_QUANTIFIER;
+            const expectedQuantifier = MAX_QUANTIFIER;
 
-            store.dispatch(sut.saveQuantifier3Setting(quantifier));
+            store.dispatch(sut.saveQuantifier3Setting(expectedQuantifier));
 
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('change_quantifier');
             expect(params.rank).toBe(3);
             expect(params.from_quantifier).toBe(MIN_QUANTIFIER);   
-            expect(params.to_quantifier).toBe(MAX_QUANTIFIER);
+            expect(params.to_quantifier).toBe(expectedQuantifier);
         });
 
         test('quantifier4 changes', () => {
-            let quantifier = MAX_QUANTIFIER;
+            const expectedQuantifier = MAX_QUANTIFIER;
 
-            store.dispatch(sut.saveQuantifier4Setting(quantifier));
+            store.dispatch(sut.saveQuantifier4Setting(expectedQuantifier));
 
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('change_quantifier');
             expect(params.rank).toBe(4);
             expect(params.from_quantifier).toBe(MIN_QUANTIFIER);   
-            expect(params.to_quantifier).toBe(MAX_QUANTIFIER);
+            expect(params.to_quantifier).toBe(expectedQuantifier);
         });
 
         test('quantifier5 changes', () => {
-            let quantifier = MIN_QUANTIFIER;
+            const expectedQuantifier = MIN_QUANTIFIER;
 
-            store.dispatch(sut.saveQuantifier5Setting(quantifier));
+            store.dispatch(sut.saveQuantifier5Setting(expectedQuantifier));
 
             const event = logEventSpy.mock.calls[0][0];
             const params = logEventSpy.mock.calls[0][1];
             expect(event).toEqual('change_quantifier');
             expect(params.rank).toBe(5);
             expect(params.from_quantifier).toBe(ABS_LOSS_QUANTIFIER);   
-            expect(params.to_quantifier).toBe(MIN_QUANTIFIER);
+            expect(params.to_quantifier).toBe(expectedQuantifier);
         });
     });
 

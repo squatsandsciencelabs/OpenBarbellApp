@@ -27,7 +27,7 @@ export const presentWatchVideo = (setID, videoFileURL) => (dispatch, getState) =
     }).catch(() => {});
 };
 
-const logWatchVideoAnalytics = (setID, state) => {
+export const logWatchVideoAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('watch_video', {
         is_working_set: false,
         from_collapsed_card: true,

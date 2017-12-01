@@ -52,6 +52,16 @@ const generateSuggestions = (model, input, bias, ignore = []) => {
     // just the suggestions
     matches = matches.map((match) => match.suggestion);
 
+    // hack - ensure bug is last
+    // TODO: if we do more than just the special bug tag, make this a generic system instead so you can add more types
+    if (bias === null && ignore.filter((e) => e === 'bug').length <= 0) {
+        if (matches.length === 10) {
+            matches[9] = 'Bug';
+        } else {
+            matches[matches.length] = 'Bug';
+        }
+    }
+
     // remove if it's exactly equal
     if (matches.length > 0 && matches[0] === input) {
         matches.shift();

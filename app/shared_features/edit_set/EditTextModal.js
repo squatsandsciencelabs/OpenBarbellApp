@@ -294,9 +294,11 @@ class EditTextModal extends Component {
 
     _renderRow(item) {
         if (item.key === 'Bug') {
+            // hack to get bug pill working
+            // TODO: make this generic rather than specific so you can have multiple pill types
             return (
                 <TouchableHighlight onPress={() => this._tappedRow(item.key)}>
-                    <View style={[{backgroundColor: 'rgba(252, 176, 176, 1))', height: 50, justifyContent: 'center'}, styles.rowBorders]}>
+                    <View style={[{backgroundColor: 'white', height: 50, justifyContent: 'center'}, styles.rowBorders]}>
                         <Text style={{marginHorizontal: 10, color: 'red'}}>{item.key}</Text>
                     </View>
                 </TouchableHighlight>

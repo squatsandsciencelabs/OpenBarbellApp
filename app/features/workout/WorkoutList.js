@@ -16,7 +16,6 @@ import EditWorkoutTitleCollapsedScreen from './card/collapsed/EditWorkoutTitleCo
 import EditWorkoutSetFormScreen from './card/expanded/form/EditWorkoutSetFormScreen';
 import EditWorkoutExerciseScreen from './exercise_name/EditWorkoutExerciseScreen';
 import EditWorkoutTagsScreen from './tags/EditWorkoutTagsScreen';
-import WorkoutSetExpandedScreen from './expanded/WorkoutSetExpandedScreen';
 import SetDataLabelRow from 'app/shared_features/set_card/expanded/SetDataLabelRow';
 import SetDataRow from 'app/shared_features/set_card/expanded/SetDataRow';
 import SetRestRow from 'app/shared_features/set_card/SetRestRow';
@@ -189,7 +188,6 @@ class WorkoutList extends Component {
             <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
                 <EditWorkoutExerciseScreen />
                 <EditWorkoutTagsScreen />
-                <WorkoutSetExpandedScreen />
                 <WorkoutVideoRecorderScreen />
                 <WorkoutVideoPlayerScreen />
 

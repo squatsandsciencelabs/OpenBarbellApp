@@ -24,7 +24,7 @@ import * as Analytics from 'app/services/Analytics';
 const SyncSaga = function * SyncSaga() {
     while (true) {
         // sync
-        const task = yield fork(executeSync);        
+        const task = yield fork(executeSync);
         
         // cancel on logout
         yield take(LOGOUT);

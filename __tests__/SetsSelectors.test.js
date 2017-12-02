@@ -185,7 +185,7 @@ describe('SetsSelectors', () => {
         });
     });
 
-    describe.skip('getExpandedWorkoutSet', () => {
+    describe.skip('getWorkoutSet', () => {
         // expanded isn't being used right now, so skipping
     });
 
@@ -805,7 +805,7 @@ describe('SetsSelectors', () => {
         });
     });
 
-    describe.skip('getExpandedHistorySet', () => {
+    describe.skip('getHistorySet', () => {
         // expanded isn't being used right now, so skipping
     });
 

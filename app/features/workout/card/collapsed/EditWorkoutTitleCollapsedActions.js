@@ -5,15 +5,13 @@ import {
 import * as VideoPermissionsUtils from 'app/utility/VideoPermissionsUtils';
 import * as Analytics from 'app/services/Analytics';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
+import * as CollapseExpandWorkoutActions from 'app/redux/shared_actions/CollapseExpandWorkoutActions';
 
 export const expandCard = (setID) => (dispatch, getState) => {
     const state = getState();
     logExpandCardAnalytics(setID, state);
 
-    dispatch({
-        type: EXPAND_WORKOUT_SET,
-        setID: setID,
-    });
+    dispatch(CollapseExpandWorkoutActions.expandCard(setID));
 };
 
 export const presentWatchVideo = (setID, videoFileURL) => (dispatch, getState) => {

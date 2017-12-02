@@ -6,15 +6,13 @@ import * as Analytics from 'app/services/Analytics';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
+import * as CollapseExpandWorkoutActions from 'app/redux/shared_actions/CollapseExpandWorkoutActions';
 
 export const collapseCard = (setID) => (dispatch, getState) => {
     const state = getState();
     logCollapsedCardAnalytics(setID, state);
 
-    dispatch({
-        type: COLLAPSE_WORKOUT_SET,
-        setID, setID
-    });
+    dispatch(CollapseExpandWorkoutActions.collapseCard(setID));
 };
 
 export const presentExercise = (setID, exercise, bias) => (dispatch, getState) => {

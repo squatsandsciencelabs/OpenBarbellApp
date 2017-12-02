@@ -35,16 +35,16 @@ const pickerItem = (quantifier) => ({
 const mapStateToProps = (state, ownProps) => {
     const items = [
         pickerItem(EMPTY_QUANTIFIER),
-        pickerItem(AVG_QUANTIFIER),
-        pickerItem(ABS_LOSS_QUANTIFIER),
-        pickerItem(FIRST_REP_QUANTIFIER),
-        pickerItem(LAST_REP_QUANTIFIER),
-        pickerItem(MIN_QUANTIFIER),
-        pickerItem(MAX_QUANTIFIER),
-        pickerItem(FASTEST_EVER_QUANTIFIER),
-        pickerItem(SLOWEST_EVER_QUANTIFIER),
-        pickerItem(SET_LOSS_QUANTIFIER),
-        pickerItem(PEAK_END_QUANTIFIER),
+        pickerItem(AVG_QUANTIFIER), // vel, pkv, dur
+        pickerItem(FASTEST_EVER_QUANTIFIER), // vel, pkv, dur
+        pickerItem(SLOWEST_EVER_QUANTIFIER), // vel, pkv, dur
+        pickerItem(ABS_LOSS_QUANTIFIER), // vel, pkv, dur, rom
+        pickerItem(SET_LOSS_QUANTIFIER), // vel, pkv, dur, rom
+        pickerItem(PEAK_END_QUANTIFIER), // vel, pkv, dur, rom
+        pickerItem(FIRST_REP_QUANTIFIER), // all
+        pickerItem(LAST_REP_QUANTIFIER), // all
+        pickerItem(MIN_QUANTIFIER), // all
+        pickerItem(MAX_QUANTIFIER), // all
     ];
 
     if (Platform.OS === 'ios') {

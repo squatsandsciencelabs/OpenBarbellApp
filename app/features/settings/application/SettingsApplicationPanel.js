@@ -40,7 +40,7 @@ class SettingsApplicationPanel extends Component {
         if (Platform.OS === 'ios') {
             return (
                 <View>            
-                    <Text style={[{marginBottom: 2}, styles.labelText]}>Show deleted reps</Text>
+                    <Text style={[{marginBottom: 2}, styles.labelText]}>Show deleted sets and reps in history</Text>
                     <Switch
                         style={{backgroundColor: 'white', marginLeft: 3, marginRight: 5}}
                         value={this.props.shouldShowRemoved}
@@ -53,7 +53,7 @@ class SettingsApplicationPanel extends Component {
         } else {
             return (
                 <View style={{flex: 1, flexDirection: 'column', marginTop: 4}}>            
-                    <Text style={[{fontSize: 16, marginLeft: 7}, styles.labelText]}>Show deleted reps</Text>
+                    <Text style={[{fontSize: 16, marginLeft: 7}, styles.labelText]}>Show deleted sets and reps in history</Text>
                     <View style={{width: 55, marginTop: 7}}>
                         <Switch
                             value={this.props.shouldShowRemoved}

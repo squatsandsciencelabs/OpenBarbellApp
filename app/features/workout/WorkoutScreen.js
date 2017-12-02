@@ -25,6 +25,7 @@ const createViewModels = (state, sets) => {
     let count = 0;
     let isLastSet = false; // to set up the live set footer
     let isCollapsed = false;
+    let isRemoved = false;
 
     // build view models
     sets.map((set) => {
@@ -39,14 +40,15 @@ const createViewModels = (state, sets) => {
         // set card data
         let array = [0, 0];
 
-        // set collapsed state
+        // set state booleans
         isCollapsed = isLastSet ? false : WorkoutCollapsedSelectors.getIsCollapsed(state, set.setID);
+        isRemoved = SetEmptyCheck.isEmpty(set);
 
         // card header
         if (isInitialSet) {
             lastExerciseName = null;
             setNumber = 1;
-        } else if (!set.removed) {
+        } else if (!isRemoved) {
             if (lastExerciseName !== null && lastExerciseName === set.exercise) {
                 setNumber++;
             } else {
@@ -58,14 +60,16 @@ const createViewModels = (state, sets) => {
         } else {
             array.push(createTopBorder(set));
         }
-        array.push(createTitleViewModel(state, set, setNumber, lastExerciseName, isLastSet, isCollapsed));
+        array.push(createTitleViewModel(state, set, setNumber, lastExerciseName, isLastSet, isRemoved, isCollapsed));
         if (!isCollapsed) {
-            array.push(createFormViewModel(set, setNumber));
-            array.push(createAnalysisViewModel(set));
+            array.push(createFormViewModel(set, setNumber, isRemoved));
+            if (!isRemoved) {
+                array.push(createAnalysisViewModel(set));
+            }
             if (set.reps.length > 0) {
                 array.push({type: "subheader", key: set.setID+"subheader"});
             }
-        } else {
+        } else if (!isRemoved) {
             array.push(createSummaryViewModel(set));
             array.push(createAnalysisViewModel(set));
         }
@@ -79,9 +83,9 @@ const createViewModels = (state, sets) => {
         // rest footer
         if (isInitialSet) {
             // new set, reset the end time
-            lastSetEndTime = set.removed ? null : SetTimeCalculator.endTime(set);
+            lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
             array.push(createBottomBorder(set));
-        } else if (!set.removed && set.reps.length > 0) { // ignore removed sets in rest calculations
+        } else if (!isRemoved && set.reps.length > 0) { // ignore removed sets in rest calculations
             // add footer if valid
             if (lastSetEndTime !== null) {
                 array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
@@ -120,23 +124,24 @@ const createTopBorder = (set) => ({
     key: set.setID + 'topborder',
 });
 
-const createTitleViewModel = (state, set, setNumber, bias=null, isLastSet=false, isCollapsed=false) => ({
+const createTitleViewModel = (state, set, setNumber, bias=null, isLastSet=false, isRemoved=false, isCollapsed=false) => ({
     type: 'title',
     key: set.setID+'title',
     setNumber: setNumber,
     exercise: set.exercise,
     setID: set.setID,
+    removed: isRemoved,
     isWorkingSet: isLastSet,
     bias: bias,
     isCollapsed: isCollapsed,
     videoFileURL: set.videoFileURL,
 });
 
-const createFormViewModel = (set, setNumber) => ({
+const createFormViewModel = (set, setNumber, isRemoved) => ({
     type: 'form',
     key: set.setID+'form',
     setID: set.setID,
-    removed: set.removed,
+    removed: isRemoved,
     setNumber: setNumber,
     exercise: set.exercise,
     tags: set.tags,

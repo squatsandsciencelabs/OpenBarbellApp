@@ -82,7 +82,7 @@ class SetTitleRowCollapsed extends Component {
         if (this.props.removed) {
             return (
                 <View style={[styles.container, styles.border]}>
-                    <Text style={styles.fieldText}>Set Deleted</Text>
+                    <Text style={styles.fieldText}>Removed Set</Text>
                     {this._renderChevron()}
                 </View>
             );

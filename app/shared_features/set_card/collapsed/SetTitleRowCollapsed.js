@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     videoButton: {
-        backgroundColor: 'white',
+        backgroundColor: 'black',
         borderRadius: 10,
         overflow: 'hidden',
         width: 20,

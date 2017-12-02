@@ -65,8 +65,8 @@ export const getIsWorkoutEmpty = (state) => {
     return true;
 };
 
-export const getExpandedWorkoutSet = (state, setID) => {
-    return state.workoutData.find( set => set.setID == setID );
+export const getWorkoutSet = (state, setID) => {
+    return stateRoot(state).workoutData.find( set => set.setID == setID );
 };
 
 export const getNumWorkoutReps = (state) => {
@@ -240,7 +240,7 @@ export const getNumHistoryWorkouts = (state) => {
     return getHistoryWorkoutIDs(state).length;
 };
 
-export const getExpandedHistorySet = (state, setID) => {
+export const getHistorySet = (state, setID) => {
     var dictionary = stateRoot(state).historyData;
     for (var property in dictionary) {
         if (dictionary.hasOwnProperty(property)) {

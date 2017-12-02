@@ -19,7 +19,6 @@ import HistoryLoadingFooterScreen from './loading/HistoryLoadingFooterScreen';
 import EditHistoryExerciseScreen from './exercise_name/EditHistoryExerciseScreen';
 import EditHistoryTagsScreen from './tags/EditHistoryTagsScreen';
 import UserLoggedOutPanel from './logged_out/UserLoggedOutPanel';
-import HistorySetExpandedScreen from './expanded/HistorySetExpandedScreen';
 import ListLoadingFooter from '../history/loading/ListLoadingFooter';
 import SetDataLabelRow from 'app/shared_features/set_card/expanded/SetDataLabelRow';
 import SetDataRow from 'app/shared_features/set_card/expanded/SetDataRow';
@@ -161,7 +160,6 @@ class HistoryList extends Component {
                 <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
                     <EditHistoryExerciseScreen />
                     <EditHistoryTagsScreen />
-                    <HistorySetExpandedScreen />
                     <HistoryVideoRecorderScreen />
                     <HistoryVideoPlayerScreen />
 

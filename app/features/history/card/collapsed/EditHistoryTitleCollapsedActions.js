@@ -4,15 +4,13 @@ import {
 } from 'app/ActionTypes';
 import * as VideoPermissionsUtils from 'app/utility/VideoPermissionsUtils';
 import * as Analytics from 'app/services/Analytics';
+import * as CollapseExpandHistoryActions from 'app/redux/shared_actions/CollapseExpandHistoryActions';
 
 export const expandCard = (setID) => (dispatch, getState) => {
     const state = getState();
     logExpandCardAnalytics(setID, state);
 
-    dispatch({
-        type: EXPAND_HISTORY_SET,
-        setID: setID,
-    });
+    dispatch(CollapseExpandHistoryActions.expandCard(setID));
 };
 
 export const presentWatchVideo = (setID, videoFileURL) => (dispatch, getState) => {

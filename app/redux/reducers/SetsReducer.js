@@ -87,7 +87,7 @@ const createSet = (setNumber = 1, metric = "kgs") => ({
     initialStartTime: null, // time of first edit, used to calculate times for sets with no reps
     // startTime: null, // LEGACY - use rep time instead
     // endTime: null, // LEGACY - use rep time instead
-    removed: false,
+    removed: false, // NOTE: THIS IS USELESS NOW, removed has changed definitions over time, should no longer use it!
     reps : [],
     tags: [],
     videoFileURL: null,

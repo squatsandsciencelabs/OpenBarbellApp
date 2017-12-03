@@ -16,6 +16,7 @@ import {
     MAX_QUANTIFIER,
     AVG_QUANTIFIER,
     ABS_LOSS_QUANTIFIER,
+    PERCENT_LOSS_QUANTIFIER,
     FASTEST_EVER_QUANTIFIER,
     SLOWEST_EVER_QUANTIFIER,
     SET_LOSS_QUANTIFIER,
@@ -51,6 +52,9 @@ const metricValue = (state, set, quantifier, metric) => {
                 case ABS_LOSS_QUANTIFIER:
                     returnValue = CollapsedMetrics.getAbsLossOfAvgVelocities(set);
                     break;
+                case PERCENT_LOSS_QUANTIFIER:
+                    returnValue = CollapsedMetrics.getPercentLossOfAvgVelocities(set);
+                    break;
                 case SET_LOSS_QUANTIFIER:
                     returnValue = CollapsedMetrics.getSetLossOfAvgVelocities(set);
                     break;
@@ -84,6 +88,9 @@ const metricValue = (state, set, quantifier, metric) => {
                     break;
                 case ABS_LOSS_QUANTIFIER:
                     returnValue = CollapsedMetrics.getAbsLossOfDurations(set);
+                    break;
+                case PERCENT_LOSS_QUANTIFIER:
+                    returnValue = CollapsedMetrics.getPercentLossOfDurations(set);
                     break;
                 case SET_LOSS_QUANTIFIER:
                     returnValue = CollapsedMetrics.getSetLossOfDurations(set);
@@ -121,6 +128,9 @@ const metricValue = (state, set, quantifier, metric) => {
                     break;
                 case ABS_LOSS_QUANTIFIER:
                     returnValue = CollapsedMetrics.getAbsLossOfROMs(set);
+                    break;
+                case PERCENT_LOSS_QUANTIFIER:
+                    returnValue = CollapsedMetrics.getPercentLossOfROMs(set);
                     break;
                 case SET_LOSS_QUANTIFIER:
                     returnValue = CollapsedMetrics.getSetLossOfROMs(set);
@@ -166,6 +176,9 @@ const metricValue = (state, set, quantifier, metric) => {
                 case ABS_LOSS_QUANTIFIER:
                     returnValue = CollapsedMetrics.getAbsLossOfPKVs(set);
                     break;
+                case PERCENT_LOSS_QUANTIFIER:
+                    returnValue = CollapsedMetrics.getPercentLossOfPKVs(set);
+                    break;
                 case SET_LOSS_QUANTIFIER:
                     returnValue = CollapsedMetrics.getSetLossOfPKVs(set);
                     break;
@@ -198,7 +211,7 @@ const metricDescription = (quantifier, metric) => {
     return CollapsedMetrics.quantifierAbbreviation(quantifier) + " " + CollapsedMetrics.metricAbbreviation(metric);
 };
 
-const unit = (metric) => CollapsedMetrics.metricUnit(metric);
+const unit = (metric, quantifier) => CollapsedMetrics.metricUnit(metric, quantifier);
 
 const mapStateToProps = (state, ownProps) => {
     // raw values
@@ -217,20 +230,20 @@ const mapStateToProps = (state, ownProps) => {
     // display values
     return {
         value1: metricValue(state, set, quantifier1, metric1),
-        unit1: unit(metric1),
+        unit1: unit(metric1, quantifier1),
         description1: metricDescription(quantifier1, metric1),
         value2: metricValue(state, set, quantifier2, metric2),
         description2: metricDescription(quantifier2, metric2),
-        unit2: unit(metric2),        
+        unit2: unit(metric2, quantifier2),
         value3: metricValue(state, set, quantifier3, metric3),
         description3: metricDescription(quantifier3, metric3),
-        unit3: unit(metric3),        
+        unit3: unit(metric3, quantifier3),
         value4: metricValue(state, set, quantifier4, metric4),
         description4: metricDescription(quantifier4, metric4),
-        unit4: unit(metric4),        
+        unit4: unit(metric4, quantifier4),
         value5: metricValue(state, set, quantifier5, metric5),
         description5: metricDescription(quantifier5, metric5),
-        unit5: unit(metric5),        
+        unit5: unit(metric5, quantifier5),
     };
 };
 

@@ -17,6 +17,7 @@ import {
     MAX_QUANTIFIER,
     AVG_QUANTIFIER,
     ABS_LOSS_QUANTIFIER,
+    PERCENT_LOSS_QUANTIFIER,
     FASTEST_EVER_QUANTIFIER,
     SLOWEST_EVER_QUANTIFIER,
     SET_LOSS_QUANTIFIER,
@@ -39,6 +40,7 @@ const mapStateToProps = (state, ownProps) => {
         pickerItem(FASTEST_EVER_QUANTIFIER), // vel, pkv, dur
         pickerItem(SLOWEST_EVER_QUANTIFIER), // vel, pkv, dur
         pickerItem(ABS_LOSS_QUANTIFIER), // vel, pkv, dur, rom
+        pickerItem(PERCENT_LOSS_QUANTIFIER), // vel, pkv, dur, rom
         pickerItem(SET_LOSS_QUANTIFIER), // vel, pkv, dur, rom
         pickerItem(PEAK_END_QUANTIFIER), // vel, pkv, dur, rom
         pickerItem(FIRST_REP_QUANTIFIER), // all

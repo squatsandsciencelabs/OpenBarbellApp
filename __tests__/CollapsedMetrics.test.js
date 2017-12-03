@@ -318,6 +318,26 @@ describe('collapsed metrics', () => {
         });
 
     });
+
+    describe('getPercentLossOfAvgVelocities', () => {
+        
+        test('return null when avgVs empty', () => {
+            const set = {
+                reps: [],
+            };
+            
+            const result = sut.getPercentLossOfAvgVelocities(set);
+            
+            expect(result).toBe(null);
+        });
+    
+        test('returns percentlossvelocity', () => {
+            const result = sut.getPercentLossOfAvgVelocities(set);
+    
+            expect(result).toBe(43.72);
+        });
+
+    });
     
     describe('getFirstAvgVelocity', () => {
         
@@ -437,6 +457,26 @@ describe('collapsed metrics', () => {
             const result = sut.getAbsLossOfPKVs(set);
     
             expect(result).toBe(26);
+        });
+
+    });
+
+    describe('getPercentLossOfPKVs', () => {
+        
+        test('return null when PKVs empty', () => {
+            const set = {
+                reps: [],
+            };
+            
+            const result = sut.getPercentLossOfPKVs(set);
+            
+            expect(result).toBe(null);
+        });
+    
+        test('returns percentlossPKVs', () => {
+            const result = sut.getPercentLossOfPKVs(set);
+    
+            expect(result).toBe(45.61);
         });
 
     });
@@ -644,6 +684,26 @@ describe('collapsed metrics', () => {
         });
 
     });
+
+    describe('getPercentLossOfROMs', () => {
+        
+        test('return null when ROMs empty', () => {
+            const set = {
+                reps: [],
+            };
+            
+            const result = sut.getPercentLossOfROMs(set);
+            
+            expect(result).toBe(null);
+        });
+    
+        test('returns percentlossROMs', () => {
+            const result = sut.getPercentLossOfROMs(set);
+    
+            expect(result).toBe(31.67);
+        });
+
+    });
     
     describe('getFirstROM', () => {
         
@@ -763,6 +823,26 @@ describe('collapsed metrics', () => {
             const result = sut.getAbsLossOfDurations(set);
     
             expect(result).toBe(7);
+        });
+
+    });
+
+    describe('getPercentLossOfDurations', () => {
+        
+        test('return null when Durations empty', () => {
+            const set = {
+                reps: [],
+            };
+            
+            const result = sut.getPercentLossOfDurations(set);
+            
+            expect(result).toBe(null);
+        });
+    
+        test('returns percent loss durations', () => {
+            const result = sut.getPercentLossOfDurations(set);
+    
+            expect(result).toBe(77.78);
         });
 
     });

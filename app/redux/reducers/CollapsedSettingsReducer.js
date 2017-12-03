@@ -32,6 +32,7 @@ import {
     MAX_QUANTIFIER,
     AVG_QUANTIFIER,
     ABS_LOSS_QUANTIFIER,
+    PERCENT_LOSS_QUANTIFIER,
     FASTEST_EVER_QUANTIFIER,
     SLOWEST_EVER_QUANTIFIER,
     SET_LOSS_QUANTIFIER,
@@ -234,7 +235,7 @@ const shouldResetMetric = (quantifier, metric) => {
     if (metric === RPE_METRIC) {
         return true;
     }
-    if ((quantifier === AVG_QUANTIFIER || quantifier === ABS_LOSS_QUANTIFIER || quantifier === SET_LOSS_QUANTIFIER || quantifier === PEAK_END_QUANTIFIER) && metric === PKH_METRIC) {
+    if ((quantifier === AVG_QUANTIFIER || quantifier === ABS_LOSS_QUANTIFIER || quantifier === PERCENT_LOSS_QUANTIFIER || quantifier === SET_LOSS_QUANTIFIER || quantifier === PEAK_END_QUANTIFIER) && metric === PKH_METRIC) {
         return true;
     }
     if ((quantifier === FASTEST_EVER_QUANTIFIER || quantifier === SLOWEST_EVER_QUANTIFIER) && (metric === PKH_METRIC || metric === ROM_METRIC)) {

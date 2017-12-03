@@ -15,6 +15,9 @@ import {
     FASTEST_EVER_QUANTIFIER,
     SLOWEST_EVER_QUANTIFIER,
     ABS_LOSS_QUANTIFIER,
+    PERCENT_LOSS_QUANTIFIER,
+    SET_LOSS_QUANTIFIER,
+    PEAK_END_QUANTIFIER,
 } from 'app/constants/CollapsedMetricTypes';
 
 import PickerModal from 'app/shared_features/picker/PickerModal';
@@ -44,6 +47,9 @@ const generateItems = (quantifier) => {
             ];
         case AVG_QUANTIFIER:
         case ABS_LOSS_QUANTIFIER:
+        case PERCENT_LOSS_QUANTIFIER:
+        case SET_LOSS_QUANTIFIER:
+        case PEAK_END_QUANTIFIER:
             return [
                 pickerItem(EMPTY_METRIC),
                 pickerItem(ROM_METRIC),

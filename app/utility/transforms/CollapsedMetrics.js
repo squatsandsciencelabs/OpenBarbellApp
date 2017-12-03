@@ -14,6 +14,7 @@ import {
     MAX_QUANTIFIER,
     AVG_QUANTIFIER,
     ABS_LOSS_QUANTIFIER,
+    PERCENT_LOSS_QUANTIFIER,
     FASTEST_EVER_QUANTIFIER,
     SLOWEST_EVER_QUANTIFIER,
     SET_LOSS_QUANTIFIER,
@@ -98,10 +99,10 @@ const getAbsLossOfMetrics = (metrics) => {
         return null;
     }
 
-    const maxV = Math.max(...metrics);
-    const minV = Math.min(...metrics);
+    const max = Math.max(...metrics);
+    const min = Math.min(...metrics);
     
-    return Number((maxV - minV).toFixed(2));
+    return Number((max - min).toFixed(2));
 };
 
 export const getAbsLossOfAvgVelocities = (set) => {
@@ -122,6 +123,39 @@ export const getAbsLossOfROMs = (set) => {
 export const getAbsLossOfDurations = (set) => {
     const durations = getDurations(set);
     return getAbsLossOfMetrics(durations);    
+};
+
+// Percent Loss Quantifiers
+
+const getPercentLossOfMetrics = (metrics) => {
+    if (metrics.length <= 0) {
+        return null;
+    }
+
+    const max = Math.max(...metrics);
+    const min = Math.min(...metrics);
+    
+    return Number((100*(max - min)/max).toFixed(2));
+};
+
+export const getPercentLossOfAvgVelocities = (set) => {
+    const velocities = getAvgVelocities(set);
+    return getPercentLossOfMetrics(velocities);
+};
+
+export const getPercentLossOfPKVs = (set) => {
+    const pkvs = getPKVs(set);
+    return getPercentLossOfMetrics(pkvs);
+};
+
+export const getPercentLossOfROMs = (set) => {
+    const roms = getROMs(set);
+    return getPercentLossOfMetrics(roms);
+};
+
+export const getPercentLossOfDurations = (set) => {
+    const durations = getDurations(set);
+    return getPercentLossOfMetrics(durations);    
 };
 
 // First Rep Quantifiers
@@ -374,7 +408,12 @@ export const metricString = (metric) => {
     };
 };
 
-export const metricUnit = (metric) => {
+export const metricUnit = (metric, quantifier) => {
+    // some quantifiers override the units
+    if (quantifier === PERCENT_LOSS_QUANTIFIER) {
+        return '%';
+    }
+
     switch (metric) {
         case EMPTY_METRIC:
             return '';
@@ -409,6 +448,8 @@ export const quantifierAbbreviation = (quantifier) => {
             return 'AVG SET';
         case ABS_LOSS_QUANTIFIER:
             return 'A. LOSS';
+        case PERCENT_LOSS_QUANTIFIER:
+            return '% LOSS';
         case FASTEST_EVER_QUANTIFIER:
             return 'FASTEST';
         case SLOWEST_EVER_QUANTIFIER:
@@ -438,6 +479,8 @@ export const quantifierString = (quantifier) => {
             return 'Average Set';
         case ABS_LOSS_QUANTIFIER:
             return 'Absolute Loss';
+        case PERCENT_LOSS_QUANTIFIER:
+            return 'Percent Loss';
         case FASTEST_EVER_QUANTIFIER:
             return 'Fastest Ever';
         case SLOWEST_EVER_QUANTIFIER:

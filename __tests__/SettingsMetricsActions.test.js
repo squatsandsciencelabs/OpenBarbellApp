@@ -8,6 +8,7 @@ import * as sut from 'app/features/settings/metrics/SettingsMetricsActions';
 const middlewares = [ thunk ];
 const mockStore = configureMockStore(middlewares);
 var logEventSpy = null;
+var logScreenSpy = null;
 var store = null;
 
 describe('what are metric tips', () => {
@@ -38,48 +39,48 @@ describe('what are metric tips', () => {
 
 describe('edit collapsed metric screen', () => {
     beforeEach(() => {
-        logEventSpy = jest.spyOn(Analytics, 'setCurrentScreen').mockImplementation(() => {});        
+        logScreenSpy = jest.spyOn(Analytics, 'setCurrentScreen').mockImplementation(() => {});        
         store = mockStore({
             collapsedSettings: {}
         });
     });
 
     afterEach(() => {
-        logEventSpy.mockReset();        
+        logScreenSpy.mockReset();        
     });
 
     afterAll(() => {
-        logEventSpy.mockRestore();
+        logScreenSpy.mockRestore();
     });   
 
     test('edit collapsed_metric screen is set', () => {
         store.dispatch(sut.presentCollapsedMetric());
         
-        const event = logEventSpy.mock.calls[0][0];
+        const event = logScreenSpy.mock.calls[0][0];
         expect(event).toEqual('edit_collapsed_metric');
     });    
 });
 
 describe('edit quantifier screen', () => {
     beforeEach(() => {
-        logEventSpy = jest.spyOn(Analytics, 'setCurrentScreen').mockImplementation(() => {});        
+        logScreenSpy = jest.spyOn(Analytics, 'setCurrentScreen').mockImplementation(() => {});        
         store = mockStore({
             collapsedSettings: {}
         });
     });
 
     afterEach(() => {
-        logEventSpy.mockReset();        
+        logScreenSpy.mockReset();        
     });
 
     afterAll(() => {
-        logEventSpy.mockRestore();
+        logScreenSpy.mockRestore();
     });   
 
     test('edit quantifier screen is set', () => {
         store.dispatch(sut.presentQuantifier());
         
-        const event = logEventSpy.mock.calls[0][0];
+        const event = logScreenSpy.mock.calls[0][0];
         expect(event).toEqual('edit_quantifier');
     });    
 });

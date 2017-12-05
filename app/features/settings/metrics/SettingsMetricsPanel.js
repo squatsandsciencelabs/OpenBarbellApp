@@ -134,33 +134,36 @@ class SettingsMetricsPanel extends Component {
             return (
                 <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
                     <Text style={[{marginBottom: 20}, styles.titleText]}>Metrics</Text>
-                        <View style={{marginBottom: 15}}>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                                <View style={styles.bigMetricBackground}><Text style={styles.bigMetricNumber}>1</Text></View>
-                                <View style={[{flex: 0.63}, styles.dropdownButton]}><SettingsEditQuantifiersScreen color={'white'} rank={1} /></View>
-                                <View style={[{flex: 0.37}, styles.dropdownButton]}><SettingsEditMetricsScreen color={'white'} rank={1} /></View>
-                            </View>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                                <View style={styles.numberBackground}><Text style={styles.numberLabel}>2</Text></View>
-                                <View style={[{flex: 0.63}, styles.dropdownButton]}><SettingsEditQuantifiersScreen color={'white'} rank={2} /></View>
-                                <View style={[{flex: 0.37}, styles.dropdownButton]}><SettingsEditMetricsScreen color={'white'} rank={2} /></View>
-                            </View>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                                <View style={styles.numberBackground}><Text style={styles.numberLabel}>3</Text></View>
-                                <View style={[{flex: 0.63}, styles.dropdownButton]}><SettingsEditQuantifiersScreen color={'white'} rank={3} /></View>
-                                <View style={[{flex: 0.37}, styles.dropdownButton]}><SettingsEditMetricsScreen color={'white'} rank={3} /></View>
-                            </View>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                                <View style={styles.numberBackground}><Text style={styles.numberLabel}>4</Text></View>
-                                <View style={[{flex: 0.63}, styles.dropdownButton]}><SettingsEditQuantifiersScreen color={'white'} rank={4} /></View>
-                                <View style={[{flex: 0.37}, styles.dropdownButton]}><SettingsEditMetricsScreen color={'white'} rank={4} /></View>
-                            </View>
-                            <View style={{flex: 1, flexDirection: 'row'}}>
-                                <View style={styles.numberBackground}><Text style={styles.numberLabel}>5</Text></View>
-                                <View style={[{flex: 0.63}, styles.dropdownButton]}><SettingsEditQuantifiersScreen color={'white'} rank={5} /></View>
-                                <View style={[{flex: 0.37}, styles.dropdownButton]}><SettingsEditMetricsScreen color={'white'} rank={5} /></View>
-                            </View>
+                    <View style={{marginBottom: 15}}>
+                        <View style={{flex: 1, flexDirection: 'row'}}>
+                            <View style={styles.bigMetricBackground}><Text style={styles.bigMetricNumber}>1</Text></View>
+                            <View style={[{flex: 0.63}, styles.dropdownButton]}><SettingsEditQuantifiersScreen color={'white'} rank={1} /></View>
+                            <View style={[{flex: 0.37}, styles.dropdownButton]}><SettingsEditMetricsScreen color={'white'} rank={1} /></View>
+                        </View>
+                        <View style={{flex: 1, flexDirection: 'row'}}>
+                            <View style={styles.numberBackground}><Text style={styles.numberLabel}>2</Text></View>
+                            <View style={[{flex: 0.63}, styles.dropdownButton]}><SettingsEditQuantifiersScreen color={'white'} rank={2} /></View>
+                            <View style={[{flex: 0.37}, styles.dropdownButton]}><SettingsEditMetricsScreen color={'white'} rank={2} /></View>
+                        </View>
+                        <View style={{flex: 1, flexDirection: 'row'}}>
+                            <View style={styles.numberBackground}><Text style={styles.numberLabel}>3</Text></View>
+                            <View style={[{flex: 0.63}, styles.dropdownButton]}><SettingsEditQuantifiersScreen color={'white'} rank={3} /></View>
+                            <View style={[{flex: 0.37}, styles.dropdownButton]}><SettingsEditMetricsScreen color={'white'} rank={3} /></View>
+                        </View>
+                        <View style={{flex: 1, flexDirection: 'row'}}>
+                            <View style={styles.numberBackground}><Text style={styles.numberLabel}>4</Text></View>
+                            <View style={[{flex: 0.63}, styles.dropdownButton]}><SettingsEditQuantifiersScreen color={'white'} rank={4} /></View>
+                            <View style={[{flex: 0.37}, styles.dropdownButton]}><SettingsEditMetricsScreen color={'white'} rank={4} /></View>
+                        </View>
+                        <View style={{flex: 1, flexDirection: 'row'}}>
+                            <View style={styles.numberBackground}><Text style={styles.numberLabel}>5</Text></View>
+                            <View style={[{flex: 0.63}, styles.dropdownButton]}><SettingsEditQuantifiersScreen color={'white'} rank={5} /></View>
+                            <View style={[{flex: 0.37}, styles.dropdownButton]}><SettingsEditMetricsScreen color={'white'} rank={5} /></View>
+                        </View>
                     </View>
+                    <TouchableOpacity style={{alignItems: 'center'}} onPress={ () => this.props.tappedBigMetricsInfo() }>
+                        <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >What are these metrics?</Text>
+                    </TouchableOpacity>
                 </View>
             );
         }

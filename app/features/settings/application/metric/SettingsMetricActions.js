@@ -4,13 +4,14 @@ import {
 import * as Analytics from 'app/services/Analytics';
 import * as CollapsedSettingsActionCreators from 'app/redux/shared_actions/CollapsedSettingsActionCreators';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
+import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsActionCreators';
 
 export const saveDefaultMetricSetting = (metric = 'kgs') => (dispatch, getState) => {
     const state = getState();
     
     logChangeDefaultMetricAnalytics(metric, state);
 
-    dispatch(CollapsedSettingsActionCreators.saveDefaultMetric(metric));
+    dispatch(SettingsActionCreators.saveDefaultMetric(metric));
 };
 
 export const dismissDefaultMetricSetter = () => {

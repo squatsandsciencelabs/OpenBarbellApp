@@ -2,7 +2,6 @@ import {
     DISMISS_DEFAULT_METRIC
 } from 'app/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
-import * as CollapsedSettingsActionCreators from 'app/redux/shared_actions/CollapsedSettingsActionCreators';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsActionCreators';
 

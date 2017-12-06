@@ -338,7 +338,7 @@ const getSetLossMetrics = (metrics) => {
     const firstRepMetric = getFirstRepOfMetrics(metrics);
 
     if (metrics.length > 0) {
-        return lastRepMetric - firstRepMetric;
+        return Number((lastRepMetric - firstRepMetric).toFixed(2));
     } else {
         return null;
     }

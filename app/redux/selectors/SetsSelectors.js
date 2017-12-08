@@ -367,3 +367,36 @@ export const getSlowestDurationEver = (state, set) => {
 };
 
 export const getRevision = (state) => stateRoot(state).revision;
+
+// 1rm
+
+export const getWeightVelocities = (state) => {   
+    const historySets = getHistorySets(state);
+    const workoutSets = getWorkoutSets(state);
+
+    const sets = historySets.concat(workoutSets);
+    let data = [];
+
+    sets.forEach((set) => {
+        // if it already exists, replace it.
+        data.push([set.weight, set.reps[0].data[2]])
+    });
+
+    return data;
+}
+
+export const get1rm = (state) => {
+    const lifts = getWeightVelocities(state);
+    let maxWeight = lifts[0][0];
+    let slowestVel = lifts[0][1];
+
+    // highest lift
+    for (let i = 1; i < lifts.length; i++) {
+        if (lifts[i][0] > maxWeight && lifts[i][1] < slowestVel) {
+            maxWeight = lifts[i][0];
+            slowestVel = lifts[i][1];
+        }
+    };
+
+    return { weight: maxWeight, velocity: slowestVel };
+}

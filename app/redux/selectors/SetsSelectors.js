@@ -6,6 +6,7 @@ import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
 import * as CollapsedMetrics from 'app/utility/transforms/CollapsedMetrics';
+import * as OneRepMax from 'app/utility/transforms/OneRepMax';
 
 const stateRoot = (state) => state.sets;
 
@@ -370,7 +371,7 @@ export const getRevision = (state) => stateRoot(state).revision;
 
 // 1rm
 
-export const getWeightVelocities = (state) => {   
+export const getExerciseVelocities = (state, exercise) => {   
     const historySets = getHistorySets(state);
     const workoutSets = getWorkoutSets(state);
 
@@ -379,14 +380,16 @@ export const getWeightVelocities = (state) => {
 
     sets.forEach((set) => {
         // if it already exists, replace it.
-        data.push([set.weight, set.reps[0].data[2]])
+        if (set.exercise === exercise) {
+            data.push([set.weight, set.reps[0].data[2]])
+        }
     });
 
     return data;
 }
 
-export const get1rm = (state) => {
-    const lifts = getWeightVelocities(state);
+export const get1rm = (state, exercise) => {
+    const lifts = getExerciseVelocities(state, exercise);
     let maxWeight = lifts[0][0];
     let slowestVel = lifts[0][1];
 
@@ -399,4 +402,10 @@ export const get1rm = (state) => {
     };
 
     return { weight: maxWeight, velocity: slowestVel };
+}
+
+export const predictExerciseVelocities = (state, exercise, weight) => {
+    const data = getExerciseVelocities(state, exercise);
+
+    return OneRepMax.velocityPrediction(data, 220);
 }

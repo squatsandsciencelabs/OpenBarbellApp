@@ -1,13 +1,17 @@
 import {
-    UPDATE_SUGGESTIONS,
+    UPDATE_TAG_SUGGESTIONS,
+    UPDATE_EXERCISE_SUGGESTIONS
 } from 'app/ActionTypes';
 
 const SuggestionsReducer = (state = createDefaultState(), action) => {
     switch (action.type) {
-        case UPDATE_SUGGESTIONS:
+        case UPDATE_EXERCISE_SUGGESTIONS:
             return Object.assign({}, state, {
-                exerciseModel: generateAutocompleteExerciseModel(action.historyData),
-                tagsModel: generateAutocompleteTagsModel(action.historyData),
+                tagsModel: generateAutocompleteExerciseModel(action.workoutData, action.historyData)
+            });
+        case UPDATE_TAG_SUGGESTIONS:
+            return Object.assign({}, state, {
+                tagsModel: generateAutocompleteTagsModel(action.workoutData, action.historyData)
             });
         default:
             return state;
@@ -29,11 +33,13 @@ const createDefaultState = () => ({
     }
 });
 
-const generateAutocompleteExerciseModel = (historyData) => {
+const generateAutocompleteExerciseModel = (workoutData, historyData) => {
     // declare vars
     let dictionary = createDefaultState().exerciseModel;
     let model = createDefaultState().exerciseModel;
-    let sets = dictToArray(historyData);
+    let historySets = dictToArray(historyData);
+    let workoutSets = dictToArray(workoutData);
+    let sets = workoutSets.concat(historySets);
 
     // ignore nulls and empty strings
     sets = sets.filter((set) => set.exercise !== null && set.exercise !== '');
@@ -59,10 +65,12 @@ const generateAutocompleteExerciseModel = (historyData) => {
     return model;
 };
 
-const generateAutocompleteTagsModel = (historyData) => {
+const generateAutocompleteTagsModel = (workoutData, historyData) => {
     // declare vars
     let model = createDefaultState().tagsModel;
-    let sets = dictToArray(historyData);
+    let workoutSets = dictToArray(workoutData);
+    let historySets = dictToArray(historyData);
+    let sets = workoutSets.concat(historySets);
 
     // ignore undefined / nulls / empties
     sets = sets.filter((set) => set.tags !== undefined && set.tags !== null && set.tags.length > 0);

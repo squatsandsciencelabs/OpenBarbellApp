@@ -1349,6 +1349,29 @@ describe('SetsSelectors', () => {
             });
 
         });
+
+        describe('getExerciseVelocities', () => {
+
+            test('return data', () => {
+                const result = sut.getExerciseVelocities(state, 'Bench');
+
+                const expected = [[100, 1.833368], [100, 1.733368], [200, 1.833368], [100, 1.433368]]
+
+                expect(result).toEqual(expected);
+            })
+        });
+
+        describe('get 1rm', () => {
+            const result = sut.get1rm(state, 'Bench');
+
+            expect(result).toEqual({"velocity": 1.833368, "weight": 100});
+        });
+
+        describe('predictExerciseVelocities', () => {
+            const result = sut.predictExerciseVelocities(state, 'Bench', 135);
+
+            expect(result).toBe(1.87);
+        })
     });
 
     describe.skip('getSetsToUpload', () => {

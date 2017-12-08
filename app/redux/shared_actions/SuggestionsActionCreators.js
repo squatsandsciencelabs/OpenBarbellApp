@@ -1,12 +1,24 @@
 import {
-    UPDATE_SUGGESTIONS
+    UPDATE_TAG_SUGGESTIONS,
+    UPDATE_EXERCISE_SUGGESTIONS
 } from 'app/ActionTypes';
 
-export const updateSuggestions = () => (dispatch, getState) => {
+export const updateTagSuggestions = () => (dispatch, getState) => {
     let state = getState();
-
+    
     dispatch({
-        type: UPDATE_SUGGESTIONS,
+        type: UPDATE_TAG_SUGGESTIONS,
+        workoutData: state.sets.workoutData,
+        historyData: state.sets.historyData
+    });    
+}
+
+export const updateExerciseSuggestions = () => (dispatch, getState) => {
+    let state = getState();
+    
+    dispatch({
+        type: UPDATE_EXERCISE_SUGGESTIONS,
+        workoutData: state.sets.workoutData,
         historyData: state.sets.historyData
     });
-};
+}

@@ -10,7 +10,8 @@ import * as SuggestionsActionCreators from 'app/redux/shared_actions/Suggestions
 const SuggestionsSaga = function * SuggestionsSaga() {
     while (true) {
         yield take([LOGIN_SUCCESS, LOGOUT, STORE_INITIALIZED]);
-        yield put(SuggestionsActionCreators.updateSuggestions());
+        yield put(SuggestionsActionCreators.updateExerciseSuggestions());
+        yield put(SuggestionsActionCreators.updateTagSuggestions());
     }
 };
 

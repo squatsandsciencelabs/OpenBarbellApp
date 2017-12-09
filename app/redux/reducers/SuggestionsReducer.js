@@ -58,7 +58,6 @@ const generateAutocompleteExerciseModel = (workoutData, historyData) => {
     for (var property in dictionary) {
         if (dictionary.hasOwnProperty(property) && dictionary[property].seed > 1) {
             model[property] = dictionary[property];
-            console.tron.log(property + " = " + JSON.stringify(dictionary[property]));
         }
     }
 

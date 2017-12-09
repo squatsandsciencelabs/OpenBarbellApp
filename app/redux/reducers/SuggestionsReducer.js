@@ -7,7 +7,7 @@ const SuggestionsReducer = (state = createDefaultState(), action) => {
     switch (action.type) {
         case UPDATE_EXERCISE_SUGGESTIONS:
             return Object.assign({}, state, {
-                tagsModel: generateAutocompleteExerciseModel(action.workoutData, action.historyData)
+                exerciseModel: generateAutocompleteExerciseModel(action.workoutData, action.historyData)
             });
         case UPDATE_TAG_SUGGESTIONS:
             return Object.assign({}, state, {
@@ -38,7 +38,7 @@ const generateAutocompleteExerciseModel = (workoutData, historyData) => {
     let dictionary = createDefaultState().exerciseModel;
     let model = createDefaultState().exerciseModel;
     let historySets = dictToArray(historyData);
-    let workoutSets = dictToArray(workoutData);
+    let workoutSets = workoutData;
     let sets = workoutSets.concat(historySets);
 
     // ignore nulls and empty strings
@@ -58,9 +58,10 @@ const generateAutocompleteExerciseModel = (workoutData, historyData) => {
     for (var property in dictionary) {
         if (dictionary.hasOwnProperty(property) && dictionary[property].seed > 1) {
             model[property] = dictionary[property];
+            console.tron.log(property + " = " + JSON.stringify(dictionary[property]));
         }
     }
-    
+
     // return
     return model;
 };
@@ -68,7 +69,7 @@ const generateAutocompleteExerciseModel = (workoutData, historyData) => {
 const generateAutocompleteTagsModel = (workoutData, historyData) => {
     // declare vars
     let model = createDefaultState().tagsModel;
-    let workoutSets = dictToArray(workoutData);
+    let workoutSets = workoutData;
     let historySets = dictToArray(historyData);
     let sets = workoutSets.concat(historySets);
 

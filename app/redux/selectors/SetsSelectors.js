@@ -370,7 +370,7 @@ export const getRevision = (state) => stateRoot(state).revision;
 
 // 1rm
 
-export const getWeightVelocities = (state) => {   
+export const getExerciseVelocities = (state, exercise) => {   
     const historySets = getHistorySets(state);
     const workoutSets = getWorkoutSets(state);
 
@@ -378,15 +378,16 @@ export const getWeightVelocities = (state) => {
     let data = [];
 
     sets.forEach((set) => {
-        // if it already exists, replace it.
-        data.push([set.weight, set.reps[0].data[2]])
+        if (set.exercise === exercise) {
+            data.push([set.weight, set.reps[0].data[2]]);
+        }       
     });
 
     return data;
 }
 
-export const get1rm = (state) => {
-    const lifts = getWeightVelocities(state);
+export const get1rm = (state, exercise) => {
+    const lifts = getExerciseVelocities(state, exercise);
     let maxWeight = lifts[0][0];
     let slowestVel = lifts[0][1];
 

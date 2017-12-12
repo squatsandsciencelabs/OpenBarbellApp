@@ -1350,34 +1350,21 @@ describe('SetsSelectors', () => {
 
         });
 
-        describe('getWeightVelocities', () => {
+        describe('getExerciseVelocities', () => {
 
             test('return data', () => {
-                const result = sut.getWeightVelocities(state);
+                const result = sut.getExerciseVelocities(state, 'Bench');
 
-                const expected = [
-                    [100, 1.833368], 
-                    [200, 1.943368], 
-                    [100, 1.733368], 
-                    [200, 1.833368], 
-                    [100, 1.3], 
-                    [200, 1.3], 
-                    [200, 2.933368], 
-                    [100, 1.333368], 
-                    [200, 1.933368], 
-                    [200, 3.933368], 
-                    [100, 1.433368], 
-                    [100, 1.333368]
-                ]
+                const expected = [[100, 1.833368], [100, 1.733368], [200, 1.833368], [100, 1.433368]];
 
                 expect(result).toEqual(expected);
             })
         });
 
         describe('get 1rm', () => {
-            const result = sut.get1rm(state);
+            const result = sut.get1rm(state, 'Bench');
 
-            expect(result).toBe(0);
+            expect(result).toEqual({"velocity": 1.833368, "weight": 100});
         })
     });
 

@@ -13,8 +13,8 @@ describe('1rm', () => {
             [320, 0.19]
         ];
 
-        const result = sut.velocityPrediction(data, 330);
+        const result = sut.OneRMPrediction(data, 0.15);
         
-        expect(result).toBe(0.13);
+        expect(result).toBe(326);
     });
 });

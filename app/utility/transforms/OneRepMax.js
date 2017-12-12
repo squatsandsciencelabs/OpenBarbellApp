@@ -1,9 +1,10 @@
 import regression from 'regression';
 
-export const velocityPrediction = (data, weight) => {
+export const OneRMPrediction = (data, velocity) => {
     // gather points
     const result = regression.linear(data, { precision: 4 });
 
     //prediction
-    return Number(result.predict(weight)[1].toFixed(2));
+    // 
+    return Number(((velocity - result.equation[1]) / result.equation[0]).toFixed(0));
 }

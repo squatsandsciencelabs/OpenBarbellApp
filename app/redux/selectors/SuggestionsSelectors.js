@@ -5,14 +5,14 @@ const exerciseNameModel = (state) => stateRoot(state).exerciseModel;
 const tagsModel = (state) => stateRoot(state).tagsModel;
 
 export const generateExerciseNameSuggestions = (state, input, bias = null) => {
-    return generateSuggestions(exerciseNameModel(state), input, bias);
+    return generateSuggestions(exerciseNameModel(state), input, bias, false);
 };
 
 export const generateTagsSuggestions = (state, input, ignore = []) => {
-    return generateSuggestions(tagsModel(state), input, null, ignore);
+    return generateSuggestions(tagsModel(state), input, null, true, ignore);
 };
 
-const generateSuggestions = (model, input, bias, ignore = []) => {
+const generateSuggestions = (model, input, bias, showBug=false, ignore = []) => {
     // lowercase comparisons
     var lowercaseInput = '';
     if (input !== null) {
@@ -54,7 +54,7 @@ const generateSuggestions = (model, input, bias, ignore = []) => {
 
     // hack - ensure bug is last
     // TODO: if we do more than just the special bug tag, make this a generic system instead so you can add more types
-    if (bias === null) {
+    if (showBug) {
         // remove all bugs from suggestions so you can re-add it at the end
         matches = matches.filter((e) => e !== 'Bug');
 

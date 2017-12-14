@@ -1349,23 +1349,23 @@ describe('SetsSelectors', () => {
             });
 
         });
-
-        describe('getExerciseVelocities', () => {
+        
+        describe('getExerciseData', () => {
 
             test('return data', () => {
-                const result = sut.getExerciseVelocities(state, 'Bench');
-
-                const expected = [[100, 1.833368], [100, 1.733368], [200, 1.833368], [100, 1.433368]];
+                const expected = [[100, 1.83], [100, 1.73], [200, 1.83], [100, 1.43]];
+                
+                const result = sut.getExerciseData(state, 'Bench');
 
                 expect(result).toEqual(expected);
-            })
+            });
         });
 
         describe('get 1rm', () => {
             const result = sut.get1rm(state, 'Bench');
 
-            expect(result).toEqual({"velocity": 1.833368, "weight": 100});
-        })
+            expect(result).toEqual({ "velocity": 1.83, "weight": 100, "confidence": 19 });
+        });
     });
 
     describe.skip('getSetsToUpload', () => {

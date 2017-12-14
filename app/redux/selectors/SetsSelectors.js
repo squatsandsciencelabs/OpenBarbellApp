@@ -5,6 +5,7 @@ import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
+import * as OneRepMax from 'app/utility/transforms/OneRepMax';
 import * as CollapsedMetrics from 'app/utility/transforms/CollapsedMetrics';
 
 const stateRoot = (state) => state.sets;
@@ -369,17 +370,16 @@ export const getSlowestDurationEver = (state, set) => {
 export const getRevision = (state) => stateRoot(state).revision;
 
 // 1rm
-
-export const getExerciseVelocities = (state, exercise) => {   
-    const historySets = getHistorySets(state);
-    const workoutSets = getWorkoutSets(state);
-
-    const sets = historySets.concat(workoutSets);
+// Get Weights and Velocity for the exercise
+export const getExerciseData = (state, exercise) => {   
+    const sets = getAllSets(state);
     let data = [];
 
     sets.forEach((set) => {
+        const repData = set.reps[0].data;
+
         if (set.exercise === exercise) {
-            data.push([set.weight, set.reps[0].data[2]]);
+            data.push([set.weight, Number(RepDataMap.averageVelocity(repData))]);
         }       
     });
 
@@ -387,11 +387,15 @@ export const getExerciseVelocities = (state, exercise) => {
 }
 
 export const get1rm = (state, exercise) => {
-    const lifts = getExerciseVelocities(state, exercise);
+    const lifts = getExerciseData(state, exercise);
+
+    const confidence = OneRepMax.getConfidenceInterval(lifts);
+
     let maxWeight = lifts[0][0];
     let slowestVel = lifts[0][1];
 
     // highest lift
+    // compare against max weight and slowest vel to get max weight at its slowest vel
     for (let i = 1; i < lifts.length; i++) {
         if (lifts[i][0] > maxWeight && lifts[i][1] < slowestVel) {
             maxWeight = lifts[i][0];
@@ -399,5 +403,12 @@ export const get1rm = (state, exercise) => {
         }
     };
 
-    return { weight: maxWeight, velocity: slowestVel };
+    return { weight: maxWeight, velocity: slowestVel, confidence};
+}
+
+const getAllSets = (state) => {
+    const historySets = getHistorySets(state);
+    const workoutSets = getWorkoutSets(state);
+
+    return historySets.concat(workoutSets);
 }

@@ -36,3 +36,11 @@ Be careful when using react-native link. It duplicates imports for the React Nat
 For Android, run it on device rather than the emulator. Bluetooth requirements cause issues.
 
 Unit tests have not been added yet; they are on the roadmap.
+
+# APP ARCHITECTURE
+
+See https://github.com/squatsandsciencelabs/OpenBarbell-V3/wiki/App-Architecture
+
+# DATA FORMAT
+
+See https://github.com/squatsandsciencelabs/OpenBarbell-V3/wiki/OpenBarbell-Data-Storage-Format

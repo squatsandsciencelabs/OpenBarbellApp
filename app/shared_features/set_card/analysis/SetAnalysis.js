@@ -6,9 +6,6 @@ import {
     Dimensions,
 } from 'react-native';
 
-import * as CollapsedMetrics from 'app/utility/transforms/CollapsedMetrics';
-import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
-
 class SetAnalysis extends Component {
 
     _renderAnalysis(value, unit, description, isBigMetric) {

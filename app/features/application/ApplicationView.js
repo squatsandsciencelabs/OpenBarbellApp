@@ -77,7 +77,7 @@ class ApplicationView extends Component {
     _renderHeader = props => <TabBar
         indicatorStyle={{backgroundColor: '#eb5757', height: 2}}
         style={{backgroundColor: '#333333'}}
-        labelStyle={{fontWeight: '500'}}
+        labelStyle={{fontWeight: '500', fontSize: 12, padding: 0, marginLeft: 0, marginRight: 0 }}
         {...props} />;
 
     _renderApplication() {

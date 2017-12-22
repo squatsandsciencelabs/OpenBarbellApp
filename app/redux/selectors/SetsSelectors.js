@@ -5,7 +5,7 @@ import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
-import * as OneRepMax from 'app/utility/transforms/OneRepMax';
+import * as OneRMPrediction from 'app/utility/transforms/OneRMPrediction';
 import * as CollapsedMetrics from 'app/utility/transforms/CollapsedMetrics';
 
 const stateRoot = (state) => state.sets;
@@ -379,7 +379,7 @@ export const getExerciseData = (state, exercise) => {
         const repData = set.reps[0].data;
 
         if (set.exercise === exercise) {
-            data.push([set.weight, Number(RepDataMap.averageVelocity(repData))]);
+            data.push([set.weight, Number(RepDataMap.averageVelocity(set.reps[0].data))]);
         }       
     });
 
@@ -389,7 +389,7 @@ export const getExerciseData = (state, exercise) => {
 export const get1rm = (state, exercise) => {
     const lifts = getExerciseData(state, exercise);
 
-    const confidence = OneRepMax.getConfidenceInterval(lifts);
+    const confidence = OneRMPrediction.getConfidenceInterval(lifts);
 
     let maxWeight = lifts[0][0];
     let slowestVel = lifts[0][1];

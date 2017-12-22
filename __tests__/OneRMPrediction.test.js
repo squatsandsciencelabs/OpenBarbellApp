@@ -1,4 +1,4 @@
-import * as sut from 'app/utility/transforms/OneRepMax';
+import * as sut from 'app/utility/transforms/OneRMPrediction';
 
 var data = [
     [255, 0.48], 
@@ -12,9 +12,9 @@ var data = [
 
 describe('1rm', () => {
 
-    test('return velocity estimate', () => {
+    test('return 1rm prediction', () => {
 
-        const result = sut.OneRMPrediction(data, 0.15);
+        const result = sut.get1rmPrediction(data, 0.15);
         
         expect(result).toBe(326);
     });
@@ -29,4 +29,3 @@ describe('confidenceInterval', () => {
         expect(result).toBe(91);
     });
 });
-    

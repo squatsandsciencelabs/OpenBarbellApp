@@ -1,7 +1,7 @@
 import regression from 'regression';
 
 // Data must be an array of arrays, sub arrays representing X, and Y values
-export const OneRMPrediction = (data, velocity) => {
+export const get1rmPrediction = (data, velocity) => {
     // gather points
     // precision is 4 for accuracy of regression points in the library
     const result = regression.linear(data, { precision: 4 });

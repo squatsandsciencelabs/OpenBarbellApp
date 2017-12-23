@@ -50,12 +50,48 @@ function* executeSync() {
         // login check - do not need to check is uploading as relying on the cancel instead
         const isLoggedIn = yield select(AuthSelectors.getIsLoggedIn);    
         if (!isLoggedIn)  {
-            console.tron.log("Not logged in, backing out of sync");
-            const state = yield select();
-            logSyncIgnoredAnalytics(state);
+            yield call(pushAnonymousUpdates);
+            // console.tron.log("Not logged in, backing out of sync");
+            // const state = yield select();
+            // logSyncIgnoredAnalytics(state);
         } else {
             // actions
             yield call(pushUpdates);
+        }
+    }
+}
+
+function *pushAnonymousUpdates() {
+    const sets = yield select(SetsSelectors.getSetsToUpload);
+    if (sets.length > 0) {
+        yield put(SetsActionCreators.beginUploadingSets());
+        try {
+            // upload
+            let state = yield select();
+            // logAttemptPushDataAnalytics(state);
+            const accessToken = yield select(AuthSelectors.getAccessToken);
+            const lastRefreshDate = yield select(AuthSelectors.getLastRefreshDate);
+            const validator = new Validator(accessToken, lastRefreshDate);
+            const json = yield call(API.postAnonymousSetData, sets, validator);
+
+            // success
+            state = yield select();
+            // logPushDataSucceededAnalytics(state);
+            yield put(SetsActionCreators.finishedUploadingSets());
+        } catch(error) {
+            // error
+            let state = yield select();
+            // logPushDataErrorAnalytics(state);
+            yield put(SetsActionCreators.failedUploadSets());
+            if (error.type !== undefined || typeof error === 'function') {
+                yield put(error);
+            }
+            console.tron.log(JSON.stringify(error));            
+        } finally {
+            if (yield cancelled()) {
+                console.tron.log("Push Anonymous Updates cancelled");            
+                yield put(SetsActionCreators.failedUploadSets());
+            }
         }
     }
 }

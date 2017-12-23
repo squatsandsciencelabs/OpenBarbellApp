@@ -22,9 +22,9 @@ const TokenSaga = function * TokenSaga() {
 function* executeObtainNewTokens() {
     const isLoggedIn = yield select(AuthSelectors.getIsLoggedIn);
     if (isLoggedIn) {
-        yield obtainNewTokens();
+        yield call(obtainNewTokens);
     } else {
-        yield obtainNewAnonymousTokens();
+        yield call(obtainNewAnonymousTokens);
     }
 }
 

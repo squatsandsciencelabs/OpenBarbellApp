@@ -16,7 +16,7 @@ import * as Analytics from 'app/services/Analytics';
 
 const AuthSaga = function * AuthSaga() {
     yield take(STORE_INITIALIZED);
-    yield executeAnonymousLogin();
+    yield call(executeAnonymousLogin);
     
     while (true) {
         // login
@@ -36,7 +36,7 @@ const AuthSaga = function * AuthSaga() {
             logLogoutAnalytics(state);
 
             // login anonymously
-            yield executeAnonymousLogin();
+            yield call(executeAnonymousLogin);
         } catch(error) {
             console.tron.log("LOGOUT SIGN OUT ERROR " + error);
             let state = yield select();

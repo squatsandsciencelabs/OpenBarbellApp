@@ -28,7 +28,7 @@ export const endWorkout = () => (dispatch, getState) => {
               {text: 'Cancel', style: 'cancel'},,
             ],
             { cancelable: false }
-          )                    
+        )
     }
 };
 

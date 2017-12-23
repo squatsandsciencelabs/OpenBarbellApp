@@ -14,10 +14,19 @@ import * as Analytics from 'app/services/Analytics';
 
 const TokenSaga = function * TokenSaga() {
     yield all([
-        takeEvery(CHANGE_TAB, obtainNewTokens),
-        takeEvery(STORE_INITIALIZED, obtainNewTokens)        
+        takeEvery(CHANGE_TAB, executeObtainNewTokens),
+        takeEvery(STORE_INITIALIZED, executeObtainNewTokens)        
     ]);
 };
+
+function* executeObtainNewTokens() {
+    const isLoggedIn = yield select(AuthSelectors.getIsLoggedIn);
+    if (isLoggedIn) {
+        yield obtainNewTokens();
+    } else {
+        yield obtainNewAnonymousTokens();
+    }
+}
 
 function* obtainNewTokens() {
     // check has token
@@ -48,6 +57,46 @@ function* obtainNewTokens() {
         } catch(error) {
             let state = yield select();
             logRefreshTokenErrorAnalytics(state);
+            if (error.type !== undefined || typeof error === 'function') {
+                yield put(error);
+            }
+            console.tron.log(JSON.stringify(error));
+        }
+    }
+
+    // ready
+    yield put(AuthActionCreators.tokensReady());
+}
+
+function *obtainNewAnonymousTokens() {
+    // check has token
+    const refreshToken = yield select(AuthSelectors.getRefreshToken);    
+    if (refreshToken === null) {
+        console.tron.log("cannot refresh as no refresh token");
+        return;
+    }
+
+    // check should refresh
+    var lastRefreshDate = yield select(AuthSelectors.getLastRefreshDate);
+    lastRefreshDate = DateUtils.getDate(lastRefreshDate);
+    if (!shouldRequestNewToken(lastRefreshDate)) {
+        console.tron.log("hasn't been long enough to refresh anonymous " + lastRefreshDate + " " + OpenBarbellConfig.obtainTokenTimer + " vs " + Math.abs(new Date() - lastRefreshDate));
+    } else {
+        console.tron.log("refreshing anonymous tokens");
+
+        try {
+            // refresh
+            let state = yield select();
+            // logAttemptRefreshTokenAnalytics(state);
+            const json = yield call(API.obtainNewAnonymousTokens, refreshToken);
+
+            // success
+            state = yield select();
+            // logRefreshedTokenAnalytics(state);
+            yield put(AuthActionCreators.saveTokens(json.accessToken, json.refreshToken, new Date()));
+        } catch(error) {
+            let state = yield select();
+            // logRefreshTokenErrorAnalytics(state);
             if (error.type !== undefined || typeof error === 'function') {
                 yield put(error);
             }

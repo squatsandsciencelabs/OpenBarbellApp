@@ -5,14 +5,19 @@ import { Alert, Platform } from 'react-native';
 import { GoogleSignin } from 'react-native-google-signin';
 
 import {
+    STORE_INITIALIZED,
     LOGIN_REQUEST,
     LOGOUT,
 } from 'app/ActionTypes';
 import API from 'app/services/API';
+import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
 import * as Analytics from 'app/services/Analytics';
 
 const AuthSaga = function * AuthSaga() {
+    yield take(STORE_INITIALIZED);
+    yield executeAnonymousLogin();
+    
     while (true) {
         // login
         const task = yield fork(executeLogin);
@@ -21,11 +26,17 @@ const AuthSaga = function * AuthSaga() {
         yield take(LOGOUT);
         yield cancel(task);
         try {
+            // reset and logout
             Analytics.setUserID();
             const user = yield apply(GoogleSignin, GoogleSignin.currentUserAsync);
             yield apply(GoogleSignin, GoogleSignin.signOut);
+
+            // analytics
             let state = yield select();
             logLogoutAnalytics(state);
+
+            // login anonymously
+            yield executeAnonymousLogin();
         } catch(error) {
             console.tron.log("LOGOUT SIGN OUT ERROR " + error);
             let state = yield select();
@@ -33,6 +44,17 @@ const AuthSaga = function * AuthSaga() {
         }
     }
 };
+
+function* executeAnonymousLogin() {
+    // login immediately
+    let refreshToken = yield select(AuthSelectors.getRefreshToken);
+    if (!refreshToken) {
+        // TODO: analytics?
+        let json = yield call(API.loginAnonymously);
+        // TOOD: analytics?
+        yield put(AuthActionCreators.saveTokens(json.accessToken, json.refreshToken, new Date()));
+    }
+}
 
 function* executeLogin() {
     try {

@@ -29,9 +29,37 @@ const API = {
         });
     },
 
+    postAnonymousSetData: (sets, validator) => {
+        return new Promise((resolve, reject) => {
+            if (validator.isValid) {
+                executeRequest('POST', 'anonymous-sets', sets, validator.accessToken)
+                .then((json) => {
+                    resolve(json);
+                }).catch((error) => {
+                    // TODO: check if this will work, I'm assuming that the error will always be an action
+                    reject(error);
+                });
+            } else {
+                reject(new Error("has not been atleast two weeks"));
+            }
+        });
+    },
+
     login: (googleToken) => {
         return new Promise((resolve, reject) => {
             executeRequest('POST', 'login', { token: googleToken })
+            .then((json) => {
+                resolve(json);
+            }).catch((error) => {
+                // TODO: check if this will work, I'm assuming that the error will always be an action
+                reject(error);
+            });
+        });
+    },
+
+    loginAnonymously: () => {
+        return new Promise((resolve, reject) => {
+            executeRequest('POST', 'login-anonymously')
             .then((json) => {
                 resolve(json);
             }).catch((error) => {
@@ -75,7 +103,24 @@ const API = {
                 });
             }
         });
-    }
+    },
+
+    obtainNewAnonymousTokens: (refreshToken) => {
+        return new Promise((resolve, reject) => {
+            if (refreshToken === null || refreshToken === undefined) {
+                // no refresh token, logout
+                reject(AuthActionCreators.logout(false));
+            } else {
+                executeRequest('POST', 'anonymous-token', { refreshToken: refreshToken })
+                .then((json) => {
+                    resolve(json);
+                }).catch((error) => {
+                    // TODO: check if this will work, I'm assuming that the error will always be an action
+                    reject(error);
+                });
+            }
+        });
+    },
 };
 
 const executeRequest = (method, endpoint, body, accessToken=null) => {

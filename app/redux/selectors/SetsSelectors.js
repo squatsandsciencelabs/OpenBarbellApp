@@ -377,7 +377,7 @@ export const getExerciseData = (state, exercise) => {
 
     sets.forEach((set) => {
         if (set.exercise === exercise) {
-            data.push([set.weight, set.reps[0].data[2]]);
+            data.push([set.weight, Number(RepDataMap.averageVelocity(set.reps[0].data))]);
         }       
     });
 

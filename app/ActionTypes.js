@@ -54,6 +54,7 @@ export const STORE_INITIALIZED = 'STORE_INITIALIZED';
 
 // tab
 export const CHANGE_TAB = 'CHANGE_TAB';
+export const DISABLE_TAB_SWIPE = 'DISABLE_TAB_SWIPE';
 
 // suggestions
 export const UPDATE_SUGGESTIONS = 'UPDATE_SUGGESTIONS';

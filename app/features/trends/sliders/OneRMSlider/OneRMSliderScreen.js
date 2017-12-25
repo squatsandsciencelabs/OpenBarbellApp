@@ -4,16 +4,20 @@ import { connect } from 'react-redux';
 import OneRMSlider from './OneRMSlider';
 import * as Actions from './OneRMSliderActions';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
+import * as SlidersSelectors from 'app/redux/selectors/SlidersSelectors';
+import * as AppStateActionCreators from 'app/redux/shared_actions/AppStateActionCreators';
 
 const mapStateToProps = (state, ownProps) => ({
-    velocity: state.sliders.velocity,
-    exercise: state.sliders.exercise,
-    data: SetsSelectors.getExerciseData(state, ownProps.exercise)
+    velocity: SlidersSelectors.getSliderVelocity(state),
+    exercise: SlidersSelectors.getSliderExercise(state),
+    data: SetsSelectors.getHistorySetsChronological(state)
 });
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        changeVelocity: Actions.changeSliderVelocity
+        changeVelocity: Actions.changeSliderVelocity,
+        enableTabSwipe: AppStateActionCreators.enableTabSwipe,
+        disableTabSwipe: AppStateActionCreators.disableTabSwipe
     }, dispatch);
 };
 

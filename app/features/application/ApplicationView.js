@@ -103,6 +103,7 @@ class ApplicationView extends Component {
                     renderScene={NavigationConfig.sceneMap}
                     renderHeader={this._renderHeader}
                     onIndexChange={(index) => this.props.changeTab(index) }
+                    swipeEnabled={this.props.swipeEnabled}
                 />
 
             </View>

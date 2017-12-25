@@ -372,16 +372,17 @@ export const getRevision = (state) => stateRoot(state).revision;
 // 1rm
 // Get Weights and Velocity for the exercise
 export const getExerciseData = (state, exercise) => {   
-    const sets = getAllSets(state);
-    let data = [];
+    // const sets = getAllSets(state);
+    // let data = [];
 
-    sets.forEach((set) => {
-        if (set.exercise === exercise) {
-            data.push([set.weight, Number(RepDataMap.averageVelocity(set.reps[0].data))]);
-        }       
-    });
+    // sets.forEach((set) => {
+    //     if (set.exercise === exercise) {
+    //         data.push([set.weight, Number(RepDataMap.averageVelocity(set.reps[0].data))]);
+    //     }       
+    // });
 
-    return data;
+    // return data;
+    return exercise;
 }
 
 export const get1rm = (state, exercise) => {

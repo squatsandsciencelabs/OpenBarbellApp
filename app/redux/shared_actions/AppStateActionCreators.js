@@ -2,11 +2,13 @@ import {
     UNLOCKED_SCREEN,
     LOCKED_SCREEN,
     MULTI_TASK_SCREEN,
-    CHANGE_TAB
+    CHANGE_TAB,
+    DISABLE_TAB_SWIPE,
+    ENABLE_TAB_SWIPE,
+    HISTORY_VIEWED 
 } from 'app/ActionTypes';
 import { Keyboard } from 'react-native';
 import * as Analytics from 'app/services/Analytics';
-import { HISTORY_VIEWED } from 'app/ActionTypes';
 import * as AppStateSelectors from 'app/redux/selectors/AppStateSelectors';
 
 export const unlockedScreen = () => ({
@@ -53,3 +55,11 @@ export const changeTab = (tabIndex) => (dispatch, getState) => {
         tabIndex: tabIndex
     });
 };
+
+export const disableTabSwipe = () => ({
+    type: DISABLE_TAB_SWIPE
+});
+
+export const enableTabSwipe = () => ({
+    type: ENABLE_TAB_SWIPE
+});

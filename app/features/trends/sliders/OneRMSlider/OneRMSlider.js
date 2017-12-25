@@ -9,6 +9,14 @@ import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 import * as OneRepMax from 'app/utility/transforms/OneRepMax';
 
 class OneRMSlider extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            value: this.props.velocity
+        };
+    }
+
     render() {
         return (
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
@@ -20,6 +28,7 @@ class OneRMSlider extends Component {
                     </Text>
                     <Slider
                     value={this.props.velocity} 
+                    onValueChange={(value) => this.setState({ value: Number(value.toFixed(2)) })}
                     onSlidingStart={this.props.disableTabSwipe}
                     onSlidingComplete={(value) => this.props.changeVelocity(value)}
                     minimumValue={.01}
@@ -29,7 +38,7 @@ class OneRMSlider extends Component {
                     minimumTrackTintColor={'#368fff'}
                     thumbStyle={styles.thumbStyle}
                     animateTransitions={true}
-                    /><Text style={styles.numberStyle}>{this.props.velocity}</Text>
+                    /><Text style={styles.numberStyle}>{this.state.value}</Text>
                 </View>
             </View>
         )

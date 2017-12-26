@@ -9,6 +9,7 @@ import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 import * as OneRepMax from 'app/utility/transforms/OneRepMax';
 
 class OneRMSlider extends Component {
+    // using component level state vs redux here to avoid excessive dispatches
     constructor(props) {
         super(props);
 
@@ -17,12 +18,18 @@ class OneRMSlider extends Component {
         };
     }
 
+    componentDidMount() {
+        console.tron.log(this.props);
+    }
+
     render() {
         return (
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
                 <Text style={[{marginBottom: 20}, styles.titleText]}>Estimated One-Rep Max</Text>
                 <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
-                <Text style={styles.oneRMText}>e1RM: </Text>
+                    <Text style={styles.oneRMText}>
+                        e1RM: {OneRepMax.OneRMPrediction(this.props.data, this.props.velocity)}
+                    </Text>
                     <Text style={styles.labelText}>
                         Velocity
                     </Text>

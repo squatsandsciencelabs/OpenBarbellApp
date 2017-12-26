@@ -7,10 +7,10 @@ import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as SlidersSelectors from 'app/redux/selectors/SlidersSelectors';
 import * as AppStateActionCreators from 'app/redux/shared_actions/AppStateActionCreators';
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
     velocity: SlidersSelectors.getSliderVelocity(state),
     exercise: SlidersSelectors.getSliderExercise(state),
-    data: SetsSelectors.getHistorySetsChronological(state)
+    data: SetsSelectors.getExerciseData(state, SlidersSelectors.getSliderExercise(state))
 });
 
 const mapDispatchToProps = (dispatch) => {

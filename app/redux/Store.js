@@ -62,6 +62,7 @@ export default initializeStore = () => {
             createFilter('history', ['viewedCounter']),
             createFilter('appState', ['multiTaskCounter', 'lockedCounter']),
             createFilter('connectedDevice', ['numDisconnects', 'numReconnects']),
+            createFilter('sliders', ['velocity, exercise'])
         ]}, () => {
             // on startup, always "fail" it so syncing variables go back into the queue to be synced
             store.dispatch(SetsActionCreators.failedUploadSets());

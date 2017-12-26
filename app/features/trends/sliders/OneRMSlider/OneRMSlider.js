@@ -14,12 +14,23 @@ class OneRMSlider extends Component {
         super(props);
 
         this.state = {
-            value: this.props.velocity
+            value: this.props.velocity,
         };
     }
 
-    componentDidMount() {
-        console.tron.log(this.props);
+    _render1rm(confidence) {
+        if (confidence >= 90) {
+            return (
+                <Text style={styles.oneRMText}>e1RM: {this.props.e1rm}</Text>
+            );
+        } else {
+            return (
+                <Text style={styles.errorText}>
+                    Cannot calculate 1rm, 
+                    please clean-up or add more data
+                </Text>
+            );
+        }
     }
 
     render() {
@@ -27,9 +38,7 @@ class OneRMSlider extends Component {
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
                 <Text style={[{marginBottom: 20}, styles.titleText]}>Estimated One-Rep Max</Text>
                 <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
-                    <Text style={styles.oneRMText}>
-                        e1RM: {OneRepMax.OneRMPrediction(this.props.data, this.props.velocity)}
-                    </Text>
+                    {this._render1rm(this.props.confidence)}
                     <Text style={styles.labelText}>
                         Velocity
                     </Text>
@@ -70,6 +79,12 @@ const styles = StyleSheet.create({
         color: 'rgba(77, 77, 77, 1)',
         marginBottom: 20, 
         fontSize: 32, 
+        textAlign: 'center'
+    },
+    errorText: {
+        color: 'rgba(77, 77, 77, 1)',
+        marginBottom: 20, 
+        fontSize: 20, 
         textAlign: 'center'
     },
     thumbStyle: {

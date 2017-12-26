@@ -6,12 +6,22 @@ import * as Actions from './OneRMSliderActions';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as SlidersSelectors from 'app/redux/selectors/SlidersSelectors';
 import * as AppStateActionCreators from 'app/redux/shared_actions/AppStateActionCreators';
+import * as OneRepMax from 'app/utility/transforms/OneRepMax';
 
-const mapStateToProps = (state) => ({
-    velocity: SlidersSelectors.getSliderVelocity(state),
-    exercise: SlidersSelectors.getSliderExercise(state),
-    data: SetsSelectors.getExerciseData(state, SlidersSelectors.getSliderExercise(state))
-});
+const mapStateToProps = (state) => {
+    const exercise = SlidersSelectors.getSliderExercise(state);
+    const velocity = SlidersSelectors.getSliderVelocity(state);
+    const data = SetsSelectors.getExerciseData(state, exercise);
+    const confidence = OneRepMax.getConfidenceInterval(data);
+    const e1rm = OneRepMax.OneRMPrediction(data, velocity);
+
+    return {
+        velocity: velocity,
+        exercise: exercise,
+        confidence: confidence,
+        e1rm: e1rm
+    }
+};
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({

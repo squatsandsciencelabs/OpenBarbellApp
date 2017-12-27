@@ -20,12 +20,12 @@ const SuggestionsReducer = (state = createDefaultState(), action) => {
 
 const createDefaultState = () => ({
     exerciseModel: {
-        'squat' : {suggestion: 'Squat', seed: 10},
-        'bench': {suggestion: 'Bench', seed: 10},
-        'deadlift': {suggestion: 'Deadlift', seed: 10},
-        'sumo deadlift' : {suggestion: 'Sumo Deadlift', seed: 10},
-        'back squat' : {suggestion: 'Back Squat', seed: 10},
-        'front squat' : {suggestion: 'Front Squat', seed: 10},
+        'belt squat': {suggestion: 'Belt Squat', seed: 5},
+        'deficit deadlift': {suggestion: 'Deficit Deadlift', seed: 5},
+        'close grip bench': {suggestion: 'Close Grip Bench', seed:5},
+        'slingshot bench': {suggestion: 'Slingshot Bench', seed:5},
+        'front squat': {suggestion: 'Front Squat', seed: 5},
+        'SSB Squat': {suggestion: 'SSB Squat', seed: 5}
     },
     tagsModel: {}
 });

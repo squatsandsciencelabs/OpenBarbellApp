@@ -26,8 +26,7 @@ class OneRMSlider extends Component {
         } else {
             return (
                 <Text style={styles.errorText}>
-                    Cannot calculate 1rm, 
-                    please clean-up or add more data
+                    Confidence too low, please clean up or log more data.
                 </Text>
             );
         }

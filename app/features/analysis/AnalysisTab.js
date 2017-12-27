@@ -10,7 +10,7 @@ import {
 
 import OneRMSliderScreen from './sliders/OneRMSlider/OneRMSliderScreen';
 
-class TrendsTab extends Component {
+class AnalysisTab extends Component {
             
     render() {
         return (
@@ -23,4 +23,4 @@ class TrendsTab extends Component {
     }
 }
 
-export default TrendsTab;
+export default AnalysisTab;

@@ -185,7 +185,7 @@ class EditTextModal extends Component {
                 <View style={styles.navTitle}>
                     <Text style={{color: 'rgba(77, 77, 77, 1)'}}>{this.props.title}</Text>
                 </View>
-
+                
                 <View style={{position: 'absolute', right: 0, top: 0}}>
                     <TouchableOpacity onPress={() => this._tappedDone() }>
                         <View style={styles.nav}>

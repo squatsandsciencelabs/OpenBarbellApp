@@ -29,8 +29,8 @@ const defaultState = {
     editHistoryRPEStart: null,
     editWorkoutWeightStart: null,
     editHistoryWeightStart: null,
-    editWorkoutTagsStart: null,
-    editHistoryTagsStart: null,
+    editWorkoutCommentsStart: null,
+    editHistoryCommentsStart: null,
     workoutVideoRecorderStart: null,
     historyVideoRecorderStart: null,
     workoutVideoPlayerStart: null,
@@ -65,11 +65,11 @@ const DurationsReducer = (state = defaultState, action) => {
             });
         case PRESENT_WORKOUT_TAGS:
             return Object.assign({}, state, {
-                editWorkoutTagsStart: Date.now()
+                editWorkoutCommentsStart: Date.now()
             });
         case PRESENT_HISTORY_TAGS:
             return Object.assign({}, state, {
-                editHistoryTagsStart: Date.now()
+                editHistoryCommentsStart: Date.now()
             });
         case PRESENT_WORKOUT_VIDEO_RECORDER:
             return Object.assign({}, state, {

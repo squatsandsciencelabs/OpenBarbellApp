@@ -17,7 +17,7 @@ import EditHistoryTitleExpandedScreen from './card/expanded/title/EditHistoryTit
 import EditHistoryTitleCollapsedScreen from './card/collapsed/EditHistoryTitleCollapsedScreen';
 import HistoryLoadingFooterScreen from './loading/HistoryLoadingFooterScreen';
 import EditHistoryExerciseScreen from './exercise_name/EditHistoryExerciseScreen';
-import EditHistoryTagsScreen from './tags/EditHistoryTagsScreen';
+import EditHistoryCommentsScreen from './comments/EditHistoryCommentsScreen';
 import UserLoggedOutPanel from './logged_out/UserLoggedOutPanel';
 import ListLoadingFooter from '../history/loading/ListLoadingFooter';
 import SetDataLabelRow from 'app/shared_features/set_card/expanded/SetDataLabelRow';
@@ -85,7 +85,7 @@ class HistoryList extends Component {
                         weight={item.weight}
                         metric={item.metric}
                         numReps={item.numReps}
-                        tags={item.tags}
+                        comments={item.comments}
                     />
                 );
             case "analysis":
@@ -99,7 +99,7 @@ class HistoryList extends Component {
                             <EditHistorySetFormScreen
                                 setID={item.setID}
                                 removed={item.removed}
-                                tags={item.tags}
+                                comments={item.comments}
                                 weight={item.weight}
                                 metric={item.metric}
                                 rpe={item.rpe}
@@ -159,7 +159,7 @@ class HistoryList extends Component {
             return (
                 <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
                     <EditHistoryExerciseScreen />
-                    <EditHistoryTagsScreen />
+                    <EditHistoryCommentsScreen />
                     <HistoryVideoRecorderScreen />
                     <HistoryVideoPlayerScreen />
 

@@ -54,15 +54,15 @@ export const dismissWeight = (setID) => (dispatch, getState) => {
     });
 };
 
-export const presentTags = (setID, tags) => (dispatch, getState) => {
+export const presentComments = (setID, comments) => (dispatch, getState) => {
     const state = getState();
-    Analytics.setCurrentScreen('edit_history_tags');
-    logEditTagsAnalytics(setID, state);
+    Analytics.setCurrentScreen('edit_history_comments');
+    logEditCommentsAnalytics(setID, state);
 
     dispatch({
         type: PRESENT_HISTORY_TAGS,
         setID: setID,
-        tags: tags
+        comments: comments
     });
 };
 
@@ -150,8 +150,8 @@ const logEditWeightAnalytics = (setID, state) => {
     }, state);
 };
 
-const logEditTagsAnalytics = (setID, state) => {
-    Analytics.logEventWithAppState('edit_tags', {
+const logEditCommentsAnalytics = (setID, state) => {
+    Analytics.logEventWithAppState('edit_comments', {
         is_working_set: false
     }, state);
 };

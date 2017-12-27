@@ -22,7 +22,7 @@ class SetForm extends Component {
         super(props);
 
         this.state = {
-            tags: this.props.tags,
+            comments: this.props.comments,
             weight: this.props.weight,
             didChangeWeight: false,
             metric: this.props.metric,
@@ -35,7 +35,7 @@ class SetForm extends Component {
     // this uses didChange flags to prevent overwriting of values while you're still typing while still allowing sync to update it
     componentWillReceiveProps(nextProps) {
         this.setState({
-            tags: nextProps.tags,
+            comments: nextProps.comments,
             weight: this.state.didChangeWeight ? this.state.weight : nextProps.weight,
             didChangeWeight: false,
             metric: nextProps.metric,
@@ -112,22 +112,22 @@ class SetForm extends Component {
 
     // RENDER
 
-    _displayTags() {
-        if (this.state.tags === undefined || this.state.tags === null || this.state.tags.length === 0) {
-            return (<Text style={[styles.tagText, styles.placeholderText]}>Tags</Text>);
+    _displayComments() {
+        if (this.state.comments === undefined || this.state.comments === null || this.state.comments.length === 0) {
+            return (<Text style={[styles.commentText, styles.placeholderText]}>Comments</Text>);
         }
 
         var pills = [];
         let position = 0;
-        this.state.tags.map((tag) => {
+        this.state.comments.map((comment) => {
             let key = position;
             pills.push(
-                <Pill key={key} text={tag} style={{paddingRight: 5, paddingBottom: 3, paddingTop: 3}} />
+                <Pill key={key} text={comment} style={{paddingRight: 5, paddingBottom: 3, paddingTop: 3}} />
             );
             position++;
         });
 
-        return (<View style={styles.tagField}>{pills}</View>);
+        return (<View style={styles.commentField}>{pills}</View>);
     }
 
     _displayMetric() {
@@ -188,11 +188,11 @@ class SetForm extends Component {
         );
     }
 
-    _renderTags() {
+    _renderComments() {
         return (
             <View style={[styles.field, {flex: 1}]}>
-                <TouchableHighlight onPress={() => this.props.tapTags(this.props.setID, this.state.tags)} underlayColor='#e0e0e0'>
-                    {this._displayTags()}
+                <TouchableHighlight onPress={() => this.props.tapComments(this.props.setID, this.state.comments)} underlayColor='#e0e0e0'>
+                    {this._displayComments()}
                 </TouchableHighlight>
             </View>
         );
@@ -208,7 +208,7 @@ class SetForm extends Component {
                                 { this._renderWeight() }
                                 { this._renderRPE() }
                             </View>
-                            <View>{ this._renderTags() }</View>
+                            <View>{ this._renderComments() }</View>
                         </View>
 
                         <View>{ this.props.renderDetailComponent() }</View>
@@ -246,7 +246,7 @@ const styles = StyleSheet.create({
         paddingRight: 30,
         color: 'rgba(77, 77, 77, 1)',
     },
-    tagText: {
+    commentText: {
         height: 29,
         paddingTop: 6,
         paddingLeft: 4,
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
         paddingRight: 30,
         color: 'rgba(77, 77, 77, 1)',
     },
-    tagField: {
+    commentField: {
         flexDirection: 'row',
         flexWrap: 'wrap',
         minHeight: 29,

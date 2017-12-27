@@ -8,7 +8,7 @@ import * as Analytics from 'app/services/Analytics';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
-export const dismissTags = () => {
+export const dismissComments = () => {
     Analytics.setCurrentScreen('workout');
     
     return {
@@ -16,29 +16,29 @@ export const dismissTags = () => {
     };
 };
 
-export const cancelTags = (setID) => (dispatch, getState) => {
+export const cancelComments = (setID) => (dispatch, getState) => {
     const state = getState();
     Analytics.setCurrentScreen('workout');
-    logCancelEditTagsAnalytics(state, setID);
+    logCancelEditCommentsAnalytics(state, setID);
 
     dispatch({
         type: DISMISS_WORKOUT_TAGS
     });
 };
 
-export const saveTags = (setID, tags = []) => (dispatch, getState) => {
+export const saveComments = (setID, comments = []) => (dispatch, getState) => {
     const state = getState();
-    logSaveTagsAnalytics(state, setID);
+    logSaveCommentsAnalytics(state, setID);
     dispatch({
         type: SAVE_WORKOUT_SET_TAGS,
         setID: setID,
-        tags: tags
+        comments: comments
     });
 };
 
 export const tappedPill = (setID) => (dispatch, getState) => {
     const state = getState();
-    logRemovedTagAnalytics(state, setID);
+    logRemovedCommentAnalytics(state, setID);
     dispatch({
         type: REMOVE_WORKOUT_TAG,
     });
@@ -46,46 +46,46 @@ export const tappedPill = (setID) => (dispatch, getState) => {
 
 export const addPill = (setID) => (dispatch, getState) => {
     const state = getState();
-    logAddTagAnalytics(state, setID);
+    logAddCommentAnalytics(state, setID);
     dispatch({
         type: ADD_WORKOUT_TAG,
     });
 };
 
-const logSaveTagsAnalytics = (state, setID) => {
+const logSaveCommentsAnalytics = (state, setID) => {
     const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
-    const duration = DurationsSelectors.getEditWorkoutTagsDuration(state);
+    const duration = DurationsSelectors.getEditWorkoutCommentsDuration(state);
 
-    Analytics.logEventWithAppState('save_tags', {
+    Analytics.logEventWithAppState('save_comments', {
         value: duration,
         duration: duration,
         is_working_set: is_working_set,
     }, state);    
 };
 
-const logCancelEditTagsAnalytics = (state, setID) => {
+const logCancelEditCommentsAnalytics = (state, setID) => {
     const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
-    const duration = DurationsSelectors.getEditWorkoutTagsDuration(state);
+    const duration = DurationsSelectors.getEditWorkoutCommentsDuration(state);
 
-    Analytics.logEventWithAppState('cancel_edit_tags', {
+    Analytics.logEventWithAppState('cancel_edit_comments', {
         value: duration,
         duration: duration,
         is_working_set: is_working_set,
     }, state);
 };
 
-const logRemovedTagAnalytics = (state, setID) => {
+const logRemovedCommentAnalytics = (state, setID) => {
     const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 
-    Analytics.logEventWithAppState('remove_tag', {
+    Analytics.logEventWithAppState('remove_comment', {
         is_working_set: is_working_set,
     }, state);
 };
 
-const logAddTagAnalytics = (state, setID) => {
+const logAddCommentAnalytics = (state, setID) => {
     const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
     
-    Analytics.logEventWithAppState('add_tag', {
+    Analytics.logEventWithAppState('add_comment', {
         is_working_set: is_working_set,
     }, state);
 };

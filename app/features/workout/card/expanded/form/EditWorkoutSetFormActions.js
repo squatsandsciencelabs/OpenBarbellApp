@@ -56,17 +56,17 @@ export const dismissWeight = (setID) => (dispatch, getState) => {
     });
 };
 
-export const presentTags = (setID, tags) => (dispatch, getState) => {
+export const presentComments = (setID, comments) => (dispatch, getState) => {
     var state = getState();
 
-    Analytics.setCurrentScreen('edit_workout_tags');
+    Analytics.setCurrentScreen('edit_workout_comments');
 
-    logEditTagsAnalytics(setID, state);
+    logEditCommentsAnalytics(setID, state);
 
     dispatch({
         type: PRESENT_WORKOUT_TAGS,
         setID: setID,
-        tags: tags
+        comments: comments
     });
 };
 
@@ -162,10 +162,10 @@ const logEditWeightAnalytics = (setID, state) => {
     }, state);       
 };
 
-const logEditTagsAnalytics = (setID, state) => {
+const logEditCommentsAnalytics = (setID, state) => {
     let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 
-    Analytics.logEventWithAppState('edit_tags', {
+    Analytics.logEventWithAppState('edit_comments', {
         is_working_set: is_working_set
     }, state);       
 };

@@ -2,14 +2,14 @@ const stateRoot = (state) => state.suggestions;
 
 const exerciseNameModel = (state) => stateRoot(state).exerciseModel;
 
-const tagsModel = (state) => stateRoot(state).tagsModel;
+const commentsModel = (state) => stateRoot(state).commentsModel;
 
 export const generateExerciseNameSuggestions = (state, input, bias = null) => {
     return generateSuggestions(exerciseNameModel(state), input, bias, false);
 };
 
-export const generateTagsSuggestions = (state, input, ignore = []) => {
-    return generateSuggestions(tagsModel(state), input, null, true, ignore);
+export const generateCommentsSuggestions = (state, input, ignore = []) => {
+    return generateSuggestions(commentsModel(state), input, null, true, ignore);
 };
 
 const generateSuggestions = (model, input, bias, showBug=false, ignore = []) => {
@@ -53,7 +53,7 @@ const generateSuggestions = (model, input, bias, showBug=false, ignore = []) => 
     matches = matches.map((match) => match.suggestion);
 
     // hack - ensure bug is last
-    // TODO: if we do more than just the special bug tag, make this a generic system instead so you can add more types
+    // TODO: if we do more than just the special bug comment, make this a generic system instead so you can add more types
     if (showBug) {
         // remove all bugs from suggestions so you can re-add it at the end
         matches = matches.filter((e) => e !== 'Bug');

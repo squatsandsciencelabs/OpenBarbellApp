@@ -15,7 +15,7 @@ import EditWorkoutTitleExpandedScreen from './card/expanded/title/EditWorkoutTit
 import EditWorkoutTitleCollapsedScreen from './card/collapsed/EditWorkoutTitleCollapsedScreen';
 import EditWorkoutSetFormScreen from './card/expanded/form/EditWorkoutSetFormScreen';
 import EditWorkoutExerciseScreen from './exercise_name/EditWorkoutExerciseScreen';
-import EditWorkoutTagsScreen from './tags/EditWorkoutTagsScreen';
+import EditWorkoutCommentsScreen from './comments/EditWorkoutCommentsScreen';
 import SetDataLabelRow from 'app/shared_features/set_card/expanded/SetDataLabelRow';
 import SetDataRow from 'app/shared_features/set_card/expanded/SetDataRow';
 import SetRestRow from 'app/shared_features/set_card/SetRestRow';
@@ -102,7 +102,7 @@ class WorkoutList extends Component {
                         weight={item.weight}
                         metric={item.metric}
                         numReps={item.numReps}
-                        tags={item.tags}
+                        comments={item.comments}
                     />
                 );
             case "analysis":
@@ -114,7 +114,7 @@ class WorkoutList extends Component {
                             <EditWorkoutSetFormScreen
                                 setID={item.setID}
                                 removed={item.removed}
-                                tags={item.tags}
+                                comments={item.comments}
                                 weight={item.weight}
                                 metric={item.metric}
                                 rpe={item.rpe}
@@ -187,7 +187,7 @@ class WorkoutList extends Component {
         return (
             <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
                 <EditWorkoutExerciseScreen />
-                <EditWorkoutTagsScreen />
+                <EditWorkoutCommentsScreen />
                 <WorkoutVideoRecorderScreen />
                 <WorkoutVideoPlayerScreen />
 

@@ -220,7 +220,7 @@ const logAddRepAnalytics = (state) => {
     let has_exercise_name = Boolean(currentSet.exercise);
     let has_weight = Boolean(currentSet.weight);
     let has_rpe = Boolean(currentSet.rpe);
-    let has_tags = Boolean(currentSet.tags.length);
+    let has_comments = Boolean(currentSet.comments.length);
     let has_video = Boolean(currentSet.videoFileUrl);
     let has_reps = Boolean(SetsSelectors.getNumWorkoutReps(state));
     let end_set_time_left = SettingsSelectors.getEndSetTimeLeft(state);
@@ -231,7 +231,7 @@ const logAddRepAnalytics = (state) => {
         has_exercise_name: has_exercise_name,
         has_weight: has_weight,
         has_rpe: has_rpe,
-        has_tags: has_tags,
+        has_comments: has_comments,
         has_video: has_video,
         has_reps: has_reps,
         end_set_time_left: end_set_time_left,

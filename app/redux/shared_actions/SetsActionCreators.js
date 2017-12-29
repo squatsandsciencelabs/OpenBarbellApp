@@ -134,7 +134,7 @@ const logEndSetAnalytics = (manuallyStarted, wasSanityCheck, state) => {
         has_exercise_name: Boolean(set.exercise),
         has_weight: Boolean(set.weight),
         has_rpe: Boolean(set.rpe),
-        has_tags: Boolean(set.tags.length),
+        has_comments: Boolean(set.comments.length),
         has_video: Boolean(set.videoFileURL),
         has_reps: has_reps,
         is_previous_set_fields_filled: is_previous_set_fields_filled,

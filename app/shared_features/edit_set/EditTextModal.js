@@ -185,7 +185,7 @@ class EditTextModal extends Component {
                 <View style={styles.navTitle}>
                     <Text style={{color: 'rgba(77, 77, 77, 1)'}}>{this.props.title}</Text>
                 </View>
-
+                
                 <View style={{position: 'absolute', right: 0, top: 0}}>
                     <TouchableOpacity onPress={() => this._tappedDone() }>
                         <View style={styles.nav}>
@@ -335,12 +335,25 @@ class EditTextModal extends Component {
         );
     }
 
+    _renderMessage() {
+        if (this.props.message) {
+            return (
+                <Text style={{textAlign: 'center', fontSize: 12, marginBottom: 10}}>
+                    {this.props.message}
+                </Text>
+            );
+        } else {
+            return null;
+        }
+    }
+
     // TODO: move 242 gray from global stylesheet
     render() {
         return (
             <Modal visible={this.props.isModalShowing} animationType='fade'>
                 <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'rgba(242, 242, 242, 1)'}}>
                     {this._renderNavigation()}
+                    {this._renderMessage()}
                     {this._renderHeader()}
                     {this._renderTextField()}
                     {this._renderList()}

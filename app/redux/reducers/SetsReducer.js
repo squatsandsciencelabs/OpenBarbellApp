@@ -33,11 +33,11 @@ const SetsReducer = (state = createDefaultState(), action) => {
         case SAVE_WORKOUT_SET:
             return saveWorkoutSet(state, action);
         case SAVE_WORKOUT_SET_TAGS:
-            return saveWorkoutSetTags(state, action);
+            return saveWorkoutSetComments(state, action);
         case SAVE_HISTORY_SET:
             return saveHistorySet(state, action);
         case SAVE_HISTORY_SET_TAGS:
-            return saveHistorySetTags(state, action);
+            return saveHistorySetComments(state, action);
         case ADD_REP_DATA:
             return addRepData(state, action);
         case SAVE_WORKOUT_REP:
@@ -89,7 +89,7 @@ const createSet = (setNumber = 1, metric = "kgs") => ({
     // endTime: null, // LEGACY - use rep time instead
     removed: false, // NOTE: THIS IS USELESS NOW, removed has changed definitions over time, should no longer use it!
     reps : [],
-    tags: [],
+    comments: [],
     videoFileURL: null,
     videoType: null
 });
@@ -164,13 +164,13 @@ const saveWorkoutSet = (state, action) => {
 
 // SAVE_WORKOUT_SET_TAGS
 
-const saveWorkoutSetTags = (state, action) => {
+const saveWorkoutSetComments = (state, action) => {
     let newWorkoutData = state.workoutData.slice(0);
     let setIndex = newWorkoutData.findIndex( set => set.setID === action.setID );
     let set = newWorkoutData[setIndex];
 
     let changes = {
-        tags: [...action.tags]
+        comments: [...action.comments]
     };
     if (!set.initialStartTime) {
         changes.initialStartTime = new Date();
@@ -219,14 +219,14 @@ const saveHistorySet = (state, action) => {
 
 // SAVE_HISTORY_SET_TAGS
 
-const saveHistorySetTags = (state, action) => {
+const saveHistorySetComments = (state, action) => {
     let setID = action.setID;
     let historyData = state.historyData;
     let set = historyData[setID];
 
     // new set
     let setChanges = {
-        tags: [...action.tags]
+        comments: [...action.comments]
     };
     let newSet = Object.assign({}, set, setChanges);
 

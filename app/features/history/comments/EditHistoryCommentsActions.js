@@ -7,7 +7,7 @@ import {
 import * as Analytics from 'app/services/Analytics';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
 
-export const dismissTags = () => {
+export const dismissComments = () => {
     Analytics.setCurrentScreen('history');
     
     return {
@@ -15,30 +15,30 @@ export const dismissTags = () => {
     }
 };
 
-export const cancelTags = () => (dispatch, getState) => {
+export const cancelComments = () => (dispatch, getState) => {
     const state = getState();
     Analytics.setCurrentScreen('history');
-    logCancelEditTagsAnalytics(state);
+    logCancelEditCommentsAnalytics(state);
 
     dispatch({
         type: DISMISS_HISTORY_TAGS
     });
 };
 
-export const saveTags = (setID, tags = []) => (dispatch, getState) => {
+export const saveComments = (setID, comments = []) => (dispatch, getState) => {
     const state = getState();
-    logSaveTagsAnalytics(state);
+    logSaveCommentsAnalytics(state);
 
     dispatch({
         type: SAVE_HISTORY_SET_TAGS,
         setID: setID,
-        tags: tags
+        comments: comments
     });
 };
 
 export const tappedPill = (setID) => (dispatch, getState) => {
     const state = getState();
-    logRemovedTagAnalytics(state);
+    logRemovedCommentAnalytics(state);
     dispatch({
         type: REMOVE_HISTORY_TAG,
     });
@@ -46,40 +46,40 @@ export const tappedPill = (setID) => (dispatch, getState) => {
 
 export const addPill = (setID) => (dispatch, getState) => {
     const state = getState();
-    logAddTagAnalytics(state);
+    logAddCommentAnalytics(state);
     dispatch({
         type: ADD_HISTORY_TAG,
     });
 };
 
-const logSaveTagsAnalytics = (state) => {
-    const duration = DurationsSelectors.getEditHistoryTagsDuration(state);
+const logSaveCommentsAnalytics = (state) => {
+    const duration = DurationsSelectors.getEditHistoryCommentsDuration(state);
 
-    Analytics.logEventWithAppState('save_tags', {
+    Analytics.logEventWithAppState('save_comments', {
         value: duration,
         duration: duration,
         is_working_set: false,
     }, state);    
 };
 
-const logCancelEditTagsAnalytics = (state) => {
-    const duration = DurationsSelectors.getEditHistoryTagsDuration(state);
+const logCancelEditCommentsAnalytics = (state) => {
+    const duration = DurationsSelectors.getEditHistoryCommentsDuration(state);
 
-    Analytics.logEventWithAppState('cancel_edit_tags', {
+    Analytics.logEventWithAppState('cancel_edit_comments', {
         value: duration,
         duration: duration,
         is_working_set: false,
     }, state);
 };
 
-const logRemovedTagAnalytics = (state) => {
-    Analytics.logEventWithAppState('remove_tag', {
+const logRemovedCommentAnalytics = (state) => {
+    Analytics.logEventWithAppState('remove_comment', {
         is_working_set: false,
     }, state);
 };
 
-const logAddTagAnalytics = (state) => {
-    Analytics.logEventWithAppState('add_tag', {
+const logAddCommentAnalytics = (state) => {
+    Analytics.logEventWithAppState('add_comment', {
         is_working_set: false,
     }, state);
 };

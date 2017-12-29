@@ -12,11 +12,11 @@ class SetSummary extends Component {
 
     render() {
         let pills = [];
-        if (this.props.tags) {
+        if (this.props.comments) {
             let position = 0;
-            this.props.tags.forEach((tag) => {
+            this.props.comments.forEach((comment) => {
                 let key = position;
-                pills.push(<Pill key={position} text={tag} style={styles.pill} />);
+                pills.push(<Pill key={position} text={comment} style={styles.pill} />);
                 position++;
             });
         }

@@ -22,8 +22,8 @@ const defaultState = {
     isLoadingHistory: true,
     editingExerciseName: '',
     editingExerciseSetID: null,
-    editingTags: [],
-    editingTagsSetID: null,
+    editingComments: [],
+    editingCommentsSetID: null,
     expandedSetID: null,
     recordingSetID: null,
     recordingVideoType: null,
@@ -55,8 +55,8 @@ const HistoryReducer = (state = defaultState, action) => {
             });
         case PRESENT_HISTORY_TAGS:
             return Object.assign({}, state, {
-                editingTagsSetID: action.setID,
-                editingTags: action.tags
+                editingCommentsSetID: action.setID,
+                editingComments: action.comments
             });
         case PRESENT_HISTORY_EXPANDED:
             return Object.assign({}, state, {
@@ -69,8 +69,8 @@ const HistoryReducer = (state = defaultState, action) => {
             });
         case DISMISS_HISTORY_TAGS:
             return Object.assign({}, state, {
-                editingTagsSetID: null,
-                editingTags: []
+                editingCommentsSetID: null,
+                editingComments: []
             });
         case DISMISS_HISTORY_EXPANDED:
             return Object.assign({}, state, {

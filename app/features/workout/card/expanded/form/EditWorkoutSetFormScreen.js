@@ -8,7 +8,7 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         saveSet: Actions.saveSet,
         tapExercise: Actions.presentExercise,
-        tapTags: Actions.presentTags,
+        tapComments: Actions.presentComments,
         tapRPE: Actions.editRPE,
         tapWeight: Actions.editWeight,
         dismissRPE: Actions.dismissRPE,

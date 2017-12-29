@@ -3,7 +3,7 @@ import {
     UPDATE_EXERCISE_SUGGESTIONS
 } from 'app/ActionTypes';
 
-export const updateTagSuggestions = () => (dispatch, getState) => {
+export const updateCommentSuggestions = () => (dispatch, getState) => {
     let state = getState();
     
     dispatch({

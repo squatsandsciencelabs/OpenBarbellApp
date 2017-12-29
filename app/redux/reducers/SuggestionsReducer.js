@@ -11,7 +11,7 @@ const SuggestionsReducer = (state = createDefaultState(), action) => {
             });
         case UPDATE_TAG_SUGGESTIONS:
             return Object.assign({}, state, {
-                tagsModel: generateAutocompleteTagsModel(action.workoutData, action.historyData)
+                commentsModel: generateAutocompleteCommentsModel(action.workoutData, action.historyData)
             });
         default:
             return state;
@@ -27,7 +27,7 @@ const createDefaultState = () => ({
         'front squat': {suggestion: 'Front Squat', seed: 5},
         'SSB Squat': {suggestion: 'SSB Squat', seed: 5}
     },
-    tagsModel: {}
+    commentsModel: {}
 });
 
 const generateAutocompleteExerciseModel = (workoutData, historyData) => {
@@ -62,24 +62,24 @@ const generateAutocompleteExerciseModel = (workoutData, historyData) => {
     return model;
 };
 
-const generateAutocompleteTagsModel = (workoutData, historyData) => {
+const generateAutocompleteCommentsModel = (workoutData, historyData) => {
     // declare vars
-    let model = createDefaultState().tagsModel;
+    let model = createDefaultState().commentsModel;
     let workoutSets = workoutData;
     let historySets = dictToArray(historyData);
     let sets = workoutSets.concat(historySets);
 
     // ignore undefined / nulls / empties
-    sets = sets.filter((set) => set.tags !== undefined && set.tags !== null && set.tags.length > 0);
+    sets = sets.filter((set) => set.comments !== undefined && set.comments !== null && set.comments.length > 0);
 
     // generate dictionary with counts
     sets.map((set) => {
-        set.tags.map((tag) => {
-            let lowercaseTag = tag.toLowerCase();
-            if (model[lowercaseTag] === undefined) {
-                model[lowercaseTag] = { suggestion: tag, seed: 1 };
+        set.comments.map((comment) => {
+            let lowercaseComment = comment.toLowerCase();
+            if (model[lowercaseComment] === undefined) {
+                model[lowercaseComment] = { suggestion: comment, seed: 1 };
             } else {
-                model[lowercaseTag] = { suggestion: tag, seed: model[lowercaseTag].seed + 1};
+                model[lowercaseComment] = { suggestion: comment, seed: model[lowercaseComment].seed + 1};
             }
         });
     });

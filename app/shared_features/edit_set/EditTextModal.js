@@ -353,8 +353,8 @@ class EditTextModal extends Component {
             <Modal visible={this.props.isModalShowing} animationType='fade'>
                 <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'rgba(242, 242, 242, 1)'}}>
                     {this._renderNavigation()}
-                    {this._renderHeader()}
                     {this._renderMessage()}
+                    {this._renderHeader()}
                     {this._renderTextField()}
                     {this._renderList()}
                 </View>

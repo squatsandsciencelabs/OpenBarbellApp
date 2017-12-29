@@ -1352,13 +1352,71 @@ describe('SetsSelectors', () => {
         
         describe('getExerciseData', () => {
 
-            test('return data', () => {
+            test('return data for regression', () => {
                 const expected = [[100, 1.83], [100, 1.73], [200, 1.83], [100, 1.43]];
                 
-                const result = sut.getExerciseData(state, 'Bench');
+                const result = sut.getExerciseData(state, 'Bench', 'regression');
 
                 expect(result).toEqual(expected);
             });
+
+            test('return data for scatter', () => {
+                const expected = [
+                    { "x": 100, "y": 1.83 },
+                    { "x": 100, "y": 1.73 },
+                    { "x": 200, "y": 1.83 },
+                    { "x": 100, "y": 1.43 }
+                ];
+                
+                const result = sut.getExerciseData(state, 'Bench', 'scatter');
+
+                expect(result).toEqual(expected);
+            });
+        });
+
+        describe('generateExerciseItems', () => {
+            const state = {
+                sets: {
+                    workoutData: [
+                        { exercise: 'SSB Squat' },
+                        { exercise: 'Reverse Band Bench' },
+                        { exercise: 'Deadlift w/ Chains' },
+                    ],
+                    historyData: {
+                        a: {
+                            exercise: 'Box Squat w/ Bands'
+                        },
+                        b: {
+                            exercise: 'Good Mornings w/ Bands & Chains in Belt Squat'
+                        },
+                        c: {
+                            exercise: 'Zercher Squats'
+                        },
+                        d: {
+                            exercise: 'Close Grip Bench Press'
+                        },
+                        e: {
+                            exercise: 'Box Squat w/ Bands'
+                        },
+                        f: {
+                            exercise: 'Reverse Band Bench'
+                        }
+                    }
+                }
+            }
+
+            const result = sut.generateExerciseItems(state);
+
+            const expected = [
+                {label: "Box Squat w/ Bands", value: "Box Squat w/ Bands"}, 
+                {label: "Good Mornings w/ Bands & Chains in Belt Squat", value: "Good Mornings w/ Bands & Chains in Belt Squat"}, 
+                {label: "Zercher Squats", value: "Zercher Squats"}, 
+                {label: "Close Grip Bench Press", value: "Close Grip Bench Press"}, 
+                {label: "Reverse Band Bench", value: "Reverse Band Bench"}, 
+                {label: "SSB Squat", value: "SSB Squat"}, 
+                {label: "Deadlift w/ Chains", value: "Deadlift w/ Chains"}]
+
+            expect(result).toEqual(expected);
         });
 
         describe('get 1rm', () => {

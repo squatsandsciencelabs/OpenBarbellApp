@@ -11,7 +11,7 @@ import * as OneRepMax from 'app/utility/transforms/OneRepMax';
 const mapStateToProps = (state) => {
     const exercise = SlidersSelectors.getSliderExercise(state);
     const velocity = SlidersSelectors.getSliderVelocity(state);
-    const data = SetsSelectors.getExerciseData(state, exercise);
+    const data = SetsSelectors.getExerciseData(state, exercise, 'regression');
     const confidence = OneRepMax.getConfidenceInterval(data);
     const e1rm = OneRepMax.OneRMPrediction(data, velocity);
 

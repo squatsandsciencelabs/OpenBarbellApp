@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 
 import OneRMSliderScreen from './sliders/OneRMSlider/OneRMSliderScreen';
+import OneRMChartScreen from './charts/OneRMChartScreen';
 
 class AnalysisTab extends Component {
             
@@ -16,6 +17,7 @@ class AnalysisTab extends Component {
         return (
             <ScrollView style={{flex: 1}}>
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent:'flex-start' }}>
+                    
                     <OneRMSliderScreen />
                 </View>
             </ScrollView>

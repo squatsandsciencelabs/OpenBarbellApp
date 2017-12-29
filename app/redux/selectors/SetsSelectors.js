@@ -371,21 +371,49 @@ export const getRevision = (state) => stateRoot(state).revision;
 
 // 1rm
 // Get Weights and Velocity for the exercise
-export const getExerciseData = (state, exercise) => {   
+export const getExerciseData = (state, exercise, type) => {   
     const sets = getAllSets(state);
     let data = [];
 
-    sets.forEach((set) => {
-        if (set.exercise === exercise && set.reps.length > 0 && set.weight) {
-            data.push([set.weight, Number(RepDataMap.averageVelocity(set.reps[0].data))]);
-        }       
-    });
+    if (type === 'regression') {
+        sets.forEach((set) => {
+            if (set.exercise === exercise && set.reps.length > 0 && set.weight) {
+                data.push([set.weight, Number(RepDataMap.averageVelocity(set.reps[0].data))]);
+            }       
+        });
+    } else {
+        sets.forEach((set) => {
+            if (set.exercise === exercise && set.reps.length > 0 && set.weight) {
+                data.push({ x: set.weight, y: Number(RepDataMap.averageVelocity(set.reps[0].data)) });
+            }       
+        });
+    }
 
     return data;
 }
 
+export const generateExerciseItems = (state) => {
+    const sets = getAllSets(state);
+    let exercises = []
+
+    sets.forEach((set) => {
+        if (!exerciseExists(set.exercise, exercises)) {
+            exercises.push({ label: set.exercise, value: set.exercise });
+        }
+    });
+
+    return exercises;
+}
+
+// check if exercise exists
+const exerciseExists = (exercise, arr) => {
+    return arr.some((item) => {
+        return item.label === exercise;
+    }); 
+}
+
 export const get1rm = (state, exercise) => {
-    const lifts = getExerciseData(state, exercise);
+    const lifts = getExerciseData(state, exercise, 'regression');
 
     const confidence = OneRMPrediction.getConfidenceInterval(lifts);
 

@@ -20,6 +20,7 @@
     "react-native-google-signin": "0.12.0",
     "react-native-keep-awake": "2.0.6",
     "react-native-permissions": "1.0.1",
+    "react-native-svg": "5.4.2",
     "react-native-tab-view": "0.0.70",
     "react-native-vector-icons": "4.4.2",
     "react-native-video": "2.0.0",
@@ -32,7 +33,8 @@
     "redux-thunk": "2.2.0",
     "regression": "^2.0.0",
     "reselect": "3.0.1",
-    "uuid": "3.1.0"
+    "uuid": "3.1.0",
+    "victory-native": "0.15.0"
   },
   "rnpm": {
     "android": {

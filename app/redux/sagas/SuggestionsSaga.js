@@ -13,7 +13,7 @@ import * as SuggestionsActionCreators from 'app/redux/shared_actions/Suggestions
 
 const SuggestionsSaga = function * SuggestionsSaga() {
     yield fork(exerciseSuggestions);
-    yield fork(tagSuggestions);
+    yield fork(commentSuggestions);
     yield fork(bothSuggestions);
 };
 
@@ -26,10 +26,10 @@ function* exerciseSuggestions() {
     }
 }
 
-function* tagSuggestions() {
+function* commentSuggestions() {
     while (true) {
         yield take([SAVE_WORKOUT_SET_TAGS, SAVE_HISTORY_SET_TAGS]);
-        yield put(SuggestionsActionCreators.updateTagSuggestions());
+        yield put(SuggestionsActionCreators.updateCommentSuggestions());
     }
 }
 
@@ -37,7 +37,7 @@ function* bothSuggestions() {
     while (true) {
         yield take([LOGIN_SUCCESS, LOGOUT, STORE_INITIALIZED]);
         yield put(SuggestionsActionCreators.updateExerciseSuggestions());
-        yield put(SuggestionsActionCreators.updateTagSuggestions());
+        yield put(SuggestionsActionCreators.updateCommentSuggestions());
     }
 }
 

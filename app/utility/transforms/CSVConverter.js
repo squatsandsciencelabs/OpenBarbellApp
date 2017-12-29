@@ -9,7 +9,7 @@ import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 // aka SetReducer's getHistorySets convenience function
 export const convert = (sets) => {
     // output
-    var output = "Exercise,Set,Rep,Weight,Metric,Set RPE,Tags,Workout Start Time,Rest Time,Avg Velocity (m/s),Range of Motion (mm),Peak Velocity (m/s),Peak Velocity Location (%),Duration of rep (sec)\n";
+    var output = "Exercise,Set,Rep,Weight,Metric,Set RPE,Comments,Workout Start Time,Rest Time,Avg Velocity (m/s),Range of Motion (mm),Peak Velocity (m/s),Peak Velocity Location (%),Duration of rep (sec)\n";
 
     // filter removed sets
     sets = sets.filter((set) => set.removed === false && set.reps.length > 0);
@@ -51,10 +51,10 @@ export const convert = (sets) => {
 
         // reps
         let reps = set.reps.filter((rep) => rep.removed === false && rep.isValid === true);
-        if (set.tags) {
-            var tags = set.tags.join();
+        if (set.comments) {
+            var comments = set.comments.join();
         } else {
-            var tags = '';
+            var comments = '';
         }
 
         reps.forEach((rep, index, array) => {
@@ -64,7 +64,7 @@ export const convert = (sets) => {
             output += escapeDoubleQuote(set.weight) + ',';
             output += escapeDoubleQuote(set.metric) + ',';
             output += escapeDoubleQuote(set.rpe) + ',';
-            output += escapeDoubleQuote(tags) + ',';
+            output += escapeDoubleQuote(comments) + ',';
             output += escapeDoubleQuote(workoutStartTime) + ',';
             output += escapeDoubleQuote(rest) + ',';
             output += RepDataMap.averageVelocity(rep.data) + ',';

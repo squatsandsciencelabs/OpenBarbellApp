@@ -144,7 +144,7 @@ const createFormViewModel = (set, setNumber, isRemoved) => ({
     removed: isRemoved,
     setNumber: setNumber,
     exercise: set.exercise,
-    tags: set.tags,
+    comments: set.comments,
     weight: set.weight,
     metric: set.metric,
     rpe: set.rpe,
@@ -160,7 +160,7 @@ const createSummaryViewModel = (set) => {
         weight: set.weight ? set.weight : 0,
         numReps: numReps ? numReps : '0 reps',
         metric: set.metric,
-        tags: set.tags,
+        comments: set.comments,
     };
 };
 

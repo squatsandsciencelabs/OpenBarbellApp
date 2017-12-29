@@ -26,13 +26,13 @@ export const getEditHistoryWeightStart = (state) => stateRoot(state).editHistory
 
 export const getEditHistoryWeightDuration = (state) => DurationCalculator.getDurationBetween(getEditHistoryWeightStart(state), Date.now());
 
-export const getEditWorkoutTagsStart = (state) => stateRoot(state).editWorkoutTagsStart; 
+export const getEditWorkoutCommentsStart = (state) => stateRoot(state).editWorkoutCommentsStart; 
 
-export const getEditWorkoutTagsDuration = (state) => DurationCalculator.getDurationBetween(getEditWorkoutTagsStart(state), Date.now());
+export const getEditWorkoutCommentsDuration = (state) => DurationCalculator.getDurationBetween(getEditWorkoutCommentsStart(state), Date.now());
 
-export const getEditHistoryTagsStart = (state) => stateRoot(state).editHistoryTagsStart;
+export const getEditHistoryCommentsStart = (state) => stateRoot(state).editHistoryCommentsStart;
 
-export const getEditHistoryTagsDuration = (state) => DurationCalculator.getDurationBetween(getEditHistoryTagsStart(state), Date.now());
+export const getEditHistoryCommentsDuration = (state) => DurationCalculator.getDurationBetween(getEditHistoryCommentsStart(state), Date.now());
 
 export const getWorkoutVideoRecorderStart = (state) => stateRoot(state).workoutVideoRecorderStart;
 

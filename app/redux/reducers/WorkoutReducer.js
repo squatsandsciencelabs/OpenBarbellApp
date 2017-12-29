@@ -31,8 +31,8 @@ const defaultState = {
     editingExerciseSetID: null,
     editingExerciseName: '',
     editingExerciseBias: null,
-    editingTagsSetID: null,
-    editingTags: [],
+    editingCommentsSetID: null,
+    editingComments: [],
 
     // expanded
     expandedSetID: null,
@@ -71,14 +71,14 @@ const WorkoutReducer = (state = defaultState, action) => {
             });
         case PRESENT_WORKOUT_TAGS:
             return Object.assign({}, state, {
-                editingTagsSetID: action.setID,
-                editingTags: action.tags,
+                editingCommentsSetID: action.setID,
+                editingComments: action.comments,
                 isEditing: true
             });
         case DISMISS_WORKOUT_TAGS:
             return Object.assign({}, state, {
-                editingTagsSetID: null,
-                editingTags: [],
+                editingCommentsSetID: null,
+                editingComments: [],
                 isEditing: false
             });
         case PRESENT_WORKOUT_EXPANDED:
@@ -195,7 +195,7 @@ const WorkoutReducer = (state = defaultState, action) => {
 };
 
 const isModalVisible = (state) => {
-    return (state.editingExerciseSetID !== null || state.editingTagsSetID !== null || state.expandedSetID !== null || state.recordingSetID !== null || state.watchSetID !== null);
+    return (state.editingExerciseSetID !== null || state.editingCommentsSetID !== null || state.expandedSetID !== null || state.recordingSetID !== null || state.watchSetID !== null);
 };
 
 export default WorkoutReducer;

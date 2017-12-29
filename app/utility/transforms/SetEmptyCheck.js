@@ -9,7 +9,7 @@ export const isUntouched = (set) => {
 };
 
 export const hasEmptyFields = (set) => {
-    return !set.exercise && (!set.weight || set.weight === '') && (!set.rpe || set.rpe === '') && (!set.tags || set.tags === undefined || set.tags.length === 0);
+    return !set.exercise && (!set.weight || set.weight === '') && (!set.rpe || set.rpe === '') && (!set.comments || set.comments === undefined || set.comments.length === 0);
 };
 
 export const hasEmptyData = (set) => {
@@ -33,7 +33,7 @@ export const hasEmptyReps = (set) => {
 };
 
 export const numFieldsEntered = (set) => {
-    let fields = [set.exercise, set.weight, set.rpe, set.tags.length];
+    let fields = [set.exercise, set.weight, set.rpe, set.comments.length];
     let num_fields_entered = 0;
 
     fields.forEach((field) => {

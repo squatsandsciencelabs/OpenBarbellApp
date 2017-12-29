@@ -27,10 +27,7 @@ const createDefaultState = () => ({
         'back squat' : {suggestion: 'Back Squat', seed: 10},
         'front squat' : {suggestion: 'Front Squat', seed: 10},
     },
-    commentsModel: {
-        'belt' : {suggestion: 'Belt', seed: 10},
-        'high bar' : {suggestion: 'High Bar', seed: 10},
-    }
+    commentsModel: {}
 });
 
 const generateAutocompleteExerciseModel = (workoutData, historyData) => {

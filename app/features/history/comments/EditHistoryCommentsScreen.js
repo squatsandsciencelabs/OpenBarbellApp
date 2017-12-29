@@ -8,6 +8,7 @@ import * as Actions from './EditHistoryCommentsActions';
 const mapStateToProps = (state) => ({
     title: 'Edit Comments',
     placeholder: 'Enter Comment',
+    message: 'This information is not used for 1RM calculations. Important exercise information should be put in the "Exercise" field.',
     text: '',
     multipleInput: true,
     setID: state.history.editingCommentsSetID,

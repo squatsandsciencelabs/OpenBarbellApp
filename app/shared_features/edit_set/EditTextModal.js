@@ -335,6 +335,18 @@ class EditTextModal extends Component {
         );
     }
 
+    _renderMessage() {
+        if (this.props.message) {
+            return (
+                <Text style={{textAlign: 'center', fontSize: 12, marginBottom: 10}}>
+                    {this.props.message}
+                </Text>
+            );
+        } else {
+            return null;
+        }
+    }
+
     // TODO: move 242 gray from global stylesheet
     render() {
         return (
@@ -342,6 +354,7 @@ class EditTextModal extends Component {
                 <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'rgba(242, 242, 242, 1)'}}>
                     {this._renderNavigation()}
                     {this._renderHeader()}
+                    {this._renderMessage()}
                     {this._renderTextField()}
                     {this._renderList()}
                 </View>

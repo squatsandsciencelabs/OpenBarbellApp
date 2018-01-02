@@ -16,6 +16,7 @@ class Analysis extends Component {
     render() {
         return (
             <ScrollView style={{flex: 1}}>
+                <OneRMChartScreen />
                 <OneRMSliderScreen />
             </ScrollView>
         );

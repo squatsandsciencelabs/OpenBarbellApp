@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import OneRMChartView from './OneRMChartView';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
+import * as SlidersSelectors from 'app/redux/selectors/SlidersSelectors';
 
 const mapStateToProps = (state) => {
     const exercise = SlidersSelectors.getSliderExercise(state);

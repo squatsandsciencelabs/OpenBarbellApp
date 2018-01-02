@@ -3,7 +3,7 @@ import { SceneMap } from 'react-native-tab-view';
 
 import WorkoutScreen from 'app/features/workout/WorkoutScreen';
 import SettingsTab from 'app/features/settings/SettingsTab';
-import AnalysisTab from 'app/features/analysis/AnalysisTab';
+import Analysis from 'app/features/analysis/Analysis';
 import HistoryScreen from 'app/features/history/HistoryScreen';
 
 export const initialIndex = 2;
@@ -18,6 +18,6 @@ export const routes = [
 export const sceneMap = SceneMap({
     '0': () => <WorkoutScreen />,
     '1': () => <HistoryScreen />,
-    '2': () => <AnalysisTab />,
+    '2': () => <Analysis />,
     '3': () => <SettingsTab />
 });

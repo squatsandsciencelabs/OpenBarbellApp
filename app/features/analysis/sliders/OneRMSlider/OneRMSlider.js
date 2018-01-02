@@ -14,7 +14,8 @@ class OneRMSlider extends Component {
         super(props);
 
         this.state = {
-            value: this.props.velocity,
+            velocity: this.props.velocity,
+            days: this.props.days
         };
     }
 
@@ -43,7 +44,7 @@ class OneRMSlider extends Component {
                     </Text>
                     <Slider
                     value={this.props.velocity} 
-                    onValueChange={(value) => this.setState({ value: Number(value.toFixed(2)) })}
+                    onValueChange={(value) => this.setState({ velocity: Number(value.toFixed(2)) })}
                     onSlidingStart={this.props.disableTabSwipe}
                     onSlidingComplete={(value) => this.props.changeVelocity(value)}
                     minimumValue={.01}
@@ -53,7 +54,25 @@ class OneRMSlider extends Component {
                     minimumTrackTintColor={'#368fff'}
                     thumbStyle={styles.thumbStyle}
                     animateTransitions={true}
-                    /><Text style={styles.numberStyle}>{this.state.value}</Text>
+                    />
+                    <Text style={styles.numberStyle}>{this.state.velocity} m/s</Text>
+                    <Text style={styles.labelText}>
+                        Date Range
+                    </Text>
+                    <Slider
+                    value={this.state.days} 
+                    onValueChange={(value) => this.setState({ days: Number(value.toFixed(2)) })}
+                    onSlidingStart={this.props.disableTabSwipe}
+                    onSlidingComplete={(value) => this.props.changeDays(value)}
+                    minimumValue={1}
+                    maximumValue={7}
+                    step={1}
+                    thumbTintColor={'white'}
+                    minimumTrackTintColor={'#368fff'}
+                    thumbStyle={styles.thumbStyle}
+                    animateTransitions={true}
+                    />
+                    <Text style={styles.numberStyle}>{this.state.days} days</Text>
                 </View>
             </View>
         )

@@ -11,6 +11,7 @@ import * as OneRepMax from 'app/utility/transforms/OneRepMax';
 const mapStateToProps = (state) => {
     const exercise = SlidersSelectors.getSliderExercise(state);
     const velocity = SlidersSelectors.getSliderVelocity(state);
+    const days = SlidersSelectors.getSliderDays(state);
     const data = SetsSelectors.getExerciseData(state, exercise, 'regression');
     const confidence = OneRepMax.getConfidenceInterval(data);
     const e1rm = OneRepMax.OneRMPrediction(data, velocity);
@@ -18,6 +19,7 @@ const mapStateToProps = (state) => {
     return {
         velocity: velocity,
         exercise: exercise,
+        days: days,
         confidence: confidence,
         e1rm: e1rm
     }
@@ -26,6 +28,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         changeVelocity: Actions.changeSliderVelocity,
+        changeDays: Actions.changeSliderDays,
         enableTabSwipe: AppStateActionCreators.enableTabSwipe,
         disableTabSwipe: AppStateActionCreators.disableTabSwipe
     }, dispatch);

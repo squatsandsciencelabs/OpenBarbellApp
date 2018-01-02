@@ -1051,6 +1051,9 @@ describe('SetsSelectors', () => {
                         }]
                     },
                 }
+            },
+            sliders: {
+                days: 5,
             }
         };
 

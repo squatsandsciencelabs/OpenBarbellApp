@@ -7,6 +7,7 @@ import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
 import * as OneRepMax from 'app/utility/transforms/OneRepMax';
 import * as CollapsedMetrics from 'app/utility/transforms/CollapsedMetrics';
+import * as SlidersSelectors from 'app/redux/selectors/SlidersSelectors';
 
 const stateRoot = (state) => state.sets;
 
@@ -375,15 +376,19 @@ export const getExerciseData = (state, exercise, type) => {
     const sets = getAllSets(state);
     let data = [];
 
+    const days = SlidersSelectors.getSliderDays(state);
+    const date = new Date();
+    const minDate = new Date(new Date().setDate(date.getDate() - days));
+
     if (type === 'regression') {
         sets.forEach((set) => {
-            if (set.exercise === exercise && set.reps.length > 0 && set.weight) {
+            if (set.exercise === exercise && set.reps.length > 0 && set.weight && new Date(set.initialStartTime) >= minDate) {
                 data.push([set.weight, Number(RepDataMap.averageVelocity(set.reps[0].data))]);
             }       
         });
     } else {
         sets.forEach((set) => {
-            if (set.exercise === exercise && set.reps.length > 0 && set.weight) {
+            if (set.exercise === exercise && set.reps.length > 0 && set.weight && set.initialStartTime >= minDate) {
                 data.push({ x: set.weight, y: Number(RepDataMap.averageVelocity(set.reps[0].data)) });
             }       
         });

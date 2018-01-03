@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { Slider } from 'react-native-elements';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
-import * as OneRepMax from 'app/utility/transforms/OneRepMax';
+import * as OneRMPrediction from 'app/utility/transforms/OneRMPrediction';
 
 class OneRMSlider extends Component {
     // using component level state vs redux here to avoid excessive dispatches

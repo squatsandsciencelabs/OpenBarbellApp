@@ -3,19 +3,13 @@ import {
     Text,
     View,
 } from 'react-native';
-import { VictoryChart, VictoryScatter } from 'victory-native';
+import { Scatterplot } from 'react-native-pathjs-charts'
 
 class OneRMChartView extends Component {
     render() {
         return (
             <View>
-                <VictoryChart>
-                    <VictoryScatter
-                        style={{ data: { fill: "#c43a31" } }}
-                        size={7}
-                        data={this.props.data}
-                    />
-                </VictoryChart>
+                <Scatterplot data={this.props.data} xKey="episode" yKey="rating" />
             </View>
         );
     }

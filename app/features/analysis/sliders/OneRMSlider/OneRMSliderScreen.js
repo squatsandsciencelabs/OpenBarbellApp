@@ -6,15 +6,15 @@ import * as Actions from './OneRMSliderActions';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as SlidersSelectors from 'app/redux/selectors/SlidersSelectors';
 import * as AppStateActionCreators from 'app/redux/shared_actions/AppStateActionCreators';
-import * as OneRepMax from 'app/utility/transforms/OneRepMax';
+import * as OneRMPrediction from 'app/utility/transforms/OneRMPrediction';
 
 const mapStateToProps = (state) => {
     const exercise = SlidersSelectors.getSliderExercise(state);
     const velocity = SlidersSelectors.getSliderVelocity(state);
     const days = SlidersSelectors.getSliderDays(state);
     const data = SetsSelectors.getExerciseData(state, exercise, 'regression');
-    const confidence = OneRepMax.getConfidenceInterval(data);
-    const e1rm = OneRepMax.OneRMPrediction(data, velocity);
+    const confidence = OneRMPrediction.getConfidenceInterval(data);
+    const e1rm = OneRMPrediction.OneRMPrediction(data, velocity);
 
     return {
         velocity: velocity,

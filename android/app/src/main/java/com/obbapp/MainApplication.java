@@ -18,6 +18,7 @@ import com.facebook.react.shell.MainReactPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 import io.invertase.firebase.crash.RNFirebaseCrashPackage;
+import io.invertase.firebase.config.RNFirebaseRemoteConfigPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
 
 import java.util.Arrays;
@@ -47,7 +48,8 @@ public class MainApplication extends Application implements ReactApplication {
               new RFDuinoServicePackage(),
               new RNFirebasePackage(),
               new RNFirebaseAnalyticsPackage(),
-              new RNFirebaseCrashPackage());
+              new RNFirebaseCrashPackage(),
+              new RNFirebaseRemoteConfigPackage());
     }
 
     @Override

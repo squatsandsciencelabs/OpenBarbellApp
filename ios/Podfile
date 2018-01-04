@@ -18,6 +18,13 @@ target 'OBBApp' do
     # Add any other subspecs you want to use in your project
   ]
 
+
+
+
+
+
+  pod 'RNSVG', :path => '../node_modules/react-native-svg'
+
   target 'OBBAppTests' do
     inherit! :search_paths
     # Pods for testing

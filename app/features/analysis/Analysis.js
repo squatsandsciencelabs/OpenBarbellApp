@@ -8,16 +8,14 @@ import {
     ListView
 } from 'react-native';
 
-import OneRMSliderScreen from './sliders/OneRMSlider/OneRMSliderScreen';
-import OneRMChartScreen from './charts/OneRMChartScreen';
+import OneRMScreen from './cards/OneRM/OneRMScreen';
 
 class Analysis extends Component {
 
     render() {
         return (
             <ScrollView style={{flex: 1}}>
-                <OneRMChartScreen />
-                <OneRMSliderScreen />
+                <OneRMScreen />
             </ScrollView>
         );
     }

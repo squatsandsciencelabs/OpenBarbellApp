@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 
 import OneRMChartView from './OneRMChartView';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
-import * as SlidersSelectors from 'app/redux/selectors/SlidersSelectors';
+import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 
 const mapStateToProps = (state) => {
-    const exercise = SlidersSelectors.getSliderExercise(state);
+    const exercise = AnalysisSelectors.getAnalysisExercise(state);
     const data = SetsSelectors.getExerciseData(state, exercise, 'scatter');
 
     return {

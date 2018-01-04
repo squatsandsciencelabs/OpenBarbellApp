@@ -13,7 +13,7 @@ import CollapsedSettingsReducer from './CollapsedSettingsReducer';
 import SuggestionsReducer from './SuggestionsReducer';
 import AppStateReducer from './AppStateReducer';
 import DurationsReducer from './DurationsReducer';
-import SlidersReducer from './SlidersReducer';
+import AnalysisReducer from './AnalysisReducer';
 
 export default reducers = combineReducers({
     sets: SetsReducer,
@@ -30,5 +30,5 @@ export default reducers = combineReducers({
     collapsedSettings: CollapsedSettingsReducer,
     appState: AppStateReducer,
     durations: DurationsReducer,
-    sliders: SlidersReducer
+    analysis: AnalysisReducer
 });

@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import {
     Text,
     StyleSheet,
-    View
+    View,
+    TouchableOpacity
 } from 'react-native';
 import { Slider } from 'react-native-elements';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 import * as OneRMPrediction from 'app/utility/transforms/OneRMPrediction';
+import OneRMChartScreen from '../../charts/OneRMChartScreen';
+import ExercisePicker from '../OneRM/exercise/ExercisePicker';
 
-class OneRMSlider extends Component {
+class OneRM extends Component {
     // using component level state vs redux here to avoid excessive dispatches
     constructor(props) {
         super(props);
@@ -22,7 +25,11 @@ class OneRMSlider extends Component {
     _render1rm(confidence) {
         if (confidence >= 90) {
             return (
-                <Text style={styles.oneRMText}>e1RM: {this.props.e1rm}</Text>
+                <View>
+                    <OneRMChartScreen />
+                    <Text style={styles.oneRMText}>e1RM: {this.props.e1rm}</Text>
+                    <Text style={styles.oneRMText}>confidence: {this.props.confidence}</Text>
+                </View>
             );
         } else {
             return (
@@ -33,10 +40,22 @@ class OneRMSlider extends Component {
         }
     }
 
+    _tapExercise() {
+        this.props.tapExercise;
+    }
+
     render() {
         return (
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
                 <Text style={[{marginBottom: 20}, styles.titleText]}>Estimated One-Rep Max</Text>
+                <View style={{marginBottom: 20}}>
+                    <TouchableOpacity onPress={() => this._tapExercise()}>
+                        <Text style={{fontSize: 16, color: 'rgba(47, 128, 237, 1)', textAlign: 'center'}}>
+                            {this.props.exercise}
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                <ExercisePicker />
                 <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
                     {this._render1rm(this.props.confidence)}
                     <Text style={styles.labelText}>
@@ -95,8 +114,14 @@ const styles = StyleSheet.create({
     },
     oneRMText: {
         color: 'rgba(77, 77, 77, 1)',
-        marginBottom: 20, 
+        marginBottom: 5,
         fontSize: 32, 
+        textAlign: 'center'
+    },
+    confidenceText: {
+        color: 'rgba(77, 77, 77, 1)',
+        marginBottom: 20,
+        fontSize: 20,
         textAlign: 'center'
     },
     errorText: {
@@ -114,7 +139,14 @@ const styles = StyleSheet.create({
     },
     numberStyle: {
         fontSize: 16
-    }
+    },
+    dropdownButton: {
+        backgroundColor: 'rgba(47, 128, 237, 1)',
+        borderRadius: 3,
+        marginLeft: 5,
+        marginBottom: 5,
+        height: 40,
+    },
 });
 
-export default OneRMSlider;
+export default OneRM;

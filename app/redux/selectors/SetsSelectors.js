@@ -7,7 +7,7 @@ import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
 import * as OneRMPrediction from 'app/utility/transforms/OneRMPrediction';
 import * as CollapsedMetrics from 'app/utility/transforms/CollapsedMetrics';
-import * as SlidersSelectors from 'app/redux/selectors/SlidersSelectors';
+import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 
 const stateRoot = (state) => state.sets;
 
@@ -376,7 +376,7 @@ export const getExerciseData = (state, exercise, type) => {
     const sets = getAllSets(state);
     let data = [];
 
-    const days = SlidersSelectors.getSliderDays(state);
+    const days = AnalysisSelectors.getAnalysisDays(state);
     const date = new Date();
     const minDate = new Date(new Date().setDate(date.getDate() - days));
 
@@ -389,7 +389,7 @@ export const getExerciseData = (state, exercise, type) => {
     } else {
         sets.forEach((set) => {
             if (set.exercise === exercise && set.reps.length > 0 && set.weight && set.initialStartTime >= minDate) {
-                data.push({ x: set.weight, y: Number(RepDataMap.averageVelocity(set.reps[0].data)) });
+                data.push({ title: set.setID, weight: set.weight, velocity: Number(RepDataMap.averageVelocity(set.reps[0].data)) });
             }       
         });
     }
@@ -399,7 +399,7 @@ export const getExerciseData = (state, exercise, type) => {
 
 export const generateExerciseItems = (state) => {
     const sets = getAllSets(state);
-    let exercises = []
+    let exercises = [];
 
     sets.forEach((set) => {
         if (!exerciseExists(set.exercise, exercises)) {
@@ -417,7 +417,7 @@ const exerciseExists = (exercise, arr) => {
     }); 
 }
 
-export const get1rm = (state, exercise) => {
+export const OneRM = (state, exercise) => {
     const lifts = getExerciseData(state, exercise, 'regression');
 
     const confidence = OneRMPrediction.getConfidenceInterval(lifts);

@@ -899,6 +899,7 @@ describe('SetsSelectors', () => {
                         removed: true,
                         data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
                     }],
+                    initialStartTime: '2017-12-30T04:06:12.640Z'
                 }, {
                     exercise: 'Squat',
                     weight: 200,
@@ -908,6 +909,7 @@ describe('SetsSelectors', () => {
                         removed: false,
                         data: [-3456, 37, 3.933368, 312, 34, 35, 1, 36]
                     }],
+                    initialStartTime: '2017-12-30T04:06:12.640Z'
                 }, {
                     exercise: 'Bench',
                     weight: 100,
@@ -925,6 +927,7 @@ describe('SetsSelectors', () => {
                         removed: false,
                         data: [-3456, 37, 0.483368, 28, 48, 13, 3, 5]
                     }],
+                    initialStartTime: '2017-12-30T04:06:12.640Z'
                 }, {
                     exercise: 'Deadlift',
                     weight: 100,
@@ -942,6 +945,7 @@ describe('SetsSelectors', () => {
                         removed: false,
                         data: [-3456, 37, 1.453368, 328, 32, 22, 1, 12]
                     }],
+                    initialStartTime: '2017-12-30T04:06:12.640Z'
                 }],
                 historyData: {
                     a: {
@@ -968,7 +972,8 @@ describe('SetsSelectors', () => {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 0.233368, 400, 40, 30, 1, 20]
-                        }]
+                        }],
+                        initialStartTime: '2017-12-30T04:06:12.640Z'
                     },
                     b: {
                         exercise: 'Squat',
@@ -979,6 +984,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 1.943368, 388, 38, 28, 1, 18]
                         }],
+                        initialStartTime: '2017-12-30T04:06:12.640Z'
                     },
                     c: {
                         exercise: 'Bench',
@@ -989,6 +995,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 1.733368, 288, 28, 18, 1, 8]
                         }],
+                        initialStartTime: '2017-12-30T04:06:12.640Z'
                     },
                     d: {
                         exercise: 'Bench',
@@ -999,6 +1006,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 1.833368, 188, 18, 8, 1, 4]
                         }],
+                        initialStartTime: '2017-12-30T04:06:12.640Z'
                     },
                     e: {
                         exercise: 'Squat',
@@ -1018,7 +1026,8 @@ describe('SetsSelectors', () => {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 2.4, 230, 23, 13, 1, 3]
-                        }]
+                        }],
+                        initialStartTime: '2017-12-30T04:06:12.640Z'
                     },
                     f: {
                         exercise: 'Squat',
@@ -1038,7 +1047,8 @@ describe('SetsSelectors', () => {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 2.4, 230, 23, 13, 1, 3]
-                        }]
+                        }],
+                        initialStartTime: '2017-12-30T04:06:12.640Z',
                     },
                     g: {
                         exercise: 'Squat',
@@ -1048,7 +1058,8 @@ describe('SetsSelectors', () => {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 2.933368, 288, 28, 28, 1, 28]
-                        }]
+                        }],
+                        initialStartTime: '2017-12-30T04:06:12.640Z'
                     },
                 }
             },
@@ -1423,7 +1434,7 @@ describe('SetsSelectors', () => {
         });
 
         describe('get 1rm', () => {
-            const result = sut.get1rm(state, 'Bench');
+            const result = sut.OneRM(state, 'Bench');
 
             expect(result).toEqual({ "velocity": 1.83, "weight": 100, "confidence": 19 });
         });

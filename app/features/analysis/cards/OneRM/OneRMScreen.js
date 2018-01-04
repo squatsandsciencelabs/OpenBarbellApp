@@ -1,17 +1,17 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import OneRMSlider from './OneRMSlider';
-import * as Actions from './OneRMSliderActions';
+import OneRM from './OneRM';
+import * as Actions from './OneRMActions';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
-import * as SlidersSelectors from 'app/redux/selectors/SlidersSelectors';
+import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 import * as AppStateActionCreators from 'app/redux/shared_actions/AppStateActionCreators';
 import * as OneRMPrediction from 'app/utility/transforms/OneRMPrediction';
 
 const mapStateToProps = (state) => {
-    const exercise = SlidersSelectors.getSliderExercise(state);
-    const velocity = SlidersSelectors.getSliderVelocity(state);
-    const days = SlidersSelectors.getSliderDays(state);
+    const exercise = AnalysisSelectors.getAnalysisExercise(state);
+    const velocity = AnalysisSelectors.getAnalysisVelocity(state);
+    const days = AnalysisSelectors.getAnalysisDays(state);
     const data = SetsSelectors.getExerciseData(state, exercise, 'regression');
     const confidence = OneRMPrediction.getConfidenceInterval(data);
     const e1rm = OneRMPrediction.OneRMPrediction(data, velocity);
@@ -27,6 +27,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
+        tapExercise: Actions.presentSelectExercise,
         changeVelocity: Actions.changeSliderVelocity,
         changeDays: Actions.changeSliderDays,
         enableTabSwipe: AppStateActionCreators.enableTabSwipe,
@@ -34,9 +35,9 @@ const mapDispatchToProps = (dispatch) => {
     }, dispatch);
 };
 
-const OneRMSliderScreen = connect(
+const OneRMScreen = connect(
     mapStateToProps,
     mapDispatchToProps
-)(OneRMSlider);
+)(OneRM);
 
-export default OneRMSliderScreen;
+export default OneRMScreen;

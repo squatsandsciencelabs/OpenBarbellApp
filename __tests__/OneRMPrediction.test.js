@@ -14,7 +14,7 @@ describe('1rm', () => {
 
     test('return 1rm prediction', () => {
 
-        const result = sut.get1rmPrediction(data, 0.15);
+        const result = sut.OneRMPrediction(data, 0.15);
         
         expect(result).toBe(326);
     });

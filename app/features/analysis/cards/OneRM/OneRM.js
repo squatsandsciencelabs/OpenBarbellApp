@@ -5,7 +5,7 @@ import {
     View,
     TouchableOpacity
 } from 'react-native';
-import { Slider } from 'react-native-elements';
+import { Slider } from 'react-native';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 import * as OneRMPrediction from 'app/utility/transforms/OneRMPrediction';
 import OneRMChartScreen from '../../charts/OneRMChartScreen';
@@ -41,7 +41,7 @@ class OneRM extends Component {
     }
 
     _tapExercise() {
-        this.props.tapExercise;
+        this.props.tapExercise();
     }
 
     render() {
@@ -63,8 +63,7 @@ class OneRM extends Component {
                     </Text>
                     <Slider
                     value={this.props.velocity} 
-                    onValueChange={(value) => this.setState({ velocity: Number(value.toFixed(2)) })}
-                    onSlidingStart={this.props.disableTabSwipe}
+                    onValueChange={(value) => this.setState({ velocity: Number(value.toFixed(2)) })}               // 
                     onSlidingComplete={(value) => this.props.changeVelocity(value)}
                     minimumValue={.01}
                     maximumValue={.41}

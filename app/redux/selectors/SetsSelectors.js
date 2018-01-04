@@ -402,7 +402,7 @@ export const generateExerciseItems = (state) => {
     let exercises = [];
 
     sets.forEach((set) => {
-        if (!exerciseExists(set.exercise, exercises)) {
+        if (!exerciseExists(set.exercise, exercises) && set.exercise) {
             exercises.push({ label: set.exercise, value: set.exercise });
         }
     });
@@ -437,7 +437,7 @@ export const OneRM = (state, exercise) => {
     return { weight: maxWeight, velocity: slowestVel, confidence};
 }
 
-const getAllSets = (state) => {
+export const getAllSets = (state) => {
     const historySets = getHistorySets(state);
     const workoutSets = getWorkoutSets(state);
 

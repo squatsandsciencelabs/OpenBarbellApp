@@ -3,9 +3,7 @@ import {
     LOCKED_SCREEN,
     MULTI_TASK_SCREEN,
     END_WORKOUT,
-    CHANGE_TAB,
-    DISABLE_TAB_SWIPE,
-    CHANGE_SLIDER_VELOCITY
+    CHANGE_TAB
 } from 'app/ActionTypes';
 import * as NavigationConfig from 'app/configs/NavigationConfig';
 
@@ -14,7 +12,6 @@ const defaultState = {
     lockedCounter: 0,
     multiTaskCounter: 0,
     tabIndex: NavigationConfig.initialIndex,
-    tabSwipeEnabled: true
 }
 
 const AppStateReducer = (state = defaultState, action) => {
@@ -22,14 +19,6 @@ const AppStateReducer = (state = defaultState, action) => {
         case CHANGE_TAB:
             return Object.assign({}, state, {
                 tabIndex: action.tabIndex,
-            });
-        case DISABLE_TAB_SWIPE:
-            return Object.assign({}, state, {
-                tabSwipeEnabled: false,
-            });
-        case CHANGE_SLIDER_VELOCITY:
-            return Object.assign({}, state, {
-                tabSwipeEnabled: true,
             });
         case UNLOCKED_SCREEN:
             return Object.assign({}, state, {

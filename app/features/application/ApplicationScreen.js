@@ -7,7 +7,6 @@ import ApplicationView from './ApplicationView';
 
 const mapStateToProps = (state) => ({
     tabIndex: AppStateSelectors.getTabIndex(state),
-    swipeEnabled: AppStateSelectors.getTabSwipeEnabled(state),
     killSwitch: state.killSwitch,
 });
 

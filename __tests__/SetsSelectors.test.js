@@ -978,7 +978,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 0.233368, 400, 40, 30, 1, 20]
                         }],
-                        initialStartTime: '2017-12-30T04:06:12.640Z'
+                        initialStartTime: '12-30-17'
                     },
                     b: {
                         setID: 'b',

@@ -10,7 +10,7 @@ const defaultState = {
     isEditingExercise: false,
     velocity: .01,
     exercise: 'Bench',
-    daysRange: 7
+    daysRange: 7,
 }
 
 const AnalysisReducer = (state = defaultState, action) => {

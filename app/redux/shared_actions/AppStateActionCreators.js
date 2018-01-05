@@ -3,8 +3,6 @@ import {
     LOCKED_SCREEN,
     MULTI_TASK_SCREEN,
     CHANGE_TAB,
-    DISABLE_TAB_SWIPE,
-    ENABLE_TAB_SWIPE,
     HISTORY_VIEWED 
 } from 'app/ActionTypes';
 import { Keyboard } from 'react-native';

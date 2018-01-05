@@ -19,6 +19,7 @@ import {
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 
 import * as NavigationConfig from 'app/configs/NavigationConfig';
+import SurveyModalScreen from 'app/shared_features/survey/SurveyModalScreen';
 
 class ApplicationView extends Component {
     state = {
@@ -104,6 +105,8 @@ class ApplicationView extends Component {
                     renderHeader={this._renderHeader}
                     onIndexChange={(index) => this.props.changeTab(index) }
                 />
+
+                <SurveyModalScreen />
 
             </View>
         );

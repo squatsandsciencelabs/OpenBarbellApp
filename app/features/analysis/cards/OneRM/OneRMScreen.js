@@ -29,9 +29,7 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         tapExercise: Actions.presentSelectExercise,
         changeVelocity: Actions.changeSliderVelocity,
-        changeDays: Actions.changeSliderDays,
-        enableTabSwipe: AppStateActionCreators.enableTabSwipe,
-        disableTabSwipe: AppStateActionCreators.disableTabSwipe
+        changeDays: Actions.changeSliderDays
     }, dispatch);
 };
 

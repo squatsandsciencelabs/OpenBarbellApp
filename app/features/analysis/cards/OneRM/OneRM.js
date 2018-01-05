@@ -80,7 +80,6 @@ class OneRM extends Component {
                         <Slider
                         value={this.state.days} 
                         onValueChange={(value) => this.setState({ days: Number(value.toFixed(2)) })}
-                        onSlidingStart={this.props.disableTabSwipe}
                         onSlidingComplete={(value) => this.props.changeDays(value)}
                         minimumValue={1}
                         maximumValue={7}

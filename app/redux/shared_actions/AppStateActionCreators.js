@@ -53,11 +53,3 @@ export const changeTab = (tabIndex) => (dispatch, getState) => {
         tabIndex: tabIndex
     });
 };
-
-export const disableTabSwipe = () => ({
-    type: DISABLE_TAB_SWIPE
-});
-
-export const enableTabSwipe = () => ({
-    type: ENABLE_TAB_SWIPE
-});

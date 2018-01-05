@@ -14,6 +14,7 @@ import SuggestionsReducer from './SuggestionsReducer';
 import AppStateReducer from './AppStateReducer';
 import DurationsReducer from './DurationsReducer';
 import AnalysisReducer from './AnalysisReducer';
+import SurveyReducer from './SurveyReducer';
 
 export default reducers = combineReducers({
     sets: SetsReducer,
@@ -30,5 +31,6 @@ export default reducers = combineReducers({
     collapsedSettings: CollapsedSettingsReducer,
     appState: AppStateReducer,
     durations: DurationsReducer,
-    analysis: AnalysisReducer
+    analysis: AnalysisReducer,
+    survey: SurveyReducer,
 });

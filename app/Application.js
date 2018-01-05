@@ -6,6 +6,7 @@ import 'app/configs/ReactotronConfig';
 import Store from 'app/redux/Store';
 import ApplicationScreen from 'app/features/application/ApplicationScreen';
 import * as GoogleSignInSetup from 'app/services/GoogleSignInSetup';
+import * as Firebase from 'app/services/Firebase';
 import Bluetooth from 'app/services/Bluetooth';
 import AppState from 'app/services/AppState';
 import * as Analytics from 'app/services/Analytics';
@@ -22,6 +23,9 @@ Analytics.setInitialAnalytics();
 
 // configure google sign in
 GoogleSignInSetup.configure();
+
+// configure firebase
+Firebase.configure();
 
 // start the bluetooth
 Bluetooth(store);

@@ -1,7 +1,7 @@
 import regression from 'regression';
 
 // Data must be an array of arrays, sub arrays representing X, and Y values
-export const OneRMPrediction = (data, velocity) => {
+export const calc1rm = (data, velocity) => {
     if (!data) {
         return null;
     }

@@ -161,6 +161,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-svg')
     compile project(':react-native-keep-awake')
     compile project(':react-native-video')
     compile project(':react-native-camera')

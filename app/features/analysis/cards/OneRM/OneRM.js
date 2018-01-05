@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { Slider } from 'react-native';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
-import * as OneRMPrediction from 'app/utility/transforms/OneRMPrediction';
+import * as OneRMCalculator from 'app/utility/transforms/OneRMCalculator';
 import OneRMChartScreen from '../../charts/OneRMChartScreen';
 import ExercisePicker from '../OneRM/exercise/ExercisePicker';
 

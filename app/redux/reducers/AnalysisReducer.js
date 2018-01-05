@@ -10,7 +10,7 @@ const defaultState = {
     isEditingExercise: false,
     velocity: .01,
     exercise: 'Bench',
-    days: 7
+    daysRange: 7
 }
 
 const AnalysisReducer = (state = defaultState, action) => {
@@ -21,7 +21,7 @@ const AnalysisReducer = (state = defaultState, action) => {
             });
         case CHANGE_SLIDER_DAYS: 
             return Object.assign({}, state, {
-                days: action.days
+                daysRange: action.days
             });
         case PRESENT_SELECT_EXERCISE: 
             return Object.assign({}, state, {

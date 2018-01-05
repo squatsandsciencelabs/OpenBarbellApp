@@ -6,15 +6,15 @@ import * as Actions from './OneRMActions';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 import * as AppStateActionCreators from 'app/redux/shared_actions/AppStateActionCreators';
-import * as OneRMPrediction from 'app/utility/transforms/OneRMPrediction';
+import * as OneRMCalculator from 'app/utility/transforms/OneRMCalculator';
 
 const mapStateToProps = (state) => {
     const exercise = AnalysisSelectors.getAnalysisExercise(state);
     const velocity = AnalysisSelectors.getAnalysisVelocity(state);
-    const days = AnalysisSelectors.getAnalysisDays(state);
+    const days = AnalysisSelectors.getAnalysisRange(state);
     const data = SetsSelectors.getExerciseData(state, exercise, 'regression');
-    const confidence = OneRMPrediction.getConfidenceInterval(data);
-    const e1rm = OneRMPrediction.OneRMPrediction(data, velocity);
+    const confidence = OneRMCalculator.getConfidenceInterval(data);
+    const e1rm = OneRMCalculator.calc1rm(data, velocity);
 
     return {
         velocity: velocity,

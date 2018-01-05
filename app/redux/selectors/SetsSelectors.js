@@ -5,8 +5,9 @@ import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
-import * as OneRMPrediction from 'app/utility/transforms/OneRMPrediction';
+import * as OneRMCalculator from 'app/utility/transforms/OneRMCalculator';
 import * as CollapsedMetrics from 'app/utility/transforms/CollapsedMetrics';
+import * as DateUtils from 'app/utility/transforms/DateUtils';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 
 const stateRoot = (state) => state.sets;
@@ -376,19 +377,18 @@ export const getExerciseData = (state, exercise, type) => {
     const sets = getAllSets(state);
     let data = [];
 
-    const days = AnalysisSelectors.getAnalysisDays(state);
-    const date = new Date();
-    const minDate = new Date(new Date().setDate(date.getDate() - days));
+    // check if date fits within range
+    const range = AnalysisSelectors.getAnalysisRange(state);
 
     if (type === 'regression') {
         sets.forEach((set) => {
-            if (set.exercise === exercise && set.reps.length > 0 && set.weight && new Date(set.initialStartTime) >= minDate) {
+            if (set.exercise === exercise && set.reps.length > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime)) {
                 data.push([set.weight, Number(RepDataMap.averageVelocity(set.reps[0].data))]);
             }       
         });
     } else {
         sets.forEach((set) => {
-            if (set.exercise === exercise && set.reps.length > 0 && set.weight && set.initialStartTime >= minDate) {
+            if (set.exercise === exercise && set.reps.length > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime)) {
                 data.push({ title: set.setID, weight: set.weight, velocity: Number(RepDataMap.averageVelocity(set.reps[0].data)) });
             }       
         });
@@ -417,10 +417,10 @@ const exerciseExists = (exercise, arr) => {
     }); 
 }
 
-export const OneRM = (state, exercise) => {
+export const getCurrentOneRM = (state, exercise) => {
     const lifts = getExerciseData(state, exercise, 'regression');
 
-    const confidence = OneRMPrediction.getConfidenceInterval(lifts);
+    const confidence = OneRMCalculator.getConfidenceInterval(lifts);
 
     let maxWeight = lifts[0][0];
     let slowestVel = lifts[0][1];

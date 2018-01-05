@@ -1,4 +1,4 @@
-import * as sut from 'app/utility/transforms/OneRMPrediction';
+import * as sut from 'app/utility/transforms/OneRMCalculator';
 
 var data = [
     [255, 0.48], 
@@ -14,7 +14,7 @@ describe('1rm', () => {
 
     test('return 1rm prediction', () => {
 
-        const result = sut.OneRMPrediction(data, 0.15);
+        const result = sut.calc1rm(data, 0.15);
         
         expect(result).toBe(326);
     });

@@ -10,7 +10,7 @@ import {
 
 import OneRMScreen from './cards/OneRM/OneRMScreen';
 
-class Analysis extends Component {
+class AnalysisTab extends Component {
 
     render() {
         return (
@@ -21,4 +21,4 @@ class Analysis extends Component {
     }
 }
 
-export default Analysis;
+export default AnalysisTab;

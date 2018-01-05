@@ -866,6 +866,7 @@ describe('SetsSelectors', () => {
         var state = {
             sets: {
                 workoutData: [{
+                    setID: 'h',
                     exercise: 'Squat',
                     weight: 100,
                     metric: 'lbs',
@@ -883,6 +884,7 @@ describe('SetsSelectors', () => {
                         data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
                     }],
                 }, {
+                    setID: 'i',
                     exercise: 'Squat',
                     weight: 200,
                     metric: 'kgs',
@@ -901,6 +903,7 @@ describe('SetsSelectors', () => {
                     }],
                     initialStartTime: '2017-12-30T04:06:12.640Z'
                 }, {
+                    setID: 'j',
                     exercise: 'Squat',
                     weight: 200,
                     metric: 'kgs',
@@ -911,6 +914,7 @@ describe('SetsSelectors', () => {
                     }],
                     initialStartTime: '2017-12-30T04:06:12.640Z'
                 }, {
+                    setID: 'k',
                     exercise: 'Bench',
                     weight: 100,
                     metric: 'lbs',
@@ -949,6 +953,7 @@ describe('SetsSelectors', () => {
                 }],
                 historyData: {
                     a: {
+                        setID: 'a',
                         exercise: 'Bench',
                         weight: 100,
                         metric: 'lbs',
@@ -976,6 +981,7 @@ describe('SetsSelectors', () => {
                         initialStartTime: '2017-12-30T04:06:12.640Z'
                     },
                     b: {
+                        setID: 'b',
                         exercise: 'Squat',
                         weight: 200,
                         metric: 'lbs',
@@ -987,6 +993,7 @@ describe('SetsSelectors', () => {
                         initialStartTime: '2017-12-30T04:06:12.640Z'
                     },
                     c: {
+                        setID: 'c',
                         exercise: 'Bench',
                         weight: 100,
                         metric: 'lbs',
@@ -998,6 +1005,7 @@ describe('SetsSelectors', () => {
                         initialStartTime: '2017-12-30T04:06:12.640Z'
                     },
                     d: {
+                        setID: 'd',
                         exercise: 'Bench',
                         weight: 200,
                         metric: 'lbs',
@@ -1009,6 +1017,7 @@ describe('SetsSelectors', () => {
                         initialStartTime: '2017-12-30T04:06:12.640Z'
                     },
                     e: {
+                        setID: 'e',
                         exercise: 'Squat',
                         weight: 100,
                         metric: 'lbs',
@@ -1030,6 +1039,7 @@ describe('SetsSelectors', () => {
                         initialStartTime: '2017-12-30T04:06:12.640Z'
                     },
                     f: {
+                        setID: 'f',
                         exercise: 'Squat',
                         weight: 200,
                         metric: 'kgs',
@@ -1051,6 +1061,7 @@ describe('SetsSelectors', () => {
                         initialStartTime: '2017-12-30T04:06:12.640Z',
                     },
                     g: {
+                        setID: 'g',
                         exercise: 'Squat',
                         weight: 200,
                         metric: 'kgs',
@@ -1063,8 +1074,8 @@ describe('SetsSelectors', () => {
                     },
                 }
             },
-            sliders: {
-                days: 5,
+            analysis: {
+                daysRange: 7,
             }
         };
 
@@ -1376,10 +1387,10 @@ describe('SetsSelectors', () => {
 
             test('return data for scatter', () => {
                 const expected = [
-                    { "x": 100, "y": 1.83 },
-                    { "x": 100, "y": 1.73 },
-                    { "x": 200, "y": 1.83 },
-                    { "x": 100, "y": 1.43 }
+                    {"title": "a", "velocity": 1.83, "weight": 100}, 
+                    {"title": "c", "velocity": 1.73, "weight": 100}, 
+                    {"title": "d", "velocity": 1.83, "weight": 200}, 
+                    {"title": "k", "velocity": 1.43, "weight": 100}
                 ];
                 
                 const result = sut.getExerciseData(state, 'Bench', 'scatter');
@@ -1433,8 +1444,8 @@ describe('SetsSelectors', () => {
             expect(result).toEqual(expected);
         });
 
-        describe('get 1rm', () => {
-            const result = sut.OneRM(state, 'Bench');
+        describe('get current 1rm', () => {
+            const result = sut.getCurrentOneRM(state, 'Bench');
 
             expect(result).toEqual({ "velocity": 1.83, "weight": 100, "confidence": 19 });
         });

@@ -901,7 +901,7 @@ describe('SetsSelectors', () => {
                         removed: true,
                         data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
                     }],
-                    initialStartTime: '2017-12-30T04:06:12.640Z'
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
                 }, {
                     setID: 'j',
                     exercise: 'Squat',
@@ -912,7 +912,7 @@ describe('SetsSelectors', () => {
                         removed: false,
                         data: [-3456, 37, 3.933368, 312, 34, 35, 1, 36]
                     }],
-                    initialStartTime: '2017-12-30T04:06:12.640Z'
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
                 }, {
                     setID: 'k',
                     exercise: 'Bench',
@@ -931,7 +931,7 @@ describe('SetsSelectors', () => {
                         removed: false,
                         data: [-3456, 37, 0.483368, 28, 48, 13, 3, 5]
                     }],
-                    initialStartTime: '2017-12-30T04:06:12.640Z'
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
                 }, {
                     exercise: 'Deadlift',
                     weight: 100,
@@ -949,7 +949,7 @@ describe('SetsSelectors', () => {
                         removed: false,
                         data: [-3456, 37, 1.453368, 328, 32, 22, 1, 12]
                     }],
-                    initialStartTime: '2017-12-30T04:06:12.640Z'
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
                 }],
                 historyData: {
                     a: {
@@ -978,7 +978,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 0.233368, 400, 40, 30, 1, 20]
                         }],
-                        initialStartTime: '12-30-17'
+                        initialStartTime: '1-2-18'
                     },
                     b: {
                         setID: 'b',
@@ -990,7 +990,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 1.943368, 388, 38, 28, 1, 18]
                         }],
-                        initialStartTime: '2017-12-30T04:06:12.640Z'
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
                     c: {
                         setID: 'c',
@@ -1002,7 +1002,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 1.733368, 288, 28, 18, 1, 8]
                         }],
-                        initialStartTime: '2017-12-30T04:06:12.640Z'
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
                     d: {
                         setID: 'd',
@@ -1014,7 +1014,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 1.833368, 188, 18, 8, 1, 4]
                         }],
-                        initialStartTime: '2017-12-30T04:06:12.640Z'
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
                     e: {
                         setID: 'e',
@@ -1036,7 +1036,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 2.4, 230, 23, 13, 1, 3]
                         }],
-                        initialStartTime: '2017-12-30T04:06:12.640Z'
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
                     f: {
                         setID: 'f',
@@ -1058,7 +1058,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 2.4, 230, 23, 13, 1, 3]
                         }],
-                        initialStartTime: '2017-12-30T04:06:12.640Z',
+                        initialStartTime: '2018-01-03T04:06:12.640Z',
                     },
                     g: {
                         setID: 'g',
@@ -1070,7 +1070,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 2.933368, 288, 28, 28, 1, 28]
                         }],
-                        initialStartTime: '2017-12-30T04:06:12.640Z'
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
                 }
             },
@@ -1376,6 +1376,13 @@ describe('SetsSelectors', () => {
         });
         
         describe('getExerciseData', () => {
+            beforeEach(() => {
+                Date.now = () => 1515197192603;
+            });
+
+            afterAll(() => {
+                Date.now = realNow;
+            });
 
             test('return data for regression', () => {
                 const expected = [[100, 1.83], [100, 1.73], [200, 1.83], [100, 1.43]];

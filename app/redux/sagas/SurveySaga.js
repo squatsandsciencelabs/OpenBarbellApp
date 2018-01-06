@@ -29,15 +29,22 @@ const SurveySaga = function * SurveySaga() {
 function* updateSurveyURL() {
     const fbconfig = firebase.config();
     try {
-        // TODO: do we want to fetch this every time [0] or the default every 12 hours?
-        yield apply(fbconfig, fbconfig.fetch, [0]);
+        // fetch
+        // yield apply(fbconfig, fbconfig.fetch, [0]); // USE THIS INSTEAD FOR DEBUGGING AS IT REFRESHES INSTANTLY
+        yield apply(fbconfig, fbconfig.fetch);
+
+        // activate
         const activated = yield apply(fbconfig, fbconfig.activateFetched);
         if (!activated) {
             console.tron.log("Fetched data not activated");
             // TODO: analytics here for problems
         }
+
+        // get url
         const snapshot = yield apply(fbconfig, fbconfig.getValue, ['survey_url']);
         const url = snapshot.val();
+
+        // action
         yield put(SurveyActionCreators.saveSurveyURL(url));
     } catch(error) {
         // TODO: analytics here for problems

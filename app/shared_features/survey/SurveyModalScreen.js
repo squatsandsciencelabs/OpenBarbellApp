@@ -7,6 +7,7 @@ import SurveyModalView from './SurveyModalView';
 
 const mapStateToProps = (state) => ({
     isModalShowing: SurveySelectors.getIsFillingOutSurvey(state),
+    url: SurveySelectors.getURL(state),
 });
 
 const mapDispatchToProps = (dispatch) => {

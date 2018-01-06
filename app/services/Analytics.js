@@ -24,7 +24,7 @@ export const setInitialAnalytics = () => {
 // user ID defaults to the mobile identifier for anonymous users
 export const setUserID = (userID=DeviceInfo.getUniqueID()) => {
     
-    firebase.analytics().setUserId(userID);
+    firebase.app().analytics().setUserId(userID);
 
     console.tron.display({
         name: 'UserID',
@@ -38,7 +38,7 @@ export const setUserID = (userID=DeviceInfo.getUniqueID()) => {
 // Screens
 
 export const setCurrentScreen = (screen) => {
-    firebase.analytics().setCurrentScreen(screen);
+    firebase.app().analytics().setCurrentScreen(screen);
 
     console.tron.display({
         name: 'SetScreen',
@@ -52,7 +52,7 @@ export const setCurrentScreen = (screen) => {
 // User Properties
 
 export const setUserProp = (name, value) => {
-    firebase.analytics().setUserProperty(name, value);
+    firebase.app().analytics().setUserProperty(name, value);
 
     console.tron.display({
         name: 'SetUserProp',
@@ -66,7 +66,7 @@ export const setUserProp = (name, value) => {
 // Log Events
 // params must be an object
 export const logEvent = (event, params) => {
-    firebase.analytics().logEvent(event, params);
+    firebase.app().analytics().logEvent(event, params);
 
     console.tron.display({
         name: 'LogEvent',

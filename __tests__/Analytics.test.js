@@ -1,12 +1,16 @@
 // NOTE: maybe need to reset these somewhere? For now just going with this
 jest.mock('app/services/Firebase', () => {
     return {
-        analytics: () => {
+        app: () => {
             return {
-                logEvent: () => {
-                    
+                analytics: () => {
+                    return {
+                        logEvent: () => {
+                            
+                        }
+                    };
                 }
-            };
+            }
         }
     };
 });

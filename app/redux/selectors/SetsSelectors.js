@@ -386,7 +386,7 @@ export const getExerciseData = (state, exercise, type) => {
                 data.push([set.weight, Number(RepDataMap.averageVelocity(set.reps[0].data))]);
             }       
         });
-    } else {
+    } else if (type === 'scatter') {
         data = [[]]
         sets.forEach((set) => {
             if (set.exercise === exercise && set.reps.length > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime)) {

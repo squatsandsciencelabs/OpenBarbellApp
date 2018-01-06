@@ -16,6 +16,7 @@ import {
 } from 'app/ActionTypes';
 import firebase from 'app/services/Firebase';
 import * as SurveyActionCreators from 'app/redux/shared_actions/SurveyActionCreators';
+import * as SurveySelectors from 'app/redux/selectors/SurveySelectors';
 
 const SurveySaga = function * SurveySaga() {
     yield all([
@@ -44,7 +45,19 @@ function* updateSurveyURL() {
     }
 }
 
-function* askSurvey() {
+function* askSurvey(action) {
+    // only do this for manually ended workouts
+    if (!action.manual) {
+        return;
+    }
+
+    // only do this if the survey is available
+    const surveyAvailable = yield select(SurveySelectors.getSurveyAvailable);
+    if (!surveyAvailable) {
+        return;
+    }
+
+    // alert and present
     try {
         yield call(showSurveyAlert);
         // TODO: analytics

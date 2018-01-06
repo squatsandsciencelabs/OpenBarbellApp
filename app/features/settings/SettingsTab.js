@@ -7,6 +7,7 @@ import {
     View,
     ListView
 } from 'react-native';
+import SettingsSurveyScreen from './survey/SettingsSurveyScreen';
 import SettingsDeviceScreen from './device/SettingsDeviceScreen';
 import SettingsAccountScreen from './account/SettingsAccountScreen';
 import SettingsApplicationScreen from './application/SettingsApplicationScreen';
@@ -19,6 +20,7 @@ class SettingsTab extends Component {
         return (
             <ScrollView style={{flex: 1}}>
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent:'flex-start' }}>
+                    <SettingsSurveyScreen />
                     <SettingsDeviceScreen />
                     <SettingsAccountScreen />
                     <SettingsMetricsScreen />

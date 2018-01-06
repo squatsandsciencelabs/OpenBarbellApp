@@ -1,5 +1,4 @@
 import {
-    PRESENT_SURVEY,
     DISMISS_SURVEY,
     COMPLETE_SURVEY,
     SAVE_SURVEY_URL,
@@ -10,13 +9,6 @@ export const saveSurveyURL = (url) => (dispatch, getState) => {
     dispatch({
         type: SAVE_SURVEY_URL,
         surveyURL: url,
-    });
-};
-
-export const presentSurvey = () => (dispatch, getState) => {
-    // TODO: analytics
-    dispatch({
-        type: PRESENT_SURVEY,
     });
 };
 

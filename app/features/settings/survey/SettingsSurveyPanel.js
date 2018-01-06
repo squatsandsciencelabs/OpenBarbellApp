@@ -14,7 +14,7 @@ class SettingsSurveyPanel extends Component {
         if (this.props.isVisible) {
             return (
                 <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
-                    <Text style={[{marginBottom: 20}, styles.titleText]}>Survey</Text>
+                    <Text style={[{marginBottom: 20}, styles.titleText]}>Help us out, take our survey!</Text>
 
                     <TouchableOpacity style={[SETTINGS_PANEL_STYLES.blueButton, {height: 50}]}
                         disabled={ false }

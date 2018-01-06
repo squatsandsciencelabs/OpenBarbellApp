@@ -15,6 +15,7 @@ import {
     PRESENT_SURVEY,
 } from 'app/ActionTypes';
 import firebase from 'app/services/Firebase';
+import * as Analytics from 'app/services/Analytics';
 import * as SurveyActionCreators from 'app/redux/shared_actions/SurveyActionCreators';
 import * as SurveySelectors from 'app/redux/selectors/SurveySelectors';
 
@@ -28,6 +29,7 @@ const SurveySaga = function * SurveySaga() {
 
 function* updateSurveyURL() {
     const fbconfig = firebase.config();
+    let state = null;
     try {
         // fetch
         // yield apply(fbconfig, fbconfig.fetch, [0]); // USE THIS INSTEAD FOR DEBUGGING AS IT REFRESHES INSTANTLY
@@ -37,18 +39,28 @@ function* updateSurveyURL() {
         const activated = yield apply(fbconfig, fbconfig.activateFetched);
         if (!activated) {
             console.tron.log("Fetched data not activated");
-            // TODO: analytics here for problems
+            state = yield select();
+            logUpdateSurveyURLErrorAnalytics('fetched data not activated', state);
         }
 
         // get url
         const snapshot = yield apply(fbconfig, fbconfig.getValue, ['survey_url']);
         const url = snapshot.val();
 
+        // analytics
+        state = yield select();
+        logUpdateSurveyURLAnalytics(url, state);
+
         // action
         yield put(SurveyActionCreators.saveSurveyURL(url));
     } catch(error) {
-        // TODO: analytics here for problems
-        console.tron.log(JSON.stringify(error));
+        if (error === null) {
+            var errorString = '';
+        } else {
+            var errorString = JSON.stringify(error);
+        }
+        logUpdateSurveyURLErrorAnalytics(errorString, state);
+        console.tron.log(errorString);
     }
 }
 
@@ -64,13 +76,23 @@ function* askSurvey(action) {
         return;
     }
 
+    let state = null;
+
     // alert and present
     try {
+        // prompt
+        state = yield select();
+        logPromptSurveyAnalytics(state);
         yield call(showSurveyAlert);
-        // TODO: analytics
+
+        // present
+        state = yield select();
+        logPromptSurveyTakeNowAnalytics(state);
         yield put(SurveyActionCreators.presentSurvey());
     } catch(error) {
         // was canceled
+        state = yield select();
+        logPromptSurveyFillLaterAnalytics(state);
     }
 }
 
@@ -99,5 +121,37 @@ function showSurveyAlert() {
         );
     });
 }
+
+// ANALYTICS
+
+const logPromptSurveyAnalytics = (state) => {
+    Analytics.logEventWithAppState('prompt_survey', {
+        url: SurveySelectors.getURL(state),
+    }, state);
+};
+
+const logPromptSurveyFillLaterAnalytics = (state) => {
+    Analytics.logEventWithAppState('prompt_survey_fill_later', {
+        url: SurveySelectors.getURL(state),
+    }, state);
+};
+
+const logPromptSurveyTakeNowAnalytics = (state) => {
+    Analytics.logEventWithAppState('prompt_survey_take_now', {
+        url: SurveySelectors.getURL(state),
+    }, state);
+};
+
+const logUpdateSurveyURLAnalytics = (url, state) => {
+    Analytics.logEventWithAppState('update_survey_url', {
+        url: url,
+    }, state);
+};
+
+const logUpdateSurveyURLErrorAnalytics = (error, state) => {
+    Analytics.logEventWithAppState('update_survey_url_error', {
+        error: error,
+    }, state);
+};
 
 export default SurveySaga;

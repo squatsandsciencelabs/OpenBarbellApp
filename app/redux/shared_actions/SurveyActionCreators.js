@@ -2,6 +2,7 @@ import {
     SAVE_SURVEY_URL,
     PRESENT_SURVEY,
 } from 'app/ActionTypes';
+import * as Analytics from 'app/services/Analytics';
 
 export const saveSurveyURL = (url) => (dispatch, getState) => {
     // TODO: analytics
@@ -11,6 +12,10 @@ export const saveSurveyURL = (url) => (dispatch, getState) => {
     });
 };
 
-export const presentSurvey = () => ({
-    type: PRESENT_SURVEY
-});
+export const presentSurvey = () => {
+    Analytics.setCurrentScreen('survey');
+
+    return {
+        type: PRESENT_SURVEY
+    };
+};

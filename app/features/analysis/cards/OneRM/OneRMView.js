@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { Slider } from 'react-native';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
-import OneRMChartScreen from '../../charts/OneRMChartScreen';
+import OneRMChart from '../../charts/OneRMChart';
 import ExercisePicker from '../OneRM/exercise/ExercisePicker';
 
 class OneRM extends Component {
@@ -25,9 +25,10 @@ class OneRM extends Component {
         if (confidence >= 90) {
             return (
                 <View>
-                    <OneRMChartScreen />
                     <Text style={styles.oneRMText}>e1RM: {this.props.e1rm}</Text>
-                    <Text style={styles.oneRMText}>confidence: {this.props.confidence}</Text>
+                    <Text style={{ textAlign: 'center', fontSize: 15 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.velocity} m/s</Text></Text> 
+                    <OneRMChart data={this.props.chartData} />
+                    <Text style={styles.confidenceText}>Confidence: {this.props.confidence} %</Text>
                 </View>
             );
         } else {
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
     confidenceText: {
         color: 'rgba(77, 77, 77, 1)',
         marginBottom: 20,
-        fontSize: 20,
+        fontSize: 18,
         textAlign: 'center'
     },
     errorText: {

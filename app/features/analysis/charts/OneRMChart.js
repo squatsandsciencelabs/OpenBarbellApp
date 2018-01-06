@@ -20,12 +20,12 @@ class OneRMChartView extends Component {
 }
 
 const options = {
-    width: 300,
-    height: 300,
+    width: 250,
+    height: 250,
     r: 2,
     margin: {
-      top: 20,
-      left: 40,
+      top: 30,
+      left: 30,
       bottom: 30,
       right: 30
     },

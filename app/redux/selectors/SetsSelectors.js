@@ -387,9 +387,10 @@ export const getExerciseData = (state, exercise, type) => {
             }       
         });
     } else {
+        data = [[]]
         sets.forEach((set) => {
             if (set.exercise === exercise && set.reps.length > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime)) {
-                data.push({ title: set.setID, weight: set.weight, velocity: Number(RepDataMap.averageVelocity(set.reps[0].data)) });
+                data[0].push({ title: set.setID, weight: set.weight, velocity: Number(RepDataMap.averageVelocity(set.reps[0].data)) });
             }       
         });
     }

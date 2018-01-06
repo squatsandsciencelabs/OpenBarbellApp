@@ -1394,10 +1394,10 @@ describe('SetsSelectors', () => {
 
             test('return data for scatter', () => {
                 const expected = [
-                    {"title": "a", "velocity": 1.83, "weight": 100}, 
+                    [{"title": "a", "velocity": 1.83, "weight": 100}, 
                     {"title": "c", "velocity": 1.73, "weight": 100}, 
                     {"title": "d", "velocity": 1.83, "weight": 200}, 
-                    {"title": "k", "velocity": 1.43, "weight": 100}
+                    {"title": "k", "velocity": 1.43, "weight": 100}]
                 ];
                 
                 const result = sut.getExerciseData(state, 'Bench', 'scatter');

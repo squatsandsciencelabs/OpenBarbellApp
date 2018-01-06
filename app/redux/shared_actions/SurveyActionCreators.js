@@ -1,5 +1,6 @@
 import {
     SAVE_SURVEY_URL,
+    PRESENT_SURVEY,
 } from 'app/ActionTypes';
 
 export const saveSurveyURL = (url) => (dispatch, getState) => {
@@ -9,3 +10,7 @@ export const saveSurveyURL = (url) => (dispatch, getState) => {
         surveyURL: url,
     });
 };
+
+export const presentSurvey = () => ({
+    type: PRESENT_SURVEY
+});

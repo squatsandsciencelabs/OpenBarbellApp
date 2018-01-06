@@ -7,7 +7,7 @@ import {
 
 export const closeSurvey = () => (dispatch, getState) => {
     Alert.alert(
-        'CONFIRM',
+        null,
         "Are you done with the survey? We won't show this one to you again.",
         [
             {

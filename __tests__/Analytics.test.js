@@ -21,6 +21,7 @@ import * as AppStateSelectors from 'app/redux/selectors/AppStateSelectors';
 import * as ScannedDevicesSelectors from 'app/redux/selectors/ScannedDevicesSelectors';
 import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDeviceStatusSelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
+import * as SurveySelectors from 'app/redux/selectors/SurveySelectors';
 
 describe('Analytics', () => {
     let params = null;
@@ -58,6 +59,7 @@ describe('Analytics', () => {
                 ScannedDevicesSelectors.getScannedDevices = () => [];
                 ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = () => '';
                 SetsSelectors.getIsWorkoutEmpty = () => true;
+                SurveySelectors.getSurveyAvailable = () => true;
             });
 
             test('false', () => {
@@ -86,6 +88,7 @@ describe('Analytics', () => {
                 ScannedDevicesSelectors.getScannedDevices = () => [];
                 ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = () => '';
                 SetsSelectors.getIsWorkoutEmpty = () => true;
+                SurveySelectors.getSurveyAvailable = () => true;
             });
 
             afterEach(() => {
@@ -134,6 +137,7 @@ describe('Analytics', () => {
                 ScannedDevicesSelectors.getScannedDevices = () => [];
                 ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = () => '';
                 SetsSelectors.getIsWorkoutEmpty = () => true;
+                SurveySelectors.getSurveyAvailable = () => true;
             });
 
             afterEach(() => {
@@ -182,6 +186,7 @@ describe('Analytics', () => {
                 ScannedDevicesSelectors.getScannedDevices = () => [];
                 ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = () => '';
                 SetsSelectors.getIsWorkoutEmpty = () => true;
+                SurveySelectors.getSurveyAvailable = () => true;
             });
 
             afterEach(() => {
@@ -226,6 +231,7 @@ describe('Analytics', () => {
                 AppStateSelectors.getScreenStatus = () => '';
                 ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = () => '';
                 SetsSelectors.getIsWorkoutEmpty = () => true;
+                SurveySelectors.getSurveyAvailable = () => true;
             });
 
             test('0', () => {
@@ -282,6 +288,7 @@ describe('Analytics', () => {
                 AppStateSelectors.getScreenStatus = () => '';
                 ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = () => '';
                 SetsSelectors.getIsWorkoutEmpty = () => true;
+                SurveySelectors.getSurveyAvailable = () => true;
             });
 
             test('0', () => {
@@ -339,6 +346,7 @@ describe('Analytics', () => {
                 AppStateSelectors.getScreenStatus = () => '';
                 ScannedDevicesSelectors.getScannedDevices = () => [];
                 SetsSelectors.getIsWorkoutEmpty = () => true;
+                SurveySelectors.getSurveyAvailable = () => true;
             });
             
             test('false if bluetooth off', () => {
@@ -363,6 +371,7 @@ describe('Analytics', () => {
                 AppStateSelectors.getScreenStatus = () => '';
                 ScannedDevicesSelectors.getScannedDevices = () => [];
                 ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = () => '';
+                SurveySelectors.getSurveyAvailable = () => true;
             });
 
             test('true', () => {
@@ -381,5 +390,32 @@ describe('Analytics', () => {
                 expect(params.is_workout_in_progress).toBe(false);
             });
         });
+
+        describe('is_survey_visible', () => {
+            beforeEach(() => {
+                SetsSelectors.getIsWorkoutEmpty = () => false;
+                AppStateSelectors.getScreenStatus = () => '';
+                ScannedDevicesSelectors.getScannedDevices = () => [];
+                ConnectedDeviceStatusSelectors.getConnectedDeviceStatus = () => '';
+                SurveySelectors.getSurveyAvailable = () => true;
+            });
+
+            test('true', () => {
+                SurveySelectors.getSurveyAvailable = () => true;
+
+                sut.logEventWithAppState(null, params, null);
+                
+                expect(params.is_survey_visible).toBe(true);
+            });
+
+            test('false', () => {
+                SurveySelectors.getSurveyAvailable = () => false;
+
+                sut.logEventWithAppState(null, params, null);
+                
+                expect(params.is_survey_visible).toBe(false);
+            });
+        });
+
     });
 });

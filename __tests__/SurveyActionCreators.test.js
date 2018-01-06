@@ -31,7 +31,7 @@ describe('SettingsActionCreators', () => {
         logScreenSpy.mockRestore();
     });   
 
-    test('set analytics screen when presenting', () => {
+    test('presentSurvey sets screen to survey', () => {
         store.dispatch(sut.presentSurvey());
         
         const screen = logScreenSpy.mock.calls[0][0];

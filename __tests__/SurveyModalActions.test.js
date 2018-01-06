@@ -13,7 +13,7 @@ var logEventSpy = null;
 var logScreenSpy = null;
 var store = null;
 
-describe('SettingsSurveyActions', () => {
+describe('SettingsSurveyActions Analytics', () => {
 
     const expectedURL = 'foobar';
 
@@ -40,7 +40,7 @@ describe('SettingsSurveyActions', () => {
         logScreenSpy.mockRestore();
     });
 
-    test('log url when attempt finish survey', () => {
+    test('attempt_finish_survey', () => {
         store.dispatch(sut.closeSurvey());
         
         const event = logEventSpy.mock.calls[0][0];
@@ -49,7 +49,7 @@ describe('SettingsSurveyActions', () => {
         expect(params.url).toEqual(expectedURL);
     });
 
-    test('log url when cancel survey', () => {
+    test('cancel_finish_survey', () => {
         store.dispatch(sut.cancel());
         
         const event = logEventSpy.mock.calls[0][0];
@@ -58,7 +58,7 @@ describe('SettingsSurveyActions', () => {
         expect(params.url).toEqual(expectedURL);
     });
 
-    test('resets screen when cancel survey', () => {
+    test('screen is settings when cancel_finish_survey', () => {
         store = mockStore({
             survey: {
                 surveyURL: expectedURL
@@ -74,7 +74,7 @@ describe('SettingsSurveyActions', () => {
         expect(screen).toEqual('settings');
     });
 
-    test('log url when finish survey', () => {
+    test('finish_survey', () => {
         store.dispatch(sut.finish());
         
         const event = logEventSpy.mock.calls[0][0];
@@ -83,7 +83,7 @@ describe('SettingsSurveyActions', () => {
         expect(params.url).toEqual(expectedURL);
     });
 
-    test('resets screen when finish survey', () => {
+    test('screen is workout when finish_survey', () => {
         store = mockStore({
             survey: {
                 surveyURL: expectedURL
@@ -99,7 +99,7 @@ describe('SettingsSurveyActions', () => {
         expect(screen).toEqual('workout');
     });
 
-    test('log url when fill out later', () => {
+    test('fill_survey_later', () => {
         store.dispatch(sut.fillOutLater());
         
         const event = logEventSpy.mock.calls[0][0];
@@ -108,7 +108,7 @@ describe('SettingsSurveyActions', () => {
         expect(params.url).toEqual(expectedURL);
     });
 
-    test('resets screen when fill out later', () => {
+    test('screen is history when fill_survey_later', () => {
         store = mockStore({
             survey: {
                 surveyURL: expectedURL

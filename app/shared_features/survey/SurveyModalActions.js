@@ -6,6 +6,7 @@ import {
 } from 'app/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as SurveySelectors from 'app/redux/selectors/SurveySelectors';
+import * as AppStateSelectors from 'app/redux/selectors/AppStateSelectors';
 
 export const closeSurvey = () => (dispatch, getState) => {
     // log analytics
@@ -37,12 +38,14 @@ export const closeSurvey = () => (dispatch, getState) => {
 export const cancel = () => (dispatch, getState) => {
     const state = getState();
     logCancelFinishSurveyAnalytics(state);
+    resetScreen(state);
 };
 
 export const finish = () => (dispatch, getState) => {
-    // log analytics
+    // analytics
     const state = getState();
     logFinishSurveyAnalytics(state);
+    resetScreen(state);
 
     dispatch({
         type: COMPLETE_SURVEY,
@@ -50,13 +53,33 @@ export const finish = () => (dispatch, getState) => {
 };
 
 export const fillOutLater = () => (dispatch, getState) => {
-    // log analytics
+    // analytics
     const state = getState();
     logFillSurveyLaterAnalytics(state);
+    resetScreen(state);
 
     dispatch({
         type: DISMISS_SURVEY,
     });
+};
+
+// TODO: make sure to handle new tabs here as well
+const resetScreen = (state) => {
+    const tabIndex = AppStateSelectors.getTabIndex(state);
+
+    switch(tabIndex) {
+        case 0:
+            Analytics.setCurrentScreen('workout');
+            break;
+        case 1:
+            Analytics.setCurrentScreen('history');
+            break;
+        case 2: 
+            Analytics.setCurrentScreen('settings');
+            break;
+        default:
+            break;
+    }
 };
 
 // ANALYTICS

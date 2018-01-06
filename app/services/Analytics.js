@@ -23,7 +23,6 @@ export const setInitialAnalytics = () => {
 
 // user ID defaults to the mobile identifier for anonymous users
 export const setUserID = (userID=DeviceInfo.getUniqueID()) => {
-    
     firebase.app().analytics().setUserId(userID);
 
     console.tron.display({

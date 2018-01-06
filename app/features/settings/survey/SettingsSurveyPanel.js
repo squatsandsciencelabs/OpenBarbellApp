@@ -11,21 +11,24 @@ import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 class SettingsSurveyPanel extends Component {
 
     render() {
-        return (
-            <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
-                <Text style={[{marginBottom: 20}, styles.titleText]}>Survey</Text>
+        if (this.props.isVisible) {
+            return (
+                <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
+                    <Text style={[{marginBottom: 20}, styles.titleText]}>Survey</Text>
 
-                <TouchableOpacity style={[SETTINGS_PANEL_STYLES.blueButton, {height: 50}]}
-                    disabled={ false }
-                    onPress={ () => this.props.presentSurvey() }>
-                        <Text style={SETTINGS_PANEL_STYLES.buttonText}>TAKE SURVEY</Text>
-                </TouchableOpacity>
+                    <TouchableOpacity style={[SETTINGS_PANEL_STYLES.blueButton, {height: 50}]}
+                        disabled={ false }
+                        onPress={ () => this.props.presentSurvey() }>
+                            <Text style={SETTINGS_PANEL_STYLES.buttonText}>TAKE SURVEY</Text>
+                    </TouchableOpacity>
 
-            </View>
-        );
+                </View>
+            );
+        } else {
+            return null;
+        }
 
     }
-
 }
 
 const styles = StyleSheet.create({

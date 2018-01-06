@@ -7,3 +7,10 @@ export const getIsFillingOutSurvey = (state) => {
 export const getURL = (state) => {
     return stateRoot(state).surveyURL;
 };
+
+export const getSurveyAvailable = (state) => {
+    if (getURL(state)) {
+        return true;
+    }
+    return false;
+};

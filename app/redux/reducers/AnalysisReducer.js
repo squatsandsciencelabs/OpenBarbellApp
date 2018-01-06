@@ -1,39 +1,39 @@
 import {
-    CHANGE_SLIDER_VELOCITY,
-    CHANGE_SLIDER_DAYS,
+    CHANGE_1RM_VELOCITY,
+    CHANGE_1RM_DAYS_RANGE,
     PRESENT_SELECT_EXERCISE,
-    SAVE_SELECTED_EXERCISE,
+    SAVE_1RM_EXERCISE,
     DISMISS_SELECT_EXERCISE,
 } from 'app/ActionTypes';
 
 const defaultState = {
-    isEditingExercise: false,
-    velocity: .01,
-    exercise: 'Bench',
-    daysRange: 7,
-}
+    isEditing1RMExercise: false,
+    e1RMVelocity: .01,
+    e1RMExercise: 'Bench',
+    e1RMDaysRange: 7,
+};
 
 const AnalysisReducer = (state = defaultState, action) => {
     switch (action.type) {
-        case CHANGE_SLIDER_VELOCITY:
+        case CHANGE_1RM_VELOCITY:
             return Object.assign({}, state, {
-                velocity: Number(action.velocity.toFixed(2))
+                e1RMVelocity: Number(action.velocity.toFixed(2))
             });
-        case CHANGE_SLIDER_DAYS: 
+        case CHANGE_1RM_DAYS_RANGE: 
             return Object.assign({}, state, {
-                daysRange: action.days
+                e1RMDaysRange: action.days
             });
         case PRESENT_SELECT_EXERCISE: 
             return Object.assign({}, state, {
-                isEditingExercise: true
+                isEditing1RMExercise: true
             });
         case DISMISS_SELECT_EXERCISE:
             return Object.assign({}, state, {
-                isEditingExercise: false
+                isEditing1RMExercise: false
             })
-        case SAVE_SELECTED_EXERCISE:
+        case SAVE_1RM_EXERCISE:
             return Object.assign({}, state, {
-                exercise: action.exercise
+                e1RMExercise: action.exercise
             });
         
         default: 

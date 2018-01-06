@@ -76,10 +76,10 @@ export const restInSentenceFormat = (millis) => {
 };
 
 export const checkDateWithinRange = (range, time) => {
-    const today = new Date();
+    const today = Date.now();
     const date = new Date(time);
     
-    const diff = Math.abs(date.getTime() - today.getTime()) / (1000 * 60 * 60 * 24);
+    const diff = Math.abs(date.getTime() - today) / (1000 * 60 * 60 * 24);
 
     return diff <= range;
 };

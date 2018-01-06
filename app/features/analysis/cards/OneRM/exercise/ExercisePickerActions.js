@@ -9,8 +9,8 @@ export const dismissSelectExercise = () => ({
     type: DISMISS_SELECT_EXERCISE 
 });
 
-export const saveSelectedExercise = (exercise = 'Squat') => (dispatch, getState) => {
+export const saveSelected1RMExercise = (exercise = 'Squat') => (dispatch, getState) => {
     const state = getState();
 
-    dispatch(AnalysisActionCreators.saveSelectedExercise(exercise));
+    dispatch(AnalysisActionCreators.saveSelected1RMExercise(exercise));
 };

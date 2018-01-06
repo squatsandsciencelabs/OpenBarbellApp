@@ -408,14 +408,14 @@ export const generateExerciseItems = (state) => {
     });
 
     return exercises;
-}
+};
 
 // check if exercise exists
 const exerciseExists = (exercise, arr) => {
     return arr.some((item) => {
         return item.label === exercise;
     }); 
-}
+};
 
 export const getCurrentOneRM = (state, exercise) => {
     const lifts = getExerciseData(state, exercise, 'regression');

@@ -1,9 +1,9 @@
 const stateRoot = (state) => state.analysis;
 
-export const getisEditingExercise = (state) => stateRoot(state).isEditingExercise;
+export const getisEditing1RMExercise = (state) => stateRoot(state).isEditing1RMExercise;
 
-export const getAnalysisVelocity = (state) => stateRoot(state).velocity;
+export const getAnalysisE1RMVelocity = (state) => stateRoot(state).e1RMVelocity;
 
-export const getAnalysisExercise = (state) => stateRoot(state).exercise;
+export const getAnalysisE1RMExercise = (state) => stateRoot(state).e1RMExercise;
 
-export const getAnalysisRange = (state) => stateRoot(state).daysRange;
+export const getAnalysisRange = (state) => stateRoot(state).e1RMDaysRange;

@@ -1075,7 +1075,7 @@ describe('SetsSelectors', () => {
                 }
             },
             analysis: {
-                daysRange: 7,
+                e1RMDaysRange: 7,
             }
         };
 
@@ -1430,8 +1430,6 @@ describe('SetsSelectors', () => {
                 }
             }
 
-            const result = sut.generateExerciseItems(state);
-
             const expected = [
                 {label: "Box Squat w/ Bands", value: "Box Squat w/ Bands"}, 
                 {label: "Good Mornings w/ Bands & Chains in Belt Squat", value: "Good Mornings w/ Bands & Chains in Belt Squat"}, 
@@ -1440,6 +1438,8 @@ describe('SetsSelectors', () => {
                 {label: "Reverse Band Bench", value: "Reverse Band Bench"}, 
                 {label: "SSB Squat", value: "SSB Squat"}, 
                 {label: "Deadlift w/ Chains", value: "Deadlift w/ Chains"}]
+
+            const result = sut.generateExerciseItems(state);
 
             expect(result).toEqual(expected);
         });

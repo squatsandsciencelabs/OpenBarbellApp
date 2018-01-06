@@ -1,19 +1,19 @@
 import {
     PRESENT_SELECT_EXERCISE,
-    CHANGE_SLIDER_VELOCITY,
-    CHANGE_SLIDER_DAYS
+    CHANGE_1RM_VELOCITY,
+    CHANGE_1RM_DAYS_RANGE
 } from 'app/ActionTypes';
 
 export const presentSelectExercise = () => ({
     type: PRESENT_SELECT_EXERCISE
 });
 
-export const changeSliderVelocity = (velocity) => ({
-    type: CHANGE_SLIDER_VELOCITY,
+export const changeE1RMVelocity = (velocity) => ({
+    type: CHANGE_1RM_VELOCITY,
     velocity: velocity
 });
 
-export const changeSliderDays = (days) => ({
-    type: CHANGE_SLIDER_DAYS,
+export const changeE1RMDays = (days) => ({
+    type: CHANGE_1RM_DAYS_RANGE,
     days: days
 });

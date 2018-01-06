@@ -8,14 +8,14 @@ import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 
 const mapStateToProps = (state) => ({
-    isModalShowing: AnalysisSelectors.getisEditingExercise(state),
-    items: [{label: 'Bench', value: 'Bench'}],
-    selectedValue: AnalysisSelectors.getAnalysisExercise(state)
+    isModalShowing: AnalysisSelectors.getisEditing1RMExercise(state),
+    items: [{ label: 'Bench', item: 'Bench'}],
+    selectedValue: AnalysisSelectors.getAnalysisE1RMExercise(state)
 });
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        selectValue: Actions.saveSelectedExercise,
+        selectValue: Actions.saveSelected1RMExercise,
         closeModal: Actions.dismissSelectExercise
     }, dispatch);
 };

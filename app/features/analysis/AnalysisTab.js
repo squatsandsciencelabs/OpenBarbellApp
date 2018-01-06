@@ -1,11 +1,6 @@
 import React, {Component} from 'react';
 import {
-    TouchableHighlight,
-    Text,
-    StyleSheet,
     ScrollView,
-    View,
-    ListView
 } from 'react-native';
 
 import OneRMScreen from './cards/OneRM/OneRMScreen';

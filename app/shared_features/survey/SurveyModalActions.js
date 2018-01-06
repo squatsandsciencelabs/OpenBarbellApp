@@ -1,15 +1,33 @@
+import { Alert } from 'react-native';
+
 import {
     DISMISS_SURVEY,
     COMPLETE_SURVEY,
 } from 'app/ActionTypes';
 
 export const closeSurvey = () => (dispatch, getState) => {
-    // TODO: Alert confirm first
-
-    // TODO: analytics
-    dispatch({
-        type: COMPLETE_SURVEY,
-    });
+    Alert.alert(
+        'CONFIRM',
+        "Are you done with the survey? We won't show this one to you again.",
+        [
+            {
+                text: 'Cancel',
+                onPress: () => {
+                    // TODO: analytics
+                },
+                style: 'cancel'
+            },
+            {
+                text: "Finished",
+                onPress: () => {
+                    // TODO: analytics
+                    dispatch({
+                        type: COMPLETE_SURVEY,
+                    });
+                },
+            },
+        ]
+    );
 };
 
 export const fillOutLater = () => (dispatch, getState) => {

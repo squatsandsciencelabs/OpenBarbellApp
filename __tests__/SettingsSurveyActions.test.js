@@ -11,7 +11,7 @@ var logEventSpy = null;
 var logScreenSpy = null;
 var store = null;
 
-describe('SettingsSurveyActions', () => {
+describe('SettingsSurveyActions Analytics', () => {
 
     const expectedURL = 'foobar';
 
@@ -35,7 +35,7 @@ describe('SettingsSurveyActions', () => {
         logScreenSpy.mockRestore();
     });   
 
-    test('log url when presenting', () => {
+    test('present_survey', () => {
         store.dispatch(sut.presentSurvey());
         
         const event = logEventSpy.mock.calls[0][0];

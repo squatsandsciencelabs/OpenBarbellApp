@@ -6,6 +6,7 @@ import * as ScannedDevicesSelectors from 'app/redux/selectors/ScannedDevicesSele
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDeviceStatusSelectors';
 import * as AppStateSelectors from 'app/redux/selectors/AppStateSelectors';
+import * as SurveySelectors from 'app/redux/selectors/SurveySelectors';
 import DeviceInfo from 'react-native-device-info';
 
 //initial analytics and initial screen
@@ -101,15 +102,14 @@ export const logEventWithAppState = (event, params, state) => {
     // }
 
     let devices = ScannedDevicesSelectors.getScannedDevices(state);
-    const connectedDeviceStatus = ConnectedDeviceStatusSelectors.getConnectedDeviceStatus(state);
-    const isWorkoutEmpty = SetsSelectors.getIsWorkoutEmpty(state);
-
     if (devices.length > 25) {
         devices = devices.slice(0, 25);
     };
+    const connectedDeviceStatus = ConnectedDeviceStatusSelectors.getConnectedDeviceStatus(state);
+    const isWorkoutEmpty = SetsSelectors.getIsWorkoutEmpty(state);
+    const isSurveyVisible = SurveySelectors.getSurveyAvailable(state);
 
     const scanned_devices = devices.join().replace(/\s|OB|,/g, '');
-
     params.scanned_devices = scanned_devices;
         
     params.num_scanned_devices = devices.length;  
@@ -117,6 +117,8 @@ export const logEventWithAppState = (event, params, state) => {
     // params.is_bluetooth_on = connectedDeviceStatus !== 'BLUETOOTH_OFF';
 
     params.is_workout_in_progress = !isWorkoutEmpty;
+
+    params.is_survey_visible = isSurveyVisible;
     
     logEvent(event, params);
 };

@@ -70,8 +70,7 @@ function* askSurvey(action) {
         // TODO: analytics
         yield put(SurveyActionCreators.presentSurvey());
     } catch(error) {
-        // TODO: analytics here for problems
-        console.tron.log(JSON.stringify(error));
+        // was canceled
     }
 }
 

@@ -9,7 +9,8 @@ export const getURL = (state) => {
 };
 
 export const getSurveyAvailable = (state) => {
-    if (getURL(state)) {
+    const url = getURL(state);
+    if (url && !stateRoot(state).completedSurveyURLs.includes(url)) {
         return true;
     }
     return false;

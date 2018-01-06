@@ -5,6 +5,7 @@ import SettingsSurveyPanel from './SettingsSurveyPanel';
 import * as Actions from './SettingsSurveyActions';
 
 const mapStateToProps = (state) => ({
+    
 });
 
 const mapDispatchToProps = (dispatch) => {

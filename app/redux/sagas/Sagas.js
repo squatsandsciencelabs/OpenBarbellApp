@@ -10,6 +10,7 @@ import TimerUnlockSaga from './TimerUnlockSaga';
 import EndOldWorkoutSaga from './EndOldWorkoutSaga';
 import ReconnectSaga from './ReconnectSaga';
 import CollapseRemovedSetSaga from './CollapseRemovedSetSaga';
+import SurveySaga from './SurveySaga';
 
 const Sagas = function* Sagas() {
     yield all([
@@ -23,6 +24,7 @@ const Sagas = function* Sagas() {
         call(EndOldWorkoutSaga),
         call(ReconnectSaga),
         call(CollapseRemovedSetSaga),
+        call(SurveySaga),
     ]);
 };
 

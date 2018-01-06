@@ -14,4 +14,4 @@ export const configure = () => {
 let app = firebase.app();
 app.analytics().setAnalyticsCollectionEnabled(true);
 
-export default app;
+export default firebase;

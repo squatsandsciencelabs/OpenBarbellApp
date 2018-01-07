@@ -25,7 +25,7 @@ class OneRM extends Component {
         if (confidence >= 90) {
             return (
                 <View>
-                    <Text style={styles.oneRMText}>e1RM: {this.props.e1rm}</Text>
+                    <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{this.props.e1rm}</Text> {this.props.metric}</Text>
                     <Text style={{ textAlign: 'center', fontSize: 15 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.velocity} m/s</Text></Text> 
                     <OneRMChart data={this.props.chartData} />
                     <Text style={styles.confidenceText}>Confidence: {this.props.confidence} %</Text>
@@ -50,7 +50,7 @@ class OneRM extends Component {
                 <Text style={[{marginBottom: 20}, styles.titleText]}>Estimated One-Rep Max</Text>
                 <View style={{marginBottom: 20}}>
                     <TouchableOpacity onPress={() => this._tapExercise()}>
-                        <Text style={{fontSize: 16, color: 'rgba(47, 128, 237, 1)', textAlign: 'center'}}>
+                        <Text style={{fontSize: 18, color: 'rgba(47, 128, 237, 1)', textAlign: 'center'}}>
                             {this.props.exercise}
                         </Text>
                     </TouchableOpacity>

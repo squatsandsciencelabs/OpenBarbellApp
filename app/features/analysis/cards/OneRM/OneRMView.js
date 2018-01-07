@@ -21,6 +21,13 @@ class OneRM extends Component {
         };
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            velocity: nextProps.velocity,
+            days: nextProps.days
+        })
+    }
+
     _render1rm(confidence) {
         if (confidence >= 90) {
             return (
@@ -44,6 +51,14 @@ class OneRM extends Component {
         this.props.tapExercise();
     }
 
+    _changeVelocitySlider(value) {
+        this.props.changeVelocity(value);
+    }
+
+    _changeDaysSlider(value) {
+        this.props.changeDays(value);
+    }
+
     render() {
         return (
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
@@ -63,8 +78,8 @@ class OneRM extends Component {
                     </Text>
                         <Slider
                             value={this.props.velocity} 
-                            onValueChange={(value) => this.setState({ velocity: Number(value.toFixed(2)) })}               // 
-                            onSlidingComplete={(value) => this.props.changeVelocity(value)}
+                            onValueChange={(value) => this.setState({ slidingVelocity: true, velocity: Number(value.toFixed(2)) })}               // 
+                            onSlidingComplete={(value) => this._changeVelocitySlider(value)}
                             minimumValue={.01}
                             maximumValue={.41}
                             step={.01}
@@ -73,14 +88,14 @@ class OneRM extends Component {
                             thumbStyle={styles.thumbStyle}
                             animateTransitions={true}
                         />
-                    <Text style={styles.numberStyle}>{this.state.velocity} m/s</Text>
+                        <Text style={styles.numberStyle}>{this.state.velocity} m/s</Text>
                     <Text style={styles.labelText}>
                         Date Range
                     </Text>
                         <Slider
                             value={this.props.days} 
-                            onValueChange={(value) => this.setState({ days: Number(value.toFixed(2)) })}
-                            onSlidingComplete={(value) => this.props.changeDays(value)}
+                            onValueChange={(value) => this.setState({ slidingDays: true, days: Number(value.toFixed(2)) })}
+                            onSlidingComplete={(value) => this._changeDaysSlider(value)}
                             minimumValue={1}
                             maximumValue={7}
                             step={1}
@@ -89,7 +104,7 @@ class OneRM extends Component {
                             thumbStyle={styles.thumbStyle}
                             animateTransitions={true}
                         />
-                    <Text style={styles.numberStyle}>{this.state.days} days</Text>
+                        <Text style={styles.numberStyle}>{this.state.days} days</Text>
                 </View>
             </View>
         )

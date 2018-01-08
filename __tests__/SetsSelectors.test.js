@@ -866,6 +866,7 @@ describe('SetsSelectors', () => {
         var state = {
             sets: {
                 workoutData: [{
+                    setID: 'h',
                     exercise: 'Squat',
                     weight: 100,
                     metric: 'lbs',
@@ -883,6 +884,7 @@ describe('SetsSelectors', () => {
                         data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
                     }],
                 }, {
+                    setID: 'i',
                     exercise: 'Squat',
                     weight: 200,
                     metric: 'kgs',
@@ -899,7 +901,9 @@ describe('SetsSelectors', () => {
                         removed: true,
                         data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
                     }],
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
                 }, {
+                    setID: 'j',
                     exercise: 'Squat',
                     weight: 200,
                     metric: 'kgs',
@@ -908,7 +912,9 @@ describe('SetsSelectors', () => {
                         removed: false,
                         data: [-3456, 37, 3.933368, 312, 34, 35, 1, 36]
                     }],
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
                 }, {
+                    setID: 'k',
                     exercise: 'Bench',
                     weight: 100,
                     metric: 'lbs',
@@ -925,6 +931,7 @@ describe('SetsSelectors', () => {
                         removed: false,
                         data: [-3456, 37, 0.483368, 28, 48, 13, 3, 5]
                     }],
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
                 }, {
                     exercise: 'Deadlift',
                     weight: 100,
@@ -942,9 +949,11 @@ describe('SetsSelectors', () => {
                         removed: false,
                         data: [-3456, 37, 1.453368, 328, 32, 22, 1, 12]
                     }],
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
                 }],
                 historyData: {
                     a: {
+                        setID: 'a',
                         exercise: 'Bench',
                         weight: 100,
                         metric: 'lbs',
@@ -968,9 +977,11 @@ describe('SetsSelectors', () => {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 0.233368, 400, 40, 30, 1, 20]
-                        }]
+                        }],
+                        initialStartTime: '1-2-18'
                     },
                     b: {
+                        setID: 'b',
                         exercise: 'Squat',
                         weight: 200,
                         metric: 'lbs',
@@ -979,8 +990,10 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 1.943368, 388, 38, 28, 1, 18]
                         }],
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
                     c: {
+                        setID: 'c',
                         exercise: 'Bench',
                         weight: 100,
                         metric: 'lbs',
@@ -989,8 +1002,10 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 1.733368, 288, 28, 18, 1, 8]
                         }],
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
                     d: {
+                        setID: 'd',
                         exercise: 'Bench',
                         weight: 200,
                         metric: 'lbs',
@@ -999,8 +1014,10 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 1.833368, 188, 18, 8, 1, 4]
                         }],
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
                     e: {
+                        setID: 'e',
                         exercise: 'Squat',
                         weight: 100,
                         metric: 'lbs',
@@ -1018,9 +1035,11 @@ describe('SetsSelectors', () => {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 2.4, 230, 23, 13, 1, 3]
-                        }]
+                        }],
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
                     f: {
+                        setID: 'f',
                         exercise: 'Squat',
                         weight: 200,
                         metric: 'kgs',
@@ -1038,9 +1057,11 @@ describe('SetsSelectors', () => {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 2.4, 230, 23, 13, 1, 3]
-                        }]
+                        }],
+                        initialStartTime: '2018-01-03T04:06:12.640Z',
                     },
                     g: {
+                        setID: 'g',
                         exercise: 'Squat',
                         weight: 200,
                         metric: 'kgs',
@@ -1048,9 +1069,13 @@ describe('SetsSelectors', () => {
                             isValid: true,
                             removed: false,
                             data: [-3456, 37, 2.933368, 288, 28, 28, 1, 28]
-                        }]
+                        }],
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
                 }
+            },
+            analysis: {
+                e1RMDaysRange: 7,
             }
         };
 
@@ -1351,18 +1376,83 @@ describe('SetsSelectors', () => {
         });
         
         describe('getExerciseData', () => {
+            beforeEach(() => {
+                Date.now = () => 1515197192603;
+            });
 
-            test('return data', () => {
+            afterAll(() => {
+                Date.now = realNow;
+            });
+
+            test('return data for regression', () => {
                 const expected = [[100, 1.83], [100, 1.73], [200, 1.83], [100, 1.43]];
                 
-                const result = sut.getExerciseData(state, 'Bench');
+                const result = sut.getExerciseData(state, 'Bench', 'regression');
+
+                expect(result).toEqual(expected);
+            });
+
+            test('return data for scatter', () => {
+                const expected = [
+                    [{"title": "a", "velocity": 1.83, "weight": 100}, 
+                    {"title": "c", "velocity": 1.73, "weight": 100}, 
+                    {"title": "d", "velocity": 1.83, "weight": 200}, 
+                    {"title": "k", "velocity": 1.43, "weight": 100}]
+                ];
+                
+                const result = sut.getExerciseData(state, 'Bench', 'scatter');
 
                 expect(result).toEqual(expected);
             });
         });
 
-        describe('get 1rm', () => {
-            const result = sut.get1rm(state, 'Bench');
+        describe('generateExerciseItems', () => {
+            const state = {
+                sets: {
+                    workoutData: [
+                        { exercise: 'SSB Squat' },
+                        { exercise: 'Reverse Band Bench' },
+                        { exercise: 'Deadlift w/ Chains' },
+                    ],
+                    historyData: {
+                        a: {
+                            exercise: 'Box Squat w/ Bands'
+                        },
+                        b: {
+                            exercise: 'Good Mornings w/ Bands & Chains in Belt Squat'
+                        },
+                        c: {
+                            exercise: 'Zercher Squats'
+                        },
+                        d: {
+                            exercise: 'Close Grip Bench Press'
+                        },
+                        e: {
+                            exercise: 'Box Squat w/ Bands'
+                        },
+                        f: {
+                            exercise: 'Reverse Band Bench'
+                        }
+                    }
+                }
+            }
+
+            const expected = [
+                {label: "Box Squat w/ Bands", value: "Box Squat w/ Bands"}, 
+                {label: "Good Mornings w/ Bands & Chains in Belt Squat", value: "Good Mornings w/ Bands & Chains in Belt Squat"}, 
+                {label: "Zercher Squats", value: "Zercher Squats"}, 
+                {label: "Close Grip Bench Press", value: "Close Grip Bench Press"}, 
+                {label: "Reverse Band Bench", value: "Reverse Band Bench"}, 
+                {label: "SSB Squat", value: "SSB Squat"}, 
+                {label: "Deadlift w/ Chains", value: "Deadlift w/ Chains"}]
+
+            const result = sut.generateExerciseItems(state);
+
+            expect(result).toEqual(expected);
+        });
+
+        describe('get current 1rm', () => {
+            const result = sut.getCurrentOneRM(state, 'Bench');
 
             expect(result).toEqual({ "velocity": 1.83, "weight": 100, "confidence": 19 });
         });

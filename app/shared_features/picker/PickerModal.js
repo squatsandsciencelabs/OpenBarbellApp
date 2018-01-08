@@ -24,10 +24,6 @@ class PickerModal extends Component {
     // RENDER
 
     render() {
-         if (this.props.items.length <= 0) {
-            return;
-        }
-
         if (Platform.OS === 'ios') {
             return (
                 <Modal

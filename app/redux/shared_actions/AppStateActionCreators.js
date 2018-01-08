@@ -2,11 +2,11 @@ import {
     UNLOCKED_SCREEN,
     LOCKED_SCREEN,
     MULTI_TASK_SCREEN,
-    CHANGE_TAB
+    CHANGE_TAB,
+    HISTORY_VIEWED 
 } from 'app/ActionTypes';
 import { Keyboard } from 'react-native';
 import * as Analytics from 'app/services/Analytics';
-import { HISTORY_VIEWED } from 'app/ActionTypes';
 import * as AppStateSelectors from 'app/redux/selectors/AppStateSelectors';
 
 export const unlockedScreen = () => ({

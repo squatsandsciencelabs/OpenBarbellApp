@@ -5,8 +5,10 @@ import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
 import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
-import * as OneRMPrediction from 'app/utility/transforms/OneRMPrediction';
+import * as OneRMCalculator from 'app/utility/transforms/OneRMCalculator';
 import * as CollapsedMetrics from 'app/utility/transforms/CollapsedMetrics';
+import * as DateUtils from 'app/utility/transforms/DateUtils';
+import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 
 const stateRoot = (state) => state.sets;
 
@@ -371,25 +373,55 @@ export const getRevision = (state) => stateRoot(state).revision;
 
 // 1rm
 // Get Weights and Velocity for the exercise
-export const getExerciseData = (state, exercise) => {   
+export const getExerciseData = (state, exercise, type) => {   
     const sets = getAllSets(state);
     let data = [];
 
-    sets.forEach((set) => {
-        const repData = set.reps[0].data;
+    // check if date fits within range
+    const range = AnalysisSelectors.getAnalysisRange(state);
 
-        if (set.exercise === exercise) {
-            data.push([set.weight, Number(RepDataMap.averageVelocity(set.reps[0].data))]);
-        }       
-    });
+    if (type === 'regression') {
+        sets.forEach((set) => {
+            if (set.exercise === exercise && set.reps.length > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime)) {
+                data.push([set.weight, Number(RepDataMap.averageVelocity(set.reps[0].data))]);
+            }       
+        });
+    } else if (type === 'scatter') {
+        data = [[]]
+        sets.forEach((set) => {
+            if (set.exercise === exercise && set.reps.length > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime)) {
+                data[0].push({ title: set.setID, weight: set.weight, velocity: Number(RepDataMap.averageVelocity(set.reps[0].data)) });
+            }       
+        });
+    }
 
     return data;
 }
 
-export const get1rm = (state, exercise) => {
-    const lifts = getExerciseData(state, exercise);
+export const generateExerciseItems = (state) => {
+    const sets = getAllSets(state);
+    let exercises = [];
 
-    const confidence = OneRMPrediction.getConfidenceInterval(lifts);
+    sets.forEach((set) => {
+        if (!exerciseExists(set.exercise, exercises) && set.exercise) {
+            exercises.push({ label: set.exercise, value: set.exercise });
+        }
+    });
+
+    return exercises;
+};
+
+// check if exercise exists
+const exerciseExists = (exercise, arr) => {
+    return arr.some((item) => {
+        return item.label === exercise;
+    }); 
+};
+
+export const getCurrentOneRM = (state, exercise) => {
+    const lifts = getExerciseData(state, exercise, 'regression');
+
+    const confidence = OneRMCalculator.getConfidenceInterval(lifts);
 
     let maxWeight = lifts[0][0];
     let slowestVel = lifts[0][1];
@@ -406,7 +438,7 @@ export const get1rm = (state, exercise) => {
     return { weight: maxWeight, velocity: slowestVel, confidence};
 }
 
-const getAllSets = (state) => {
+export const getAllSets = (state) => {
     const historySets = getHistorySets(state);
     const workoutSets = getWorkoutSets(state);
 

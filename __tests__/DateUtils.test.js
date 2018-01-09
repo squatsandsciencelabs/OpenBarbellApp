@@ -4,7 +4,7 @@ describe('DateUtils', () => {
     describe('checkDateWithinRange', () => {
         const realNow = Date.now;
 
-        beforeEach(() => {
+        beforeAll(() => {
             Date.now = () => 1515197192603;
         })
 

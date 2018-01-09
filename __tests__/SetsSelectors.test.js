@@ -1454,7 +1454,7 @@ describe('SetsSelectors', () => {
         describe('get current 1rm', () => {
             const result = sut.getCurrentOneRM(state, 'Bench');
 
-            expect(result).toEqual({ "velocity": 1.83, "weight": 100, "confidence": 19 });
+            expect(result).toEqual({"confidence": 48, "velocity": 1.73, "weight": 100});
         });
     });
 

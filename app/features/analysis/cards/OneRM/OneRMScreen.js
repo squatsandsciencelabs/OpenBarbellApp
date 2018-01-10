@@ -14,8 +14,8 @@ const mapStateToProps = (state) => {
     const velocity = AnalysisSelectors.getAnalysisE1RMVelocity(state);
     const metric = SettingsSelectors.getDefaultMetric(state);
     const days = AnalysisSelectors.getAnalysisRange(state);
-    const data = SetsSelectors.getExerciseData(state, exercise, 'regression');
-    const chartData = SetsSelectors.getExerciseData(state, exercise, 'scatter');
+    const data = SetsSelectors.getExerciseData(state, exercise, 'regression'); // TODO: make regression a config
+    const chartData = SetsSelectors.getExerciseData(state, exercise, 'scatter'); // TODO: make scatter a config
 
     // Test Data Points that result in 91% confidence
 
@@ -50,6 +50,7 @@ const mapStateToProps = (state) => {
         days: days,
         confidence: confidence,
         e1rm: e1rm,
+        minConfidence: 90, // TODO: make this a config
     }
 };
 

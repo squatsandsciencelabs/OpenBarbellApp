@@ -29,7 +29,7 @@ class OneRM extends Component {
     }
 
     _render1rm(confidence) {
-        if (confidence >= 90) {
+        if (confidence >= this.props.minConfidence) {
             return (
                 <View>
                     <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{this.props.e1rm}</Text> {this.props.metric}</Text>

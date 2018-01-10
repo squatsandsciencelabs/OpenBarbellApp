@@ -7,6 +7,7 @@ import {
     TOKENS_READY
 } from 'app/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
+import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 
 export const loginSucceeded = (accessToken, refreshToken, email, date = new Date(), revision = null, sets = null) => ({
     type: LOGIN_SUCCESS,
@@ -19,8 +20,15 @@ export const loginSucceeded = (accessToken, refreshToken, email, date = new Date
 });
 
 export const logout = (forceLogout=false) => (dispatch, getState) => {
+    const state = getState();
+
+    // don't logout if you're already logged out
+    // this can happen if the refresh token 401s
+    if (!AuthSelectors.getIsLoggedIn(state)) {
+        return false;
+    }
+
     if (forceLogout) {
-        const state = getState();
         logForceLogoutAnalytics(state);
         Alert.alert("Important", "As it's been awhile since you've signed on, you've been logged out! Please login again.");        
     }

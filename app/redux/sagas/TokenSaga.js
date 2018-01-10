@@ -2,7 +2,8 @@ import { takeEvery, select, put, call, all } from 'redux-saga/effects';
 
 import {
     CHANGE_TAB,
-    STORE_INITIALIZED
+    STORE_INITIALIZED,
+    CLEAR_TOKENS,
 } from 'app/ActionTypes';
 
 import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
@@ -15,7 +16,8 @@ import * as Analytics from 'app/services/Analytics';
 const TokenSaga = function * TokenSaga() {
     yield all([
         takeEvery(CHANGE_TAB, executeObtainNewTokens),
-        takeEvery(STORE_INITIALIZED, executeObtainNewTokens)        
+        takeEvery(STORE_INITIALIZED, executeObtainNewTokens),
+        takeEvery(CLEAR_TOKENS, executeObtainNewTokens), // for anonymous
     ]);
 };
 
@@ -100,6 +102,7 @@ function *obtainNewAnonymousTokens() {
             if (error.type !== undefined || typeof error === 'function') {
                 yield put(error);
             }
+            yield put(AuthActionCreators.logout()); // logging out of a logged out user just clear tokens
             console.tron.log(JSON.stringify(error));
         }
     }

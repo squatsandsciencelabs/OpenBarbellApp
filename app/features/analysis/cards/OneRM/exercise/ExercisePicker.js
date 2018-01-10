@@ -8,7 +8,7 @@ import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 
 const mapStateToProps = (state) => ({
-    isModalShowing: AnalysisSelectors.getisEditing1RMExercise(state),
+    isModalShowing: AnalysisSelectors.getIsEditing1RMExercise(state),
     items: SetsSelectors.generateExerciseItems(state),
     selectedValue: AnalysisSelectors.getAnalysisE1RMExercise(state)
 });

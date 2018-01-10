@@ -1,6 +1,6 @@
 const stateRoot = (state) => state.analysis;
 
-export const getisEditing1RMExercise = (state) => stateRoot(state).isEditing1RMExercise;
+export const getIsEditing1RMExercise = (state) => stateRoot(state).isEditing1RMExercise;
 
 export const getAnalysisE1RMVelocity = (state) => stateRoot(state).e1RMVelocity;
 

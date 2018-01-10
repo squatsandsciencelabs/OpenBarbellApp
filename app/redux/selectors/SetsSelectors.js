@@ -404,7 +404,7 @@ export const generateExerciseItems = (state) => {
     let exercises = [];
 
     sets.forEach((set) => {
-        if (!exerciseExists(set.exercise, exercises) && set.exercise) {
+        if (set.exercise && !exerciseExists(set.exercise, exercises)) {
             exercises.push({ label: set.exercise, value: set.exercise });
         }
     });

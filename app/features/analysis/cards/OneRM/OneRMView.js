@@ -78,7 +78,7 @@ class OneRM extends Component {
                     </Text>
                         <Slider
                             value={this.props.velocity} 
-                            onValueChange={(value) => this.setState({ slidingVelocity: true, velocity: Number(value.toFixed(2)) })}               // 
+                            onValueChange={(value) => this.setState({ slidingVelocity: true, velocity: Number(value.toFixed(2)) })}
                             onSlidingComplete={(value) => this._changeVelocitySlider(value)}
                             minimumValue={.01}
                             maximumValue={.41}

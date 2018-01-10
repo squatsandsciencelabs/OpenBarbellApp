@@ -2,7 +2,8 @@ import {
     SAVE_TOKENS,
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
-    LOGOUT
+    LOGOUT,
+    CLEAR_TOKENS,
 } from 'app/ActionTypes';
 
 const AuthReducer = (state = createDefaultState(), action) => {
@@ -14,6 +15,7 @@ const AuthReducer = (state = createDefaultState(), action) => {
         case LOGIN_SUCCESS:
             return loginSuccess(state, action);
         case LOGOUT:
+        case CLEAR_TOKENS: // same action as logout ONLY in the auth reducer but nowhere else
             return logout(state, action);
         default:
             return state;

@@ -25,6 +25,7 @@ export const LOGOUT = 'LOGOUT';
 export const CANCEL_LOGOUT = 'CANCEL_LOGOUT';
 export const SAVE_TOKENS = 'SAVE_TOKENS';
 export const TOKENS_READY = 'TOKENS_READY';
+export const CLEAR_TOKENS = 'CLEAR_TOKENS';
 
 // sets
 export const SAVE_WORKOUT_SET = 'SAVE_WORKOUT_SET';

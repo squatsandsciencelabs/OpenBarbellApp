@@ -11,7 +11,7 @@ const defaultState = {
     screenStatus: 'active',
     lockedCounter: 0,
     multiTaskCounter: 0,
-    tabIndex: NavigationConfig.initialIndex
+    tabIndex: NavigationConfig.initialIndex,
 }
 
 const AppStateReducer = (state = defaultState, action) => {

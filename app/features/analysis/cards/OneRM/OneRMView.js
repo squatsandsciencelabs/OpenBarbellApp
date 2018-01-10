@@ -76,35 +76,35 @@ class OneRM extends Component {
                     <Text style={styles.labelText}>
                         Velocity
                     </Text>
-                        <Slider
-                            value={this.props.velocity} 
-                            onValueChange={(value) => this.setState({ slidingVelocity: true, velocity: Number(value.toFixed(2)) })}
-                            onSlidingComplete={(value) => this._changeVelocitySlider(value)}
-                            minimumValue={.01}
-                            maximumValue={.41}
-                            step={.01}
-                            thumbTintColor={'white'}
-                            minimumTrackTintColor={'#368fff'}
-                            thumbStyle={styles.thumbStyle}
-                            animateTransitions={true}
-                        />
-                        <Text style={styles.numberStyle}>{this.state.velocity} m/s</Text>
+                    <Slider
+                        value={this.props.velocity} 
+                        onValueChange={(value) => this.setState({ slidingVelocity: true, velocity: Number(value.toFixed(2)) })}
+                        onSlidingComplete={(value) => this._changeVelocitySlider(value)}
+                        minimumValue={.01}
+                        maximumValue={.41}
+                        step={.01}
+                        thumbTintColor={'white'}
+                        minimumTrackTintColor={'#368fff'}
+                        thumbStyle={styles.thumbStyle}
+                        animateTransitions={true}
+                    />
+                    <Text style={styles.numberStyle}>{this.state.velocity} m/s</Text>
                     <Text style={styles.labelText}>
                         Date Range
                     </Text>
-                        <Slider
-                            value={this.props.days} 
-                            onValueChange={(value) => this.setState({ slidingDays: true, days: Number(value.toFixed(2)) })}
-                            onSlidingComplete={(value) => this._changeDaysSlider(value)}
-                            minimumValue={1}
-                            maximumValue={7}
-                            step={1}
-                            thumbTintColor={'white'}
-                            minimumTrackTintColor={'#368fff'}
-                            thumbStyle={styles.thumbStyle}
-                            animateTransitions={true}
-                        />
-                        <Text style={styles.numberStyle}>{this.state.days} days</Text>
+                    <Slider
+                        value={this.props.days} 
+                        onValueChange={(value) => this.setState({ slidingDays: true, days: Number(value.toFixed(2)) })}
+                        onSlidingComplete={(value) => this._changeDaysSlider(value)}
+                        minimumValue={1}
+                        maximumValue={7}
+                        step={1}
+                        thumbTintColor={'white'}
+                        minimumTrackTintColor={'#368fff'}
+                        thumbStyle={styles.thumbStyle}
+                        animateTransitions={true}
+                    />
+                    <Text style={styles.numberStyle}>{this.state.days} days</Text>
                 </View>
             </View>
         )

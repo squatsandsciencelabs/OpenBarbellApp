@@ -373,6 +373,7 @@ export const getRevision = (state) => stateRoot(state).revision;
 
 // 1rm
 // Get Weights and Velocity for the exercise
+// TODO: change this into two separate functions instead so can avoid using TYPE
 export const getExerciseData = (state, exercise, type) => {   
     const sets = getAllSets(state);
     let data = [];

@@ -11,7 +11,7 @@ import OneRMChart from '../../charts/OneRMChart';
 import ExercisePicker from '../OneRM/exercise/ExercisePicker';
 
 class OneRM extends Component {
-    // using component level state vs redux here to avoid excessive dispatches
+    // using component level state vs redux here to avoid excessive dispatches for the sliders
     constructor(props) {
         super(props);
 

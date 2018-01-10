@@ -1376,7 +1376,7 @@ describe('SetsSelectors', () => {
         });
         
         describe('getExerciseData', () => {
-            beforeEach(() => {
+            beforeAll(() => {
                 Date.now = () => 1515197192603;
             });
 

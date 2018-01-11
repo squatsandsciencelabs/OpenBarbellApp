@@ -383,20 +383,52 @@ export const getExerciseData = (state, exercise, type) => {
 
     if (type === 'regression') {
         sets.forEach((set) => {
-            if (set.exercise === exercise && set.reps.length > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime)) {
+            if (set.exercise === exercise && set.reps.length > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime) && (checkIncludesTags(state, set.tags) && !checkExcludesTags(state, set.tags))) {
                 data.push([set.weight, Number(RepDataMap.averageVelocity(set.reps[0].data))]);
             }       
         });
     } else if (type === 'scatter') {
         data = [[]]
         sets.forEach((set) => {
-            if (set.exercise === exercise && set.reps.length > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime)) {
+            if (set.exercise === exercise && set.reps.length > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime) && (checkIncludesTags(state, set.tags) && !checkExcludesTags(state, set.tags))) {
                 data[0].push({ title: set.setID, weight: set.weight, velocity: Number(RepDataMap.averageVelocity(set.reps[0].data)) });
             }       
         });
     }
 
     return data;
+}
+
+const checkIncludesTags = (state, tags) => {
+    const tagsToInclude = AnalysisSelectors.getTagsToInclude(state);
+
+    if (!tagsToInclude.length) {
+        return true;
+    }
+
+    let includesTag = null;
+
+    tagsToInclude.forEach((tagToInclude) => {
+        includesTag = tags.includes(tagToInclude);
+    });
+
+    return includesTag;
+}
+
+const checkExcludesTags = (state, tags) => {
+    const tagsToExclude = AnalysisSelectors.getTagsToExclude(state);
+
+    if (!tagsToExclude.length) {
+        return false;
+    }
+
+    let includesTag = null;
+
+    tagsToExclude.forEach((tagToExclude) => {
+        includesTag = tags.includes(tagToExclude);
+    });
+
+    return includesTag;
 }
 
 export const generateExerciseItems = (state) => {

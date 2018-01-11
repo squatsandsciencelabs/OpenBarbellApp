@@ -883,6 +883,8 @@ describe('SetsSelectors', () => {
                         removed: false,
                         data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
                     }],
+                    tags: ['A', 'B', 'C', 'D'],
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
                 }, {
                     setID: 'i',
                     exercise: 'Squat',
@@ -901,6 +903,7 @@ describe('SetsSelectors', () => {
                         removed: true,
                         data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
                     }],
+                    tags: ['A', 'B', 'C'],
                     initialStartTime: '2018-01-03T04:06:12.640Z'
                 }, {
                     setID: 'j',
@@ -912,6 +915,7 @@ describe('SetsSelectors', () => {
                         removed: false,
                         data: [-3456, 37, 3.933368, 312, 34, 35, 1, 36]
                     }],
+                    tags: ['A', 'B', 'C'],
                     initialStartTime: '2018-01-03T04:06:12.640Z'
                 }, {
                     setID: 'k',
@@ -931,6 +935,7 @@ describe('SetsSelectors', () => {
                         removed: false,
                         data: [-3456, 37, 0.483368, 28, 48, 13, 3, 5]
                     }],
+                    tags: ['A', 'B', 'C'],
                     initialStartTime: '2018-01-03T04:06:12.640Z'
                 }, {
                     exercise: 'Deadlift',
@@ -949,6 +954,7 @@ describe('SetsSelectors', () => {
                         removed: false,
                         data: [-3456, 37, 1.453368, 328, 32, 22, 1, 12]
                     }],
+                    tags: ['A', 'B', 'C'],
                     initialStartTime: '2018-01-03T04:06:12.640Z'
                 }],
                 historyData: {
@@ -978,6 +984,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 0.233368, 400, 40, 30, 1, 20]
                         }],
+                        tags: ['A', 'B', 'C'],
                         initialStartTime: '1-2-18'
                     },
                     b: {
@@ -990,6 +997,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 1.943368, 388, 38, 28, 1, 18]
                         }],
+                        tags: ['A', 'B', 'C'],
                         initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
                     c: {
@@ -1002,6 +1010,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 1.733368, 288, 28, 18, 1, 8]
                         }],
+                        tags: ['A', 'B', 'C'],
                         initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
                     d: {
@@ -1014,6 +1023,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 1.833368, 188, 18, 8, 1, 4]
                         }],
+                        tags: ['A', 'B', 'C'],
                         initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
                     e: {
@@ -1036,6 +1046,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 2.4, 230, 23, 13, 1, 3]
                         }],
+                        tags: ['A', 'B', 'C'],
                         initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
                     f: {
@@ -1058,6 +1069,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 2.4, 230, 23, 13, 1, 3]
                         }],
+                        tags: ['A', 'B', 'C', 'E', 'J'],
                         initialStartTime: '2018-01-03T04:06:12.640Z',
                     },
                     g: {
@@ -1070,12 +1082,41 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 2.933368, 288, 28, 28, 1, 28]
                         }],
+                        tags: ['A', 'B', 'C'],
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
+                    },
+                    h: {
+                        setID: 'h',
+                        exercise: 'Squat',
+                        weight: 200,
+                        metric: 'kgs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 2.933368, 288, 28, 28, 1, 28]
+                        }],
+                        tags: ['A', 'B', 'G'],
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
+                    },
+                    i: {
+                        setID: 'i',
+                        exercise: 'Squat',
+                        weight: 200,
+                        metric: 'kgs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 2.933368, 288, 28, 28, 1, 28]
+                        }],
+                        tags: ['A', 'B', 'F'],
                         initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
                 }
             },
             analysis: {
                 e1RMDaysRange: 7,
+                tagsToInclude: ['A', 'B', 'C'],
+                tagsToExclude: ['F', 'G'],
             }
         };
 

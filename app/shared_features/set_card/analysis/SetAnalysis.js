@@ -23,14 +23,26 @@ class SetAnalysis extends Component {
             } else {
                 var text = description;
             }
-            return (
-                <View style={{flex: 1, marginTop: -2, justifyContent: 'center'}}>
-                    <Text style={styles.text}>
-                        {value}
-                    </Text>
-                    <Text style={styles.metric}>{text}</Text>
-                </View>  
-            );
+
+            if (!this.props.rpe && (text === 'RPE' || text === 'RPE1RM')) {
+                return (
+                    <View style={{flex: 1, marginTop: -2, justifyContent: 'center'}}>
+                        <Text style={styles.redText}>
+                            {value}
+                        </Text>
+                        <Text style={styles.redMetric}>{text}</Text>
+                    </View>  
+                );
+            } else {
+                return (
+                    <View style={{flex: 1, marginTop: -2, justifyContent: 'center'}}>
+                        <Text style={styles.text}>
+                            {value}
+                        </Text>
+                        <Text style={styles.metric}>{text}</Text>
+                    </View>  
+                );
+            }
         }
     }
 
@@ -66,6 +78,17 @@ const styles = StyleSheet.create({
         borderLeftWidth: 1,
         borderRightWidth: 1,
     },
+    redText: {
+        color: 'red',
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginLeft: 5,
+        marginRight: 5,
+        marginTop: 5,
+        textAlign: 'center',
+        paddingTop: 5,
+        paddingBottom: 5,
+    },
     text: {
         color: '#4d4d4d',
         fontSize: 18,
@@ -87,6 +110,17 @@ const styles = StyleSheet.create({
         marginLeft: 3,
         marginRight: 3,
         textAlign: 'center',
+    },
+    redMetric: {
+        color: 'red',
+        fontSize: 8,
+        fontWeight: "500",
+        paddingTop: 3,
+        paddingBottom: 5,
+        marginTop: -8,
+        marginLeft: 3,
+        marginRight: 3,
+        textAlign: 'center',        
     },
     bigMetricBackground: {
         alignItems: 'center',

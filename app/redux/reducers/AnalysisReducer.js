@@ -4,6 +4,10 @@ import {
     PRESENT_SELECT_EXERCISE,
     SAVE_1RM_EXERCISE,
     DISMISS_SELECT_EXERCISE,
+    ADD_INCLUDE_TAG,
+    ADD_EXCLUDE_TAG,
+    REMOVE_INCLUDE_TAG,
+    REMOVE_EXCLUDE_TAG,
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -11,6 +15,8 @@ const defaultState = {
     e1RMVelocity: .01,
     e1RMExercise: 'Bench',
     e1RMDaysRange: 7,
+    tagsToInclude: [],
+    tagsToExclude: [],
 };
 
 const AnalysisReducer = (state = defaultState, action) => {
@@ -35,7 +41,26 @@ const AnalysisReducer = (state = defaultState, action) => {
             return Object.assign({}, state, {
                 e1RMExercise: action.exercise
             });
-        
+        case ADD_INCLUDE_TAG:
+            return { 
+                ...state,
+                tagsToInclude: [...state.tagsToInclude, action.tag]
+            }
+        case ADD_EXCLUDE_TAG:
+            return { 
+                ...state,
+                tagsToExclude: [...state.tagsToExclude, action.tag]
+            }    
+        case REMOVE_INCLUDE_TAG:
+            return {
+                ...state,
+                tagsToInclude: state.tagsToInclude.filter(tag => tag !== action.tag),
+            }
+        case REMOVE_EXCLUDE_TAG:
+            return {
+                ...state,
+                tagsToExclude: state.tagsToExclude.filter(tag => tag !== action.tag),
+            }
         default: 
             return state;
     }

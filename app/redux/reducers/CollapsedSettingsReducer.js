@@ -21,6 +21,7 @@ import {
     EMPTY_METRIC,
     AVG_VELOCITY_METRIC,
     RPE_METRIC,
+    RPE1RM_METRIC,
     DURATION_METRIC,
     ROM_METRIC,
     PKH_METRIC,
@@ -48,8 +49,8 @@ const defaultState = {
     quantifier3: MIN_QUANTIFIER,
     metric4: DURATION_METRIC,
     quantifier4: MIN_QUANTIFIER,
-    metric5: AVG_VELOCITY_METRIC,
-    quantifier5: ABS_LOSS_QUANTIFIER,
+    metric5: RPE1RM_METRIC,
+    quantifier5: EMPTY_QUANTIFIER,
     currentCollapsedMetricRank: null,
     isEditingMetric: false,
     isEditingQuantifier: false,
@@ -225,14 +226,14 @@ const CollapsedSettingsReducer = (state = defaultState, action) => {
 };
 
 const shouldResetQuantifier = (quantifier, metric) => {
-    if (metric === RPE_METRIC) {
+    if (metric === RPE_METRIC || metric === RPE1RM_METRIC) {
         return true;
     }
     return false;
 };
 
 const shouldResetMetric = (quantifier, metric) => {
-    if (metric === RPE_METRIC) {
+    if (metric === RPE_METRIC || metric === RPE1RM_METRIC) {
         return true;
     }
     if ((quantifier === AVG_QUANTIFIER || quantifier === ABS_LOSS_QUANTIFIER || quantifier === PERCENT_LOSS_QUANTIFIER || quantifier === SET_LOSS_QUANTIFIER || quantifier === PEAK_END_QUANTIFIER) && metric === PKH_METRIC) {

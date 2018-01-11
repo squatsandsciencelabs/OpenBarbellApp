@@ -5,6 +5,7 @@ import {
     EMPTY_METRIC,
     AVG_VELOCITY_METRIC,
     RPE_METRIC,
+    RPE1RM_METRIC,
     DURATION_METRIC,
     ROM_METRIC,
     PKH_METRIC,
@@ -196,13 +197,16 @@ const metricValue = (state, set, quantifier, metric) => {
         case RPE_METRIC:
             returnValue = CollapsedMetrics.getRPE(set);
             break;
+        case RPE1RM_METRIC:
+            returnValue = CollapsedMetrics.getRPE1rm(set);
+            break;
     }
 
     return returnValue ? returnValue : '---';    
 };
 
 const metricDescription = (quantifier, metric) => {
-    if (metric === RPE_METRIC) {
+    if (metric === RPE_METRIC || metric === RPE1RM_METRIC) {
         return CollapsedMetrics.metricAbbreviation(metric);
     }
     if (quantifier === EMPTY_QUANTIFIER || metric === EMPTY_METRIC) {
@@ -216,6 +220,7 @@ const unit = (metric, quantifier) => CollapsedMetrics.metricUnit(metric, quantif
 const mapStateToProps = (state, ownProps) => {
     // raw values
     const set = ownProps.set;
+    const rpe = set.rpe;
     const metric1 = CollapsedSettingsSelectors.getMetric1(state);
     const quantifier1 = CollapsedSettingsSelectors.getQuantifier1(state);
     const metric2 = CollapsedSettingsSelectors.getMetric2(state);
@@ -244,6 +249,7 @@ const mapStateToProps = (state, ownProps) => {
         value5: metricValue(state, set, quantifier5, metric5),
         description5: metricDescription(quantifier5, metric5),
         unit5: unit(metric5, quantifier5),
+        rpe: rpe,
     };
 };
 

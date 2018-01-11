@@ -3,6 +3,7 @@ import {
     EMPTY_METRIC,
     AVG_VELOCITY_METRIC,
     RPE_METRIC,
+    RPE1RM_METRIC,
     DURATION_METRIC,
     ROM_METRIC,
     PKH_METRIC,
@@ -369,11 +370,12 @@ export const getRPE1rm = (set) => {
     const weight = set.weight;
     const rpe = set.rpe;
 
-    if (rpe < 6.5) {
+    if (rpe < 6.5 || !rpe) {
         return null;
     }
 
     // RPE percentages of 1rm correlated to reps @ RPE values
+    // "RPE":{"REP#": Percentage of 1rm, ...}
     const RPEIntensity = {
 		"10":{"10":0.74,"9":0.76,"8":0.79,"7":0.81,"6":0.84,"5":0.86,"4":0.89,"3":0.92,"2":0.96,"1":1},
 		"9.5":{"10":0.72,"9":0.75,"8":0.77,"7":0.8,"6":0.82,"5":0.85,"4":0.88,"3":0.91,"2":0.94,"1":0.98},
@@ -401,6 +403,8 @@ export const metricAbbreviation = (metric) => {
             return 'VEL';
         case RPE_METRIC:
             return 'RPE';
+        case RPE1RM_METRIC:
+            return 'RPE1RM';
         case DURATION_METRIC:
             return 'DUR';
         case ROM_METRIC:
@@ -422,6 +426,8 @@ export const metricString = (metric) => {
             return 'Average Velocity';
         case RPE_METRIC:
             return 'RPE';
+        case RPE1RM_METRIC:
+            return 'RPE1RM'; 
         case DURATION_METRIC:
             return 'Duration';
         case ROM_METRIC:

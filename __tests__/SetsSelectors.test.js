@@ -883,7 +883,7 @@ describe('SetsSelectors', () => {
                         removed: false,
                         data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
                     }],
-                    tags: ['A', 'B', 'C', 'D'],
+                    tags: ['D', 'A', 'B', 'C'],
                     initialStartTime: '2018-01-03T04:06:12.640Z'
                 }, {
                     setID: 'i',
@@ -1069,7 +1069,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 2.4, 230, 23, 13, 1, 3]
                         }],
-                        tags: ['A', 'B', 'C', 'E', 'J'],
+                        tags: ['A', 'E', 'J', 'C', 'B'],
                         initialStartTime: '2018-01-03T04:06:12.640Z',
                     },
                     g: {
@@ -1082,7 +1082,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 2.933368, 288, 28, 28, 1, 28]
                         }],
-                        tags: ['A', 'B', 'C'],
+                        tags: ['B', 'A', 'C'],
                         initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
                     h: {

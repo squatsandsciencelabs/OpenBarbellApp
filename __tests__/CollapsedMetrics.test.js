@@ -1081,4 +1081,56 @@ describe('collapsed metrics', () => {
         });
     });
     
+    describe('getRPE1rm', () => {
+
+        test('return correct 1rm value based on RPE', () => {
+            const set = {
+                weight: 435,
+                reps: [{}, {}],
+                rpe: 8
+            }
+    
+            const actual = sut.getRPE1rm(set);
+    
+            expect(actual).toBe(489);
+        });
+    
+        test('return correct 1rm value based on RPE', () => {
+            const set = {
+                weight: 405,
+                reps: [{}, {}, {}, {}],
+                rpe: 7
+            }
+    
+            const actual = sut.getRPE1rm(set);
+    
+            expect(actual).toBe(500);
+        });
+
+        test('return correct 1rm value based on RPE', () => {
+            const set = {
+                weight: 315,
+                reps: [{}, {}, {}, {}, {}, {}, {}, {}],
+                rpe: 6.5
+            }
+    
+            const actual = sut.getRPE1rm(set);
+    
+            expect(actual).toBe(457);
+        });
+    
+    
+        test('return null if RPE below 6.5', () => {
+            const set = {
+                weight: 345,
+                reps: [{}, {}, {}, {}],
+                rpe: 5
+            }
+    
+            const actual = sut.getRPE1rm(set);
+    
+            expect(actual).toBe(null)
+        })
+    });
+    
 });

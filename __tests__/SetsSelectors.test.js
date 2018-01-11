@@ -1450,12 +1450,6 @@ describe('SetsSelectors', () => {
 
             expect(result).toEqual(expected);
         });
-
-        describe('get current 1rm', () => {
-            const result = sut.getCurrentOneRM(state, 'Bench');
-
-            expect(result).toEqual({"confidence": 48, "velocity": 1.73, "weight": 100});
-        });
     });
 
     describe.skip('getSetsToUpload', () => {

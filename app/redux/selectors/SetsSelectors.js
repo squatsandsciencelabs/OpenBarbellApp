@@ -419,26 +419,6 @@ const exerciseExists = (exercise, arr) => {
     }); 
 };
 
-export const getCurrentOneRM = (state, exercise) => {
-    const lifts = getExerciseData(state, exercise, 'regression');
-
-    const confidence = OneRMCalculator.getConfidenceInterval(lifts);
-
-    let maxWeight = lifts[0][0];
-    let slowestVel = lifts[0][1];
-
-    // highest lift
-    // compare against max weight and slowest vel to get max weight at its slowest vel
-    for (let i = 1; i < lifts.length; i++) {
-        if (lifts[i][0] > maxWeight && lifts[i][1] < slowestVel) {
-            maxWeight = lifts[i][0];
-            slowestVel = lifts[i][1];
-        }
-    };
-
-    return { weight: maxWeight, velocity: slowestVel, confidence};
-}
-
 export const getAllSets = (state) => {
     const historySets = getHistorySets(state);
     const workoutSets = getWorkoutSets(state);

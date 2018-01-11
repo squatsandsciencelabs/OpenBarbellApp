@@ -167,25 +167,44 @@ class SetForm extends Component {
     }
 
     _renderRPE() {
-        return (
-            <View style={[styles.field, {flex: 2}]}>
-                <TextInput
-                    style={styles.fieldText}
-                    keyboardType={'numeric'}
-                    underlineColorAndroid={'transparent'}
-                    editable = {true}
-                    placeholder="RPE"
-                    onEndEditing={() => this._onEndEditRPE() }
-                    placeholderTextColor={'rgba(189, 189, 189, 1)'}
-                    value = {this.state.rpe}
-                    onFocus={() => this.props.tapRPE(this.props.setID) }
-                    onChangeText={(rpe) => this._onChangeRPE(rpe) }
-                />
-                <View style={styles.fieldDetails} pointerEvents='none'>
-                    <Text style={styles.detailText}>RPE</Text>
+        if (this.props.rpeDisabled) {
+            return (
+                <View style={[styles.field, {flex: 2}]}>
+                    <TextInput
+                        style={styles.fieldText}
+                        keyboardType={'numeric'}
+                        underlineColorAndroid={'transparent'}
+                        editable = {false}
+                        placeholder="RPE"
+                        placeholderTextColor={'rgba(189, 189, 189, 1)'}
+                        value = {this.state.rpe}        
+                    />
+                    <View style={styles.fieldDetails} pointerEvents='none'>
+                        <Text style={styles.disabledText}>RPE</Text>
+                    </View>
                 </View>
-            </View>
-        );
+            );
+        } else {
+            return (
+                <View style={[styles.field, {flex: 2}]}>
+                    <TextInput
+                        style={styles.fieldText}
+                        keyboardType={'numeric'}
+                        underlineColorAndroid={'transparent'}
+                        editable = {true}
+                        placeholder="RPE"
+                        onEndEditing={() => this._onEndEditRPE() }
+                        placeholderTextColor={'rgba(189, 189, 189, 1)'}
+                        value = {this.state.rpe}
+                        onFocus={() => this.props.tapRPE(this.props.setID) }
+                        onChangeText={(rpe) => this._onChangeRPE(rpe) }
+                    />
+                    <View style={styles.fieldDetails} pointerEvents='none'>
+                        <Text style={styles.detailText}>RPE</Text>
+                    </View>
+                </View>
+            );
+        }
     }
 
     _renderTags() {
@@ -267,6 +286,11 @@ const styles = StyleSheet.create({
     detailText: {
         fontSize: 13,
         color: 'gray',
+        backgroundColor: 'rgba(0, 0, 0, 0)'
+    },
+    disabledText: {
+        fontSize: 13,
+        color: 'rgba(189, 189, 189, 1)',
         backgroundColor: 'rgba(0, 0, 0, 0)'
     },
     border: {

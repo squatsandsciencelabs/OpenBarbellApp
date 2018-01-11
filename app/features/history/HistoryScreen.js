@@ -155,6 +155,7 @@ const createFormViewModel = (set, setNumber, isRemoved) => ({
     type: 'form',
     key: set.setID+'form',
     setID: set.setID,
+    initialStartTime: set.initialStartTime,
     removed: isRemoved,
     setNumber: setNumber,
     exercise: set.exercise,

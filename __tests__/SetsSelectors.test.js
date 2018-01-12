@@ -1472,7 +1472,37 @@ describe('SetsSelectors', () => {
             test('return data with proper tags included and excluded', () => {
                 const state = {
                     sets: {
-                        workoutData: [{
+                        workoutData: [
+                        {
+                            setID: 'a',
+                            exercise: 'Bench',
+                            weight: 100,
+                            metric: 'lbs',
+                            reps: [{
+                                isValid: true,
+                                removed: false,
+                                data: [-3456, 37, 1.833368, 200, 19, 10, 1, 4]
+                            }, {
+                                isValid: false,
+                                removed: false,
+                                data: [-3456, 37, 10.533368, 500, 70, 80, 1, 70]
+                            }, {
+                                isValid: true,
+                                removed: false,
+                                data: [-3456, 37, 2.433368, 250, 25, 15, 1, 10]
+                            }, {
+                                isValid: true,
+                                removed: true,
+                                data: [-3456, 37, 0.533368, 50, 10, 20, 1, 2]
+                            }, {
+                                isValid: true,
+                                removed: false,
+                                data: [-3456, 37, 0.233368, 400, 40, 30, 1, 20]
+                            }],
+                            tags: ['A', 'B', 'C'],
+                            initialStartTime: '1-2-18'
+                        },
+                        {
                             setID: 'h',
                             exercise: 'Squat',
                             weight: 100,
@@ -1494,35 +1524,6 @@ describe('SetsSelectors', () => {
                             initialStartTime: '2018-01-03T04:06:12.640Z'
                         }],
                         historyData: {
-                            a: {
-                                setID: 'a',
-                                exercise: 'Bench',
-                                weight: 100,
-                                metric: 'lbs',
-                                reps: [{
-                                    isValid: true,
-                                    removed: false,
-                                    data: [-3456, 37, 1.833368, 200, 19, 10, 1, 4]
-                                }, {
-                                    isValid: false,
-                                    removed: false,
-                                    data: [-3456, 37, 10.533368, 500, 70, 80, 1, 70]
-                                }, {
-                                    isValid: true,
-                                    removed: false,
-                                    data: [-3456, 37, 2.433368, 250, 25, 15, 1, 10]
-                                }, {
-                                    isValid: true,
-                                    removed: true,
-                                    data: [-3456, 37, 0.533368, 50, 10, 20, 1, 2]
-                                }, {
-                                    isValid: true,
-                                    removed: false,
-                                    data: [-3456, 37, 0.233368, 400, 40, 30, 1, 20]
-                                }],
-                                tags: ['A', 'B', 'C'],
-                                initialStartTime: '1-2-18'
-                            },
                             b: {
                                 setID: 'b',
                                 exercise: 'Bench',
@@ -1533,7 +1534,7 @@ describe('SetsSelectors', () => {
                                     removed: false,
                                     data: [-3456, 37, 1.943368, 388, 38, 28, 1, 18]
                                 }],
-                                tags: ['A', 'G', 'B', 'C'],
+                                tags: ['A', 'G', 'B', 'C', 'F'],
                                 initialStartTime: '2018-01-03T04:06:12.640Z'
                             },
                             c: {
@@ -1571,7 +1572,10 @@ describe('SetsSelectors', () => {
                     }
                 };
 
-                const expected =  [[{"title": "a", "velocity": 1.83, "weight": 100}, {"title": "c", "velocity": 1.73, "weight": 100}]]
+                const expected =  [[
+                    {"title": "c", "velocity": 1.73, "weight": 100},
+                    {"title": "a", "velocity": 1.83, "weight": 100},
+                ]];
                 
                 const result = sut.getExerciseData(state, 'Bench', 'scatter');
 

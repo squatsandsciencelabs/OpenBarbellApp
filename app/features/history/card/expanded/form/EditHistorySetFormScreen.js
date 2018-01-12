@@ -9,7 +9,7 @@ const mapStateToProps = (state, ownProps) => {
     const rpeDisabled = !DateUtils.checkDateWithinRange(7, ownProps.initialStartTime)
     
     return {
-        rpeDisabled: rpeDisabled
+        rpeDisabled: rpeDisabled,
     }
 }
 

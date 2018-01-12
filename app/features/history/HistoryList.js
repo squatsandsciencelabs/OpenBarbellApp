@@ -98,6 +98,7 @@ class HistoryList extends Component {
                 return (<View style={{backgroundColor: 'white'}}>
                             <EditHistorySetFormScreen
                                 setID={item.setID}
+                                initialStartTime={item.initialStartTime}
                                 removed={item.removed}
                                 tags={item.tags}
                                 weight={item.weight}

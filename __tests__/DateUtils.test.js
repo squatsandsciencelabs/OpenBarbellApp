@@ -20,6 +20,14 @@ describe('DateUtils', () => {
             expect(actual).toBe(true);
         });
 
+        test('check if date is within range over 7 days', () => {  
+            const date = '2017-12-27T04:06:12.640Z';
+
+            const actual = sut.checkDateWithinRange(10, date)
+    
+            expect(actual).toBe(true);
+        });
+
         test('check if works with date object', () => {  
             const dateString = '2017-12-30T04:06:12.640Z';
             const date = new Date(dateString);

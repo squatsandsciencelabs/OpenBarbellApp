@@ -77,7 +77,7 @@ class SetForm extends Component {
 
     _tapDisabledRPE() {
         Alert.alert(
-            'RPE Disabled',
+            '',
             "It has been too long since this set to log RPE.",
             [
                 {text: 'Close', style: 'cancel'},

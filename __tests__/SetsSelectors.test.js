@@ -1111,6 +1111,29 @@ describe('SetsSelectors', () => {
                         tags: ['A', 'B', 'F'],
                         initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
+                    j: {
+                        setID: 'j',
+                        exercise: 'Squat',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.3, 100, 10, 5, 1, 3]
+                        }, 
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.9, 300, 30, 20, 1, 10]
+                        },
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 2.4, 230, 23, 13, 1, 3]
+                        }],
+                        tags: ['F', 'A', 'B', 'C'],
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
+                    },
                 }
             },
             analysis: {

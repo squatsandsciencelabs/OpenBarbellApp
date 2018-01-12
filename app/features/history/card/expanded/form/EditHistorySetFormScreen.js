@@ -10,7 +10,7 @@ const mapStateToProps = (state, ownProps) => {
     
     return {
         rpeDisabled: rpeDisabled,
-    }
+    };
 }
 
 const mapDispatchToProps = (dispatch) => {

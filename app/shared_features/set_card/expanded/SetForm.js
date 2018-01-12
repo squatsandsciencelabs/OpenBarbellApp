@@ -11,7 +11,8 @@ import {
     TouchableHighlight,
     TextInput,
     Keyboard,
-    Platform
+    Platform,
+    Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Pill from 'app/shared_features/pill/Pill';
@@ -72,6 +73,16 @@ class SetForm extends Component {
             rpe: rpe,
             didChangeRPE: true
         });
+    }
+
+    _tapDisabledRPE() {
+        Alert.alert(
+            'RPE Disabled',
+            "It has been too long since this set to log RPE.",
+            [
+                {text: 'Close', style: 'cancel'},
+            ]
+        );
     }
 
     _onEndEditWeight() {
@@ -170,18 +181,21 @@ class SetForm extends Component {
         if (this.props.rpeDisabled) {
             return (
                 <View style={[styles.field, {flex: 2}]}>
-                    <TextInput
-                        style={styles.fieldText}
-                        keyboardType={'numeric'}
-                        underlineColorAndroid={'transparent'}
-                        editable = {false}
-                        placeholder="RPE"
-                        placeholderTextColor={'rgba(189, 189, 189, 1)'}
-                        value = {this.state.rpe}        
-                    />
-                    <View style={styles.fieldDetails} pointerEvents='none'>
-                        <Text style={styles.disabledText}>RPE</Text>
-                    </View>
+                    <TouchableOpacity onPress={() => this._tapDisabledRPE()}>
+                        <TextInput
+                            style={styles.fieldText}
+                            keyboardType={'numeric'}
+                            underlineColorAndroid={'transparent'}
+                            editable = {false}
+                            placeholder="RPE"
+                            placeholderTextColor={'rgba(189, 189, 189, 1)'}
+                            value = {this.state.rpe}   
+                            pointerEvents='none'
+                        />
+                        <View style={styles.fieldDetails} pointerEvents='none'>
+                            <Text style={styles.detailText}>RPE</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
             );
         } else {

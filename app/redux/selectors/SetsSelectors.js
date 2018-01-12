@@ -415,11 +415,11 @@ const checkExcludesTags = (state, tags) => {
     const tagsToExclude = AnalysisSelectors.getTagsToExclude(state);
 
     if (!tagsToExclude.length) {
-        return false;
+        return true;
     }
 
-    return !tagsToExclude.every((tagToExclude) => {
-        return tags.includes(tagToExclude);
+    return tagsToExclude.every((tagToExclude) => {
+        return !tags.includes(tagToExclude);
     });
 }
 

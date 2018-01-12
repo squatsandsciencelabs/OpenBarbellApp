@@ -377,7 +377,6 @@ export const getRevision = (state) => stateRoot(state).revision;
 export const getExerciseData = (state, exercise, type) => {   
     const sets = getAllSets(state);
     let data = [];
-
     // check if date fits within range
     const range = AnalysisSelectors.getAnalysisRange(state);
 

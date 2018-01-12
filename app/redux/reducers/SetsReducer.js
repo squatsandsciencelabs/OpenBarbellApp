@@ -19,7 +19,9 @@ import {
     UPDATE_SET_DATA_FROM_SERVER,
     FINISH_UPLOADING_SETS,
     LOGIN_SUCCESS,
-    LOGOUT
+    LOGOUT,
+    DELETE_WORKOUT_SET,
+    DELETE_HISTORY_SET,
 } from 'app/ActionTypes';
 import uuidV4 from 'uuid/v4';
 import DeviceInfo from 'react-native-device-info';
@@ -32,6 +34,10 @@ const SetsReducer = (state = createDefaultState(), action) => {
             return saveDefaultMetric(state, action);        
         case SAVE_WORKOUT_SET:
             return saveWorkoutSet(state, action);
+        case DELETE_WORKOUT_SET:
+            return deleteWorkoutSet(state, action);
+        case DELETE_HISTORY_SET:
+            return deleteHistorySet(state, action);
         case SAVE_WORKOUT_SET_TAGS:
             return saveWorkoutSetTags(state, action);
         case SAVE_HISTORY_SET:
@@ -162,6 +168,12 @@ const saveWorkoutSet = (state, action) => {
     });
 };
 
+// DELETE_WORKOUT_SET
+
+const deleteWorkoutSet = (state, action) => {
+    return state.workoutData.filter(set => set.setID !== action.setID);
+};
+
 // SAVE_WORKOUT_SET_TAGS
 
 const saveWorkoutSetTags = (state, action) => {
@@ -215,6 +227,19 @@ const saveHistorySet = (state, action) => {
     }
 
     return Object.assign({}, state, stateChanges);
+};
+
+// DELETE_HISTORY_SET
+
+const deleteHistorySet = (state, action) => {
+    return Object.assign({}, state, {
+        historyData: Object.keys(state.historyData).reduce((result, setID) => {
+            if (setID !== action.setID) {
+                result[setID] = state.historyData[setID];
+            }
+            return result;
+        }, {})
+    });
 };
 
 // SAVE_HISTORY_SET_TAGS

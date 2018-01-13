@@ -8,6 +8,7 @@ import {
     STORE_INITIALIZED,
     LOGIN_REQUEST,
     LOGOUT,
+    CLEAR_TOKENS,
 } from 'app/ActionTypes';
 import API from 'app/services/API';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
@@ -15,8 +16,8 @@ import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators
 import * as Analytics from 'app/services/Analytics';
 
 const AuthSaga = function * AuthSaga() {
-    yield take(STORE_INITIALIZED);
-    yield call(executeAnonymousLogin);
+    // handle anonymous logins
+    yield fork(executeAnonymousLogin);
     
     while (true) {
         // login
@@ -46,13 +47,17 @@ const AuthSaga = function * AuthSaga() {
 };
 
 function* executeAnonymousLogin() {
-    // login immediately
-    let refreshToken = yield select(AuthSelectors.getRefreshToken);
-    if (!refreshToken) {
-        // TODO: analytics?
-        let json = yield call(API.loginAnonymously);
-        // TOOD: analytics?
-        yield put(AuthActionCreators.saveTokens(json.accessToken, json.refreshToken, new Date()));
+    while(true) {
+        yield take([STORE_INITIALIZED, CLEAR_TOKENS]);
+
+        // login immediately
+        let refreshToken = yield select(AuthSelectors.getRefreshToken);
+        if (!refreshToken) {
+            // TODO: analytics?
+            let json = yield call(API.loginAnonymously);
+            // TOOD: analytics?
+            yield put(AuthActionCreators.saveTokens(json.accessToken, json.refreshToken, new Date()));
+        }
     }
 }
 

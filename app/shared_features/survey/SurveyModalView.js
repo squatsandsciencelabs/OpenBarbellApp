@@ -11,10 +11,6 @@ import {
 
  class SurveyModalView extends Component {
 
-    _fillOutLater() {
-        this.props.fillOutLater();
-    }
-
     _close() {
         this.props.closeModal();
     }
@@ -46,13 +42,6 @@ import {
                     <Text style={{color: 'rgba(77, 77, 77, 1)'}}>Survey</Text>
                 </View>
 
-                <View style={{position: 'absolute', right: 0, top: 0}}>
-                    <TouchableOpacity onPress={() => this._fillOutLater() }>
-                        <View style={styles.nav}>
-                            <Text style={[{color: 'rgba(47, 128, 237, 1)'}]}>Later</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
             </View>
         )
     }

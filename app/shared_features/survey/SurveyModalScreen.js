@@ -13,7 +13,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         closeModal: Actions.closeSurvey,
-        fillOutLater: Actions.fillOutLater,
     }, dispatch);
 };
 

@@ -40,25 +40,25 @@ describe('SettingsSurveyActions Analytics', () => {
         logScreenSpy.mockRestore();
     });
 
-    test('attempt_finish_survey', () => {
+    test('close_survey', () => {
         store.dispatch(sut.closeSurvey());
         
         const event = logEventSpy.mock.calls[0][0];
         const params = logEventSpy.mock.calls[0][1];
-        expect(event).toEqual('attempt_finish_survey');
+        expect(event).toEqual('close_survey');
         expect(params.url).toEqual(expectedURL);
     });
 
-    test('cancel_finish_survey', () => {
-        store.dispatch(sut.cancel());
+    test('opt_out_survey', () => {
+        store.dispatch(sut.optout());
         
         const event = logEventSpy.mock.calls[0][0];
         const params = logEventSpy.mock.calls[0][1];
-        expect(event).toEqual('cancel_finish_survey');
+        expect(event).toEqual('opt_out_survey');
         expect(params.url).toEqual(expectedURL);
     });
 
-    test('screen is settings when cancel_finish_survey', () => {
+    test('screen is settings when opt_out_survey', () => {
         store = mockStore({
             survey: {
                 surveyURL: expectedURL
@@ -68,7 +68,7 @@ describe('SettingsSurveyActions Analytics', () => {
             }
         });
 
-        store.dispatch(sut.cancel());
+        store.dispatch(sut.optout());
         
         const screen = logScreenSpy.mock.calls[0][0];
         expect(screen).toEqual('settings');
@@ -100,7 +100,7 @@ describe('SettingsSurveyActions Analytics', () => {
     });
 
     test('fill_survey_later', () => {
-        store.dispatch(sut.fillOutLater());
+        store.dispatch(sut.later());
         
         const event = logEventSpy.mock.calls[0][0];
         const params = logEventSpy.mock.calls[0][1];
@@ -118,7 +118,7 @@ describe('SettingsSurveyActions Analytics', () => {
             }
         });
 
-        store.dispatch(sut.fillOutLater());
+        store.dispatch(sut.later());
         
         const screen = logScreenSpy.mock.calls[0][0];
         expect(screen).toEqual('history');

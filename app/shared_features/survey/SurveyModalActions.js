@@ -11,34 +11,44 @@ import * as AppStateSelectors from 'app/redux/selectors/AppStateSelectors';
 export const closeSurvey = () => (dispatch, getState) => {
     // log analytics
     const state = getState();
-    logAttemptFinishSurveyAnalytics(state);
+    logCloseSurveyAnalytics(state);
 
     // present
     Alert.alert(
+        "Thanks for taking our survey!",
         null,
-        "Are you done with the survey? We won't show this one to you again.",
         [
-            {
-                text: 'Cancel',
-                onPress: () => {
-                    dispatch(cancel());
-                },
-                style: 'cancel'
-            },
             {
                 text: "Finished",
                 onPress: () => {
                     dispatch(finish());
                 },
             },
+            {
+                text: 'Later',
+                onPress: () => {
+                    dispatch(later());
+                },
+            },
+            {
+                text: 'I Hate Data',
+                onPress: () => {
+                    dispatch(optout());
+                },
+            },
         ]
     );
 };
 
-export const cancel = () => (dispatch, getState) => {
+export const optout = () => (dispatch, getState) => {
+    // analytics
     const state = getState();
-    logCancelFinishSurveyAnalytics(state);
+    logOptOutSurveyAnalytics(state);
     resetScreen(state);
+
+    dispatch({
+        type: COMPLETE_SURVEY,
+    });
 };
 
 export const finish = () => (dispatch, getState) => {
@@ -52,7 +62,7 @@ export const finish = () => (dispatch, getState) => {
     });
 };
 
-export const fillOutLater = () => (dispatch, getState) => {
+export const later = () => (dispatch, getState) => {
     // analytics
     const state = getState();
     logFillSurveyLaterAnalytics(state);
@@ -84,8 +94,8 @@ const resetScreen = (state) => {
 
 // ANALYTICS
 
-const logAttemptFinishSurveyAnalytics = (state) => {
-    Analytics.logEventWithAppState('attempt_finish_survey', {
+const logCloseSurveyAnalytics = (state) => {
+    Analytics.logEventWithAppState('close_survey', {
         url: SurveySelectors.getURL(state),
     }, state);
 };
@@ -96,8 +106,8 @@ const logFinishSurveyAnalytics = (state) => {
     }, state);
 };
 
-const logCancelFinishSurveyAnalytics = (state) => {
-    Analytics.logEventWithAppState('cancel_finish_survey', {
+const logOptOutSurveyAnalytics = (state) => {
+    Analytics.logEventWithAppState('opt_out_survey', {
         url: SurveySelectors.getURL(state),
     }, state);
 };

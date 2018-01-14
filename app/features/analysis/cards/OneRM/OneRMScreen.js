@@ -52,6 +52,8 @@ const mapStateToProps = (state) => {
         days: days,
         confidence: confidence,
         e1rm: e1rm,
+        tagsToInclude: state.analysis.tagsToInclude,
+        tagsToExclude: state.analysis.tagsToExclude,
         minConfidence: 90, // TODO: make this a config
         isLoggedIn: isLoggedIn,
     }
@@ -60,6 +62,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         tapExercise: Actions.presentSelectExercise,
+        tapTagsToInclude: Actions.presentTagsToInclude,
+        tapTagsToExclude: Actions.presentTagsToExclude,
         changeVelocity: Actions.changeE1RMVelocity,
         changeDays: Actions.changeE1RMDays,
     }, dispatch);

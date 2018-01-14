@@ -1,7 +1,9 @@
 import {
     PRESENT_SELECT_EXERCISE,
     CHANGE_1RM_VELOCITY,
-    CHANGE_1RM_DAYS_RANGE
+    CHANGE_1RM_DAYS_RANGE,
+    PRESENT_INCLUDES_TAGS,
+    PRESENT_EXCLUDES_TAGS,
 } from 'app/ActionTypes';
 
 export const presentSelectExercise = () => ({
@@ -16,4 +18,12 @@ export const changeE1RMVelocity = (velocity) => ({
 export const changeE1RMDays = (days) => ({
     type: CHANGE_1RM_DAYS_RANGE,
     days: days
+});
+
+export const presentTagsToExclude = () => ({
+    type: PRESENT_EXCLUDES_TAGS
+})
+
+export const presentTagsToInclude = () => ({
+    type: PRESENT_INCLUDES_TAGS
 });

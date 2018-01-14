@@ -5,11 +5,15 @@ import {
     View,
     TouchableOpacity,
     Platform,
+    TouchableHighlight,
 } from 'react-native';
 import { Slider } from 'react-native';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 import OneRMChart from '../../charts/OneRMChart';
 import ExercisePicker from '../OneRM/exercise/ExercisePicker';
+import EditAnalysisTagsToIncludeScreen from './tags/tagsToInclude/EditAnalysisTagsToIncludeScreen';
+import EditAnalysisTagsToExcludeScreen from './tags/tagsToExclude/EditAnalysisTagsToExcludeScreen';
+import Pill from 'app/shared_features/pill/Pill';
 
 class OneRM extends Component {
     // using component level state vs redux here to avoid excessive dispatches for the sliders
@@ -68,19 +72,83 @@ class OneRM extends Component {
         this.props.changeDays(value);
     }
 
+    _displayTagsToInclude() {
+        if (this.props.tagsToInclude === undefined || this.props.tagsToInclude === null || this.props.tagsToInclude.length === 0) {
+            return (<Text style={[styles.tagText, styles.placeholderText]}>Tags to Include</Text>);
+        }
+
+        var pills = [];
+        let position = 0;
+        this.props.tagsToInclude.map((tag) => {
+            let key = position;
+            pills.push(
+                <Pill key={key} text={tag} style={{paddingRight: 5, paddingBottom: 3, paddingTop: 3}} />
+            );
+            position++;
+        });
+
+        return (<View style={styles.tagField}>{pills}</View>);
+    }
+
+    _renderTagsToInclude() {
+        return (
+            <View style={[styles.field, {flex: 1}]}>
+                <TouchableHighlight onPress={() => this.props.tapTagsToInclude()} underlayColor='#e0e0e0'>
+                    {this._displayTagsToInclude()}
+                </TouchableHighlight>
+            </View>
+        );
+    }
+
+    _displayTagsToExclude() {
+        if (this.props.tagsToExclude === undefined || this.props.tagsToExclude === null || this.props.tagsToExclude.length === 0) {
+            return (<Text style={[styles.tagText, styles.placeholderText]}>Tags to Exclude</Text>);
+        }
+
+        var pills = [];
+        let position = 0;
+        this.props.tagsToExclude.map((tag) => {
+            let key = position;
+            pills.push(
+                <Pill key={key} text={tag} style={{paddingRight: 5, paddingBottom: 3, paddingTop: 3}} />
+            );
+            position++;
+        });
+
+        return (<View style={styles.tagField}>{pills}</View>);
+    }
+
+    _renderTagsToExclude() {
+        return (
+            <View style={[styles.field, {flex: 1}]}>
+                <TouchableHighlight onPress={() => this.props.tapTagsToExclude()} underlayColor='#e0e0e0'>
+                    {this._displayTagsToExclude()}
+                </TouchableHighlight>
+            </View>
+        );
+    }
+
     render() {
         if (Platform.OS === 'ios') {
             return (
                 <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
                     <Text style={[{marginBottom: 20}, styles.titleText]}>Estimated One-Rep Max</Text>
                     <View style={{marginBottom: 20}}>
-                        <TouchableOpacity onPress={() => this._tapExercise()}>
-                            <Text style={{fontSize: 18, color: 'rgba(47, 128, 237, 1)', textAlign: 'center'}}>
+                        <TouchableOpacity onPress={() => this._tappedExercise()}>
+                            <Text style={{fontSize: 18, color: 'rgba(47, 128, 237, 1)', textAlign: 'center', marginBottom: 20}}>
                                 {this.props.exercise}
                             </Text>
                         </TouchableOpacity>
+                        <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Include:</Text>
+                        <View style={{marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
+                        <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Exclude:</Text>
+                        <View>{ this._renderTagsToExclude() }</View>
                     </View>
                     <ExercisePicker />
+                    <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
+                    <EditAnalysisTagsToIncludeScreen />
+                    <EditAnalysisTagsToExcludeScreen />
+                    </View>
                     <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
                         {this._render1rm(this.props.confidence)}
                         <Text style={styles.labelText}>
@@ -202,6 +270,49 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         marginBottom: 5,
         height: 40,
+    },
+    field: {
+        backgroundColor: 'rgba(239, 239, 239, 1)',
+        borderColor: 'rgba(239, 239, 239, 1)',
+        borderWidth: 3,
+        borderRadius: 3,
+        marginBottom: 5,
+        zIndex: 2,
+        minHeight: 35,
+    },
+    fieldDetails: {
+        position: 'absolute',
+        right: 5,
+        top: -1,
+        bottom: 0,
+        justifyContent: 'center',
+    },
+    fieldText: {
+        height: 29,
+        fontSize: 13,
+        paddingLeft: 4,
+        paddingTop: 4,
+        paddingBottom: 5,
+        paddingRight: 30,
+        color: 'rgba(77, 77, 77, 1)',
+    },
+    tagText: {
+        height: 29,
+        paddingTop: 6,
+        paddingLeft: 4,
+        fontSize: 13,
+        paddingRight: 30,
+        color: 'rgba(77, 77, 77, 1)',
+    },
+    tagField: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        minHeight: 29,
+        paddingLeft: 2,
+        paddingRight: 0,
+    },
+    placeholderText: {
+        color: 'rgba(189, 189, 189, 1)'
     },
 });
 

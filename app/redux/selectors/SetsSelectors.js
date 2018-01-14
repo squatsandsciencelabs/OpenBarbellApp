@@ -422,6 +422,43 @@ const checkExcludesTags = (state, tags) => {
     });
 }
 
+// Get all tags for an exercises
+export const getExerciseAllTagsIncludes = (state, exercise) => {
+    const sets = getAllSets(state);
+    const tagsToExclude = state.analysis.tagsToExclude;
+    const tags = [];
+
+    sets.forEach((set) => {
+        if (set.exercise === exercise) {
+            set.tags.forEach((tag) => {
+                if (!tags.includes(tag) && !tagsToExclude.includes(tag) && tag !== 'Bug') {
+                    tags.push(tag);
+                }
+            });
+        }
+    });
+
+    return tags;
+}
+
+export const getExerciseAllTagsExcludes = (state, exercise) => {
+    const sets = getAllSets(state);
+    const tagsToInclude = state.analysis.tagsToInclude;
+    const tags = [];
+
+    sets.forEach((set) => {
+        if (set.exercise === exercise) {
+            set.tags.forEach((tag) => {
+                if (!tags.includes(tag) && !tagsToInclude.includes(tag) && tag !== 'Bug') {
+                    tags.push(tag);
+                }
+            });
+        }
+    });
+
+    return tags;
+}
+
 export const generateExerciseItems = (state) => {
     const sets = getAllSets(state);
     let exercises = [];

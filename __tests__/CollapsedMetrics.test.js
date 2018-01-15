@@ -1082,55 +1082,130 @@ describe('collapsed metrics', () => {
     });
     
     describe('getRPE1rm', () => {
+        const validRep = {isValid: true, removed: false};
+        const invalidRep = {isValid: false, removed: true};
+        const removedRep = {isValid: true, removed: true};
+        const invalidandRemovedRep = {isValid: false, removed: false};
 
         test('return correct 1rm value based on RPE', () => {
             const set = {
                 weight: 435,
-                reps: [{}, {}],
-                rpe: 8
+                reps: [validRep, validRep],
+                rpe: '9',
             }
     
             const actual = sut.getRPE1rm(set);
     
-            expect(actual).toBe(489);
+            expect(actual).toBe(473);
         });
     
         test('return correct 1rm value based on RPE', () => {
             const set = {
                 weight: 405,
-                reps: [{}, {}, {}, {}],
-                rpe: 7
+                reps: [validRep, invalidandRemovedRep, validRep, invalidRep, validRep],
+                rpe: '7',
             }
     
             const actual = sut.getRPE1rm(set);
     
-            expect(actual).toBe(500);
+            expect(actual).toBe(482);
         });
 
         test('return correct 1rm value based on RPE', () => {
             const set = {
                 weight: 315,
-                reps: [{}, {}, {}, {}, {}, {}, {}, {}],
-                rpe: 6.5
+                reps: [validRep, validRep, removedRep, validRep, invalidandRemovedRep, validRep, validRep, removedRep, validRep, validRep],
+                rpe: '6.5',
             }
     
             const actual = sut.getRPE1rm(set);
     
-            expect(actual).toBe(457);
+            expect(actual).toBe(438);
+        });
+
+        test('return null if all reps are invalid ', () => {
+            const set = {
+                weight: 315,
+                reps: [invalidRep, invalidRep, invalidRep, invalidRep],
+                rpe: '6.5',
+            }
+
+            const actual = sut.getRPE1rm(set);
+    
+            expect(actual).toBe(null);
+        });
+
+        test('return null if all reps are removed', () => {
+            const set = {
+                weight: 315,
+                reps: [removedRep, removedRep, removedRep],
+                rpe: '6.5',
+            }
+
+            const actual = sut.getRPE1rm(set);
+    
+            expect(actual).toBe(null);
         });
     
+        test('return null if all reps are removed or invalid', () => {
+            const set = {
+                weight: 315,
+                reps: [removedRep, invalidRep, invalidRep, removedRep, removedRep],
+                rpe: '6.5',
+            }
+
+            const actual = sut.getRPE1rm(set);
+    
+            expect(actual).toBe(null);
+        });
+
+        test('return null if all reps are removed or invalid or invalidandRemoved', () => {
+            const set = {
+                weight: 315,
+                reps: [removedRep, invalidRep, invalidRep, invalidandRemovedRep, removedRep, removedRep, invalidandRemovedRep],
+                rpe: '6.5',
+            }
+
+            const actual = sut.getRPE1rm(set);
+    
+            expect(actual).toBe(null);
+        });
+
+        test('return null if all reps are invalidandRemoved', () => {
+            const set = {
+                weight: 315,
+                reps: [invalidandRemovedRep, invalidandRemovedRep],
+                rpe: '6.5',
+            }
+
+            const actual = sut.getRPE1rm(set);
+    
+            expect(actual).toBe(null);
+        });
     
         test('return null if RPE below 6.5', () => {
             const set = {
                 weight: 345,
-                reps: [{}, {}, {}, {}],
-                rpe: 5
+                reps: [validRep, validRep, validRep, validRep,],
+                rpe: '5',
             }
     
             const actual = sut.getRPE1rm(set);
     
             expect(actual).toBe(null)
-        })
+        });
+
+        test('return RPE 1rm if comma instead of decimal', () => {
+            const set = {
+                weight: 345,
+                reps: [validRep, validRep, validRep, validRep,],
+                rpe: '6,5',
+            }
+
+            const actual = sut.getRPE1rm(set);
+
+            expect(actual).toBe(431);
+        });
     });
     
 });

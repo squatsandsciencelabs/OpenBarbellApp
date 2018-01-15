@@ -24,25 +24,17 @@ class SetAnalysis extends Component {
                 var text = description;
             }
 
-            if (!this.props.rpe && (text === 'RPE' || text === 'RPE1RM')) {
-                return (
-                    <View style={{flex: 1, marginTop: -2, justifyContent: 'center'}}>
-                        <Text style={styles.redText}>
-                            {value}
-                        </Text>
-                        <Text style={styles.redMetric}>{text}</Text>
-                    </View>  
-                );
-            } else {
-                return (
-                    <View style={{flex: 1, marginTop: -2, justifyContent: 'center'}}>
-                        <Text style={styles.text}>
-                            {value}
-                        </Text>
-                        <Text style={styles.metric}>{text}</Text>
-                    </View>  
-                );
-            }
+            let textStyle = !this.props.rpe && (text === 'RPE' || text === 'RPE1RM') ? styles.redText : styles.text;
+            let metricStyle = !this.props.rpe && (text === 'RPE' || text === 'RPE1RM') ? styles.redMetric : styles.metric;
+            
+            return (
+                <View style={{flex: 1, marginTop: -2, justifyContent: 'center'}}>
+                    <Text style={textStyle}>
+                        {value}
+                    </Text>
+                    <Text style={metricStyle}>{text}</Text>
+                </View>  
+            );
         }
     }
 
@@ -51,7 +43,7 @@ class SetAnalysis extends Component {
         if (!Device.isSmallDevice()) {
             lastColumn = this._renderAnalysis(this.props.value5, this.props.unit5, this.props.description5, false);
         }
-        
+
         return (
             <View style={[styles.border, styles.container, {flex:1, flexDirection: 'row'}]}>
                 {this._renderAnalysis(this.props.value1, this.props.unit1, this.props.description1, true)}

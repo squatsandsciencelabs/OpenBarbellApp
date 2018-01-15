@@ -24,7 +24,7 @@ const AuthSaga = function * AuthSaga() {
         const task = yield fork(executeLogin);
 
         // logout
-        yield take(LOGOUT);
+        yield take([LOGOUT, CLEAR_TOKENS]);
         yield cancel(task);
         try {
             // reset and logout
@@ -35,9 +35,6 @@ const AuthSaga = function * AuthSaga() {
             // analytics
             let state = yield select();
             logLogoutAnalytics(state);
-
-            // login anonymously
-            yield call(executeAnonymousLogin);
         } catch(error) {
             console.tron.log("LOGOUT SIGN OUT ERROR " + error);
             let state = yield select();
@@ -48,7 +45,7 @@ const AuthSaga = function * AuthSaga() {
 
 function* executeAnonymousLogin() {
     while(true) {
-        yield take([STORE_INITIALIZED, CLEAR_TOKENS]);
+        yield take([STORE_INITIALIZED, CLEAR_TOKENS, LOGOUT]);
 
         // login immediately
         let refreshToken = yield select(AuthSelectors.getRefreshToken);

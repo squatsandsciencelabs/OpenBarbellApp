@@ -6,6 +6,7 @@ import * as Actions from './OneRMActions';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
+import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import * as AppStateActionCreators from 'app/redux/shared_actions/AppStateActionCreators';
 import * as OneRMCalculator from 'app/utility/transforms/OneRMCalculator';
 
@@ -41,6 +42,7 @@ const mapStateToProps = (state) => {
 
     const confidence = OneRMCalculator.getConfidenceInterval(data);
     const e1rm = OneRMCalculator.calc1rm(data, velocity);
+    const email = AuthSelectors.getEmail(state);
 
     return {
         velocity: velocity,
@@ -51,6 +53,7 @@ const mapStateToProps = (state) => {
         confidence: confidence,
         e1rm: e1rm,
         minConfidence: 90, // TODO: make this a config
+        email: email,
     }
 };
 

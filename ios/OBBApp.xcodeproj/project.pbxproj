@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -78,7 +77,6 @@
 		CE6B0CFD7E424C429E725784 /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7A399CD4F05E4181B0EAD34F /* libRNFirebase.a */; };
 		D577A397DA444933A2D5E661 /* libKCKeepAwake.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B48AB458803F41BF99DB8886 /* libKCKeepAwake.a */; };
 		D84B96E3F00742CA914C2E89 /* libRNGoogleSignin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F9B90CB4DAC458597DFCC86 /* libRNGoogleSignin.a */; };
-		E155817BEF884A2FB2FC4D28 /* libReactNativePermissions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A01FDE8E96645C9BB87624E /* libReactNativePermissions.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -397,13 +395,6 @@
 			remoteGlobalIDString = 3D383D621EBD27B9005632C8;
 			remoteInfo = "double-conversion-tvOS";
 		};
-		C3B88B861F58E36A00E90D33 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 37D84A684F2C444C9352BA4E /* ReactNativePermissions.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9D23B34F1C767B80008B4819;
-			remoteInfo = ReactNativePermissions;
-		};
 		C3D458D41E7350D100C545A4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 855F349217A44F3A9F1849F7 /* RNVectorIcons.xcodeproj */;
@@ -463,11 +454,9 @@
 		369EE494638B4CDFAB407589 /* KCKeepAwake.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = KCKeepAwake.xcodeproj; path = "../node_modules/react-native-keep-awake/ios/KCKeepAwake.xcodeproj"; sourceTree = "<group>"; };
 		36D60B0DD70C3D9E9805D23E /* Pods-OBBApp-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OBBApp-tvOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OBBApp-tvOSTests/Pods-OBBApp-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3723931E4C54F36262CABD47 /* libPods-OBBApp-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-OBBApp-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		37D84A684F2C444C9352BA4E /* ReactNativePermissions.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativePermissions.xcodeproj; path = "../node_modules/react-native-permissions/ReactNativePermissions.xcodeproj"; sourceTree = "<group>"; };
 		39ED46B3D82F408896857355 /* libRCTVideo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTVideo.a; sourceTree = "<group>"; };
 		4DE54ECB1DCDF2BC2041761E /* Pods-OBBApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OBBApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-OBBApp/Pods-OBBApp.release.xcconfig"; sourceTree = "<group>"; };
 		61E446441C234E1D9249D86E /* libRNBackgroundTimer.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNBackgroundTimer.a; sourceTree = "<group>"; };
-		6A01FDE8E96645C9BB87624E /* libReactNativePermissions.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativePermissions.a; sourceTree = "<group>"; };
 		6D9AEF9053B84358A5A79ED8 /* RCTVideo.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTVideo.xcodeproj; path = "../node_modules/react-native-video/ios/RCTVideo.xcodeproj"; sourceTree = "<group>"; };
 		6F610C984B7547179A810BC0 /* RNFirebase.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFirebase.xcodeproj; path = "../node_modules/react-native-firebase/ios/RNFirebase.xcodeproj"; sourceTree = "<group>"; };
 		7204D9D12CA64406A94517D0 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
@@ -564,7 +553,6 @@
 				96958C31505C41F49BB3731A /* CoreData.framework in Frameworks */,
 				211A0B7F8276461AA0051D2E /* libsqlite3.0.tbd in Frameworks */,
 				D577A397DA444933A2D5E661 /* libKCKeepAwake.a in Frameworks */,
-				E155817BEF884A2FB2FC4D28 /* libReactNativePermissions.a in Frameworks */,
 				2E1B7A20210D27AB671CCD4A /* libPods-OBBApp.a in Frameworks */,
 				CE6B0CFD7E424C429E725784 /* libRNFirebase.a in Frameworks */,
 			);
@@ -808,7 +796,6 @@
 				7204D9D12CA64406A94517D0 /* RCTCamera.xcodeproj */,
 				6D9AEF9053B84358A5A79ED8 /* RCTVideo.xcodeproj */,
 				369EE494638B4CDFAB407589 /* KCKeepAwake.xcodeproj */,
-				37D84A684F2C444C9352BA4E /* ReactNativePermissions.xcodeproj */,
 				6F610C984B7547179A810BC0 /* RNFirebase.xcodeproj */,
 			);
 			name = Libraries;
@@ -948,14 +935,6 @@
 			isa = PBXGroup;
 			children = (
 				C3B88AD41F58B15100E90D33 /* libKCKeepAwake.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		C3B88B621F58E36A00E90D33 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C3B88B871F58E36A00E90D33 /* libReactNativePermissions.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1146,10 +1125,6 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
-				},
-				{
-					ProductGroup = C3B88B621F58E36A00E90D33 /* Products */;
-					ProjectRef = 37D84A684F2C444C9352BA4E /* ReactNativePermissions.xcodeproj */;
 				},
 				{
 					ProductGroup = C38029C51E70B74600A54DC3 /* Products */;
@@ -1482,13 +1457,6 @@
 			fileType = archive.ar;
 			path = "libdouble-conversion.a";
 			remoteRef = C3B88AF91F58B15100E90D33 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C3B88B871F58E36A00E90D33 /* libReactNativePermissions.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libReactNativePermissions.a;
-			remoteRef = C3B88B861F58E36A00E90D33 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		C3D458D51E7350D100C545A4 /* libRNVectorIcons.a */ = {
@@ -1861,7 +1829,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1896,7 +1863,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2022,7 +1988,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2063,7 +2028,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2094,7 +2058,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.OBBApp-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2120,7 +2083,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.OBBApp-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";

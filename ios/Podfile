@@ -20,6 +20,8 @@ target 'OBBApp' do
   ]
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+  pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
+
   target 'OBBAppTests' do
     inherit! :search_paths
     # Pods for testing

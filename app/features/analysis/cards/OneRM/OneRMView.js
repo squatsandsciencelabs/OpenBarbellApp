@@ -30,21 +30,29 @@ class OneRM extends Component {
     }
 
     _render1rm(confidence) {
-        if (confidence >= this.props.minConfidence) {
-            return (
-                <View>
-                    <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{this.props.e1rm}</Text> {this.props.metric}</Text>
-                    <Text style={{ textAlign: 'center', fontSize: 15 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.velocity} m/s</Text></Text> 
-                    <OneRMChart data={this.props.chartData} />
-                    <Text style={styles.confidenceText}>Confidence: {this.props.confidence} %</Text>
-                </View>
-            );
+        if (this.props.email) {
+            if (confidence >= this.props.minConfidence) {
+                return (
+                    <View>
+                        <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{this.props.e1rm}</Text> {this.props.metric}</Text>
+                        <Text style={{ textAlign: 'center', fontSize: 15 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.velocity} m/s</Text></Text> 
+                        <OneRMChart data={this.props.chartData} />
+                        <Text style={styles.confidenceText}>Confidence: {this.props.confidence} %</Text>
+                    </View>
+                );
+            } else {
+                return (
+                    <Text style={styles.errorText}>
+                        Confidence too low, please clean up or log more data.
+                    </Text>
+                );
+            }
         } else {
             return (
                 <Text style={styles.errorText}>
-                    Confidence too low, please clean up or log more data.
+                    You must be logged in for 1rm calculation.
                 </Text>
-            );
+            )
         }
     }
 

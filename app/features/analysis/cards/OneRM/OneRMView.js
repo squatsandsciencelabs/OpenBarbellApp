@@ -3,7 +3,8 @@ import {
     Text,
     StyleSheet,
     View,
-    TouchableOpacity
+    TouchableOpacity,
+    Platform,
 } from 'react-native';
 import { Slider } from 'react-native';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
@@ -60,54 +61,95 @@ class OneRM extends Component {
     }
 
     render() {
-        return (
-            <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
-                <Text style={[{marginBottom: 20}, styles.titleText]}>Estimated One-Rep Max</Text>
-                <View style={{marginBottom: 20}}>
-                    <TouchableOpacity onPress={() => this._tapExercise()}>
-                        <Text style={{fontSize: 18, color: 'rgba(47, 128, 237, 1)', textAlign: 'center'}}>
-                            {this.props.exercise}
+        if (Platform.OS === 'ios') {
+            return (
+                <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
+                    <Text style={[{marginBottom: 20}, styles.titleText]}>Estimated One-Rep Max</Text>
+                    <View style={{marginBottom: 20}}>
+                        <TouchableOpacity onPress={() => this._tapExercise()}>
+                            <Text style={{fontSize: 18, color: 'rgba(47, 128, 237, 1)', textAlign: 'center'}}>
+                                {this.props.exercise}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <ExercisePicker />
+                    <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
+                        {this._render1rm(this.props.confidence)}
+                        <Text style={styles.labelText}>
+                            Velocity
                         </Text>
-                    </TouchableOpacity>
+                        <Slider
+                            value={this.props.velocity} 
+                            onValueChange={(value) => this.setState({ slidingVelocity: true, velocity: Number(value.toFixed(2)) })}
+                            onSlidingComplete={(value) => this._changeVelocitySlider(value)}
+                            minimumValue={.01}
+                            maximumValue={.41}
+                            step={.01}
+                            minimumTrackTintColor={'#368fff'}
+                            animateTransitions={true}
+                        />
+                        <Text style={styles.numberStyle}>{this.state.velocity} m/s</Text>
+                        <Text style={styles.labelText}>
+                            Date Range
+                        </Text>
+                        <Slider
+                            value={this.props.days} 
+                            onValueChange={(value) => this.setState({ slidingDays: true, days: Number(value.toFixed(2)) })}
+                            onSlidingComplete={(value) => this._changeDaysSlider(value)}
+                            minimumValue={1}
+                            maximumValue={7}
+                            step={1}
+                            minimumTrackTintColor={'#368fff'}
+                            animateTransitions={true}
+                        />
+                        <Text style={styles.numberStyle}>{this.state.days} days</Text>
+                    </View>
                 </View>
-                <ExercisePicker />
-                <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
-                    {this._render1rm(this.props.confidence)}
-                    <Text style={styles.labelText}>
-                        Velocity
-                    </Text>
-                    <Slider
-                        value={this.props.velocity} 
-                        onValueChange={(value) => this.setState({ slidingVelocity: true, velocity: Number(value.toFixed(2)) })}
-                        onSlidingComplete={(value) => this._changeVelocitySlider(value)}
-                        minimumValue={.01}
-                        maximumValue={.41}
-                        step={.01}
-                        thumbTintColor={'white'}
-                        minimumTrackTintColor={'#368fff'}
-                        thumbStyle={styles.thumbStyle}
-                        animateTransitions={true}
-                    />
-                    <Text style={styles.numberStyle}>{this.state.velocity} m/s</Text>
-                    <Text style={styles.labelText}>
-                        Date Range
-                    </Text>
-                    <Slider
-                        value={this.props.days} 
-                        onValueChange={(value) => this.setState({ slidingDays: true, days: Number(value.toFixed(2)) })}
-                        onSlidingComplete={(value) => this._changeDaysSlider(value)}
-                        minimumValue={1}
-                        maximumValue={7}
-                        step={1}
-                        thumbTintColor={'white'}
-                        minimumTrackTintColor={'#368fff'}
-                        thumbStyle={styles.thumbStyle}
-                        animateTransitions={true}
-                    />
-                    <Text style={styles.numberStyle}>{this.state.days} days</Text>
+            )
+        } else {
+            return (
+                <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
+                    <Text style={[{marginBottom: 20}, styles.titleText]}>Estimated One-Rep Max</Text>
+                    <View style={{marginBottom: 10}}>
+                        <ExercisePicker />  
+                    </View>
+                    <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
+                        {this._render1rm(this.props.confidence)}
+                        <Text style={styles.labelText}>
+                            Velocity
+                        </Text>
+                        <Slider
+                            value={this.props.velocity} 
+                            onValueChange={(value) => this.setState({ slidingVelocity: true, velocity: Number(value.toFixed(2)) })}
+                            onSlidingComplete={(value) => this._changeVelocitySlider(value)}
+                            minimumValue={.01}
+                            maximumValue={.41}
+                            step={.01}
+                            thumbTintColor={'#368fff'}
+                            minimumTrackTintColor={'#368fff'}
+                            animateTransitions={true}
+                        />
+                        <Text style={styles.numberStyle}>{this.state.velocity} m/s</Text>
+                        <Text style={styles.labelText}>
+                            Date Range
+                        </Text>
+                        <Slider
+                            value={this.props.days} 
+                            onValueChange={(value) => this.setState({ slidingDays: true, days: Number(value.toFixed(2)) })}
+                            onSlidingComplete={(value) => this._changeDaysSlider(value)}
+                            minimumValue={1}
+                            maximumValue={7}
+                            step={1}
+                            thumbTintColor={'#368fff'}
+                            minimumTrackTintColor={'#368fff'}
+                            animateTransitions={true}
+                        />
+                        <Text style={styles.numberStyle}>{this.state.days} days</Text>
+                    </View>
                 </View>
-            </View>
-        )
+            ) 
+        }
+        
     }
 }
 
@@ -142,13 +184,6 @@ const styles = StyleSheet.create({
         marginBottom: 20, 
         fontSize: 20, 
         textAlign: 'center'
-    },
-    thumbStyle: {
-        width: 30,
-        height: 30,
-        borderWidth: 1.5,
-        borderColor: '#b2b1b2',
-        borderRadius: 20
     },
     numberStyle: {
         fontSize: 16

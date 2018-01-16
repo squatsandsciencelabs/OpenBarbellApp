@@ -60,7 +60,8 @@ const logSaveTagsAnalytics = (state, setID) => {
         value: duration,
         duration: duration,
         is_working_set: is_working_set,
-    }, state);    
+        is_history: false,
+    }, state);
 };
 
 const logCancelEditTagsAnalytics = (state, setID) => {

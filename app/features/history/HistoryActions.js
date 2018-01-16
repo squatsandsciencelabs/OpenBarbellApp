@@ -57,12 +57,14 @@ export const restoreRep = (setID, repIndex) => (dispatch, getState) => {
 
 const logRemoveRepAnalytics = (state, setID) => {
     Analytics.logEventWithAppState('remove_rep', {
-        is_working_set: false
+        is_working_set: false,
+        is_history: true,
     }, state);
 };
 
 const logRestoreRepAnalytics = (state, setID) => {
     Analytics.logEventWithAppState('restore_rep', {
-        is_working_set: false
+        is_working_set: false,
+        is_history: true,
     }, state);
 };

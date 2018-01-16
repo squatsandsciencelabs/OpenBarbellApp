@@ -85,7 +85,7 @@ export const presentRecordVideo = (setID) => (dispatch, getState) => {
             setID: setID,
             isCommentary: false
         });
-    }).catch(() => {});;
+    }).catch(() => {});
 };
 
 export const presentRecordCommentary = (setID) => (dispatch, getState) => {
@@ -99,7 +99,7 @@ export const presentRecordCommentary = (setID) => (dispatch, getState) => {
             setID: setID,
             isCommentary: true
         });
-    }).catch(() => {});;
+    }).catch(() => {});
 };
 
 export const presentWatchVideo = (setID, videoFileURL) => (dispatch, getState) => {
@@ -113,15 +113,16 @@ export const presentWatchVideo = (setID, videoFileURL) => (dispatch, getState) =
             setID: setID,
             videoFileURL: videoFileURL
         });
-    }).catch(() => {});;
+    }).catch(() => {});
 };
 
 const logToggleMetricAnalytics = (setID, state) => {
     let is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 
     Analytics.logEventWithAppState('toggle_weight_metric', {
-        is_working_set: is_working_set
-    }, state);    
+        is_working_set: is_working_set,
+        is_history: false,
+    }, state);
 };
 
 const logSaveWeightAnalytics = (setID, state) => {
@@ -131,8 +132,9 @@ const logSaveWeightAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('save_weight', {
         value: duration,
         duration: duration,
-        is_working_set: is_working_set
-    }, state);    
+        is_working_set: is_working_set,
+        is_history: false,
+    }, state);
 }
 
 const logSaveRPEAnalytics = (setID, state) => {
@@ -142,8 +144,9 @@ const logSaveRPEAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('save_rpe', {
         value: duration,
         duration: duration,
-        is_working_set: is_working_set
-    }, state);    
+        is_working_set: is_working_set,
+        is_history: false,
+    }, state);
 };
 
 const logEditRPEAnalytics = (setID, state) => {
@@ -151,7 +154,7 @@ const logEditRPEAnalytics = (setID, state) => {
 
     Analytics.logEventWithAppState('edit_rpe', {
         is_working_set: is_working_set
-    }, state);       
+    }, state);
 };
 
 const logEditWeightAnalytics = (setID, state) => {
@@ -159,7 +162,7 @@ const logEditWeightAnalytics = (setID, state) => {
     
     Analytics.logEventWithAppState('edit_weight', {
         is_working_set: is_working_set
-    }, state);       
+    }, state);
 };
 
 const logEditTagsAnalytics = (setID, state) => {
@@ -167,7 +170,7 @@ const logEditTagsAnalytics = (setID, state) => {
 
     Analytics.logEventWithAppState('edit_tags', {
         is_working_set: is_working_set
-    }, state);       
+    }, state);
 };
 
 const logVideoRecorderAnalytics = (setID, state) => {

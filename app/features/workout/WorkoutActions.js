@@ -59,7 +59,8 @@ const logRemoveRepAnalytics = (state, setID) => {
     const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 
     Analytics.logEventWithAppState('remove_rep', {
-        is_working_set: is_working_set
+        is_working_set: is_working_set,
+        is_history: false,
     }, state);
 };
 
@@ -67,6 +68,7 @@ const logRestoreRepAnalytics = (state, setID) => {
     const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 
     Analytics.logEventWithAppState('restore_rep', {
-        is_working_set: is_working_set
+        is_working_set: is_working_set,
+        is_history: false,
     }, state);
 };

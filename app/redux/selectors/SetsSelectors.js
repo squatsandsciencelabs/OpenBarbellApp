@@ -137,6 +137,30 @@ export const getPercentWorkoutSetsWithAllFields = (state) => {
     }
 };
 
+export const getNumWorkoutSetsWithRPE = (state) => {
+    const sets = getWorkoutSets(state);
+    var num_sets_with_RPE = 0;
+
+    sets.forEach((set) => {
+        if (set.rpe) {
+            num_sets_with_RPE++;
+        }
+    });
+
+    return num_sets_with_RPE; 
+};
+
+export const getPercentWorkoutSetsWithRPE = (state) => {
+    const sets = getWorkoutSets(state);
+    const numSetsWithRPE = getNumWorkoutSetsWithRPE(state);
+
+    if (sets.length > 0) {
+        return (numSetsWithRPE/(sets.length)) * 100;
+    } else {
+        return 0;
+    }
+};
+
 export const getWorkoutDuration = (state) => {
     const sets = getWorkoutSets(state);
     const startDate = SetTimeCalculator.startTime(sets[0]);

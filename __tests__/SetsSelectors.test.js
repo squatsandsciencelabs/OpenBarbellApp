@@ -459,6 +459,137 @@ describe('SetsSelectors', () => {
         });
     });
 
+    describe('getNumWorkoutSetsWithRPE', () => {
+
+        test('with rpe', () => {
+            SetEmptyCheck.hasAllFields = (set) => set;
+            const state = {
+                sets: {
+                    workoutData: [{rpe: '5'}, {rpe: '5,5'}, {rpe: '5.5'}]
+                }
+            };
+        
+            const result = sut.getNumWorkoutSetsWithRPE(state);
+        
+            expect(result).toBe(3);
+        });
+
+        test('with empty string rpe', () => {
+            SetEmptyCheck.hasAllFields = (set) => set;
+            const state = {
+                sets: {
+                    workoutData: [{rpe: '5'}, {rpe: ''}, {rpe: '5.5'}]
+                }
+            };
+        
+            const result = sut.getNumWorkoutSetsWithRPE(state);
+        
+            expect(result).toBe(2);
+        });
+
+        test('with null rpe', () => {
+            SetEmptyCheck.hasAllFields = (set) => set;
+            const state = {
+                sets: {
+                    workoutData: [{rpe: '5'}, {rpe: null}, {rpe: '5.5'}]
+                }
+            };
+        
+            const result = sut.getNumWorkoutSetsWithRPE(state);
+        
+            expect(result).toBe(2);
+        });
+
+        test('with undefined rpe', () => {
+            SetEmptyCheck.hasAllFields = (set) => set;
+            const state = {
+                sets: {
+                    workoutData: [{rpe: '5'}, {}, {rpe: '5.5'}]
+                }
+            };
+        
+            const result = sut.getNumWorkoutSetsWithRPE(state);
+        
+            expect(result).toBe(2);
+        });
+
+    });
+
+    describe('getPercentWorkoutSetsWithRPE', () => {
+
+        test('0% when none', () => {
+            const state = {
+                sets: {
+                    workoutData: []
+                }
+            };
+        
+            const result = sut.getPercentWorkoutSetsWithRPE(state);
+        
+            expect(result).toBe(0);
+        });
+
+        test('0% when 1', () => {
+            const state = {
+                sets: {
+                    workoutData: [{rpe: null}]
+                }
+            };
+        
+            const result = sut.getPercentWorkoutSetsWithRPE(state);
+        
+            expect(result).toBe(0);
+        });
+
+        test('25%', () => {
+            const state = {
+                sets: {
+                    workoutData: [{rpe: ''}, {rpe: ''}, {rpe: '5'}, {rpe: ''}]
+                }
+            };
+        
+            const result = sut.getPercentWorkoutSetsWithRPE(state);
+        
+            expect(result).toBe(25);
+        });
+
+        test('66.66666666666%', () => {
+            const state = {
+                sets: {
+                    workoutData: [{rpe: '5'}, {}, {rpe: '5'}]
+                }
+            };
+        
+            const result = sut.getPercentWorkoutSetsWithRPE(state);
+        
+            expect(result).toBe(2/3*100);
+        });
+
+        test('100% when single', () => {
+            const state = {
+                sets: {
+                    workoutData: [{rpe: '5,5'}]
+                }
+            };
+        
+            const result = sut.getPercentWorkoutSetsWithRPE(state);
+        
+            expect(result).toBe(100);
+        });
+
+        test('100% when multiple', () => {
+            const state = {
+                sets: {
+                    workoutData: [{rpe: '5'}, {rpe: '5,5'}, {rpe: '5.5'}, {rpe: '7'}, {rpe: '10'}]
+                }
+            };
+        
+            const result = sut.getPercentWorkoutSetsWithRPE(state);
+        
+            expect(result).toBe(100);
+        });
+    });
+
     describe('getWorkoutDuration', () => {
         const realNow = Date.now;
         const realStartTime = SetTimeCalculator.startTime;

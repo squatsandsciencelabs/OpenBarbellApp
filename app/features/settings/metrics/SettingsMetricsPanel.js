@@ -7,7 +7,6 @@ import {
     Platform,
     Switch,
     StyleSheet,
-    Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
@@ -25,6 +24,7 @@ import * as DateUtils from 'app/utility/transforms/DateUtils';
 import SettingsEditMetricsScreen from './metric/SettingsEditMetricsScreen';
 import SettingsEditQuantifiersScreen from './quantifier/SettingsEditQuantifiersScreen';
 import * as CollapsedMetricsUtility from 'app/utility/transforms/CollapsedMetrics';
+import * as CheckScreenWidth from 'app/utility/CheckScreenWidth';
 
 class SettingsMetricsPanel extends Component {
 
@@ -113,9 +113,9 @@ class SettingsMetricsPanel extends Component {
     }
 
     _renderLastRow() {
-        let { height, width } = Dimensions.get('window');
+        const checkScreenWidth = CheckScreenWidth.checkScreenWidth();
 
-        if (width > 350) {
+        if (checkScreenWidth) {
             if (Platform.OS === 'ios') {
                 return this._renderRow(5, this.props.quantifier5, this.props.metric5);
             } else {

@@ -3,8 +3,8 @@ import {
     View,
     StyleSheet,
     Text,
-    Dimensions,
 } from 'react-native';
+import * as CheckScreenWidth from 'app/utility/CheckScreenWidth';
 
 class SetAnalysis extends Component {
 
@@ -35,9 +35,9 @@ class SetAnalysis extends Component {
     }
 
     render() {
-        let { height, width } = Dimensions.get('window');
+        const checkScreenWidth = CheckScreenWidth.checkScreenWidth();
         let lastColumn = null;
-        if (width > 350) {
+        if (checkScreenWidth) {
             lastColumn = this._renderAnalysis(this.props.value5, this.props.unit5, this.props.description5, false);
         }
         

@@ -54,10 +54,10 @@ const logEndWorkoutAnalytics = (manuallyEnded, state) => {
     let num_auto_reconnects = ConnectedDeviceStatusSelectors.getNumReconnects(state);
     let num_history_views = HistorySelectors.getHistoryViewedCounter(state);
     let workout_duration = SetsSelectors.getWorkoutDuration(state);
+    let num_sets_with_all_fields = SetsSelectors.getNumWorkoutSetsWithAllFields(state);
+    let percent_sets_with_all_fields = SetsSelectors.getPercentWorkoutSetsWithAllFields(state);
 
     Analytics.logEventWithAppState('end_workout', {
-        value: null,
-        percent_app_active: null,
         num_history_views: num_history_views,
         num_disconnects: num_disconnects,
         num_auto_reconnects: num_auto_reconnects,
@@ -67,9 +67,9 @@ const logEndWorkoutAnalytics = (manuallyEnded, state) => {
         num_restores: num_restores,
         num_sets_with_fields: num_sets_with_fields,
         percent_sets_fields: percent_sets_fields,
-        time_since_last_workout: null,
+        num_sets_with_all_fields: num_sets_with_all_fields,
+        percent_sets_with_all_fields: percent_sets_with_all_fields,
         workout_duration: workout_duration,
-        time_since_last_rep: null,
         manually_ended: manuallyEnded,
     }, state);    
 };

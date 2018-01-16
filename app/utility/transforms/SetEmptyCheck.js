@@ -8,6 +8,13 @@ export const isUntouched = (set) => {
     return hasEmptyData(set) && hasNoReps(set);
 };
 
+export const hasAllFields = (set) => {
+    if (set.exercise && set.weight && set.rpe && set.tags && set.tags.length > 0) {
+        return true;
+    }
+    return false;
+};
+
 export const hasEmptyFields = (set) => {
     return !set.exercise && (!set.weight || set.weight === '') && (!set.rpe || set.rpe === '') && (!set.tags || set.tags === undefined || set.tags.length === 0);
 };

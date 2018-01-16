@@ -8,6 +8,140 @@ describe.skip('isUntouched', () => {
     // note: skipping for now as too many possibilities and theoretically testing inner functions is sufficient
 });
 
+describe('hasAllFields', () => {
+    // note: not testing for every undefined / null case as too many possibilities
+    // note: not testing for combinations as too many possibilities
+    test('false when all null', () => {
+        const set = {
+            exercise: null,
+            weight: null,
+            rpe: null,
+            tags: [],
+        };
+
+        const result = sut.hasAllFields(set);
+
+        expect(result).toBe(false);;
+    });
+
+    test('true when all filled', () => {
+        const set = {
+            exercise: '1',
+            weight: '1',
+            rpe: '1',
+            tags: ['1'],
+        };
+
+        const result = sut.hasAllFields(set);
+
+        expect(result).toBe(true);
+    });
+
+    test('false w/ exercise name empty string', () => {
+        const set = {
+            exercise: '',
+            weight: '1',
+            rpe: '1',
+            tags: ['1'],
+        };
+
+        const result = sut.hasAllFields(set);
+
+        expect(result).toBe(false);
+    });
+
+    test('false w/ exercise name null', () => {
+        const set = {
+            exercise: null,
+            weight: '1',
+            rpe: '1',
+            tags: ['1'],
+        };
+
+        const result = sut.hasAllFields(set);
+
+        expect(result).toBe(false);
+    });
+
+    test('false w/ weight empty string', () => {
+        const set = {
+            exercise: '1',
+            weight: '',
+            rpe: '1',
+            tags: ['1'],
+        };
+
+        const result = sut.hasAllFields(set);
+
+        expect(result).toBe(false);
+    });
+
+    test('false w/ weight null', () => {
+        const set = {
+            exercise: '1',
+            weight: null,
+            rpe: '1',
+            tags: [''],
+        };
+
+        const result = sut.hasAllFields(set);
+
+        expect(result).toBe(false);
+    });
+
+    test('false w/ rpe empty string', () => {
+        const set = {
+            exercise: '1',
+            weight: '1',
+            rpe: '',
+            tags: ['1'],
+        };
+
+        const result = sut.hasAllFields(set);
+
+        expect(result).toBe(false);
+    });
+
+    test('false w/ rpe null', () => {
+        const set = {
+            exercise: '1',
+            weight: '1',
+            rpe: null,
+            tags: ['1'],
+        };
+
+        const result = sut.hasAllFields(set);
+
+        expect(result).toBe(false);
+    });
+
+    test('false due to tag len 0', () => {
+        const set = {
+            exercise: '1',
+            weight: '1',
+            rpe: '1',
+            tags: [],
+        };
+
+        const result = sut.hasAllFields(set);
+
+        expect(result).toBe(false);
+    });
+
+    test('false due to tag undef', () => {
+        const set = {
+            exercise: '1',
+            weight: '1',
+            rpe: '1',
+        };
+
+        const result = sut.hasAllFields(set);
+
+        expect(result).toBe(false);
+    });
+
+});
+
 describe('hasEmptyFields', () => {
     // note: not testing for every undefined / null case as too many possibilities
     // note: not testing for combinations as too many possibilities

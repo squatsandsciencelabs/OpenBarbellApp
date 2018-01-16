@@ -23,6 +23,7 @@ import API from 'app/services/API';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
 import * as Analytics from 'app/services/Analytics';
+import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
 const AuthSaga = function * AuthSaga() {
     // handle anonymous logins
@@ -87,9 +88,9 @@ function* executeLogin() {
         let json = yield call(API.login, user.idToken);
 
         // success
+        yield put(AuthActionCreators.loginSucceeded(json.accessToken, json.refreshToken, user.email, new Date(), json.revision, json.sets));
         state = yield select();
         logLoginAnalytics(state);
-        yield put(AuthActionCreators.loginSucceeded(json.accessToken, json.refreshToken, user.email, new Date(), json.revision, json.sets));
     } catch(error) {
         console.tron.log("ERROR CODE " + error.code + " ERROR " + error);
         if (error.code === -5 || error.code === 12501) {
@@ -160,8 +161,15 @@ const logLoginErrorAnalytics = (state, error) => {
     }, state);
 };
 
+// TODO: test this
+// this is waiting for a system to test sagas
 const logLoginAnalytics = (state) => {
+    const revision = SetsSelectors.getRevision(state);
+    const has_nonzero_revision = revision > 0;
+
     Analytics.logEventWithAppState('login', {
+        revision: revision,
+        has_nonzero_revision: has_nonzero_revision,
     }, state);
 };
 

@@ -10,7 +10,7 @@ import {
     Modal,
     StyleSheet,
     FlatList,
-    Platform
+    Platform,
 }  from 'react-native';
 
 import Pill from 'app/shared_features/pill/Pill';
@@ -89,11 +89,8 @@ class EditTextModal extends Component {
     }
 
     _updateSuggestions(input=this.state.text, inputs=this.state.inputs, bias=null) {
-        if (this.props.multipleInput) {
-            var suggestions = this.props.generateMultipleInputSuggestions;
-        } else {
-            var suggestions = [];
-        }
+        var suggestions = this.props.generateMultipleInputSuggestions;
+
         let suggestionsVM = suggestions.map((suggestion) => { return {key: suggestion}} );
         this.setState({
             suggestions: suggestionsVM,
@@ -103,7 +100,7 @@ class EditTextModal extends Component {
     // ACTIONS
 
     _onChangeText(input) {
-        if (this.props.multipleInput && input.slice(-1) === '\n') {
+        if (input.slice(-1) === '\n') {
             // enter tapped in multiline mode, update accordingly
             this._addNewPill(this.state.text, true);
         } else {
@@ -113,35 +110,25 @@ class EditTextModal extends Component {
     }
 
     _tappedRow(input) {
-        if (this.props.multipleInput) {
-            this._addNewPill(input, true);
-        } else {
-            // TODO: find a way to not repeat _tappedDone logic
-            // NOTE: This is repeating _tappedDone logic because setState doesn't update immediately
-            this.props.closeModal();
-        }
+        this._addNewPill(input, true);
     }
 
     _tappedDone() {
-        if (this.props.multipleInput) {
-            if (this.state.text) {
-                var inputs = [...this.state.inputs, this.state.text];
-            } else {
-                var inputs = this.state.inputs;
-            }
-            this.props.saveSetMultipleInput(inputs);            
+        if (this.state.text) {
+            var inputs = [...this.state.inputs, this.state.text];
+        } else {
+            var inputs = this.state.inputs;
         }
+
+        this.props.saveSetMultipleInput(inputs);            
 
         this.props.closeModal();
     }
 
     _tappedEnter() {
-        if (this.props.multipleInput) {
-            // this is android only, iOS instead uses the \n check in onChangeText
-            this._addNewPill(this.state.text, true);
-        } else {
-            this._tappedDone();
-        }
+        // this is android only, iOS instead uses the \n check in onChangeText
+        this._addNewPill(this.state.text, true);
+
     }
 
     _tappedPill(index) {
@@ -187,10 +174,6 @@ class EditTextModal extends Component {
     }
 
     _renderHeader() {
-        if (!this.props.multipleInput) {
-            return;
-        }
-
         var pills = [];
         this.state.inputs.map((input) => {
             let position = pills.length;
@@ -214,27 +197,24 @@ class EditTextModal extends Component {
     }
 
     _renderTextField() {
-        if (this.props.multipleInput) {
-            var returnKeyType = 'go';
-            if (this.state.inputs.includes(this.state.text) || this.state.text == '') {
-                var button = (
-                    <View style={[{width: 50, height: 50, marginRight: 10}, styles.addButton, styles.disabled]}>
+        var returnKeyType = 'go';
+        
+        if (this.state.inputs.includes(this.state.text) || this.state.text == '') {
+            var button = (
+                <View style={[{width: 50, height: 50, marginRight: 10}, styles.addButton, styles.disabled]}>
+                    <Text style={styles.addText}>Add</Text>
+                </View>
+            );
+        } else {
+            var button = (
+                <TouchableOpacity onPress={() => this._tappedEnter()}>
+                    <View style={[{width: 50, height: 50, marginRight: 10}, styles.addButton]}>
                         <Text style={styles.addText}>Add</Text>
                     </View>
-                );
-            } else {
-                var button = (
-                    <TouchableOpacity onPress={() => this._tappedEnter()}>
-                        <View style={[{width: 50, height: 50, marginRight: 10}, styles.addButton]}>
-                            <Text style={styles.addText}>Add</Text>
-                        </View>
-                    </TouchableOpacity>
-                );
-            }
-        } else {
-            var returnKeyType = 'done';
-            var button = null;
+                </TouchableOpacity>
+            );
         }
+
 
         return (
             <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
@@ -248,7 +228,7 @@ class EditTextModal extends Component {
                         placeholder={this.props.placeholder}
                         returnKeyType={returnKeyType}
                         value={this.state.text}
-                        multiline={Platform.os === 'ios' ? this.props.multipleInput : false } //Android multiline screws up spacing
+                        multiline={Platform.os === 'ios' ? true : false } //Android multiline screws up spacing
                         onSubmitEditing = {() => this._tappedEnter()}
                         onChangeText={(text) => this._onChangeText(text) }
                         clearButtonMode = {'while-editing'}

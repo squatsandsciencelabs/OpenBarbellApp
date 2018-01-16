@@ -396,7 +396,7 @@ export const getExerciseData = (state, exercise, type) => {
     }
 
     return data;
-}
+};
 
 const checkIncludesTags = (state, tags) => {
     const tagsToInclude = AnalysisSelectors.getTagsToInclude(state);
@@ -408,7 +408,7 @@ const checkIncludesTags = (state, tags) => {
     return tagsToInclude.every((tagToInclude) => {
         return tags.includes(tagToInclude);
     });
-}
+};
 
 const checkExcludesTags = (state, tags) => {
     const tagsToExclude = AnalysisSelectors.getTagsToExclude(state);
@@ -420,12 +420,12 @@ const checkExcludesTags = (state, tags) => {
     return tagsToExclude.every((tagToExclude) => {
         return !tags.includes(tagToExclude);
     });
-}
+};
 
 // Get all tags for an exercises
-export const getExerciseAllTagsIncludes = (state, exercise) => {
+export const getAllIncludedTagsForExerciseIncludes = (state, exercise) => {
     const sets = getAllSets(state);
-    const tagsToExclude = state.analysis.tagsToExclude;
+    const tagsToExclude = AnalysisSelectors.getTagsToExclude(state);
     const tags = [];
 
     sets.forEach((set) => {
@@ -439,11 +439,11 @@ export const getExerciseAllTagsIncludes = (state, exercise) => {
     });
 
     return tags;
-}
+};
 
-export const getExerciseAllTagsExcludes = (state, exercise) => {
+export const getAllIncludedTagsForExerciseExcludes = (state, exercise) => {
     const sets = getAllSets(state);
-    const tagsToInclude = state.analysis.tagsToInclude;
+    const tagsToInclude = AnalysisSelectors.getTagsToInclude(state);
     const tags = [];
 
     sets.forEach((set) => {
@@ -457,7 +457,7 @@ export const getExerciseAllTagsExcludes = (state, exercise) => {
     });
 
     return tags;
-}
+};
 
 export const generateExerciseItems = (state) => {
     const sets = getAllSets(state);
@@ -484,4 +484,4 @@ export const getAllSets = (state) => {
     const workoutSets = getWorkoutSets(state);
 
     return historySets.concat(workoutSets);
-}
+};

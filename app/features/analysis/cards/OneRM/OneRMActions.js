@@ -21,9 +21,9 @@ export const changeE1RMDays = (days) => ({
 });
 
 export const presentTagsToExclude = () => ({
-    type: PRESENT_EXCLUDES_TAGS
+    type: PRESENT_EXCLUDES_TAGS,
 })
 
 export const presentTagsToInclude = () => ({
-    type: PRESENT_INCLUDES_TAGS
+    type: PRESENT_INCLUDES_TAGS,
 });

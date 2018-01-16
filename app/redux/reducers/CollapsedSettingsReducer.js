@@ -1,4 +1,7 @@
 import {
+    Dimensions,
+} from 'react-native';
+import {
     PRESENT_COLLAPSED_METRIC,
     PRESENT_QUANTIFIER,
     DISMISS_COLLAPSED_METRIC,
@@ -40,23 +43,7 @@ import {
     PEAK_END_QUANTIFIER,
 } from 'app/constants/CollapsedMetricTypes';
 
-const defaultState = {
-    metric1: AVG_VELOCITY_METRIC,
-    quantifier1: LAST_REP_QUANTIFIER,
-    metric2: RPE_METRIC,
-    quantifier2: EMPTY_QUANTIFIER,
-    metric3: ROM_METRIC,
-    quantifier3: MIN_QUANTIFIER,
-    metric4: DURATION_METRIC,
-    quantifier4: MIN_QUANTIFIER,
-    metric5: RPE1RM_METRIC,
-    quantifier5: EMPTY_QUANTIFIER,
-    currentCollapsedMetricRank: null,
-    isEditingMetric: false,
-    isEditingQuantifier: false,
-};
-
-const CollapsedSettingsReducer = (state = defaultState, action) => {
+const CollapsedSettingsReducer = (state = createDefaultState(), action) => {
     let changes = null;
     switch (action.type) {
         case PRESENT_COLLAPSED_METRIC:
@@ -224,6 +211,44 @@ const CollapsedSettingsReducer = (state = defaultState, action) => {
             return state;
     }
 };
+
+const createDefaultState = () => {
+    const { height, width } = Dimensions.get('window');
+
+    if (width > 350) {
+        return {
+            metric1: AVG_VELOCITY_METRIC,
+            quantifier1: LAST_REP_QUANTIFIER,
+            metric2: RPE_METRIC,
+            quantifier2: EMPTY_QUANTIFIER,
+            metric3: ROM_METRIC,
+            quantifier3: MIN_QUANTIFIER,
+            metric4: DURATION_METRIC,
+            quantifier4: MIN_QUANTIFIER,
+            metric5: RPE1RM_METRIC,
+            quantifier5: EMPTY_QUANTIFIER,
+            currentCollapsedMetricRank: null,
+            isEditingMetric: false,
+            isEditingQuantifier: false,
+        };
+    } else {
+        return {
+            metric1: AVG_VELOCITY_METRIC,
+            quantifier1: LAST_REP_QUANTIFIER,
+            metric2: RPE_METRIC,
+            quantifier2: EMPTY_QUANTIFIER,
+            metric3: ROM_METRIC,
+            quantifier3: MIN_QUANTIFIER,
+            metric4: RPE1RM_METRIC,
+            quantifier4: EMPTY_QUANTIFIER,
+            metric5: DURATION_METRIC,
+            quantifier5: MIN_QUANTIFIER,
+            currentCollapsedMetricRank: null,
+            isEditingMetric: false,
+            isEditingQuantifier: false,
+        };
+    }
+}
 
 const shouldResetQuantifier = (quantifier, metric) => {
     if (metric === RPE_METRIC || metric === RPE1RM_METRIC) {

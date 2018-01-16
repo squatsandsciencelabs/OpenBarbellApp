@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 
 import {
     CHANGE_TAB,
-    STORE_INITIALIZED
+    STORE_INITIALIZED,
 } from 'app/ActionTypes';
 
 import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
@@ -36,8 +36,8 @@ function* endOldWorkout() {
     const isLoggedIn = yield select(AuthSelectors.getIsLoggedIn);    
     // error
     if (timeDifference >= OpenBarbellConfig.endWorkoutTimer && isLoggedIn) {
-        Alert.alert("Ending Workout", "You can find your last workout on the History screen.");
         yield put(WorkoutActionCreators.autoEndWorkout());
+        Alert.alert("Ending Workout", "You can find your last workout on the History screen.");
     }
 };
 

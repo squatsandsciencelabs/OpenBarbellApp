@@ -85,6 +85,7 @@ export const getNumWorkoutReps = (state) => {
     return num_reps;
 };
 
+// at least 1 field entered not counting video
 export const getNumWorkoutSetsWithFields = (state) => {
     const sets = getWorkoutSets(state);
     var num_sets_with_fields = 0;
@@ -98,6 +99,7 @@ export const getNumWorkoutSetsWithFields = (state) => {
     return num_sets_with_fields; 
 };
 
+// at least 1 field entered not counting video
 export const getPercentWorkoutSetsWithFields = (state) => {
     const sets = getWorkoutSets(state);
     const numSetsFields = getNumWorkoutSetsWithFields(state);
@@ -107,7 +109,33 @@ export const getPercentWorkoutSetsWithFields = (state) => {
     } else {
         return 0;
     }
-}
+};
+
+// all fields but doesn't count video
+export const getNumWorkoutSetsWithAllFields = (state) => {
+    const sets = getWorkoutSets(state);
+    var num_sets_with_all_fields = 0;
+
+    sets.forEach((set) => {
+        if (SetEmptyCheck.hasAllFields(set)) {
+            num_sets_with_all_fields++;
+        }
+    });
+
+    return num_sets_with_all_fields; 
+};
+
+// all fields but doesn't count video
+export const getPercentWorkoutSetsWithAllFields = (state) => {
+    const sets = getWorkoutSets(state);
+    const numSetsAllFields = getNumWorkoutSetsWithAllFields(state);
+
+    if (sets.length > 0) {
+        return (numSetsAllFields/(sets.length)) * 100;
+    } else {
+        return 0;
+    }
+};
 
 export const getWorkoutDuration = (state) => {
     const sets = getWorkoutSets(state);

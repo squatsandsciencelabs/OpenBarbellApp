@@ -354,6 +354,111 @@ describe('SetsSelectors', () => {
         });
     });
 
+    describe('getNumWorkoutSetsWithAllFields', () => {
+        const realHasAllFields = SetEmptyCheck.hasAllFields;
+        
+        afterEach(() => {
+            SetEmptyCheck.hasAllFields = realHasAllFields;
+        });
+
+        test('3 fields', () => {
+            SetEmptyCheck.hasAllFields = (set) => set;
+            const state = {
+                sets: {
+                    workoutData: [true, false, true, true]
+                }
+            };
+        
+            const result = sut.getNumWorkoutSetsWithAllFields(state);
+        
+            expect(result).toBe(3);
+        });
+    });
+
+    describe('getPercentWorkoutSetsWithAllFields', () => {
+        const realHasAllFields = SetEmptyCheck.hasAllFields;
+
+        beforeAll(() => {
+            SetEmptyCheck.hasAllFields = (set) => set;            
+        });
+        
+        afterAll(() => {
+            SetEmptyCheck.hasAllFields = realHasAllFields;
+        });
+
+        test('0% when none', () => {
+            const state = {
+                sets: {
+                    workoutData: []
+                }
+            };
+        
+            const result = sut.getPercentWorkoutSetsWithAllFields(state);
+        
+            expect(result).toBe(0);
+        });
+
+        test('0% when 1', () => {
+            const state = {
+                sets: {
+                    workoutData: [false]
+                }
+            };
+        
+            const result = sut.getPercentWorkoutSetsWithAllFields(state);
+        
+            expect(result).toBe(0);
+        });
+
+        test('25%', () => {
+            const state = {
+                sets: {
+                    workoutData: [false, true, false, false]
+                }
+            };
+        
+            const result = sut.getPercentWorkoutSetsWithAllFields(state);
+        
+            expect(result).toBe(25);
+        });
+
+        test('66.66666666666%', () => {
+            const state = {
+                sets: {
+                    workoutData: [false, true, true]
+                }
+            };
+        
+            const result = sut.getPercentWorkoutSetsWithAllFields(state);
+        
+            expect(result).toBe(2/3*100);
+        });
+
+        test('100% when single', () => {
+            const state = {
+                sets: {
+                    workoutData: [true]
+                }
+            };
+        
+            const result = sut.getPercentWorkoutSetsWithAllFields(state);
+        
+            expect(result).toBe(100);
+        });
+
+        test('100% when multiple', () => {
+            const state = {
+                sets: {
+                    workoutData: [true, true, true, true, true]
+                }
+            };
+        
+            const result = sut.getPercentWorkoutSetsWithAllFields(state);
+        
+            expect(result).toBe(100);
+        });
+    });
+
     describe('getWorkoutDuration', () => {
         const realNow = Date.now;
         const realStartTime = SetTimeCalculator.startTime;

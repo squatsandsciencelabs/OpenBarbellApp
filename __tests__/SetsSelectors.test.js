@@ -1855,7 +1855,7 @@ describe('SetsSelectors', () => {
         });
     });
 
-    describe('getExerciseAllTags', () => {
+    describe('getAllIncludedTagsForExercise', () => {
         const state = {
             sets: {
                 workoutData: [{
@@ -1877,6 +1877,27 @@ describe('SetsSelectors', () => {
                         data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
                     }],
                     tags: ['D', 'A', 'B', 'C'],
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
+                },
+                {
+                    setID: 'x',
+                    exercise: 'Bench',
+                    weight: 100,
+                    metric: 'lbs',
+                    reps: [{
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.333368, 388, 65, 24, 9, 12]
+                    }, {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.033368, 378, 43, 69, 13, 8]
+                    }, {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
+                    }],
+                    tags: ['X', 'A', 'B', 'C'],
                     initialStartTime: '2018-01-03T04:06:12.640Z'
                 }],
                 historyData: {
@@ -1960,11 +1981,11 @@ describe('SetsSelectors', () => {
         test('get all tags for an exercise', () => {
             const expected = [];
 
-            const result = sut.getExerciseAllTags(state, 'Bench');
+            const result = sut.getAllIncludedTagsForExerciseIncludes(state, 'Bench');
 
-            expect(result).toEqual(["A", "B", "C", "E", "F"]);
+            expect(result).toEqual(["A", "B", "C", "E", "F", "X"]);
         })
-    })
+    });
 
     describe.skip('getSetsToUpload', () => {
         // skipping as focused on analytics, revisit later

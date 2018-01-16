@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import EditTagsModal from '../edit_tags/EditTagsModal';
+import SelectTagsModal from '../SelectTagsModal';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as Actions from './EditAnalysisTagsToIncludeActions';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
@@ -13,9 +13,8 @@ const mapStateToProps = (state) => {
         title: 'Tags to Include',
         placeholder: 'Enter Tag',
         text: '',
-        multipleInput: true,
         inputs: AnalysisSelectors.getTagsToInclude(state),
-        generateMultipleInputSuggestions: SetsSelectors.getExerciseAllTagsIncludes(state, e1RMExercise),
+        generateMultipleInputSuggestions: SetsSelectors.getAllIncludedTagsForExerciseIncludes(state, e1RMExercise),
         isModalShowing: AnalysisSelectors.getIsEditingIncludeTags(state),
     }
 };
@@ -33,6 +32,6 @@ const mapDispatchToProps = (dispatch) => {
 const EditAnalysisTagsToIncludeScreen = connect(
     mapStateToProps,
     mapDispatchToProps
-)(EditTagsModal);
+)(SelectTagsModal);
 
 export default EditAnalysisTagsToIncludeScreen;

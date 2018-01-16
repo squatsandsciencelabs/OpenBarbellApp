@@ -61,9 +61,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        tapExercise: Actions.presentSelectExercise,
-        tapTagsToInclude: Actions.presentTagsToInclude,
-        tapTagsToExclude: Actions.presentTagsToExclude,
+        tappedExercise: Actions.presentSelectExercise,
+        tappedTagsToInclude: Actions.presentTagsToInclude,
+        tappedTagsToExclude: Actions.presentTagsToExclude,
         changeVelocity: Actions.changeE1RMVelocity,
         changeDays: Actions.changeE1RMDays,
     }, dispatch);

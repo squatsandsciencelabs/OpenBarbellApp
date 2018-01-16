@@ -11,6 +11,7 @@ import EndOldWorkoutSaga from './EndOldWorkoutSaga';
 import ReconnectSaga from './ReconnectSaga';
 import CollapseRemovedSetSaga from './CollapseRemovedSetSaga';
 import SurveySaga from './SurveySaga';
+import InitializedAnalyticsSaga from './InitializedAnalyticsSaga';
 
 const Sagas = function* Sagas() {
     yield all([
@@ -25,6 +26,7 @@ const Sagas = function* Sagas() {
         call(ReconnectSaga),
         call(CollapseRemovedSetSaga),
         call(SurveySaga),
+        call(InitializedAnalyticsSaga),
     ]);
 };
 

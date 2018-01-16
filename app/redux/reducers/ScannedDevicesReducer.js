@@ -1,20 +1,28 @@
 import {
     START_DEVICE_SCAN,
     STOP_DEVICE_SCAN,
-    FOUND_DEVICE
+    FOUND_DEVICE,
 } from 'app/ActionTypes';
 
-const ScannedDevicesReducer = ( state = { devices: [], scanning: false }, action) => {
+const defaultState = {
+    devices: [],
+    scanning: false,
+    isManualScan: false,
+};
+
+const ScannedDevicesReducer = ( state = defaultState, action) => {
     switch (action.type) {
         case START_DEVICE_SCAN:
             return Object.assign({}, state, {
                 devices: [],
-                scanning: true
+                scanning: true,
+                isManualScan: action.isManualScan,
             });
         case STOP_DEVICE_SCAN:
             return Object.assign({}, state, {
                 devices: state.devices,
-                scanning: false
+                scanning: false,
+                isManualScan: false,
             });
         case FOUND_DEVICE:
             if(state.devices.includes(action.device) || !action.device.startsWith("OB")) {

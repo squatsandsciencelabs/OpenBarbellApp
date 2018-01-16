@@ -6,7 +6,8 @@ import {
     Picker,
     Platform,
     Switch,
-    StyleSheet
+    StyleSheet,
+    Dimensions,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
@@ -111,6 +112,26 @@ class SettingsMetricsPanel extends Component {
         }
     }
 
+    _renderLastRow() {
+        let { height, width } = Dimensions.get('window');
+
+        if (width > 350) {
+            if (Platform.OS === 'ios') {
+                return this._renderRow(5, this.props.quantifier5, this.props.metric5);
+            } else {
+                return (
+                    <View style={{flex: 1, flexDirection: 'row'}}>
+                        <View style={styles.numberBackground}><Text style={styles.numberLabel}>5</Text></View>
+                        <View style={[{flex: 0.63}, styles.dropdownButton]}><SettingsEditQuantifiersScreen color={'white'} rank={5} /></View>
+                        <View style={[{flex: 0.37}, styles.dropdownButton]}><SettingsEditMetricsScreen color={'white'} rank={5} /></View>
+                    </View>        
+                );
+            }
+        } else {
+            return null;
+        }
+    }
+
     render() {
         if (Platform.OS === 'ios') {
             return (
@@ -121,7 +142,7 @@ class SettingsMetricsPanel extends Component {
                         {this._renderRow(2, this.props.quantifier2, this.props.metric2)}
                         {this._renderRow(3, this.props.quantifier3, this.props.metric3)}
                         {this._renderRow(4, this.props.quantifier4, this.props.metric4)}
-                        {this._renderRow(5, this.props.quantifier5, this.props.metric5)}
+                        {this._renderLastRow()}
                     </View>
                     <TouchableOpacity style={{alignItems: 'center'}} onPress={ () => this.props.tappedBigMetricsInfo() }>
                         <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >What are these metrics?</Text>
@@ -155,11 +176,7 @@ class SettingsMetricsPanel extends Component {
                             <View style={[{flex: 0.63}, styles.dropdownButton]}><SettingsEditQuantifiersScreen color={'white'} rank={4} /></View>
                             <View style={[{flex: 0.37}, styles.dropdownButton]}><SettingsEditMetricsScreen color={'white'} rank={4} /></View>
                         </View>
-                        <View style={{flex: 1, flexDirection: 'row'}}>
-                            <View style={styles.numberBackground}><Text style={styles.numberLabel}>5</Text></View>
-                            <View style={[{flex: 0.63}, styles.dropdownButton]}><SettingsEditQuantifiersScreen color={'white'} rank={5} /></View>
-                            <View style={[{flex: 0.37}, styles.dropdownButton]}><SettingsEditMetricsScreen color={'white'} rank={5} /></View>
-                        </View>
+                        {this._renderLastRow()}
                     </View>
                     <TouchableOpacity style={{alignItems: 'center'}} onPress={ () => this.props.tappedBigMetricsInfo() }>
                         <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >What are these metrics?</Text>

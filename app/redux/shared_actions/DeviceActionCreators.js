@@ -25,6 +25,7 @@ import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDe
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as Analytics from 'app/services/Analytics';
+import * as ScannedDevicesSelectors from 'app/redux/selectors/ScannedDevicesSelectors';
 
 const RFDuinoLib = NativeModules.RFDuinoLib;
 
@@ -42,13 +43,14 @@ const clearTimers = () => {
 
 // SCANNING
 
-export const startDeviceScan = () => (dispatch, getState) => {
+export const startDeviceScan = (isManualScan = false) => (dispatch, getState) => {
     RFDuinoLib.startScan();
     const state = getState();
-    logAttemptScanAnalytics(state);
+    logAttemptScanAnalytics(state, isManualScan);
 
     dispatch({
-        type: START_DEVICE_SCAN
+        type: START_DEVICE_SCAN,
+        isManualScan: isManualScan,
     });
 };
 
@@ -248,15 +250,19 @@ function checkOBVersion(name) {
     }    
 };
 
-const logAttemptScanAnalytics = (state) => {
+const logAttemptScanAnalytics = (state, isManualScan) => {
     Analytics.logEventWithAppState('attempt_scan', {
-
+        is_manual: isManualScan,
     }, state);
 };
 
 const logCompletedScanAnalytics = (state) => {
-    Analytics.logEventWithAppState('completed_scan', {
+    const isManualScan = ScannedDevicesSelectors.getIsManualScan(state);
+    const manualScannedNone = ScannedDevicesSelectors.getManualScannedNone(state);
 
+    Analytics.logEventWithAppState('completed_scan', {
+        is_manual: isManualScan,
+        manual_scanned_none: manualScannedNone,
     }, state);
 };
 

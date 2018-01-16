@@ -299,6 +299,99 @@ describe('endWorkout analytics', () => {
         });        
     });
 
+    describe('num_sets_with_rpe', () => {
+        const realGetNumWorkoutSetsWithRPE = SetsSelectors.getNumWorkoutSetsWithRPE;
+
+        afterEach(() => {
+            SetsSelectors.getNumWorkoutSetsWithRPE = realGetNumWorkoutSetsWithRPE;
+        });
+
+        test('num_sets_with_all_fields is 1', () => {
+            SetsSelectors.getNumWorkoutSetsWithRPE = () => 1;
+
+            store.dispatch(sut.endWorkout());
+            
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('end_workout');
+            expect(params.num_sets_with_rpe).toBe(1);
+        });
+
+        test('num_sets_with_all_fields is 2', () => {
+            SetsSelectors.getNumWorkoutSetsWithRPE = () => 2;
+            
+            store.dispatch(sut.endWorkout());
+            
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('end_workout');
+            expect(params.num_sets_with_rpe).toBe(2);    
+        });
+        
+        test('num_sets_with_all_fields is 3', () => {
+            SetsSelectors.getNumWorkoutSetsWithRPE = () => 3;
+            
+            store.dispatch(sut.endWorkout());
+            
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('end_workout');
+            expect(params.num_sets_with_rpe).toBe(3);
+        });        
+    });
+
+    describe('percent_sets_with_rpe', () => {
+        const realGetPercentWorkoutSetsWithRPE = SetsSelectors.getPercentWorkoutSetsWithRPE;
+
+        afterEach(() => {
+            SetsSelectors.getPercentWorkoutSetsWithRPE = realGetPercentWorkoutSetsWithRPE;
+        });
+        
+        test('25%', () => {
+            SetsSelectors.getPercentWorkoutSetsWithRPE = () => 25;
+        
+            store.dispatch(sut.endWorkout());
+            
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('end_workout');
+            expect(params.percent_sets_with_rpe).toBe(25);
+        });
+
+        test('50%', () => {
+            SetsSelectors.getPercentWorkoutSetsWithRPE = () => 50;
+            
+            store.dispatch(sut.endWorkout());
+            
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('end_workout');
+            expect(params.percent_sets_with_rpe).toBe(50);
+        });
+        
+        test('75%', () => {
+            SetsSelectors.getPercentWorkoutSetsWithRPE = () => 75;
+            
+            store.dispatch(sut.endWorkout());
+            
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('end_workout');
+            expect(params.percent_sets_with_rpe).toBe(75);
+        });  
+        
+        test('100%', () => {
+            SetsSelectors.getPercentWorkoutSetsWithRPE = () => 100;
+            
+            store.dispatch(sut.endWorkout());
+            
+            const event = logEventSpy.mock.calls[0][0];
+            const params = logEventSpy.mock.calls[0][1];
+            expect(event).toEqual('end_workout');
+            expect(params.percent_sets_with_rpe).toBe(100);
+        });        
+    });
+
     describe('workout_duration', () => {
         const realWorkoutDuration = SetsSelectors.getWorkoutDuration;
 

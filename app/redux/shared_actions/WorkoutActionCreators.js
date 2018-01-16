@@ -56,6 +56,8 @@ const logEndWorkoutAnalytics = (manuallyEnded, state) => {
     let workout_duration = SetsSelectors.getWorkoutDuration(state);
     let num_sets_with_all_fields = SetsSelectors.getNumWorkoutSetsWithAllFields(state);
     let percent_sets_with_all_fields = SetsSelectors.getPercentWorkoutSetsWithAllFields(state);
+    let num_sets_with_rpe = SetsSelectors.getNumWorkoutSetsWithRPE(state);
+    let percent_sets_with_rpe = SetsSelectors.getPercentWorkoutSetsWithRPE(state);
 
     Analytics.logEventWithAppState('end_workout', {
         num_history_views: num_history_views,
@@ -69,6 +71,8 @@ const logEndWorkoutAnalytics = (manuallyEnded, state) => {
         percent_sets_fields: percent_sets_fields,
         num_sets_with_all_fields: num_sets_with_all_fields,
         percent_sets_with_all_fields: percent_sets_with_all_fields,
+        num_sets_with_rpe: num_sets_with_rpe,
+        percent_sets_with_rpe: percent_sets_with_rpe,
         workout_duration: workout_duration,
         manually_ended: manuallyEnded,
     }, state);    

@@ -1087,7 +1087,89 @@ describe('collapsed metrics', () => {
         const removedRep = {isValid: true, removed: true};
         const invalidAndRemovedRep = {isValid: false, removed: false};
 
-        test('return correct 1rm value based on RPE', () => {
+        test('return null when rpe null', () => {
+            const set = {
+                weight: 435,
+                reps: [validRep, validRep],
+                rpe: null,
+            };
+    
+            const actual = sut.getRPE1rm(set);
+    
+            expect(actual).toBe(null);
+        });
+
+        test('return null when rpe > 10', () => {
+            const set = {
+                weight: 435,
+                reps: [validRep, validRep],
+                rpe: '11',
+            };
+    
+            const actual = sut.getRPE1rm(set);
+    
+            expect(actual).toBe(null);
+        });
+
+        test('return null when rpe is a range', () => {
+            const set = {
+                weight: 435,
+                reps: [validRep, validRep],
+                rpe: '5,5-6',
+            };
+    
+            const actual = sut.getRPE1rm(set);
+    
+            expect(actual).toBe(null);
+        });
+
+        test('return null when rpe undefined', () => {
+            const set = {
+                weight: 435,
+                reps: [validRep, validRep],
+            };
+    
+            const actual = sut.getRPE1rm(set);
+    
+            expect(actual).toBe(null);
+        });
+
+        test('return null when weight null', () => {
+            const set = {
+                weight: null,
+                reps: [validRep, validRep],
+                rpe: '8',
+            };
+    
+            const actual = sut.getRPE1rm(set);
+    
+            expect(actual).toBe(null);
+        });
+
+        test('return null when weight undefined', () => {
+            const set = {
+                reps: [validRep, validRep],
+                rpe: '8',
+            };
+    
+            const actual = sut.getRPE1rm(set);
+    
+            expect(actual).toBe(null);
+        });
+
+        test('return null when weight empty string', () => {
+            const set = {
+                weight: '',
+                reps: [validRep, validRep],
+                rpe: '8',
+            };
+    
+            const actual = sut.getRPE1rm(set);
+    
+            expect(actual).toBe(null);
+        });
+
+        test('return correct 1rm value for only valid reps based on RPE', () => {
             const set = {
                 weight: 435,
                 reps: [validRep, validRep],
@@ -1099,7 +1181,7 @@ describe('collapsed metrics', () => {
             expect(actual).toBe(473);
         });
     
-        test('return correct 1rm value based on RPE', () => {
+        test('return correct 1rm value for mixed valid invalid+removed reps based on RPE', () => {
             const set = {
                 weight: 405,
                 reps: [validRep, invalidAndRemovedRep, validRep, invalidRep, validRep],
@@ -1111,7 +1193,7 @@ describe('collapsed metrics', () => {
             expect(actual).toBe(482);
         });
 
-        test('return correct 1rm value based on RPE', () => {
+        test('return correct 1rm value for mixed valid invalid removed reps based on RPE', () => {
             const set = {
                 weight: 315,
                 reps: [validRep, validRep, removedRep, validRep, invalidAndRemovedRep, validRep, validRep, removedRep, validRep, validRep],

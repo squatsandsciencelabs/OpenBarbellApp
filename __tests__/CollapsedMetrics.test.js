@@ -1085,14 +1085,14 @@ describe('collapsed metrics', () => {
         const validRep = {isValid: true, removed: false};
         const invalidRep = {isValid: false, removed: true};
         const removedRep = {isValid: true, removed: true};
-        const invalidandRemovedRep = {isValid: false, removed: false};
+        const invalidAndRemovedRep = {isValid: false, removed: false};
 
         test('return correct 1rm value based on RPE', () => {
             const set = {
                 weight: 435,
                 reps: [validRep, validRep],
                 rpe: '9',
-            }
+            };
     
             const actual = sut.getRPE1rm(set);
     
@@ -1102,9 +1102,9 @@ describe('collapsed metrics', () => {
         test('return correct 1rm value based on RPE', () => {
             const set = {
                 weight: 405,
-                reps: [validRep, invalidandRemovedRep, validRep, invalidRep, validRep],
+                reps: [validRep, invalidAndRemovedRep, validRep, invalidRep, validRep],
                 rpe: '7',
-            }
+            };
     
             const actual = sut.getRPE1rm(set);
     
@@ -1114,9 +1114,9 @@ describe('collapsed metrics', () => {
         test('return correct 1rm value based on RPE', () => {
             const set = {
                 weight: 315,
-                reps: [validRep, validRep, removedRep, validRep, invalidandRemovedRep, validRep, validRep, removedRep, validRep, validRep],
+                reps: [validRep, validRep, removedRep, validRep, invalidAndRemovedRep, validRep, validRep, removedRep, validRep, validRep],
                 rpe: '6.5',
-            }
+            };
     
             const actual = sut.getRPE1rm(set);
     
@@ -1128,7 +1128,7 @@ describe('collapsed metrics', () => {
                 weight: 315,
                 reps: [invalidRep, invalidRep, invalidRep, invalidRep],
                 rpe: '6.5',
-            }
+            };
 
             const actual = sut.getRPE1rm(set);
     
@@ -1140,7 +1140,7 @@ describe('collapsed metrics', () => {
                 weight: 315,
                 reps: [removedRep, removedRep, removedRep],
                 rpe: '6.5',
-            }
+            };
 
             const actual = sut.getRPE1rm(set);
     
@@ -1152,7 +1152,7 @@ describe('collapsed metrics', () => {
                 weight: 315,
                 reps: [removedRep, invalidRep, invalidRep, removedRep, removedRep],
                 rpe: '6.5',
-            }
+            };
 
             const actual = sut.getRPE1rm(set);
     
@@ -1162,9 +1162,9 @@ describe('collapsed metrics', () => {
         test('return null if all reps are removed or invalid or invalidandRemoved', () => {
             const set = {
                 weight: 315,
-                reps: [removedRep, invalidRep, invalidRep, invalidandRemovedRep, removedRep, removedRep, invalidandRemovedRep],
+                reps: [removedRep, invalidRep, invalidRep, invalidAndRemovedRep, removedRep, removedRep, invalidAndRemovedRep],
                 rpe: '6.5',
-            }
+            };
 
             const actual = sut.getRPE1rm(set);
     
@@ -1174,9 +1174,9 @@ describe('collapsed metrics', () => {
         test('return null if all reps are invalidandRemoved', () => {
             const set = {
                 weight: 315,
-                reps: [invalidandRemovedRep, invalidandRemovedRep],
+                reps: [invalidAndRemovedRep, invalidAndRemovedRep],
                 rpe: '6.5',
-            }
+            };
 
             const actual = sut.getRPE1rm(set);
     
@@ -1188,7 +1188,7 @@ describe('collapsed metrics', () => {
                 weight: 345,
                 reps: [validRep, validRep, validRep, validRep,],
                 rpe: '5',
-            }
+            };
     
             const actual = sut.getRPE1rm(set);
     
@@ -1200,7 +1200,7 @@ describe('collapsed metrics', () => {
                 weight: 345,
                 reps: [validRep, validRep, validRep, validRep,],
                 rpe: '6,5',
-            }
+            };
 
             const actual = sut.getRPE1rm(set);
 

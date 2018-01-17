@@ -398,7 +398,7 @@ export const getRPE1rm = (set) => {
     const result = weight / RPEIntensity[rpe][reps.length];
     
     return Math.round(result);
-}
+};
 
 // To String
 

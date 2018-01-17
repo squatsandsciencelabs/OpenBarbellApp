@@ -366,18 +366,17 @@ export const getSetLossOfDurations = (set) => {
 };
 
 export const getRPE1rm = (set) => {
-    let reps = [];
+    // empty rpe / weight check
+    if (!set.rpe || !set.weight) {
+        return null;
+    }
 
-    set.reps.forEach((rep) => {
-        if (rep.isValid && !rep.removed) {
-            reps.push(rep);
-        }
-    });
-
+    const reps = set.reps.filter(rep => rep.isValid && !rep.removed);
     const weight = set.weight;
     const rpe = Number(set.rpe.replace(',','.'));
 
-    if (rpe < 6.5 || !rpe || reps.length === 0 || !rpe) {
+    // rep length check
+    if (reps.length <= 0) {
         return null;
     }
 
@@ -394,9 +393,20 @@ export const getRPE1rm = (set) => {
 		"6.5":{"10":0.64,"9":0.67,"8":0.69,"7":0.72,"6":0.75,"5":0.77,"4":0.8,"3":0.82,"2":0.85,"1":0.88}
 	};
 
+    // rpe table lookup
+    const rpeTable = RPEIntensity[rpe];
+    if (!rpeTable) {
+        return null;
+    }
+
+    // rpe percent lookup
+    const rpePercent = rpeTable[reps.length];
+    if (!rpePercent) {
+        return null;
+    }
+
     // 1rm calculation by RPE percentage
-    const result = weight / RPEIntensity[rpe][reps.length];
-    
+    const result = weight / rpePercent;
     return Math.round(result);
 };
 

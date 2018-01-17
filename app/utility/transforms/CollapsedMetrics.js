@@ -376,7 +376,7 @@ export const getRPE1rm = (set) => {
     const rpe = Number(set.rpe.replace(',','.'));
 
     // rep length check
-    if (reps.length <= 0) {
+    if (reps.length <= 0 || reps.length > 10) {
         return null;
     }
 

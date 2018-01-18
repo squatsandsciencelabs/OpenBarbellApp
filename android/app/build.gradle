@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply plugin: "io.fabric"
 
 import com.android.build.OutputFile
 
@@ -97,12 +98,17 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
 
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
     defaultConfig {
         applicationId "com.openbarbellapp"
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 29
         versionName "3.2.3"
+        multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -179,6 +185,9 @@ dependencies {
     // RNFirebase required dependencies
     compile(project(':react-native-firebase')) {
         transitive = false
+    }
+    compile('com.crashlytics.sdk.android:crashlytics:2.7.1@aar') {
+        transitive = true
     }
     compile "com.google.android.gms:play-services-base:11.6.0"
     compile "com.google.firebase:firebase-core:11.6.0"

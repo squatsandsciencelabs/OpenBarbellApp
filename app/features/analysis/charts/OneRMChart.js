@@ -12,9 +12,28 @@ import {
 } from "victory-native";
 
 class OneRMChartView extends Component {
-    render() {     
+    
+  _renderRegressionLine() {
       const lowest = this.props.data[0];
       const highest = this.props.data[this.props.data.length - 1];
+
+      if (this.props.confidenceHighEnough) {
+        return (
+          <VictoryLine
+            style={{
+              data: { stroke: "#368fff" },
+              parent: { border: "1px solid #ccc"}
+            }}
+            data={[
+              lowest,
+              highest,
+            ]}
+          />    
+        );        
+      }
+    } 
+
+    render() {
         return (
           <View style={{ alignItems: 'center' }}>
             <VictoryChart
@@ -23,16 +42,7 @@ class OneRMChartView extends Component {
               <VictoryGroup offset={20}
                 colorScale={"qualitative"}
               >
-                <VictoryLine
-                  style={{
-                    data: { stroke: "#368fff" },
-                    parent: { border: "1px solid #ccc"}
-                  }}
-                  data={[
-                    lowest,
-                    highest,
-                  ]}
-                />
+                {this._renderRegressionLine()}
                 <VictoryScatter
                   style={{ data: { fill: "#c43a31" } }}
                   width={400}

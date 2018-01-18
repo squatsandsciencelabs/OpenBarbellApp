@@ -387,10 +387,9 @@ export const getExerciseData = (state, exercise, type) => {
             }       
         });
     } else if (type === 'scatter') {
-        data = [[]]
         sets.forEach((set) => {
             if (set.exercise === exercise && set.reps.length > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime) && (checkIncludesTags(state, set.tags) && checkExcludesTags(state, set.tags))) {
-                data[0].push({ title: set.setID, weight: set.weight, velocity: Number(RepDataMap.averageVelocity(set.reps[0].data)) });
+                data.push({ x: set.weight, y: Number(RepDataMap.averageVelocity(set.reps[0].data)), setID: set.setID });
             }       
         });
     }
@@ -464,9 +463,10 @@ export const getTagsToExcludeSuggestions = (state, exercise) => {
 export const generateExerciseItems = (state) => {
     const sets = getAllSets(state);
     let exercises = [];
+    const range = AnalysisSelectors.getAnalysisRange(state);
 
     sets.forEach((set) => {
-        if (set.exercise && !exerciseExists(set.exercise, exercises)) {
+        if (set.exercise && !exerciseExists(set.exercise, exercises) && set.reps.length > 0) {
             exercises.push({ label: set.exercise, value: set.exercise });
         }
     });

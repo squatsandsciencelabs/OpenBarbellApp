@@ -34,29 +34,34 @@ class OneRMView extends Component {
     }
 
     _render1rm(confidence) {
-        if (this.props.isLoggedIn) {
+        if (this.props.chartData.length > 0) {
             if (confidence >= this.props.minConfidence) {
                 return (
                     <View>
                         <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{this.props.e1rm}</Text> {this.props.metric}</Text>
                         <Text style={{ textAlign: 'center', fontSize: 15 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.velocity} m/s</Text></Text> 
-                        <OneRMChart data={this.props.chartData} />
+                        <OneRMChart confidenceHighEnough={true} data={this.props.chartData} />
                         <Text style={styles.confidenceText}>Confidence: {this.props.confidence} %</Text>
                     </View>
                 );
             } else {
                 return (
-                    <Text style={styles.errorText}>
-                        Confidence too low, please clean up or log more data.
-                    </Text>
+                    <View>
+                        <Text style={styles.errorText}>
+                            Confidence too low, please clean up or log more data.
+                        </Text>
+                        <OneRMChart confidenceHighEnough={false} data={this.props.chartData} />
+                    </View>
                 );
             }
         } else {
             return (
-                <Text style={styles.errorText}>
-                    You must be logged in for 1rm calculation.
-                </Text>
-            )
+                <View>
+                    <Text style={styles.errorText}>
+                        This exercise has no reps within the date range.
+                    </Text>
+                </View>
+            );
         }
     }
 

@@ -42,7 +42,7 @@ const mapStateToProps = (state) => {
 
     const confidence = OneRMCalculator.getConfidenceInterval(data);
     const e1rm = OneRMCalculator.calc1rm(data, velocity);
-    const email = AuthSelectors.getEmail(state);
+    const isLoggedIn = AuthSelectors.getIsLoggedIn(state);
 
     return {
         velocity: velocity,
@@ -53,7 +53,7 @@ const mapStateToProps = (state) => {
         confidence: confidence,
         e1rm: e1rm,
         minConfidence: 90, // TODO: make this a config
-        email: email,
+        isLoggedIn: isLoggedIn,
     }
 };
 

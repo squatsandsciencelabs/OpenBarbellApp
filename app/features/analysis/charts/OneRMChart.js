@@ -3,71 +3,46 @@ import {
     Text,
     View,
 } from 'react-native';
-import { Scatterplot } from 'react-native-pathjs-charts'
+import { 
+  VictoryScatter, 
+  VictoryChart, 
+  VictoryTheme, 
+  VictoryGroup, 
+  VictoryLine 
+} from "victory-native";
 
 class OneRMChartView extends Component {
     render() {     
+      const lowest = this.props.data[0];
+      const highest = this.props.data[this.props.data.length - 1];
         return (
-            <View>
-                <Scatterplot 
-                    data={this.props.data} 
-                    options={options} 
-                    xKey="weight" yKey="velocity" 
+          <View style={{ alignItems: 'center' }}>
+            <VictoryChart
+              theme={VictoryTheme.material}
+            >
+              <VictoryGroup offset={20}
+                colorScale={"qualitative"}
+              >
+                <VictoryLine
+                  style={{
+                    data: { stroke: "#368fff" },
+                    parent: { border: "1px solid #ccc"}
+                  }}
+                  data={[
+                    lowest,
+                    highest,
+                  ]}
                 />
-            </View>
+                <VictoryScatter
+                  style={{ data: { fill: "#c43a31" } }}
+                  width={400}
+                  size={5}
+                  data={this.props.data}
+                />
+              </VictoryGroup>
+            </VictoryChart>
+          </View>
         );
-    }
-}
-
-const options = {
-    width: 250,
-    height: 250,
-    r: 2,
-    margin: {
-      top: 30,
-      left: 30,
-      bottom: 30,
-      right: 30
-    },
-    fill: "#2980B9",
-    stroke: "#3E90F0",
-    animate: {
-      type: 'delayed',
-      duration: 200
-    },
-    label: {
-      fontFamily: 'Arial',
-      fontSize: 8,
-      fontWeight: true,
-      fill: '#34495E'
-    },
-    axisX: {
-      showAxis: true,
-      showLines: true,
-      showLabels: true,
-      showTicks: true,
-      zeroAxis: false,
-      orient: 'bottom',
-      label: {
-        fontFamily: 'Arial',
-        fontSize: 8,
-        fontWeight: true,
-        fill: '#34495E'
-      }
-    },
-    axisY: {
-      showAxis: true,
-      showLines: true,
-      showLabels: true,
-      showTicks: true,
-      zeroAxis: false,
-      orient: 'left',
-      label: {
-        fontFamily: 'Arial',
-        fontSize: 8,
-        fontWeight: true,
-        fill: '#34495E'
-      }
     }
 }
 

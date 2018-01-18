@@ -15,30 +15,30 @@ const mapStateToProps = (state) => {
     const velocity = AnalysisSelectors.getAnalysisE1RMVelocity(state);
     const metric = SettingsSelectors.getDefaultMetric(state);
     const days = AnalysisSelectors.getAnalysisRange(state);
-    const data = SetsSelectors.getExerciseData(state, exercise, 'regression'); // TODO: make regression a config
-    const chartData = SetsSelectors.getExerciseData(state, exercise, 'scatter'); // TODO: make scatter a config
+    // const data = SetsSelectors.getExerciseData(state, exercise, 'regression'); // TODO: make regression a config
+    // const chartData = SetsSelectors.getExerciseData(state, exercise, 'scatter'); // TODO: make scatter a config
 
     // Test Data Points that result in 91% confidence
 
-    // const data = [
-    //     [255, 0.48], 
-    //     [275, 0.31], 
-    //     [285, 0.30], 
-    //     [295, 0.28], 
-    //     [300, 0.26], 
-    //     [310, 0.22], 
-    //     [320, 0.19]
-    // ];
+    const data = [
+        [255, 0.48], 
+        [275, 0.31], 
+        [285, 0.30], 
+        [295, 0.28], 
+        [300, 0.26], 
+        [310, 0.22], 
+        [320, 0.19],
+    ];
 
-    // const chartData = [[
-    //     {title: 'a', weight: 255, velocity: 0.48}, 
-    //     {title: 'b', weight: 275, velocity: 0.31}, 
-    //     {title: 'c', weight: 285, velocity: 0.30}, 
-    //     {title: 'd', weight: 295, velocity: 0.28}, 
-    //     {title: 'e', weight: 300, velocity: 0.26}, 
-    //     {title: 'f', weight: 310, velocity: 0.22}, 
-    //     {title: 'g', weight: 320, velocity: 0.19}
-    // ]];
+    const chartData = [
+        {x: 255, y: 0.48, setID: 'A'}, 
+        {x: 275, y: 0.31, setID: 'B'}, 
+        {x: 285, y: 0.30, setID: 'C'}, 
+        {x: 295, y: 0.28, setID: 'D'}, 
+        {x: 300, y: 0.26, setID: 'E'}, 
+        {x: 310, y: 0.22, setID: 'F'}, 
+        {x: 320, y: 0.19, setID: 'G'},
+    ];
 
     const confidence = OneRMCalculator.getConfidenceInterval(data);
     const e1rm = OneRMCalculator.calc1rm(data, velocity);

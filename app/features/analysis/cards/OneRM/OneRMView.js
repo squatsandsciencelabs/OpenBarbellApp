@@ -30,7 +30,7 @@ class OneRM extends Component {
     }
 
     _render1rm(confidence) {
-        if (this.props.email) {
+        if (this.props.isLoggedIn) {
             if (confidence >= this.props.minConfidence) {
                 return (
                     <View>

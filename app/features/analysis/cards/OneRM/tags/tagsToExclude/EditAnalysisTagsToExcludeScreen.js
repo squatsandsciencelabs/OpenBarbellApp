@@ -14,14 +14,14 @@ const mapStateToProps = (state) => {
         placeholder: 'Enter Tag',
         text: '',
         inputs: AnalysisSelectors.getTagsToExclude(state),
-        generateMultipleInputSuggestions: SetsSelectors.getAllIncludedTagsForExerciseExcludes(state, e1RMExercise),
+        generateSuggestions: SetsSelectors.getAllIncludedTagsForExerciseExcludes(state, e1RMExercise),
         isModalShowing: AnalysisSelectors.getIsEditingExcludeTags(state),
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        saveSetMultipleInput: Actions.saveTags,
+        save: Actions.saveTags,
         closeModal: Actions.cancelTags,
         cancelModal: Actions.cancelTags,
         tappedPill: Actions.tappedPill,

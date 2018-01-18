@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
         placeholder: 'Enter Tag',
         text: '',
         inputs: AnalysisSelectors.getTagsToExclude(state),
-        generateSuggestions: SetsSelectors.getAllIncludedTagsForExerciseExcludes(state, e1RMExercise),
+        generateSuggestions: SetsSelectors.getTagsToExcludeSuggestions(state, e1RMExercise),
         isModalShowing: AnalysisSelectors.getIsEditingExcludeTags(state),
     }
 };

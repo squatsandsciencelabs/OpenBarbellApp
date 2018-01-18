@@ -463,10 +463,9 @@ export const getTagsToExcludeSuggestions = (state, exercise) => {
 export const generateExerciseItems = (state) => {
     const sets = getAllSets(state);
     let exercises = [];
-    const range = AnalysisSelectors.getAnalysisRange(state);
 
     sets.forEach((set) => {
-        if (set.exercise && !exerciseExists(set.exercise, exercises) && set.reps.length > 0) {
+        if (set.exercise && !exerciseExists(set.exercise, exercises) && SetEmptyCheck.numValidUnremovedReps(set) > 0) {
             exercises.push({ label: set.exercise, value: set.exercise });
         }
     });

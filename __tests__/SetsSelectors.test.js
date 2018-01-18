@@ -1458,11 +1458,11 @@ describe('SetsSelectors', () => {
 
             test('return data for scatter', () => {
                 const expected = [
-                    [
-                    {"title": "c", "velocity": 1.73, "weight": 100}, 
-                    {"title": "d", "velocity": 1.83, "weight": 200}, 
-                    {"title": "k", "velocity": 1.43, "weight": 100}]
-                ];
+                    {"setID": "c", "x": 100, "y": 1.73}, 
+                    {"setID": "d", "x": 200, "y": 1.83}, 
+                    {"setID": "k", "x": 100, "y": 1.43}
+                ]
+    
                 
                 const result = sut.getExerciseData(state, 'Bench', 'scatter');
 
@@ -1572,10 +1572,7 @@ describe('SetsSelectors', () => {
                     }
                 };
 
-                const expected =  [[
-                    {"title": "c", "velocity": 1.73, "weight": 100},
-                    {"title": "a", "velocity": 1.83, "weight": 100},
-                ]];
+                const expected =  [{"setID": "c", "x": 100, "y": 1.73}, {"setID": "a", "x": 100, "y": 1.83}];
                 
                 const result = sut.getExerciseData(state, 'Bench', 'scatter');
 
@@ -1684,10 +1681,10 @@ describe('SetsSelectors', () => {
                     }
                 };
 
-                const expected =  [[
-                    {"title": "a", "velocity": 1.83, "weight": 100}, 
-                    {"title": "c", "velocity": 1.73, "weight": 100}, 
-                    {"title": "h", "velocity": 1.33, "weight": 100}]
+                const expected =  [
+                    {x: 100, y: 1.83, setID: "a"}, 
+                    {x: 100, y: 1.73, setID: "c"}, 
+                    {x: 100, y: 1.33, setID: "h"},
                 ]
                 
                 const result = sut.getExerciseData(state, 'Bench', 'scatter');
@@ -1797,11 +1794,7 @@ describe('SetsSelectors', () => {
                     }
                 };
 
-                const expected = [
-                    [{"title": "a", "velocity": 1.83, "weight": 100}, 
-                    {"title": "c", "velocity": 1.73, "weight": 100}, 
-                    {"title": "d", "velocity": 1.83, "weight": 200}]
-                ]
+                const expected = [{"setID": "a", "x": 100, "y": 1.83}, {"setID": "c", "x": 100, "y": 1.73}, {"setID": "d", "x": 200, "y": 1.83}]
 
                 const result = sut.getExerciseData(state, 'Bench', 'scatter');
 
@@ -1812,43 +1805,52 @@ describe('SetsSelectors', () => {
 
         describe('generateExerciseItems', () => {
             test('TODO: ACTUAL TEST NAME HERE', () => {
+                const valid = { isValid: true, removed: false }
+                const invalid = { isValid: false, removed: true }
+                const removed = { isValid: true, removed: true }
+
                 const state = {
                     sets: {
                         workoutData: [
-                            { exercise: 'SSB Squat' },
-                            { exercise: 'Reverse Band Bench' },
-                            { exercise: 'Deadlift w/ Chains' },
+                            { exercise: 'SSB Squat', reps: [] },
+                            { exercise: 'Reverse Band Bench', reps: [valid, valid, invalid] },
+                            { exercise: 'Deadlift w/ Chains', reps: [valid, invalid, valid, valid] },
                         ],
                         historyData: {
                             a: {
-                                exercise: 'Box Squat w/ Bands'
+                                exercise: 'Box Squat w/ Bands',
+                                reps: [valid, valid, invalid, valid]
                             },
                             b: {
-                                exercise: 'Good Mornings w/ Bands & Chains in Belt Squat'
+                                exercise: 'Good Mornings w/ Bands & Chains in Belt Squat',
+                                reps: [valid, removed, valid, valid, removed]
                             },
                             c: {
-                                exercise: 'Zercher Squats'
+                                exercise: 'Zercher Squats',
+                                reps: [removed]
                             },
                             d: {
-                                exercise: 'Close Grip Bench Press'
+                                exercise: 'Close Grip Bench Press',
+                                reps: [valid]
                             },
                             e: {
-                                exercise: 'Box Squat w/ Bands'
+                                exercise: 'Box Squat w/ Bands',
+                                reps: [],
                             },
                             f: {
-                                exercise: 'Reverse Band Bench'
+                                exercise: 'Reverse Band Bench',
+                                reps: [invalid, valid]
                             }
                         }
                     }
                 }
+                
                 const expected = [
-                    {label: "Box Squat w/ Bands", value: "Box Squat w/ Bands"}, 
-                    {label: "Good Mornings w/ Bands & Chains in Belt Squat", value: "Good Mornings w/ Bands & Chains in Belt Squat"}, 
-                    {label: "Zercher Squats", value: "Zercher Squats"}, 
-                    {label: "Close Grip Bench Press", value: "Close Grip Bench Press"}, 
-                    {label: "Reverse Band Bench", value: "Reverse Band Bench"}, 
-                    {label: "SSB Squat", value: "SSB Squat"}, 
-                    {label: "Deadlift w/ Chains", value: "Deadlift w/ Chains"}]
+                    {"label": "Box Squat w/ Bands", "value": "Box Squat w/ Bands"}, 
+                    {"label": "Good Mornings w/ Bands & Chains in Belt Squat", "value": "Good Mornings w/ Bands & Chains in Belt Squat"}, 
+                    {"label": "Close Grip Bench Press", "value": "Close Grip Bench Press"}, 
+                    {"label": "Reverse Band Bench", "value": "Reverse Band Bench"}, 
+                    {"label": "Deadlift w/ Chains", "value": "Deadlift w/ Chains"}]
 
                 const result = sut.generateExerciseItems(state);
 

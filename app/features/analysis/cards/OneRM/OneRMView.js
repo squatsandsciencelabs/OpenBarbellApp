@@ -15,7 +15,7 @@ import EditAnalysisTagsToIncludeScreen from './tags/tagsToInclude/EditAnalysisTa
 import EditAnalysisTagsToExcludeScreen from './tags/tagsToExclude/EditAnalysisTagsToExcludeScreen';
 import Pill from 'app/shared_features/pill/Pill';
 
-class OneRM extends Component {
+class OneRMView extends Component {
     // using component level state vs redux here to avoid excessive dispatches for the sliders
     constructor(props) {
         super(props);
@@ -327,4 +327,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default OneRM;
+export default OneRMView;

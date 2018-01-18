@@ -89,7 +89,7 @@ class EditTextModal extends Component {
     }
 
     _updateSuggestions(input=this.state.text, inputs=this.state.inputs, bias=null) {
-        var suggestions = this.props.generateMultipleInputSuggestions;
+        var suggestions = this.props.generateSuggestions;
 
         let suggestionsVM = suggestions.map((suggestion) => { return {key: suggestion}} );
         this.setState({
@@ -120,7 +120,7 @@ class EditTextModal extends Component {
             var inputs = this.state.inputs;
         }
 
-        this.props.saveSetMultipleInput(inputs);            
+        this.props.save(inputs);            
 
         this.props.closeModal();
     }

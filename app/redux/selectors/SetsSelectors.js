@@ -423,7 +423,7 @@ const checkExcludesTags = (state, tags) => {
 };
 
 // Get all tags for an exercises
-export const getAllIncludedTagsForExerciseIncludes = (state, exercise) => {
+export const getTagsToIncludeSuggestions = (state, exercise) => {
     const sets = getAllSets(state);
     const tagsToExclude = AnalysisSelectors.getTagsToExclude(state);
     const tags = [];
@@ -441,7 +441,7 @@ export const getAllIncludedTagsForExerciseIncludes = (state, exercise) => {
     return tags;
 };
 
-export const getAllIncludedTagsForExerciseExcludes = (state, exercise) => {
+export const getTagsToExcludeSuggestions = (state, exercise) => {
     const sets = getAllSets(state);
     const tagsToInclude = AnalysisSelectors.getTagsToInclude(state);
     const tags = [];

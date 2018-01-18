@@ -1797,65 +1797,67 @@ describe('SetsSelectors', () => {
                     }
                 };
 
-            const expected = [
-                [{"title": "a", "velocity": 1.83, "weight": 100}, 
-                {"title": "c", "velocity": 1.73, "weight": 100}, 
-                {"title": "d", "velocity": 1.83, "weight": 200}]
-            ]
+                const expected = [
+                    [{"title": "a", "velocity": 1.83, "weight": 100}, 
+                    {"title": "c", "velocity": 1.73, "weight": 100}, 
+                    {"title": "d", "velocity": 1.83, "weight": 200}]
+                ]
 
-            const result = sut.getExerciseData(state, 'Bench', 'scatter');
+                const result = sut.getExerciseData(state, 'Bench', 'scatter');
 
-            expect(result).toEqual(expected);
-        })
-    });
+                expect(result).toEqual(expected);
+            });
+            
+        });
 
         describe('generateExerciseItems', () => {
-            const state = {
-                sets: {
-                    workoutData: [
-                        { exercise: 'SSB Squat' },
-                        { exercise: 'Reverse Band Bench' },
-                        { exercise: 'Deadlift w/ Chains' },
-                    ],
-                    historyData: {
-                        a: {
-                            exercise: 'Box Squat w/ Bands'
-                        },
-                        b: {
-                            exercise: 'Good Mornings w/ Bands & Chains in Belt Squat'
-                        },
-                        c: {
-                            exercise: 'Zercher Squats'
-                        },
-                        d: {
-                            exercise: 'Close Grip Bench Press'
-                        },
-                        e: {
-                            exercise: 'Box Squat w/ Bands'
-                        },
-                        f: {
-                            exercise: 'Reverse Band Bench'
+            test('TODO: ACTUAL TEST NAME HERE', () => {
+                const state = {
+                    sets: {
+                        workoutData: [
+                            { exercise: 'SSB Squat' },
+                            { exercise: 'Reverse Band Bench' },
+                            { exercise: 'Deadlift w/ Chains' },
+                        ],
+                        historyData: {
+                            a: {
+                                exercise: 'Box Squat w/ Bands'
+                            },
+                            b: {
+                                exercise: 'Good Mornings w/ Bands & Chains in Belt Squat'
+                            },
+                            c: {
+                                exercise: 'Zercher Squats'
+                            },
+                            d: {
+                                exercise: 'Close Grip Bench Press'
+                            },
+                            e: {
+                                exercise: 'Box Squat w/ Bands'
+                            },
+                            f: {
+                                exercise: 'Reverse Band Bench'
+                            }
                         }
                     }
                 }
-            }
+                const expected = [
+                    {label: "Box Squat w/ Bands", value: "Box Squat w/ Bands"}, 
+                    {label: "Good Mornings w/ Bands & Chains in Belt Squat", value: "Good Mornings w/ Bands & Chains in Belt Squat"}, 
+                    {label: "Zercher Squats", value: "Zercher Squats"}, 
+                    {label: "Close Grip Bench Press", value: "Close Grip Bench Press"}, 
+                    {label: "Reverse Band Bench", value: "Reverse Band Bench"}, 
+                    {label: "SSB Squat", value: "SSB Squat"}, 
+                    {label: "Deadlift w/ Chains", value: "Deadlift w/ Chains"}]
 
-            const expected = [
-                {label: "Box Squat w/ Bands", value: "Box Squat w/ Bands"}, 
-                {label: "Good Mornings w/ Bands & Chains in Belt Squat", value: "Good Mornings w/ Bands & Chains in Belt Squat"}, 
-                {label: "Zercher Squats", value: "Zercher Squats"}, 
-                {label: "Close Grip Bench Press", value: "Close Grip Bench Press"}, 
-                {label: "Reverse Band Bench", value: "Reverse Band Bench"}, 
-                {label: "SSB Squat", value: "SSB Squat"}, 
-                {label: "Deadlift w/ Chains", value: "Deadlift w/ Chains"}]
+                const result = sut.generateExerciseItems(state);
 
-            const result = sut.generateExerciseItems(state);
-
-            expect(result).toEqual(expected);
+                expect(result).toEqual(expected);
+            });
         });
     });
 
-    describe('getAllIncludedTagsForExercise', () => {
+    describe('getTagsToIn/ExcludeSuggestions', () => {
         const state = {
             sets: {
                 workoutData: [{
@@ -1974,17 +1976,26 @@ describe('SetsSelectors', () => {
             analysis: {
                 e1RMDaysRange: 7,
                 tagsToInclude: ['A', 'B', 'C'],
-                tagsToExclude: [],
+                tagsToExclude: ['E'],
             }
         };
 
-        test('get all tags for an exercise', () => {
+        test('get all tag suggestions to include for an exercise', () => {
             const expected = [];
 
-            const result = sut.getAllIncludedTagsForExerciseIncludes(state, 'Bench');
+            const result = sut.getTagsToIncludeSuggestions(state, 'Bench');
 
-            expect(result).toEqual(["A", "B", "C", "E", "F", "X"]);
-        })
+            expect(result).toEqual(["A", "B", "C", "F", "X"]);
+        });
+
+        test('get all tag suggestions to exclude for an exercise', () => {
+            const expected = [];
+
+            const result = sut.getTagsToExcludeSuggestions(state, 'Bench');
+
+            expect(result).toEqual(["E", "F", "X"]);
+        });
+
     });
 
     describe.skip('getSetsToUpload', () => {

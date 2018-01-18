@@ -1,8 +1,7 @@
 import { Dimensions } from 'react-native';
 
-export const checkScreenWidth = () => {
+export const isSmallDevice = () => {
     const { width } = Dimensions.get('window');
 
-    return (width > 350);
+    return (width <= 350);
 };
-

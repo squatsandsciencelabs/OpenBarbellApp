@@ -4,7 +4,7 @@ import {
     StyleSheet,
     Text,
 } from 'react-native';
-import * as CheckScreenWidth from 'app/utility/CheckScreenWidth';
+import * as Device from 'app/utility/Device';
 
 class SetAnalysis extends Component {
 
@@ -35,9 +35,8 @@ class SetAnalysis extends Component {
     }
 
     render() {
-        const checkScreenWidth = CheckScreenWidth.checkScreenWidth();
         let lastColumn = null;
-        if (checkScreenWidth) {
+        if (!Device.isSmallDevice()) {
             lastColumn = this._renderAnalysis(this.props.value5, this.props.unit5, this.props.description5, false);
         }
         

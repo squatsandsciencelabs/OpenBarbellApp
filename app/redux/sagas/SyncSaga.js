@@ -202,6 +202,7 @@ const logPullDataSucceededAnalytics = (state) => {
 
 const logPullDataErrorAnalytics = (state, error) => {
     Analytics.logErrorWithAppState(error, PULL_DATA_ERROR_CODE, 'pull_data_error', {
+        revision: SetsSelectors.getRevision(state),
     }, state);
 };
 

@@ -124,22 +124,38 @@ export const logEventWithAppState = (event, params, state) => {
     logEvent(event, params);
 };
 
-const logCrashlyticsError = (code, event, params) => {
-    if (params) {
-        var message = JSON.stringify(params);
+const addErrorToParams = (error, params) => {
+    // parse error string
+    if (error) {
+        var errorString = JSON.stringify(error);
     } else {
-        var message = "";
+        var errorString = "";
     }
+
+    // create params
+    if (params) {
+        params.error = errorString;
+    } else {
+        params = {error: errorString};
+    }
+
+    return params;
+};
+
+const logCrashlyticsError = (code, event, params) => {
+    let message = JSON.stringify(params);
     firebase.fabric.crashlytics().setStringValue("error_params", message);
     firebase.fabric.crashlytics().recordError(code, event);
 };
 
-export const logError = (code, event, params) => {
-    logCrashlyticsError(code, event, params);
-    logEvent(event, params);
+export const logError = (error, code, event, params) => {
+    let errorParams = addErrorToParams(error, params);
+    logCrashlyticsError(code, event, errorParams);
+    logEvent(event, errorParams);
 };
 
-export const logErrorWithAppState = (code, event, params, state) => {
-    logCrashlyticsError(code, event, params);
-    logEventWithAppState(event, params, state);
+export const logErrorWithAppState = (error, code, event, params, state) => {
+    let errorParams = addErrorToParams(error, params);
+    logCrashlyticsError(code, event, errorParams);
+    logEventWithAppState(event, errorParams, state);
 };

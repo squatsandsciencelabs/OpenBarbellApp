@@ -58,7 +58,7 @@ function* obtainNewTokens() {
             yield put(AuthActionCreators.saveTokens(json.accessToken, json.refreshToken, new Date()));
         } catch(error) {
             let state = yield select();
-            logRefreshTokenErrorAnalytics(state);
+            logRefreshTokenErrorAnalytics(state, error, refreshToken);
             if (error.type !== undefined || typeof error === 'function') {
                 yield put(error);
             }
@@ -101,7 +101,7 @@ function *obtainNewAnonymousTokens() {
         } catch(error) {
             let state = yield select();
             // TODO: analytics
-            // logRefreshTokenErrorAnalytics(state);
+            // logRefreshTokenErrorAnalytics(state, error, refreshToken);
             if (error.type !== undefined || typeof error === 'function') {
                 yield put(error);
             }
@@ -123,8 +123,9 @@ const logAttemptRefreshTokenAnalytics = (state) => {
     }, state);
 };
 
-const logRefreshTokenErrorAnalytics = (state) => {
-    Analytics.logEventWithAppState('refresh_token_error', {
+const logRefreshTokenErrorAnalytics = (state, error, refreshToken) => {
+    Analytics.logErrorWithAppState(error, 'refresh_token_error', {
+        refreshToken: refreshToken,
     }, state);
 };
 

@@ -10,7 +10,6 @@ export const presentSurvey = () => (dispatch, getState) => {
     const state = getState();
     logPresentSurveyAnalytics(state);
 
-    // TODO: analytics
     dispatch(SurveyActionCreators.presentSurvey());
 };
 

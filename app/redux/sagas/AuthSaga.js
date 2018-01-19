@@ -53,7 +53,7 @@ function* executeAnonymousLogin() {
             if (!refreshToken) {
                 // TODO: analytics?
                 let json = yield call(API.loginAnonymously);
-                // TOOD: analytics?
+                // TODO: analytics?
                 yield put(AuthActionCreators.saveTokens(json.accessToken, json.refreshToken, new Date()));
             }
         } catch(error) {

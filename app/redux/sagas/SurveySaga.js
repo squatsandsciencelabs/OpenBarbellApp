@@ -105,7 +105,6 @@ function showSurveyAlert() {
                 {
                     text: 'Later',
                     onPress: () => {
-                        // TODO: analytics
                         reject();
                     },
                     style: 'cancel'
@@ -113,7 +112,6 @@ function showSurveyAlert() {
                 {
                     text: "Sure",
                     onPress: () => {
-                        // TODO: analytics
                         resolve();
                     },
                 },

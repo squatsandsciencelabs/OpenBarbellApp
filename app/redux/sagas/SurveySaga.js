@@ -39,8 +39,9 @@ function* updateSurveyURL() {
         const activated = yield apply(fbconfig, fbconfig.activateFetched);
         if (!activated) {
             console.tron.log("Fetched data not activated");
-            state = yield select();
-            logUpdateSurveyURLErrorAnalytics('fetched data not activated', state);
+            // NOTE: not logging this as it appears to still work regardless of activation?
+            // state = yield select();
+            // logUpdateSurveyURLErrorAnalytics(state, 'fetched data not activated');
         }
 
         // get url
@@ -49,18 +50,12 @@ function* updateSurveyURL() {
 
         // analytics
         state = yield select();
-        logUpdateSurveyURLAnalytics(url, state);
+        logUpdateSurveyURLAnalytics(state, url);
 
         // action
         yield put(SurveyActionCreators.saveSurveyURL(url));
     } catch(error) {
-        if (error === null) {
-            var errorString = '';
-        } else {
-            var errorString = JSON.stringify(error);
-        }
-        logUpdateSurveyURLErrorAnalytics(errorString, state);
-        console.tron.log(errorString);
+        logUpdateSurveyURLErrorAnalytics(state, error);
     }
 }
 
@@ -140,15 +135,14 @@ const logPromptSurveyTakeNowAnalytics = (state) => {
     }, state);
 };
 
-const logUpdateSurveyURLAnalytics = (url, state) => {
+const logUpdateSurveyURLAnalytics = (state, url) => {
     Analytics.logEventWithAppState('update_survey_url', {
         url: url,
     }, state);
 };
 
-const logUpdateSurveyURLErrorAnalytics = (error, state) => {
-    Analytics.logEventWithAppState('update_survey_url_error', {
-        error: error,
+const logUpdateSurveyURLErrorAnalytics = (state, error) => {
+    Analytics.logErrorWithAppState(error, 'update_survey_url_error', {
     }, state);
 };
 

@@ -125,7 +125,7 @@ const logAttemptRefreshTokenAnalytics = (state) => {
 
 const logRefreshTokenErrorAnalytics = (state, error, refreshToken) => {
     Analytics.logErrorWithAppState(error, 'refresh_token_error', {
-        refreshToken: refreshToken,
+        refresh_token: refreshToken,
     }, state);
 };
 

@@ -25,6 +25,7 @@ export const setInitialAnalytics = () => {
 // user ID defaults to the mobile identifier for anonymous users
 export const setUserID = (userID=DeviceInfo.getUniqueID()) => {
     firebase.app().analytics().setUserId(userID);
+    firebase.fabric.crashlytics().setUserIdentifier(userID);
 
     console.tron.display({
         name: 'UserID',
@@ -121,4 +122,24 @@ export const logEventWithAppState = (event, params, state) => {
     params.is_survey_visible = isSurveyVisible;
     
     logEvent(event, params);
+};
+
+const logCrashlyticsError = (code, event, params) => {
+    if (params) {
+        var message = JSON.stringify(params);
+    } else {
+        var message = "";
+    }
+    firebase.fabric.crashlytics().setStringValue("error_params", message);
+    firebase.fabric.crashlytics().recordError(code, event);
+};
+
+export const logError = (code, event, params) => {
+    logCrashlyticsError(code, event, params);
+    logEvent(event, params);
+};
+
+export const logErrorWithAppState = (code, event, params, state) => {
+    logCrashlyticsError(code, event, params);
+    logEventWithAppState(event, params, state);
 };

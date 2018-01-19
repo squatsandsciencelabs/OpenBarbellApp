@@ -85,7 +85,7 @@ export const exportCSV = () => (dispatch, getState) => {
                 }
                 dispatch(updateIsExportingCSV(false));
                 let state = getState();
-                logExportCSVErrorAnalytics(state);
+                logExportCSVErrorAnalytics(state, err);
             }
         }
     })
@@ -148,14 +148,14 @@ const logExportCSVAnalytics = (state) => {
     }, state);
 };
 
-const logExportCSVErrorAnalytics = (state) => {
+const logExportCSVErrorAnalytics = (state, error) => {
     const num_sets = SetsSelectors.getNumHistorySets(state);
     const num_reps = SetsSelectors.getNumHistoryReps(state);
     const num_workouts = SetsSelectors.getNumHistoryWorkouts(state);
     const time_since_last_export = getTimeSinceLastExport(state);
     const time_since_last_workout = SetsSelectors.getTimeSinceLastWorkout(state);
 
-    Analytics.logEventWithAppState('export_csv_error', {
+    Analytics.logErrorWithAppState(error, 'export_csv_error', {
         num_sets: num_sets,
         num_reps: num_reps,
         num_workouts: num_workouts,

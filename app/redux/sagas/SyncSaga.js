@@ -84,7 +84,7 @@ function *pushAnonymousUpdates() {
             // error
             let state = yield select();
             // TODO: analytics
-            // logPushDataErrorAnalytics(state);
+            // logPushDataErrorAnalytics(state, error);
             yield put(SetsActionCreators.failedUploadSets());
             if (error.type !== undefined || typeof error === 'function') {
                 yield put(error);
@@ -127,7 +127,7 @@ function* pushUpdates() {
         } catch(error) {
             // error
             let state = yield select();
-            logPushDataErrorAnalytics(state);
+            logPushDataErrorAnalytics(state, error);
             yield put(SetsActionCreators.failedUploadSets());
             if (error.type !== undefined || typeof error === 'function') {
                 yield put(error);
@@ -213,7 +213,7 @@ const logPushDataSucceededAnalytics = (state) => {
     }, state);
 };
 
-const logPushDataErrorAnalytics = (state) => {
+const logPushDataErrorAnalytics = (state, error) => {
     Analytics.logErrorWithAppState(error, 'push_data_error', {
         revision: SetsSelectors.getRevision(state),
     }, state);

@@ -160,14 +160,7 @@ const logCancelLoginAnalytics = (state) => {
 };
 
 const logLoginErrorAnalytics = (state, error) => {
-    if (error) {
-        var errorString = JSON.stringify(error);
-    } else {
-        var errorString = "";
-    }
-
-    Analytics.logErrorWithAppState(LOGIN_ERROR_CODE, 'login_error', {
-        error: errorString,
+    Analytics.logErrorWithAppState(error, LOGIN_ERROR_CODE, 'login_error', {
     }, state);
 };
 
@@ -177,14 +170,7 @@ const logLoginAnalytics = (state) => {
 };
 
 const logLogoutErrorAnalytics = (state, error) => {
-    if (error) {
-        var errorString = JSON.stringify(error);
-    } else {
-        var errorString = "";
-    }
-
-    Analytics.logErrorWithAppState(LOGOUT_ERROR_CODE, 'logout_error', {
-        error: errorString,
+    Analytics.logErrorWithAppState(error, LOGOUT_ERROR_CODE, 'logout_error', {
     }, state);
 };
 

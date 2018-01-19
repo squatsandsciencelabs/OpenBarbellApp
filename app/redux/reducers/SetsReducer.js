@@ -171,7 +171,10 @@ const saveWorkoutSet = (state, action) => {
 // DELETE_WORKOUT_SET
 
 const deleteWorkoutSet = (state, action) => {
-    return state.workoutData.filter(set => set.setID !== action.setID);
+    return {
+        ...state,
+        workoutData: state.workoutData.filter(set => set.setID !== action.setID)
+    }
 };
 
 // SAVE_WORKOUT_SET_TAGS
@@ -232,14 +235,15 @@ const saveHistorySet = (state, action) => {
 // DELETE_HISTORY_SET
 
 const deleteHistorySet = (state, action) => {
-    return Object.assign({}, state, {
+    return {
+        ...state,
         historyData: Object.keys(state.historyData).reduce((result, setID) => {
             if (setID !== action.setID) {
                 result[setID] = state.historyData[setID];
             }
             return result;
         }, {})
-    });
+    };
 };
 
 // SAVE_HISTORY_SET_TAGS

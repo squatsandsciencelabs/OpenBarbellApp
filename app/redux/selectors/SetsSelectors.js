@@ -274,6 +274,8 @@ export const getSetsToUpload = (state) => {
     return root.setIDsToUpload.map( setID => root.historyData[setID] );
 };
 
+export const getNumSetsBeingUploaded = (state) => stateRoot(state).setIDsBeingUploaded.length;
+
 export const getIsUploading = (state) => stateRoot(state).setIDsBeingUploaded.length > 0;
 
 export const hasChangesToSync = (state) => {

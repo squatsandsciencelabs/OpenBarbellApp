@@ -216,6 +216,7 @@ const logPushDataSucceededAnalytics = (state) => {
 const logPushDataErrorAnalytics = (state, error) => {
     Analytics.logErrorWithAppState(error, 'push_data_error', {
         revision: SetsSelectors.getRevision(state),
+        num_sets_to_push: SetsSelectors.getNumSetsBeingUploaded(state),
     }, state);
 }; 
 

@@ -19,10 +19,6 @@ import {
     LOGOUT,
     CLEAR_TOKENS,
 } from 'app/ActionTypes';
-import {
-    LOGIN_ERROR_CODE,
-    LOGOUT_ERROR_CODE,
-} from 'app/constants/ErrorCodes';
 import API from 'app/services/API';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
@@ -160,7 +156,7 @@ const logCancelLoginAnalytics = (state) => {
 };
 
 const logLoginErrorAnalytics = (state, error) => {
-    Analytics.logErrorWithAppState(error, LOGIN_ERROR_CODE, 'login_error', {
+    Analytics.logErrorWithAppState(error, 'login_error', {
     }, state);
 };
 
@@ -170,7 +166,7 @@ const logLoginAnalytics = (state) => {
 };
 
 const logLogoutErrorAnalytics = (state, error) => {
-    Analytics.logErrorWithAppState(error, LOGOUT_ERROR_CODE, 'logout_error', {
+    Analytics.logErrorWithAppState(error, 'logout_error', {
     }, state);
 };
 

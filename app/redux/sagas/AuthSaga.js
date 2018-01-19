@@ -51,7 +51,6 @@ function* executeAnonymousLogin() {
             // login immediately
             let refreshToken = yield select(AuthSelectors.getRefreshToken);
             if (!refreshToken) {
-                // TODO: analytics?
                 let json = yield call(API.loginAnonymously);
                 // TODO: analytics?
                 yield put(AuthActionCreators.saveTokens(json.accessToken, json.refreshToken, new Date()));

@@ -89,15 +89,18 @@ function *obtainNewAnonymousTokens() {
         try {
             // refresh
             let state = yield select();
+            // TODO: analytics
             // logAttemptRefreshTokenAnalytics(state);
             const json = yield call(API.obtainNewAnonymousTokens, refreshToken);
 
             // success
             state = yield select();
+            // TODO: analytics
             // logRefreshedTokenAnalytics(state);
             yield put(AuthActionCreators.saveTokens(json.accessToken, json.refreshToken, new Date()));
         } catch(error) {
             let state = yield select();
+            // TODO: analytics
             // logRefreshTokenErrorAnalytics(state);
             if (error.type !== undefined || typeof error === 'function') {
                 yield put(error);

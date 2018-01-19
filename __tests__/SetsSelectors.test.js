@@ -1929,7 +1929,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 0.233368, 400, 40, 30, 1, 20]
                         }],
-                        tags: ['A', 'B', 'C'],
+                        tags: ['A', 'B', 'G', 'C'],
                         initialStartTime: '1-2-18'
                     },
                     b: {
@@ -1955,7 +1955,7 @@ describe('SetsSelectors', () => {
                             removed: false,
                             data: [-3456, 37, 1.733368, 288, 28, 18, 1, 8]
                         }],
-                        tags: ['A', 'E', 'B', 'C'],
+                        tags: ['A', 'E', 'B', 'V', 'C'],
                         initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
                     d: {
@@ -1985,7 +1985,7 @@ describe('SetsSelectors', () => {
 
             const result = sut.getTagsToIncludeSuggestions(state, 'Bench');
 
-            expect(result).toEqual(["A", "B", "C", "F", "X"]);
+            expect(result).toEqual(["G", "V", "F", "X"]);
         });
 
         test('get all tag suggestions to exclude for an exercise', () => {
@@ -1993,7 +1993,7 @@ describe('SetsSelectors', () => {
 
             const result = sut.getTagsToExcludeSuggestions(state, 'Bench');
 
-            expect(result).toEqual(["E", "F", "X"]);
+            expect(result).toEqual(["G", "V", "F", "X"]);
         });
 
     });

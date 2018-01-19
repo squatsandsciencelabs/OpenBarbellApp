@@ -176,7 +176,12 @@ const executeRequest = (method, endpoint, body, accessToken=null) => {
             }
         } catch (err) {
             console.tron.log("Error with request " + endpoint + " error: " + err);
-            reject({type:err.toString()}); // TODO: ensure this error toString actually works and doesn't fail
+            if (err) {
+                var message = JSON.stringify(err);
+            } else {
+                var message = "unknown error";
+            }
+            reject({type: message});
         }
     });
 };

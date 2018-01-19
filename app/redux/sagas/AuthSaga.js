@@ -45,15 +45,20 @@ const AuthSaga = function * AuthSaga() {
 
 function* executeAnonymousLogin() {
     while(true) {
-        yield take([STORE_INITIALIZED, CLEAR_TOKENS, LOGOUT]);
+        try {
+            yield take([STORE_INITIALIZED, CLEAR_TOKENS, LOGOUT]);
 
-        // login immediately
-        let refreshToken = yield select(AuthSelectors.getRefreshToken);
-        if (!refreshToken) {
-            // TODO: analytics?
-            let json = yield call(API.loginAnonymously);
-            // TOOD: analytics?
-            yield put(AuthActionCreators.saveTokens(json.accessToken, json.refreshToken, new Date()));
+            // login immediately
+            let refreshToken = yield select(AuthSelectors.getRefreshToken);
+            if (!refreshToken) {
+                // TODO: analytics?
+                let json = yield call(API.loginAnonymously);
+                // TOOD: analytics?
+                yield put(AuthActionCreators.saveTokens(json.accessToken, json.refreshToken, new Date()));
+            }
+        } catch(error) {
+            console.tron.log("ERROR CODE " + error.code + " ERROR " + error);
+            // TODO: analytics
         }
     }
 }

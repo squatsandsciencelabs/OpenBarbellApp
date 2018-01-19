@@ -77,8 +77,8 @@ export const exportCSV = () => (dispatch, getState) => {
                     logExportCSVAnalytics(state);
                 });
             } catch(err) {
-                console.tron.log("Error uploading csv file " + typeof err + " " + err);
-                if (err.message == 'Insufficient Permission') { // TODO: should do typeof check but it's not working
+                console.tron.log("Error uploading csv file " + typeof err + " " + JSON.stringify(err));
+                if (err.message == 'Insufficient Permission' || err.message == 'Invalid Credentials') { // TODO: should do typeof check but it's not working
                     Alert.alert('Google Drive Permissions Error', 'Please log out and log in again. This feature requires additional Google Drive permissions.');
                 } else {
                     Alert.alert('Error exporting CSV', 'Please try again later.\n\nTip: Is your internet connection working?');

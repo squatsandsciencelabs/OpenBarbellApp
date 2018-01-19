@@ -28,8 +28,8 @@ export const upload = async (accessToken, name, content, completionHandler) => {
     if (status !== 200) {
         let json = await response.json();
         console.tron.log('Error, received status ' + status + ' body ' + JSON.stringify(json));
-        if (status === 403 && json.error !== undefined && json.error.message === 'Insufficient Permission') {
-            throw new Errors.PermissionsError('Insufficient Permission')
+        if (json.error) {
+            throw json.error;
         } else {
             throw new Error('Did not receive 200 for setup upload');
         }

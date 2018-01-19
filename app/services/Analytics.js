@@ -124,6 +124,10 @@ export const logEventWithAppState = (event, params, state) => {
     logEvent(event, params);
 };
 
+// ERRORS
+// auto adds error to the params
+// auto chooses the code from the error if it exists, else defaults to 9001 as it's unknown
+
 const addErrorToParams = (error, params) => {
     // parse error string
     if (error) {
@@ -142,20 +146,30 @@ const addErrorToParams = (error, params) => {
     return params;
 };
 
+const getErrorCode = (error) => {
+    if (error && error.code) {
+        return error.code;
+    } else {
+        return 9001;
+    }
+}
+
 const logCrashlyticsError = (code, event, params) => {
     let message = JSON.stringify(params);
     firebase.fabric.crashlytics().setStringValue("error_params", message);
     firebase.fabric.crashlytics().recordError(code, event);
 };
 
-export const logError = (error, code, event, params) => {
+export const logError = (error, event, params) => {
     let errorParams = addErrorToParams(error, params);
-    logCrashlyticsError(code, event, errorParams);
+    let errorCode = getErrorCode(error);
+    logCrashlyticsError(errorCode, event, errorParams);
     logEvent(event, errorParams);
 };
 
-export const logErrorWithAppState = (error, code, event, params, state) => {
+export const logErrorWithAppState = (error, event, params, state) => {
     let errorParams = addErrorToParams(error, params);
-    logCrashlyticsError(code, event, errorParams);
+    let errorCode = getErrorCode(error);
+    logCrashlyticsError(errorCode, event, errorParams);
     logEventWithAppState(event, errorParams, state);
 };

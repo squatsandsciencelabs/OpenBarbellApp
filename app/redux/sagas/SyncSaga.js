@@ -15,6 +15,7 @@ import {
 } from 'app/ActionTypes';
 import {
     PULL_DATA_ERROR_CODE,
+    PUSH_DATA_ERROR_CODE,
 } from 'app/constants/ErrorCodes';
 import API from 'app/services/API';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
@@ -217,7 +218,8 @@ const logPushDataSucceededAnalytics = (state) => {
 };
 
 const logPushDataErrorAnalytics = (state) => {
-    Analytics.logEventWithAppState('push_data_error', {
+    Analytics.logErrorWithAppState(error, PUSH_DATA_ERROR_CODE, 'push_data_error', {
+        revision: SetsSelectors.getRevision(state),
     }, state);
 }; 
 

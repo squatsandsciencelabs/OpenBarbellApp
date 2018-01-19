@@ -1,6 +1,15 @@
 // This scheme was built on the assumption that users log in EACH TIME manually, and that's patently untrue
 
-import { take, call, put, cancelled, cancel, fork, apply, select } from 'redux-saga/effects';
+import {
+    take,
+    call,
+    put,
+    cancelled,
+    cancel,
+    fork,
+    apply,
+    select,
+} from 'redux-saga/effects';
 import { Alert, Platform } from 'react-native';
 import { GoogleSignin } from 'react-native-google-signin';
 
@@ -10,6 +19,10 @@ import {
     LOGOUT,
     CLEAR_TOKENS,
 } from 'app/ActionTypes';
+import {
+    LOGIN_ERROR_CODE,
+    LOGOUT_ERROR_CODE,
+} from 'app/constants/ErrorCodes';
 import API from 'app/services/API';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
@@ -38,7 +51,7 @@ const AuthSaga = function * AuthSaga() {
         } catch(error) {
             console.tron.log("LOGOUT SIGN OUT ERROR " + error);
             let state = yield select();
-            logLogoutErrorAnalytics(state);
+            logLogoutErrorAnalytics(state, error);
         }
     }
 };
@@ -91,7 +104,7 @@ function* executeLogin() {
         } else {
             showGenericAlert();
             let state = yield select();
-            logLoginErrorAnalytics(state);
+            logLoginErrorAnalytics(state, error);
         }
         yield put(AuthActionCreators.logout());
     } finally {
@@ -146,8 +159,15 @@ const logCancelLoginAnalytics = (state) => {
     }, state);
 };
 
-const logLoginErrorAnalytics = (state) => {
-    Analytics.logEventWithAppState('login_error', {
+const logLoginErrorAnalytics = (state, error) => {
+    if (error) {
+        var errorString = JSON.stringify(error);
+    } else {
+        var errorString = "";
+    }
+
+    Analytics.logErrorWithAppState(LOGIN_ERROR_CODE, 'login_error', {
+        error: errorString,
     }, state);
 };
 
@@ -156,8 +176,15 @@ const logLoginAnalytics = (state) => {
     }, state);
 };
 
-const logLogoutErrorAnalytics = (state) => {
-    Analytics.logEventWithAppState('logout_error', {
+const logLogoutErrorAnalytics = (state, error) => {
+    if (error) {
+        var errorString = JSON.stringify(error);
+    } else {
+        var errorString = "";
+    }
+
+    Analytics.logErrorWithAppState(LOGOUT_ERROR_CODE, 'logout_error', {
+        error: errorString,
     }, state);
 };
 

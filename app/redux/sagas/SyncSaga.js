@@ -68,6 +68,7 @@ function *pushAnonymousUpdates() {
         try {
             // upload
             let state = yield select();
+            // TODO: analytics
             // logAttemptPushDataAnalytics(state);
             const accessToken = yield select(AuthSelectors.getAccessToken);
             const lastRefreshDate = yield select(AuthSelectors.getLastRefreshDate);
@@ -76,11 +77,13 @@ function *pushAnonymousUpdates() {
 
             // success
             state = yield select();
+            // TODO: analytics
             // logPushDataSucceededAnalytics(state);
             yield put(SetsActionCreators.finishedUploadingSets());
         } catch(error) {
             // error
             let state = yield select();
+            // TODO: analytics
             // logPushDataErrorAnalytics(state);
             yield put(SetsActionCreators.failedUploadSets());
             if (error.type !== undefined || typeof error === 'function') {

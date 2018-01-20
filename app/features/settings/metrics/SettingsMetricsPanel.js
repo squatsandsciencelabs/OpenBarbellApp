@@ -48,7 +48,7 @@ class SettingsMetricsPanel extends Component {
                 <Text style={SETTINGS_PANEL_STYLES.buttonText}>
                     {CollapsedMetricsUtility.metricAbbreviation(metric)}
                 </Text>
-                <Icon name="caret-down" size={10} color='white' style={{right: 10, position:'absolute'}} />
+                <Icon name="caret-down" size={10} color='white' style={{right: 5, position:'absolute'}} />
             </TouchableOpacity>
         );
     }
@@ -61,7 +61,7 @@ class SettingsMetricsPanel extends Component {
                 <Text style={SETTINGS_PANEL_STYLES.buttonText}>
                     {CollapsedMetricsUtility.quantifierString(quantifier)}
                 </Text>
-                <Icon name="caret-down" size={10} color='white' style={{right: 10, position:'absolute'}} />
+                <Icon name="caret-down" size={10} color='white' style={{right: 5, position:'absolute'}} />
             </TouchableOpacity>
         );
     }

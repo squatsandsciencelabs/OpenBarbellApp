@@ -5,6 +5,7 @@ import android.app.Application;
 import com.brentvatne.react.ReactVideoPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.facebook.react.ReactApplication;
+import com.RNFetchBlob.RNFetchBlobPackage;
 import com.horcrux.svg.SvgPackage;
 import com.corbt.keepawake.KCKeepAwakePackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
@@ -36,6 +37,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
               new MainReactPackage(),
+            new RNFetchBlobPackage(),
             new SvgPackage(),
             new KCKeepAwakePackage(),
             new RNGoogleSigninPackage(),

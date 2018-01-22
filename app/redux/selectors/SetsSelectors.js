@@ -382,19 +382,26 @@ export const getExerciseData = (state, exercise, type) => {
 
     if (type === 'regression') {
         sets.forEach((set) => {
-            if (set.exercise === exercise && set.reps.length > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime) && (checkIncludesTags(state, set.tags) && checkExcludesTags(state, set.tags))) {
-                data.push([set.weight, Number(RepDataMap.averageVelocity(set.reps[0].data))]);
+
+            if (set.exercise === exercise && SetEmptyCheck.numValidUnremovedReps(set) > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime) && (checkIncludesTags(state, set.tags) && checkExcludesTags(state, set.tags))) {
+                data.push([set.weight, Number(RepDataMap.averageVelocity(getFirstValidUnremovedRep(set.reps).data))]);
             }       
         });
     } else if (type === 'scatter') {
         sets.forEach((set) => {
-            if (set.exercise === exercise && set.reps.length > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime) && (checkIncludesTags(state, set.tags) && checkExcludesTags(state, set.tags))) {
-                data.push({ x: set.weight, y: Number(RepDataMap.averageVelocity(set.reps[0].data)), setID: set.setID });
+            if (set.exercise === exercise && SetEmptyCheck.numValidUnremovedReps(set) > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime) && (checkIncludesTags(state, set.tags) && checkExcludesTags(state, set.tags))) {
+                data.push({ x: set.weight, y: Number(RepDataMap.averageVelocity(getFirstValidUnremovedRep(set.reps).data)), setID: set.setID });
             }       
         });
     }
 
     return data;
+};
+
+const getFirstValidUnremovedRep = (reps) => {
+    return reps.find((rep) => {
+        return rep.isValid && !rep.removed;
+    });
 };
 
 const checkIncludesTags = (state, tags) => {

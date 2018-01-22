@@ -4,7 +4,10 @@ import {
     CHANGE_1RM_DAYS_RANGE,
     PRESENT_INCLUDES_TAGS,
     PRESENT_EXCLUDES_TAGS,
+    CALC_ONE_RM,
 } from 'app/ActionTypes';
+import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
+import * as OneRMCalculator from 'app/utility/transforms/OneRMCalculator';
 
 export const presentSelectExercise = () => ({
     type: PRESENT_SELECT_EXERCISE
@@ -27,3 +30,14 @@ export const presentTagsToExclude = () => ({
 export const presentTagsToInclude = () => ({
     type: PRESENT_INCLUDES_TAGS,
 });
+
+export const calcE1rm = (data, velocity) => {
+    const e1rm = OneRMCalculator.calc1rm(data, velocity);
+    const confidence = OneRMCalculator.getConfidenceInterval(data);
+
+    return {
+        type: CALC_ONE_RM,
+        e1rm: e1rm,
+        confidence: confidence,
+    };
+};

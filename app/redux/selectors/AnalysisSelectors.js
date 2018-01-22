@@ -15,3 +15,7 @@ export const getIsEditingExcludeTags = (state) => stateRoot(state).isEditingExcl
 export const getTagsToInclude = (state) => stateRoot(state).tagsToInclude;
 
 export const getTagsToExclude = (state) => stateRoot(state).tagsToExclude;
+
+export const getCurrentE1rm = (state) => stateRoot(state).e1rm;
+
+export const getCurrentConfidence = (state) => stateRoot(state).confidence;

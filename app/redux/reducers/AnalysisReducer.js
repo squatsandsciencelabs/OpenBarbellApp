@@ -12,6 +12,7 @@ import {
     SAVE_EXCLUDES_TAGS,
     DISMISS_INCLUDES_TAGS,
     DISMISS_EXCLUDES_TAGS,
+    CALC_ONE_RM,
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -23,6 +24,8 @@ const defaultState = {
     e1RMDaysRange: 7,
     tagsToInclude: [],
     tagsToExclude: [],
+    e1rm: null,
+    confidence: null,
 };
 
 const AnalysisReducer = (state = defaultState, action) => {
@@ -76,6 +79,12 @@ const AnalysisReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 isEditingExcludeTags: false,
+            }
+        case CALC_ONE_RM:
+            return {
+                ...state,
+                e1rm: action.e1rm,
+                confidence: action.confidence,
             }
         default: 
             return state;

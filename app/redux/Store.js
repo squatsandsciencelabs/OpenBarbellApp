@@ -1,9 +1,10 @@
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Platform } from 'react-native';
 import {persistStore, autoRehydrate} from 'redux-persist'
 import Reactotron from 'reactotron-react-native';
 import { createFilter } from 'redux-persist-transform-filter';
 
 // store imports
+import FilesystemStorage from 'redux-persist-filesystem-storage'
 import { compose, createStore, applyMiddleware }  from 'redux';
 import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
@@ -44,8 +45,13 @@ export default initializeStore = () => {
     sagaMiddleware.run(Sagas);
     
     // load previous
+    if (Platform.OS === 'ios') {
+        var storageMechanism = AsyncStorage;
+    } else {
+        var storageMechanism = FilesystemStorage;
+    }
     persistStore(store, { 
-        storage: AsyncStorage,
+        storage: storageMechanism,
         blacklist: [
             'scannedDevices',
             'killSwitch',

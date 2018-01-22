@@ -26,6 +26,8 @@ target 'OBBApp' do
 
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
 
+  pod 'react-native-fetch-blob', :path => '../node_modules/react-native-fetch-blob'
+
   target 'OBBAppTests' do
     inherit! :search_paths
     # Pods for testing

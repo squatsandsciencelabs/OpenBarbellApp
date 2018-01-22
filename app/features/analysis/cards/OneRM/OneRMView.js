@@ -34,15 +34,17 @@ class OneRMView extends Component {
     }
 
     _render1rm(confidence) {
+        if (this.props.isLogged)
         if (this.props.chartData.length > 3) {
-            if (confidence >= this.props.minConfidence) {
-                let e1rm = this.props.e1rm ? this.props.e1rm : "---"
+            if (this.props.confidence >= this.props.minConfidence) {
+                let e1rm = this.props.e1rm ? this.props.e1rm : "---";
+                let e1rmVelocity = this.props.e1rmVelocity ? this.props.e1rmVelocity : "---";
                 
                 return (
                     <View>
                         <OneRMChart confidenceHighEnough={true} data={this.props.chartData} />
                         <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{e1rm}</Text> {this.props.metric}</Text>
-                        <Text style={{ textAlign: 'center', fontSize: 15, marginBottom: 20 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.velocity} m/s</Text></Text> 
+                        <Text style={{ textAlign: 'center', fontSize: 15, marginBottom: 20 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.e1rmVelocity} m/s</Text></Text> 
                         <Text style={styles.confidenceText}>Confidence: {this.props.confidence} %</Text>
                     </View>
                 );
@@ -67,7 +69,7 @@ class OneRMView extends Component {
         }
     }
 
-    _renderCalculate1rm(confidence) {
+    _renderCalculate1rm() {
         if (this.props.isLoggedIn) {
             return (
                 <View style={[styles.button, {marginTop: 20}]}>
@@ -247,7 +249,7 @@ class OneRMView extends Component {
                             animateTransitions={true}
                         />
                         <Text style={styles.numberStyle}>{this.state.days} days</Text>
-                        {this._renderCalculate1rm(this.props.confidence)}
+                        {this._renderCalculate1rm()}
                     </View>
                 </View>
             ) 

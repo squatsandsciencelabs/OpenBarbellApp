@@ -12,7 +12,7 @@ import * as OneRMCalculator from 'app/utility/transforms/OneRMCalculator';
 
 const mapStateToProps = (state) => {
     const exercise = AnalysisSelectors.getAnalysisE1RMExercise(state);
-    const velocity = AnalysisSelectors.getAnalysisE1RMVelocity(state);
+    const velocity = AnalysisSelectors.getVelocitySlider(state);
     const metric = SettingsSelectors.getDefaultMetric(state);
     const days = AnalysisSelectors.getAnalysisRange(state);
     // const data = SetsSelectors.getExerciseData(state, exercise, 'regression'); // TODO: make regression a config
@@ -20,27 +20,28 @@ const mapStateToProps = (state) => {
 
     // Test Data Points that result in 91% confidence
 
-    // const data = [
-    //     [255, 0.48], 
-    //     [275, 0.31], 
-    //     [285, 0.30], 
-    //     [295, 0.28], 
-    //     [300, 0.26], 
-    //     [310, 0.22], 
-    //     [320, 0.19]
-    // ];
+    const data = [
+        [255, 0.48], 
+        [275, 0.31], 
+        [285, 0.30], 
+        [295, 0.28], 
+        [300, 0.26], 
+        [310, 0.22], 
+        [320, 0.19]
+    ];
 
-    // const chartData = [[
-    //     {title: 'a', weight: 255, velocity: 0.48}, 
-    //     {title: 'b', weight: 275, velocity: 0.31}, 
-    //     {title: 'c', weight: 285, velocity: 0.30}, 
-    //     {title: 'd', weight: 295, velocity: 0.28}, 
-    //     {title: 'e', weight: 300, velocity: 0.26}, 
-    //     {title: 'f', weight: 310, velocity: 0.22}, 
-    //     {title: 'g', weight: 320, velocity: 0.19}
-    // ]];
+    const chartData = [
+        {setID: 'a', x: 255, y: 0.48}, 
+        {setID: 'b', x: 275, y: 0.31}, 
+        {setID: 'c', x: 285, y: 0.30}, 
+        {setID: 'd', x: 295, y: 0.28}, 
+        {setID: 'e', x: 300, y: 0.26}, 
+        {setID: 'f', x: 310, y: 0.22}, 
+        {setID: 'g', x: 320, y: 0.19}
+    ];
 
     const confidence = AnalysisSelectors.getCurrentConfidence(state);
+    const e1rmVelocity = AnalysisSelectors.getAnalysisE1RMVelocity(state);
     const e1rm = AnalysisSelectors.getCurrentE1rm(state);
     const isLoggedIn = AuthSelectors.getIsLoggedIn(state);
 
@@ -52,6 +53,7 @@ const mapStateToProps = (state) => {
         data: data,
         days: days,
         confidence: confidence,
+        e1rmVelocity: e1rmVelocity,
         e1rm: e1rm,
         tagsToInclude: state.analysis.tagsToInclude,
         tagsToExclude: state.analysis.tagsToExclude,
@@ -66,7 +68,7 @@ const mapDispatchToProps = (dispatch) => {
         tappedExercise: Actions.presentSelectExercise,
         tappedTagsToInclude: Actions.presentTagsToInclude,
         tappedTagsToExclude: Actions.presentTagsToExclude,
-        changeVelocity: Actions.changeE1RMVelocity,
+        changeVelocity: Actions.changeVelocitySlider,
         changeDays: Actions.changeE1RMDays,
     }, dispatch);
 };

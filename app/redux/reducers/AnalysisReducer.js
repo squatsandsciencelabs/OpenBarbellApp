@@ -1,5 +1,5 @@
 import {
-    CHANGE_1RM_VELOCITY,
+    CHANGE_VELOCITY_SLIDER,
     CHANGE_1RM_DAYS_RANGE,
     PRESENT_SELECT_EXERCISE,
     SAVE_1RM_EXERCISE,
@@ -19,21 +19,23 @@ const defaultState = {
     isEditing1RMExercise: false,
     isEditingIncludeTags: false,
     isEditingExcludeTags: false,
-    e1RMVelocity: .01,
+    velocitySlider: .01,
     e1RMExercise: 'Bench',
     e1RMDaysRange: 7,
     tagsToInclude: [],
     tagsToExclude: [],
     e1rm: null,
+    e1RMVelocity: null,
     confidence: null,
 };
 
 const AnalysisReducer = (state = defaultState, action) => {
     switch (action.type) {
-        case CHANGE_1RM_VELOCITY:
-            return Object.assign({}, state, {
-                e1RMVelocity: Number(action.velocity.toFixed(2)),
-            });
+        case CHANGE_VELOCITY_SLIDER:
+            return {
+                ...state,
+                velocitySlider: Number(action.velocity.toFixed(2)),
+            }
         case CHANGE_1RM_DAYS_RANGE: 
             return Object.assign({}, state, {
                 e1RMDaysRange: action.days,
@@ -84,6 +86,7 @@ const AnalysisReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 e1rm: action.e1rm,
+                e1RMVelocity: action.e1RMVelocity,
                 confidence: action.confidence,
             }
         default: 

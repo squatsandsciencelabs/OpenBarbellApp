@@ -1,6 +1,6 @@
 import {
     PRESENT_SELECT_EXERCISE,
-    CHANGE_1RM_VELOCITY,
+    CHANGE_VELOCITY_SLIDER,
     CHANGE_1RM_DAYS_RANGE,
     PRESENT_INCLUDES_TAGS,
     PRESENT_EXCLUDES_TAGS,
@@ -13,8 +13,8 @@ export const presentSelectExercise = () => ({
     type: PRESENT_SELECT_EXERCISE
 });
 
-export const changeE1RMVelocity = (velocity) => ({
-    type: CHANGE_1RM_VELOCITY,
+export const changeVelocitySlider = (velocity) => ({
+    type: CHANGE_VELOCITY_SLIDER,
     velocity: velocity
 });
 
@@ -38,6 +38,7 @@ export const calcE1rm = (data, velocity) => {
     return {
         type: CALC_ONE_RM,
         e1rm: e1rm,
+        e1RMVelocity: velocity,
         confidence: confidence,
     };
 };

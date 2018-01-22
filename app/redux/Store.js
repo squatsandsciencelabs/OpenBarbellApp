@@ -62,7 +62,7 @@ export default initializeStore = () => {
             createFilter('history', ['viewedCounter']),
             createFilter('appState', ['multiTaskCounter', 'lockedCounter']),
             createFilter('connectedDevice', ['numDisconnects', 'numReconnects']),
-            createFilter('analysis', ['e1RMExercise', 'e1RMVelocity', 'e1RMDaysRange', 'tagsToInclude', 'tagsToExclude', 'e1rm', 'confidence']),
+            createFilter('analysis', ['e1RMExercise', 'e1RMVelocity', 'velocitySlider', 'e1RMDaysRange', 'tagsToInclude', 'tagsToExclude', 'e1rm', 'confidence']),
             createFilter('survey', ['surveyURL', 'completedSurveyURLs']),
         ]}, () => {
             // on startup, always "fail" it so syncing variables go back into the queue to be synced

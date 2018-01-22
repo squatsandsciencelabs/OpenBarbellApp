@@ -182,9 +182,9 @@ class OneRMView extends Component {
                         <ExercisePicker />  
                     </View>
                     <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Include:</Text>
-                        <View style={{marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
-                        <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Exclude:</Text>
-                        <View>{ this._renderTagsToExclude() }</View>
+                    <View style={{marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
+                    <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Exclude:</Text>
+                    <View>{ this._renderTagsToExclude() }</View>
                     <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white', marginBottom: 20 }}>
                         <EditAnalysisTagsToIncludeScreen />
                         <EditAnalysisTagsToExcludeScreen />

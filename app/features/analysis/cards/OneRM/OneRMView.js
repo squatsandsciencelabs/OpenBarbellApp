@@ -34,6 +34,14 @@ class OneRM extends Component {
             if (confidence >= this.props.minConfidence) {
                 return (
                     <View>
+                        <View style={{marginBottom: 20}}>
+                            <TouchableOpacity onPress={() => this._tapExercise()}>
+                            <Text style={{fontSize: 18, color: 'rgba(47, 128, 237, 1)', textAlign: 'center'}}>
+                                {this.props.exercise}
+                            </Text>
+                            </TouchableOpacity>
+                        </View>
+                        <ExercisePicker />
                         <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{this.props.e1rm}</Text> {this.props.metric}</Text>
                         <Text style={{ textAlign: 'center', fontSize: 15 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.velocity} m/s</Text></Text> 
                         <OneRMChart data={this.props.chartData} />
@@ -42,9 +50,19 @@ class OneRM extends Component {
                 );
             } else {
                 return (
-                    <Text style={styles.errorText}>
-                        Confidence too low, please clean up or log more data.
-                    </Text>
+                    <View>
+                        <View style={{marginBottom: 20}}>
+                        <TouchableOpacity onPress={() => this._tapExercise()}>
+                            <Text style={{fontSize: 18, color: 'rgba(47, 128, 237, 1)', textAlign: 'center'}}>
+                                {this.props.exercise}
+                            </Text>
+                        </TouchableOpacity>
+                        </View>
+                        <ExercisePicker />
+                        <Text style={styles.errorText}>
+                            Confidence too low, please clean up or log more data.
+                        </Text>
+                    </View>
                 );
             }
         } else {
@@ -73,14 +91,6 @@ class OneRM extends Component {
             return (
                 <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
                     <Text style={[{marginBottom: 20}, styles.titleText]}>Estimated One-Rep Max</Text>
-                    <View style={{marginBottom: 20}}>
-                        <TouchableOpacity onPress={() => this._tapExercise()}>
-                            <Text style={{fontSize: 18, color: 'rgba(47, 128, 237, 1)', textAlign: 'center'}}>
-                                {this.props.exercise}
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <ExercisePicker />
                     <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
                         {this._render1rm(this.props.confidence)}
                         <Text style={styles.labelText}>

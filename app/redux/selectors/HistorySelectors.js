@@ -4,6 +4,8 @@ export const getExpandedSetID = (state) => stateRoot(state).expandedSetID;
 
 // video recorder / camera
 
+export const getCameraType = (state) => stateRoot(state).cameraType;
+
 export const getIsRecording = (state) => stateRoot(state).isRecording;
 
 export const getRecordingVideoType = (state) => stateRoot(state).recordingVideoType;

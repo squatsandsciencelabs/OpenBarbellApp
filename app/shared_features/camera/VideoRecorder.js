@@ -10,9 +10,9 @@ import {
 }  from 'react-native';
 import Camera from 'react-native-camera';
 import KeepAwake from 'react-native-keep-awake';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-class VideoRecorder extends Component {
-
+class VideoRecorder extends Component {  
     componentDidUpdate(prevProps) {
         if (prevProps.isRecording !== this.props.isRecording) {
             if (this.props.isRecording) {
@@ -74,6 +74,20 @@ class VideoRecorder extends Component {
         }
     }
 
+    _switchCamera() {
+        let cameraType = this.props.cameraType;
+        cameraType = cameraType === "back" ? "front" : "back";
+        this.props.changeCameraType(cameraType);     
+    }
+
+    _videoType() {
+        if (this.props.videoType !== 'lift') {
+            return 'START LOG';
+        } else {
+            return 'START';
+        }
+    }
+
     // render
 
     _renderActionButton() {
@@ -95,7 +109,7 @@ class VideoRecorder extends Component {
             return (
                 <TouchableOpacity onPress={()=>this.props.tappedStart(this.props.setID)}>
                     <View style={[styles.actionButton, styles.startButton]}>
-                        <Text style={styles.buttonText}>START</Text>
+                        <Text style={styles.buttonText}>{this._videoType()}</Text>
                     </View>
                 </TouchableOpacity>
             );
@@ -109,6 +123,7 @@ class VideoRecorder extends Component {
                     <Camera
                         ref={(cam) => {this.camera = cam}}
                         style={{flex: 1}}
+                        type={this.props.cameraType}
                         aspect={Camera.constants.Aspect.fit}>
 
                         <View style={styles.cancelButton}>
@@ -117,6 +132,14 @@ class VideoRecorder extends Component {
                                 <View><Text style={styles.cancelText}>Cancel</Text></View>
                             </TouchableOpacity>
                             </View>
+                        </View>
+
+                        <View style={styles.switchCamera}>
+                            <TouchableOpacity onPress={()=>this._switchCamera()}>
+                                <View>
+                                    <Icon name="refresh" size={30} color="white" />
+                                </View>
+                            </TouchableOpacity>
                         </View>
 
                         <View style={{position: 'absolute', bottom: 50, left: 0, right: 0, alignItems: 'center'}}>
@@ -164,6 +187,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontWeight: 'bold',
+        textAlign: 'center',
     },
     cancelButton: {
         marginTop: 30,
@@ -181,6 +205,13 @@ const styles = StyleSheet.create({
         height: 30,
         paddingTop: 5,
         textAlign: 'center'
+    },
+    switchCamera: {
+        backgroundColor: 'transparent',
+        marginRight: 40,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'flex-start',
     }
 });
 

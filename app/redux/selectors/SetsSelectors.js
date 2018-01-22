@@ -382,7 +382,7 @@ export const getExerciseData = (state, exercise, type) => {
 
     if (type === 'regression') {
         sets.forEach((set) => {
-
+            
             if (set.exercise === exercise && SetEmptyCheck.numValidUnremovedReps(set) > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime) && (checkIncludesTags(state, set.tags) && checkExcludesTags(state, set.tags))) {
                 data.push([set.weight, Number(RepDataMap.averageVelocity(getFirstValidUnremovedRep(set.reps).data))]);
             }       

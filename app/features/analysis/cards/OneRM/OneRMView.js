@@ -58,7 +58,7 @@ class OneRMView extends Component {
             return (
                 <View>
                     <Text style={styles.errorText}>
-                        This exercise has no reps within the date range.
+                        Not enough reps reps within the date range
                     </Text>
                 </View>
             );

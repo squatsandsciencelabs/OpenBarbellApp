@@ -34,8 +34,7 @@
     "regression": "2.0.0",
     "reselect": "3.0.1",
     "uuid": "3.1.0",
-    "victory-native": "0.16.6",
-    "react-native-pathjs-charts": "0.0.33"
+    "victory-native": "0.16.6"
   },
   "rnpm": {
     "android": {

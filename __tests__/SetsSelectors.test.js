@@ -1006,7 +1006,7 @@ describe('SetsSelectors', () => {
                         weight: 100,
                         metric: 'lbs',
                         reps: [{
-                            isValid: true,
+                            isValid: false,
                             removed: false,
                             data: [-3456, 37, 1.733368, 288, 28, 18, 1, 8]
                         }],
@@ -1112,6 +1112,29 @@ describe('SetsSelectors', () => {
                         initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
                     j: {
+                        setID: 'j',
+                        exercise: 'Squat',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.3, 100, 10, 5, 1, 3]
+                        }, 
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.9, 300, 30, 20, 1, 10]
+                        },
+                        {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 2.4, 230, 23, 13, 1, 3]
+                        }],
+                        tags: ['F'],
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
+                    },
+                                        j: {
                         setID: 'j',
                         exercise: 'Squat',
                         weight: 100,
@@ -1449,7 +1472,7 @@ describe('SetsSelectors', () => {
             });
 
             test('return data for regression', () => {
-                const expected = [[100, 1.73], [200, 1.83], [100, 1.43]];
+                const expected = [[200, 1.83], [100, 1.43]];
                 
                 const result = sut.getExerciseData(state, 'Bench', 'regression');
 
@@ -1457,13 +1480,8 @@ describe('SetsSelectors', () => {
             });
 
             test('return data for scatter', () => {
-                const expected = [
-                    {"setID": "c", "x": 100, "y": 1.73}, 
-                    {"setID": "d", "x": 200, "y": 1.83}, 
-                    {"setID": "k", "x": 100, "y": 1.43}
-                ]
+                const expected = [{"setID": "d", "x": 200, "y": 1.83}, {"setID": "k", "x": 100, "y": 1.43}]
     
-                
                 const result = sut.getExerciseData(state, 'Bench', 'scatter');
 
                 expect(result).toEqual(expected);

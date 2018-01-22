@@ -188,16 +188,16 @@ class OneRMView extends Component {
                             Date Range
                         </Text>
                         <Slider
-                            value={this.props.days} 
+                            value={this.props.days * -1} 
                             onValueChange={(value) => this.setState({ slidingDays: true, days: Number(value.toFixed(2)) })}
                             onSlidingComplete={(value) => this._changeDaysSlider(value)}
-                            minimumValue={1}
-                            maximumValue={7}
+                            minimumValue={-60}
+                            maximumValue={-1}
                             step={1}
                             minimumTrackTintColor={'#368fff'}
                             animateTransitions={true}
                         />
-                        <Text style={styles.numberStyle}>{this.state.days} days</Text>
+                        <Text style={styles.numberStyle}>{Math.abs(this.state.days) } days</Text>
                     </View>
                 </View>
             )
@@ -237,17 +237,17 @@ class OneRMView extends Component {
                             Date Range
                         </Text>
                         <Slider
-                            value={this.props.days} 
+                            value={this.props.days * -1} 
                             onValueChange={(value) => this.setState({ slidingDays: true, days: Number(value.toFixed(2)) })}
                             onSlidingComplete={(value) => this._changeDaysSlider(value)}
-                            minimumValue={1}
-                            maximumValue={7}
+                            minimumValue={-60}
+                            maximumValue={-1}
                             step={1}
                             thumbTintColor={'#368fff'}
                             minimumTrackTintColor={'#368fff'}
                             animateTransitions={true}
                         />
-                        <Text style={styles.numberStyle}>{this.state.days} days</Text>
+                        <Text style={styles.numberStyle}>{Math.abs(this.state.days)} days</Text>
                     </View>
                 </View>
             ) 

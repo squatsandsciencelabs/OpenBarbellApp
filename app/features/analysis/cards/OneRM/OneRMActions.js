@@ -17,7 +17,7 @@ export const changeE1RMVelocity = (velocity) => ({
 
 export const changeE1RMDays = (days) => ({
     type: CHANGE_1RM_DAYS_RANGE,
-    days: days
+    days: Math.abs(days)
 });
 
 export const presentTagsToExclude = () => ({

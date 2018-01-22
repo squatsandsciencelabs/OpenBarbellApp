@@ -109,20 +109,34 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
         }
 
         // rest footer
-        if (isInitialSet) {
+        if (isInitialSet && isCollapsed) {
             // new set, reset the end time
             lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
             array.push(createBottomBorder(set));
+        } else if (isInitialSet && !isCollapsed) {
+            // new set, reset the end time
+            lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
+            array.push(createDeleteFooter(set));
+            array.push(createBottomBorder(set));
         } else if (!isRemoved && set.reps.length > 0) { // ignore removed sets in rest calculations
             // add footer if valid
-            if (lastSetEndTime !== null) {
+            if (lastSetEndTime !== null && isCollapsed) {
                 array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
+            } else if (lastSetEndTime !== null && !isCollapsed) {
+                array.push(createDeleteFooter(set));
+                array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
+            } else if (!isCollapsed) {
+                array.push(createDeleteFooter(set));
+                array.push(createBottomBorder(set));
             } else {
                 array.push(createBottomBorder(set));
             }
 
             // update variable for calculation purposes
             lastSetEndTime = SetTimeCalculator.endTime(set);
+        } else if (!isCollapsed) {
+            array.push(createDeleteFooter(set));
+            array.push(createBottomBorder(set));            
         } else {
             array.push(createBottomBorder(set));
         }
@@ -267,6 +281,12 @@ const createFooterVM = (set, lastSetEndTime, isCollapsed) => {
     return footerVM;
 };
 
+const createDeleteFooter = (set) => ({
+    type: "delete footer",
+    key: set.setID + "deleteSet",
+    setID: set.setID,
+});
+
 const createBottomBorder = (set) => ({
     type: "bottom border",
     key: set.setID + 'bottomborder',
@@ -302,6 +322,8 @@ const mapStateToProps = (state) => {
         storedShouldShowRemoved = shouldShowRemoved;
     }
 
+    console.tron.log(storedSections);
+
     return {
         email: state.auth.email,
         sections: storedSections,
@@ -311,6 +333,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
+        deleteSet: Actions.deleteSet,
         removeRep: Actions.removeRep,
         restoreRep: Actions.restoreRep,
         finishLoading: Actions.finishLoading,

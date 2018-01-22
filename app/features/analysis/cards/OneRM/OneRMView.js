@@ -34,7 +34,6 @@ class OneRMView extends Component {
     }
 
     _render1rm(confidence) {
-        if (this.props.isLogged)
         if (this.props.chartData.length > 3) {
             if (this.props.confidence >= this.props.minConfidence) {
                 let e1rm = this.props.e1rm ? this.props.e1rm : "---";

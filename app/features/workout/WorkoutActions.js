@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 import {
     PRESENT_WORKOUT_EXPANDED,
     SAVE_WORKOUT_REP,
@@ -24,8 +25,21 @@ export const expandSet = (setID) => (dispatch, getState) => {
 
 export const presentExpanded = (setID) => ({
     type: PRESENT_WORKOUT_EXPANDED,
-    setID: setID
+    setID: setID,
 });
+
+export const deleteSet = (setID) => (dispatch) => {
+    Alert.alert(
+        'Are you sure?',
+        "",
+        [
+          {text: 'Delete Set', style: 'destructive', onPress: () => dispatch({ type: DELETE_WORKOUT_SET, setID: setID })},
+          {text: 'Cancel', style: 'cancel'},,
+        ],
+        { cancelable: false }
+    );
+};
+
 
 export const removeRep = (setID, repIndex) => (dispatch, getState) => {
     const state = getState();

@@ -70,7 +70,7 @@ const createViewModels = (state, sets) => {
         } else if (!isRemoved) {
             array.push(createSummaryViewModel(set));
             array.push(createAnalysisViewModel(set));
-        }
+        } 
         lastExerciseName = set.exercise;
 
         // reps
@@ -79,14 +79,25 @@ const createViewModels = (state, sets) => {
         }
 
         // rest footer
-        if (isInitialSet) {
+        if (isInitialSet && isLastSet) {
             // new set, reset the end time
-            lastSetEndTime = isRemoved ? null : SetUtils.endTime(set);
+            lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
+            array.push(createBottomBorder(set));
+        } else if (isInitialSet && !isLastSet && !isCollapsed) {
+            // new set, reset the end time
+            lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
+            array.push(createDeleteFooter(set));
             array.push(createBottomBorder(set));
         } else if (!isRemoved && set.reps.length > 0) { // ignore removed sets in rest calculations
             // add footer if valid
-            if (lastSetEndTime !== null) {
+            if (lastSetEndTime !== null && isCollapsed) {
                 array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
+            } else if (lastSetEndTime !== null && !isCollapsed) {
+                array.push(createDeleteFooter(set));
+                array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
+            } else if (!isCollapsed) {
+                array.push(createDeleteFooter(set));
+                array.push(createBottomBorder(set));
             } else {
                 array.push(createBottomBorder(set));
             }
@@ -96,6 +107,9 @@ const createViewModels = (state, sets) => {
         } else if (isLastSet && lastSetEndTime !== null && set.reps.length === 0) {
             // working set, live rest mode
             array.push(createWorkingSetFooterVM(set, lastSetEndTime));
+        } else if (!isLastSet && !isCollapsed) {
+            array.push(createDeleteFooter(set));
+            array.push(createBottomBorder(set));
         } else {
             array.push(createBottomBorder(set));
         }
@@ -253,6 +267,13 @@ const createFooterVM = (set, lastSetEndTime, isCollapsed) => {
     };
     return footerVM;
 };
+
+const createDeleteFooter = (set) => ({
+    type: "delete footer",
+    key: set.setID + "deleteSet",
+    setID: set.setID,
+});
+
 const createBottomBorder = (set) => ({
     type: "bottom border",
     key: set.setID + 'bottomborder',
@@ -275,6 +296,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
+        deleteSet: Actions.deleteSet,
         endSet: Actions.endSet,
         removeRep: Actions.removeRep,
         restoreRep: Actions.restoreRep,

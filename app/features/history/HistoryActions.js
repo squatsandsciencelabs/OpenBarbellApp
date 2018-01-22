@@ -1,3 +1,4 @@
+import { Alert } from 'react-native';
 import {
     PRESENT_HISTORY_EXPANDED,
     LOADING_HISTORY,
@@ -25,6 +26,18 @@ export const presentExpanded = (setID) => ({
     type: PRESENT_HISTORY_EXPANDED,
     setID: setID
 });
+
+export const deleteSet = (setID) => (dispatch) => {
+    Alert.alert(
+        'Are you sure?',
+        "",
+        [
+          {text: 'Delete Set', style: 'destructive', onPress: () => dispatch({ type: DELETE_HISTORY_SET, setID: setID })},
+          {text: 'Cancel', style: 'cancel'},,
+        ],
+        { cancelable: false }
+    );
+};
 
 export const finishLoading = () => ({
     type: LOADING_HISTORY,

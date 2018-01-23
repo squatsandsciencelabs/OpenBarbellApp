@@ -34,23 +34,37 @@ class OneRMView extends Component {
     }
 
     _render1rm(confidence) {
-        if (this.props.chartData.length > 3) {
-            if (confidence >= this.props.minConfidence) {
-                return (
-                    <View>
-                        <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{this.props.e1rm}</Text> {this.props.metric}</Text>
-                        <Text style={{ textAlign: 'center', fontSize: 15 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.velocity} m/s</Text></Text> 
-                        <OneRMChart confidenceHighEnough={true} data={this.props.chartData} />
-                        <Text style={styles.confidenceText}>Confidence: {this.props.confidence} %</Text>
-                    </View>
-                );
+        
+        if (this.props.isLoggedIn) {
+            if (this.props.chartData.length > 3) {
+                if (confidence >= this.props.minConfidence) {
+                    return (
+                        <View>
+                            <OneRMChart confidenceHighEnough={true} data={this.props.chartData} />
+                            <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{this.props.e1rm}</Text> {this.props.metric}</Text>
+                            <Text style={{ textAlign: 'center', fontSize: 15 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.velocity} m/s</Text></Text> 
+                            <Text style={[styles.confidenceText, {marginTop: 15}]}>Confidence: {this.props.confidence} %</Text>
+                            {this._renderForms()}
+                        </View>
+                    );
+                } else {
+                    return (
+                        <View>
+                            <Text style={styles.errorText}>
+                                Confidence too low, please clean up or log more data.
+                            </Text>
+                            <OneRMChart confidenceHighEnough={false} data={this.props.chartData} />
+                            {this._renderForms()}
+                        </View>
+                    );
+                }
             } else {
                 return (
                     <View>
                         <Text style={styles.errorText}>
-                            Confidence too low, please clean up or log more data.
+                            This exercise with these tags does not contain enough reps within the date range.
                         </Text>
-                        <OneRMChart confidenceHighEnough={false} data={this.props.chartData} />
+                        {this._renderForms()}
                     </View>
                 );
             }
@@ -58,11 +72,12 @@ class OneRMView extends Component {
             return (
                 <View>
                     <Text style={styles.errorText}>
-                        This exercise with these tags does not contain enough reps within the date range.
+                        You must be logged in for 1rm calculation.
                     </Text>
                 </View>
-            );
+            )
         }
+    
     }
 
     _tappedExercise() {
@@ -125,27 +140,34 @@ class OneRMView extends Component {
         );
     }
 
+    _renderForms() {
+        return (
+            <View>
+                <View style={{marginBottom: 20}}>
+                    <TouchableOpacity onPress={() => this._tappedExercise()}>
+                        <Text style={{fontSize: 18, color: 'rgba(47, 128, 237, 1)', textAlign: 'center', marginBottom: 20}}>
+                            {this.props.exercise}
+                        </Text>
+                    </TouchableOpacity>
+                    <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Include:</Text>
+                    <View style={{marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
+                    <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Exclude:</Text>
+                    <View>{ this._renderTagsToExclude() }</View>
+                </View>
+                <ExercisePicker />
+                <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
+                    <EditAnalysisTagsToIncludeScreen />
+                    <EditAnalysisTagsToExcludeScreen />
+                </View>
+            </View>
+        );
+    }
+
     render() {
         if (Platform.OS === 'ios') {
             return (
                 <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
-                    <Text style={[{marginBottom: 20}, styles.titleText]}>Estimated One-Rep Max</Text>
-                    <View style={{marginBottom: 20}}>
-                        <TouchableOpacity onPress={() => this._tappedExercise()}>
-                            <Text style={{fontSize: 18, color: 'rgba(47, 128, 237, 1)', textAlign: 'center', marginBottom: 20}}>
-                                {this.props.exercise}
-                            </Text>
-                        </TouchableOpacity>
-                        <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Include:</Text>
-                        <View style={{marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
-                        <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Exclude:</Text>
-                        <View>{ this._renderTagsToExclude() }</View>
-                    </View>
-                    <ExercisePicker />
-                    <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
-                        <EditAnalysisTagsToIncludeScreen />
-                        <EditAnalysisTagsToExcludeScreen />
-                    </View>
+                    <Text style={[{marginBottom: 15}, styles.titleText]}>Estimated One-Rep Max</Text>
                     <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
                         {this._render1rm(this.props.confidence)}
                         <Text style={styles.labelText}>

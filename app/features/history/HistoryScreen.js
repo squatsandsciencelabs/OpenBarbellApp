@@ -116,29 +116,42 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
         } else if (isInitialSet && !isCollapsed) {
             // new set, reset the end time
             lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
-            array.push(createDeleteFooter(set));
-            array.push(createBottomBorder(set));
-        } else if (!isRemoved && set.reps.length > 0) { // ignore removed sets in rest calculations
-            // add footer if valid
-            if (lastSetEndTime !== null && isCollapsed) {
-                array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
-            } else if (lastSetEndTime !== null && !isCollapsed) {
-                array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
-                array.push(createDeleteFooter(set));
-            } else if (!isCollapsed) {
-                array.push(createDeleteFooter(set));
+
+            if (isCollapsed) {
                 array.push(createBottomBorder(set));
             } else {
+                // new set, reset the end time
+                lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
+                array.push(createDeleteFooter(set));
                 array.push(createBottomBorder(set));
+            }   
+        } else if (!isRemoved && set.reps.length > 0) { // ignore removed sets in rest calculations
+            // add footer if valid
+            if (lastSetEndTime !== null) {
+                if (isCollapsed) {
+                    array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
+                } else {
+                    array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
+                    array.push(createDeleteFooter(set));
+                }
+            } else {
+                if (!isCollapsed) {
+                    array.push(createDeleteFooter(set));
+                    array.push(createBottomBorder(set));
+                } else {
+                    array.push(createBottomBorder(set));
+                }
             }
 
             // update variable for calculation purposes
             lastSetEndTime = SetTimeCalculator.endTime(set);
-        } else if (!isCollapsed) {
-            array.push(createDeleteFooter(set));
-            array.push(createBottomBorder(set));            
         } else {
-            array.push(createBottomBorder(set));
+            if (!isCollapsed) {
+                array.push(createDeleteFooter(set));
+                array.push(createBottomBorder(set));            
+            } else {
+                array.push(createBottomBorder(set));
+            }
         }
 
         // insert set card data

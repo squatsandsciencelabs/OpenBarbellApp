@@ -33,12 +33,12 @@ const styles = StyleSheet.create({
         borderColor: '#e0e0e0',
         borderLeftWidth: 1,
         borderRightWidth: 1,
-        borderTopWidth: 1,
+        borderBottomWidth: 1,
     },
     bar: {
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'flex-end',
         alignItems: 'center',
         alignSelf: 'stretch',
         left: 0,
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         height: 40,
         padding: 0,
-        marginRight: 0,
+        marginRight: 15,
         overflow: 'hidden'
     },
     data: {

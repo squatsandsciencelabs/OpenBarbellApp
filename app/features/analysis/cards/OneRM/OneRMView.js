@@ -34,16 +34,18 @@ class OneRMView extends Component {
     }
 
     _render1rm(confidence) {
-        
         if (this.props.isLoggedIn) {
             if (this.props.chartData.length > 3) {
                 if (confidence >= this.props.minConfidence) {
+                    let e1rm = this.props.e1rm ? this.props.e1rm : "---";
+                    let e1rmVelocity = this.props.e1rmVelocity ? this.props.e1rmVelocity : "---";
+
                     return (
                         <View>
                             <OneRMChart confidenceHighEnough={true} data={this.props.chartData} />
-                            <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{this.props.e1rm}</Text> {this.props.metric}</Text>
-                            <Text style={{ textAlign: 'center', fontSize: 15 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.velocity} m/s</Text></Text> 
-                            <Text style={[styles.confidenceText, {marginTop: 15}]}>Confidence: {this.props.confidence} %</Text>
+                            <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{e1rm}</Text> {this.props.metric}</Text>
+                            <Text style={{ textAlign: 'center', fontSize: 15, marginBottom: 20 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.e1rmVelocity} m/s</Text></Text> 
+                            <Text style={styles.confidenceText}>Confidence: {this.props.confidence} %</Text>
                             {this._renderForms()}
                         </View>
                     );
@@ -57,7 +59,7 @@ class OneRMView extends Component {
                             {this._renderForms()}
                         </View>
                     );
-                }
+                } 
             } else {
                 return (
                     <View>
@@ -77,7 +79,24 @@ class OneRMView extends Component {
                 </View>
             )
         }
-    
+    }
+
+    _renderCalculate1rm() {
+        if (this.props.isLoggedIn) {
+            return (
+                <View style={[styles.button, {marginTop: 20}]}>
+                    <TouchableOpacity onPress={ () => this.props.calcE1rm(this.props.data, this.props.velocity) }>
+                        <Text style={styles.buttonText}>Calculate</Text>
+                    </TouchableOpacity>
+                </View>
+            );
+        } else {
+            return (
+                <View style={[styles.disabledButton, {marginTop: 20}]}>
+                    <Text style={styles.buttonText}>Calculate</Text>
+                </View>
+            );
+        }
     }
 
     _tappedExercise() {
@@ -141,26 +160,44 @@ class OneRMView extends Component {
     }
 
     _renderForms() {
-        return (
-            <View>
-                <View style={{marginBottom: 20}}>
-                    <TouchableOpacity onPress={() => this._tappedExercise()}>
-                        <Text style={{fontSize: 18, color: 'rgba(47, 128, 237, 1)', textAlign: 'center', marginBottom: 20}}>
-                            {this.props.exercise}
-                        </Text>
-                    </TouchableOpacity>
+        if (Platform.OS === 'ios') {
+            return (
+                <View>
+                    <View style={{marginBottom: 20}}>
+                        <TouchableOpacity onPress={() => this._tappedExercise()}>
+                            <Text style={{fontSize: 18, color: 'rgba(47, 128, 237, 1)', textAlign: 'center', marginBottom: 20}}>
+                                {this.props.exercise}
+                            </Text>
+                        </TouchableOpacity>
+                        <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Include:</Text>
+                        <View style={{marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
+                        <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Exclude:</Text>
+                        <View>{ this._renderTagsToExclude() }</View>
+                    </View>
+                    <ExercisePicker />
+                    <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
+                        <EditAnalysisTagsToIncludeScreen />
+                        <EditAnalysisTagsToExcludeScreen />
+                    </View>
+                </View>
+            );
+        } else {
+            return (
+                <View>
+                    <View style={{marginBottom: 10}}>
+                        <ExercisePicker />  
+                    </View>
                     <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Include:</Text>
                     <View style={{marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
                     <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Exclude:</Text>
                     <View>{ this._renderTagsToExclude() }</View>
+                    <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white', marginBottom: 20 }}>
+                        <EditAnalysisTagsToIncludeScreen />
+                        <EditAnalysisTagsToExcludeScreen />
+                    </View>
                 </View>
-                <ExercisePicker />
-                <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
-                    <EditAnalysisTagsToIncludeScreen />
-                    <EditAnalysisTagsToExcludeScreen />
-                </View>
-            </View>
-        );
+            );
+        }
     }
 
     render() {
@@ -197,7 +234,8 @@ class OneRMView extends Component {
                             minimumTrackTintColor={'#368fff'}
                             animateTransitions={true}
                         />
-                        <Text style={styles.numberStyle}>{Math.abs(this.state.days) } days</Text>
+                        <Text style={styles.numberStyle}>{Math.abs(this.state.days)} days</Text>
+                        {this._renderCalculate1rm(this.props.confidence)}
                     </View>
                 </View>
             )
@@ -205,19 +243,8 @@ class OneRMView extends Component {
             return (
                 <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
                     <Text style={[{marginBottom: 20}, styles.titleText]}>Estimated One-Rep Max</Text>
-                    <View style={{marginBottom: 10}}>
-                        <ExercisePicker />  
-                    </View>
-                    <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Include:</Text>
-                    <View style={{marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
-                    <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Exclude:</Text>
-                    <View>{ this._renderTagsToExclude() }</View>
-                    <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white', marginBottom: 20 }}>
-                        <EditAnalysisTagsToIncludeScreen />
-                        <EditAnalysisTagsToExcludeScreen />
-                    </View>
+                    {this._render1rm(this.props.confidence)}
                     <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
-                        {this._render1rm(this.props.confidence)}
                         <Text style={styles.labelText}>
                             Velocity
                         </Text>
@@ -248,6 +275,7 @@ class OneRMView extends Component {
                             animateTransitions={true}
                         />
                         <Text style={styles.numberStyle}>{Math.abs(this.state.days)} days</Text>
+                        {this._renderCalculate1rm(this.props.confidence)}
                     </View>
                 </View>
             ) 
@@ -272,6 +300,7 @@ const styles = StyleSheet.create({
     },
     oneRMText: {
         color: 'rgba(77, 77, 77, 1)',
+        marginTop: 10,
         marginBottom: 5,
         fontSize: 32, 
         textAlign: 'center'
@@ -340,6 +369,24 @@ const styles = StyleSheet.create({
     },
     placeholderText: {
         color: 'rgba(189, 189, 189, 1)'
+    },
+    button: {
+        backgroundColor: 'rgba(47, 128, 237, 1)',
+        borderColor: 'rgba(47, 128, 237, 1)',        
+        borderWidth: 5,
+        borderRadius: 15,
+    },
+    disabledButton: {
+        backgroundColor: 'rgba(47, 128, 237, 1)',
+        borderColor: 'rgba(47, 128, 237, 1)',        
+        borderWidth: 5,
+        borderRadius: 15,
+        opacity: 0.3
+    },
+    buttonText: {
+        color: 'white',
+        padding: 5,
+        textAlign: 'center'
     },
 });
 

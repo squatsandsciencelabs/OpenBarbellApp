@@ -142,13 +142,12 @@ class HistoryList extends Component {
                             onPressRow={() => this.props.tapCard(item.setID) }
                         />);
             case "footer":
-                return (
-                    <View style={{marginBottom: 15}}>                    
-                        <SetRestRow item={item} />
-                    </View>);
+                return <SetRestRow item={item} />;
             case "delete footer":
                 return (
-                    <DeleteSetRow onPressDelete={() => this.props.deleteSet(item.setID)} />
+                    <View style={{marginBottom: 15}}>
+                        <DeleteSetRow onPressDelete={() => this.props.deleteSet(item.setID)} />
+                    </View>
                 );
             case "bottom border":
                 return (<View style={{flex: 1, backgroundColor: '#e0e0e0', height: 1, marginBottom: 15}} />);

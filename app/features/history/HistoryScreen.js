@@ -123,8 +123,8 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
             if (lastSetEndTime !== null && isCollapsed) {
                 array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
             } else if (lastSetEndTime !== null && !isCollapsed) {
-                array.push(createDeleteFooter(set));
                 array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
+                array.push(createDeleteFooter(set));
             } else if (!isCollapsed) {
                 array.push(createDeleteFooter(set));
                 array.push(createBottomBorder(set));

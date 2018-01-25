@@ -436,7 +436,7 @@ export const getTagsToIncludeSuggestions = (state, exercise) => {
     const tags = [];
 
     sets.forEach((set) => {
-        if (set.exercise === exercise) {
+        if (set.exercise === exercise && set.tags) {
             set.tags.forEach((tag) => {
                 if (!tags.includes(tag) && !tagsToExclude.includes(tag) && !tagsToInclude.includes(tag) && tag !== 'Bug') {
                     tags.push(tag);
@@ -455,7 +455,7 @@ export const getTagsToExcludeSuggestions = (state, exercise) => {
     const tags = [];
 
     sets.forEach((set) => {
-        if (set.exercise === exercise) {
+        if (set.exercise === exercise && set.tags) {
             set.tags.forEach((tag) => {
                 if (!tags.includes(tag) && !tagsToInclude.includes(tag) && !tagsToExclude.includes(tag) && tag !== 'Bug') {
                     tags.push(tag);

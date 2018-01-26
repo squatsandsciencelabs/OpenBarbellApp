@@ -45,11 +45,12 @@ export default initializeStore = () => {
     sagaMiddleware.run(Sagas);
     
     // load previous
-    if (Platform.OS === 'ios') {
-        var storageMechanism = AsyncStorage;
-    } else {
-        var storageMechanism = FilesystemStorage;
-    }
+    // if (Platform.OS === 'ios') {
+    //     var storageMechanism = AsyncStorage;
+    // } else {
+    //     var storageMechanism = FilesystemStorage;
+    // }
+    var storageMechanism = AsyncStorage;
     persistStore(store, { 
         storage: storageMechanism,
         blacklist: [

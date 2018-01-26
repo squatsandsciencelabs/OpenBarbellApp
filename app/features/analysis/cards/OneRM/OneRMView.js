@@ -35,7 +35,7 @@ class OneRMView extends Component {
 
     _render1rm(confidence) {
         if (this.props.isLoggedIn) {
-            if (this.props.chartData.length > 3) {
+            if (this.props.chartData && this.props.chartData.length > 3) {
                 if (confidence >= this.props.minConfidence) {
                     let e1rm = this.props.e1rm ? this.props.e1rm : "---";
                     let e1rmVelocity = this.props.e1rmVelocity ? this.props.e1rmVelocity : "---";
@@ -85,7 +85,7 @@ class OneRMView extends Component {
         if (this.props.isLoggedIn) {
             return (
                 <View style={[styles.button, {marginTop: 20}]}>
-                    <TouchableOpacity onPress={ () => this.props.calcE1rm(this.props.data, this.props.velocity) }>
+                    <TouchableOpacity onPress={ () => this.props.calcE1rm() }>
                         <Text style={styles.buttonText}>Calculate</Text>
                     </TouchableOpacity>
                 </View>

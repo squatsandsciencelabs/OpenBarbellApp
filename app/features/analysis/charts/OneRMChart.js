@@ -35,7 +35,7 @@ class OneRMChartView extends Component {
 
     render() {
         return (
-          <View style={{ alignItems: 'center' }}>
+          <View pointerEvents="none" style={{ alignItems: 'center' }}>
             <VictoryChart
               theme={VictoryTheme.material}
             >

@@ -20,13 +20,14 @@ const defaultState = {
     isEditingIncludeTags: false,
     isEditingExcludeTags: false,
     velocitySlider: .01,
-    e1RMExercise: 'Bench',
+    e1RMExercise: 'Squat',
     e1RMDaysRange: 7,
     tagsToInclude: [],
     tagsToExclude: [],
     e1rm: null,
     e1RMVelocity: null,
     confidence: null,
+    chartData: null,
 };
 
 const AnalysisReducer = (state = defaultState, action) => {
@@ -88,6 +89,7 @@ const AnalysisReducer = (state = defaultState, action) => {
                 e1rm: action.e1rm,
                 e1RMVelocity: action.e1RMVelocity,
                 confidence: action.confidence,
+                chartData: action.chartData,
             };
         default: 
             return state;

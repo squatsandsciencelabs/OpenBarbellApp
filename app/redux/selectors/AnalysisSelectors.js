@@ -21,3 +21,5 @@ export const getCurrentE1rm = (state) => stateRoot(state).e1rm;
 export const getCurrentConfidence = (state) => stateRoot(state).confidence;
 
 export const getVelocitySlider = (state) => stateRoot(state).velocitySlider;
+
+export const getChartData = (state) => stateRoot(state).chartData;

@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     Platform,
     TouchableHighlight,
+    Image,
 } from 'react-native';
 import { Slider } from 'react-native';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
@@ -14,6 +15,7 @@ import ExercisePicker from '../OneRM/exercise/ExercisePicker';
 import EditAnalysisTagsToIncludeScreen from './tags/tagsToInclude/EditAnalysisTagsToIncludeScreen';
 import EditAnalysisTagsToExcludeScreen from './tags/tagsToExclude/EditAnalysisTagsToExcludeScreen';
 import Pill from 'app/shared_features/pill/Pill';
+import * as Device from 'app/utility/Device';
 
 class OneRMView extends Component {
     // using component level state vs redux here to avoid excessive dispatches for the sliders
@@ -71,8 +73,11 @@ class OneRMView extends Component {
                 );
             }
         } else {
+            const size = Device.isSmallDevice() ? 250 : 300;
+
             return (
                 <View>
+                    <Image style={{width: size, height: size, marginBottom: 20}} source={require('app/appearance/images/grayed_chart.png')} />
                     <Text style={styles.errorText}>
                         You must be logged in for 1rm calculation.
                     </Text>

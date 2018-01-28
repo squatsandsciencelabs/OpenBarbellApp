@@ -35,7 +35,7 @@ class OneRMChartView extends Component {
 
     render() {
         return (
-          <View pointerEvents="none" style={{ alignItems: 'center' }}>
+          <View style={{ alignItems: 'center' }}>
             <VictoryChart
               theme={VictoryTheme.material}
             >
@@ -47,6 +47,15 @@ class OneRMChartView extends Component {
                   style={{ data: { fill: "#c43a31" } }}
                   width={400}
                   size={5}
+                  events={[{
+                    target: "data",
+                    eventHandlers: {
+                      onPressIn: (evt, clickedProps) => {
+                        const setID = clickedProps.datum.setID;
+                        this.props.tapPoint(setID);
+                      }
+                    }
+                  }]}
                   data={this.props.data}
                 />
               </VictoryGroup>

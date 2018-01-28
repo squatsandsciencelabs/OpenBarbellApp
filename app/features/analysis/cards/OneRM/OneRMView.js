@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Slider } from 'react-native';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
-import OneRMChart from '../../charts/OneRMChart';
+import OneRMChartScreen from '../../charts/OneRMChartScreen';
 import ExercisePicker from '../OneRM/exercise/ExercisePicker';
 import EditAnalysisTagsToIncludeScreen from './tags/tagsToInclude/EditAnalysisTagsToIncludeScreen';
 import EditAnalysisTagsToExcludeScreen from './tags/tagsToExclude/EditAnalysisTagsToExcludeScreen';

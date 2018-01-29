@@ -20,6 +20,7 @@ import io.invertase.firebase.analytics.RNFirebaseAnalyticsPackage;
 import io.invertase.firebase.crash.RNFirebaseCrashPackage;
 import io.invertase.firebase.config.RNFirebaseRemoteConfigPackage;
 import io.invertase.firebase.fabric.crashlytics.RNFirebaseCrashlyticsPackage;
+import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
 
 import java.util.Arrays;
@@ -51,6 +52,7 @@ public class MainApplication extends Application implements ReactApplication {
               new RNFirebaseAnalyticsPackage(),
               new RNFirebaseCrashPackage(),
               new RNFirebaseCrashlyticsPackage(),
+              new RNFirebaseMessagingPackage(),
               new RNFirebaseRemoteConfigPackage());
     }
 

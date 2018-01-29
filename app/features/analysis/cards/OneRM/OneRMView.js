@@ -37,14 +37,14 @@ class OneRMView extends Component {
 
     _render1rm(confidence) {
         if (this.props.isLoggedIn) {
-            if (this.props.chartData && this.props.chartData.length > 3) {
+            if (this.props.chartData && this.props.chartData.length > 3 && this.props.regLineData && this.props.regLineData.length > 3) {
                 if (confidence >= this.props.minConfidence) {
                     let e1rm = this.props.e1rm ? this.props.e1rm : "---";
                     let e1rmVelocity = this.props.e1rmVelocity ? this.props.e1rmVelocity : "---";
 
                     return (
                         <View>
-                            <OneRMChart confidenceHighEnough={true} data={this.props.chartData} />
+                            <OneRMChart confidenceHighEnough={true} data={this.props.chartData} regLineData={this.props.regLineData} />
                             <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{e1rm}</Text> {this.props.metric}</Text>
                             <Text style={{ textAlign: 'center', fontSize: 15, marginBottom: 20 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.e1rmVelocity} m/s</Text></Text> 
                             <Text style={styles.confidenceText}>Confidence: {this.props.confidence} %</Text>

@@ -11,6 +11,7 @@ target 'OBBApp' do
   pod 'Firebase/Analytics'
   pod 'Firebase/Crash'
   pod 'Firebase/RemoteConfig'
+  pod 'Firebase/Messaging'
   pod 'Fabric', '1.7.2'
   pod 'Crashlytics', '3.9.3'
   pod 'GoogleIDFASupport', '3.14.0'

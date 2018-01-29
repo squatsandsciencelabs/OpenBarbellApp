@@ -15,6 +15,7 @@ const mapStateToProps = (state) => ({
     exercise: AnalysisSelectors.getAnalysisE1RMExercise(state),
     metric: SettingsSelectors.getDefaultMetric(state),
     chartData: AnalysisSelectors.getChartData(state),
+    regLineData: AnalysisSelectors.getRegLineData(state),
     days: AnalysisSelectors.getAnalysisRange(state),
     confidence: AnalysisSelectors.getCurrentConfidence(state),
     e1rmVelocity: AnalysisSelectors.getAnalysisE1RMVelocity(state),

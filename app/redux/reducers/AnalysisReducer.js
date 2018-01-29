@@ -28,6 +28,7 @@ const defaultState = {
     e1RMVelocity: null,
     confidence: null,
     chartData: null,
+    regLineData: null,
 };
 
 const AnalysisReducer = (state = defaultState, action) => {
@@ -90,6 +91,7 @@ const AnalysisReducer = (state = defaultState, action) => {
                 e1RMVelocity: action.e1RMVelocity,
                 confidence: action.confidence,
                 chartData: action.chartData,
+                regLineData: action.regLineData,
             };
         default: 
             return state;

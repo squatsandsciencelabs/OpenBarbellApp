@@ -1695,7 +1695,7 @@ describe('SetsSelectors', () => {
             test('return data for scatter', () => {
                 const expected = [{"setID": "d", "x": 200, "y": 1.83}, {"setID": "k", "x": 100, "y": 1.43}]
     
-                const result = sut.getChartPoints(state, 'Bench');
+                const result = sut.getChartData(state, 'Bench');
 
                 expect(result).toEqual(expected);
             });
@@ -1805,7 +1805,7 @@ describe('SetsSelectors', () => {
 
                 const expected = [{"setID": "c", "x": 150, "y": 1.73}, {"setID": "a", "x": 100, "y": 1.83}];
                 
-                const result = sut.getChartPoints(state, 'Bench');
+                const result = sut.getChartData(state, 'Bench');
 
                 expect(result).toEqual(expected);
             });
@@ -1912,9 +1912,9 @@ describe('SetsSelectors', () => {
                     }
                 };
 
-                const expected =  [{"setID": "a", "x": 100, "y": 1.88}, {"setID": "c", "x": 150, "y": 1.63}, {"setID": "h", "x": 200, "y": 1.38}]
+                const expected =  [{"setID": "a", "x": 100, "y": 1.83}, {"setID": "c", "x": 150, "y": 1.73}, {"setID": "h", "x": 200, "y": 1.33}];
                 
-                const result = sut.getChartPoints(state, 'Bench');
+                const result = sut.getChartData(state, 'Bench');
 
                 expect(result).toEqual(expected);
             });
@@ -2021,9 +2021,9 @@ describe('SetsSelectors', () => {
                     }
                 };
 
-                const expected = [{"setID": "a", "x": 100, "y": 1.78}, {"setID": "c", "x": 100, "y": 1.78}, {"setID": "d", "x": 200, "y": 1.83}];
+                const expected =  [{"setID": "a", "x": 100, "y": 1.83}, {"setID": "c", "x": 100, "y": 1.73}, {"setID": "d", "x": 200, "y": 1.83}];
 
-                const result = sut.getChartPoints(state, 'Bench')
+                const result = sut.getChartData(state, 'Bench')
 
                 expect(result).toEqual(expected);
             });

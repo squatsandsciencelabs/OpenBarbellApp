@@ -443,7 +443,22 @@ export const getExerciseData = (state, exercise) => {
     return data;
 };
 
-export const getChartPoints = (state, exercise) => {
+export const getChartData = (state, exercise) => {
+    const sets = getAllSets(state);
+    let data = [];
+    // check if date fits within range
+    const range = AnalysisSelectors.getAnalysisRange(state);
+
+    sets.forEach((set) => {
+        if (set.exercise === exercise && SetEmptyCheck.numValidUnremovedReps(set) > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime) && (checkIncludesTags(state, set.tags) && checkExcludesTags(state, set.tags))) {
+            data.push({ x: set.weight, y: Number(RepDataMap.averageVelocity(getFirstValidUnremovedRep(set.reps).data)), setID: set.setID });
+        }       
+    });
+
+    return data;
+}
+
+export const getRegLinePoints = (state, exercise) => {
     const exerciseData = getExerciseData(state, exercise);
 
     const sets = getAllSets(state);

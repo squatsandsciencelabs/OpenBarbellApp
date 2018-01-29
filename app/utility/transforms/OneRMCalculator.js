@@ -31,7 +31,7 @@ export const calcVel = (data, weight) => {
     const result = regression.linear(data, { precision: 4 });
 
     return result.predict(weight);
-}
+};
 
 export const getRegressionPoints = (data) => {
     if (!data) {

@@ -36,7 +36,9 @@ export const calcE1rm = () => (dispatch, getState) => {
     const state = getState();
     const exercise = AnalysisSelectors.getAnalysisE1RMExercise(state);
     const velocity = AnalysisSelectors.getVelocitySlider(state);
+    // get data for use in OneRM calculation
     const exerciseData = SetsSelectors.getExerciseData(state, exercise);
+    // data for plotting chart points
     const chartData = SetsSelectors.getChartPoints(state, exercise);
     
     // Test Data Points that result in 91% confidence

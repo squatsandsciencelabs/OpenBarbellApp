@@ -17,6 +17,7 @@ import {
     SAVE_HISTORY_VIDEO,
     END_WORKOUT,
     CHANGE_TAB_HISTORY,
+    CHANGE_TAB,
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -117,6 +118,11 @@ const HistoryReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 scrollToSetID: action.scrollToSetID,
+            }
+        case CHANGE_TAB:
+            return {
+                ...state,
+                scrollToSetID: null,
             }
         default:
             return state;

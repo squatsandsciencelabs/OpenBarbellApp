@@ -166,8 +166,12 @@ class HistoryList extends Component {
                 renderItem={({item, index, section}) => this._renderRow(section, index, item)}
                 // getItemLayout={{item, index, section}}
                 renderSectionHeader={({section}) => this._renderSectionHeader(section) }
-                renderSectionFooter={({section}) => this._renderSectionFooter(section)}                
+                renderSectionFooter={({section}) => this._renderSectionFooter(section)}              
                 sections={this.props.sections}
+                getItemLayout={(data, index) => {
+                    console.log(`getItemLayout called with index: ${index}`);
+                    return { length: 44, offset: 44 * index, index: index };
+                }}
                 onEndReached={() => this.props.finishLoading() }
                 style = {{padding: 10, backgroundColor: '#f2f2f2'}}
             />);

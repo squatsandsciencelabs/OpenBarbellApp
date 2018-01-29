@@ -54,7 +54,10 @@ function* updateSurveyURL() {
 
         // action
         yield put(SurveyActionCreators.saveSurveyURL(url));
-    } catch(error) {
+    } catch (error) {
+        if (state === null) {
+            state = yield select();
+        }
         logUpdateSurveyURLErrorAnalytics(state, error);
     }
 }

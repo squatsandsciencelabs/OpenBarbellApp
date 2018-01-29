@@ -36,11 +36,11 @@ export const calcE1rm = () => (dispatch, getState) => {
     const state = getState();
     const exercise = AnalysisSelectors.getAnalysisE1RMExercise(state);
     const velocity = AnalysisSelectors.getVelocitySlider(state);
-    const data = SetsSelectors.getExerciseData(state, exercise, 'regression');
-    const chartData = SetsSelectors.getExerciseData(state, exercise, 'scatter');   
+    const exerciseData = SetsSelectors.getExerciseData(state, exercise);
+    const chartData = SetsSelectors.getChartPoints(state, exercise);
     
     // Test Data Points that result in 91% confidence
-    // const data = [
+    // const exerciseData = [
     //     [255, 0.48], 
     //     [275, 0.31], 
     //     [285, 0.30], 
@@ -51,21 +51,21 @@ export const calcE1rm = () => (dispatch, getState) => {
     // ];
 
     // const chartData = [
-    //     {setID: 'a', x: 255, y: 0.48}, 
-    //     {setID: 'b', x: 275, y: 0.31}, 
-    //     {setID: 'c', x: 285, y: 0.30}, 
-    //     {setID: 'd', x: 295, y: 0.28}, 
-    //     {setID: 'e', x: 300, y: 0.26}, 
-    //     {setID: 'f', x: 310, y: 0.22}, 
-    //     {setID: 'g', x: 320, y: 0.19}
+    //     {setID: 'a', x: 255, y: 0.4408}, 
+    //     {setID: 'b', x: 275, y: 0.3588}, 
+    //     {setID: 'c', x: 285, y: 0.3178}, 
+    //     {setID: 'd', x: 295, y: 0.2768}, 
+    //     {setID: 'e', x: 300, y: 0.2563}, 
+    //     {setID: 'f', x: 310, y: 0.2153}, 
+    //     {setID: 'g', x: 320, y: 0.1743}
     // ];
-
-    const e1rm = OneRMCalculator.calc1rm(data, velocity);
-    const confidence = OneRMCalculator.getConfidenceInterval(data);
+    
+    const e1rm = OneRMCalculator.calc1rm(exerciseData, velocity);
+    const confidence = OneRMCalculator.getConfidenceInterval(exerciseData);
 
     dispatch({
         type: CALC_ONE_RM,
-        e1rm: e1rm,
+        e1rm: Math.sign(e1rm) === 1 ? e1rm : null,
         e1RMVelocity: velocity,
         confidence: confidence,
         chartData: chartData,

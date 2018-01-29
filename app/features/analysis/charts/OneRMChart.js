@@ -39,7 +39,7 @@ class OneRMChartView extends Component {
             <VictoryChart
               theme={VictoryTheme.material}
             >
-              <VictoryGroup offset={20}
+              <VictoryGroup offset={0}
                 colorScale={"qualitative"}
               >
                 {this._renderRegressionLine()}

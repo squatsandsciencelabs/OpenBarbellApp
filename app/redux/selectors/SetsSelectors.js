@@ -428,29 +428,37 @@ export const getRevision = (state) => stateRoot(state).revision;
 // 1rm
 // Get Weights and Velocity for the exercise
 // TODO: change this into two separate functions instead so can avoid using TYPE
-export const getExerciseData = (state, exercise, type) => {   
+export const getExerciseData = (state, exercise) => {   
     const sets = getAllSets(state);
     let data = [];
     // check if date fits within range
     const range = AnalysisSelectors.getAnalysisRange(state);
 
-    if (type === 'regression') {
-        sets.forEach((set) => {
-            
-            if (set.exercise === exercise && SetEmptyCheck.numValidUnremovedReps(set) > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime) && (checkIncludesTags(state, set.tags) && checkExcludesTags(state, set.tags))) {
-                data.push([set.weight, Number(RepDataMap.averageVelocity(getFirstValidUnremovedRep(set.reps).data))]);
-            }       
-        });
-    } else if (type === 'scatter') {
-        sets.forEach((set) => {
-            if (set.exercise === exercise && SetEmptyCheck.numValidUnremovedReps(set) > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime) && (checkIncludesTags(state, set.tags) && checkExcludesTags(state, set.tags))) {
-                data.push({ x: set.weight, y: Number(RepDataMap.averageVelocity(getFirstValidUnremovedRep(set.reps).data)), setID: set.setID });
-            }       
-        });
-    }
+    sets.forEach((set) => {
+        if (set.exercise === exercise && SetEmptyCheck.numValidUnremovedReps(set) > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime) && (checkIncludesTags(state, set.tags) && checkExcludesTags(state, set.tags))) {
+            data.push([set.weight, Number(RepDataMap.averageVelocity(getFirstValidUnremovedRep(set.reps).data))]);
+        }       
+    });
 
     return data;
 };
+
+export const getChartPoints = (state, exercise) => {
+    const exerciseData = getExerciseData(state, exercise);
+
+    const sets = getAllSets(state);
+    let data = [];
+    // check if date fits within range
+    const range = AnalysisSelectors.getAnalysisRange(state);
+
+    sets.forEach((set) => {
+        if (set.exercise === exercise && SetEmptyCheck.numValidUnremovedReps(set) > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime) && (checkIncludesTags(state, set.tags) && checkExcludesTags(state, set.tags))) {
+            data.push({ x: set.weight, y: OneRMCalculator.calcVel(exerciseData, set.weight)[1], setID: set.setID });
+        }       
+    });
+
+    return data;
+}
 
 const getFirstValidUnremovedRep = (reps) => {
     return reps.find((rep) => {

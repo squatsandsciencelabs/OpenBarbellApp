@@ -15,7 +15,8 @@ import {
     DISMISS_HISTORY_VIDEO_PLAYER,
     DELETE_HISTORY_VIDEO,
     SAVE_HISTORY_VIDEO,
-    END_WORKOUT
+    END_WORKOUT,
+    CHANGE_TAB_HISTORY,
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -32,6 +33,7 @@ const defaultState = {
     watchSetID: null,
     watchFileURL: null,
     viewedCounter: 0,
+    scrollToSetID: null,
 };
 
 const HistoryReducer = (state = defaultState, action) => {
@@ -111,6 +113,11 @@ const HistoryReducer = (state = defaultState, action) => {
                 watchSetID: null,
                 watchFileURL: null
             });
+        case CHANGE_TAB_HISTORY:
+            return {
+                ...state,
+                scrollToSetID: action.scrollToSetID,
+            }
         default:
             return state;
     }

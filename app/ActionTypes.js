@@ -57,6 +57,7 @@ export const STORE_INITIALIZED = 'STORE_INITIALIZED';
 
 // tab
 export const CHANGE_TAB = 'CHANGE_TAB';
+export const CHANGE_TAB_HISTORY = 'CHANGE_TAB_HISTORY';
 
 // suggestions
 export const UPDATE_TAG_SUGGESTIONS = 'UPDATE_TAG_SUGGESTIONS';

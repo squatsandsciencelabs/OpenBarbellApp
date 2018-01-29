@@ -52,7 +52,7 @@ class OneRMChartView extends Component {
                     eventHandlers: {
                       onPressIn: (evt, clickedProps) => {
                         const setID = clickedProps.datum.setID;
-                        this.props.tapPoint('dfa3113f-9cd9-48fe-bbbc-c5adc69ceac7');
+                        this.props.tapPoint(setID);
                       }
                     }
                   }]}

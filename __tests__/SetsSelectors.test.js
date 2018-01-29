@@ -1816,7 +1816,7 @@ describe('SetsSelectors', () => {
                         workoutData: [{
                             setID: 'h',
                             exercise: 'Bench',
-                            weight: 100,
+                            weight: 200,
                             metric: 'lbs',
                             reps: [{
                                 isValid: true,
@@ -1880,7 +1880,7 @@ describe('SetsSelectors', () => {
                             c: {
                                 setID: 'c',
                                 exercise: 'Bench',
-                                weight: 100,
+                                weight: 150,
                                 metric: 'lbs',
                                 reps: [{
                                     isValid: true,
@@ -1912,7 +1912,7 @@ describe('SetsSelectors', () => {
                     }
                 };
 
-                const expected =  [{"setID": "a", "x": 100, "y": 1.63}, {"setID": "c", "x": 100, "y": 1.63}, {"setID": "h", "x": 100, "y": 1.63}]
+                const expected =  [{"setID": "a", "x": 100, "y": 1.88}, {"setID": "c", "x": 150, "y": 1.63}, {"setID": "h", "x": 200, "y": 1.38}]
                 
                 const result = sut.getChartPoints(state, 'Bench');
 

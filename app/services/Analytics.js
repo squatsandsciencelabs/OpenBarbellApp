@@ -152,7 +152,7 @@ const getErrorCode = (error) => {
     } else {
         return 9001;
     }
-}
+};
 
 const logCrashlyticsError = (code, event, params) => {
     let message = JSON.stringify(params);

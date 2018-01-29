@@ -2,8 +2,6 @@
 // TODO: tweak this so setting up upload is separate from actually uploading
 // Also split it up so resume is doable
 
-import * as Errors from 'app/utility/Errors';
-
 export const upload = async (accessToken, name, content, completionHandler) => {
     // length
     let length = getByteLen(content);

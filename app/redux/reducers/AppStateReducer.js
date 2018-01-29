@@ -3,7 +3,8 @@ import {
     LOCKED_SCREEN,
     MULTI_TASK_SCREEN,
     END_WORKOUT,
-    CHANGE_TAB
+    CHANGE_TAB,
+    CHANGE_TAB_HISTORY,
 } from 'app/ActionTypes';
 import * as NavigationConfig from 'app/configs/NavigationConfig';
 
@@ -20,6 +21,11 @@ const AppStateReducer = (state = defaultState, action) => {
             return Object.assign({}, state, {
                 tabIndex: action.tabIndex,
             });
+        case CHANGE_TAB_HISTORY:
+            return {
+                ...state,
+                tabIndex: action.tabIndex,
+            }
         case UNLOCKED_SCREEN:
             return Object.assign({}, state, {
                 screenStatus: 'active',

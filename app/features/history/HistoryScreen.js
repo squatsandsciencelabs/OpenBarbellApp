@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
+import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as DateUtils from 'app/utility/transforms/DateUtils';
 import * as RepDataMap from 'app/utility/transforms/RepDataMap';
@@ -305,7 +306,8 @@ const mapStateToProps = (state) => {
     return {
         email: state.auth.email,
         sections: storedSections,
-        shouldShowRemoved: shouldShowRemoved
+        shouldShowRemoved: shouldShowRemoved,
+        scrollToSetID: HistorySelectors.getScrollToSetID(state),
     };
 };
 

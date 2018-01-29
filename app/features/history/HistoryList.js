@@ -28,6 +28,7 @@ import HistoryVideoRecorderScreen from './camera/HistoryVideoRecorderScreen';
 import HistoryVideoPlayerScreen from './video/HistoryVideoPlayerScreen';
 import SetSummary from 'app/shared_features/set_card/collapsed/SetSummary';
 import SetAnalysisScreen from 'app/shared_features/set_card/analysis/SetAnalysisScreen';
+import * as Sections from 'app/utility/transforms/Sections';
 
 class HistoryList extends Component {
 
@@ -37,6 +38,20 @@ class HistoryList extends Component {
         const differentShowRemoved = nextProps.shouldShowRemoved !== this.props.shouldShowRemoved;
         const differentSections = nextProps.sections !== this.props.sections;
         return differentShowRemoved || differentSections;
+    }
+
+    componentWillReceiveProps(nextProps) {
+        let setID = nextProps.scrollToSetID;
+
+        if (setID) {
+            this._scrollToLocation(setID)
+        }
+    }
+
+    _scrollToLocation(setID) {
+        const scrollTo = Sections.findInSection(this.props.sections, setID);
+        console.tron.log(scrollTo);
+        return this.sectionList.scrollToLocation(scrollTo);
     }
 
     // RENDER
@@ -149,6 +164,7 @@ class HistoryList extends Component {
                 stickySectionHeadersEnabled={false}
                 ListFooterComponent={HistoryLoadingFooterScreen}
                 renderItem={({item, index, section}) => this._renderRow(section, index, item)}
+                // getItemLayout={{item, index, section}}
                 renderSectionHeader={({section}) => this._renderSectionHeader(section) }
                 renderSectionFooter={({section}) => this._renderSectionFooter(section)}                
                 sections={this.props.sections}

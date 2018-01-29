@@ -10,8 +10,8 @@ import {
 import * as DeviceActionCreators from 'app/redux/shared_actions/DeviceActionCreators';
 import * as Analytics from 'app/services/Analytics';
 
-export const startDeviceScan = () => {
-    return DeviceActionCreators.startDeviceScan();
+export const startDeviceScan = (isManual=false) => {
+    return DeviceActionCreators.startDeviceScan(isManual);
 };
 
 export const stopDeviceScan = () => {

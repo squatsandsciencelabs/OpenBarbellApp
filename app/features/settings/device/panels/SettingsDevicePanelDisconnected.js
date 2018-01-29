@@ -23,7 +23,9 @@ class SettingsDevicePanelDisconnected extends Component {
     }
 
     componentDidMount() {
-        this._scanForDevices(INITIAL_SCAN);
+        // TODO: don't do this on mounting, do this on startup instead
+        // reason is that switching from connected to disconnected will cause this to run unnecessarily
+        this._scanForDevices(INITIAL_SCAN, false);
     }
 
     componentWillUnmount() {
@@ -35,8 +37,8 @@ class SettingsDevicePanelDisconnected extends Component {
 
     // ACTIONS
 
-    _scanForDevices(time) {
-        this.props.startDeviceScan();
+    _scanForDevices(time, isManualScan=true) {
+        this.props.startDeviceScan(isManualScan);
 
         this.timer = setTimeout(() => {
             this.props.stopDeviceScan();

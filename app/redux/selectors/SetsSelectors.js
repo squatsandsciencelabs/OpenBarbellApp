@@ -458,7 +458,7 @@ export const getChartPoints = (state, exercise) => {
     });
 
     return data;
-}
+};
 
 const getFirstValidUnremovedRep = (reps) => {
     return reps.find((rep) => {

@@ -52,25 +52,25 @@ export const calcE1rm = () => (dispatch, getState) => {
     // ];
 
     // const chartData = [
-    //     {setID: 'a', x: 255, y: 0.48}, 
-    //     {setID: 'b', x: 275, y: 0.31}, 
-    //     {setID: 'c', x: 285, y: 0.30}, 
-    //     {setID: 'd', x: 295, y: 0.28}, 
-    //     {setID: 'e', x: 300, y: 0.26}, 
-    //     {setID: 'f', x: 310, y: 0.22}, 
-    //     {setID: 'g', x: 320, y: 0.19}    
+    //     {setID: 'dfa3113f-9cd9-48fe-bbbc-c5adc69ceac7', x: 255, y: 0.48}, 
+    //     {setID: 'b727077c-88cc-42ab-b3a5-9623ac2ea8b6', x: 275, y: 0.31}, 
+    //     {setID: '1665b792-328a-41d6-92f7-b85892e56386', x: 285, y: 0.30}, 
+    //     {setID: '8d1ad6a5-a039-413f-95c8-e1d0cf72f4e3', x: 295, y: 0.28}, 
+    //     {setID: 'f49b7f6f-921e-4ad0-b5ea-34621c4cd2be', x: 300, y: 0.26}, 
+    //     {setID: 'd10208d5-aec4-447d-a0d6-3f40c73cbbe9', x: 310, y: 0.22}, 
+    //     {setID: '4139c974-3ce2-4d4f-a573-05795121da92', x: 320, y: 0.19}  
     // ];
 
     // const regLineData = [
-    //     {setID: 'a', x: 255, y: 0.4408}, 
-    //     {setID: 'b', x: 275, y: 0.3588}, 
-    //     {setID: 'c', x: 285, y: 0.3178}, 
-    //     {setID: 'd', x: 295, y: 0.2768}, 
-    //     {setID: 'e', x: 300, y: 0.2563}, 
-    //     {setID: 'f', x: 310, y: 0.2153}, 
-    //     {setID: 'g', x: 320, y: 0.1743}
+    //     {setID: 'dfa3113f-9cd9-48fe-bbbc-c5adc69ceac7', x: 255, y: 0.4408}, 
+    //     {setID: 'b727077c-88cc-42ab-b3a5-9623ac2ea8b6', x: 275, y: 0.3588}, 
+    //     {setID: '1665b792-328a-41d6-92f7-b85892e56386', x: 285, y: 0.3178}, 
+    //     {setID: '8d1ad6a5-a039-413f-95c8-e1d0cf72f4e3', x: 295, y: 0.2768}, 
+    //     {setID: 'f49b7f6f-921e-4ad0-b5ea-34621c4cd2be', x: 300, y: 0.2563}, 
+    //     {setID: 'd10208d5-aec4-447d-a0d6-3f40c73cbbe9', x: 310, y: 0.2153}, 
+    //     {setID: '4139c974-3ce2-4d4f-a573-05795121da92', x: 320, y: 0.1743}
     // ];
-    
+
     const e1rm = OneRMCalculator.calc1rm(exerciseData, velocity);
     const r2 = OneRMCalculator.getR2interval(exerciseData);
 

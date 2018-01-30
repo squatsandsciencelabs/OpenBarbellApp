@@ -54,7 +54,6 @@ class OneRMChartView extends Component {
                     eventHandlers: {
                       onPressIn: (evt, clickedProps) => {
                         const setID = clickedProps.datum.setID;
-                        console.tron.log(clickedProps.datum);
                         this.props.tapPoint(setID);
                       }
                     }

@@ -2023,7 +2023,7 @@ describe('SetsSelectors', () => {
 
                 const expected =  [{"setID": "a", "x": 100, "y": 1.83}, {"setID": "c", "x": 100, "y": 1.73}, {"setID": "d", "x": 200, "y": 1.83}];
 
-                const result = sut.getChartData(state, 'Bench')
+                const result = sut.getChartData(state, 'Bench');
 
                 expect(result).toEqual(expected);
             });
@@ -2137,7 +2137,7 @@ describe('SetsSelectors', () => {
                 // same weight so y being the same makes sense
                 const expected = [{"setID": "a", "x": 100, "y": 1.78}, {"setID": "c", "x": 100, "y": 1.78}, {"setID": "d", "x": 200, "y": 1.83}];
 
-                const result = sut.getRegLinePoints(state, 'Bench')
+                const result = sut.getRegLinePoints(state, 'Bench');
 
                 expect(result).toEqual(expected);
             });

@@ -89,19 +89,16 @@ function *obtainNewAnonymousTokens() {
         try {
             // refresh
             let state = yield select();
-            // TODO: analytics
-            // logAttemptRefreshTokenAnalytics(state);
+            logAttemptRefreshAnonymousTokenAnalytics(state);
             const json = yield call(API.obtainNewAnonymousTokens, refreshToken);
 
             // success
             state = yield select();
-            // TODO: analytics
-            // logRefreshedTokenAnalytics(state);
+            logRefreshedAnonymousTokenAnalytics(state);
             yield put(AuthActionCreators.saveTokens(json.accessToken, json.refreshToken, new Date()));
         } catch(error) {
             let state = yield select();
-            // TODO: analytics
-            // logRefreshTokenErrorAnalytics(state, error, refreshToken);
+            logRefreshAnonymousTokenErrorAnalytics(state, error, refreshToken);
             if (error.type !== undefined || typeof error === 'function') {
                 yield put(error);
             }
@@ -131,6 +128,22 @@ const logRefreshTokenErrorAnalytics = (state, error, refreshToken) => {
 
 const logRefreshedTokenAnalytics = (state) => {
     Analytics.logEventWithAppState('refreshed_token', {
+    }, state);
+};
+
+const logAttemptRefreshAnonymousTokenAnalytics = (state) => {
+    Analytics.logEventWithAppState('attempt_refresh_anonymous_token', {
+    }, state);
+};
+
+const logRefreshAnonymousTokenErrorAnalytics = (state, error, refreshToken) => {
+    Analytics.logErrorWithAppState(error, 'refresh_anonymous_token_error', {
+        refresh_token: refreshToken,
+    }, state);
+};
+
+const logRefreshedAnonymousTokenAnalytics = (state) => {
+    Analytics.logEventWithAppState('refreshed_anonymous_token', {
     }, state);
 };
 

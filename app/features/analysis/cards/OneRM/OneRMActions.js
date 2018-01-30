@@ -36,9 +36,9 @@ export const calcE1rm = () => (dispatch, getState) => {
     const state = getState();
     const exercise = AnalysisSelectors.getAnalysisE1RMExercise(state);
     const velocity = AnalysisSelectors.getVelocitySlider(state);
-    const exerciseData = SetsSelectors.getExerciseData(state, exercise); // get data for use in OneRM calculation
-    const chartData = SetsSelectors.getChartData(state, exercise); // data for plotting chart points
-    const regLineData = SetsSelectors.getRegLinePoints(state, exercise); // data for plotting regression line
+    // const exerciseData = SetsSelectors.getExerciseData(state, exercise); // get data for use in OneRM calculation
+    // const chartData = SetsSelectors.getChartData(state, exercise); // data for plotting chart points
+    // const regLineData = SetsSelectors.getRegLinePoints(state, exercise); // data for plotting regression line
     
     // Test Data Points that result in 91% confidence
     // const exerciseData = [
@@ -48,7 +48,7 @@ export const calcE1rm = () => (dispatch, getState) => {
     //     [295, 0.28], 
     //     [300, 0.26], 
     //     [310, 0.22], 
-    //     [320, 0.19],
+    //     [320, 0.19]
     // ];
 
     // const chartData = [

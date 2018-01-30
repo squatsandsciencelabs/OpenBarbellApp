@@ -73,6 +73,10 @@ function* askSurvey(action) {
     if (!surveyAvailable) {
         return;
     }
+    const canPromptSurvey = yield select(SurveySelectors.getCanPromptEndWorkoutSurvey);
+    if (!canPromptSurvey) {
+        return;
+    }
 
     let state = null;
 
@@ -81,16 +85,23 @@ function* askSurvey(action) {
         // prompt
         state = yield select();
         logPromptSurveyAnalytics(state);
-        yield call(showSurveyAlert);
+        const result = yield call(showSurveyAlert);
 
         // present
         state = yield select();
         logPromptSurveyTakeNowAnalytics(state);
         yield put(SurveyActionCreators.presentSurvey());
     } catch(error) {
-        // was canceled
-        state = yield select();
-        logPromptSurveyFillLaterAnalytics(state);
+        if (error === 'Later') {
+            // was canceled
+            state = yield select();
+            logPromptSurveyFillLaterAnalytics(state);
+        } else if (error === 'I Hate Data') {
+            // hate data
+            yield put(SurveyActionCreators.optOutEndWorkoutSurveyPrompt());
+            state = yield select();
+            logPromptSurveyOptOutAnalytics(state);
+        }
     }
 }
 
@@ -103,15 +114,21 @@ function showSurveyAlert() {
                 {
                     text: 'Later',
                     onPress: () => {
-                        reject();
+                        reject('Later');
                     },
-                    style: 'cancel'
                 },
                 {
                     text: "Sure",
                     onPress: () => {
                         resolve();
                     },
+                },
+                {
+                    text: 'I Hate Data',
+                    onPress: () => {
+                        reject('I Hate Data');
+                    },
+                    style: 'destructive'
                 },
             ]
         );
@@ -128,6 +145,12 @@ const logPromptSurveyAnalytics = (state) => {
 
 const logPromptSurveyFillLaterAnalytics = (state) => {
     Analytics.logEventWithAppState('prompt_survey_fill_later', {
+        url: SurveySelectors.getURL(state),
+    }, state);
+};
+
+const logPromptSurveyOptOutAnalytics = (state) => {
+    Analytics.logEventWithAppState('prompt_survey_opt_out', {
         url: SurveySelectors.getURL(state),
     }, state);
 };

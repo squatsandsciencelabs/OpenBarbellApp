@@ -3,11 +3,13 @@ import {
     DISMISS_SURVEY,
     COMPLETE_SURVEY,
     SAVE_SURVEY_URL,
+    OPT_OUT_END_WORKOUT_SURVEY_PROMPT,
 } from 'app/ActionTypes';
 
 const defaultState = {
     surveyURL: '',
-    completedSurveyURLs: [],
+    completedSurveyURLs: [], // this is to determine if there's a survey to be shown
+    optedOutEndWorkoutPromptSurveyURLs: [], // this is to determine if someone no longer wants to see the prompts on end workout
     isFillingOutSurvey: false,
 };
 
@@ -32,6 +34,11 @@ const SurveyReducer = (state = defaultState, action) => {
             return Object.assign({}, state, {
                 surveyURL: action.surveyURL,
             });
+        case OPT_OUT_END_WORKOUT_SURVEY_PROMPT:
+            return {
+                ...state,
+                optedOutEndWorkoutPromptSurveyURLs: [...state.optedOutEndWorkoutPromptSurveyURLs, state.surveyURL],
+            };
         default:
             return state;
     }

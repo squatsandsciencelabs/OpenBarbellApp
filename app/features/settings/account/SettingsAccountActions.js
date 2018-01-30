@@ -19,10 +19,7 @@ import * as Analytics from 'app/services/Analytics';
 export const signIn = () => (dispatch, getState) => {
     const state = getState();
     logTapGoogleSignInAnalytics(state);
-
-    dispatch({
-        type: LOGIN_REQUEST 
-    });
+    dispatch(AuthActionCreators.requestLogin());
 };
 
 export const signOut = () => (dispatch, getState) => {

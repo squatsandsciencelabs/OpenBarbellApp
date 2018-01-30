@@ -6,9 +6,14 @@ import {
     SAVE_TOKENS,
     TOKENS_READY,
     CLEAR_TOKENS,
+    LOGIN_REQUEST,
 } from 'app/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
+
+export const requestLogin = () => ({
+    type: LOGIN_REQUEST,
+});
 
 export const loginSucceeded = (accessToken, refreshToken, email, date = new Date(), revision = null, sets = null) => ({
     type: LOGIN_SUCCESS,

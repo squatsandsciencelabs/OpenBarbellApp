@@ -43,11 +43,11 @@ const AuthSaga = function * AuthSaga() {
             yield apply(GoogleSignin, GoogleSignin.signOut);
 
             // analytics
-            let state = yield select();
+            const state = yield select();
             logLogoutAnalytics(state);
         } catch(error) {
             console.tron.log("LOGOUT SIGN OUT ERROR " + error);
-            let state = yield select();
+            const state = yield select();
             logLogoutErrorAnalytics(state, error);
         }
     }
@@ -62,12 +62,16 @@ function* executeAnonymousLogin() {
             let refreshToken = yield select(AuthSelectors.getRefreshToken);
             if (!refreshToken) {
                 let json = yield call(API.loginAnonymously);
-                // TODO: analytics?
                 yield put(AuthActionCreators.saveTokens(json.accessToken, json.refreshToken, new Date()));
+
+                // analytics
+                const state = yield select();
+                logLoginAnonymouslyAnalytics(state);
             }
         } catch(error) {
             console.tron.log("ERROR CODE " + error.code + " ERROR " + error);
-            // TODO: analytics
+            const state = yield select();
+            logLoginAnonymouslyErrorAnalytics(state, error);
         }
     }
 }
@@ -170,6 +174,16 @@ const logLoginAnalytics = (state) => {
     Analytics.logEventWithAppState('login', {
         revision: revision,
         has_nonzero_revision: has_nonzero_revision,
+    }, state);
+};
+
+const logLoginAnonymouslyAnalytics = (state) => {
+    Analytics.logEventWithAppState('login_anonymously', {
+    }, state);
+};
+
+const logLoginAnonymouslyErrorAnalytics = (state, error) => {
+    Analytics.logErrorWithAppState(error, 'login_anonymously_error', {
     }, state);
 };
 

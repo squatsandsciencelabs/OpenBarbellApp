@@ -50,7 +50,6 @@ class HistoryList extends Component {
 
     _scrollToLocation(setID) {
         const scrollTo = Sections.findInSection(this.props.sections, setID);
-        console.tron.log(scrollTo);
         return this.sectionList.scrollToLocation(scrollTo);
     }
 

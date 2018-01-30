@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import OneRMChart from './OneRMChart';
+import OneRMChartView from './OneRMChartView';
 import * as Actions from './OneRMChartActions';
 
 const mapDispatchToProps = (dispatch) => {
@@ -13,6 +13,6 @@ const mapDispatchToProps = (dispatch) => {
 const OneRMChartScreen = connect(
     null,
     mapDispatchToProps
-)(OneRMChart);
+)(OneRMChartView);
 
 export default OneRMChartScreen;

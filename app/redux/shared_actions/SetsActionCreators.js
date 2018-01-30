@@ -53,7 +53,11 @@ const saveWorkoutSet = (setID, exercise = null, weight = null, metric = null, rp
     }
 
     if (Number(rpe.replace(',','.')) <= 5.5 || isNaN(rpe)) {
-        action.rpe = '< 5.5';
+        if (rpe.includes(',')) {
+            action.rpe = '< 5,5';
+        } else {
+            action.rpe = '< 5.5';
+        }
     }
 
     return action;

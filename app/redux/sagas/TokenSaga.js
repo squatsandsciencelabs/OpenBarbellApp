@@ -59,7 +59,11 @@ function* obtainNewTokens() {
         } catch(error) {
             let state = yield select();
             logRefreshTokenErrorAnalytics(state, error, refreshToken);
-            if (error.type !== undefined || typeof error === 'function') {
+            if (error.type === '401') {
+                // request a sign in because the tokens can't be refreshed
+                dispatch(AuthActionCreators.requestLogin());
+            } else if (error.type !== undefined || typeof error === 'function') {
+                // unknown error type, just propogate it
                 yield put(error);
             }
             console.tron.log(JSON.stringify(error));

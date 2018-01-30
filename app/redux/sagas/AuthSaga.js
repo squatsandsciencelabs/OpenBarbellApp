@@ -77,43 +77,45 @@ function* executeAnonymousLogin() {
 }
 
 function* executeLogin() {
-    try {
-        yield take(LOGIN_REQUEST);
+    while (true) {
+        try {
+            yield take(LOGIN_REQUEST);
 
-        // sign into google
-        let state = yield select();
-        logAttemptLoginGoogleAnalytics(state);
-        const user = yield apply(GoogleSignin, GoogleSignin.signIn);
-
-        // sign into our servers
-        Analytics.setUserID(user.id);
-        state = yield select();
-        logAttemptLoginOpenBarbellAnalytics(state);
-        let json = yield call(API.login, user.idToken);
-
-        // success
-        yield put(AuthActionCreators.loginSucceeded(json.accessToken, json.refreshToken, user.email, new Date(), json.revision, json.sets));
-        state = yield select();
-        logLoginAnalytics(state);
-    } catch(error) {
-        console.tron.log("ERROR CODE " + error.code + " ERROR " + error);
-        if (error.code === -5 || error.code === 12501) {
-            // -5 is when the user cancels the sign in on iOS
-            // 12501 is when the user cancels the sign in on Android
+            // sign into google
             let state = yield select();
-            logCancelLoginAnalytics(state);
-        } else {
-            showGenericAlert();
-            let state = yield select();
-            logLoginErrorAnalytics(state, error);
-        }
-        yield put(AuthActionCreators.logout());
-    } finally {
-        if (yield cancelled()) {
-            // TODO: Fix double logout on errors
-            // Login Error causes a logout, which will cause a cancel of login, which then causes a second logout
-            // not a big deal as it's an edge case, but would be nice to fix
+            logAttemptLoginGoogleAnalytics(state);
+            const user = yield apply(GoogleSignin, GoogleSignin.signIn);
+
+            // sign into our servers
+            Analytics.setUserID(user.id);
+            state = yield select();
+            logAttemptLoginOpenBarbellAnalytics(state);
+            let json = yield call(API.login, user.idToken);
+
+            // success
+            yield put(AuthActionCreators.loginSucceeded(json.accessToken, json.refreshToken, user.email, new Date(), json.revision, json.sets));
+            state = yield select();
+            logLoginAnalytics(state);
+        } catch(error) {
+            console.tron.log("ERROR CODE " + error.code + " ERROR " + error);
+            if (error.code === -5 || error.code === 12501) {
+                // -5 is when the user cancels the sign in on iOS
+                // 12501 is when the user cancels the sign in on Android
+                let state = yield select();
+                logCancelLoginAnalytics(state);
+            } else {
+                showGenericAlert();
+                let state = yield select();
+                logLoginErrorAnalytics(state, error);
+            }
             yield put(AuthActionCreators.logout());
+        } finally {
+            if (yield cancelled()) {
+                // TODO: Fix double logout on errors
+                // Login Error causes a logout, which will cause a cancel of login, which then causes a second logout
+                // not a big deal as it's an edge case, but would be nice to fix
+                yield put(AuthActionCreators.logout());
+            }
         }
     }
 }

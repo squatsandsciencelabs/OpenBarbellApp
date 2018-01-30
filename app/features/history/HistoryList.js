@@ -22,6 +22,7 @@ import UserLoggedOutPanel from './logged_out/UserLoggedOutPanel';
 import ListLoadingFooter from '../history/loading/ListLoadingFooter';
 import SetDataLabelRow from 'app/shared_features/set_card/expanded/SetDataLabelRow';
 import SetDataRow from 'app/shared_features/set_card/expanded/SetDataRow';
+import DeleteSetRow from 'app/shared_features/set_card/expanded/DeleteSetRow';
 import SetRestRow from 'app/shared_features/set_card/SetRestRow';
 import HistoryVideoButtonScreen from './card/expanded/form/HistoryVideoButtonScreen';
 import HistoryVideoRecorderScreen from './camera/HistoryVideoRecorderScreen';
@@ -127,10 +128,13 @@ class HistoryList extends Component {
                             onPressRow={() => this.props.tapCard(item.setID) }
                         />);
             case "footer":
+                return <SetRestRow item={item} />;
+            case "delete footer":
                 return (
-                    <View style={{marginBottom: 15}}>                    
-                        <SetRestRow item={item} />
-                    </View>);
+                    <View style={{marginBottom: 15}}>
+                        <DeleteSetRow onPressDelete={() => this.props.deleteSet(item.setID)} />
+                    </View>
+                );
             case "bottom border":
                 return (<View style={{flex: 1, backgroundColor: '#e0e0e0', height: 1, marginBottom: 15}} />);
             default:

@@ -18,6 +18,7 @@ import EditWorkoutExerciseScreen from './exercise_name/EditWorkoutExerciseScreen
 import EditWorkoutTagsScreen from './tags/EditWorkoutTagsScreen';
 import SetDataLabelRow from 'app/shared_features/set_card/expanded/SetDataLabelRow';
 import SetDataRow from 'app/shared_features/set_card/expanded/SetDataRow';
+import DeleteSetRow from 'app/shared_features/set_card/expanded/DeleteSetRow';
 import SetRestRow from 'app/shared_features/set_card/SetRestRow';
 import LiveRestRow from 'app/shared_features/set_card/expanded/LiveRestRow';
 import WorkoutVideoButtonScreen from './card/expanded/form/WorkoutVideoButtonScreen';
@@ -143,10 +144,7 @@ class WorkoutList extends Component {
                             onPressRow={() => this.props.tapCard(item.setID) }
                         />);
             case "footer":
-                return (
-                    <View style={{marginBottom: 15}}>
-                        <SetRestRow item={item} />
-                    </View>);
+                return <SetRestRow item={item} />;
             case "working set header":
                 return (
                     <View style={{marginTop: 15}}>
@@ -155,6 +153,12 @@ class WorkoutList extends Component {
                 );
             case "top border":
                 return (<View style={{flex: 1, backgroundColor: '#e0e0e0', height: 1}} />);
+            case "delete footer":
+                return (
+                    <View style={{marginBottom: 15}}>
+                        <DeleteSetRow onPressDelete={() => this.props.deleteSet(item.setID)} />
+                    </View>
+                );
             case "bottom border":
                 return (<View style={{flex: 1, backgroundColor: '#e0e0e0', height: 1, marginBottom: 15}} />);
             case "working set footer":

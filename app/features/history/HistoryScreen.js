@@ -112,19 +112,42 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
         if (isInitialSet) {
             // new set, reset the end time
             lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
-            array.push(createBottomBorder(set));
+
+            if (isCollapsed) {
+                array.push(createBottomBorder(set));
+            } else {
+                // new set, reset the end time
+                lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
+                array.push(createDeleteFooter(set));
+                array.push(createBottomBorder(set));
+            }   
         } else if (!isRemoved && set.reps.length > 0) { // ignore removed sets in rest calculations
             // add footer if valid
             if (lastSetEndTime !== null) {
-                array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
+                if (isCollapsed) {
+                    array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
+                } else {
+                    array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
+                    array.push(createDeleteFooter(set));
+                }
             } else {
-                array.push(createBottomBorder(set));
+                if (!isCollapsed) {
+                    array.push(createDeleteFooter(set));
+                    array.push(createBottomBorder(set));
+                } else {
+                    array.push(createBottomBorder(set));
+                }
             }
 
             // update variable for calculation purposes
             lastSetEndTime = SetTimeCalculator.endTime(set);
         } else {
-            array.push(createBottomBorder(set));
+            if (!isCollapsed) {
+                array.push(createDeleteFooter(set));
+                array.push(createBottomBorder(set));            
+            } else {
+                array.push(createBottomBorder(set));
+            }
         }
 
         // insert set card data
@@ -267,6 +290,12 @@ const createFooterVM = (set, lastSetEndTime, isCollapsed) => {
     return footerVM;
 };
 
+const createDeleteFooter = (set) => ({
+    type: "delete footer",
+    key: set.setID + "deleteSet",
+    setID: set.setID,
+});
+
 const createBottomBorder = (set) => ({
     type: "bottom border",
     key: set.setID + 'bottomborder',
@@ -302,6 +331,8 @@ const mapStateToProps = (state) => {
         storedShouldShowRemoved = shouldShowRemoved;
     }
 
+    console.tron.log(storedSections);
+
     return {
         email: state.auth.email,
         sections: storedSections,
@@ -311,6 +342,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
+        deleteSet: Actions.deleteSet,
         removeRep: Actions.removeRep,
         restoreRep: Actions.restoreRep,
         finishLoading: Actions.finishLoading,

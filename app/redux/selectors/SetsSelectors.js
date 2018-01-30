@@ -456,7 +456,7 @@ export const getChartData = (state, exercise) => {
     });
 
     return data;
-}
+};
 
 export const getRegLinePoints = (state, exercise) => {
     const exerciseData = getExerciseData(state, exercise);

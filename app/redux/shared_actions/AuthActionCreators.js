@@ -7,6 +7,8 @@ import {
     TOKENS_READY,
     CLEAR_TOKENS,
     LOGIN_REQUEST,
+    REAUTHENTICATE_REQUEST,
+    REAUTHENTICATE_SUCCESS,
 } from 'app/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
@@ -48,6 +50,18 @@ export const logout = (forceLogout=false) => (dispatch, getState) => {
         });
     }
 };
+
+export const requestReauthenticate = () => ({
+    type: REAUTHENTICATE_REQUEST,
+});
+
+export const reauthenticateSucceeded = (accessToken, refreshToken, email, date = new Date()) => ({
+    type: REAUTHENTICATE_SUCCESS,
+    accessToken: accessToken,
+    refreshToken: refreshToken,
+    email: email,
+    date: date,
+});
 
 export const saveTokens = (accessToken, refreshToken, lastRefreshDate) => ({
     type: SAVE_TOKENS,

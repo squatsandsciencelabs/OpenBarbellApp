@@ -68,8 +68,7 @@ function *pushAnonymousUpdates() {
         try {
             // upload
             let state = yield select();
-            // TODO: analytics
-            // logAttemptPushDataAnalytics(state);
+            logAttemptPushAnonymousDataAnalytics(state);
             const accessToken = yield select(AuthSelectors.getAccessToken);
             const lastRefreshDate = yield select(AuthSelectors.getLastRefreshDate);
             const validator = new Validator(accessToken, lastRefreshDate);
@@ -77,14 +76,12 @@ function *pushAnonymousUpdates() {
 
             // success
             state = yield select();
-            // TODO: analytics
-            // logPushDataSucceededAnalytics(state);
+            logPushAnonymousDataSucceededAnalytics(state);
             yield put(SetsActionCreators.finishedUploadingSets());
         } catch(error) {
             // error
             let state = yield select();
-            // TODO: analytics
-            // logPushDataErrorAnalytics(state, error);
+            logPushAnonymousDataErrorAnalytics(state, error);
             yield put(SetsActionCreators.failedUploadSets());
             if (error.type !== undefined || typeof error === 'function') {
                 yield put(error);
@@ -216,6 +213,22 @@ const logPushDataSucceededAnalytics = (state) => {
 const logPushDataErrorAnalytics = (state, error) => {
     Analytics.logErrorWithAppState(error, 'push_data_error', {
         revision: SetsSelectors.getRevision(state),
+        num_sets_to_push: SetsSelectors.getNumSetsBeingUploaded(state),
+    }, state);
+};
+
+const logAttemptPushAnonymousDataAnalytics = (state) => {
+    Analytics.logEventWithAppState('attempt_push_anonymous_data', {
+    }, state);
+};
+
+const logPushAnonymousDataSucceededAnalytics = (state) => {
+    Analytics.logEventWithAppState('push_anonymous_data_succeeded', {
+    }, state);
+};
+
+const logPushAnonymousDataErrorAnalytics = (state, error) => {
+    Analytics.logErrorWithAppState(error, 'push_anonymous_data_error', {
         num_sets_to_push: SetsSelectors.getNumSetsBeingUploaded(state),
     }, state);
 }; 

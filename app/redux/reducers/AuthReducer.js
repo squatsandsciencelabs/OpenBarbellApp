@@ -4,16 +4,21 @@ import {
     LOGIN_SUCCESS,
     LOGOUT,
     CLEAR_TOKENS,
+    REAUTHENTICATE_REQUEST,
+    REAUTHENTICATE_SUCCESS,
 } from 'app/ActionTypes';
 
 const AuthReducer = (state = createDefaultState(), action) => {
     switch (action.type) {
         case SAVE_TOKENS:
             return saveTokens(state, action);
+        case REAUTHENTICATE_REQUEST:
         case LOGIN_REQUEST:
             return loginRequest(state, action);
         case LOGIN_SUCCESS:
             return loginSuccess(state, action);
+        case REAUTHENTICATE_SUCCESS:
+            return reauthenticateSuccess(state, action);
         case LOGOUT:
         case CLEAR_TOKENS: // same action as logout ONLY in the auth reducer but nowhere else
             return logout(state, action);
@@ -27,14 +32,14 @@ const createDefaultState = () => ({
     refreshToken: null,
     lastRefreshDate: null,
     email: null,
-    isLoggingIn: false
+    isLoggingIn: false,
 });
 
 const saveTokens = (state, action) => {
     let changes = {
         accessToken: action.accessToken,
         refreshToken: action.refreshToken,
-        lastRefreshDate: action.lastRefreshDate
+        lastRefreshDate: action.lastRefreshDate,
     };
 
     return Object.assign({}, state, changes);
@@ -42,7 +47,7 @@ const saveTokens = (state, action) => {
 
 const loginRequest = (state, action) => {
     return Object.assign({}, state, {
-        isLoggingIn: true
+        isLoggingIn: true,
     });
 };
 
@@ -52,7 +57,17 @@ const loginSuccess = (state, action) => {
         accessToken: action.accessToken,
         refreshToken: action.refreshToken,
         email: action.email,
-        lastRefreshDate: action.syncDate
+        lastRefreshDate: action.syncDate,
+    });
+};
+
+const reauthenticateSuccess = (state, action) => {
+    return Object.assign({}, state, {
+        isLoggingIn: false,
+        accessToken: action.accessToken,
+        refreshToken: action.refreshToken,
+        email: action.email,
+        lastRefreshDate: action.date,
     });
 };
 
@@ -61,7 +76,7 @@ const logout = (state, action) => {
         isLoggingIn: false,
         accessToken: null,
         refreshToken: null,
-        email: null
+        email: null,
     });
 };
 

@@ -18,6 +18,7 @@ import {
     LOGIN_REQUEST,
     LOGOUT,
     CLEAR_TOKENS,
+    REAUTHENTICATE_REQUEST,
 } from 'app/ActionTypes';
 import API from 'app/services/API';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
@@ -31,11 +32,13 @@ const AuthSaga = function * AuthSaga() {
     
     while (true) {
         // login
-        const task = yield fork(executeLogin);
+        const loginTask = yield fork(executeLogin);
+        const reauthenticateTask = yield fork(executeReauthenticate);
 
         // logout
         yield take([LOGOUT, CLEAR_TOKENS]);
-        yield cancel(task);
+        yield cancel(loginTask);
+        yield cancel(reauthenticateTask);
         try {
             // reset and logout
             Analytics.setUserID();
@@ -77,52 +80,88 @@ function* executeAnonymousLogin() {
 }
 
 function* executeLogin() {
+    try {
+        yield take(LOGIN_REQUEST);
+
+        // sign into google
+        let state = yield select();
+        logAttemptLoginGoogleAnalytics(state);
+        const user = yield apply(GoogleSignin, GoogleSignin.signIn);
+
+        // sign into our servers
+        Analytics.setUserID(user.id);
+        state = yield select();
+        logAttemptLoginOpenBarbellAnalytics(state);
+        let json = yield call(API.login, user.idToken);
+
+        // success
+        yield put(AuthActionCreators.loginSucceeded(json.accessToken, json.refreshToken, user.email, new Date(), json.revision, json.sets));
+        state = yield select();
+        logLoginAnalytics(state);
+    } catch(error) {
+        console.tron.log("ERROR CODE " + error.code + " ERROR " + error);
+        let state = yield select();
+        if (error.code === -5 || error.code === 12501) {
+            // -5 is when the user cancels the sign in on iOS
+            // 12501 is when the user cancels the sign in on Android
+            logCancelLoginAnalytics(state);
+        } else {
+            showSignInErrorAlert();
+            logLoginErrorAnalytics(state, error);
+        }
+        yield put(AuthActionCreators.logout());
+    } finally {
+        if (yield cancelled()) {
+            // TODO: Fix double logout on errors
+            // Login Error causes a logout, which will cause a cancel of login, which then causes a second logout
+            // not a big deal as it's an edge case, but would be nice to fix
+            yield put(AuthActionCreators.logout());
+        }
+    }
+}
+
+function* executeReauthenticate() {
     while (true) {
         try {
-            yield take(LOGIN_REQUEST);
+            yield take(REAUTHENTICATE_REQUEST);
 
             // sign into google
             let state = yield select();
-            logAttemptLoginGoogleAnalytics(state);
+            logAttemptReauthenticateGoogleAnalytics(state);
             const user = yield apply(GoogleSignin, GoogleSignin.signIn);
 
             // sign into our servers
             Analytics.setUserID(user.id);
             state = yield select();
-            logAttemptLoginOpenBarbellAnalytics(state);
-            let json = yield call(API.login, user.idToken);
+            logAttemptReauthenticateOpenBarbellAnalytics(state);
+            let json = yield call(API.login, user.idToken); // TODO: consider making a new endpoint instead
 
             // success
-            yield put(AuthActionCreators.loginSucceeded(json.accessToken, json.refreshToken, user.email, new Date(), json.revision, json.sets));
+            // note that we do not utilize the revisions or the set data
+            // reason being that we only want to exchange our google token for access and refresh tokens
+            // data cannot be pulled yet as they might have data waiting to go to the server first
+            yield put(AuthActionCreators.reauthenticateSucceeded(json.accessToken, json.refreshToken, user.email, new Date()));
             state = yield select();
-            logLoginAnalytics(state);
+            logReauthenticatedAnalytics(state);
         } catch(error) {
             console.tron.log("ERROR CODE " + error.code + " ERROR " + error);
+            let state = yield select();
             if (error.code === -5 || error.code === 12501) {
                 // -5 is when the user cancels the sign in on iOS
                 // 12501 is when the user cancels the sign in on Android
-                let state = yield select();
-                logCancelLoginAnalytics(state);
+                logCancelReauthenticateAnalytics(state);
             } else {
-                showGenericAlert();
-                let state = yield select();
-                logLoginErrorAnalytics(state, error);
+                logReauthenticateErrorAnalytics(state, error);
             }
-            yield put(AuthActionCreators.logout());
-        } finally {
-            if (yield cancelled()) {
-                // TODO: Fix double logout on errors
-                // Login Error causes a logout, which will cause a cancel of login, which then causes a second logout
-                // not a big deal as it's an edge case, but would be nice to fix
-                yield put(AuthActionCreators.logout());
-            }
+            yield put(AuthActionCreators.logout(true)); // this will pop the alert
         }
+        // NOTE: theoretically don't need the finally logout call as canceling executeLogin should handle that
     }
 }
 
 // ALERTS
 
-const showGenericAlert = () => {
+const showSignInErrorAlert = () => {
     alert("Oops!", "Something went wrong during the signin process, please try again.");
 };
 
@@ -176,6 +215,31 @@ const logLoginAnalytics = (state) => {
     Analytics.logEventWithAppState('login', {
         revision: revision,
         has_nonzero_revision: has_nonzero_revision,
+    }, state);
+};
+
+const logAttemptReauthenticateGoogleAnalytics = (state) => {
+    Analytics.logEventWithAppState('attempt_reauthenticate_google', {
+    }, state);
+};
+
+const logAttemptReauthenticateOpenBarbellAnalytics = (state) => {
+    Analytics.logEventWithAppState('attempt_reauthenticate_openbarbell', {
+    }, state);
+};
+
+const logCancelReauthenticateAnalytics = (state) => {
+    Analytics.logEventWithAppState('cancel_reauthenticate', {
+    }, state);
+};
+
+const logReauthenticateErrorAnalytics = (state, error) => {
+    Analytics.logErrorWithAppState(error, 'reauthenticate_error', {
+    }, state);
+};
+
+const logReauthenticatedAnalytics = (state) => {
+    Analytics.logEventWithAppState('reauthenticated', {
     }, state);
 };
 

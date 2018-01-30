@@ -54,9 +54,6 @@ const SettingsReducer = (state = defaultState, action) => {
             });
         case UPDATE_SET_DATA_FROM_SERVER:
         case LOGIN_SUCCESS:
-            return Object.assign({}, state, {
-                syncDate: action.syncDate
-            });
         case UPDATE_SYNC_DATE:
             return Object.assign({}, state, {
                 syncDate: action.syncDate

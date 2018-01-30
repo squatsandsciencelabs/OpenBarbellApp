@@ -2,7 +2,6 @@ import { Alert, Linking } from 'react-native';
 import { GoogleSignin } from 'react-native-google-signin';
 
 import {
-    LOGIN_REQUEST,
     ATTEMPT_EXPORTING_CSV,
     EXPORTING_CSV,
     CANCEL_LOGOUT,

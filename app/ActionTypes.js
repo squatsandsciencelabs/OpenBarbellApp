@@ -25,7 +25,9 @@ export const LOGOUT = 'LOGOUT';
 export const CANCEL_LOGOUT = 'CANCEL_LOGOUT';
 export const SAVE_TOKENS = 'SAVE_TOKENS';
 export const TOKENS_READY = 'TOKENS_READY';
-export const CLEAR_TOKENS = 'CLEAR_TOKENS';
+export const CLEAR_TOKENS = 'CLEAR_TOKENS'; // TODO: this is a bad action to use for anonymous logout, rename it
+export const REAUTHENTICATE_REQUEST = 'REAUTHENTICATE_REQUEST';
+export const REAUTHENTICATE_SUCCESS = 'REAUTHENTICATE_SUCCESS';
 
 // sets
 export const SAVE_WORKOUT_SET = 'SAVE_WORKOUT_SET';

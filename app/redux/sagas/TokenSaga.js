@@ -61,7 +61,7 @@ function* obtainNewTokens() {
             logRefreshTokenErrorAnalytics(state, error, refreshToken);
             if (error.type === '401') {
                 // request a sign in because the tokens can't be refreshed
-                dispatch(AuthActionCreators.requestLogin());
+                yield put(AuthActionCreators.requestLogin());
             } else if (error.type !== undefined || typeof error === 'function') {
                 // unknown error type, just propogate it
                 yield put(error);

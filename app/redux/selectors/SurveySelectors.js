@@ -15,3 +15,11 @@ export const getSurveyAvailable = (state) => {
     }
     return false;
 };
+
+export const getCanPromptEndWorkoutSurvey = (state) => {
+    const url = getURL(state);
+    if (url && !stateRoot(state).optedOutEndWorkoutPromptSurveyURLs.includes(url)) {
+        return true;
+    }
+    return false;
+};

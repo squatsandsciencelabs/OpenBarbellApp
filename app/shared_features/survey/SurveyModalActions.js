@@ -7,6 +7,7 @@ import {
 import * as Analytics from 'app/services/Analytics';
 import * as SurveySelectors from 'app/redux/selectors/SurveySelectors';
 import * as AppStateSelectors from 'app/redux/selectors/AppStateSelectors';
+import * as SurveyActionCreators from 'app/redux/shared_actions/SurveyActionCreators';
 
 export const closeSurvey = () => (dispatch, getState) => {
     // log analytics
@@ -19,15 +20,15 @@ export const closeSurvey = () => (dispatch, getState) => {
         null,
         [
             {
-                text: "Finished",
-                onPress: () => {
-                    dispatch(finish());
-                },
-            },
-            {
                 text: 'Later',
                 onPress: () => {
                     dispatch(later());
+                },
+            },
+            {
+                text: "Finished",
+                onPress: () => {
+                    dispatch(finish());
                 },
             },
             {
@@ -35,6 +36,7 @@ export const closeSurvey = () => (dispatch, getState) => {
                 onPress: () => {
                     dispatch(optout());
                 },
+                style: 'destructive'
             },
         ]
     );
@@ -46,9 +48,7 @@ export const optout = () => (dispatch, getState) => {
     logOptOutSurveyAnalytics(state);
     resetScreen(state);
 
-    dispatch({
-        type: COMPLETE_SURVEY,
-    });
+    dispatch(SurveyActionCreators.completeSurvey());
 };
 
 export const finish = () => (dispatch, getState) => {
@@ -57,9 +57,7 @@ export const finish = () => (dispatch, getState) => {
     logFinishSurveyAnalytics(state);
     resetScreen(state);
 
-    dispatch({
-        type: COMPLETE_SURVEY,
-    });
+    dispatch(SurveyActionCreators.completeSurvey());
 };
 
 export const later = () => (dispatch, getState) => {

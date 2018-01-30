@@ -60,6 +60,10 @@ const saveWorkoutSet = (setID, exercise = null, weight = null, metric = null, rp
         }
     }
 
+    if (Number(rpe.replace(',','.')) > 10) {
+        action.rpe = '10';
+    }
+
     return action;
 };
 
@@ -95,7 +99,15 @@ const saveHistorySet = (setID, exercise = null, weight = null, metric = null, rp
     }
 
     if (Number(rpe.replace(',','.')) <= 5.5 || isNaN(rpe)) {
-        action.rpe = '< 5.5';
+        if (rpe.includes(',')) {
+            action.rpe = '< 5,5';
+        } else {
+            action.rpe = '< 5.5';
+        }
+    }
+
+    if (Number(rpe.replace(',','.')) > 10) {
+        action.rpe = '10';
     }
 
     return action;

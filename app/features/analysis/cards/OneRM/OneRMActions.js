@@ -36,43 +36,40 @@ export const calcE1rm = () => (dispatch, getState) => {
     const state = getState();
     const exercise = AnalysisSelectors.getAnalysisE1RMExercise(state);
     const velocity = AnalysisSelectors.getVelocitySlider(state);
-    // get data for use in OneRM calculation
-    const exerciseData = SetsSelectors.getExerciseData(state, exercise);
-    // data for plotting chart points
-    const chartData = SetsSelectors.getChartData(state, excercise);
-    // data for plotting regression line
-    const regLineData = SetsSelectors.getRegLinePoints(state, exercise);
+    const exerciseData = SetsSelectors.getExerciseData(state, exercise); // get data for use in OneRM calculation
+    const chartData = SetsSelectors.getChartData(state, excercise); // data for plotting chart points
+    const regLineData = SetsSelectors.getRegLinePoints(state, exercise); // data for plotting regression line
     
     // Test Data Points that result in 91% confidence
-    const exerciseData = [
-        [255, 0.48], 
-        [275, 0.31], 
-        [285, 0.30], 
-        [295, 0.28], 
-        [300, 0.26], 
-        [310, 0.22], 
-        [320, 0.19]
-    ];
+    // const exerciseData = [
+    //     [255, 0.48], 
+    //     [275, 0.31], 
+    //     [285, 0.30], 
+    //     [295, 0.28], 
+    //     [300, 0.26], 
+    //     [310, 0.22], 
+    //     [320, 0.19]
+    // ];
 
-    const chartData = [
-        {setID: 'a', x: 255, y: 0.48}, 
-        {setID: 'b', x: 275, y: 0.31}, 
-        {setID: 'c', x: 285, y: 0.30}, 
-        {setID: 'd', x: 295, y: 0.28}, 
-        {setID: 'e', x: 300, y: 0.26}, 
-        {setID: 'f', x: 310, y: 0.22}, 
-        {setID: 'g', x: 320, y: 0.19}    
-    ];
+    // const chartData = [
+    //     {setID: 'a', x: 255, y: 0.48}, 
+    //     {setID: 'b', x: 275, y: 0.31}, 
+    //     {setID: 'c', x: 285, y: 0.30}, 
+    //     {setID: 'd', x: 295, y: 0.28}, 
+    //     {setID: 'e', x: 300, y: 0.26}, 
+    //     {setID: 'f', x: 310, y: 0.22}, 
+    //     {setID: 'g', x: 320, y: 0.19}    
+    // ];
 
-    const regLineData = [
-        {setID: 'a', x: 255, y: 0.4408}, 
-        {setID: 'b', x: 275, y: 0.3588}, 
-        {setID: 'c', x: 285, y: 0.3178}, 
-        {setID: 'd', x: 295, y: 0.2768}, 
-        {setID: 'e', x: 300, y: 0.2563}, 
-        {setID: 'f', x: 310, y: 0.2153}, 
-        {setID: 'g', x: 320, y: 0.1743}
-    ];
+    // const regLineData = [
+    //     {setID: 'a', x: 255, y: 0.4408}, 
+    //     {setID: 'b', x: 275, y: 0.3588}, 
+    //     {setID: 'c', x: 285, y: 0.3178}, 
+    //     {setID: 'd', x: 295, y: 0.2768}, 
+    //     {setID: 'e', x: 300, y: 0.2563}, 
+    //     {setID: 'f', x: 310, y: 0.2153}, 
+    //     {setID: 'g', x: 320, y: 0.1743}
+    // ];
     
     const e1rm = OneRMCalculator.calc1rm(exerciseData, velocity);
     const confidence = OneRMCalculator.getConfidenceInterval(exerciseData);

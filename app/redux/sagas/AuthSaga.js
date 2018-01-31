@@ -98,8 +98,6 @@ function* executeLogin() {
         yield put(AuthActionCreators.loginSucceeded(json.accessToken, json.refreshToken, user.email, new Date(), json.revision, json.sets));
         state = yield select();
         logLoginAnalytics(state);
-
-        yield apply(GoogleSignin, GoogleSignin.signOut);
     } catch(error) {
         console.tron.log("ERROR CODE " + error.code + " ERROR " + error);
         let state = yield select();

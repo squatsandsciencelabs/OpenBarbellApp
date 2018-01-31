@@ -168,10 +168,15 @@ function* executeReauthenticateLoggedInUser() {
             // -5 is when the user cancels the sign in on iOS
             // 12501 is when the user cancels the sign in on Android
             logCancelReauthenticateAnalytics(state);
+            yield put(AuthActionCreators.logout(true)); // this will pop the alert
         } else {
+            // actual error
             logReauthenticateErrorAnalytics(state, error);
+            if (error.type === "401") {
+                // server rejected, NOW logout
+                yield put(AuthActionCreators.logout(true)); // this will pop the alert
+            }
         }
-        yield put(AuthActionCreators.logout(true)); // this will pop the alert
     }
     // NOTE: theoretically don't need the finally logout call as canceling executeLogin should handle that
 }

@@ -12,11 +12,12 @@ const AuthReducer = (state = createDefaultState(), action) => {
     switch (action.type) {
         case SAVE_TOKENS:
             return saveTokens(state, action);
-        case REAUTHENTICATE_REQUEST:
         case LOGIN_REQUEST:
             return loginRequest(state, action);
         case LOGIN_SUCCESS:
             return loginSuccess(state, action);
+        case REAUTHENTICATE_REQUEST:
+            return reauthenticateRequest(state, action);
         case REAUTHENTICATE_SUCCESS:
             return reauthenticateSuccess(state, action);
         case LOGOUT:
@@ -43,6 +44,14 @@ const saveTokens = (state, action) => {
     };
 
     return Object.assign({}, state, changes);
+};
+
+const reauthenticateRequest = (state, action) => {
+    return {
+        ...state,
+        accessToken: 'invalid',
+        refreshToken: 'invalid',
+    };
 };
 
 const loginRequest = (state, action) => {

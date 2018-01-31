@@ -103,10 +103,12 @@ function *obtainNewAnonymousTokens() {
         } catch(error) {
             let state = yield select();
             logRefreshAnonymousTokenErrorAnalytics(state, error, refreshToken);
-            if (error.type !== undefined || typeof error === 'function') {
+            if (error.type === '401') {
+                // request a sign in because the tokens can't be refreshed
+                yield put(AuthActionCreators.requestReauthenticate());
+            } else if (error.type !== undefined || typeof error === 'function') {
                 yield put(error);
             }
-            yield put(AuthActionCreators.logout()); // logging out of a logged out user just clear tokens
             console.tron.log(JSON.stringify(error));
         }
     }

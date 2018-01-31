@@ -98,6 +98,8 @@ function* executeLogin() {
         yield put(AuthActionCreators.loginSucceeded(json.accessToken, json.refreshToken, user.email, new Date(), json.revision, json.sets));
         state = yield select();
         logLoginAnalytics(state);
+
+        yield apply(GoogleSignin, GoogleSignin.signOut);
     } catch(error) {
         console.tron.log("ERROR CODE " + error.code + " ERROR " + error);
         let state = yield select();
@@ -122,41 +124,54 @@ function* executeLogin() {
 
 function* executeReauthenticate() {
     while (true) {
-        try {
-            yield take(REAUTHENTICATE_REQUEST);
-
-            // sign into google
-            let state = yield select();
-            logAttemptReauthenticateGoogleAnalytics(state);
-            const user = yield apply(GoogleSignin, GoogleSignin.signIn);
-
-            // sign into our servers
-            Analytics.setUserID(user.id);
-            state = yield select();
-            logAttemptReauthenticateOpenBarbellAnalytics(state);
-            let json = yield call(API.login, user.idToken); // TODO: consider making a new endpoint instead
-
-            // success
-            // note that we do not utilize the revisions or the set data
-            // reason being that we only want to exchange our google token for access and refresh tokens
-            // data cannot be pulled yet as they might have data waiting to go to the server first
-            yield put(AuthActionCreators.reauthenticateSucceeded(json.accessToken, json.refreshToken, user.email, new Date()));
-            state = yield select();
-            logReauthenticatedAnalytics(state);
-        } catch(error) {
-            console.tron.log("ERROR CODE " + error.code + " ERROR " + error);
-            let state = yield select();
-            if (error.code === -5 || error.code === 12501) {
-                // -5 is when the user cancels the sign in on iOS
-                // 12501 is when the user cancels the sign in on Android
-                logCancelReauthenticateAnalytics(state);
-            } else {
-                logReauthenticateErrorAnalytics(state, error);
-            }
-            yield put(AuthActionCreators.logout(true)); // this will pop the alert
+        yield take(REAUTHENTICATE_REQUEST);
+        const isLoggedIn = yield select(AuthSelectors.getIsLoggedIn);
+        if (isLoggedIn) {
+            executeReauthenticateLoggedInUser();
+        } else {
+            executeReauthenticateLoggedOutUser();
         }
-        // NOTE: theoretically don't need the finally logout call as canceling executeLogin should handle that
     }
+}
+
+function* executeReauthenticateLoggedOutUser() {
+    // this will cause CLEAR_TOKENS to be called, thereby creating a new anonymous user
+    yield put(AuthActionCreators.logout(false));
+}
+
+function* executeReauthenticateLoggedInUser() {
+    try {
+        // sign into google
+        let state = yield select();
+        logAttemptReauthenticateGoogleAnalytics(state);
+        const user = yield apply(GoogleSignin, GoogleSignin.signIn);
+
+        // sign into our servers
+        Analytics.setUserID(user.id);
+        state = yield select();
+        logAttemptReauthenticateOpenBarbellAnalytics(state);
+        let json = yield call(API.login, user.idToken); // TODO: consider making a new endpoint instead
+
+        // success
+        // note that we do not utilize the revisions or the set data
+        // reason being that we only want to exchange our google token for access and refresh tokens
+        // data cannot be pulled yet as they might have data waiting to go to the server first
+        yield put(AuthActionCreators.reauthenticateSucceeded(json.accessToken, json.refreshToken, user.email, new Date()));
+        state = yield select();
+        logReauthenticatedAnalytics(state);
+    } catch(error) {
+        console.tron.log("ERROR CODE " + error.code + " ERROR " + error);
+        let state = yield select();
+        if (error.code === -5 || error.code === 12501) {
+            // -5 is when the user cancels the sign in on iOS
+            // 12501 is when the user cancels the sign in on Android
+            logCancelReauthenticateAnalytics(state);
+        } else {
+            logReauthenticateErrorAnalytics(state, error);
+        }
+        yield put(AuthActionCreators.logout(true)); // this will pop the alert
+    }
+    // NOTE: theoretically don't need the finally logout call as canceling executeLogin should handle that
 }
 
 // ALERTS

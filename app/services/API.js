@@ -148,10 +148,10 @@ const executeRequest = (method, endpoint, body, accessToken=null) => {
 
             switch(true) {
                 case (status === 401):
-                    console.tron.log("401!");
+                    console.tron.log("401 on request to " + endpoint);
                     if (authorizedRequest === true) {
-                        console.tron.log("401 on authorized call to " + endpoint + " should logout");
-                        reject(AuthActionCreators.logout(true));
+                        console.tron.log("401 on authorized call to " + endpoint + " should invalidate tokens");
+                        reject(AuthActionCreators.requestReauthenticate());
                     } else {
                         reject({type: "401"});
                     }

@@ -100,6 +100,9 @@ function *obtainNewAnonymousTokens() {
             state = yield select();
             logRefreshedAnonymousTokenAnalytics(state);
             yield put(AuthActionCreators.saveTokens(json.accessToken, json.refreshToken, new Date()));
+
+            // ready
+            yield put(AuthActionCreators.tokensReady());
         } catch(error) {
             let state = yield select();
             logRefreshAnonymousTokenErrorAnalytics(state, error, refreshToken);
@@ -112,9 +115,6 @@ function *obtainNewAnonymousTokens() {
             console.tron.log(JSON.stringify(error));
         }
     }
-
-    // ready
-    yield put(AuthActionCreators.tokensReady());
 }
 
 const shouldRequestNewToken = (lastRefreshDate) => lastRefreshDate === null || Math.abs(new Date() - lastRefreshDate) > OpenBarbellConfig.obtainTokenTimer;

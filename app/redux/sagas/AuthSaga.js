@@ -127,9 +127,9 @@ function* executeReauthenticate() {
         yield take(REAUTHENTICATE_REQUEST);
         const isLoggedIn = yield select(AuthSelectors.getIsLoggedIn);
         if (isLoggedIn) {
-            executeReauthenticateLoggedInUser();
+            yield call(executeReauthenticateLoggedInUser);
         } else {
-            executeReauthenticateLoggedOutUser();
+            yield call(executeReauthenticateLoggedOutUser);
         }
     }
 }

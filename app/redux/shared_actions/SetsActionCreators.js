@@ -49,19 +49,7 @@ const saveWorkoutSet = (setID, exercise = null, weight = null, metric = null, rp
         action.metric = metric;
     }
     if (rpe != null) {
-        action.rpe = rpe;
-    }
-
-    if (Number(rpe.replace(',','.')) <= 5.5 || isNaN(rpe)) {
-        if (rpe.includes(',')) {
-            action.rpe = '< 5,5';
-        } else {
-            action.rpe = '< 5.5';
-        }
-    }
-
-    if (Number(rpe.replace(',','.')) > 10) {
-        action.rpe = '10';
+        action.rpe = fixRPE(rpe);
     }
 
     return action;
@@ -95,19 +83,7 @@ const saveHistorySet = (setID, exercise = null, weight = null, metric = null, rp
         action.metric = metric;
     }
     if (rpe != null) {
-        action.rpe = rpe;
-    }
-
-    if (Number(rpe.replace(',','.')) <= 5.5 || isNaN(rpe)) {
-        if (rpe.includes(',')) {
-            action.rpe = '< 5,5';
-        } else {
-            action.rpe = '< 5.5';
-        }
-    }
-
-    if (Number(rpe.replace(',','.')) > 10) {
-        action.rpe = '10';
+        action.rpe = fixRPE(rpe);
     }
 
     return action;
@@ -149,6 +125,26 @@ export const finishedUploadingSets = (revision=null) => ({
 });
 
 export const failedUploadSets = () => ({ type: FAILED_UPLOAD_SETS });
+
+// UTILITY
+
+const fixRPE = (rpe) => {
+    if (Number(rpe.replace(',','.')) <= 5.5 || isNaN(rpe)) {
+        if (rpe.includes(',')) {
+            return '< 5,5';
+        } else {
+            return '< 5.5';
+        }
+    }
+
+    if (Number(rpe.replace(',','.')) > 10) {
+        return '10';
+    }
+
+    return rpe;
+};
+
+// ANALYTICS
 
 const logEndSetAnalytics = (manuallyStarted, wasSanityCheck, state) => {
     var set = SetsSelectors.getWorkingSet(state);

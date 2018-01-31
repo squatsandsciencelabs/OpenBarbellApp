@@ -152,15 +152,22 @@ function* executeReauthenticateLoggedInUser() {
         Analytics.setUserID(user.id);
         state = yield select();
         logAttemptReauthenticateOpenBarbellAnalytics(state);
-        let json = yield call(API.login, user.idToken); // TODO: consider making a new endpoint instead
+        let json = yield call(API.login, user.idToken);
 
-        // success
-        // note that we do not utilize the revisions or the set data
-        // reason being that we only want to exchange our google token for access and refresh tokens
-        // data cannot be pulled yet as they might have data waiting to go to the server first
-        yield put(AuthActionCreators.reauthenticateSucceeded(json.accessToken, json.refreshToken, user.email, new Date()));
+        const origEmail = yield select(AuthSelectors.getEmail);
+        const isDifferentUser = origEmail !== user.email;
+        if (isDifferentUser) {
+            // switch accounts, aka lose everything
+            yield put(AuthActionCreators.loginSucceeded(json.accessToken, json.refreshToken, user.email, new Date(), json.revision, json.sets));
+        } else {
+            // success
+            // note that we do not utilize the revisions or the set data
+            // reason being that we only want to exchange our google token for access and refresh tokens
+            // data cannot be pulled yet as they might have data waiting to go to the server first
+            yield put(AuthActionCreators.reauthenticateSucceeded(json.accessToken, json.refreshToken, user.email, new Date()));
+        }
         state = yield select();
-        logReauthenticatedAnalytics(state);
+        logReauthenticatedAnalytics(state, isDifferentUser);
     } catch(error) {
         console.tron.log("ERROR CODE " + error.code + " ERROR " + error);
         let state = yield select();
@@ -264,8 +271,9 @@ const logReauthenticateErrorAnalytics = (state, error) => {
     }, state);
 };
 
-const logReauthenticatedAnalytics = (state) => {
+const logReauthenticatedAnalytics = (state, isDiffUser) => {
     Analytics.logEventWithAppState('reauthenticated', {
+        is_diff_user: isDiffUser,
     }, state);
 };
 

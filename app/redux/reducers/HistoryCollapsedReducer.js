@@ -1,5 +1,6 @@
 import {
     LOGOUT,
+    LOGIN_SUCCESS,
     EXPAND_HISTORY_SET,
     COLLAPSE_HISTORY_SET
 } from 'app/ActionTypes';
@@ -12,6 +13,7 @@ const HistoryCollapsedReducer = (state = defaultState, action) => {
 
     switch (action.type) {
         case LOGOUT:
+        case LOGIN_SUCCESS:
             return defaultState;
         case EXPAND_HISTORY_SET:
             changes = {};

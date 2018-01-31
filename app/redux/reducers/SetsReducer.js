@@ -545,7 +545,14 @@ const failedUploadSets = (state, action) => {
 const updateSetDataFromServer = (state, action) => {
     // valid check
     if (action.sets === null || action.sets === undefined || action.revision === null || action.revision === undefined) {
-        return state;
+        // return empty
+        return {
+            ...state,
+            historyData: {},
+            revision: 0,
+            setIDsToUpload: [],
+            setIDsBeingUploaded: [],
+        };
     }
 
     let newHistoryData = {};
@@ -558,7 +565,7 @@ const updateSetDataFromServer = (state, action) => {
     return Object.assign({}, state, {
         historyData: newHistoryData,
         revision: action.revision,
-        setIDsBeingUploaded: []
+        setIDsBeingUploaded: [],
     });
 };
 
@@ -569,7 +576,7 @@ const loginSuccess = (state, action) => {
     return Object.assign({}, newState, {
         revision: action.revision,
         setIDsBeingUploaded: [],
-        setIDsToUpload: []
+        setIDsToUpload: [],
     });
 };
 
@@ -580,7 +587,7 @@ const clearHistory = (state, action) => {
         historyData: {},
         revision: 0,
         setIDsToUpload: [],
-        setIDsBeingUploaded: []
+        setIDsBeingUploaded: [],
     });
 };
 
@@ -590,7 +597,7 @@ const clearHistory = (state, action) => {
 const finishUploadingSets = (state, action) => {
     return Object.assign({}, state, {
         setIDsBeingUploaded: [],
-        revision: action.revision
+        revision: action.revision,
     });
 };
 

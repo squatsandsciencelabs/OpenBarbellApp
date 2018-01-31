@@ -137,6 +137,8 @@ function* executeReauthenticate() {
 function* executeReauthenticateLoggedOutUser() {
     // this will cause CLEAR_TOKENS to be called, thereby creating a new anonymous user
     yield put(AuthActionCreators.logout(false));
+    const state = yield select();
+    logReauthenticateAnonymousAnalytics(state);
 }
 
 function* executeReauthenticateLoggedInUser() {
@@ -201,6 +203,8 @@ const alert = (title, message) => {
 
 // ANALYTICS
 
+// login
+
 const logAttemptLoginGoogleAnalytics = (state) => {
     Analytics.logEventWithAppState('attempt_login_google', {
     }, state);
@@ -233,6 +237,8 @@ const logLoginAnalytics = (state) => {
     }, state);
 };
 
+// reauth
+
 const logAttemptReauthenticateGoogleAnalytics = (state) => {
     Analytics.logEventWithAppState('attempt_reauthenticate_google', {
     }, state);
@@ -258,6 +264,13 @@ const logReauthenticatedAnalytics = (state) => {
     }, state);
 };
 
+const logReauthenticateAnonymousAnalytics = (state) => {
+    Analytics.logEventWithAppState('reauthenticated_anonymous', {
+    }, state);
+};
+
+// anonymous
+
 const logLoginAnonymouslyAnalytics = (state) => {
     Analytics.logEventWithAppState('login_anonymously', {
     }, state);
@@ -267,6 +280,8 @@ const logLoginAnonymouslyErrorAnalytics = (state, error) => {
     Analytics.logErrorWithAppState(error, 'login_anonymously_error', {
     }, state);
 };
+
+// logout
 
 const logLogoutErrorAnalytics = (state, error) => {
     Analytics.logErrorWithAppState(error, 'logout_error', {

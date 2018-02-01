@@ -77,7 +77,6 @@ class OneRMView extends Component {
 
             return (
                 <View>
-                    <Image style={{width: size, height: size, marginBottom: 20}} source={require('app/appearance/images/grayed_chart.png')} />
                     <Text style={styles.errorText}>
                         You must be logged in for 1rm calculation.
                     </Text>
@@ -168,7 +167,7 @@ class OneRMView extends Component {
         if (Platform.OS === 'ios') {
             return (
                 <View>
-                    <View style={{marginBottom: 20}}>
+                    <View>
                         <TouchableOpacity onPress={() => this._tappedExercise()}>
                             <Text style={{fontSize: 18, color: 'rgba(47, 128, 237, 1)', textAlign: 'center', marginBottom: 20}}>
                                 {this.props.exercise}
@@ -189,9 +188,7 @@ class OneRMView extends Component {
         } else {
             return (
                 <View>
-                    <View style={{marginBottom: 10}}>
-                        <ExercisePicker />  
-                    </View>
+                    <ExercisePicker />  
                     <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Include:</Text>
                     <View style={{marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
                     <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Exclude:</Text>
@@ -284,8 +281,7 @@ class OneRMView extends Component {
                     </View>
                 </View>
             ) 
-        }
-        
+        }        
     }
 }
 

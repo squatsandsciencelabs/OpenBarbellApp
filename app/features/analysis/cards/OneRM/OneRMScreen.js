@@ -17,12 +17,12 @@ const mapStateToProps = (state) => ({
     chartData: AnalysisSelectors.getChartData(state),
     regLineData: AnalysisSelectors.getRegLineData(state),
     days: AnalysisSelectors.getAnalysisRange(state),
-    confidence: AnalysisSelectors.getCurrentConfidence(state),
+    r2: AnalysisSelectors.getCurrentR2(state),
     e1rmVelocity: AnalysisSelectors.getAnalysisE1RMVelocity(state),
     e1rm: AnalysisSelectors.getCurrentE1rm(state),
     tagsToInclude: AnalysisSelectors.getTagsToInclude(state),
     tagsToExclude: AnalysisSelectors.getTagsToExclude(state),
-    minConfidence: 90, // TODO: make this a config
+    minr2: 90, // TODO: make this a config
     isLoggedIn: AuthSelectors.getIsLoggedIn(state),
 });
 

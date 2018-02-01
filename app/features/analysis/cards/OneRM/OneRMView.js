@@ -35,19 +35,19 @@ class OneRMView extends Component {
         })
     }
 
-    _render1rm(confidence) {
+    _render1rm(r2) {
         if (this.props.isLoggedIn) {
             if (this.props.chartData && this.props.chartData.length > 3 && this.props.regLineData && this.props.regLineData.length > 3) {
-                if (confidence >= this.props.minConfidence) {
+                if (r2 >= this.props.minr2) {
                     let e1rm = this.props.e1rm ? this.props.e1rm : "---";
                     let e1rmVelocity = this.props.e1rmVelocity ? this.props.e1rmVelocity : "---";
 
                     return (
                         <View>
-                            <OneRMChart confidenceHighEnough={true} data={this.props.chartData} regLineData={this.props.regLineData} />
+                            <OneRMChart r2HighEnough={true} data={this.props.chartData} regLineData={this.props.regLineData} />
                             <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{e1rm}</Text> {this.props.metric}</Text>
                             <Text style={{ textAlign: 'center', fontSize: 15, marginBottom: 20 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.e1rmVelocity} m/s</Text></Text> 
-                            <Text style={styles.confidenceText}>Confidence: {this.props.confidence} %</Text>
+                            <Text style={styles.r2Text}>r2: {this.props.r2} %</Text>
                             {this._renderForms()}
                         </View>
                     );
@@ -55,9 +55,9 @@ class OneRMView extends Component {
                     return (
                         <View>
                             <Text style={styles.errorText}>
-                                Confidence too low, please clean up or log more data.
+                                r2 too low, please clean up or log more data.
                             </Text>
-                            <OneRMChart confidenceHighEnough={false} data={this.props.chartData} />
+                            <OneRMChart r2HighEnough={false} data={this.props.chartData} />
                             {this._renderForms()}
                         </View>
                     );
@@ -211,7 +211,7 @@ class OneRMView extends Component {
                 <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
                     <Text style={[{marginBottom: 15}, styles.titleText]}>Estimated One-Rep Max</Text>
                     <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
-                        {this._render1rm(this.props.confidence)}
+                        {this._render1rm(this.props.r2)}
                         <Text style={styles.labelText}>
                             Velocity
                         </Text>
@@ -240,7 +240,7 @@ class OneRMView extends Component {
                             animateTransitions={true}
                         />
                         <Text style={styles.numberStyle}>{Math.abs(this.state.days)} days</Text>
-                        {this._renderCalculate1rm(this.props.confidence)}
+                        {this._renderCalculate1rm(this.props.r2)}
                     </View>
                 </View>
             )
@@ -248,7 +248,7 @@ class OneRMView extends Component {
             return (
                 <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
                     <Text style={[{marginBottom: 20}, styles.titleText]}>Estimated One-Rep Max</Text>
-                    {this._render1rm(this.props.confidence)}
+                    {this._render1rm(this.props.r2)}
                     <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
                         <Text style={styles.labelText}>
                             Velocity
@@ -280,7 +280,7 @@ class OneRMView extends Component {
                             animateTransitions={true}
                         />
                         <Text style={styles.numberStyle}>{Math.abs(this.state.days)} days</Text>
-                        {this._renderCalculate1rm(this.props.confidence)}
+                        {this._renderCalculate1rm(this.props.r2)}
                     </View>
                 </View>
             ) 
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
         fontSize: 32, 
         textAlign: 'center'
     },
-    confidenceText: {
+    r2Text: {
         color: 'rgba(77, 77, 77, 1)',
         marginBottom: 20,
         fontSize: 18,

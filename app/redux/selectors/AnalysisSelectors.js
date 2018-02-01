@@ -18,7 +18,7 @@ export const getTagsToExclude = (state) => stateRoot(state).tagsToExclude;
 
 export const getCurrentE1rm = (state) => stateRoot(state).e1rm;
 
-export const getCurrentConfidence = (state) => stateRoot(state).confidence;
+export const getCurrentR2 = (state) => stateRoot(state).r2;
 
 export const getVelocitySlider = (state) => stateRoot(state).velocitySlider;
 

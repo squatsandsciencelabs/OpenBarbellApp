@@ -421,7 +421,7 @@ export const metricAbbreviation = (metric) => {
         case RPE_METRIC:
             return 'RPE';
         case RPE1RM_METRIC:
-            return 'RPE1RM';
+            return 'e1RM';
         case DURATION_METRIC:
             return 'DUR';
         case ROM_METRIC:

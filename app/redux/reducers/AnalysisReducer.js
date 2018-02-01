@@ -26,7 +26,7 @@ const defaultState = {
     tagsToExclude: [],
     e1rm: null,
     e1RMVelocity: null,
-    confidence: null,
+    r2: null,
     chartData: null,
     regLineData: null,
 };
@@ -89,7 +89,7 @@ const AnalysisReducer = (state = defaultState, action) => {
                 ...state,
                 e1rm: action.e1rm,
                 e1RMVelocity: action.e1RMVelocity,
-                confidence: action.confidence,
+                r2: action.r2,
                 chartData: action.chartData,
                 regLineData: action.regLineData,
             };

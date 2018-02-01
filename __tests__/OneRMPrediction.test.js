@@ -20,11 +20,11 @@ describe('1rm', () => {
     });
 });
 
-describe('confidenceInterval', () => {
+describe('r2Interval', () => {
     
     test('return velocity estimate', () => {
 
-        const result = sut.getConfidenceInterval(data);
+        const result = sut.getr2Interval(data);
         
         expect(result).toBe(91);
     });

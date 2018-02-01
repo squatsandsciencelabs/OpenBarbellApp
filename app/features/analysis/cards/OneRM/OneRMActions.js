@@ -40,7 +40,7 @@ export const calcE1rm = () => (dispatch, getState) => {
     const chartData = SetsSelectors.getChartData(state, exercise); // data for plotting chart points
     const regLineData = SetsSelectors.getRegLinePoints(state, exercise); // data for plotting regression line
     
-    // Test Data Points that result in 91% confidence
+    // Test Data Points that result in 91% r2
     // const exerciseData = [
     //     [255, 0.48], 
     //     [275, 0.31], 
@@ -72,13 +72,13 @@ export const calcE1rm = () => (dispatch, getState) => {
     // ];
     
     const e1rm = OneRMCalculator.calc1rm(exerciseData, velocity);
-    const confidence = OneRMCalculator.getConfidenceInterval(exerciseData);
+    const r2 = OneRMCalculator.getr2Interval(exerciseData);
 
     dispatch({
         type: CALC_ONE_RM,
         e1rm: Math.sign(e1rm) === 1 ? e1rm : null,
         e1RMVelocity: velocity,
-        confidence: confidence,
+        r2: r2,
         chartData: chartData,
         regLineData: regLineData,
     });

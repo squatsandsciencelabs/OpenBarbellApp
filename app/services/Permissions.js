@@ -17,13 +17,15 @@ export default function() {
             PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
         ]);
     } else {
-        Permissions.request('photo');
-        Permissions.request('camera');
-        Permissions.request('microphone');
         firebase.messaging().requestPermissions().then((result) => {
             // TODO: analytics as a user prop
             // result can have granted true/false or status unknown based on iOS version
             // see https://rnfirebase.io/docs/v3.2.x/messaging/reference/messaging
+
+            // other permissions
+            Permissions.request('photo');
+            Permissions.request('camera');
+            Permissions.request('microphone');    
         });
     }
 };

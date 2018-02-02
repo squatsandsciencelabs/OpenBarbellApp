@@ -3,7 +3,6 @@ import {
     EMPTY_METRIC,
     AVG_VELOCITY_METRIC,
     RPE_METRIC,
-    RPE1RM_METRIC,
     DURATION_METRIC,
     ROM_METRIC,
     PKH_METRIC,
@@ -420,8 +419,6 @@ export const metricAbbreviation = (metric) => {
             return 'VEL';
         case RPE_METRIC:
             return 'RPE';
-        case RPE1RM_METRIC:
-            return 'e1RM';
         case DURATION_METRIC:
             return 'DUR';
         case ROM_METRIC:
@@ -443,8 +440,6 @@ export const metricString = (metric) => {
             return 'Average Velocity';
         case RPE_METRIC:
             return 'RPE';
-        case RPE1RM_METRIC:
-            return 'RPE1RM'; 
         case DURATION_METRIC:
             return 'Duration';
         case ROM_METRIC:

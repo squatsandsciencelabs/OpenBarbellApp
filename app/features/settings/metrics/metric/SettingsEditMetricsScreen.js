@@ -6,7 +6,6 @@ import {
     EMPTY_METRIC,
     AVG_VELOCITY_METRIC,
     RPE_METRIC,
-    RPE1RM_METRIC,
     DURATION_METRIC,
     ROM_METRIC,
     PKH_METRIC,
@@ -45,7 +44,6 @@ const generateItems = (quantifier) => {
                 pickerItem(AVG_VELOCITY_METRIC),
                 pickerItem(DURATION_METRIC),
                 pickerItem(RPE_METRIC),
-                pickerItem(RPE1RM_METRIC),
             ];
         case AVG_QUANTIFIER:
         case ABS_LOSS_QUANTIFIER:
@@ -59,7 +57,6 @@ const generateItems = (quantifier) => {
                 pickerItem(AVG_VELOCITY_METRIC),
                 pickerItem(DURATION_METRIC),
                 pickerItem(RPE_METRIC),
-                pickerItem(RPE1RM_METRIC),
             ];
         default:
             return [
@@ -70,7 +67,6 @@ const generateItems = (quantifier) => {
                 pickerItem(AVG_VELOCITY_METRIC),
                 pickerItem(DURATION_METRIC),
                 pickerItem(RPE_METRIC),
-                pickerItem(RPE1RM_METRIC),
             ];
     };
 };

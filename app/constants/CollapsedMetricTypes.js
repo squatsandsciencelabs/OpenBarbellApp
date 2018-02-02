@@ -5,7 +5,6 @@ export const DURATION_METRIC = 'DURATION_METRIC';
 export const ROM_METRIC = 'ROM_METRIC';
 export const PKH_METRIC = 'PKH_METRIC';
 export const PKV_METRIC = 'PKV_METRIC';
-export const RPE1RM_METRIC = 'RPE1RM_METRIC';
 
 export const EMPTY_QUANTIFIER = 'EMPTY_QUANTIFIER';
 export const FIRST_REP_QUANTIFIER = 'FIRST_REP_QUANTIFIER';

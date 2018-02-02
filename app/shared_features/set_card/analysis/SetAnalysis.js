@@ -24,8 +24,8 @@ class SetAnalysis extends Component {
                 var text = description;
             }
 
-            let textStyle = !this.props.rpe && (text === 'RPE' || text === 'RPE1RM') ? styles.redText : styles.text;
-            let metricStyle = !this.props.rpe && (text === 'RPE' || text === 'RPE1RM') ? styles.redMetric : styles.metric;
+            let textStyle = !this.props.rpe && text.includes("RPE") ? styles.redText : styles.text;
+            let metricStyle = !this.props.rpe && text.includes("RPE") ? styles.redMetric : styles.metric;
 
             return (
                 <View style={{flex: 1, marginTop: -2, justifyContent: 'center'}}>

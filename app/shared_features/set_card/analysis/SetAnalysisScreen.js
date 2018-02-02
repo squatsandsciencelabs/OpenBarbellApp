@@ -5,7 +5,6 @@ import {
     EMPTY_METRIC,
     AVG_VELOCITY_METRIC,
     RPE_METRIC,
-    RPE1RM_METRIC,
     DURATION_METRIC,
     ROM_METRIC,
     PKH_METRIC,
@@ -195,9 +194,6 @@ const metricValue = (state, set, quantifier, metric) => {
             }
             break;
         case RPE_METRIC:
-            returnValue = CollapsedMetrics.getRPE(set);
-            break;
-        case RPE1RM_METRIC:
             returnValue = CollapsedMetrics.getRPE1rm(set);
             break;
     }
@@ -207,11 +203,7 @@ const metricValue = (state, set, quantifier, metric) => {
 
 const metricDescription = (quantifier, metric, rpe, weightMetric) => {
     if (metric === RPE_METRIC) {
-        return CollapsedMetrics.metricAbbreviation(metric)
-    }
-
-    if (metric === RPE1RM_METRIC) {
-        return weightMetric + " " + '@ ' + rpe + " RPE" +  "\n " + CollapsedMetrics.metricAbbreviation(metric);
+        return weightMetric + " " + '@ ' + rpe + " " + CollapsedMetrics.metricAbbreviation(metric) +  "\n " + "e1RM";
     }
 
     if (quantifier === EMPTY_QUANTIFIER || metric === EMPTY_METRIC) {

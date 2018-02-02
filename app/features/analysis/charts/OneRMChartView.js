@@ -56,10 +56,15 @@ class OneRMChartView extends Component {
   }
 
   _renderChart() {
+    const highestWeight = Math.max.apply(Math, this.props.chartData.map((point) => { return point.x; }));
+    const lowestWeight = Math.min.apply(Math, this.props.chartData.map((point) => { return point.x; }));
+    const highestVel = Math.max.apply(Math, this.props.chartData.map((point) => { return point.y; }));
+
     return (
       <View>
         <VictoryChart
           theme={VictoryTheme.material}
+          domain={{x: [lowestWeight, highestWeight], y: [0, highestVel] }}
         >
           <VictoryGroup offset={0}
             colorScale={"qualitative"}

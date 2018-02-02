@@ -82,13 +82,15 @@ const createViewModels = (state, sets) => {
         if (isInitialSet) {
             // new set, reset the end time
             lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
-            
+
             if (isLastSet) {
                 array.push(createBottomBorder(set));
             } else if (!isLastSet && !isCollapsed) {
                 // new set, reset the end time
                 lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
                 array.push(createDeleteFooter(set));
+                array.push(createBottomBorder(set));
+            } else {
                 array.push(createBottomBorder(set));
             }
         } else if (!isRemoved && set.reps.length > 0) { // ignore removed sets in rest calculations

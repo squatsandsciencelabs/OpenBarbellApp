@@ -145,7 +145,7 @@ class HistoryList extends Component {
                 return <SetRestRow item={item} />;
             case "delete footer":
                 return (
-                    <View style={{marginBottom: 15}}>
+                    <View>
                         <DeleteSetRow onPressDelete={() => this.props.deleteSet(item.setID)} />
                     </View>
                 );

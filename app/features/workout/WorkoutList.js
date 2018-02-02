@@ -155,7 +155,7 @@ class WorkoutList extends Component {
                 return (<View style={{flex: 1, backgroundColor: '#e0e0e0', height: 1}} />);
             case "delete footer":
                 return (
-                    <View style={{marginBottom: 15}}>
+                    <View>
                         <DeleteSetRow onPressDelete={() => this.props.deleteSet(item.setID)} />
                     </View>
                 );

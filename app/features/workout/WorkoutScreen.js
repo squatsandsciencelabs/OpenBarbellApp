@@ -114,6 +114,8 @@ const createViewModels = (state, sets) => {
         } else if (isLastSet && lastSetEndTime !== null && set.reps.length === 0) {
             // working set, live rest mode
             array.push(createWorkingSetFooterVM(set, lastSetEndTime));
+        } else if (isLastSet && !lastSetEndTime && set.reps.length === 0) {
+            array.push(createBottomBorder(set));
         } else if (!isLastSet) {
             if (!isCollapsed) {
                 array.push(createDeleteFooter(set));

@@ -72,7 +72,7 @@ export const calcE1rm = () => (dispatch, getState) => {
     // ];
     
     const e1rm = OneRMCalculator.calc1rm(exerciseData, velocity);
-    const r2 = OneRMCalculator.getr2Interval(exerciseData);
+    const r2 = OneRMCalculator.getR2interval(exerciseData);
 
     dispatch({
         type: CALC_ONE_RM,

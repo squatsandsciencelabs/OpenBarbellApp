@@ -14,7 +14,7 @@ import {
 class OneRMChartView extends Component {
     
   _renderRegressionLine() {
-      if (this.props.r2HighEnough) {
+      if (this.props.isR2HighEnough) {
         const lowest = this.props.regLineData[0];
         const highest = this.props.regLineData[this.props.regLineData.length - 1];
         

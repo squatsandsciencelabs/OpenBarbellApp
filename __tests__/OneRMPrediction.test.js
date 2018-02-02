@@ -24,7 +24,7 @@ describe('r2Interval', () => {
     
     test('return velocity estimate', () => {
 
-        const result = sut.getr2Interval(data);
+        const result = sut.getR2interval(data);
         
         expect(result).toBe(91);
     });

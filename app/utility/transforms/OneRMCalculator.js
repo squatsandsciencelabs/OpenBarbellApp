@@ -14,7 +14,7 @@ export const calc1rm = (data, velocity) => {
     return Number(((velocity - result.equation[1]) / result.equation[0]).toFixed(0));
 };
 
-export const getr2Interval = (data) => {
+export const getR2interval = (data) => {
     // gather points
     // precision is 4 for accuracy of regression points in the library
     const result = regression.linear(data, { precision: 4 });

@@ -147,7 +147,7 @@ const addErrorToParams = (error, params) => {
 };
 
 const getErrorCode = (error) => {
-    if (error && error.code) {
+    if (error && error.code && !isNaN(error.code)) {
         return error.code;
     } else {
         return 9001;

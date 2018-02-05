@@ -85,7 +85,7 @@ const createViewModels = (state, sets) => {
 
             if (isLastSet) {
                 array.push(createBottomBorder(set));
-            } else if (!isLastSet && !isCollapsed) {
+            } else if (!isLastSet && !isCollapsed && !isRemoved) {
                 // new set, reset the end time
                 lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
                 array.push(createDeleteFooter(set));
@@ -119,7 +119,7 @@ const createViewModels = (state, sets) => {
         } else if (isLastSet && !lastSetEndTime && set.reps.length === 0) {
             array.push(createBottomBorder(set));
         } else if (!isLastSet) {
-            if (!isCollapsed) {
+            if (!isCollapsed && !isRemoved) {
                 array.push(createDeleteFooter(set));
                 array.push(createBottomBorder(set));
             } else {
@@ -186,6 +186,7 @@ const createSummaryViewModel = (set) => {
         numReps: numReps ? numReps : '0 reps',
         metric: set.metric,
         tags: set.tags,
+        removed: set.removed,
     };
 };
 
@@ -285,6 +286,7 @@ const createDeleteFooter = (set) => ({
     type: "delete footer",
     key: set.setID + "deleteSet",
     setID: set.setID,
+    removed: set.removed,
 });
 
 const createBottomBorder = (set) => ({
@@ -310,6 +312,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         deleteSet: Actions.deleteSet,
+        restoreSet: Actions.restoreSet,
         endSet: Actions.endSet,
         removeRep: Actions.removeRep,
         restoreRep: Actions.restoreRep,

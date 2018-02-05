@@ -174,10 +174,26 @@ const saveWorkoutSet = (state, action) => {
 // DELETE_WORKOUT_SET
 
 const deleteWorkoutSet = (state, action) => {
+    // copy workout data
+    let newWorkoutData = state.workoutData.slice(0);
+
+    // get set
+    let setIndex = newWorkoutData.findIndex( set => set.setID === action.setID );
+
+    newWorkoutData[setIndex].exercise = "";
+    newWorkoutData[setIndex].weight = "";
+    newWorkoutData[setIndex].rpe = "";
+    newWorkoutData[setIndex].tags = [];
+
+    // update set and its reps
+    newWorkoutData[setIndex].reps.forEach((rep) => {
+        rep.removed = true;
+    });
+
     return {
         ...state,
-        workoutData: state.workoutData.filter(set => set.setID !== action.setID)
-    };
+        workoutData: newWorkoutData,
+    }
 };
 
 // SAVE_WORKOUT_SET_TAGS
@@ -238,16 +254,25 @@ const saveHistorySet = (state, action) => {
 // DELETE_HISTORY_SET
 
 const deleteHistorySet = (state, action) => {
+    // copy workout data
+    let newHistoryData = { ...state.historyData };
+
+    // update set and its rep
+    newHistoryData[action.setID].exercise = "";
+    newHistoryData[action.setID].weight = "";
+    newHistoryData[action.setID].rpe = "";
+    newHistoryData[action.setID].tags = [];
+
+    // update set and its reps
+    newHistoryData[action.setID].reps.forEach((rep) => {
+        rep.removed = true;
+    });
+
     return {
         ...state,
-        historyData: Object.keys(state.historyData).reduce((result, setID) => {
-            if (setID !== action.setID) {
-                result[setID] = state.historyData[setID];
-            }
-            return result;
-        }, {})
-    };
-};
+        historyData: newHistoryData,
+    }    
+}
 
 // SAVE_HISTORY_SET_TAGS
 

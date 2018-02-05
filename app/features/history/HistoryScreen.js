@@ -119,10 +119,12 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
 
             if (isCollapsed) {
                 array.push(createBottomBorder(set));
-            } else {
+            } else if (!isCollapsed && !isRemoved) {
                 // new set, reset the end time
                 lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
                 array.push(createDeleteFooter(set));
+                array.push(createBottomBorder(set));
+            } else {
                 array.push(createBottomBorder(set));
             }   
         } else if (!isRemoved && set.reps.length > 0) { // ignore removed sets in rest calculations
@@ -334,8 +336,6 @@ const mapStateToProps = (state) => {
         storedSections = createViewModels(state, storedHistorySets, shouldShowRemoved);
         storedShouldShowRemoved = shouldShowRemoved;
     }
-
-    console.tron.log(storedSections);
 
     return {
         email: state.auth.email,

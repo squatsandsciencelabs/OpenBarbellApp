@@ -18,7 +18,7 @@ import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 class OneRMChartView extends Component {
     
   _renderRegressionLine() {
-      if (this.props.isR2HighEnough) {
+      if (this.props.r2 > this.props.minR2) {
         const lowest = this.props.regLineData[0];
         const highest = this.props.regLineData[this.props.regLineData.length - 1];
         

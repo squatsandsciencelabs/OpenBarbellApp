@@ -7,6 +7,8 @@ import {
 
 import OneRMScreen from './cards/OneRM/OneRMScreen';
 
+// Hack for svg bug with scrolling in victory charts on Android
+// https://github.com/FormidableLabs/victory-native/issues/96
 class AnalysisTab extends Component {
 
     render() {
@@ -19,8 +21,6 @@ class AnalysisTab extends Component {
     }
 }
 
-// Hack for svg bug with scrolling in victory charts on Android
-// https://github.com/FormidableLabs/victory-native/issues/96
 const styles = StyleSheet.create({
     pseudoScrollView: {
       opacity: 0,
@@ -28,9 +28,8 @@ const styles = StyleSheet.create({
       top: 0,    
       left: 0,
       width:"100%",
-      height:"100%"
+      height:"100%",
     }
 });
   
-
 export default AnalysisTab;

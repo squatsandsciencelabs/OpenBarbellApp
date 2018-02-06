@@ -13,6 +13,12 @@ import {
     DISMISS_INCLUDES_TAGS,
     DISMISS_EXCLUDES_TAGS,
     CALC_ONE_RM,
+    SHOW_INFO_MODAL,
+    SHOW_BEST_RESULTS_MODAL,
+    SHOW_PROTOCOL_MODAL,
+    DISMISS_BEST_RESULTS_MODAL,
+    DISMISS_INFO_MODAL,
+    DISMISS_PROTOCOL_MODAL,
 } from 'app/ActionTypes';
 
 const defaultState = {
@@ -29,6 +35,9 @@ const defaultState = {
     r2: null,
     chartData: null,
     regLineData: null,
+    showInfoModal: false,
+    showBestResultsModal: false,
+    showProtocolModal: false,
 };
 
 const AnalysisReducer = (state = defaultState, action) => {
@@ -93,6 +102,36 @@ const AnalysisReducer = (state = defaultState, action) => {
                 chartData: action.chartData,
                 regLineData: action.regLineData,
             };
+        case SHOW_INFO_MODAL:
+            return {
+                ...state,
+                showInfoModal: true,
+            }
+        case SHOW_BEST_RESULTS_MODAL:
+            return {
+                ...state,
+                showBestResultsModal: true,
+            }
+        case SHOW_PROTOCOL_MODAL:
+            return {
+                ...state,
+                showProtocolModal: true,
+            }
+        case DISMISS_INFO_MODAL:
+            return {
+                ...state,
+                showInfoModal: false,
+            }
+        case DISMISS_PROTOCOL_MODAL:
+            return {
+                ...state,
+                showProtocolModal: false,
+            }
+        case DISMISS_BEST_RESULTS_MODAL:
+            return {
+                ...state,
+                showBestResultsModal: false,
+            }
         default: 
             return state;
     }

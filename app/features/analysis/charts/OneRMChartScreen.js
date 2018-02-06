@@ -32,12 +32,18 @@ const mapStateToProps = (state) => {
         highestWeight: highestWeightPossible,
         lowestWeight: OneRMCalculator.lowestWeight(chartData),
         highestVel: OneRMCalculator.highestVelocity(chartData),
-    }
+        isInfoModalShowing: AnalysisSelectors.getShowInfoModal(state),
+        isProtocolModalShowing: AnalysisSelectors.getShowProtocolModal(state),    
+    };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         tapPoint: Actions.tapPoint,
+        showInfoModal: Actions.showInfoModal,
+        showProtocolModal: Actions.showProtocolModal,
+        dismissInfoModal: Actions.dismissInfoModal,
+        dismissProtocolModal: Actions.dismissProtocolModal,
     }, dispatch);
 };
 

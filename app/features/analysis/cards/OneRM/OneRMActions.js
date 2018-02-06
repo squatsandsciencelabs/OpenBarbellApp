@@ -52,23 +52,23 @@ export const calcE1rm = () => (dispatch, getState) => {
     // ];
 
     // const chartData = [
-    //     {setID: 'dfa3113f-9cd9-48fe-bbbc-c5adc69ceac7', x: 255, y: 0.48}, 
-    //     {setID: 'b727077c-88cc-42ab-b3a5-9623ac2ea8b6', x: 275, y: 0.31}, 
-    //     {setID: '1665b792-328a-41d6-92f7-b85892e56386', x: 285, y: 0.30}, 
-    //     {setID: '8d1ad6a5-a039-413f-95c8-e1d0cf72f4e3', x: 295, y: 0.28}, 
-    //     {setID: 'f49b7f6f-921e-4ad0-b5ea-34621c4cd2be', x: 300, y: 0.26}, 
-    //     {setID: 'd10208d5-aec4-447d-a0d6-3f40c73cbbe9', x: 310, y: 0.22}, 
-    //     {setID: '4139c974-3ce2-4d4f-a573-05795121da92', x: 320, y: 0.19},  
+    //     {setID: 'f49b7f6f-921e-4ad0-b5ea-34621c4cd2be', x: 255, y: 0.48}, // SQUAT
+    //     {setID: '1850f26a-2e82-4b31-b434-bbd4c6c9179b', x: 275, y: 0.31}, // EMPTY #1
+    //     {setID: '640d73e0-4851-4b9a-97ba-880b389a2890', x: 285, y: 0.30}, // Front Squat #1
+    //     {setID: '9aef9e6b-0477-48eb-b55d-b08de64b5421', x: 295, y: 0.28}, // Front Squat #1
+    //     {setID: '7a4e9fee-f061-4aeb-94eb-d031b323f64f', x: 300, y: 0.26}, // Deadlift #3
+    //     {setID: 'c1a9ade8-ac13-4b9b-89e8-2922b9fdf049', x: 310, y: 0.22}, // Bench #1
+    //     {setID: '30e60758-a19b-4942-9421-243af33a3bfa', x: 320, y: 0.19},  // Sumo Deadlift #1
     // ];
 
     // const regLineData = [
-    //     {setID: 'dfa3113f-9cd9-48fe-bbbc-c5adc69ceac7', x: 255, y: 0.4408}, 
-    //     {setID: 'b727077c-88cc-42ab-b3a5-9623ac2ea8b6', x: 275, y: 0.3588}, 
-    //     {setID: '1665b792-328a-41d6-92f7-b85892e56386', x: 285, y: 0.3178}, 
-    //     {setID: '8d1ad6a5-a039-413f-95c8-e1d0cf72f4e3', x: 295, y: 0.2768}, 
-    //     {setID: 'f49b7f6f-921e-4ad0-b5ea-34621c4cd2be', x: 300, y: 0.2563}, 
-    //     {setID: 'd10208d5-aec4-447d-a0d6-3f40c73cbbe9', x: 310, y: 0.2153}, 
-    //     {setID: '4139c974-3ce2-4d4f-a573-05795121da92', x: 320, y: 0.1743},
+    //     {setID: 'f49b7f6f-921e-4ad0-b5ea-34621c4cd2be', x: 255, y: 0.4408}, 
+    //     {setID: '1850f26a-2e82-4b31-b434-bbd4c6c9179b', x: 275, y: 0.3588}, 
+    //     {setID: '640d73e0-4851-4b9a-97ba-880b389a2890', x: 285, y: 0.3178}, 
+    //     {setID: '9aef9e6b-0477-48eb-b55d-b08de64b5421', x: 295, y: 0.2768}, 
+    //     {setID: '7a4e9fee-f061-4aeb-94eb-d031b323f64f', x: 300, y: 0.2563}, 
+    //     {setID: 'c1a9ade8-ac13-4b9b-89e8-2922b9fdf0499', x: 310, y: 0.2153}, 
+    //     {setID: '30e60758-a19b-4942-9421-243af33a3bfa', x: 320, y: 0.1743},
     // ];
 
     const e1rm = OneRMCalculator.calc1rm(exerciseData, velocity);

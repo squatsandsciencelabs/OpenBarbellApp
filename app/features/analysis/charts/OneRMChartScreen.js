@@ -6,7 +6,7 @@ import * as Actions from './OneRMChartActions';
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        tapPoint: Actions.tapPoint
+        tapPoint: Actions.tapPoint,
     }, dispatch);
 };
 

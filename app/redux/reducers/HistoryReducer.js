@@ -118,12 +118,12 @@ const HistoryReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 scrollToSetID: action.scrollToSetID,
-            }
+            };
         case CHANGE_TAB:
             return {
                 ...state,
                 scrollToSetID: null,
-            }
+            };
         default:
             return state;
     }

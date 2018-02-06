@@ -57,7 +57,7 @@ export const changeTab = (tabIndex, setID) => (dispatch, getState) => {
     } else {
         dispatch({
             type: CHANGE_TAB,
-            tabIndex: tabIndex
+            tabIndex: tabIndex,
         });
     }
 };

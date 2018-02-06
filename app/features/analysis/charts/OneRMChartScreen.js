@@ -13,8 +13,7 @@ import * as OneRMCalculator from 'app/utility/transforms/OneRMCalculator';
 const mapStateToProps = (state) => ({
     chartData: AnalysisSelectors.getChartData(state),
     regLineData: AnalysisSelectors.getRegLineData(state),
-    r2: AnalysisSelectors.getCurrentR2(state),
-    minR2: 90, // TODO: make this a config
+    isR2HighEnough: AnalysisSelectors.getCurrentR2(state) > 90,
     isLoggedIn: AuthSelectors.getIsLoggedIn(state),
 });
 

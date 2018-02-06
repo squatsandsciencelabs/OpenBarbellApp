@@ -11,5 +11,5 @@ export const findInSection = (sections, setID) => {
        return index.setID === setID;
    });
 
-   return ({ sectionIndex: sectionIndex, itemIndex: itemIndex });
+   return ({ sectionIndex: sectionIndex, itemIndex: itemIndex, animated: false });
 };

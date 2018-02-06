@@ -48,7 +48,7 @@ export const calcE1rm = () => (dispatch, getState) => {
         [295, 0.28], 
         [300, 0.26], 
         [310, 0.22], 
-        [320, 0.19]
+        [320, 0.19],
     ];
 
     const chartData = [
@@ -58,7 +58,7 @@ export const calcE1rm = () => (dispatch, getState) => {
         {setID: '8d1ad6a5-a039-413f-95c8-e1d0cf72f4e3', x: 295, y: 0.28}, 
         {setID: 'f49b7f6f-921e-4ad0-b5ea-34621c4cd2be', x: 300, y: 0.26}, 
         {setID: 'd10208d5-aec4-447d-a0d6-3f40c73cbbe9', x: 310, y: 0.22}, 
-        {setID: '4139c974-3ce2-4d4f-a573-05795121da92', x: 320, y: 0.19}  
+        {setID: '4139c974-3ce2-4d4f-a573-05795121da92', x: 320, y: 0.19},  
     ];
 
     const regLineData = [
@@ -68,7 +68,7 @@ export const calcE1rm = () => (dispatch, getState) => {
         {setID: '8d1ad6a5-a039-413f-95c8-e1d0cf72f4e3', x: 295, y: 0.2768}, 
         {setID: 'f49b7f6f-921e-4ad0-b5ea-34621c4cd2be', x: 300, y: 0.2563}, 
         {setID: 'd10208d5-aec4-447d-a0d6-3f40c73cbbe9', x: 310, y: 0.2153}, 
-        {setID: '4139c974-3ce2-4d4f-a573-05795121da92', x: 320, y: 0.1743}
+        {setID: '4139c974-3ce2-4d4f-a573-05795121da92', x: 320, y: 0.1743},
     ];
 
     const e1rm = OneRMCalculator.calc1rm(exerciseData, velocity);

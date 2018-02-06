@@ -25,7 +25,7 @@ const AppStateReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 tabIndex: action.tabIndex,
-            }
+            };
         case UNLOCKED_SCREEN:
             return Object.assign({}, state, {
                 screenStatus: 'active',

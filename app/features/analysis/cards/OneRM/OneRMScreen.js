@@ -24,6 +24,7 @@ const mapStateToProps = (state) => ({
     tagsToExclude: AnalysisSelectors.getTagsToExclude(state),
     minr2: 90, // TODO: make this a config
     isLoggedIn: AuthSelectors.getIsLoggedIn(state),
+    isBestResultsModalShowing: AnalysisSelectors.getShowBestResultsModal(state),
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -34,6 +35,8 @@ const mapDispatchToProps = (dispatch) => {
         tappedTagsToExclude: Actions.presentTagsToExclude,
         changeVelocity: Actions.changeVelocitySlider,
         changeDays: Actions.changeE1RMDays,
+        showBestResultsModal: Actions.showBestResultsModal,
+        dismissBestResultsModal: Actions.dismissBestResultsModal,
     }, dispatch);
 };
 

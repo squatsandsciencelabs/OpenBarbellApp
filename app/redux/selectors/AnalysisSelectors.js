@@ -25,3 +25,9 @@ export const getVelocitySlider = (state) => stateRoot(state).velocitySlider;
 export const getChartData = (state) => stateRoot(state).chartData;
 
 export const getRegLineData = (state) => stateRoot(state).regLineData;
+
+export const getShowInfoModal = (state) => stateRoot(state).showInfoModal;
+
+export const getShowBestResultsModal = (state) => stateRoot(state).showBestResultsModal;
+
+export const getShowProtocolModal = (state) => stateRoot(state).showProtocolModal;

@@ -18,7 +18,7 @@ import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 class OneRMChartView extends Component {
     
   _renderRegressionLine() {
-      if (this.props.r2 > this.props.minR2) {
+      if (this.props.isR2HighEnough) {
         const lowest = this.props.regLineData[0];
         const highest = this.props.regLineData[this.props.regLineData.length - 1];
         
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
       color: 'rgba(77, 77, 77, 1)',
       textAlign: 'center',
       fontSize: 16,
-      fontWeight: 'bold'
+      fontWeight: 'bold',
   },
   pseudoScrollView: {
     opacity: 0,
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     top: 0,    
     left: 0,
     width:"100%",
-    height:"100%"
+    height:"100%",
   }
 });
 

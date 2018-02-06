@@ -44,7 +44,7 @@ class OneRMView extends Component {
 
                     return (
                         <View>
-                            <OneRMChart isR2HighEnough={true} data={this.props.chartData} regLineData={this.props.regLineData} />
+                            <OneRMChartScreen isR2HighEnough={true} data={this.props.chartData} regLineData={this.props.regLineData} />
                             <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{e1rm}</Text> {this.props.metric}</Text>
                             <Text style={{ textAlign: 'center', fontSize: 15, marginBottom: 20 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.e1rmVelocity} m/s</Text></Text> 
                             <Text style={styles.r2Text}>r2: {this.props.r2} %</Text>
@@ -54,10 +54,10 @@ class OneRMView extends Component {
                 } else {
                     return (
                         <View>
+                            <OneRMChartScreen isR2HighEnough={false} data={this.props.chartData} />
                             <Text style={styles.errorText}>
                                 r2 too low, please clean up or log more data.
                             </Text>
-                            <OneRMChart isR2HighEnough={false} data={this.props.chartData} />
                             {this._renderForms()}
                         </View>
                     );

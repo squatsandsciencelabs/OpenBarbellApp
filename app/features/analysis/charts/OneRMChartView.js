@@ -49,15 +49,15 @@ class OneRMChartView extends Component {
                   style={{ data: { fill: "#c43a31" } }}
                   width={400}
                   size={5}
-                  events={[{
-                    target: "data",
-                    eventHandlers: {
-                      onPressIn: (evt, clickedProps) => {
-                        const setID = clickedProps.datum.setID;
-                        this.props.tapPoint(setID);
-                      }
-                    }
-                  }]}
+                  // events={[{
+                  //   target: "data",
+                  //   eventHandlers: {
+                  //     onPressIn: (evt, clickedProps) => {
+                  //       const setID = clickedProps.datum.setID;
+                  //       this.props.tapPoint(setID);
+                  //     }
+                  //   }
+                  // }]}
                   data={this.props.data}
                 />
               </VictoryGroup>

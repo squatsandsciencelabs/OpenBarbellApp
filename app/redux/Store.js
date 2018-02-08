@@ -45,13 +45,12 @@ export default initializeStore = () => {
     sagaMiddleware.run(Sagas);
     
     // load previous
-    // if (Platform.OS === 'ios') {
-    //     var storageMechanism = AsyncStorage;
-    // } else {
-    //     var storageMechanism = FilesystemStorage;
-    // }
-    var storageMechanism = AsyncStorage;
-    persistStore(store, { 
+    if (Platform.OS === 'ios') {
+        var storageMechanism = AsyncStorage;
+    } else {
+        var storageMechanism = FilesystemStorage;
+    }
+    persistStore(store, {
         storage: storageMechanism,
         blacklist: [
             'scannedDevices',
@@ -71,7 +70,24 @@ export default initializeStore = () => {
             createFilter('connectedDevice', ['numDisconnects', 'numReconnects']),
             createFilter('analysis', ['e1RMExercise', 'e1RMVelocity', 'velocitySlider', 'e1RMDaysRange', 'tagsToInclude', 'tagsToExclude', 'e1rm', 'r2', 'chartData', 'regLineData']),
             createFilter('survey', ['surveyURL', 'completedSurveyURLs', 'optedOutEndWorkoutPromptSurveyURLs']),
-        ]}, () => {
+        ]}, async (fsError, fsResult) => {
+            // Android filesystem migration
+            // See https://github.com/rt2zz/redux-persist/issues/679 for details
+            if (Platform.OS !== 'ios' && _.isEmpty(fsResult)) {
+                try {
+                    const asyncState = await getStoredState({
+                        storage: AsyncStorage,
+                    })
+                    if (!_.isEmpty(asyncState)) {
+                        fsPersistor.rehydrate(asyncState, {
+                            serial: false,
+                        })
+                    }
+                } catch (getStateError) {
+                    console.warn('getStoredState error', getStateError)
+                }
+            }
+
             // on startup, always "fail" it so syncing variables go back into the queue to be synced
             store.dispatch(SetsActionCreators.failedUploadSets());
 

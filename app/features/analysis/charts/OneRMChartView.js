@@ -11,6 +11,7 @@ import {
   VictoryTheme, 
   VictoryGroup, 
   VictoryLine,
+  VictoryZoomContainer,
 } from "victory-native";
 import * as Device from 'app/utility/Device';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
@@ -57,6 +58,7 @@ class OneRMChartView extends Component {
       <View>
         <VictoryChart
           theme={VictoryTheme.material}
+          containerComponent={<VictoryZoomContainer zoomDomain={{x: [this.props.lowestWeight, this.props.highestWeight], y: [0, this.props.highestVel] }}/>}
           domain={{x: [this.props.lowestWeight, this.props.highestWeight], y: [0, this.props.highestVel] }}
         >
           <VictoryGroup offset={0}

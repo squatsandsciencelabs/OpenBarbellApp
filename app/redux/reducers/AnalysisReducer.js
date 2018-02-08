@@ -106,32 +106,32 @@ const AnalysisReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 showInfoModal: true,
-            }
+            };
         case SHOW_BEST_RESULTS_MODAL:
             return {
                 ...state,
                 showBestResultsModal: true,
-            }
+            };
         case SHOW_PROTOCOL_MODAL:
             return {
                 ...state,
                 showProtocolModal: true,
-            }
+            };
         case DISMISS_INFO_MODAL:
             return {
                 ...state,
                 showInfoModal: false,
-            }
+            };
         case DISMISS_PROTOCOL_MODAL:
             return {
                 ...state,
                 showProtocolModal: false,
-            }
+            };
         case DISMISS_BEST_RESULTS_MODAL:
             return {
                 ...state,
                 showBestResultsModal: false,
-            }
+            };
         default: 
             return state;
     }

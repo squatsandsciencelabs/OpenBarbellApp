@@ -241,7 +241,6 @@ class OneRMView extends Component {
         } else {
             return (
                 <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
-                    <Text style={[{marginBottom: 20}, styles.titleText]}>Estimated One-Rep Max</Text>
                     {this._render1rm(this.props.r2)}
                     <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
                         <Text style={styles.labelText}>

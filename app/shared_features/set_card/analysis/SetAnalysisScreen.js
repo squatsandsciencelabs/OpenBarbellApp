@@ -204,9 +204,9 @@ const metricValue = (state, set, quantifier, metric) => {
 const metricDescription = (quantifier, metric, rpe, weightMetric) => {
     if (metric === RPE_METRIC) {
         if (rpe) {
-            return weightMetric + " " + '@ ' + rpe + " " + CollapsedMetrics.metricAbbreviation(metric) +  "\n " + "e1RM";       
+            return weightMetric + ' @ ' + rpe + " " + CollapsedMetrics.metricAbbreviation(metric) +  "\ne1RM";       
         } else {
-            return "---" + "\n " + "RPE e1RM"
+            return "---\nRPE e1RM";
         }
     }
 

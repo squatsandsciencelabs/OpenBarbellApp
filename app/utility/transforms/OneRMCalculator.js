@@ -15,6 +15,9 @@ export const calc1rm = (data, velocity) => {
 };
 
 export const getR2interval = (data) => {
+    if (!data) {
+        return null;
+    }
     // gather points
     // precision is 4 for accuracy of regression points in the library
     const result = regression.linear(data, { precision: 4 });

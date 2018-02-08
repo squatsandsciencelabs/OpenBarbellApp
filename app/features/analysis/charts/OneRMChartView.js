@@ -10,7 +10,7 @@ import {
   VictoryChart, 
   VictoryTheme, 
   VictoryGroup, 
-  VictoryLine 
+  VictoryLine,
 } from "victory-native";
 import * as Device from 'app/utility/Device';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
@@ -19,9 +19,6 @@ class OneRMChartView extends Component {
     
   _renderRegressionLine() {
       if (this.props.isR2HighEnough) {
-        const lowest = this.props.regLineData[0];
-        const highest = this.props.regLineData[this.props.regLineData.length - 1];
-        
         return (
           <VictoryLine
             style={{
@@ -29,8 +26,8 @@ class OneRMChartView extends Component {
               parent: { border: "1px solid #ccc"}
             }}
             data={[
-              lowest,
-              highest,
+              this.props.regLeftPoint,
+              this.props.regRightPoint,
             ]}
           />    
         );        
@@ -56,15 +53,11 @@ class OneRMChartView extends Component {
   }
 
   _renderChart() {
-    const highestWeight = Math.max.apply(Math, this.props.chartData.map((point) => { return point.x; }));
-    const lowestWeight = Math.min.apply(Math, this.props.chartData.map((point) => { return point.x; }));
-    const highestVel = Math.max.apply(Math, this.props.chartData.map((point) => { return point.y; }));
-
     return (
       <View>
         <VictoryChart
           theme={VictoryTheme.material}
-          domain={{x: [lowestWeight, highestWeight], y: [0, highestVel] }}
+          domain={{x: [this.props.lowestWeight, this.props.highestWeight], y: [0, this.props.highestVel] }}
         >
           <VictoryGroup offset={0}
             colorScale={"qualitative"}

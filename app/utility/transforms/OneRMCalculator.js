@@ -43,3 +43,35 @@ export const getRegressionPoints = (data) => {
     
     return result.points;
 };
+
+export const lowestWeight = (data) => {
+    if (!data) {
+        return null;
+    }
+    return Math.min.apply(Math, data.map((point) => { return point.x; }));
+};
+
+export const highestWeight = (data) => {
+    if (!data) {
+        return null;
+    }
+    return Math.max.apply(Math, data.map((point) => { return point.x; }));
+};
+
+export const highestWeightPossible = (regressionPoints) => {
+    if (!regressionPoints) {
+        return null;
+    }
+    const first = regressionPoints[0];
+    const second = regressionPoints[regressionPoints.length - 1];
+    const slope = (second.y - first.y) / (second.x - first.x);
+    const yint = first.y - (slope * first.x);
+    return -1 * yint / slope;
+};
+
+export const highestVelocity = (data) => {
+    if (!data) {
+        return null;
+    }
+    return Math.max.apply(Math, data.map((point) => { return point.y; }));
+};

@@ -10,12 +10,30 @@ import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import * as AppStateActionCreators from 'app/redux/shared_actions/AppStateActionCreators';
 import * as OneRMCalculator from 'app/utility/transforms/OneRMCalculator';
 
-const mapStateToProps = (state) => ({
-    chartData: AnalysisSelectors.getChartData(state),
-    regLineData: AnalysisSelectors.getRegLineData(state),
-    isR2HighEnough: AnalysisSelectors.getCurrentR2(state) > 90,
-    isLoggedIn: AuthSelectors.getIsLoggedIn(state),
-});
+const mapStateToProps = (state) => {
+    const chartData = AnalysisSelectors.getChartData(state);
+    const regressionLine = AnalysisSelectors.getRegLineData(state);
+
+    // TODO: store these values instsead of recalculating them every single time
+    if (regressionLine) {
+        var regLeftPoint = regressionLine[0];
+    } else {
+        var regLeftPoint = null;
+    }
+    const highestWeightPossible = OneRMCalculator.highestWeightPossible(regressionLine);
+    const regRightPoint = {x: highestWeightPossible, y: 0};
+
+    return {
+        chartData: chartData,
+        regLeftPoint: regLeftPoint,
+        regRightPoint: regRightPoint,
+        isR2HighEnough: AnalysisSelectors.getCurrentR2(state) > 90, // TODO: this should be in a selector instead of calculating > 90 here
+        isLoggedIn: AuthSelectors.getIsLoggedIn(state),
+        highestWeight: highestWeightPossible,
+        lowestWeight: OneRMCalculator.lowestWeight(chartData),
+        highestVel: OneRMCalculator.highestVelocity(chartData),
+    }
+};
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({

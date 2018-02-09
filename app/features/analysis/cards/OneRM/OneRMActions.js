@@ -76,16 +76,14 @@ export const calcE1rm = () => (dispatch, getState) => {
     const e1rm = OneRMCalculator.calc1rm(exerciseData, velocity);
     const r2 = OneRMCalculator.getR2interval(exerciseData);
 
-    if ((exerciseData && exerciseData.length > 3) && (chartData && chartData.length > 3)) {
-        dispatch({
-            type: CALC_ONE_RM,
-            e1rm: Math.sign(e1rm) === 1 ? e1rm : null,
-            e1RMVelocity: velocity,
-            r2: r2,
-            chartData: chartData,
-            regLineData: regLineData,
-        });
-    }
+    dispatch({
+        type: CALC_ONE_RM,
+        e1rm: Math.sign(e1rm) === 1 ? e1rm : null,
+        e1RMVelocity: velocity,
+        r2: r2,
+        chartData: chartData,
+        regLineData: regLineData,
+    });
 };
 export const showBestResultsModal = () => ({
     type: SHOW_BEST_RESULTS_MODAL,

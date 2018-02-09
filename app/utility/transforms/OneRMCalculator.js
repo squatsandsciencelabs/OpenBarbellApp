@@ -62,7 +62,7 @@ export const highestWeight = (data) => {
 };
 
 export const highestWeightPossible = (regressionPoints) => {
-    if (!regressionPoints) {
+    if (!regressionPoints || regressionPoints.length <= 1) {
         return null;
     }
     const first = regressionPoints[0];

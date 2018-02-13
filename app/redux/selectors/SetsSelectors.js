@@ -435,7 +435,7 @@ export const getExerciseData = (state, exercise) => {
     const range = AnalysisSelectors.getAnalysisRange(state);
 
     sets.forEach((set) => {
-        if (set.exercise === exercise && SetEmptyCheck.numValidUnremovedReps(set) > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime) && (checkIncludesTags(state, set.tags) && checkExcludesTags(state, set.tags))) {
+        if (set.exercise.toLowerCase() === exercise.toLowerCase() && SetEmptyCheck.numValidUnremovedReps(set) > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime) && (checkIncludesTags(state, set.tags) && checkExcludesTags(state, set.tags))) {
             data.push([set.weight, Number(RepDataMap.averageVelocity(getFirstValidUnremovedRep(set.reps).data))]);
         }       
     });
@@ -450,7 +450,7 @@ export const getChartData = (state, exercise) => {
     const range = AnalysisSelectors.getAnalysisRange(state);
 
     sets.forEach((set) => {
-        if (set.exercise === exercise && SetEmptyCheck.numValidUnremovedReps(set) > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime) && (checkIncludesTags(state, set.tags) && checkExcludesTags(state, set.tags))) {
+        if (set.exercise.lowerCase() === exercise.toLowerCase() && SetEmptyCheck.numValidUnremovedReps(set) > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime) && (checkIncludesTags(state, set.tags) && checkExcludesTags(state, set.tags))) {
             data.push({ x: set.weight, y: Number(RepDataMap.averageVelocity(getFirstValidUnremovedRep(set.reps).data)), setID: set.setID });
         }       
     });
@@ -467,7 +467,7 @@ export const getRegLinePoints = (state, exercise) => {
     const range = AnalysisSelectors.getAnalysisRange(state);
 
     sets.forEach((set) => {
-        if (set.exercise === exercise && SetEmptyCheck.numValidUnremovedReps(set) > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime) && (checkIncludesTags(state, set.tags) && checkExcludesTags(state, set.tags))) {
+        if (set.exercise.toLowerCase() === exercise.toLowerCase() && SetEmptyCheck.numValidUnremovedReps(set) > 0 && set.weight && DateUtils.checkDateWithinRange(range, set.initialStartTime) && (checkIncludesTags(state, set.tags) && checkExcludesTags(state, set.tags))) {
             data.push({ x: set.weight, y: OneRMCalculator.calcVel(exerciseData, set.weight)[1], setID: set.setID });
         }       
     });

@@ -5,6 +5,7 @@ import {
     Image,
     StyleSheet,
     TouchableOpacity,
+    Platform,
 } from 'react-native';
 import { 
   VictoryScatter, 
@@ -116,18 +117,34 @@ class OneRMChartView extends Component {
     );    
   }
 
+  _info() {
+    return (
+      <View style={{marginBottom: 15}}>
+        <TouchableOpacity style={{alignItems: 'center'}} onPress={ () => this.props.showInfoModal() }>
+            <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >What is e1rm?</Text>
+        </TouchableOpacity>
+        {this._infoModal()}
+      </View>
+    );
+  }
+
+  _protocol() {
+    return (
+      <View style={{marginBottom: 15}}>
+        <TouchableOpacity style={{alignItems: 'center'}} onPress={ () => this.props.showProtocolModal() }>
+            <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >Protocol</Text>
+        </TouchableOpacity>
+        {this._protocolModal()}
+      </View>
+    )
+  }
+
   render() {
     return (
       <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column', borderBottomWidth: 0, alignItems: 'center' }] }>
         <Text style={[{marginBottom: 15}, styles.titleText]}>Estimated One-Rep Max</Text>
-        <TouchableOpacity style={{alignItems: 'center'}} onPress={ () => this.props.showInfoModal() }>
-          <Text style= {[SETTINGS_PANEL_STYLES.tappableText, { marginBottom: 5 }]} >What is e1rm?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={{alignItems: 'center'}} onPress={ () => this.props.showProtocolModal() }>
-          <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >Protocol</Text>
-        </TouchableOpacity>
-        {this._infoModal()}
-        {this._protocolModal()}
+        {this._info()}
+        {this._protocol()}
         {this._renderChartArea()}
       </View>
     );
@@ -141,14 +158,6 @@ const styles = StyleSheet.create({
       fontSize: 16,
       fontWeight: 'bold',
   },
-  pseudoScrollView: {
-    opacity: 0,
-    position: 'absolute',
-    top: 0,    
-    left: 0,
-    width:"100%",
-    height:"100%",
-  }
 });
 
 export default OneRMChartView;

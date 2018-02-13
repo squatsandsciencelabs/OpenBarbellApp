@@ -4,7 +4,7 @@ import {
 } from 'app/ActionTypes';
 
 export const updateTagSuggestions = () => (dispatch, getState) => {
-    let state = getState();
+    const state = getState();
     
     dispatch({
         type: UPDATE_TAG_SUGGESTIONS,
@@ -14,7 +14,7 @@ export const updateTagSuggestions = () => (dispatch, getState) => {
 }
 
 export const updateExerciseSuggestions = () => (dispatch, getState) => {
-    let state = getState();
+    const state = getState();
     
     dispatch({
         type: UPDATE_EXERCISE_SUGGESTIONS,

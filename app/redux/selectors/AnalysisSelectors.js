@@ -20,9 +20,11 @@ export const getCurrentE1rm = (state) => stateRoot(state).e1rm;
 
 export const getCurrentR2 = (state) => stateRoot(state).r2;
 
+export const getIsR2HighEnough = (state) => getCurrentR2(state) > 90; // TODO: make 90 a config
+
 export const getVelocitySlider = (state) => stateRoot(state).velocitySlider;
 
-export const getChartData = (state) => stateRoot(state).chartData;
+export const get1RMChartData = (state) => stateRoot(state).chartData;
 
 export const getRegLineData = (state) => stateRoot(state).regLineData;
 

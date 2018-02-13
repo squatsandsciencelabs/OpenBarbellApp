@@ -611,7 +611,7 @@ const overrideWithTestData = (state, action) => {
     var historyData = require('app/configs/TestData.json');
 
     // alter the date to be based on TODAY
-    const originalDateTime = 5; // TODO: set it to the date of the dump itself
+    const originalDateTime = 1518556080000; // this needs to be date of the dump
     const currentDateTime = Date.now();
     const dateDifference = currentDateTime - originalDateTime;
     for (var property in historyData) {

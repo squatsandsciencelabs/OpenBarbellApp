@@ -1,8 +1,8 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import OneRMView from './OneRMView';
-import * as Actions from './OneRMActions';
+import OneRMCalculateView from './OneRMCalculateView';
+import * as Actions from './OneRMCalculateActions';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
@@ -43,6 +43,6 @@ const mapDispatchToProps = (dispatch) => {
 const OneRMScreen = connect(
     mapStateToProps,
     mapDispatchToProps
-)(OneRMView);
+)(OneRMCalculateView);
 
 export default OneRMScreen;

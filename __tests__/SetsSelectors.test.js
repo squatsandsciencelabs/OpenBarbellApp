@@ -1675,7 +1675,7 @@ describe('SetsSelectors', () => {
 
         });
         
-        describe('getExerciseData', () => {
+        describe('get1RMExerciseData', () => {
             beforeAll(() => {
                 Date.now = () => 1515197192603;
             });
@@ -1687,7 +1687,7 @@ describe('SetsSelectors', () => {
             test('return data for regression', () => {
                 const expected = [[200, 1.83], [100, 1.43]];
                 
-                const result = sut.getExerciseData(state, 'Bench');
+                const result = sut.get1RMExerciseData(state, 'Bench');
 
                 expect(result).toEqual(expected);
             });
@@ -1695,7 +1695,7 @@ describe('SetsSelectors', () => {
             test('return data for scatter', () => {
                 const expected = [{"setID": "d", "x": 200, "y": 1.83}, {"setID": "k", "x": 100, "y": 1.43}]
     
-                const result = sut.getChartData(state, 'Bench');
+                const result = sut.get1RMChartData(state, 'Bench');
 
                 expect(result).toEqual(expected);
             });
@@ -1805,7 +1805,7 @@ describe('SetsSelectors', () => {
 
                 const expected = [{"setID": "c", "x": 150, "y": 1.73}, {"setID": "a", "x": 100, "y": 1.83}];
                 
-                const result = sut.getChartData(state, 'Bench');
+                const result = sut.get1RMChartData(state, 'Bench');
 
                 expect(result).toEqual(expected);
             });
@@ -1914,7 +1914,7 @@ describe('SetsSelectors', () => {
 
                 const expected =  [{"setID": "a", "x": 100, "y": 1.83}, {"setID": "c", "x": 150, "y": 1.73}, {"setID": "h", "x": 200, "y": 1.33}];
                 
-                const result = sut.getChartData(state, 'Bench');
+                const result = sut.get1RMChartData(state, 'Bench');
 
                 expect(result).toEqual(expected);
             });
@@ -2023,14 +2023,14 @@ describe('SetsSelectors', () => {
 
                 const expected =  [{"setID": "a", "x": 100, "y": 1.83}, {"setID": "c", "x": 100, "y": 1.73}, {"setID": "d", "x": 200, "y": 1.83}];
 
-                const result = sut.getChartData(state, 'Bench');
+                const result = sut.get1RMChartData(state, 'Bench');
 
                 expect(result).toEqual(expected);
             });
 
         });
 
-        describe('getRegLinePoints', () => {
+        describe('get1RMRegLinePoints', () => {
 
             test('return reg points', () => {
                 const state = {
@@ -2133,11 +2133,11 @@ describe('SetsSelectors', () => {
                         tagsToExclude: [],
                     }
                 };
-                
                 // same weight so y being the same makes sense
                 const expected = [{"setID": "a", "x": 100, "y": 1.78}, {"setID": "c", "x": 100, "y": 1.78}, {"setID": "d", "x": 200, "y": 1.83}];
+                const exerciseData = sut.get1RMExerciseData(state, 'Bench');
 
-                const result = sut.getRegLinePoints(state, 'Bench');
+                const result = sut.get1RMRegLinePoints(state, 'Bench', exerciseData);
 
                 expect(result).toEqual(expected);
             });

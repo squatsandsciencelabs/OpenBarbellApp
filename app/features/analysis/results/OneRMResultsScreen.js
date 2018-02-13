@@ -11,25 +11,32 @@ import * as AppStateActionCreators from 'app/redux/shared_actions/AppStateAction
 import * as OneRMCalculator from 'app/utility/transforms/OneRMCalculator';
 
 const mapStateToProps = (state) => {
-    const chartData = AnalysisSelectors.getChartData(state);
+    const chartData = AnalysisSelectors.get1RMChartData(state);
     const regressionLine = AnalysisSelectors.getRegLineData(state);
+    const isR2HighEnough = AnalysisSelectors.getIsR2HighEnough(state);
 
-    // TODO: store these values instsead of recalculating them every single time
+    // TODO: store regression point and weight values instsead of recalculating them every single time for speed
+    // otherwise it's slow on launch every time, especially with every action
+    if (isR2HighEnough) {
+        var highestWeight = OneRMCalculator.highestWeightPossible(regressionLine);
+    } else {
+        var highestWeight = OneRMCalculator.highestWeight(chartData);
+    }
+
     if (regressionLine) {
         var regLeftPoint = regressionLine[0];
     } else {
         var regLeftPoint = null;
     }
-    const highestWeightPossible = OneRMCalculator.highestWeightPossible(regressionLine);
-    const regRightPoint = {x: highestWeightPossible, y: 0};
+    const regRightPoint = {x: highestWeight, y: 0};
 
     return {
         chartData: chartData,
         regLeftPoint: regLeftPoint,
         regRightPoint: regRightPoint,
-        isR2HighEnough: AnalysisSelectors.getCurrentR2(state) > 90, // TODO: this should be in a selector instead of calculating > 90 here
+        isR2HighEnough: isR2HighEnough,
         isLoggedIn: AuthSelectors.getIsLoggedIn(state),
-        highestWeight: highestWeightPossible,
+        highestWeight: highestWeight,
         lowestWeight: OneRMCalculator.lowestWeight(chartData),
         highestVel: OneRMCalculator.highestVelocity(chartData),
         isInfoModalShowing: AnalysisSelectors.getShowInfoModal(state),

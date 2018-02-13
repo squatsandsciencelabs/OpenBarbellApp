@@ -14,7 +14,7 @@ const mapStateToProps = (state) => ({
     velocity: AnalysisSelectors.getVelocitySlider(state),
     exercise: AnalysisSelectors.getAnalysisE1RMExercise(state),
     metric: SettingsSelectors.getDefaultMetric(state),
-    chartData: AnalysisSelectors.getChartData(state),
+    chartData: AnalysisSelectors.get1RMChartData(state),
     regLineData: AnalysisSelectors.getRegLineData(state),
     days: AnalysisSelectors.getAnalysisRange(state),
     r2: AnalysisSelectors.getCurrentR2(state),

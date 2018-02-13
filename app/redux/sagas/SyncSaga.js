@@ -11,7 +11,8 @@ import {
     SAVE_HISTORY_SET_TAGS,
     SAVE_WORKOUT_SET,
     SAVE_HISTORY_SET,
-    SAVE_HISTORY_VIDEO
+    SAVE_HISTORY_VIDEO,
+    TEST_ONE_RM,
 } from 'app/ActionTypes';
 import API from 'app/services/API';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
@@ -21,7 +22,14 @@ import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsAction
 import Validator from 'app/utility/transforms/Validator';
 import * as Analytics from 'app/services/Analytics';
 
-const SyncSaga = function * SyncSaga() {
+const SyncSaga = function* SyncSaga() {
+    // prevent all syncing once testing 1RM mode is enabled
+    const task = yield fork(syncLoop);
+    yield take(TEST_ONE_RM);
+    yield cancel(task);
+};
+
+function *syncLoop() {
     while (true) {
         // sync
         const task = yield fork(executeSync);
@@ -30,7 +38,7 @@ const SyncSaga = function * SyncSaga() {
         yield take(LOGOUT);
         yield cancel(task);
     }
-};
+}
 
 function* executeSync() {
     while (true) {

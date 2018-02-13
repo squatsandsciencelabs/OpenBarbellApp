@@ -608,7 +608,7 @@ const finishUploadingSets = (state, action) => {
 
 const overrideWithTestData = (state, action) => {
     // dump of test data
-    var historyData = {};
+    var historyData = require('app/configs/TestData.json');
 
     // alter the date to be based on TODAY
     const originalDateTime = 5; // TODO: set it to the date of the dump itself

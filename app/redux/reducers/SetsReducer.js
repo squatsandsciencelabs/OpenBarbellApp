@@ -608,15 +608,13 @@ const finishUploadingSets = (state, action) => {
 
 const overrideWithTestData = (state, action) => {
     // dump of test data
-    let historyData = {
-
-    };
+    var historyData = {};
 
     // alter the date to be based on TODAY
     const originalDateTime = 5; // TODO: set it to the date of the dump itself
     const currentDateTime = Date.now();
     const dateDifference = currentDateTime - originalDateTime;
-    for (property of historyData) {
+    for (var property in historyData) {
         if (historyData.hasOwnProperty(property)) {
             let set = historyData[property];
             if (set.initialStartTime) {

@@ -38,7 +38,7 @@
     "regression": "2.0.0",
     "reselect": "3.0.1",
     "uuid": "3.1.0",
-    "victory-native": "0.16.6"
+    "victory-native": "0.17.1"
   },
   "rnpm": {
     "android": {

@@ -7,6 +7,7 @@ import {
     Text,
 } from 'react-native';
 
+import OneRMDebugScreen from './debug/OneRMDebugScreen';
 import OneRMCalculateScreen from './calculate/OneRMCalculateScreen';
 import OneRMResultsScreen from './results/OneRMResultsScreen';
 import OneRMLoggedOutView from './logged_out/OneRMLoggedOutView';
@@ -21,6 +22,7 @@ class AnalysisTab extends Component {
             // TODO: test the hack still works on Android
             return (
                 <ScrollView style={{flex: 1}}>
+                    <OneRMDebugScreen />
                     <OneRMCalculateScreen />
                     <Image style={styles.pseudoScrollView} source={require('app/appearance/images/blank.png')} />
                     <OneRMResultsScreen />

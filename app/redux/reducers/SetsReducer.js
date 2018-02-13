@@ -22,6 +22,7 @@ import {
     LOGOUT,
     DELETE_WORKOUT_SET,
     DELETE_HISTORY_SET,
+    TEST_ONE_RM,
 } from 'app/ActionTypes';
 import uuidV4 from 'uuid/v4';
 import DeviceInfo from 'react-native-device-info';
@@ -77,6 +78,8 @@ const SetsReducer = (state = createDefaultState(), action) => {
             return clearHistory(state, action);
         case FINISH_UPLOADING_SETS:
             return finishUploadingSets(state, action);
+        case TEST_ONE_RM:
+            return overrideWithTestData(state, action);
         default:
             return state;
     }
@@ -174,7 +177,7 @@ const deleteWorkoutSet = (state, action) => {
     return {
         ...state,
         workoutData: state.workoutData.filter(set => set.setID !== action.setID)
-    }
+    };
 };
 
 // SAVE_WORKOUT_SET_TAGS
@@ -527,7 +530,7 @@ const endWorkout = (state, action) => {
 const beginUploadingSets = (state, action) => {
     return Object.assign({}, state, {
         setIDsBeingUploaded: [...state.setIDsToUpload],
-        setIDsToUpload: []
+        setIDsToUpload: [],
     });
 };
 
@@ -599,6 +602,54 @@ const finishUploadingSets = (state, action) => {
         setIDsBeingUploaded: [],
         revision: action.revision,
     });
+};
+
+// TEST_ONE_RM
+
+const overrideWithTestData = (state, action) => {
+    // dump of test data
+    let historyData = {
+
+    };
+
+    // alter the date to be based on TODAY
+    const originalDateTime = 5; // TODO: set it to the date of the dump itself
+    const currentDateTime = Date.now();
+    const dateDifference = currentDateTime - originalDateTime;
+    for (property of historyData) {
+        if (historyData.hasOwnProperty(property)) {
+            let set = historyData[property];
+            if (set.initialStartTime) {
+                set.initialStartTime = addTime(set.initialStartTime, dateDifference);
+            }
+            if (set.startTime) {
+                set.startTime = addTime(set.startTime, dateDifference);
+            }
+            if (set.endTime) {
+                set.endTime = addTime(set.endTime, dateDifference);
+            }
+            if (set.reps) {
+                for (rep of set.reps) {
+                    if (rep.time) {
+                        rep.time = addTime(rep.time, dateDifference);
+                    }
+                }
+            }
+        }
+    }
+
+    return {
+        ...state,
+        workoutData : [ createSet() ],
+        setIDsToUpload: [],
+        setIDsBeingUploaded: [],
+        revision: 0,
+        historyData: historyData,
+    };
+};
+
+const addTime = (origDate, dateDifference) => {
+    return new Date(Date.parse(origDate) + dateDifference);
 };
 
 export default SetsReducer;

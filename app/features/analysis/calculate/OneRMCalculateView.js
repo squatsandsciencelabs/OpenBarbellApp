@@ -10,8 +10,7 @@ import {
 } from 'react-native';
 import { Slider } from 'react-native';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
-import OneRMChartScreen from 'app/features/analysis/charts/OneRMChartScreen';
-import ExercisePicker from 'app/features/analysis/cards/OneRM/exercise/ExercisePicker';
+import ExercisePicker from './exercise/ExercisePicker';
 import EditAnalysisTagsToIncludeScreen from './tags/tagsToInclude/EditAnalysisTagsToIncludeScreen';
 import EditAnalysisTagsToExcludeScreen from './tags/tagsToExclude/EditAnalysisTagsToExcludeScreen';
 import Pill from 'app/shared_features/pill/Pill';

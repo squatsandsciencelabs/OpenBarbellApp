@@ -15,7 +15,6 @@ const mapStateToProps = (state) => ({
     days: AnalysisSelectors.getAnalysisRange(state),
     tagsToInclude: AnalysisSelectors.getTagsToInclude(state),
     tagsToExclude: AnalysisSelectors.getTagsToExclude(state),
-    isInfoModalShowing: AnalysisSelectors.getShowInfoModal(state),
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -26,8 +25,7 @@ const mapDispatchToProps = (dispatch) => {
         tappedTagsToExclude: Actions.presentTagsToExclude,
         changeVelocity: Actions.changeVelocitySlider,
         changeDays: Actions.changeE1RMDays,
-        showInfoModal: Actions.showInfoModal,
-        dismissInfoModal: Actions.dismissInfoModal,
+        presentInfoModal: Actions.presentInfoModal,
     }, dispatch);
 };
 

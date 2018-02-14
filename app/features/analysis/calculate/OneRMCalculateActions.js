@@ -5,8 +5,7 @@ import {
     PRESENT_INCLUDES_TAGS,
     PRESENT_EXCLUDES_TAGS,
     CALC_ONE_RM,
-    SHOW_INFO_MODAL,
-    DISMISS_INFO_MODAL,
+    PRESENT_INFO_MODAL,
 } from 'app/ActionTypes';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 import * as OneRMCalculator from 'app/utility/transforms/OneRMCalculator';
@@ -86,11 +85,8 @@ export const calcE1rm = () => (dispatch, getState) => {
     });
 };
 
-export const showInfoModal = () => ({
-    type: SHOW_INFO_MODAL,
+export const presentInfoModal = () => ({
+    type: PRESENT_INFO_MODAL,
 });
 
-export const dismissInfoModal = () => ({
-    type: DISMISS_INFO_MODAL,
-});
 

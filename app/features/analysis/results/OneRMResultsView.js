@@ -17,7 +17,6 @@ import {
 } from "victory-native";
 import * as Device from 'app/utility/Device';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
-import AnalysisModal from 'app/shared_features/analysis_modal/AnalysisModal';
 
 class OneRMChartView extends Component {
 

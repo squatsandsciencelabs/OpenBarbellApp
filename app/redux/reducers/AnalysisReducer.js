@@ -13,7 +13,7 @@ import {
     DISMISS_INCLUDES_TAGS,
     DISMISS_EXCLUDES_TAGS,
     CALC_ONE_RM,
-    SHOW_INFO_MODAL,
+    PRESENT_INFO_MODAL,
     SHOW_BEST_RESULTS_MODAL,
     DISMISS_INFO_MODAL,
 } from 'app/ActionTypes';
@@ -103,7 +103,7 @@ const AnalysisReducer = (state = defaultState, action) => {
                 regLineData: action.regLineData,
                 scroll: !state.scroll,
             };
-        case SHOW_INFO_MODAL:
+        case PRESENT_INFO_MODAL:
             return {
                 ...state,
                 showInfoModal: true,

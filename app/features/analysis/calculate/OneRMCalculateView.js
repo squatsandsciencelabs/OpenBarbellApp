@@ -14,7 +14,7 @@ import ExercisePicker from './exercise/ExercisePicker';
 import EditAnalysisTagsToIncludeScreen from './tags/tagsToInclude/EditAnalysisTagsToIncludeScreen';
 import EditAnalysisTagsToExcludeScreen from './tags/tagsToExclude/EditAnalysisTagsToExcludeScreen';
 import Pill from 'app/shared_features/pill/Pill';
-import AnalysisModal from 'app/shared_features/analysis_modal/AnalysisModal';
+import WhatIsOneRMScreen from './whatis/WhatIsOneRMScreen';
 import * as Device from 'app/utility/Device';
 
 class OneRMView extends Component {
@@ -50,30 +50,6 @@ class OneRMView extends Component {
     }
 
     // RENDER
-
-    _renderInfoModal() {
-        const title = "What is e1RM?";
-        const body = "- The estimated One-Rep Max calculation is based on the first rep of each set of a given exercise, within a specified date range, and extrapolated to the lowest velocity at which you think you can successfully complete a one rep max. \n \n - This estimate is provided with a confidence margin which is influenced by several factors explained below. While outliers sometimes occur naturally, the key to a high confidence rating is recording set information as fully and accurately as possible."
-        
-        return (
-            <AnalysisModal 
-                title={title}
-                body={body}
-                isModalShowing={this.props.isInfoModalShowing} 
-                closeModal={this.props.dismissInfoModal}
-            />
-        );
-    }
-
-    _renderCalculate1rm() {
-        return (
-            <View style={[styles.button, {marginTop: 20}]}>
-                <TouchableOpacity onPress={ () => this.props.calcE1rm() }>
-                    <Text style={styles.buttonText}>Calculate</Text>
-                </TouchableOpacity>
-            </View>
-        );
-    }
 
     _displayTagsToInclude() {
         if (this.props.tagsToInclude === undefined || this.props.tagsToInclude === null || this.props.tagsToInclude.length === 0) {
@@ -205,15 +181,25 @@ class OneRMView extends Component {
         );
     }
 
+    _renderCalculate1rm() {
+        return (
+            <View style={[styles.button, {marginTop: 20}]}>
+                <TouchableOpacity onPress={ () => this.props.calcE1rm() }>
+                    <Text style={styles.buttonText}>Calculate</Text>
+                </TouchableOpacity>
+            </View>
+        );
+    }
+
     render() {
         return (
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
                 <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
                     <Text style={[{marginBottom: 15}, styles.titleText]}>Estimated One-Rep Max</Text>
-                    <TouchableOpacity style={{alignItems: 'center', position: 'absolute', right: 0, top: 0}} onPress={ () => this.props.showInfoModal() }>
+                    <TouchableOpacity style={{alignItems: 'center', position: 'absolute', right: 0, top: 0}} onPress={ () => this.props.presentInfoModal() }>
                         <Text style= {[SETTINGS_PANEL_STYLES.tappableText, { marginBottom: 5 }]} >?</Text>
                     </TouchableOpacity>
-                    {this._renderInfoModal()}
+                    <WhatIsOneRMScreen />
                     {this._renderForms()}
                     {this._renderSliders()}
                     {this._renderCalculate1rm()}

@@ -49,11 +49,11 @@ class AnalysisTab extends Component {
             // TODO: test the hack still works on Android
             return (
                 <ScrollView style={{flex: 1}} ref={(ref) => { this.scrollView = ref}}>
-                    <Image style={styles.pseudoScrollView} source={require('app/appearance/images/blank.png')} />
                     <OneRMDebugScreen />
                     <OneRMCalculateScreen />
                     <View ref={(ref) => { this.results = ref }} onLayout={() => {}} collapsable={false} >
                         <OneRMResultsScreen />
+                        <Image style={styles.pseudoScrollView} source={require('app/appearance/images/blank.png')} />
                     </View>
                     <OneRMProtocolView />
                 </ScrollView>

@@ -7,12 +7,13 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import { 
-    VictoryScatter, 
-    VictoryChart, 
-    VictoryTheme, 
-    VictoryGroup, 
+    VictoryScatter,
+    VictoryChart,
+    VictoryTheme,
     VictoryLine,
     VictoryZoomContainer,
+    VictoryBar,
+    VictoryAxis,
 } from "victory-native";
 import * as Device from 'app/utility/Device';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
@@ -80,20 +81,32 @@ class OneRMChartView extends Component {
             );
         }
     }
+
+    _render1RMBar() {
+        if (this.props.isR2HighEnough && this.props.e1rm) {
+            return (
+                <VictoryBar
+                    data={[
+                        { x: this.props.e1rm, y: 20, y0: 0, width: 20, fill: "#ffe5e5" },
+                    ]}
+                />
+            )
+        }
+    }
     
     _renderRegressionLine() {
         if (this.props.isR2HighEnough) {
             return (
-            <VictoryLine
-                style={{
-                    data: { stroke: "#368fff" },
-                    parent: { border: "1px solid #ccc"}
-                }}
-                data={[
-                    this.props.regLeftPoint,
-                    this.props.regRightPoint,
-                ]}
-            />
+                <VictoryLine
+                    style={{
+                        data: { stroke: "#368fff" },
+                        parent: { border: "1px solid #ccc"}
+                    }}
+                    data={[
+                        this.props.regLeftPoint,
+                        this.props.regRightPoint,
+                    ]}
+                />
             );
         }
     }
@@ -119,8 +132,9 @@ class OneRMChartView extends Component {
                     containerComponent={<VictoryZoomContainer zoomDomain={{x: [this.props.lowestWeight, this.props.highestWeight], y: [0, this.props.highestVel] }}/>}
                     domain={{x: [this.props.lowestWeight, this.props.highestWeight], y: [0, this.props.highestVel] }}>
 
-                    <VictoryGroup offset={0} colorScale={"qualitative"}>
-                        {this._renderRegressionLine()}
+                    {this._render1RMBar()}
+                    <VictoryAxis crossAxis />
+                    <VictoryAxis dependentAxis crossAxis />
                         <VictoryScatter
                             style={{ data: { fill: "#c43a31" } }}
                             width={400}
@@ -135,7 +149,7 @@ class OneRMChartView extends Component {
                             //   }
                             // }]}
                             data={this.props.chartData} />
-                    </VictoryGroup>
+                        {this._renderRegressionLine()}
                 
                 </VictoryChart>
             </View>

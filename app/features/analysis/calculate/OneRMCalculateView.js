@@ -172,21 +172,6 @@ class OneRMView extends Component {
         return (
             <View>
                 <Text style={styles.labelText}>
-                    Velocity
-                </Text>
-                <Slider
-                    value={this.props.velocity} 
-                    onValueChange={(value) => this.setState({ slidingVelocity: true, velocity: Number(value.toFixed(2)) })}
-                    onSlidingComplete={(value) => this._changeVelocitySlider(value)}
-                    minimumValue={.01}
-                    maximumValue={.41}
-                    step={.01}
-                    thumbTintColor={thumbTintColor}
-                    minimumTrackTintColor={'#368fff'}
-                    animateTransitions={true}
-                />
-                <Text style={styles.numberStyle}>{this.state.velocity} m/s</Text>
-                <Text style={styles.labelText}>
                     Date Range
                 </Text>
                 <Slider
@@ -201,6 +186,21 @@ class OneRMView extends Component {
                     animateTransitions={true}
                 />
                 <Text style={styles.numberStyle}>{Math.abs(this.state.days)} days</Text>
+                <Text style={styles.labelText}>
+                    Velocity
+                </Text>
+                <Slider
+                    value={this.props.velocity} 
+                    onValueChange={(value) => this.setState({ slidingVelocity: true, velocity: Number(value.toFixed(2)) })}
+                    onSlidingComplete={(value) => this._changeVelocitySlider(value)}
+                    minimumValue={.01}
+                    maximumValue={.41}
+                    step={.01}
+                    thumbTintColor={thumbTintColor}
+                    minimumTrackTintColor={'#368fff'}
+                    animateTransitions={true}
+                />
+                <Text style={styles.numberStyle}>{this.state.velocity} m/s</Text>
             </View>
         );
     }

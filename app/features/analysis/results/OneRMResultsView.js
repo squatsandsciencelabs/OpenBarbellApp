@@ -29,7 +29,7 @@ class OneRMChartView extends Component {
                 <View>
                     <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{e1rm}</Text> {this.props.metric}</Text>
                     <Text style={{ textAlign: 'center', fontSize: 15, marginBottom: 20 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.e1rmVelocity} m/s</Text></Text> 
-                    <Text style={styles.r2Text}>r2: {this.props.r2} %</Text>
+                    <Text style={styles.r2Text}>r² : {this.props.r2} %</Text>
                 </View>
             );
         } else {

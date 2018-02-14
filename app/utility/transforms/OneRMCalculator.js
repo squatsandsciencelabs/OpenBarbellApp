@@ -47,6 +47,13 @@ export const getRegressionPoints = (data) => {
     return result.points;
 };
 
+export const lowestWeightPoint = (data) => {
+    if (!data) {
+        return null;
+    }
+    return data.reduce((prev, point) => point.x < prev.x ? point : prev, data[0]);
+};
+
 export const lowestWeight = (data) => {
     if (!data) {
         return null;

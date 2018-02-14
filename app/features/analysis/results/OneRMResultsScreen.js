@@ -17,13 +17,15 @@ const mapStateToProps = (state) => {
     // TODO: store regression point and weight values instsead of recalculating them every single time for speed
     // otherwise it's slow on launch every time, especially with every action
     if (isR2HighEnough) {
+        // there's a regression line, showcase x axis
         var highestWeight = OneRMCalculator.highestWeightPossible(regressionLine);
     } else {
+        // no regerssion line, just use the largest ACTUAL lift
         var highestWeight = OneRMCalculator.highestWeight(chartData);
     }
 
     if (regressionLine) {
-        var regLeftPoint = regressionLine[0];
+        var regLeftPoint = OneRMCalculator.lowestWeightPoint(regressionLine);
     } else {
         var regLeftPoint = null;
     }

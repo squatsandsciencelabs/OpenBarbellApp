@@ -21,32 +21,22 @@ import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 class OneRMChartView extends Component {
 
     _render1rm(r2) {
-        if (this.props.chartData && this.props.chartData.length > 3) {
-            if (this.props.isR2HighEnough) {
-                let e1rm = this.props.e1rm ? this.props.e1rm : "---";
-                let e1rmVelocity = this.props.e1rmVelocity ? this.props.e1rmVelocity : "---";
+        if (this.props.chartData && this.props.chartData.length > 3 && this.props.isR2HighEnough) {
+            let e1rm = this.props.e1rm ? this.props.e1rm : "---";
+            let e1rmVelocity = this.props.e1rmVelocity ? this.props.e1rmVelocity : "---";
 
-                return (
-                    <View>
-                        <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{e1rm}</Text> {this.props.metric}</Text>
-                        <Text style={{ textAlign: 'center', fontSize: 15, marginBottom: 20 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.e1rmVelocity} m/s</Text></Text> 
-                        <Text style={styles.r2Text}>r2: {this.props.r2} %</Text>
-                    </View>
-                );
-            } else {
-                return (
-                    <View>
-                        <Text style={styles.errorText}>
-                            r2 too low, please clean up or log more data.
-                        </Text>
-                    </View>
-                );
-            } 
+            return (
+                <View>
+                    <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{e1rm}</Text> {this.props.metric}</Text>
+                    <Text style={{ textAlign: 'center', fontSize: 15, marginBottom: 20 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.e1rmVelocity} m/s</Text></Text> 
+                    <Text style={styles.r2Text}>r2: {this.props.r2} %</Text>
+                </View>
+            );
         } else {
             return (
                 <View>
                     <Text style={styles.errorText}>
-                        This exercise with these tags does not contain enough reps within the date range.
+                        R² is too low, please clean up or log more data
                     </Text>
                 </View>
             );
@@ -130,6 +120,7 @@ class OneRMChartView extends Component {
     render() {
         return (
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column', alignItems: 'center' }] }>
+                <Text>Results</Text>
                 {this._render1rm(this.props.r2)}
                 <Text style={{textAlign: 'center'}}>Tap a point to view and edit the data</Text>
                 {this._renderChartArea()}

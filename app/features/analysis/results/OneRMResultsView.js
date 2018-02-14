@@ -19,6 +19,67 @@ import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 import AnalysisModal from 'app/shared_features/analysis_modal/AnalysisModal';
 
 class OneRMChartView extends Component {
+
+    _bestResultsModal() {
+        const title = "How can I get the best results?";
+        const body = "- Log all warmups from the bar to your working weight. \n \n - Make sure you use consistent tag names and exercise names. \n \n - Set your default to either KG or LB, whichever is most common, and change when appropriate. \n \n - Erase false reps caused by unracking the bar or attaching/removing an OpenBarbell. \n \n - Enter RPE for every set as accurately as possible. \n \n - If you record multiple lifters' data on the same account, separate data with a unique tag. \n \n - Remember to hit 'End Workout' so data can be analyzed more quickly.";
+        
+        return (
+          <AnalysisModal 
+            title={title}
+            body={body}
+            isModalShowing={this.props.isBestResultsModalShowing} 
+            closeModal={this.props.dismissBestResultsModal}
+          />
+        );
+    }
+
+    _bestResults() {
+        return (
+            <View style={{marginBottom: 15}}>
+                <TouchableOpacity style={{alignItems: 'center'}} onPress={ () => this.props.showBestResultsModal() }>
+                    <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >How can I get the best results?</Text>
+                </TouchableOpacity>
+                {this._bestResultsModal()}
+            </View>
+        );
+    }
+
+    _render1rm(r2) {
+        if (this.props.chartData && this.props.chartData.length > 3) {
+            if (this.props.isR2HighEnough) {
+                let e1rm = this.props.e1rm ? this.props.e1rm : "---";
+                let e1rmVelocity = this.props.e1rmVelocity ? this.props.e1rmVelocity : "---";
+
+                return (
+                    <View>
+                        <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{e1rm}</Text> {this.props.metric}</Text>
+                        <Text style={{ textAlign: 'center', fontSize: 15, marginBottom: 20 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.e1rmVelocity} m/s</Text></Text> 
+                        <Text style={styles.r2Text}>r2: {this.props.r2} %</Text>
+                        {this._bestResults()}
+                    </View>
+                );
+            } else {
+                return (
+                    <View>
+                        <Text style={styles.errorText}>
+                            r2 too low, please clean up or log more data.
+                        </Text>
+                        {this._bestResults()}
+                    </View>
+                );
+            } 
+        } else {
+            return (
+                <View>
+                    <Text style={styles.errorText}>
+                        This exercise with these tags does not contain enough reps within the date range.
+                    </Text>
+                    {this._bestResults()}
+                </View>
+            );
+        }
+    }
     
     _renderRegressionLine() {
         if (this.props.isR2HighEnough) {
@@ -38,16 +99,12 @@ class OneRMChartView extends Component {
     }
 
     _renderChartArea() {
-        if (this.props.isLoggedIn) {
-            if (this.props.chartData && this.props.chartData.length > 3) {
-                return (
-                    <View>
-                        {this._renderChart()}
-                    </View>
-                );
-            } else {
-                return;
-            }
+        if (this.props.chartData && this.props.chartData.length > 3) {
+            return (
+                <View>
+                    {this._renderChart()}
+                </View>
+            );
         } else {
             const size = Device.isSmallDevice() ? 250 : 300;
             return <Image style={{width: size, height: size, marginTop: 20}} source={require('app/appearance/images/grayed_chart.png')} />
@@ -85,46 +142,24 @@ class OneRMChartView extends Component {
         );
     }
 
-    _infoModal() {
-        const title = "What is e1RM?";
-        const body = "- The estimated One-Rep Max calculation is based on the first rep of each set of a given exercise, within a specified date range, and extrapolated to the lowest velocity at which you think you can successfully complete a one rep max. \n \n - This estimate is provided with a confidence margin which is influenced by several factors explained below. While outliers sometimes occur naturally, the key to a high confidence rating is recording set information as fully and accurately as possible."
-        
-        return (
-            <AnalysisModal 
-                title={title}
-                body={body}
-                isModalShowing={this.props.isInfoModalShowing} 
-                closeModal={this.props.dismissInfoModal}
-            />
-        );
-    }
+    // _protocolModal() {
+    //     const title = "Protocol";
+    //     const body = "The following is a protocol to get a highly accurate 1RM assessment in one session. \n \n - Do six sets of warmups, from the bar until about 90%. eg. bar, 20%, 40%, 60%, 80%, 90% \n \n - Make sure you use the same tags and exercise name for each set. \n \n - Set your date range to one day. \n \n - Tap 'end workout' so the data can be analyzed.";
 
-    _protocolModal() {
-        const title = "Protocol";
-        const body = "The following is a protocol to get a highly accurate 1RM assessment in one session. \n \n - Do six sets of warmups, from the bar until about 90%. eg. bar, 20%, 40%, 60%, 80%, 90% \n \n - Make sure you use the same tags and exercise name for each set. \n \n - Set your date range to one day. \n \n - Tap 'end workout' so the data can be analyzed.";
-
-        return (
-            <AnalysisModal 
-                title={title}
-                body={body}
-                isModalShowing={this.props.isProtocolModalShowing} 
-                closeModal={this.props.dismissProtocolModal}
-            />
-        );    
-    }
+    //     return (
+    //         <AnalysisModal 
+    //             title={title}
+    //             body={body}
+    //             isModalShowing={this.props.isProtocolModalShowing} 
+    //             closeModal={this.props.dismissProtocolModal}
+    //         />
+    //     );    
+    // }
 
     render() {
         return (
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column', borderBottomWidth: 0, alignItems: 'center' }] }>
-                <Text style={[{marginBottom: 15}, styles.titleText]}>Estimated One-Rep Max</Text>
-                <TouchableOpacity style={{alignItems: 'center'}} onPress={ () => this.props.showInfoModal() }>
-                    <Text style= {[SETTINGS_PANEL_STYLES.tappableText, { marginBottom: 5 }]} >What is e1rm?</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={{alignItems: 'center'}} onPress={ () => this.props.showProtocolModal() }>
-                    <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >Protocol</Text>
-                </TouchableOpacity>
-                {this._infoModal()}
-                {this._protocolModal()}
+                {this._render1rm(this.props.r2)}
                 {this._renderChartArea()}
             </View>
         );
@@ -132,19 +167,24 @@ class OneRMChartView extends Component {
 }
 
 const styles = StyleSheet.create({
-    titleText: {
+    oneRMText: {
         color: 'rgba(77, 77, 77, 1)',
-        textAlign: 'center',
-        fontSize: 16,
-        fontWeight: 'bold',
+        marginTop: 10,
+        marginBottom: 5,
+        fontSize: 32, 
+        textAlign: 'center'
     },
-    pseudoScrollView: {
-        opacity: 0,
-        position: 'absolute',
-        top: 0,    
-        left: 0,
-        width:"100%",
-        height:"100%",
+    r2Text: {
+        color: 'rgba(77, 77, 77, 1)',
+        marginBottom: 20,
+        fontSize: 18,
+        textAlign: 'center'
+    },
+    errorText: {
+        color: 'rgba(77, 77, 77, 1)',
+        marginBottom: 20, 
+        fontSize: 20, 
+        textAlign: 'center'
     },
 });
 

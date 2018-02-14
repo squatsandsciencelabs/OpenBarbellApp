@@ -35,99 +35,7 @@ class OneRMView extends Component {
         })
     }
 
-    _bestResultsModal() {
-        const title = "How can I get the best results?";
-        const body = "- Log all warmups from the bar to your working weight. \n \n - Make sure you use consistent tag names and exercise names. \n \n - Set your default to either KG or LB, whichever is most common, and change when appropriate. \n \n - Erase false reps caused by unracking the bar or attaching/removing an OpenBarbell. \n \n - Enter RPE for every set as accurately as possible. \n \n - If you record multiple lifters' data on the same account, separate data with a unique tag. \n \n - Remember to hit 'End Workout' so data can be analyzed more quickly.";
-        
-        return (
-          <AnalysisModal 
-            title={title}
-            body={body}
-            isModalShowing={this.props.isBestResultsModalShowing} 
-            closeModal={this.props.dismissBestResultsModal}
-          />
-        );
-    }
-
-    _bestResults() {
-        return (
-            <View style={{marginBottom: 15}}>
-                <TouchableOpacity style={{alignItems: 'center'}} onPress={ () => this.props.showBestResultsModal() }>
-                    <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >How can I get the best results?</Text>
-                </TouchableOpacity>
-                {this._bestResultsModal()}
-            </View>
-        );
-    }
-
-    _render1rm(r2) {
-        if (this.props.isLoggedIn) {
-            if (this.props.chartData && this.props.chartData.length > 3 && this.props.regLineData && this.props.regLineData.length > 3) {
-                if (r2 >= this.props.minr2) {
-                    let e1rm = this.props.e1rm ? this.props.e1rm : "---";
-                    let e1rmVelocity = this.props.e1rmVelocity ? this.props.e1rmVelocity : "---";
-
-                    return (
-                        <View>
-                            <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{e1rm}</Text> {this.props.metric}</Text>
-                            <Text style={{ textAlign: 'center', fontSize: 15, marginBottom: 20 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.e1rmVelocity} m/s</Text></Text> 
-                            <Text style={styles.r2Text}>r2: {this.props.r2} %</Text>
-                            {this._bestResults()}
-                            {this._renderForms()}
-                        </View>
-                    );
-                } else {
-                    return (
-                        <View>
-                            <Text style={styles.errorText}>
-                                r2 too low, please clean up or log more data.
-                            </Text>
-                            {this._bestResults()}
-                            {this._renderForms()}
-                        </View>
-                    );
-                } 
-            } else {
-                return (
-                    <View>
-                        <Text style={styles.errorText}>
-                            This exercise with these tags does not contain enough reps within the date range.
-                        </Text>
-                        {this._bestResults()}
-                        {this._renderForms()}
-                    </View>
-                );
-            }
-        } else {
-            const size = Device.isSmallDevice() ? 250 : 300;
-
-            return (
-                <View>
-                    <Text style={styles.errorText}>
-                        You must be logged in for 1rm calculation.
-                    </Text>
-                </View>
-            )
-        }
-    }
-
-    _renderCalculate1rm() {
-        if (this.props.isLoggedIn) {
-            return (
-                <View style={[styles.button, {marginTop: 20}]}>
-                    <TouchableOpacity onPress={ () => this.props.calcE1rm() }>
-                        <Text style={styles.buttonText}>Calculate</Text>
-                    </TouchableOpacity>
-                </View>
-            );
-        } else {
-            return (
-                <View style={[styles.disabledButton, {marginTop: 20}]}>
-                    <Text style={styles.buttonText}>Calculate</Text>
-                </View>
-            );
-        }
-    }
+    // ACTIONS
 
     _tappedExercise() {
         this.props.tappedExercise();
@@ -139,6 +47,32 @@ class OneRMView extends Component {
 
     _changeDaysSlider(value) {
         this.props.changeDays(value);
+    }
+
+    // RENDER
+
+    _renderInfoModal() {
+        const title = "What is e1RM?";
+        const body = "- The estimated One-Rep Max calculation is based on the first rep of each set of a given exercise, within a specified date range, and extrapolated to the lowest velocity at which you think you can successfully complete a one rep max. \n \n - This estimate is provided with a confidence margin which is influenced by several factors explained below. While outliers sometimes occur naturally, the key to a high confidence rating is recording set information as fully and accurately as possible."
+        
+        return (
+            <AnalysisModal 
+                title={title}
+                body={body}
+                isModalShowing={this.props.isInfoModalShowing} 
+                closeModal={this.props.dismissInfoModal}
+            />
+        );
+    }
+
+    _renderCalculate1rm() {
+        return (
+            <View style={[styles.button, {marginTop: 20}]}>
+                <TouchableOpacity onPress={ () => this.props.calcE1rm() }>
+                    <Text style={styles.buttonText}>Calculate</Text>
+                </TouchableOpacity>
+            </View>
+        );
     }
 
     _displayTagsToInclude() {
@@ -228,84 +162,64 @@ class OneRMView extends Component {
         }
     }
 
-    render() {
+    _renderSliders() {
         if (Platform.OS === 'ios') {
-            return (
-                <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
-                    <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
-                        {this._render1rm(this.props.r2)}
-                        <Text style={styles.labelText}>
-                            Velocity
-                        </Text>
-                        <Slider
-                            value={this.props.velocity} 
-                            onValueChange={(value) => this.setState({ slidingVelocity: true, velocity: Number(value.toFixed(2)) })}
-                            onSlidingComplete={(value) => this._changeVelocitySlider(value)}
-                            minimumValue={.01}
-                            maximumValue={.41}
-                            step={.01}
-                            minimumTrackTintColor={'#368fff'}
-                            animateTransitions={true}
-                        />
-                        <Text style={styles.numberStyle}>{this.state.velocity} m/s</Text>
-                        <Text style={styles.labelText}>
-                            Date Range
-                        </Text>
-                        <Slider
-                            value={this.props.days * -1} 
-                            onValueChange={(value) => this.setState({ slidingDays: true, days: Number(value.toFixed(2)) })}
-                            onSlidingComplete={(value) => this._changeDaysSlider(value)}
-                            minimumValue={-60}
-                            maximumValue={-1}
-                            step={1}
-                            minimumTrackTintColor={'#368fff'}
-                            animateTransitions={true}
-                        />
-                        <Text style={styles.numberStyle}>{Math.abs(this.state.days)} days</Text>
-                        {this._renderCalculate1rm(this.props.r2)}
-                    </View>
-                </View>
-            )
+            var thumbTintColor = '#ffffff';
         } else {
-            return (
-                <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
-                    {this._render1rm(this.props.r2)}
-                    <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
-                        <Text style={styles.labelText}>
-                            Velocity
-                        </Text>
-                        <Slider
-                            value={this.props.velocity} 
-                            onValueChange={(value) => this.setState({ slidingVelocity: true, velocity: Number(value.toFixed(2)) })}
-                            onSlidingComplete={(value) => this._changeVelocitySlider(value)}
-                            minimumValue={.01}
-                            maximumValue={.41}
-                            step={.01}
-                            thumbTintColor={'#368fff'}
-                            minimumTrackTintColor={'#368fff'}
-                            animateTransitions={true}
-                        />
-                        <Text style={styles.numberStyle}>{this.state.velocity} m/s</Text>
-                        <Text style={styles.labelText}>
-                            Date Range
-                        </Text>
-                        <Slider
-                            value={this.props.days * -1} 
-                            onValueChange={(value) => this.setState({ slidingDays: true, days: Number(value.toFixed(2)) })}
-                            onSlidingComplete={(value) => this._changeDaysSlider(value)}
-                            minimumValue={-60}
-                            maximumValue={-1}
-                            step={1}
-                            thumbTintColor={'#368fff'}
-                            minimumTrackTintColor={'#368fff'}
-                            animateTransitions={true}
-                        />
-                        <Text style={styles.numberStyle}>{Math.abs(this.state.days)} days</Text>
-                        {this._renderCalculate1rm(this.props.r2)}
-                    </View>
+            var thumbTintColor = '#368fff';
+        }
+
+        return (
+            <View>
+                <Text style={styles.labelText}>
+                    Velocity
+                </Text>
+                <Slider
+                    value={this.props.velocity} 
+                    onValueChange={(value) => this.setState({ slidingVelocity: true, velocity: Number(value.toFixed(2)) })}
+                    onSlidingComplete={(value) => this._changeVelocitySlider(value)}
+                    minimumValue={.01}
+                    maximumValue={.41}
+                    step={.01}
+                    thumbTintColor={thumbTintColor}
+                    minimumTrackTintColor={'#368fff'}
+                    animateTransitions={true}
+                />
+                <Text style={styles.numberStyle}>{this.state.velocity} m/s</Text>
+                <Text style={styles.labelText}>
+                    Date Range
+                </Text>
+                <Slider
+                    value={this.props.days * -1} 
+                    onValueChange={(value) => this.setState({ slidingDays: true, days: Number(value.toFixed(2)) })}
+                    onSlidingComplete={(value) => this._changeDaysSlider(value)}
+                    minimumValue={-60}
+                    maximumValue={-1}
+                    step={1}
+                    thumbTintColor={thumbTintColor}
+                    minimumTrackTintColor={'#368fff'}
+                    animateTransitions={true}
+                />
+                <Text style={styles.numberStyle}>{Math.abs(this.state.days)} days</Text>
+            </View>
+        );
+    }
+
+    render() {
+        return (
+            <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
+                <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
+                    <Text style={[{marginBottom: 15}, styles.titleText]}>Estimated One-Rep Max</Text>
+                    <TouchableOpacity style={{alignItems: 'center'}} onPress={ () => this.props.showInfoModal() }>
+                        <Text style= {[SETTINGS_PANEL_STYLES.tappableText, { marginBottom: 5 }]} >What is e1rm?</Text>
+                    </TouchableOpacity>
+                    {this._renderInfoModal()}
+                    {this._renderForms()}
+                    {this._renderSliders()}
+                    {this._renderCalculate1rm()}
                 </View>
-            ) 
-        }        
+            </View>
+        )     
     }
 }
 
@@ -322,25 +236,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: 'black',
         marginBottom: 5
-    },
-    oneRMText: {
-        color: 'rgba(77, 77, 77, 1)',
-        marginTop: 10,
-        marginBottom: 5,
-        fontSize: 32, 
-        textAlign: 'center'
-    },
-    r2Text: {
-        color: 'rgba(77, 77, 77, 1)',
-        marginBottom: 20,
-        fontSize: 18,
-        textAlign: 'center'
-    },
-    errorText: {
-        color: 'rgba(77, 77, 77, 1)',
-        marginBottom: 20, 
-        fontSize: 20, 
-        textAlign: 'center'
     },
     numberStyle: {
         fontSize: 16
@@ -400,13 +295,6 @@ const styles = StyleSheet.create({
         borderColor: 'rgba(47, 128, 237, 1)',        
         borderWidth: 5,
         borderRadius: 15,
-    },
-    disabledButton: {
-        backgroundColor: 'rgba(47, 128, 237, 1)',
-        borderColor: 'rgba(47, 128, 237, 1)',        
-        borderWidth: 5,
-        borderRadius: 15,
-        opacity: 0.3
     },
     buttonText: {
         color: 'white',

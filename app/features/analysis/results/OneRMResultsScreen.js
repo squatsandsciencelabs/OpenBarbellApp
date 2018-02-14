@@ -6,7 +6,6 @@ import * as Actions from './OneRMResultsActions';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
-import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import * as AppStateActionCreators from 'app/redux/shared_actions/AppStateActionCreators';
 import * as OneRMCalculator from 'app/utility/transforms/OneRMCalculator';
 
@@ -31,26 +30,28 @@ const mapStateToProps = (state) => {
     const regRightPoint = {x: highestWeight, y: 0};
 
     return {
-        chartData: chartData,
-        regLeftPoint: regLeftPoint,
-        regRightPoint: regRightPoint,
+        e1rmVelocity: AnalysisSelectors.getAnalysisE1RMVelocity(state),
+        e1rm: AnalysisSelectors.getCurrentE1rm(state),    
+        metric: SettingsSelectors.getDefaultMetric(state),
+        r2: AnalysisSelectors.getCurrentR2(state),
         isR2HighEnough: isR2HighEnough,
-        isLoggedIn: AuthSelectors.getIsLoggedIn(state),
+
+        chartData: chartData,
         highestWeight: highestWeight,
         lowestWeight: OneRMCalculator.lowestWeight(chartData),
         highestVel: OneRMCalculator.highestVelocity(chartData),
-        isInfoModalShowing: AnalysisSelectors.getShowInfoModal(state),
-        isProtocolModalShowing: AnalysisSelectors.getShowProtocolModal(state),    
+        regLeftPoint: regLeftPoint,
+        regRightPoint: regRightPoint,
+
+        isBestResultsModalShowing: AnalysisSelectors.getShowBestResultsModal(state),
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         tapPoint: Actions.tapPoint,
-        showInfoModal: Actions.showInfoModal,
-        showProtocolModal: Actions.showProtocolModal,
-        dismissInfoModal: Actions.dismissInfoModal,
-        dismissProtocolModal: Actions.dismissProtocolModal,
+        showBestResultsModal: Actions.showBestResultsModal,
+        dismissBestResultsModal: Actions.dismissBestResultsModal,
     }, dispatch);
 };
 

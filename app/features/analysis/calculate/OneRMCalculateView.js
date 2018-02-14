@@ -16,6 +16,7 @@ import EditAnalysisTagsToExcludeScreen from './tags/tagsToExclude/EditAnalysisTa
 import Pill from 'app/shared_features/pill/Pill';
 import WhatIsOneRMScreen from './whatis/WhatIsOneRMScreen';
 import * as Device from 'app/utility/Device';
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 class OneRMView extends Component {
     // using component level state vs redux here to avoid excessive dispatches for the sliders
@@ -104,10 +105,11 @@ class OneRMView extends Component {
             return (
                 <View>
                     <View>
-                        <TouchableOpacity onPress={() => this._tappedExercise()}>
-                            <Text style={{fontSize: 18, color: 'rgba(47, 128, 237, 1)', textAlign: 'center', marginBottom: 20}}>
+                        <TouchableOpacity onPress={() => this._tappedExercise()} style={[SETTINGS_PANEL_STYLES.blueButton, {width: 200, height: 35, alignSelf: 'center', marginBottom: 20}]}>
+                            <Text style={{fontSize: 18, color: 'white', textAlign: 'center'}}>
                                 {this.props.exercise}
                             </Text>
+                            <Icon name="caret-down" size={10} color='white' style={{right: 5, position:'absolute'}} />
                         </TouchableOpacity>
                         <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Include:</Text>
                         <View style={{marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
@@ -146,10 +148,13 @@ class OneRMView extends Component {
         }
 
         return (
-            <View>
-                <Text style={styles.labelText}>
-                    Date Range
-                </Text>
+            <View style={{ marginTop: 20 }}>
+                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>    
+                    <Text style={styles.labelText}>
+                        Date Range
+                    </Text>
+                    <Text style={styles.numberStyle}>{Math.abs(this.state.days)} days</Text>
+                </View>
                 <Slider
                     value={this.props.days * -1} 
                     onValueChange={(value) => this.setState({ slidingDays: true, days: Number(value.toFixed(2)) })}
@@ -161,10 +166,12 @@ class OneRMView extends Component {
                     minimumTrackTintColor={'#368fff'}
                     animateTransitions={true}
                 />
-                <Text style={styles.numberStyle}>{Math.abs(this.state.days)} days</Text>
-                <Text style={styles.labelText}>
-                    Velocity
-                </Text>
+                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <Text style={styles.labelText}>
+                        Velocity
+                    </Text>
+                    <Text style={styles.numberStyle}>{this.state.velocity} m/s</Text>
+                </View>
                 <Slider
                     value={this.props.velocity} 
                     onValueChange={(value) => this.setState({ slidingVelocity: true, velocity: Number(value.toFixed(2)) })}
@@ -176,7 +183,6 @@ class OneRMView extends Component {
                     minimumTrackTintColor={'#368fff'}
                     animateTransitions={true}
                 />
-                <Text style={styles.numberStyle}>{this.state.velocity} m/s</Text>
             </View>
         );
     }
@@ -197,7 +203,7 @@ class OneRMView extends Component {
                 <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
                     <Text style={[{marginBottom: 15}, styles.titleText]}>Estimated One-Rep Max</Text>
                     <TouchableOpacity style={{alignItems: 'center', position: 'absolute', right: 0, top: 0}} onPress={ () => this.props.presentInfoModal() }>
-                        <Text style= {[SETTINGS_PANEL_STYLES.tappableText, { marginBottom: 5 }]} >?</Text>
+                        <Icon name="question-circle" size={25} color='rgba(47, 128, 237, 1)'></Icon>
                     </TouchableOpacity>
                     <WhatIsOneRMScreen />
                     {this._renderForms()}
@@ -286,6 +292,13 @@ const styles = StyleSheet.create({
         color: 'white',
         padding: 5,
         textAlign: 'center'
+    },
+    dropdownButton: {
+        backgroundColor: 'rgba(47, 128, 237, 1)',
+        borderRadius: 3,
+        marginLeft: 5,
+        marginBottom: 5,
+        height: 40,
     },
 });
 

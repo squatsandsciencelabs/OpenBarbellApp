@@ -3,7 +3,6 @@ import {
     LOCKED_SCREEN,
     MULTI_TASK_SCREEN,
     CHANGE_TAB,
-    CHANGE_TAB_HISTORY,
     HISTORY_VIEWED 
 } from 'app/ActionTypes';
 import { Keyboard } from 'react-native';
@@ -48,16 +47,8 @@ export const changeTab = (tabIndex, setID) => (dispatch, getState) => {
     // keyboard
     Keyboard.dismiss();
 
-    if (setID) {
-        dispatch({
-            type: CHANGE_TAB_HISTORY,
-            tabIndex: tabIndex,
-            scrollToSetID: setID,
-        })
-    } else {
-        dispatch({
-            type: CHANGE_TAB,
-            tabIndex: tabIndex,
-        });
-    }
+    dispatch({
+        type: CHANGE_TAB,
+        tabIndex: tabIndex,
+    });
 };

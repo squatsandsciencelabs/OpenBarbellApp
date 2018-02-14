@@ -16,7 +16,6 @@ import {
     DELETE_HISTORY_VIDEO,
     SAVE_HISTORY_VIDEO,
     END_WORKOUT,
-    CHANGE_TAB_HISTORY,
     CHANGE_TAB,
 } from 'app/ActionTypes';
 
@@ -114,11 +113,6 @@ const HistoryReducer = (state = defaultState, action) => {
                 watchSetID: null,
                 watchFileURL: null
             });
-        case CHANGE_TAB_HISTORY:
-            return {
-                ...state,
-                scrollToSetID: action.scrollToSetID,
-            };
         case CHANGE_TAB:
             return {
                 ...state,

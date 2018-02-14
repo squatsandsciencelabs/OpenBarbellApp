@@ -126,8 +126,8 @@ class OneRMView extends Component {
         } else {
             return (
                 <View>
-                    <View style={[{flex: 0.37}, styles.dropdownButton]}><ExercisePicker color={'white'} /></View>
-                    <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Include:</Text>
+                    <View style={[{flex: 0.37, width: 200, alignSelf: 'center'}, styles.dropdownButton]}><ExercisePicker color={'white'} /></View>
+                    <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10, marginTop: 15}}>Tags to Include:</Text>
                     <View style={{marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
                     <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Exclude:</Text>
                     <View>{ this._renderTagsToExclude() }</View>

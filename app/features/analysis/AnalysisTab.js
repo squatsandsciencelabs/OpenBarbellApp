@@ -5,6 +5,7 @@ import {
     Image,
     View,
     Text,
+    findNodeHandle,
 } from 'react-native';
 
 import OneRMDebugScreen from './debug/OneRMDebugScreen';
@@ -32,10 +33,13 @@ class AnalysisTab extends Component {
             });
 
             // scroll
-            if (this.results && this.results.measure) {
-                this.results.measure( (fx, fy, width, height, px, py) => {
-                    this.scrollView.scrollTo({x: 0, y: fy, animated: true});
-                });
+            if (this.results && this.results.measureLayout) {
+                this.results.measureLayout(
+                    findNodeHandle(this.scrollView),
+                    (x, y, width, height, pageX, pageY) => {
+                        this.scrollView.scrollTo({x: 0, y: y, animated: true});
+                    }
+                );
             }
         }
     }
@@ -48,7 +52,7 @@ class AnalysisTab extends Component {
                     <Image style={styles.pseudoScrollView} source={require('app/appearance/images/blank.png')} />
                     <OneRMDebugScreen />
                     <OneRMCalculateScreen />
-                    <View ref={(ref) => { this.results = ref }}>
+                    <View ref={(ref) => { this.results = ref }} onLayout={() => {}} collapsable={false} >
                         <OneRMResultsScreen />
                     </View>
                     <OneRMProtocolView />

@@ -23,7 +23,7 @@ import {
             <View>
                 <Modal
                     visible={this.props.isModalShowing}
-                    animationType={'slide'}
+                    animationType={'fade'}
                     onRequestClose={() => this.closeModal()}
                     transparent={true}
                 >
@@ -55,7 +55,8 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center',       
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
     },
     bodyContainer: {
         padding: 25,

@@ -142,23 +142,9 @@ class OneRMChartView extends Component {
         );
     }
 
-    // _protocolModal() {
-    //     const title = "Protocol";
-    //     const body = "The following is a protocol to get a highly accurate 1RM assessment in one session. \n \n - Do six sets of warmups, from the bar until about 90%. eg. bar, 20%, 40%, 60%, 80%, 90% \n \n - Make sure you use the same tags and exercise name for each set. \n \n - Set your date range to one day. \n \n - Tap 'end workout' so the data can be analyzed.";
-
-    //     return (
-    //         <AnalysisModal 
-    //             title={title}
-    //             body={body}
-    //             isModalShowing={this.props.isProtocolModalShowing} 
-    //             closeModal={this.props.dismissProtocolModal}
-    //         />
-    //     );    
-    // }
-
     render() {
         return (
-            <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column', borderBottomWidth: 0, alignItems: 'center' }] }>
+            <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column', alignItems: 'center' }] }>
                 {this._render1rm(this.props.r2)}
                 {this._renderChartArea()}
             </View>

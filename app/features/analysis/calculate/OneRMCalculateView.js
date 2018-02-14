@@ -16,7 +16,7 @@ import EditAnalysisTagsToExcludeScreen from './tags/tagsToExclude/EditAnalysisTa
 import Pill from 'app/shared_features/pill/Pill';
 import WhatIsOneRMScreen from './whatis/WhatIsOneRMScreen';
 import * as Device from 'app/utility/Device';
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class OneRMView extends Component {
     // using component level state vs redux here to avoid excessive dispatches for the sliders
@@ -201,7 +201,7 @@ class OneRMView extends Component {
         return (
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
                 <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
-                    <Text style={[{marginBottom: 15}, styles.titleText]}>Estimated One-Rep Max</Text>
+                    <Text style={[{marginBottom: 25}, styles.titleText]}>Estimated One-Rep Max</Text>
                     <TouchableOpacity style={{alignItems: 'center', position: 'absolute', right: 0, top: 0}} onPress={ () => this.props.presentInfoModal() }>
                         <Icon name="question-circle" size={25} color='rgba(47, 128, 237, 1)'></Icon>
                     </TouchableOpacity>
@@ -223,10 +223,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     labelText: {
+        color: 'rgba(77, 77, 77, 1)',
         fontSize: 16,
         fontWeight: 'bold',
         textAlign: 'center',
-        color: 'black',
         marginBottom: 5
     },
     numberStyle: {

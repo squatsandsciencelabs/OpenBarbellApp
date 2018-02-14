@@ -87,7 +87,7 @@ class OneRMChartView extends Component {
 
     _renderChart() {
         return (
-            <View>
+            <View style={{marginLeft: 25}}>
                 <VictoryChart
                     theme={VictoryTheme.material}
                     containerComponent={<VictoryZoomContainer zoomDomain={{x: [this.props.lowestWeight, this.props.highestWeight], y: [0, this.props.highestVel] }}/>}
@@ -120,9 +120,9 @@ class OneRMChartView extends Component {
     render() {
         return (
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column', alignItems: 'center' }] }>
-                <Text>Results</Text>
+                <Text style={[styles.titleText, {marginBottom: 10}]}>Results</Text>
                 {this._render1rm(this.props.r2)}
-                <Text style={{textAlign: 'center'}}>Tap a point to view and edit the data</Text>
+                <Text style={{textAlign: 'center', fontStyle: 'italic', fontWeight: 'bold', color: 'rgba(77, 77, 77, 1)'}}>Tap a point to view and edit the data</Text>
                 {this._renderChartArea()}
                 <TouchableOpacity style={{alignItems: 'center', marginBottom: 15}} onPress={ () => this.props.presentBestResults() }>
                     <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >How can I get the best results?</Text>
@@ -144,13 +144,21 @@ const styles = StyleSheet.create({
         color: 'rgba(77, 77, 77, 1)',
         marginBottom: 20,
         fontSize: 18,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontWeight: 'bold',
     },
     errorText: {
         color: 'rgba(77, 77, 77, 1)',
         marginBottom: 20, 
         fontSize: 20, 
-        textAlign: 'center'
+        textAlign: 'center',
+        fontWeight: 'bold'
+    },
+    titleText: {
+        color: 'rgba(77, 77, 77, 1)',
+        textAlign: 'center',
+        fontSize: 16,
+        fontWeight: 'bold',
     },
 });
 

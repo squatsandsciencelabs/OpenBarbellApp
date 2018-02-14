@@ -42,16 +42,13 @@ const mapStateToProps = (state) => {
         highestVel: OneRMCalculator.highestVelocity(chartData),
         regLeftPoint: regLeftPoint,
         regRightPoint: regRightPoint,
-
-        isBestResultsModalShowing: AnalysisSelectors.getShowBestResultsModal(state),
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         tapPoint: Actions.tapPoint,
-        showBestResultsModal: Actions.showBestResultsModal,
-        dismissBestResultsModal: Actions.dismissBestResultsModal,
+        presentBestResults: Actions.presentBestResults,
     }, dispatch);
 };
 

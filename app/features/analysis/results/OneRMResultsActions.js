@@ -1,6 +1,9 @@
 import {
-    SHOW_INFO_MODAL,
-    DISMISS_INFO_MODAL,
+    Linking,
+} from 'react-native';
+
+import {
+    PRESENT_BEST_RESULTS,
 } from 'app/ActionTypes';
 import * as AppStateActionCreators from 'app/redux/shared_actions/AppStateActionCreators';
 
@@ -9,10 +12,8 @@ export const tapPoint = (setID) => {
     return AppStateActionCreators.changeTab(1, setID);
 };
 
-export const showInfoModal = () => ({
-    type: SHOW_INFO_MODAL,
-});
-
-export const dismissInfoModal = () => ({
-    type: DISMISS_INFO_MODAL,
-});
+export const presentBestResults = () => (dispatch, getState) => {
+    // TODO: analytics
+    Linking.openURL("http://www.squatsandscience.com/onerepmax/");
+    dispatch({ type: PRESENT_BEST_RESULTS });
+};

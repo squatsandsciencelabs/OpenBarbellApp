@@ -210,8 +210,8 @@ class OneRMView extends Component {
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
                 <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
                     <Text style={[{marginBottom: 15}, styles.titleText]}>Estimated One-Rep Max</Text>
-                    <TouchableOpacity style={{alignItems: 'center'}} onPress={ () => this.props.showInfoModal() }>
-                        <Text style= {[SETTINGS_PANEL_STYLES.tappableText, { marginBottom: 5 }]} >What is e1rm?</Text>
+                    <TouchableOpacity style={{alignItems: 'center', position: 'absolute', right: 0, top: 0}} onPress={ () => this.props.showInfoModal() }>
+                        <Text style= {[SETTINGS_PANEL_STYLES.tappableText, { marginBottom: 5 }]} >?</Text>
                     </TouchableOpacity>
                     {this._renderInfoModal()}
                     {this._renderForms()}

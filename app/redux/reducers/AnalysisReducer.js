@@ -15,7 +15,6 @@ import {
     CALC_ONE_RM,
     SHOW_INFO_MODAL,
     SHOW_BEST_RESULTS_MODAL,
-    DISMISS_BEST_RESULTS_MODAL,
     DISMISS_INFO_MODAL,
 } from 'app/ActionTypes';
 
@@ -37,7 +36,6 @@ const defaultState = {
     regLineData: null,
 
     showInfoModal: false,
-    showBestResultsModal: false,
 
     scroll: false,
 };
@@ -110,20 +108,10 @@ const AnalysisReducer = (state = defaultState, action) => {
                 ...state,
                 showInfoModal: true,
             };
-        case SHOW_BEST_RESULTS_MODAL:
-            return {
-                ...state,
-                showBestResultsModal: true,
-            };
         case DISMISS_INFO_MODAL:
             return {
                 ...state,
                 showInfoModal: false,
-            };
-        case DISMISS_BEST_RESULTS_MODAL:
-            return {
-                ...state,
-                showBestResultsModal: false,
             };
         default: 
             return state;

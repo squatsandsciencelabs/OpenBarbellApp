@@ -5,8 +5,8 @@ import {
     PRESENT_INCLUDES_TAGS,
     PRESENT_EXCLUDES_TAGS,
     CALC_ONE_RM,
-    SHOW_BEST_RESULTS_MODAL,
-    DISMISS_BEST_RESULTS_MODAL,
+    SHOW_INFO_MODAL,
+    DISMISS_INFO_MODAL,
 } from 'app/ActionTypes';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 import * as OneRMCalculator from 'app/utility/transforms/OneRMCalculator';
@@ -85,10 +85,12 @@ export const calcE1rm = () => (dispatch, getState) => {
         regLineData: regLineData,
     });
 };
-export const showBestResultsModal = () => ({
-    type: SHOW_BEST_RESULTS_MODAL,
+
+export const showInfoModal = () => ({
+    type: SHOW_INFO_MODAL,
 });
 
-export const dismissBestResultsModal = () => ({
-    type: DISMISS_BEST_RESULTS_MODAL,
+export const dismissInfoModal = () => ({
+    type: DISMISS_INFO_MODAL,
 });
+

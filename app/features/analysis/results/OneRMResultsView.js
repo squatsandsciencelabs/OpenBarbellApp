@@ -21,31 +21,6 @@ import AnalysisModal from 'app/shared_features/analysis_modal/AnalysisModal';
 
 class OneRMChartView extends Component {
 
-    _bestResultsModal() {
-        const title = "How can I get the best results?";
-        const body = "- Log all warmups from the bar to your working weight. \n \n - Make sure you use consistent tag names and exercise names. \n \n - Set your default to either KG or LB, whichever is most common, and change when appropriate. \n \n - Erase false reps caused by unracking the bar or attaching/removing an OpenBarbell. \n \n - Enter RPE for every set as accurately as possible. \n \n - If you record multiple lifters' data on the same account, separate data with a unique tag. \n \n - Remember to hit 'End Workout' so data can be analyzed more quickly.";
-        
-        return (
-          <AnalysisModal 
-            title={title}
-            body={body}
-            isModalShowing={this.props.isBestResultsModalShowing} 
-            closeModal={this.props.dismissBestResultsModal}
-          />
-        );
-    }
-
-    _bestResults() {
-        return (
-            <View style={{marginBottom: 15}}>
-                <TouchableOpacity style={{alignItems: 'center'}} onPress={ () => this.props.showBestResultsModal() }>
-                    <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >How can I get the best results?</Text>
-                </TouchableOpacity>
-                {this._bestResultsModal()}
-            </View>
-        );
-    }
-
     _render1rm(r2) {
         if (this.props.chartData && this.props.chartData.length > 3) {
             if (this.props.isR2HighEnough) {
@@ -57,7 +32,6 @@ class OneRMChartView extends Component {
                         <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{e1rm}</Text> {this.props.metric}</Text>
                         <Text style={{ textAlign: 'center', fontSize: 15, marginBottom: 20 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.e1rmVelocity} m/s</Text></Text> 
                         <Text style={styles.r2Text}>r2: {this.props.r2} %</Text>
-                        {this._bestResults()}
                     </View>
                 );
             } else {
@@ -66,7 +40,6 @@ class OneRMChartView extends Component {
                         <Text style={styles.errorText}>
                             r2 too low, please clean up or log more data.
                         </Text>
-                        {this._bestResults()}
                     </View>
                 );
             } 
@@ -76,7 +49,6 @@ class OneRMChartView extends Component {
                     <Text style={styles.errorText}>
                         This exercise with these tags does not contain enough reps within the date range.
                     </Text>
-                    {this._bestResults()}
                 </View>
             );
         }
@@ -160,7 +132,11 @@ class OneRMChartView extends Component {
         return (
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column', alignItems: 'center' }] }>
                 {this._render1rm(this.props.r2)}
+                <Text style={{textAlign: 'center'}}>Tap a point to view and edit the data</Text>
                 {this._renderChartArea()}
+                <TouchableOpacity style={{alignItems: 'center', marginBottom: 15}} onPress={ () => this.props.presentBestResults() }>
+                    <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >How can I get the best results?</Text>
+                </TouchableOpacity>
             </View>
         );
     }

@@ -16,7 +16,7 @@ class OneRMDebugView extends Component {
                 </TouchableOpacity>
             );
         } else {
-            return (<View></View>);
+            return null;
         }
     }
 }

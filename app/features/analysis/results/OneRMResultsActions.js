@@ -1,8 +1,6 @@
 import {
     SHOW_INFO_MODAL,
     DISMISS_INFO_MODAL,
-    SHOW_PROTOCOL_MODAL,
-    DISMISS_PROTOCOL_MODAL,
 } from 'app/ActionTypes';
 import * as AppStateActionCreators from 'app/redux/shared_actions/AppStateActionCreators';
 
@@ -17,12 +15,4 @@ export const showInfoModal = () => ({
 
 export const dismissInfoModal = () => ({
     type: DISMISS_INFO_MODAL,
-});
-
-export const showProtocolModal = () => ({
-    type: SHOW_PROTOCOL_MODAL,
-});
-
-export const dismissProtocolModal = () => ({
-    type: DISMISS_PROTOCOL_MODAL,
 });

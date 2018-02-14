@@ -2,23 +2,23 @@ import React, {Component} from 'react';
 import {
     View,
     Text,
-    Modal,
     TouchableOpacity,
-    Platform,
-    WebView,
     StyleSheet,
-    Button,
- }  from 'react-native';
+    Platform,
+    Modal,
+} from 'react-native';
 
- class AnalysisModal extends Component {
+import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
+
+class WhatIsOneRMView extends Component {
 
     _close() {
         this.props.closeModal();
     }
 
-    // RENDER
-
     render() {
+        const body = "Estimated One-Rep Max is based on the first rep of a given exercise within a specified date range, extrapolated to the lowest velocity at which you think you can successfully complete a max lift attempt.\n\nThis estimate is provided with an r² based on how much exercise data is included and how well that data adheres to a general trend. While outliers sometimes occur naturally, the key to accurate estimation is recording set information as fully and carefully as possible."
+
         return (
             <View>
                 <Modal
@@ -29,7 +29,7 @@ import {
                 >
                     <View style={styles.container}>
                         <View style={styles.bodyContainer}>
-                        <Text style={styles.titleText}>{this.props.title}</Text>
+                            <Text style={styles.titleText}>What is e1RM?</Text>
 
                             <View style={{position: 'absolute', left: 0, top: 0}}>
                                 <TouchableOpacity onPress={() => this._close() }>
@@ -38,8 +38,12 @@ import {
                                     </View>
                                 </TouchableOpacity>
                             </View>
-                    
-                    <Text style={{marginBottom: 20}}>{this.props.body}</Text>
+
+                            <Text style={{marginBottom: 20}}>{body}</Text>
+
+                            <TouchableOpacity style={{alignItems: 'center', marginBottom: 15}} onPress={ () => this.props.presentBestResults() }>
+                                <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >How can I get the best results?</Text>
+                            </TouchableOpacity>
 
                         </View>
                     </View>
@@ -47,8 +51,7 @@ import {
           </View>
         );
     }
-
- }
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -63,8 +66,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderWidth: 1,
         borderColor: '#e0e0e0',
-        height: 500,
-        width: 300,
+        marginLeft: 10,
+        marginRight: 10,
     },
     nav: {
         paddingTop: Platform.OS === 'ios' ? 15 : 5,
@@ -81,4 +84,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AnalysisModal;
+export default WhatIsOneRMView;

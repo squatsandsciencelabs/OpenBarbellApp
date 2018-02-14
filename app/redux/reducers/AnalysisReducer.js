@@ -23,18 +23,23 @@ const defaultState = {
     isEditing1RMExercise: false,
     isEditingIncludeTags: false,
     isEditingExcludeTags: false,
+
     velocitySlider: .01,
     e1RMExercise: 'Squat',
     e1RMDaysRange: 7,
     tagsToInclude: [],
     tagsToExclude: [],
+
     e1rm: null,
     e1RMVelocity: null,
     r2: null,
     chartData: null,
     regLineData: null,
+
     showInfoModal: false,
     showBestResultsModal: false,
+
+    scroll: false,
 };
 
 const AnalysisReducer = (state = defaultState, action) => {
@@ -98,6 +103,7 @@ const AnalysisReducer = (state = defaultState, action) => {
                 r2: action.r2,
                 chartData: action.chartData,
                 regLineData: action.regLineData,
+                scroll: !state.scroll,
             };
         case SHOW_INFO_MODAL:
             return {

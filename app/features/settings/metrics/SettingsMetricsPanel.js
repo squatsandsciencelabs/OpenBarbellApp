@@ -134,7 +134,7 @@ class SettingsMetricsPanel extends Component {
         if (Platform.OS === 'ios') {
             return (
                 <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
-                    <Text style={[{marginBottom: 20}, styles.titleText]}>Big Metrics</Text>
+                    <Text style={[{marginBottom: 20}, styles.titleText]}>Set Metrics</Text>
                     <View style={{marginBottom: 15}}>
                         {this._renderRow(1, this.props.quantifier1, this.props.metric1)}
                         {this._renderRow(2, this.props.quantifier2, this.props.metric2)}
@@ -152,7 +152,7 @@ class SettingsMetricsPanel extends Component {
         } else {
             return (
                 <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
-                    <Text style={[{marginBottom: 20}, styles.titleText]}>Metrics</Text>
+                    <Text style={[{marginBottom: 20}, styles.titleText]}>Set Metrics</Text>
                     <View style={{marginBottom: 15}}>
                         <View style={{flex: 1, flexDirection: 'row'}}>
                             <View style={styles.bigMetricBackground}><Text style={styles.bigMetricNumber}>1</Text></View>

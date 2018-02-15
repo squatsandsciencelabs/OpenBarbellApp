@@ -68,8 +68,8 @@ export const hasValidVelocity = (set) => {
     set.reps.map((rep) => {
         if (rep.isValid && !rep.removed && rep.data) {
             const velocity = RepDataMap.averageVelocity(rep.data); // this should always return a string
-            if (!isNaN(velocity) && !velocity.includes('nf') && velocity > 0) {
-
+            if (velocity && !isNaN(velocity) && !velocity.toLowerCase().includes('nf') && velocity > 0) {
+                return true;
             }
         }
     });

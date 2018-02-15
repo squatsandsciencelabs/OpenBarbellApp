@@ -1,3 +1,5 @@
+import * as RepDataMap from 'app/utility/transforms/RepDataMap';
+
 // no data and no active reps
 export const isEmpty = (set) => {
     return hasEmptyData(set) && hasEmptyReps(set);
@@ -60,4 +62,16 @@ export const numValidUnremovedReps = (set) => {
             return sum+1;
         }
     }, 0);
+};
+
+export const hasValidVelocity = (set) => {
+    set.reps.map((rep) => {
+        if (rep.isValid && !rep.removed && rep.data) {
+            const velocity = RepDataMap.averageVelocity(rep.data); // this should always return a string
+            if (!isNaN(velocity) && !velocity.includes('nf') && velocity > 0) {
+
+            }
+        }
+    });
+    return false;
 };

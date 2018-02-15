@@ -475,7 +475,15 @@ export const get1RMRegLinePoints = (state, exercise, exerciseData) => {
 
 const isValidFor1RMCalc = (state, set, exercise, range) => {
     const startTime = SetTimeCalculator.startTime(set);
-    return startTime && set.exercise.toLowerCase() === exercise.toLowerCase() && SetEmptyCheck.numValidUnremovedReps(set) > 0 && set.weight && !isNaN(set.weight) && DateUtils.checkDateWithinRange(range, startTime) && (checkIncludesTags(state, set.tags) && checkExcludesTags(state, set.tags));
+    return startTime
+        && set.exercise
+        && set.exercise.toLowerCase() === exercise.toLowerCase()
+        && SetEmptyCheck.numValidUnremovedReps(set) > 0
+        && set.weight
+        && !isNaN(set.weight)
+        && DateUtils.checkDateWithinRange(range, startTime)
+        && (checkIncludesTags(state, set.tags)
+        && checkExcludesTags(state, set.tags));
 };
 
 const getFirstValidUnremovedRep = (reps) => {

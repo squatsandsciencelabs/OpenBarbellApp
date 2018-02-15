@@ -477,7 +477,7 @@ const isValidFor1RMCalc = (state, set, exercise, range) => {
     const startTime = SetTimeCalculator.startTime(set);
     return startTime
         && set.exercise
-        && set.exercise.toLowerCase() === exercise.toLowerCase()
+        && set.exercise.trim().toLowerCase() === exercise.trim().toLowerCase()
         && SetEmptyCheck.numValidUnremovedReps(set) > 0
         && set.weight
         && !isNaN(set.weight)

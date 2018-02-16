@@ -1374,8 +1374,8 @@ describe('SetsSelectors', () => {
             },
             analysis: {
                 e1RMDaysRange: 7,
-                tagsToInclude: ['A', 'B', 'C'],
-                tagsToExclude: ['F', 'G'],
+                tagsToInclude: ['A', 'b', ' c '],
+                tagsToExclude: [' F ', ' G'],
             }
         };
 
@@ -1685,7 +1685,7 @@ describe('SetsSelectors', () => {
             });
 
             test('return data for regression', () => {
-                const expected = [[200, 1.83], [100, 1.43]];
+                const expected = [[100, 1.83], [200, 1.83], [100, 1.43]];
                 
                 const result = sut.get1RMExerciseData(state, 'Bench');
 
@@ -1693,7 +1693,7 @@ describe('SetsSelectors', () => {
             });
 
             test('return data for scatter', () => {
-                const expected = [{"setID": "d", "x": 200, "y": 1.83}, {"setID": "k", "x": 100, "y": 1.43}]
+                const expected = [{"setID": "a", "x": 100, "y": 1.83}, {"setID": "d", "x": 200, "y": 1.83}, {"setID": "k", "x": 100, "y": 1.43}];
     
                 const result = sut.get1RMChartData(state, 'Bench');
 
@@ -1803,7 +1803,7 @@ describe('SetsSelectors', () => {
                     }
                 };
 
-                const expected = [{"setID": "c", "x": 150, "y": 1.73}, {"setID": "a", "x": 100, "y": 1.83}];
+                const expected = [{"setID": "b", "x": 200, "y": 1.94}, {"setID": "c", "x": 150, "y": 1.73}, {"setID": "d", "x": 200, "y": 1.83}, {"setID": "a", "x": 100, "y": 1.83}];
                 
                 const result = sut.get1RMChartData(state, 'Bench');
 
@@ -1908,11 +1908,11 @@ describe('SetsSelectors', () => {
                     analysis: {
                         e1RMDaysRange: 7,
                         tagsToInclude: [],
-                        tagsToExclude: ['F', 'G', 'H'],
+                        tagsToExclude: ['F', ' G', ' h '],
                     }
                 };
 
-                const expected =  [{"setID": "a", "x": 100, "y": 1.83}, {"setID": "c", "x": 150, "y": 1.73}, {"setID": "h", "x": 200, "y": 1.33}];
+                const expected =  [{"setID": "a", "x": 100, "y": 1.83}, {"setID": "b", "x": 200, "y": 1.94}, {"setID": "c", "x": 150, "y": 1.73}, {"setID": "d", "x": 200, "y": 1.83}, {"setID": "h", "x": 200, "y": 1.33}];
                 
                 const result = sut.get1RMChartData(state, 'Bench');
 

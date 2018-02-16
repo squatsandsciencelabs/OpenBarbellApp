@@ -499,8 +499,10 @@ const checkIncludesTags = (state, tags) => {
         return true;
     }
 
+    const tagsInsensitive = tags.map(tag => tag.trim().toLowerCase());
+
     return tagsToInclude.every((tagToInclude) => {
-        return tags.includes(tagToInclude);
+        return tagsInsensitive.includes(tagToInclude.trim().toLowerCase());
     });
 };
 
@@ -511,8 +513,10 @@ const checkExcludesTags = (state, tags) => {
         return true;
     }
 
+    const tagsInsensitive = tags.map(tag => tag.trim().toLowerCase());
+
     return tagsToExclude.every((tagToExclude) => {
-        return !tags.includes(tagToExclude);
+        return !tagsInsensitive.includes(tagToExclude);
     });
 };
 

@@ -13,6 +13,7 @@ import OneRMCalculateScreen from './calculate/OneRMCalculateScreen';
 import OneRMResultsScreen from './results/OneRMResultsScreen';
 import OneRMLoggedOutView from './logged_out/OneRMLoggedOutView';
 import OneRMProtocolView from './protocol/OneRMProtocolView';
+import HowToBestResultsScreen from './results/bestresults/HowToBestResultsScreen';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 
 // Hack for svg bug with scrolling in victory charts on Android
@@ -54,6 +55,7 @@ class AnalysisTab extends Component {
                     <View ref={(ref) => { this.results = ref }} onLayout={() => {}} collapsable={false} >
                         <OneRMResultsScreen />
                         <Image style={styles.pseudoScrollView} source={require('app/appearance/images/blank.png')} />
+                        <HowToBestResultsScreen />
                     </View>
                     <OneRMProtocolView />
                 </ScrollView>

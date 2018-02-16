@@ -5,7 +5,7 @@ import {
     DISCONNECTED_FROM_DEVICE,
     FOUND_DEVICE,
     STOP_RECONNECT
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as DeviceActionCreators from 'app/redux/shared_actions/DeviceActionCreators';
 import * as Analytics from 'app/services/Analytics';
 

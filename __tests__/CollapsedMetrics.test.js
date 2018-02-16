@@ -1,4 +1,4 @@
-import * as sut from 'app/utility/transforms/CollapsedMetrics';
+import * as sut from 'app/math/CollapsedMetrics';
 
 describe('collapsed metrics', () => {
     const set = {

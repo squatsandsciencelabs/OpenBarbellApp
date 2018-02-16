@@ -1,9 +1,9 @@
 // TODO: split this into more functions that don't suck
 // TODO: prime candidate for unit testing
 
-import * as DateUtils from 'app/utility/transforms/DateUtils';
-import * as RepDataMap from 'app/utility/transforms/RepDataMap';
-import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
+import * as DateUtils from 'app/utility/DateUtils';
+import * as RepDataMap from 'app/utility/RepDataMap';
+import * as SetUtils from 'app/utility/SetUtils';
 
 // pass this the history sets as a sorted array
 // aka SetReducer's getHistorySets convenience function
@@ -26,7 +26,7 @@ export const convert = (sets) => {
         // calculate workoutstarttime
         if (lastWorkout === null || lastWorkout !== set.workoutID) {
             lastWorkout = set.workoutID;
-            workoutStartTime = new Date(SetTimeCalculator.startTime(set)).toLocaleString();
+            workoutStartTime = new Date(SetUtils.startTime(set)).toLocaleString();
             // reset vars for set count and rest time
             lastExercise = null;
             lastSetEndTime = null;
@@ -42,12 +42,12 @@ export const convert = (sets) => {
 
         // calculate rest time
         if (lastSetEndTime !== null) {
-            var restInMS = new Date(SetTimeCalculator.startTime(set)).getTime() - new Date(lastSetEndTime).getTime();
+            var restInMS = new Date(SetUtils.startTime(set)).getTime() - new Date(lastSetEndTime).getTime();
             rest = DateUtils.restInClockFormat(restInMS);
         } else {
             rest = "00:00:00";
         }
-        lastSetEndTime = SetTimeCalculator.endTime(set);
+        lastSetEndTime = SetUtils.endTime(set);
 
         // reps
         let reps = set.reps.filter((rep) => rep.removed === false && rep.isValid === true);

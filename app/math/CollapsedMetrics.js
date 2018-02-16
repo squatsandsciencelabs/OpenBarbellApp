@@ -1,4 +1,4 @@
-import * as RepDataMap from 'app/utility/transforms/RepDataMap';
+import * as RepDataMap from 'app/utility/RepDataMap';
 import {
     EMPTY_METRIC,
     AVG_VELOCITY_METRIC,
@@ -19,7 +19,7 @@ import {
     SLOWEST_EVER_QUANTIFIER,
     SET_LOSS_QUANTIFIER,
     PEAK_END_QUANTIFIER,
-} from 'app/constants/CollapsedMetricTypes';
+} from 'app/configs+constants/CollapsedMetricTypes';
 
 // unique metrics
 

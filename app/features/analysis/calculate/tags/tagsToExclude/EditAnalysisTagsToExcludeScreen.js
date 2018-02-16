@@ -5,6 +5,7 @@ import SelectTagsModal from '../SelectTagsModal';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as Actions from './EditAnalysisTagsToExcludeActions';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
+import * as OneRMCalculator from 'app/math/OneRMCalculator';
 
 const mapStateToProps = (state) => {
     const e1RMExercise = AnalysisSelectors.getAnalysisE1RMExercise(state);
@@ -14,7 +15,7 @@ const mapStateToProps = (state) => {
         placeholder: 'Enter Tag',
         text: '',
         inputs: AnalysisSelectors.getTagsToExclude(state),
-        generateSuggestions: SetsSelectors.getTagsToExcludeSuggestions(state, e1RMExercise),
+        generateSuggestions: OneRMCalculator.getTagsToExcludeSuggestions(state, e1RMExercise),
         isModalShowing: AnalysisSelectors.getIsEditingExcludeTags(state),
     }
 };

@@ -1,4 +1,4 @@
-import * as sut from 'app/utility/transforms/DateUtils';
+import * as sut from 'app/utility/DateUtils';
 
 describe('DateUtils', () => {
     describe('checkDateWithinRange', () => {

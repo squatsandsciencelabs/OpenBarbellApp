@@ -4,7 +4,7 @@ import {
     MULTI_TASK_SCREEN,
     CHANGE_TAB,
     HISTORY_VIEWED 
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import { Keyboard } from 'react-native';
 import * as Analytics from 'app/services/Analytics';
 import * as AppStateSelectors from 'app/redux/selectors/AppStateSelectors';

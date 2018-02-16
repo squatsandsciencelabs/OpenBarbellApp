@@ -1,4 +1,4 @@
-import * as RepDataMap from 'app/utility/transforms/RepDataMap';
+import * as RepDataMap from 'app/utility/RepDataMap';
 
 // no data and no active reps
 export const isEmpty = (set) => {
@@ -64,14 +64,50 @@ export const numValidUnremovedReps = (set) => {
     }, 0);
 };
 
-export const hasValidVelocity = (set) => {
+export const hasInvalidVelocity = (set) => {
     set.reps.map((rep) => {
         if (rep.isValid && !rep.removed && rep.data) {
             const velocity = RepDataMap.averageVelocity(rep.data); // this should always return a string
-            if (velocity && !isNaN(velocity) && !velocity.toLowerCase().includes('nf') && velocity > 0) {
+            if (!velocity || isNaN(velocity) || velocity.toLowerCase().includes('nf') || Number(velocity) <= 0) {
                 return true;
             }
         }
     });
     return false;
+};
+
+// this is here because of legacy issues
+// originally, sets saved their start and end times
+// however, once rep deletion was added, the rest calculation is off
+
+export const startTime = (set) => {
+    if (set.startTime === undefined) {
+        // time of first rep
+        let validReps = set.reps.filter((rep) => !rep.removed && rep.isValid);        
+        if (validReps.length > 0 && validReps[0].time !== undefined) {
+            return validReps[0].time;
+        } else if (set.initialStartTime !== undefined) {
+            return set.initialStartTime;
+        } else {
+            return null;
+        }
+    } else {
+        // legacy time of set itself
+        return set.startTime;
+    }
+};
+
+export const endTime = (set) => {
+    if (set.endTime === undefined) {
+        // time of last rep
+        let validReps = set.reps.filter((rep) => !rep.removed && rep.isValid);        
+        if (validReps.length > 0) {
+            return validReps[validReps.length-1].time;
+        } else {
+            return null;
+        }
+    } else {
+        // legacy time of set itself
+        return set.endTime;
+    }
 };

@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
-import * as DateUtils from 'app/utility/transforms/DateUtils';
+import * as DateUtils from 'app/utility/DateUtils';
 import SettingsEndSetTimerScreen from './timer/SettingsEndSetTimerScreen';
 import SettingsMetric from './metric/SettingsMetric';
 

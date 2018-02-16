@@ -6,13 +6,13 @@ import {
     EXPORTING_CSV,
     CANCEL_LOGOUT,
     EXPORTING_CSV_ERROR,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
 import * as GoogleDriveUploader from 'app/services/GoogleDriveUploader';
-import * as CSVConverter from 'app/utility/transforms/CSVConverter';
+import * as CSVConverter from 'app/utility/CSVConverter';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
-import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
+import * as DurationCalculator from 'app/utility/DurationCalculator';
 import * as Analytics from 'app/services/Analytics';
 
 export const signIn = () => (dispatch, getState) => {

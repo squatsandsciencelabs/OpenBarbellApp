@@ -19,7 +19,7 @@ import {
     LOGOUT,
     CLEAR_TOKENS,
     REAUTHENTICATE_REQUEST,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import API from 'app/services/API';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';

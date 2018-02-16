@@ -2,7 +2,7 @@ import { Alert } from 'react-native';
 
 import {
     DISMISS_SURVEY,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as SurveySelectors from 'app/redux/selectors/SurveySelectors';
 import * as AppStateSelectors from 'app/redux/selectors/AppStateSelectors';

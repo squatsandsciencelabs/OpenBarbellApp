@@ -6,7 +6,7 @@ import {
 import {
     STOP_RECONNECT,
     TROUBLESHOOTING_TIPS,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as DeviceActionCreators from 'app/redux/shared_actions/DeviceActionCreators';
 import * as Analytics from 'app/services/Analytics';
 

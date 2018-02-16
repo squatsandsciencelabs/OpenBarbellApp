@@ -3,14 +3,14 @@ import { take, put, call, apply } from 'redux-saga/effects';
 import semver from 'semver';
 import DeviceInfo from 'react-native-device-info';
 
-import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
+import OpenBarbellConfig from 'app/configs+constants/OpenBarbellConfig.json';
 import * as KillSwitchActionCreators from 'app/redux/shared_actions/KillSwitchActionCreators';
 
 import {
     FETCH_VERSION,
     VERSION_OK,
     VERSION_KILLED
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 const KillSwitchSaga = function * KillSwitchSaga() {
     yield take(FETCH_VERSION);

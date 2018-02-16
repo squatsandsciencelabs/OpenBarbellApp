@@ -18,7 +18,7 @@ import {
 } from 'react-native';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
 
-import * as NavigationConfig from 'app/configs/NavigationConfig';
+import * as NavigationConfig from 'app/configs+constants/NavigationConfig';
 import SurveyModalScreen from 'app/shared_features/survey/SurveyModalScreen';
 
 class ApplicationView extends Component {

@@ -9,7 +9,7 @@ import {
     SAVE_HISTORY_SET_TAGS,
     UPDATE_SET_DATA_FROM_SERVER,
     TEST_ONE_RM,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 import * as SuggestionsActionCreators from 'app/redux/shared_actions/SuggestionsActionCreators';
 

@@ -1,4 +1,4 @@
-import * as sut from 'app/utility/transforms/SetEmptyCheck';
+import * as sut from 'app/utility/SetUtils';
 
 describe.skip('isEmpty', () => {
     // note: skipping for now as too many possibilities and theoretically testing inner functions is sufficient

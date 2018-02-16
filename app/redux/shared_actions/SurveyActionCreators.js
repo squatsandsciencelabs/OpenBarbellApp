@@ -3,7 +3,7 @@ import {
     PRESENT_SURVEY,
     COMPLETE_SURVEY,
     OPT_OUT_END_WORKOUT_SURVEY_PROMPT,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 
 // note: analytics are done in surveysaga instead

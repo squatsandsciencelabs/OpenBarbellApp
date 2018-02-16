@@ -4,7 +4,7 @@ import {
 	SAVE_END_SET_TIMER, 
     SAVE_DEFAULT_METRIC,
     UPDATE_SYNC_DATE,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 

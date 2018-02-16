@@ -6,7 +6,7 @@ import {
     CLEAR_TOKENS,
     REAUTHENTICATE_REQUEST,
     REAUTHENTICATE_SUCCESS,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 const AuthReducer = (state = createDefaultState(), action) => {
     switch (action.type) {

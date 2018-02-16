@@ -1,6 +1,6 @@
 import { 
     TEST_ONE_RM,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 // for debug use only
 export const test1RM = () => ({

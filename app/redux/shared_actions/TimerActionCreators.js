@@ -10,7 +10,7 @@ import {
     RESUME_END_SET_TIMER,
     START_END_SET_TIMER,
     STOP_END_SET_TIMER
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import { Platform } from 'react-native';
 
 var timer = null;

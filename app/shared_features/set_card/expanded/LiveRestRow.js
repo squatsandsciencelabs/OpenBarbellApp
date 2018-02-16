@@ -4,7 +4,7 @@ import {
     StyleSheet,
     Text
 } from 'react-native';
-import * as DateUtils from 'app/utility/transforms/DateUtils';
+import * as DateUtils from 'app/utility/DateUtils';
 
 class LiveRestRow extends Component {
 

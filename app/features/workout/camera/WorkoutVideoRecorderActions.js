@@ -4,7 +4,7 @@ import {
     DISMISS_WORKOUT_VIDEO_RECORDER,
     SAVE_WORKOUT_VIDEO,
     SAVE_VIDEO_ERROR,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
 import * as Analytics from 'app/services/Analytics';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';

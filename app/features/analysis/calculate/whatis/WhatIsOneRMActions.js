@@ -5,7 +5,7 @@ import {
 import {
     PRESENT_BEST_RESULTS,
     DISMISS_INFO_MODAL,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 export const presentBestResults = () => (dispatch, getState) => {
     // TODO: analytics

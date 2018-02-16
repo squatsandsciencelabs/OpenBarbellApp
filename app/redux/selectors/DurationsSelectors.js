@@ -1,4 +1,4 @@
-import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
+import * as DurationCalculator from 'app/utility/DurationCalculator';
 
 const stateRoot = (state) => state.durations
 

@@ -7,7 +7,7 @@ import {
     START_EDITING_HISTORY_WEIGHT,
     END_EDITING_HISTORY_RPE,
     END_EDITING_HISTORY_WEIGHT,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as VideoPermissionsUtils from 'app/utility/VideoPermissionsUtils';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';

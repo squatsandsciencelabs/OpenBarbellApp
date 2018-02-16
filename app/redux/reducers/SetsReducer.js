@@ -23,11 +23,11 @@ import {
     DELETE_WORKOUT_SET,
     DELETE_HISTORY_SET,
     TEST_ONE_RM,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import uuidV4 from 'uuid/v4';
 import DeviceInfo from 'react-native-device-info';
 import { Platform } from 'react-native';
-import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
+import * as SetUtils from 'app/utility/SetUtils';
 
 const SetsReducer = (state = createDefaultState(), action) => {
     switch (action.type) {
@@ -128,7 +128,7 @@ const saveDefaultMetric = (state, action) => {
         let changes = {};
         
         // Check if set is empty before allowing metric to change
-        if (SetEmptyCheck.isUntouched(latestSet)) {
+        if (SetUtils.isUntouched(latestSet)) {
             changes.metric = action.defaultMetric;
         }
         
@@ -507,7 +507,7 @@ const endWorkout = (state, action) => {
 
     // add working set
     let lastSet = workoutData[length-1];
-    if (length > 0 && !SetEmptyCheck.isUntouched(lastSet)) {
+    if (length > 0 && !SetUtils.isUntouched(lastSet)) {
         let setID = lastSet.setID;
         lastSet.workoutID = workoutID;
         workoutSetIDs.push(setID);
@@ -608,7 +608,7 @@ const finishUploadingSets = (state, action) => {
 
 const overrideWithTestData = (state, action) => {
     // dump of test data
-    var historyData = require('app/configs/TestData.json');
+    var historyData = require('app/configs+constants/TestData.json');
 
     // alter the date to be based on TODAY
     const originalDateTime = 1518556080000; // this needs to be date of the dump

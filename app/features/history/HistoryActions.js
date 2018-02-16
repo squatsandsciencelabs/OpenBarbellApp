@@ -4,7 +4,7 @@ import {
     SAVE_HISTORY_REP,
     COLLAPSE_HISTORY_SET,
     EXPAND_HISTORY_SET,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 
 export const collapseSet = (setID) => (dispatch, getState) => {

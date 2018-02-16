@@ -2,9 +2,9 @@
 import { Alert } from 'react-native';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
-import { END_WORKOUT } from 'app/ActionTypes';
+import { END_WORKOUT } from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
-import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
+import * as SetUtils from 'app/utility/SetUtils';
 import * as WorkoutSelectors from 'app/redux/selectors/WorkoutSelectors';
 import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 import * as AppStateSelectors from 'app/redux/selectors/AppStateSelectors';

@@ -6,14 +6,13 @@ import { connect } from 'react-redux';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
-import * as DateUtils from 'app/utility/transforms/DateUtils';
-import * as RepDataMap from 'app/utility/transforms/RepDataMap';
-import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
+import * as DateUtils from 'app/utility/DateUtils';
+import * as RepDataMap from 'app/utility/RepDataMap';
+import * as SetUtils from 'app/utility/SetUtils';
 import * as Actions from './HistoryActions';
 import HistoryList from './HistoryList';
-import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 import * as HistoryCollapsedSelectors from 'app/redux/selectors/HistoryCollapsedSelectors';
-import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
+import * as DurationCalculator from 'app/utility/DurationCalculator';
 
 // NOTE: this means that every history screen accesses previous values as singletons
 var storedSections = null; // the actual data
@@ -52,7 +51,7 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
         }
 
         // ignore completely empty set
-        if (!shouldShowRemoved && SetEmptyCheck.isEmpty(set)) {
+        if (!shouldShowRemoved && SetUtils.isEmpty(set)) {
             continue;
         }
 
@@ -60,7 +59,7 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
         if (lastWorkoutID !== set.workoutID) {
             // set vars
             lastWorkoutID = set.workoutID;
-            workoutStartTime = SetTimeCalculator.startTime(set);
+            workoutStartTime = SetUtils.startTime(set);
             isInitialSet = true;
 
             // create section
@@ -75,7 +74,7 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
 
         // set state booleans
         isCollapsed = HistoryCollapsedSelectors.getIsCollapsed(state, set.setID);
-        isRemoved = SetEmptyCheck.isEmpty(set);
+        isRemoved = SetUtils.isEmpty(set);
 
         // card header
         if (isInitialSet) {
@@ -112,7 +111,7 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
         // rest footer
         if (isInitialSet) {
             // new set, reset the end time
-            lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
+            lastSetEndTime = isRemoved ? null : SetUtils.endTime(set);
             array.push(createBottomBorder(set));
         } else if (!isRemoved && set.reps.length > 0) { // ignore removed sets in rest calculations
             // add footer if valid
@@ -123,7 +122,7 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
             }
 
             // update variable for calculation purposes
-            lastSetEndTime = SetTimeCalculator.endTime(set);
+            lastSetEndTime = SetUtils.endTime(set);
         } else {
             array.push(createBottomBorder(set));
         }
@@ -169,7 +168,7 @@ const createFormViewModel = (set, setNumber, isRemoved) => ({
 });
 
 const createSummaryViewModel = (set) => {
-    const numReps = SetEmptyCheck.numValidUnremovedReps(set);
+    const numReps = SetUtils.numValidUnremovedReps(set);
     return {
         type: 'summary',
         key: set.setID+'summary',
@@ -258,7 +257,7 @@ const createRowViewModels = (set, shouldShowRemoved) => {
 };
 
 const createFooterVM = (set, lastSetEndTime, isCollapsed) => {
-    let restInMS = new Date(SetTimeCalculator.startTime(set)) - new Date(lastSetEndTime);
+    let restInMS = new Date(SetUtils.startTime(set)) - new Date(lastSetEndTime);
     let footerVM = {
         type: "footer",
         rest: DateUtils.restInSentenceFormat(restInMS),

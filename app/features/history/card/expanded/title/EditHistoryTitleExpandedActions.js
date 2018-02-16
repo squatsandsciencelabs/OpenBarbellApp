@@ -1,7 +1,7 @@
 import {
     COLLAPSE_HISTORY_SET,
     PRESENT_HISTORY_EXERCISE,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';

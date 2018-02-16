@@ -10,7 +10,7 @@ import {
     UPDATE_SYNC_DATE,
     EXPORTING_CSV,
     UPDATE_HISTORY_FILTER,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
     defaultMetric: 'kgs',

@@ -3,7 +3,7 @@ import {
     SAVE_WORKOUT_SET_TAGS,
     REMOVE_WORKOUT_TAG,
     ADD_WORKOUT_TAG,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';

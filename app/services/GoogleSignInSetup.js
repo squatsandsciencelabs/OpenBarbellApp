@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { GoogleSignin } from 'react-native-google-signin';
 
-import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
+import OpenBarbellConfig from 'app/configs+constants/OpenBarbellConfig.json';
 import * as Analytics from 'app/services/Analytics';
 
 export const configure = () => {

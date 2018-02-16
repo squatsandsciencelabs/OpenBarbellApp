@@ -28,7 +28,7 @@ import HistoryVideoRecorderScreen from './camera/HistoryVideoRecorderScreen';
 import HistoryVideoPlayerScreen from './video/HistoryVideoPlayerScreen';
 import SetSummary from 'app/shared_features/set_card/collapsed/SetSummary';
 import SetAnalysisScreen from 'app/shared_features/set_card/analysis/SetAnalysisScreen';
-import * as Sections from 'app/utility/transforms/Sections';
+import * as Sections from 'app/utility/Sections';
 
 class HistoryList extends Component {
 

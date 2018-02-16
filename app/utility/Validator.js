@@ -1,5 +1,5 @@
-import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
-import * as DateUtils from 'app/utility/transforms/DateUtils';
+import OpenBarbellConfig from 'app/configs+constants/OpenBarbellConfig.json';
+import * as DateUtils from 'app/utility/DateUtils';
 
 export default class Validator {
 

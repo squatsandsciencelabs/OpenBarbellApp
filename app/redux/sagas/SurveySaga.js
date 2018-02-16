@@ -13,7 +13,7 @@ import {
     CHANGE_TAB,
     END_WORKOUT,
     PRESENT_SURVEY,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import firebase from 'app/services/Firebase';
 import * as Analytics from 'app/services/Analytics';
 import * as SurveyActionCreators from 'app/redux/shared_actions/SurveyActionCreators';

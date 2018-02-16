@@ -3,7 +3,7 @@ import {
     VERSION_OK,
     VERSION_KILLED,
     VERSION_UNAVAILABLE
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 const KillSwitchReducer = ( state = { status: 'FETCH', currentVersion: null, fetchedVersion: null }, action) => {
     switch (action.type) {

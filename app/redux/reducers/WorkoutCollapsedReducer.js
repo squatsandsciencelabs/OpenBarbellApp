@@ -2,7 +2,7 @@ import {
     END_WORKOUT,
     EXPAND_WORKOUT_SET,
     COLLAPSE_WORKOUT_SET,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
 };

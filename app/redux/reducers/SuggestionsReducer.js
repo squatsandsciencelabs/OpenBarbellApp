@@ -1,7 +1,7 @@
 import {
     UPDATE_TAG_SUGGESTIONS,
     UPDATE_EXERCISE_SUGGESTIONS
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 const SuggestionsReducer = (state = createDefaultState(), action) => {
     switch (action.type) {
@@ -13,7 +13,7 @@ const SuggestionsReducer = (state = createDefaultState(), action) => {
             return Object.assign({}, state, {
                 tagsModel: generateAutocompleteTagsModel(action.workoutData, action.historyData)
             });
-        default:
+    default:
             return state;
     }
 };

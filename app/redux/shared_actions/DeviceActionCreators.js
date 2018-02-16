@@ -18,7 +18,7 @@ import {
     DISCONNECT_DEVICE,
     CONNECT_DEVICE,
     RECONNECT_DEVICE
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as TimerActionCreators from './TimerActionCreators';
 import * as SetsActionCreators from './SetsActionCreators';
 import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDeviceStatusSelectors';

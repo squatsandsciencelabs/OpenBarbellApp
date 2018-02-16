@@ -1,7 +1,7 @@
 import {
     UPDATE_TAG_SUGGESTIONS,
     UPDATE_EXERCISE_SUGGESTIONS
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 export const updateTagSuggestions = () => (dispatch, getState) => {
     const state = getState();

@@ -18,7 +18,7 @@ import {
     SAVE_QUANTIFIER_3,
     SAVE_QUANTIFIER_4,
     SAVE_QUANTIFIER_5,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 import {
     EMPTY_METRIC,
@@ -40,7 +40,7 @@ import {
     SLOWEST_EVER_QUANTIFIER,
     SET_LOSS_QUANTIFIER,
     PEAK_END_QUANTIFIER,
-} from 'app/constants/CollapsedMetricTypes';
+} from 'app/configs+constants/CollapsedMetricTypes';
 
 const CollapsedSettingsReducer = (state = createDefaultState(), action) => {
     let changes = null;

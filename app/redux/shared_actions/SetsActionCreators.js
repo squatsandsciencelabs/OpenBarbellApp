@@ -10,9 +10,9 @@ import {
     FAILED_UPLOAD_SETS,
     DELETE_HISTORY_SET,
     DELETE_WORKOUT_SET,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
-import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
+import * as SetUtils from 'app/utility/SetUtils';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as Analytics from 'app/services/Analytics';
 
@@ -99,7 +99,7 @@ export const endSet = (manuallyStarted=false, wasSanityCheck=false) => (dispatch
     const set = SetsSelectors.getWorkingSet(state);
     
     // check if set form has any data
-    if (!SetEmptyCheck.isUntouched(set)) {
+    if (!SetUtils.isUntouched(set)) {
         logEndSetAnalytics(manuallyStarted, wasSanityCheck, state);
         const defaultMetric = state.settings.defaultMetric;        
 
@@ -152,8 +152,8 @@ const logEndSetAnalytics = (manuallyStarted, wasSanityCheck, state) => {
     var set = SetsSelectors.getWorkingSet(state);
     var previous_set_has_reps = !SetsSelectors.getWorkoutPreviousSetHasEmptyReps(state);
     var is_previous_set_fields_filled = SetsSelectors.getIsPreviousWorkoutSetFilled(state);
-    let num_fields_entered = SetEmptyCheck.numFieldsEntered(set);
-    let has_reps = !SetEmptyCheck.hasEmptyReps(set);
+    let num_fields_entered = SetUtils.numFieldsEntered(set);
+    let has_reps = !SetUtils.hasEmptyReps(set);
     let auto_end_timer = 0;
     let endSetTimerDuration = SettingsSelectors.getEndSetTimerDuration(state);
     let is_default_end_timer = !SettingsSelectors.getIfTimerWasEdited(state);

@@ -4,12 +4,12 @@ import { Alert } from 'react-native';
 import {
     CHANGE_TAB,
     STORE_INITIALIZED,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
-import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
+import OpenBarbellConfig from 'app/configs+constants/OpenBarbellConfig.json';
 import * as WorkoutActionCreators from 'app/redux/shared_actions/WorkoutActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
-import * as DateUtils from 'app/utility/transforms/DateUtils';
+import * as DateUtils from 'app/utility/DateUtils';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 
 const EndOldWorkoutSaga = function * EndOldWorkoutSaga() {

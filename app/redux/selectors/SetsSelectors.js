@@ -1,13 +1,12 @@
 // TODO: refactor so that selectors are aware of the entire state path
 // reason being that, the callers shouldn't know to make this state.sets
 // right now only a few of them use the stateRoot
-import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
-import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
-import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
-import * as RepDataMap from 'app/utility/transforms/RepDataMap';
-import * as OneRMCalculator from 'app/utility/transforms/OneRMCalculator';
-import * as CollapsedMetrics from 'app/utility/transforms/CollapsedMetrics';
-import * as DateUtils from 'app/utility/transforms/DateUtils';
+import * as SetUtils from 'app/utility/SetUtils';
+import * as DurationCalculator from 'app/utility/DurationCalculator';
+import * as RepDataMap from 'app/utility/RepDataMap';
+import * as OneRMCalculator from 'app/math/OneRMCalculator';
+import * as CollapsedMetrics from 'app/math/CollapsedMetrics';
+import * as DateUtils from 'app/utility/DateUtils';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 
 const stateRoot = (state) => state.sets;
@@ -26,7 +25,7 @@ export const lastWorkoutRepTime = (state) => {
 
     // check the current set for end time
     var currentSet = getWorkingSet(state);
-    var endTime = SetTimeCalculator.endTime(currentSet);
+    var endTime = SetUtils.endTime(currentSet);
     if (endTime !== null) {
         return endTime;
     }
@@ -35,7 +34,7 @@ export const lastWorkoutRepTime = (state) => {
     if (workoutData.length > 1) {
         for (var i=workoutData.length-2; i>=0; i--) {
             var previousSet = workoutData[i];
-            var endTime = SetTimeCalculator.endTime(previousSet);            
+            var endTime = SetUtils.endTime(previousSet);            
             if (endTime !== null) {
                 return endTime;
             }
@@ -60,7 +59,7 @@ export const getIsWorkoutEmpty = (state) => {
     if (workoutData.length >= 2) {
         // at least one set
         return false;
-    } else if (workoutData.length === 1 && !SetEmptyCheck.isUntouched(workoutData[0])) {
+    } else if (workoutData.length === 1 && !SetUtils.isUntouched(workoutData[0])) {
         // only one set and it has data
         return false;
     }
@@ -91,7 +90,7 @@ export const getNumWorkoutSetsWithFields = (state) => {
     var num_sets_with_fields = 0;
 
     sets.forEach((set) => {
-        if (!SetEmptyCheck.hasEmptyFields(set)) {
+        if (!SetUtils.hasEmptyFields(set)) {
             num_sets_with_fields++;
         }
     });
@@ -117,7 +116,7 @@ export const getNumWorkoutSetsWithAllFields = (state) => {
     var num_sets_with_all_fields = 0;
 
     sets.forEach((set) => {
-        if (SetEmptyCheck.hasAllFields(set)) {
+        if (SetUtils.hasAllFields(set)) {
             num_sets_with_all_fields++;
         }
     });
@@ -163,7 +162,7 @@ export const getPercentWorkoutSetsWithRPE = (state) => {
 
 export const getWorkoutDuration = (state) => {
     const sets = getWorkoutSets(state);
-    const startDate = SetTimeCalculator.startTime(sets[0]);
+    const startDate = SetUtils.startTime(sets[0]);
 
     if (startDate) {
         return DurationCalculator.getDurationBetween(startDate, Date.now());
@@ -191,7 +190,7 @@ export const getWorkoutPreviousSetHasEmptyReps = (state) => {
     if (workoutData.length >= 2) {
         const prevSet = workoutData[workoutData.length - 2];
         if (prevSet) {
-            return SetEmptyCheck.hasEmptyReps(prevSet);
+            return SetUtils.hasEmptyReps(prevSet);
         }
     }
 
@@ -204,7 +203,7 @@ export const getIsPreviousWorkoutSetFilled = (state) => {
     if (workoutData.length >= 2) {        
         const prevSet = workoutData[workoutData.length - 2];
         if (prevSet) {
-            if(SetEmptyCheck.hasEmptyFields(prevSet)) {
+            if(SetUtils.hasEmptyFields(prevSet)) {
                 return 0;
             } else {
                 return 1;
@@ -232,12 +231,12 @@ const dictToArray = (dictionary) => {
 export const getHistorySetsChronological = (state) => {
     var array = getHistorySets(state);
     array.sort((set1, set2) => {
-        let set1Start = SetTimeCalculator.startTime(set1);
+        let set1Start = SetUtils.startTime(set1);
         if (set1Start !== null) {
             set1Start = Date.parse(set1Start);
         }
 
-        let set2Start = SetTimeCalculator.startTime(set2);
+        let set2Start = SetUtils.startTime(set2);
         if (set2Start !== null) {
             set2Start = Date.parse(set2Start);
         }
@@ -314,7 +313,7 @@ export const getTimeSinceLastWorkout = (state) => {
         return null;
     } else {
         const lastSet = sets[sets.length-1];
-        const startTime = Date.parse(SetTimeCalculator.startTime(lastSet));
+        const startTime = Date.parse(SetUtils.startTime(lastSet));
         return Date.now() - startTime;
     }
 };
@@ -392,7 +391,7 @@ const isSetComparable = (set) => {
         return false;
     }
 
-    if (SetEmptyCheck.numValidUnremovedReps(set) <= 0) {
+    if (SetUtils.numValidUnremovedReps(set) <= 0) {
         return false;
     }
 
@@ -425,142 +424,12 @@ export const getSlowestDurationEver = (state, set) => {
 
 export const getRevision = (state) => stateRoot(state).revision;
 
-// 1rm
-// Get Weights and Velocity for the exercise
-export const get1RMExerciseData = (state, exercise) => {   
-    const sets = getAllSets(state);
-    let data = [];
-    // check if date fits within range
-    const range = AnalysisSelectors.getAnalysisRange(state);
-
-    sets.forEach((set) => {
-        if (isValidFor1RMCalc(state, set, exercise, range)) {
-            data.push([parseFloat(set.weight), Number(RepDataMap.averageVelocity(getFirstValidUnremovedRep(set.reps).data))]);
-        }
-    });
-
-    return data;
-};
-
-export const get1RMChartData = (state, exercise) => {
-    const sets = getAllSets(state);
-    let data = [];
-    // check if date fits within range
-    const range = AnalysisSelectors.getAnalysisRange(state);
-
-    sets.forEach((set) => {
-        if (isValidFor1RMCalc(state, set, exercise, range)) {
-            data.push({ x: parseFloat(set.weight), y: Number(RepDataMap.averageVelocity(getFirstValidUnremovedRep(set.reps).data)), setID: set.setID });
-        }
-    });
-
-    return data;
-};
-
-export const get1RMRegLinePoints = (state, exercise, exerciseData) => {
-    const sets = getAllSets(state);
-    let data = [];
-    // check if date fits within range
-    const range = AnalysisSelectors.getAnalysisRange(state);
-
-    // TODO: don't calculate every point along the line, just need two points! speed it up
-    sets.forEach((set) => {
-        if (isValidFor1RMCalc(state, set, exercise, range)) {
-            data.push({ x: parseFloat(set.weight), y: OneRMCalculator.calcVel(exerciseData, set.weight)[1], setID: set.setID });
-        }
-    });
-
-    return data;
-};
-
-const isValidFor1RMCalc = (state, set, exercise, range) => {
-    const startTime = SetTimeCalculator.startTime(set);
-    return startTime
-        && set.exercise
-        && set.exercise.trim().toLowerCase() === exercise.trim().toLowerCase()
-        && SetEmptyCheck.numValidUnremovedReps(set) > 0
-        && set.weight
-        && !isNaN(set.weight)
-        && DateUtils.checkDateWithinRange(range, startTime)
-        && (checkIncludesTags(state, set.tags)
-        && checkExcludesTags(state, set.tags));
-};
-
-const getFirstValidUnremovedRep = (reps) => {
-    return reps.find((rep) => {
-        return rep.isValid && !rep.removed;
-    });
-};
-
-const checkIncludesTags = (state, tags) => {
-    const tagsToInclude = AnalysisSelectors.getTagsToInclude(state);
-
-    if (!tagsToInclude.length) {
-        return true;
-    }
-
-    return tagsToInclude.every((tagToInclude) => {
-        return tags.includes(tagToInclude);
-    });
-};
-
-const checkExcludesTags = (state, tags) => {
-    const tagsToExclude = AnalysisSelectors.getTagsToExclude(state);
-
-    if (!tagsToExclude.length) {
-        return true;
-    }
-
-    return tagsToExclude.every((tagToExclude) => {
-        return !tags.includes(tagToExclude);
-    });
-};
-
-// Get all tags for an exercises
-export const getTagsToIncludeSuggestions = (state, exercise) => {
-    const sets = getAllSets(state);
-    const tagsToInclude = AnalysisSelectors.getTagsToInclude(state);
-    const tagsToExclude = AnalysisSelectors.getTagsToExclude(state);
-    const tags = [];
-
-    sets.forEach((set) => {
-        if (set.exercise === exercise && set.tags) {
-            set.tags.forEach((tag) => {
-                if (!tags.includes(tag) && !tagsToExclude.includes(tag) && !tagsToInclude.includes(tag) && tag !== 'Bug') {
-                    tags.push(tag);
-                }
-            });
-        }
-    });
-
-    return tags;
-};
-
-export const getTagsToExcludeSuggestions = (state, exercise) => {
-    const sets = getAllSets(state);
-    const tagsToInclude = AnalysisSelectors.getTagsToInclude(state);
-    const tagsToExclude = AnalysisSelectors.getTagsToExclude(state);
-    const tags = [];
-
-    sets.forEach((set) => {
-        if (set.exercise === exercise && set.tags) {
-            set.tags.forEach((tag) => {
-                if (!tags.includes(tag) && !tagsToInclude.includes(tag) && !tagsToExclude.includes(tag) && tag !== 'Bug') {
-                    tags.push(tag);
-                }
-            });
-        }
-    });
-
-    return tags;
-};
-
 export const generateExerciseItems = (state) => {
     const sets = getAllSets(state);
     let exercises = [];
 
     sets.forEach((set) => {
-        if (set.exercise && !exerciseExists(set.exercise, exercises) && SetEmptyCheck.numValidUnremovedReps(set) > 0) {
+        if (set.exercise && !exerciseExists(set.exercise, exercises) && SetUtils.numValidUnremovedReps(set) > 0) {
             exercises.push({ label: set.exercise, value: set.exercise });
         }
     });

@@ -4,7 +4,7 @@ import {
 
 import {
     PRESENT_BEST_RESULTS,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as AppStateActionCreators from 'app/redux/shared_actions/AppStateActionCreators';
 
 export const tapPoint = (setID) => {

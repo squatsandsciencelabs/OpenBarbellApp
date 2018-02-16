@@ -3,7 +3,7 @@ import {
     SAVE_HISTORY_SET_TAGS,
     REMOVE_HISTORY_TAG,
     ADD_HISTORY_TAG,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
 

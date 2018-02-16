@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import SetForm from 'app/shared_features/set_card/expanded/SetForm';
 import * as Actions from './EditHistorySetFormActions';
-import * as DateUtils from 'app/utility/transforms/DateUtils';
+import * as DateUtils from 'app/utility/DateUtils';
 
 const mapStateToProps = (state, ownProps) => {
     const rpeDisabled = !DateUtils.checkDateWithinRange(7, ownProps.initialStartTime)

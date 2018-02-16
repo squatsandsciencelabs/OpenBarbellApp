@@ -20,7 +20,7 @@ import {
     STOP_RECORDING_WORKOUT,
     END_SET,
     END_WORKOUT
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 import * as TimerActionCreators from 'app/redux/shared_actions/TimerActionCreators';
 import * as WorkoutSelectors from 'app/redux/selectors/WorkoutSelectors';

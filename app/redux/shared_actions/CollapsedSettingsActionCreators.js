@@ -11,7 +11,7 @@ import {
     SAVE_QUANTIFIER_3,
     SAVE_QUANTIFIER_4,
     SAVE_QUANTIFIER_5,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 export const saveCollapsedMetric = (metric) => ({
     type: SAVE_COLLAPSED_METRIC,

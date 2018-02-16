@@ -50,7 +50,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         tapPoint: Actions.tapPoint,
-        presentBestResults: Actions.presentBestResults,
     }, dispatch);
 };
 

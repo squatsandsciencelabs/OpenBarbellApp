@@ -119,14 +119,11 @@ class OneRMChartView extends Component {
 
     render() {
         return (
-            <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column', alignItems: 'center' }] }>
+            <View style={ [SETTINGS_PANEL_STYLES.panel, { borderBottomWidth: 0, flexDirection: 'column', alignItems: 'center' }] }>
                 <Text style={[styles.titleText, {marginBottom: 10}]}>Results</Text>
                 {this._render1rm(this.props.r2)}
                 <Text style={{textAlign: 'center', fontStyle: 'italic', fontWeight: 'bold', color: 'rgba(77, 77, 77, 1)'}}>Tap a point to view and edit the data</Text>
                 {this._renderChartArea()}
-                <TouchableOpacity style={{alignItems: 'center', marginBottom: 15}} onPress={ () => this.props.presentBestResults() }>
-                    <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >How can I get the best results?</Text>
-                </TouchableOpacity>
             </View>
         );
     }

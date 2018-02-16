@@ -15,7 +15,7 @@ export const closeSurvey = () => (dispatch, getState) => {
 
     // present
     Alert.alert(
-        "Thanks for taking our survey!",
+        "Finished taking our survey?",
         null,
         [
             {

@@ -17,7 +17,7 @@ import {
     SAVE_HISTORY_VIDEO,
     END_WORKOUT,
     CHANGE_TAB,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
     isLoadingHistory: true,

@@ -2,7 +2,7 @@ import {
     START_DEVICE_SCAN,
     STOP_DEVICE_SCAN,
     FOUND_DEVICE,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
     devices: [],

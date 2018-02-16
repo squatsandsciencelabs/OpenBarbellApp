@@ -1,4 +1,4 @@
-import * as sut from 'app/utility/transforms/Sections';
+import * as sut from 'app/utility/Sections';
 
 describe('findInSection', () => {
     

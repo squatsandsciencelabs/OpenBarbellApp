@@ -9,7 +9,7 @@ import {
     LOGIN_REQUEST,
     REAUTHENTICATE_REQUEST,
     REAUTHENTICATE_SUCCESS,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 

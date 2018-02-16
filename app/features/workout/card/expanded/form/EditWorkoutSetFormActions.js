@@ -7,7 +7,7 @@ import {
     END_EDITING_WORKOUT_WEIGHT,
     PRESENT_WORKOUT_VIDEO_RECORDER,
     PRESENT_WORKOUT_VIDEO_PLAYER,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as VideoPermissionsUtils from 'app/utility/VideoPermissionsUtils';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';

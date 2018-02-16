@@ -18,12 +18,12 @@ import {
     ROM_METRIC,
     PKH_METRIC,
     PKV_METRIC,
-} from 'app/constants/CollapsedMetricTypes';
+} from 'app/configs+constants/CollapsedMetricTypes';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
-import * as DateUtils from 'app/utility/transforms/DateUtils';
+import * as DateUtils from 'app/utility/DateUtils';
 import SettingsEditMetricsScreen from './metric/SettingsEditMetricsScreen';
 import SettingsEditQuantifiersScreen from './quantifier/SettingsEditQuantifiersScreen';
-import * as CollapsedMetricsUtility from 'app/utility/transforms/CollapsedMetrics';
+import * as CollapsedMetricsUtility from 'app/math/CollapsedMetrics';
 import * as Device from 'app/utility/Device';
 
 class SettingsMetricsPanel extends Component {

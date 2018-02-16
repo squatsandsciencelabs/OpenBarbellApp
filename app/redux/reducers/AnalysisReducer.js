@@ -16,7 +16,7 @@ import {
     PRESENT_INFO_MODAL,
     SHOW_BEST_RESULTS_MODAL,
     DISMISS_INFO_MODAL,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
     isEditing1RMExercise: false,

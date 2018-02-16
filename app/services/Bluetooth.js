@@ -15,9 +15,9 @@ import {
     CONNECTING_TO_DEVICE,
     CONNECTED_TO_DEVICE,
     ADD_REP_DATA
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
-import * as RepDataMap from 'app/utility/transforms/RepDataMap';
+import * as RepDataMap from 'app/utility/RepDataMap';
 import * as DeviceActionCreators from 'app/redux/shared_actions/DeviceActionCreators';
 import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDeviceStatusSelectors';
 

@@ -3,7 +3,7 @@ import {
     SAVE_WORKOUT_REP,
     COLLAPSE_WORKOUT_SET,
     EXPAND_WORKOUT_SET,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as Analytics from 'app/services/Analytics';

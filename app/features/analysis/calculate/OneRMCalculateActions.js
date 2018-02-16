@@ -6,9 +6,9 @@ import {
     PRESENT_EXCLUDES_TAGS,
     CALC_ONE_RM,
     PRESENT_INFO_MODAL,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
-import * as OneRMCalculator from 'app/utility/transforms/OneRMCalculator';
+import * as OneRMCalculator from 'app/math/OneRMCalculator';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
 export const presentSelectExercise = () => ({
@@ -34,10 +34,19 @@ export const presentTagsToInclude = () => ({
 });
 
 export const calcE1rm = () => (dispatch, getState) => {
+    // Step 0: Get the current setup
+    // alternatively have these get passed in
     const state = getState();
     const exercise = AnalysisSelectors.getAnalysisE1RMExercise(state);
     const velocity = AnalysisSelectors.getVelocitySlider(state);
+
+    // Step 1: Clean the data (rep/weight/tag/date/exercise check)
     const exerciseData = SetsSelectors.get1RMExerciseData(state, exercise); // get data for use in OneRM calculation
+
+    // Step 2: Create the "bad" pile
+    // ROM Check
+    // Weight Check
+    // Velocity Check
     const chartData = SetsSelectors.get1RMChartData(state, exercise); // data for plotting chart points
     const regLineData = SetsSelectors.get1RMRegLinePoints(state, exercise, exerciseData); // data for plotting regression line
     

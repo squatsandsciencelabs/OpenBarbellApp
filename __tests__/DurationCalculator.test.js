@@ -1,4 +1,4 @@
-import * as sut from 'app/utility/transforms/DurationCalculator';
+import * as sut from 'app/utility/DurationCalculator';
 
 describe('DurationCalculator', () => {
     test('end date > start date still positive', () => {

@@ -1,14 +1,13 @@
 import * as sut from 'app/redux/selectors/SetsSelectors';
-import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
-import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
-import * as CollapsedMetrics from 'app/utility/transforms/CollapsedMetrics';
+import * as SetUtils from 'app/utility/SetUtils';
+import * as CollapsedMetrics from 'app/math/CollapsedMetrics';
 
 describe('SetsSelectors', () => {
     describe('lastWorkoutRepTime', () => {
-        const realEndTime = SetTimeCalculator.endTime;
+        const realEndTime = SetUtils.endTime;
 
         afterEach(() => {
-            SetTimeCalculator.endTime = realEndTime;
+            SetUtils.endTime = realEndTime;
         });
 
         test('null if no workout data', () => {
@@ -24,7 +23,7 @@ describe('SetsSelectors', () => {
         });
 
         test('null if no end time on current set and it is the only set', () => {
-            SetTimeCalculator.endTime = () => null;
+            SetUtils.endTime = () => null;
             const state = {
                 sets: {
                     workoutData: [{}]
@@ -37,7 +36,7 @@ describe('SetsSelectors', () => {
         });
 
         test('null if no end time on any set', () => {
-            SetTimeCalculator.endTime = () => null;
+            SetUtils.endTime = () => null;
             const state = {
                 sets: {
                     workoutData: [{}, {}, {}, {}]
@@ -51,7 +50,7 @@ describe('SetsSelectors', () => {
 
         test('end time of current set', () => {
             const expected = 3;
-            SetTimeCalculator.endTime = () => expected;
+            SetUtils.endTime = () => expected;
             const state = {
                 sets: {
                     workoutData: [{}, {}, {}, {}]
@@ -66,7 +65,7 @@ describe('SetsSelectors', () => {
         test('end time of set after current set if current set has no end time', () => {
             const expected = 3;
             let initialRun = false;
-            SetTimeCalculator.endTime = () => {
+            SetUtils.endTime = () => {
                 if (!initialRun) {
                         initialRun = true;
                         return null;
@@ -128,10 +127,10 @@ describe('SetsSelectors', () => {
     });
 
     describe('getIsWorkoutEmpty', () => {
-        const realIsUntouched = SetEmptyCheck.isUntouched;
+        const realIsUntouched = SetUtils.isUntouched;
 
         afterEach(() => {
-            SetEmptyCheck.isUntouched = realIsUntouched; 
+            SetUtils.isUntouched = realIsUntouched; 
         });
 
         test('false when > 2', () => {
@@ -147,7 +146,7 @@ describe('SetsSelectors', () => {
         });
 
         test('false when exactly 1 not untouched', () => {
-            SetEmptyCheck.isUntouched = () => false;
+            SetUtils.isUntouched = () => false;
             const state = {
                 sets: {
                     workoutData: [{}]
@@ -160,7 +159,7 @@ describe('SetsSelectors', () => {
         });
 
         test('true when 1 set untouched', () => {
-            SetEmptyCheck.isUntouched = () => true;
+            SetUtils.isUntouched = () => true;
             const state = {
                 sets: {
                     workoutData: [{}]
@@ -250,14 +249,14 @@ describe('SetsSelectors', () => {
     });
 
     describe('getNumWorkoutSetsWithFields', () => {
-        const realHasEmptyFields = SetEmptyCheck.hasEmptyFields;
+        const realHasEmptyFields = SetUtils.hasEmptyFields;
         
         afterEach(() => {
-            SetEmptyCheck.hasEmptyFields = realHasEmptyFields;
+            SetUtils.hasEmptyFields = realHasEmptyFields;
         });
 
         test('3 fields', () => {
-            SetEmptyCheck.hasEmptyFields = (set) => set;
+            SetUtils.hasEmptyFields = (set) => set;
             const state = {
                 sets: {
                     workoutData: [false, true, false, false]
@@ -271,14 +270,14 @@ describe('SetsSelectors', () => {
     });
 
     describe('getPercentWorkoutSetsWithFields', () => {
-        const realHasEmptyFields = SetEmptyCheck.hasEmptyFields;
+        const realHasEmptyFields = SetUtils.hasEmptyFields;
 
         beforeAll(() => {
-            SetEmptyCheck.hasEmptyFields = (set) => set;            
+            SetUtils.hasEmptyFields = (set) => set;            
         });
         
         afterAll(() => {
-            SetEmptyCheck.hasEmptyFields = realHasEmptyFields;
+            SetUtils.hasEmptyFields = realHasEmptyFields;
         });
 
         test('0% when none', () => {
@@ -355,14 +354,14 @@ describe('SetsSelectors', () => {
     });
 
     describe('getNumWorkoutSetsWithAllFields', () => {
-        const realHasAllFields = SetEmptyCheck.hasAllFields;
+        const realHasAllFields = SetUtils.hasAllFields;
         
         afterEach(() => {
-            SetEmptyCheck.hasAllFields = realHasAllFields;
+            SetUtils.hasAllFields = realHasAllFields;
         });
 
         test('3 fields', () => {
-            SetEmptyCheck.hasAllFields = (set) => set;
+            SetUtils.hasAllFields = (set) => set;
             const state = {
                 sets: {
                     workoutData: [true, false, true, true]
@@ -376,14 +375,14 @@ describe('SetsSelectors', () => {
     });
 
     describe('getPercentWorkoutSetsWithAllFields', () => {
-        const realHasAllFields = SetEmptyCheck.hasAllFields;
+        const realHasAllFields = SetUtils.hasAllFields;
 
         beforeAll(() => {
-            SetEmptyCheck.hasAllFields = (set) => set;            
+            SetUtils.hasAllFields = (set) => set;            
         });
         
         afterAll(() => {
-            SetEmptyCheck.hasAllFields = realHasAllFields;
+            SetUtils.hasAllFields = realHasAllFields;
         });
 
         test('0% when none', () => {
@@ -462,7 +461,7 @@ describe('SetsSelectors', () => {
     describe('getNumWorkoutSetsWithRPE', () => {
 
         test('with rpe', () => {
-            SetEmptyCheck.hasAllFields = (set) => set;
+            SetUtils.hasAllFields = (set) => set;
             const state = {
                 sets: {
                     workoutData: [{rpe: '5'}, {rpe: '5,5'}, {rpe: '5.5'}]
@@ -475,7 +474,7 @@ describe('SetsSelectors', () => {
         });
 
         test('with empty string rpe', () => {
-            SetEmptyCheck.hasAllFields = (set) => set;
+            SetUtils.hasAllFields = (set) => set;
             const state = {
                 sets: {
                     workoutData: [{rpe: '5'}, {rpe: ''}, {rpe: '5.5'}]
@@ -488,7 +487,7 @@ describe('SetsSelectors', () => {
         });
 
         test('with null rpe', () => {
-            SetEmptyCheck.hasAllFields = (set) => set;
+            SetUtils.hasAllFields = (set) => set;
             const state = {
                 sets: {
                     workoutData: [{rpe: '5'}, {rpe: null}, {rpe: '5.5'}]
@@ -501,7 +500,7 @@ describe('SetsSelectors', () => {
         });
 
         test('with undefined rpe', () => {
-            SetEmptyCheck.hasAllFields = (set) => set;
+            SetUtils.hasAllFields = (set) => set;
             const state = {
                 sets: {
                     workoutData: [{rpe: '5'}, {}, {rpe: '5.5'}]
@@ -592,11 +591,11 @@ describe('SetsSelectors', () => {
 
     describe('getWorkoutDuration', () => {
         const realNow = Date.now;
-        const realStartTime = SetTimeCalculator.startTime;
+        const realStartTime = SetUtils.startTime;
 
         afterAll(() => {
             Date.now = realNow;
-            SetTimeCalculator.startTime = realStartTime;
+            SetUtils.startTime = realStartTime;
         });
 
         test('0', () => {
@@ -605,7 +604,7 @@ describe('SetsSelectors', () => {
                     workoutData: []
                 }
             };
-            SetTimeCalculator.startTime = () => new Date(0);
+            SetUtils.startTime = () => new Date(0);
             Date.now = () => 0;
 
             const result = sut.getWorkoutDuration(state);
@@ -619,7 +618,7 @@ describe('SetsSelectors', () => {
                     workoutData: []
                 }
             };
-            SetTimeCalculator.startTime = () => new Date(5000);
+            SetUtils.startTime = () => new Date(5000);
             Date.now = () => 6000;
 
             const result = sut.getWorkoutDuration(state);
@@ -633,7 +632,7 @@ describe('SetsSelectors', () => {
                     workoutData: []
                 }
             };
-            SetTimeCalculator.startTime = () => new Date(3000);
+            SetUtils.startTime = () => new Date(3000);
             Date.now = () => 8000;
 
             const result = sut.getWorkoutDuration(state);
@@ -651,14 +650,14 @@ describe('SetsSelectors', () => {
     });
 
     describe('getWorkoutPreviousSetHasEmptyReps', () => {
-        const realHasEmptyReps = SetEmptyCheck.hasEmptyReps;
+        const realHasEmptyReps = SetUtils.hasEmptyReps;
 
         beforeAll(() => {
-            SetEmptyCheck.hasEmptyReps = (set) => set;            
+            SetUtils.hasEmptyReps = (set) => set;            
         });
 
         afterAll(() => {
-            SetEmptyCheck.hasEmptyReps = realHasEmptyReps;
+            SetUtils.hasEmptyReps = realHasEmptyReps;
         });
         
         test('false if no sets', () => {
@@ -711,10 +710,10 @@ describe('SetsSelectors', () => {
     });
 
     describe('getIsPreviousWorkoutSetFilled', () => {
-        const realHasEmptyFields = SetEmptyCheck.hasEmptyFields;
+        const realHasEmptyFields = SetUtils.hasEmptyFields;
 
         afterEach(() => {
-            SetEmptyCheck.hasEmptyFields = realHasEmptyFields;
+            SetUtils.hasEmptyFields = realHasEmptyFields;
         });
 
         test('-1 if no sets', () => {
@@ -742,7 +741,7 @@ describe('SetsSelectors', () => {
         });
 
         test('0 if not filled', () => {
-            SetEmptyCheck.hasEmptyFields = (set) => true;
+            SetUtils.hasEmptyFields = (set) => true;
             const state = {
                 sets: {
                     workoutData: [{}, {}, {}, {}]
@@ -755,7 +754,7 @@ describe('SetsSelectors', () => {
         });
 
         test('1 if filled', () => {
-            SetEmptyCheck.hasEmptyFields = (set) => false;
+            SetUtils.hasEmptyFields = (set) => false;
             const state = {
                 sets: {
                     workoutData: [{}, {}, {}, {}]
@@ -966,12 +965,12 @@ describe('SetsSelectors', () => {
     });
 
     describe('getNumHistoryWorkouts', () => {
-        const realHasEmptyFields = SetEmptyCheck.hasEmptyFields;
-        const realStartTime = SetTimeCalculator.startTime;
+        const realHasEmptyFields = SetUtils.hasEmptyFields;
+        const realStartTime = SetUtils.startTime;
         
         afterEach(() => {
-            SetEmptyCheck.hasEmptyFields = realHasEmptyFields;
-            SetTimeCalculator.startTime = realStartTime;
+            SetUtils.hasEmptyFields = realHasEmptyFields;
+            SetUtils.startTime = realStartTime;
         });
 
         test('0 if no sets', () => {
@@ -988,7 +987,7 @@ describe('SetsSelectors', () => {
         });
 
         test('1', () => {
-            SetEmptyCheck.hasEmptyFields = (set) => false;
+            SetUtils.hasEmptyFields = (set) => false;
             const state = {
                 sets: {
                     historyData: {
@@ -1005,8 +1004,8 @@ describe('SetsSelectors', () => {
         });
 
         test('3', () => {
-            SetEmptyCheck.hasEmptyFields = (set) => false;
-            SetTimeCalculator.startTime = (set) => 1;            
+            SetUtils.hasEmptyFields = (set) => false;
+            SetUtils.startTime = (set) => 1;            
             const state = {
                 sets: {
                     historyData: {

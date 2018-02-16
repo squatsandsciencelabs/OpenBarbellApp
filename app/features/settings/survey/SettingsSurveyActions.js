@@ -1,6 +1,6 @@
 import {
     PRESENT_SURVEY,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as SurveyActionCreators from 'app/redux/shared_actions/SurveyActionCreators';
 import * as SurveySelectors from 'app/redux/selectors/SurveySelectors';

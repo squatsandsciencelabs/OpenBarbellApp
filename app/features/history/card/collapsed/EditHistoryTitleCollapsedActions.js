@@ -1,7 +1,7 @@
 import {
     EXPAND_HISTORY_SET,
     PRESENT_HISTORY_VIDEO_PLAYER,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as VideoPermissionsUtils from 'app/utility/VideoPermissionsUtils';
 import * as Analytics from 'app/services/Analytics';
 import * as CollapseExpandHistoryActions from 'app/redux/shared_actions/CollapseExpandHistoryActions';

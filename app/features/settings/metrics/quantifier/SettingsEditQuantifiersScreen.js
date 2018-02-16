@@ -22,11 +22,11 @@ import {
     SLOWEST_EVER_QUANTIFIER,
     SET_LOSS_QUANTIFIER,
     PEAK_END_QUANTIFIER,
-} from 'app/constants/CollapsedMetricTypes';
+} from 'app/configs+constants/CollapsedMetricTypes';
 import PickerModal from 'app/shared_features/picker/PickerModal';
 import * as Actions from './SettingsEditQuantifiersActions';
 import * as CollapsedSettingsSelectors from 'app/redux/selectors/CollapsedSettingsSelectors';
-import * as CollapsedMetricsUtility from 'app/utility/transforms/CollapsedMetrics';
+import * as CollapsedMetricsUtility from 'app/math/CollapsedMetrics';
 
 const pickerItem = (quantifier) => ({
     label: CollapsedMetricsUtility.quantifierString(quantifier),

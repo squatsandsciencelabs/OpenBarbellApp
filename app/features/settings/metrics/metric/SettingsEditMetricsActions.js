@@ -1,6 +1,6 @@
 import {
     DISMISS_COLLAPSED_METRIC
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as CollapsedSettingsActionCreators from 'app/redux/shared_actions/CollapsedSettingsActionCreators';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';

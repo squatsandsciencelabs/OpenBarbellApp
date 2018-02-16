@@ -3,7 +3,7 @@ import {
     LOGIN_SUCCESS,
     EXPAND_HISTORY_SET,
     COLLAPSE_HISTORY_SET
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
 };

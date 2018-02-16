@@ -4,7 +4,7 @@ import {
 
 import {
     FEEDBACK,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 
 export const presentFeedback = () => (dispatch, getState) => {

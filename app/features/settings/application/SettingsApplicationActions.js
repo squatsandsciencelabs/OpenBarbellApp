@@ -2,7 +2,7 @@ import {
     PRESENT_END_SET_TIMER,
     PRESENT_DEFAULT_METRIC,
     UPDATE_HISTORY_FILTER,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 
 export const presentEndSetTimer = () => {

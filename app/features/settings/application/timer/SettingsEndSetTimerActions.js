@@ -1,7 +1,7 @@
 import {
     DISMISS_END_SET_TIMER,
     SAVE_END_SET_TIMER
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 
 export const saveEndSetTimer = (duration = 30) => (dispatch, getState) => {

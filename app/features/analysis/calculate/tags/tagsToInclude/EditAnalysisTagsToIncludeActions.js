@@ -3,7 +3,7 @@ import {
     REMOVE_INCLUDE_TAG,
     SAVE_INCLUDES_TAGS,
     DISMISS_INCLUDES_TAGS,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 export const saveTags = (tags = []) => ({
     type: SAVE_INCLUDES_TAGS,

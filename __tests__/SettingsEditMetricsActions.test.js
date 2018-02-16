@@ -18,7 +18,7 @@ import {
     ABS_LOSS_QUANTIFIER,
     FASTEST_EVER_QUANTIFIER,
     SLOWEST_EVER_QUANTIFIER,
-} from 'app/constants/CollapsedMetricTypes';
+} from 'app/configs+constants/CollapsedMetricTypes';
 
 import * as Analytics from 'app/services/Analytics';
 import * as CollapsedSettingsSelectors from 'app/redux/selectors/CollapsedSettingsSelectors';

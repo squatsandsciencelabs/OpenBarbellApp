@@ -4,13 +4,13 @@ import {
     CHANGE_TAB,
     STORE_INITIALIZED,
     CLEAR_TOKENS,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
-import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
+import OpenBarbellConfig from 'app/configs+constants/OpenBarbellConfig.json';
 import API from 'app/services/API';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
-import * as DateUtils from 'app/utility/transforms/DateUtils';
+import * as DateUtils from 'app/utility/DateUtils';
 import * as Analytics from 'app/services/Analytics';
 
 const TokenSaga = function * TokenSaga() {

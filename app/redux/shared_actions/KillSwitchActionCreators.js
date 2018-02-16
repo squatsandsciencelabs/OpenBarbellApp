@@ -5,7 +5,7 @@ import {
     VERSION_OK,
     VERSION_KILLED,
     VERSION_UNAVAILABLE
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 export const fetchVersion = () => ( {type: FETCH_VERSION });
 

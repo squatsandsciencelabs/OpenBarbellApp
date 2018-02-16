@@ -13,13 +13,13 @@ import {
     SAVE_HISTORY_SET,
     SAVE_HISTORY_VIDEO,
     TEST_ONE_RM,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import API from 'app/services/API';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as SettingsActionCreators from 'app/redux/shared_actions/SettingsActionCreators';
-import Validator from 'app/utility/transforms/Validator';
+import Validator from 'app/utility/Validator';
 import * as Analytics from 'app/services/Analytics';
 
 const SyncSaga = function* SyncSaga() {

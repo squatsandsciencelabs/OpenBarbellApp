@@ -1,4 +1,4 @@
-import { DISMISS_WORKOUT_EXERCISE } from 'app/ActionTypes';
+import { DISMISS_WORKOUT_EXERCISE } from 'app/configs+constants/ActionTypes';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';

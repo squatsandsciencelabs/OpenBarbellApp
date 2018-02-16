@@ -20,7 +20,7 @@ import {
     END_EDITING_HISTORY_RPE,
     END_EDITING_WORKOUT_WEIGHT,
     END_EDITING_HISTORY_WEIGHT,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
     editWorkoutExerciseStart: null,

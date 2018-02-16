@@ -6,7 +6,7 @@ import {
     PRESENT_COLLAPSED_METRIC,
     PRESENT_QUANTIFIER,
     PRESENT_BIG_METRIC_INFO,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 
 export const presentCollapsedMetric = (rank) => (dispatch, getState) => {

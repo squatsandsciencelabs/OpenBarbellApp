@@ -9,7 +9,7 @@ import {
     CONNECTED_TO_DEVICE,
     RECONNECTING_TO_DEVICE,
     END_WORKOUT,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
     status: 'DISCONNECTED',

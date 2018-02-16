@@ -5,8 +5,8 @@
 import {
     LOGOUT,
     
-} from 'app/ActionTypes';
-import OpenBarbellConfig from 'app/configs/OpenBarbellConfig.json';
+} from 'app/configs+constants/ActionTypes';
+import OpenBarbellConfig from 'app/configs+constants/OpenBarbellConfig.json';
 import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
 
 // note: dispatch is required on every call in this case specifically so the token system can save the new access and refresh tokens

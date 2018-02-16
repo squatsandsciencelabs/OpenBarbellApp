@@ -1,4 +1,4 @@
-import * as sut from 'app/utility/transforms/OneRMCalculator';
+import * as sut from 'app/math/OneRMCalculator';
 
 var data = [
     [255, 0.48], 

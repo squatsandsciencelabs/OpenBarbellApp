@@ -23,7 +23,7 @@ import {
     RESUME_END_SET_TIMER,
     SAVE_WORKOUT_REP,
     END_WORKOUT,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
     // editing

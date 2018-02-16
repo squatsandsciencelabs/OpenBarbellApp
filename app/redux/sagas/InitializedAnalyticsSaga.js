@@ -8,7 +8,7 @@ import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
 import {
     STORE_INITIALIZED,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 const InitializedAnalyticsSaga = function * InitializedAnalyticsSaga() {
     yield take(STORE_INITIALIZED);

@@ -2,15 +2,13 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
-import * as DateUtils from 'app/utility/transforms/DateUtils';
-import * as RepDataMap from 'app/utility/transforms/RepDataMap';
-import * as SetTimeCalculator from 'app/utility/transforms/SetTimeCalculator';
-import * as DurationCalculator from 'app/utility/transforms/DurationCalculator'
-
+import * as DateUtils from 'app/utility/DateUtils';
+import * as RepDataMap from 'app/utility/RepDataMap';
+import * as SetUtils from 'app/utility/SetUtils';
+import * as DurationCalculator from 'app/utility/DurationCalculator'
 import WorkoutList from './WorkoutList';
 import * as Actions from './WorkoutActions';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
-import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
 import * as WorkoutCollapsedSelectors from 'app/redux/selectors/WorkoutCollapsedSelectors';
 
 // assumes chronological sets
@@ -42,7 +40,7 @@ const createViewModels = (state, sets) => {
 
         // set state booleans
         isCollapsed = isLastSet ? false : WorkoutCollapsedSelectors.getIsCollapsed(state, set.setID);
-        isRemoved = SetEmptyCheck.isEmpty(set);
+        isRemoved = SetUtils.isEmpty(set);
 
         // card header
         if (isInitialSet) {
@@ -83,7 +81,7 @@ const createViewModels = (state, sets) => {
         // rest footer
         if (isInitialSet) {
             // new set, reset the end time
-            lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
+            lastSetEndTime = isRemoved ? null : SetUtils.endTime(set);
             array.push(createBottomBorder(set));
         } else if (!isRemoved && set.reps.length > 0) { // ignore removed sets in rest calculations
             // add footer if valid
@@ -94,7 +92,7 @@ const createViewModels = (state, sets) => {
             }
 
             // update variable for calculation purposes
-            lastSetEndTime = SetTimeCalculator.endTime(set);
+            lastSetEndTime = SetUtils.endTime(set);
         } else if (isLastSet && lastSetEndTime !== null && set.reps.length === 0) {
             // working set, live rest mode
             array.push(createWorkingSetFooterVM(set, lastSetEndTime));
@@ -153,7 +151,7 @@ const createFormViewModel = (set, setNumber, isRemoved) => ({
 });
 
 const createSummaryViewModel = (set) => {
-    const numReps = SetEmptyCheck.numValidUnremovedReps(set);
+    const numReps = SetUtils.numValidUnremovedReps(set);
     return {
         type: 'summary',
         key: set.setID+'summary',
@@ -246,7 +244,7 @@ const createWorkingSetFooterVM = (set, restStartTime) => {
 };
 
 const createFooterVM = (set, lastSetEndTime, isCollapsed) => {
-    let restInMS = new Date(SetTimeCalculator.startTime(set)) - new Date(lastSetEndTime);
+    let restInMS = new Date(SetUtils.startTime(set)) - new Date(lastSetEndTime);
     let footerVM = {
         type: "footer",
         rest: DateUtils.restInSentenceFormat(restInMS),
@@ -265,7 +263,7 @@ const mapStateToProps = (state) => {
     if (sets.length === 0) {
         var isAddEnabled = false;
     } else {
-        var isAddEnabled = !SetEmptyCheck.isUntouched(sets[sets.length-1]);
+        var isAddEnabled = !SetUtils.isUntouched(sets[sets.length-1]);
     }
 
     return {

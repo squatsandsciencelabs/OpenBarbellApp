@@ -2,7 +2,7 @@ jest.mock('app/services/Firebase', () => {});
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 import * as Analytics from 'app/services/Analytics';
-import * as SetEmptyCheck from 'app/utility/transforms/SetEmptyCheck';
+import * as SetUtils from 'app/utility/SetUtils';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as sut from 'app/redux/shared_actions/SetsActionCreators';
@@ -27,15 +27,15 @@ describe('endSet analytics', () => {
     });
 
     describe("Analytics called", () => {
-        const realIsUntouched = SetEmptyCheck.isUntouched;
+        const realIsUntouched = SetUtils.isUntouched;
 
         afterEach(() => {
-            SetEmptyCheck.isUntouched = realIsUntouched;
+            SetUtils.isUntouched = realIsUntouched;
         });
 
         test("not called when the working set is untouched", () => {
             // given we have a store with an untouched working set
-            SetEmptyCheck.isUntouched = () => true;
+            SetUtils.isUntouched = () => true;
             store = mockStore({
                 sets: {
                     workoutData: [{
@@ -54,7 +54,7 @@ describe('endSet analytics', () => {
 
         test('Analytics is called', () => {
             // given when a workout was touched
-            SetEmptyCheck.isUntouched = () => false;
+            SetUtils.isUntouched = () => false;
             store = mockStore({
                 sets: {
                     workoutData: [{
@@ -226,15 +226,15 @@ describe('endSet analytics', () => {
     })
 
     describe('has_reps', () => {
-        const realHasEmptyReps = SetEmptyCheck.hasEmptyReps;
+        const realHasEmptyReps = SetUtils.hasEmptyReps;
 
         afterEach(() => {
-            SetEmptyCheck.hasEmptyReps = realHasEmptyReps;
+            SetUtils.hasEmptyReps = realHasEmptyReps;
         });
 
         test("true when it does not have empty reps", () => {
             // given the set does not have empty reps
-            SetEmptyCheck.hasEmptyReps = () => false;
+            SetUtils.hasEmptyReps = () => false;
 
             // when you end the set
             store.dispatch(sut.endSet());            
@@ -248,7 +248,7 @@ describe('endSet analytics', () => {
 
         test("false when it has empty reps", () => {
             // given the set does not have empty reps
-            SetEmptyCheck.hasEmptyReps = () => true;
+            SetUtils.hasEmptyReps = () => true;
             
             // when you end the set
             store.dispatch(sut.endSet());            
@@ -262,15 +262,15 @@ describe('endSet analytics', () => {
     });
 
     describe("num_fields_entered and value", () => {
-        const realNumFieldsEntered = SetEmptyCheck.numFieldsEntered;
+        const realNumFieldsEntered = SetUtils.numFieldsEntered;
 
         afterEach(() => {
-            SetEmptyCheck.numFieldsEntered = realNumFieldsEntered;
+            SetUtils.numFieldsEntered = realNumFieldsEntered;
         });
 
         test("num_fields_entered is 0", () => {
             // given a number of fields
-            SetEmptyCheck.numFieldsEntered = () => 0;
+            SetUtils.numFieldsEntered = () => 0;
 
             // when you end the set
             store.dispatch(sut.endSet());
@@ -285,7 +285,7 @@ describe('endSet analytics', () => {
 
         test("num_fields_entered is 1", () => {
             // given a number of fields
-            SetEmptyCheck.numFieldsEntered = () => 1;
+            SetUtils.numFieldsEntered = () => 1;
             
             // when you end the set
             store.dispatch(sut.endSet());
@@ -300,7 +300,7 @@ describe('endSet analytics', () => {
         
         test("num_fields_entered is 2", () => {
             // given a number of fields
-            SetEmptyCheck.numFieldsEntered = () => 2;
+            SetUtils.numFieldsEntered = () => 2;
             
             // when you end the set
             store.dispatch(sut.endSet());
@@ -315,7 +315,7 @@ describe('endSet analytics', () => {
         
         test("num_fields_entered is 3", () => {
             // given a number of fields
-            SetEmptyCheck.numFieldsEntered = () => 3;
+            SetUtils.numFieldsEntered = () => 3;
             
             // when you end the set
             store.dispatch(sut.endSet());
@@ -330,7 +330,7 @@ describe('endSet analytics', () => {
 
         test("num_fields_entered is 4", () => {
             // given a number of fields
-            SetEmptyCheck.numFieldsEntered = () => 4;
+            SetUtils.numFieldsEntered = () => 4;
             
             // when you end the set
             store.dispatch(sut.endSet());

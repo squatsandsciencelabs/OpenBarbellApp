@@ -4,8 +4,8 @@ import {
     MULTI_TASK_SCREEN,
     END_WORKOUT,
     CHANGE_TAB
-} from 'app/ActionTypes';
-import * as NavigationConfig from 'app/configs/NavigationConfig';
+} from 'app/configs+constants/ActionTypes';
+import * as NavigationConfig from 'app/configs+constants/NavigationConfig';
 
 const defaultState = {
     screenStatus: 'active',

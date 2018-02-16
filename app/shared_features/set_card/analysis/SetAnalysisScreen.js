@@ -21,12 +21,12 @@ import {
     SLOWEST_EVER_QUANTIFIER,
     SET_LOSS_QUANTIFIER,
     PEAK_END_QUANTIFIER,
-} from 'app/constants/CollapsedMetricTypes';
+} from 'app/configs+constants/CollapsedMetricTypes';
 import SetAnalysis from './SetAnalysis';
 import * as CollapsedSettingsSelectors from 'app/redux/selectors/CollapsedSettingsSelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
-import * as CollapsedMetrics from 'app/utility/transforms/CollapsedMetrics';
-import * as DurationCalculator from 'app/utility/transforms/DurationCalculator';
+import * as CollapsedMetrics from 'app/math/CollapsedMetrics';
+import * as DurationCalculator from 'app/utility/DurationCalculator';
 
 const metricValue = (state, set, quantifier, metric) => {
     let returnValue = null;

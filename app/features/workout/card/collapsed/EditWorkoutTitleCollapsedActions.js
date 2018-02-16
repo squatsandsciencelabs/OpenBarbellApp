@@ -1,7 +1,7 @@
 import {
     EXPAND_WORKOUT_SET,
     PRESENT_WORKOUT_VIDEO_PLAYER,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as VideoPermissionsUtils from 'app/utility/VideoPermissionsUtils';
 import * as Analytics from 'app/services/Analytics';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';

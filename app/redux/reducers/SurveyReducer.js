@@ -4,7 +4,7 @@ import {
     COMPLETE_SURVEY,
     SAVE_SURVEY_URL,
     OPT_OUT_END_WORKOUT_SURVEY_PROMPT,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
     surveyURL: '',

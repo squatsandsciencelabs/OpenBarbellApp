@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
 import { Provider } from 'react-redux';
 
-import 'app/configs/ReactotronConfig';
+import 'app/configs+constants/ReactotronConfig';
 import Store from 'app/redux/Store';
 import ApplicationScreen from 'app/features/application/ApplicationScreen';
 import * as GoogleSignInSetup from 'app/services/GoogleSignInSetup';

@@ -1,7 +1,7 @@
 import {
     DELETE_WORKOUT_VIDEO,
     DISMISS_WORKOUT_VIDEO_PLAYER
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as Analytics from 'app/services/Analytics';

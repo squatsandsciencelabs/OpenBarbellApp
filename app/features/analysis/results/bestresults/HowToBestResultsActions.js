@@ -4,7 +4,7 @@ import {
 
 import {
     PRESENT_BEST_RESULTS,
-} from 'app/ActionTypes';
+} from 'app/configs+constants/ActionTypes';
 
 export const presentBestResults = () => (dispatch, getState) => {
     // TODO: analytics

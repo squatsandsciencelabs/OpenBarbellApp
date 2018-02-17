@@ -364,6 +364,23 @@ export const getSetLossOfDurations = (set) => {
     return getSetLossMetrics(durations);
 };
 
+export const canCalcRPE1RM = (set) => {
+    let rpe = set.rpe;
+    if (!rpe)
+        return false;
+    
+    const rpeWithoutCommas = rpe.replace(',','.');
+    if (isNaN(rpeWithoutCommas)) {
+        return false;
+    }
+
+    if (rpe === "6.5" || rpe === "7" || rpe === "7.5" || rpe === "8" || rpe === "8.5" || rpe === "9" || rpe === "9.5" || rpe === "10") {
+        return true;
+    }
+
+    return false;
+};
+
 export const getRPE1rm = (set) => {
     // empty rpe / weight check
     if (!set.rpe || !set.weight) {

@@ -1,33 +1,46 @@
 const stateRoot = (state) => state.analysis;
 
-export const getIsEditing1RMExercise = (state) => stateRoot(state).isEditing1RMExercise;
+// popup state
 
-export const getAnalysisE1RMVelocity = (state) => stateRoot(state).e1RMVelocity;
+export const getShowInfoModal = (state) => stateRoot(state).showInfoModal;
 
-export const getAnalysisE1RMExercise = (state) => stateRoot(state).e1RMExercise;
-
-export const getAnalysisRange = (state) => stateRoot(state).e1RMDaysRange;
+export const getIsEditingExercise = (state) => stateRoot(state).isEditingExercise;
 
 export const getIsEditingIncludeTags = (state) => stateRoot(state).isEditingIncludeTags;
 
 export const getIsEditingExcludeTags = (state) => stateRoot(state).isEditingExcludeTags;
 
+// calculate
+
+export const getExercise = (state) => stateRoot(state).exercise;
+
 export const getTagsToInclude = (state) => stateRoot(state).tagsToInclude;
 
 export const getTagsToExclude = (state) => stateRoot(state).tagsToExclude;
 
-export const getCurrentE1rm = (state) => stateRoot(state).e1rm;
-
-export const getCurrentR2 = (state) => stateRoot(state).r2;
-
-export const getIsR2HighEnough = (state) => getCurrentR2(state) > 90; // TODO: make 90 a config
-
 export const getVelocitySlider = (state) => stateRoot(state).velocitySlider;
 
-export const get1RMChartData = (state) => stateRoot(state).chartData;
+export const getDaysRange = (state) => stateRoot(state).daysRange;
 
-export const getRegLineData = (state) => stateRoot(state).regLineData;
+// results
 
-export const getShowInfoModal = (state) => stateRoot(state).showInfoModal;
+// this is the velocity last used to calculate it, not the current velocity value
+export const getAnalysisVelocity = (state) => stateRoot(state).velocity;
+
+export const getE1rm = (state) => stateRoot(state).e1rm;
+
+export const getR2 = (state) => stateRoot(state).r2;
+
+export const getIsR2HighEnough = (state) => getR2(state) > 90; // TODO: make 90 a config
+
+export const getActiveChartData = (state) => stateRoot(state).activeChartData;
+
+export const getErrorChartData = (state) => stateRoot(state).errorChartData;
+
+export const getUnusedChartData = (state) => stateRoot(state).unusedChartData;
+
+export const getRegressionPoints = (state) => stateRoot(state).regressionPoints;
+
+// scroll
 
 export const getScroll = (state) => stateRoot(state).scroll;

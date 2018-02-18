@@ -10,8 +10,10 @@ import * as AppStateActionCreators from 'app/redux/shared_actions/AppStateAction
 import * as OneRMCalculator from 'app/math/OneRMCalculator';
 
 const mapStateToProps = (state) => {
-    const chartData = AnalysisSelectors.get1RMChartData(state);
-    const regressionLine = AnalysisSelectors.getRegLineData(state);
+    const activeChartData = AnalysisSelectors.getActiveChartData(state);
+    const errorChartData = AnalysisSelectors.getErrorChartData(state);
+    const unusedChartData = AnalysisSelectors.getUnusedChartData(state);
+    const regressionPoints = AnalysisSelectors.getRegressionPoints(state);
     const isR2HighEnough = AnalysisSelectors.getIsR2HighEnough(state);
 
     // TODO: store regression point and weight values instsead of recalculating them every single time for speed
@@ -21,27 +23,29 @@ const mapStateToProps = (state) => {
         var highestWeight = OneRMCalculator.highestWeightPossible(regressionLine);
     } else {
         // no regerssion line, just use the largest ACTUAL lift
-        var highestWeight = OneRMCalculator.highestWeight(chartData);
+        var highestWeight = OneRMCalculator.highestWeight(activeChartData);
     }
 
-    if (regressionLine) {
-        var regLeftPoint = OneRMCalculator.lowestWeightPoint(regressionLine);
+    if (regressionPoints) {
+        var regLeftPoint = OneRMCalculator.lowestWeightPoint(regressionPoints);
     } else {
         var regLeftPoint = null;
     }
     const regRightPoint = {x: highestWeight, y: 0};
 
     return {
-        e1rmVelocity: AnalysisSelectors.getAnalysisE1RMVelocity(state),
-        e1rm: AnalysisSelectors.getCurrentE1rm(state),    
+        velocity: AnalysisSelectors.getAnalysisVelocity(state),
+        e1rm: AnalysisSelectors.getE1rm(state),    
         metric: SettingsSelectors.getDefaultMetric(state),
-        r2: AnalysisSelectors.getCurrentR2(state),
+        r2: AnalysisSelectors.getR2(state),
         isR2HighEnough: isR2HighEnough,
 
-        chartData: chartData,
+        activeChartData: activeChartData,
+        errorChartData: errorChartData,
+        unusedChartData: unusedChartData,
         highestWeight: highestWeight,
-        lowestWeight: OneRMCalculator.lowestWeight(chartData),
-        highestVel: OneRMCalculator.highestVelocity(chartData),
+        lowestWeight: OneRMCalculator.lowestWeight(activeChartData),
+        highestVel: OneRMCalculator.highestVelocity(activeChartData),
         regLeftPoint: regLeftPoint,
         regRightPoint: regRightPoint,
     };

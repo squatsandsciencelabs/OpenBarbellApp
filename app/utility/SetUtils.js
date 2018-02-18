@@ -76,12 +76,20 @@ export const hasInvalidVelocity = (set) => {
     return false;
 };
 
+export const getFirstValidUnremovedRep = (set) => {
+    return set.reps.find((rep) => {
+        return rep.isValid && !rep.removed;
+    });
+};
+
 // this is here because of legacy issues
 // originally, sets saved their start and end times
 // however, once rep deletion was added, the rest calculation is off
 
 export const startTime = (set) => {
-    if (set.startTime === undefined) {
+    if (!set) {
+        return null;
+    } else if (set.startTime === undefined) {
         // time of first rep
         let validReps = set.reps.filter((rep) => !rep.removed && rep.isValid);        
         if (validReps.length > 0 && validReps[0].time !== undefined) {

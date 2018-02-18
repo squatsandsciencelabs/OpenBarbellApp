@@ -19,59 +19,57 @@ import {
 } from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
-    isEditing1RMExercise: false,
+    // popups
+    showInfoModal: false,
+    isEditingExercise: false,
     isEditingIncludeTags: false,
     isEditingExcludeTags: false,
 
+    // calculate
     velocitySlider: .01,
-    e1RMExercise: 'Squat',
-    e1RMDaysRange: 7,
+    exercise: 'Squat',
+    daysRange: 7,
     tagsToInclude: [],
     tagsToExclude: [],
 
+    // results
+    velocity: null,
     e1rm: null,
-    e1RMVelocity: null,
     r2: null,
-    chartData: null,
-    regLineData: null,
+    activeChartData: null,
+    unusedChartData: null,
+    errorChartData: null,
+    regressionPoints: null,
 
-    showInfoModal: false,
-
+    // scroll
     scroll: false,
 };
 
 const AnalysisReducer = (state = defaultState, action) => {
     switch (action.type) {
-        case CHANGE_VELOCITY_SLIDER:
+        // popups
+        case PRESENT_INFO_MODAL:
             return {
                 ...state,
-                velocitySlider: Number(action.velocity.toFixed(2)),
+                showInfoModal: true,
             };
-        case CHANGE_1RM_DAYS_RANGE: 
-            return Object.assign({}, state, {
-                e1RMDaysRange: action.days,
-            });
+        case DISMISS_INFO_MODAL:
+            return {
+                ...state,
+                showInfoModal: false,
+            };
         case PRESENT_SELECT_EXERCISE: 
             return Object.assign({}, state, {
-                isEditing1RMExercise: true,
+                isEditingExercise: true,
             });
         case DISMISS_SELECT_EXERCISE:
             return Object.assign({}, state, {
-                isEditing1RMExercise: false,
-            });
-        case SAVE_1RM_EXERCISE:
-            return Object.assign({}, state, {
-                e1RMExercise: action.exercise,
+                isEditingExercise: false,
             });
         case PRESENT_INCLUDES_TAGS:
             return {
                 ...state,
                 isEditingIncludeTags: true,
-            };
-        case SAVE_INCLUDES_TAGS:
-            return {
-                ...state,
-                tagsToInclude: action.tags,
             };
         case DISMISS_INCLUDES_TAGS:
             return {
@@ -83,36 +81,51 @@ const AnalysisReducer = (state = defaultState, action) => {
                 ...state,
                 isEditingExcludeTags: true,
             };
-        case SAVE_EXCLUDES_TAGS:
-            return {
-                ...state,
-                tagsToExclude: action.tags,
-            };
         case DISMISS_EXCLUDES_TAGS:
             return {
                 ...state,
                 isEditingExcludeTags: false,
             };
+
+        // calculate
+        case SAVE_1RM_EXERCISE:
+            return Object.assign({}, state, {
+                exercise: action.exercise,
+            });
+        case SAVE_INCLUDES_TAGS:
+            return {
+                ...state,
+                tagsToInclude: action.tags,
+            };
+        case SAVE_EXCLUDES_TAGS:
+            return {
+                ...state,
+                tagsToExclude: action.tags,
+            };
+        case CHANGE_VELOCITY_SLIDER:
+            return {
+                ...state,
+                velocitySlider: Number(action.velocity.toFixed(2)),
+            };
+        case CHANGE_1RM_DAYS_RANGE: 
+            return Object.assign({}, state, {
+                daysRange: action.days,
+            });
+
+        // results
         case CALC_ONE_RM:
             return {
                 ...state,
                 e1rm: action.e1rm,
-                e1RMVelocity: action.e1RMVelocity,
+                velocity: action.velocity,
                 r2: action.r2,
-                chartData: action.chartData,
-                regLineData: action.regLineData,
+                activeChartData: action.activeChartData,
+                errorChartData: action.errorChartData,
+                unusedChartData: action.unusedChartData,
+                regressionPoints: action.regressionPoints,
                 scroll: !state.scroll,
             };
-        case PRESENT_INFO_MODAL:
-            return {
-                ...state,
-                showInfoModal: true,
-            };
-        case DISMISS_INFO_MODAL:
-            return {
-                ...state,
-                showInfoModal: false,
-            };
+
         default: 
             return state;
     }

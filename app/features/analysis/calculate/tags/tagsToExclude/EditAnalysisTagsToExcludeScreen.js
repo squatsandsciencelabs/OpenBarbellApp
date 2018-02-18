@@ -8,14 +8,14 @@ import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 import * as OneRMCalculator from 'app/math/OneRMCalculator';
 
 const mapStateToProps = (state) => {
-    const e1RMExercise = AnalysisSelectors.getAnalysisE1RMExercise(state);
+    const exercise = AnalysisSelectors.getExercise(state);
     
     return {
         title: 'Tags to Exclude',
         placeholder: 'Enter Tag',
         text: '',
         inputs: AnalysisSelectors.getTagsToExclude(state),
-        generateSuggestions: OneRMCalculator.getTagsToExcludeSuggestions(state, e1RMExercise),
+        generateSuggestions: OneRMCalculator.getTagsToExcludeSuggestions(state, exercise),
         isModalShowing: AnalysisSelectors.getIsEditingExcludeTags(state),
     }
 };

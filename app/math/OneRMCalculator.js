@@ -1,10 +1,13 @@
 import regression from 'regression';
 
-import * as SetUtils from 'app/utils/SetUtils';
+import * as SetUtils from 'app/utility/SetUtils';
+import * as DateUtils from 'app/utility/DateUtils';
 import * as CollapsedMetrics from 'app/math/CollapsedMetrics';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
+import * as RepDataMap from 'app/utility/RepDataMap';
 
+// TODO: make this formula work with metric types as it currently assumes it's just a number
 
 // returns an object with:
 //   e1RM as a number or null
@@ -13,13 +16,13 @@ import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 //   errors as [] of ? representing bad points
 //   unused as [] of ? representing unused points
 //   active as [] of ? representing points used for the regression calculation
-export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, dateRange, velocity, allSets) => {
+export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, velocity, allSets) => {
     let errors = [];
     let unused = [];
     let active = [];
 
     // Step 1: Extract a chronological pool of relevant (check all sets against rep/weight/tag/date/exercise check)
-    let pool = getSetsFor1RM(exercise, tagsToInclude, tagsToExclude, dateRange, velocity, allSets);
+    let pool = getSetsFor1RM(exercise, tagsToInclude, tagsToExclude, daysRange, velocity, allSets);
 
     // Step 2A: Remove based on ROM Check
 
@@ -43,20 +46,40 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, dateRange, 
     errors.push(...thinResults.failed);
     active.push(...thinResults.passed);
 
-    // Step 5: Calculate the shits
+    // Step 4: Convert into chart points
+    const activeChartData = active.map((set) => {
+        return { x: parseFloat(set.weight), y: Number(RepDataMap.averageVelocity(SetUtils.getFirstValidUnremovedRep(set).data)), setID: set.setID };
+    });
+    const errorChartData = errors.map((set) => {
+        return { x: parseFloat(set.weight), y: Number(RepDataMap.averageVelocity(SetUtils.getFirstValidUnremovedRep(set).data)), setID: set.setID };
+    });
+    const unusedChartData = unused.map((set) => {
+        return { x: parseFloat(set.weight), y: Number(RepDataMap.averageVelocity(SetUtils.getFirstValidUnremovedRep(set).data)), setID: set.setID };
+    });
 
+    // Step 5: Calculate Regression
+    const regressionResults = calculateRegression(activeChartData, velocity);
+
+    // return
+    return {
+        e1RM: regressionResults.e1rm,
+        r2: regressionResults.r2,
+        active: activeChartData,
+        errors: errorChartData,
+        unused: unusedChartData,
+        regressionPoints: regressionResults.regressionPoints,
+    };
 };
 
 // DATA POINTS
 
 // returns [] of usable sets
-const getSetsFor1RM = (exercise, tagsToInclude, tagsToExclude, dateRange, velocity, allSets) => {
+const getSetsFor1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, velocity, allSets) => {
     let data = [];
 
     // parse it out
     allSets.forEach((set) => {
-        if (isValidFor1RMCalc(state, set, exercise, range)) {
-            // data.push([parseFloat(set.weight), Number(RepDataMap.averageVelocity(getFirstValidUnremovedRep(set.reps).data))]);
+        if (isValidFor1RMCalc(set, exercise, tagsToInclude, tagsToExclude, daysRange)) {
             data.push(set);
         }
     });
@@ -138,19 +161,22 @@ const fastestCheck = (workouts) => {
                         
                         // calculate max and add failed
                         let maxSet = e1RMs.reduce((previous, current) => {
+                            if (previous === null) {
+                                return current;
+                            }
                             if (previous.rpe1rm > current.rpe1rm) {
-                                failed.push(current);
+                                failed.push(current.set);
                                 return previous;
                             } else {
-                                failed.push(previous);
+                                failed.push(previous.set);
                                 return current;
                             }
                         }, null);
 
                         // push passed
-                        passed.push(maxSet);
+                        passed.push(maxSet.set);
                     } else {
-                        // find earliest set
+                        // find earliest set aka the first set
                         let earliest = sets.reduce((prev, curr) => {
                             if (SetUtils.startTime(prev) < SetUtils.startTime(curr)) {
                                 return prev;
@@ -173,6 +199,12 @@ const fastestCheck = (workouts) => {
             }
         }
     }
+
+    // return
+    return {
+        passed: passed,
+        failed: failed,
+    };
 };
 
 const containsRPE = (sets) => {
@@ -183,38 +215,63 @@ const containsRPE = (sets) => {
 //   passed as [] of sets representing what we use for 1RM
 //   failed as [] of sets representing points that are too close, meant to be unused
 const thinSets = (pool) => {
+    let buckets = {};
+    let passed = [];
+    let failed = [];
 
-};
+    // split it into buckets
+    pool.forEach((set) => {
+        const bucketWeight = getBucketWeight(set.weight);
 
-const get1RMChartData = (exercise) => {
-    let data = [];
-
-    allSets.forEach((set) => {
-        if (isValidFor1RMCalc(set, exercise, range)) {
-            data.push({ x: parseFloat(set.weight), y: Number(RepDataMap.averageVelocity(getFirstValidUnremovedRep(set.reps).data)), setID: set.setID });
+        if (!buckets.hasOwnProperty(bucketWeight)) {
+            buckets[bucketWeight] = [];
         }
+
+        buckets[bucketWeight].push(set);
     });
 
-    return data;
-};
+    // move latest
+    for (var property in buckets) {
+        if (buckets.hasOwnProperty(property)) {
+            const bucket = buckets[property];
+            
+            // find the latest set aka most recent set
+            let latest = bucket.reduce((prev, curr) => {
+                if (!prev.reps) { 
+                    console.tron.log("OMG NO REPS " + JSON.stringify(prev));
+                }
+                if (!curr.reps) { 
+                    console.tron.log("OMG NO REPS " + JSON.stringify(curr));
+                }
+                if (SetUtils.startTime(prev) < SetUtils.startTime(curr)) {
+                    return curr;
+                } else {
+                    return prev;
+                }
+            }, bucket[0]);
 
-const get1RMRegLinePoints = (state, exercise, exerciseData) => {
-    const sets = SetsSelectors.getAllSets(state);
-    let data = [];
-    // check if date fits within range
-    const range = AnalysisSelectors.getAnalysisRange(state);
+            // passed
+            passed.push(latest);
 
-    // TODO: don't calculate every point along the line, just need two points! speed it up
-    sets.forEach((set) => {
-        if (isValidFor1RMCalc(state, set, exercise, range)) {
-            data.push({ x: parseFloat(set.weight), y: OneRMCalculator.calcVel(exerciseData, set.weight)[1], setID: set.setID });
+            // failed
+            bucket.forEach((set) => {
+                if (set.setID !== latest.setID) {
+                    failed.push(set);
+                }
+            });
         }
-    });
+    }
 
-    return data;
+    // return
+    return {
+        passed: passed,
+        failed: failed,
+    };
 };
 
-const isValidFor1RMCalc = (set, exercise, dateRange, tagsToInclude, tagsToExclude) => {
+const getBucketWeight = (weight) => (parseInt(weight / 1.25) + 1) * 1.25;
+
+const isValidFor1RMCalc = (set, exercise, tagsToInclude, tagsToExclude, daysRange) => {
     const startTime = SetUtils.startTime(set);
     return startTime != null
         && set.exercise
@@ -222,16 +279,11 @@ const isValidFor1RMCalc = (set, exercise, dateRange, tagsToInclude, tagsToExclud
         && SetUtils.numValidUnremovedReps(set) > 0
         && set.weight
         && !isNaN(set.weight)
-        && DateUtils.checkDateWithinRange(dateRange, startTime)
+        && DateUtils.checkDateWithinRange(daysRange, startTime)
         && (checkIncludesTags(set.tags, tagsToInclude)
         && checkExcludesTags(set.tags, tagsToExclude));
 };
 
-const getFirstValidUnremovedRep = (reps) => {
-    return reps.find((rep) => {
-        return rep.isValid && !rep.removed;
-    });
-};
 
 const checkIncludesTags = (tags, tagsToInclude) => {
     if (!tagsToInclude.length) {
@@ -255,51 +307,35 @@ const checkExcludesTags = (tags, tagsToExclude) => {
 
 // CALCULATION
 
-// Data must be an array of arrays, sub arrays representing X, and Y values
-const calc1rm = (data, velocity) => {
-    if (!data) {
-        return null;
-    }
-    // gather points
-    // precision is 4 for accuracy of regression points in the library
-    const result = regression.linear(data, { precision: 4 });
+const calculateRegression = (data, velocity) => {
+    if (data.length == 0) {
+        // no data
+        var r2 = null;
+        var e1RM = null;
+        var regressionPoints = [];
+    } else {
+        // regression
+        const result = regression.linear(data, { precision: 4 });
 
-    // prediction
-    // solving for x instead of y (x being weight, y being vel)
-    return Number(((velocity - result.equation[1]) / result.equation[0]).toFixed(0));
-};
+        // e1rm
+        var e1RM = Number(((velocity - result.equation[1]) / result.equation[0]).toFixed(0));
 
-const getR2interval = (data) => {
-    if (!data) {
-        return null;
-    }
-    // gather points
-    // precision is 4 for accuracy of regression points in the library
-    const result = regression.linear(data, { precision: 4 });
+        // r2
+        var r2 = Number((result.r2 * 100).toFixed(0));
 
-    // r2 prediction
-    return Number((result.r2 * 100).toFixed(0));
-};
-
-const calcVel = (data, weight) => {
-    if (!data) {
-        return null;
+        // regression line
+        // var regressionPoints = data.map((set) => {
+        //     return { x: parseFloat(set.weight), y: result.predict(set.weight), setID: set.setID };
+        // });
+        var regressionPoints = result.points;
     }
 
-    const result = regression.linear(data, { precision: 4 });
-
-    return result.predict(weight);
-};
-
-const getRegressionPoints = (data) => {
-    if (!data) {
-        return null;
-    }
-    // gather points
-    // precision is 4 for accuracy of regression points in the library
-    const result = regression.linear(data, { precision: 4 });
-    
-    return result.points;
+    // return
+    return {
+        r2: r2,
+        e1RM: e1RM,
+        regressionPoints: regressionPoints,
+    };    
 };
 
 // RANGES

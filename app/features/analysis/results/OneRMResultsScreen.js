@@ -35,7 +35,7 @@ const mapStateToProps = (state) => {
 
     return {
         velocity: AnalysisSelectors.getAnalysisVelocity(state),
-        e1rm: AnalysisSelectors.getE1rm(state),    
+        e1RM: AnalysisSelectors.getE1RM(state),    
         metric: SettingsSelectors.getDefaultMetric(state),
         r2: AnalysisSelectors.getR2(state),
         isR2HighEnough: isR2HighEnough,

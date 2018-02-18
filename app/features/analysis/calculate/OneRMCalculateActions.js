@@ -51,7 +51,7 @@ export const calcE1RM = () => (dispatch, getState) => {
     dispatch({
         type: CALC_ONE_RM,
         velocity: velocity,
-        e1rm: results.e1rm,
+        e1RM: results.e1RM,
         r2: results.r2,
         activeChartData: results.active,
         errorChartData: results.errors,

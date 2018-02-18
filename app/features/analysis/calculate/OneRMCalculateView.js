@@ -187,7 +187,7 @@ class OneRMView extends Component {
         );
     }
 
-    _renderCalculate1rm() {
+    _renderCalculate1RM() {
         return (
             <View style={[styles.button, {marginTop: 20}]}>
                 <TouchableOpacity onPress={ () => this.props.calcE1RM() }>
@@ -208,7 +208,7 @@ class OneRMView extends Component {
                     <WhatIsOneRMScreen />
                     {this._renderForms()}
                     {this._renderSliders()}
-                    {this._renderCalculate1rm()}
+                    {this._renderCalculate1RM()}
                 </View>
             </View>
         )     

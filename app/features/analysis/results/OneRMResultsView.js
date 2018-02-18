@@ -22,12 +22,12 @@ class OneRMChartView extends Component {
 
     _render1rm(r2) {
         if (this.props.activeChartData && this.props.activeChartData.length > 0 && this.props.isR2HighEnough) {
-            let e1rm = this.props.e1rm ? this.props.e1rm : "---";
+            let e1RM = this.props.e1RM ? this.props.e1RM : "---";
             let velocity = this.props.velocity ? this.props.velocity : "---";
 
             return (
                 <View>
-                    <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{e1rm}</Text> {this.props.metric}</Text>
+                    <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{e1RM}</Text> {this.props.metric}</Text>
                     <Text style={{ textAlign: 'center', fontSize: 15, marginBottom: 20 }}>@ <Text style={{ fontWeight: 'bold' }}> {velocity} m/s</Text></Text> 
                     <Text style={styles.r2Text}>r² : {this.props.r2} %</Text>
                 </View>
@@ -44,11 +44,11 @@ class OneRMChartView extends Component {
     }
 
     _render1RMBar() {
-        if (this.props.isR2HighEnough && this.props.e1rm) {
+        if (this.props.isR2HighEnough && this.props.e1RM) {
             return (
                 <VictoryBar
                     data={[
-                        { x: this.props.e1rm, y: 20, y0: 0, width: 20, fill: "#ffe5e5" },
+                        { x: this.props.e1RM, y: 20, y0: 0, width: 20, fill: "#ffe5e5" },
                     ]}
                 />
             )

@@ -24,6 +24,8 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     // Step 1: Extract a chronological pool of relevant (check all sets against rep/weight/tag/date/exercise check)
     let pool = getSetsFor1RM(exercise, tagsToInclude, tagsToExclude, daysRange, velocity, allSets);
 
+    console.tron.log("pool " + JSON.stringify(pool));
+
     // Step 2A: Remove based on ROM Check
 
     // Step 2B: Remove based on Weight Check
@@ -33,6 +35,9 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     errors.push(...velocityResults.failed);
     pool = velocityResults.passed;
 
+    console.tron.log("pool " + JSON.stringify(pool));
+    console.tron.log("error " + JSON.stringify(errors));
+
     // Step 3A: Split by workout
     const workouts = splitByWorkoutAndWeight(pool);
 
@@ -41,10 +46,17 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     errors.push(...fastestResults.failed);
     pool = fastestResults.passed;
 
+    console.tron.log("pool " + JSON.stringify(pool));
+    console.tron.log("error " + JSON.stringify(errors));
+
     // Step 3C: Active via Buckets
     const thinResults = thinSets(pool);
-    errors.push(...thinResults.failed);
+    unused.push(...thinResults.failed);
     active.push(...thinResults.passed);
+
+    console.tron.log("active " + JSON.stringify(active));
+    console.tron.log("unused " + JSON.stringify(unused));
+    console.tron.log("error " + JSON.stringify(errors));
 
     // Step 4: Convert into chart points
     const activeChartData = active.map((set) => {
@@ -62,7 +74,7 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
 
     // return
     return {
-        e1RM: regressionResults.e1rm,
+        e1RM: regressionResults.e1RM,
         r2: regressionResults.r2,
         active: activeChartData,
         errors: errorChartData,
@@ -156,7 +168,7 @@ const fastestCheck = (workouts) => {
                     if (useRPE) {
                         // calculate 1rms
                         const e1RMs = sets.map((set) => {
-                            return {rpe1rm: CollapsedMetrics.getRPE1rm(set), set: set};
+                            return {rpe1RM: CollapsedMetrics.getRPE1RM(set), set: set};
                         });
                         
                         // calculate max and add failed
@@ -164,7 +176,7 @@ const fastestCheck = (workouts) => {
                             if (previous === null) {
                                 return current;
                             }
-                            if (previous.rpe1rm > current.rpe1rm) {
+                            if (previous.rpe1RM > current.rpe1RM) {
                                 failed.push(current.set);
                                 return previous;
                             } else {
@@ -317,7 +329,7 @@ const calculateRegression = (data, velocity) => {
         // regression
         const result = regression.linear(data, { precision: 4 });
 
-        // e1rm
+        // e1RM
         var e1RM = Number(((velocity - result.equation[1]) / result.equation[0]).toFixed(0));
 
         // r2
@@ -328,6 +340,11 @@ const calculateRegression = (data, velocity) => {
         //     return { x: parseFloat(set.weight), y: result.predict(set.weight), setID: set.setID };
         // });
         var regressionPoints = result.points;
+
+        console.tron.log(JSON.stringify(result));
+        console.tron.log(e1RM);
+        console.tron.log(r2);
+        console.tron.log(regressionPoints);
     }
 
     // return

@@ -381,7 +381,7 @@ export const canCalcRPE1RM = (set) => {
     return false;
 };
 
-export const getRPE1rm = (set) => {
+export const getRPE1RM = (set) => {
     // empty rpe / weight check
     if (!set.rpe || !set.weight) {
         return null;

@@ -194,7 +194,7 @@ const metricValue = (state, set, quantifier, metric) => {
             }
             break;
         case RPE_METRIC:
-            returnValue = CollapsedMetrics.getRPE1rm(set);
+            returnValue = CollapsedMetrics.getRPE1RM(set);
             break;
     }
 

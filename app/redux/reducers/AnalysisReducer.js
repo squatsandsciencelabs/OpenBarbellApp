@@ -34,7 +34,7 @@ const defaultState = {
 
     // results
     velocity: null,
-    e1rm: null,
+    e1RM: null,
     r2: null,
     activeChartData: null,
     unusedChartData: null,
@@ -116,7 +116,7 @@ const AnalysisReducer = (state = defaultState, action) => {
         case CALC_ONE_RM:
             return {
                 ...state,
-                e1rm: action.e1rm,
+                e1RM: action.e1RM,
                 velocity: action.velocity,
                 r2: action.r2,
                 activeChartData: action.activeChartData,

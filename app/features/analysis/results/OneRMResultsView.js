@@ -20,8 +20,8 @@ import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 
 class OneRMChartView extends Component {
 
-    _render1rm(r2) {
-        if (this.props.activeChartData && this.props.activeChartData.length > 0 && this.props.isR2HighEnough) {
+    _render1RM(r2) {
+        if (this.props.activeChartData && this.props.activeChartData.length > 1 && this.props.isR2HighEnough) {
             let e1RM = this.props.e1RM ? this.props.e1RM : "---";
             let velocity = this.props.velocity ? this.props.velocity : "---";
 
@@ -73,7 +73,7 @@ class OneRMChartView extends Component {
     }
 
     _renderChartArea() {
-        if (this.props.activeChartData && this.props.activeChartData.length > 0) {
+        if (this.props.activeChartData && this.props.activeChartData.length > 1) {
             return (
                 <View>
                     {this._renderChart()}
@@ -97,7 +97,7 @@ class OneRMChartView extends Component {
                     <VictoryAxis crossAxis />
                     <VictoryAxis dependentAxis crossAxis />
                     <VictoryScatter
-                        style={{ data: { fill: "blue" } }}
+                        style={{ data: { fill: "rgba(47, 128, 237, 0.15)" } }}
                         width={400}
                         size={5}
                         data={this.props.unusedChartData} />
@@ -107,7 +107,7 @@ class OneRMChartView extends Component {
                         size={5}
                         data={this.props.errorChartData} />
                     <VictoryScatter
-                        style={{ data: { fill: "green" } }}
+                        style={{ data: { fill: "rgba(47, 128, 237, 1)" } }}
                         width={400}
                         size={5}
                         // events={[{
@@ -131,7 +131,7 @@ class OneRMChartView extends Component {
         return (
             <View style={ [SETTINGS_PANEL_STYLES.panel, { borderBottomWidth: 0, flexDirection: 'column', alignItems: 'center' }] }>
                 <Text style={[styles.titleText, {marginBottom: 10}]}>Results</Text>
-                {this._render1rm(this.props.r2)}
+                {this._render1RM(this.props.r2)}
                 <Text style={{textAlign: 'center', fontStyle: 'italic', fontWeight: 'bold', color: 'rgba(77, 77, 77, 1)'}}>Tap a point to view and edit the data</Text>
                 {this._renderChartArea()}
             </View>

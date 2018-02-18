@@ -633,6 +633,7 @@ const overrideWithTestData = (state, action) => {
                     }
                 }
             }
+            historyData[property] = set;
         }
     }
 

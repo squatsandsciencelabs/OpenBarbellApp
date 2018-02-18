@@ -24,8 +24,6 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     // Step 1: Extract a chronological pool of relevant (check all sets against rep/weight/tag/date/exercise check)
     let pool = getSetsFor1RM(exercise, tagsToInclude, tagsToExclude, daysRange, velocity, allSets);
 
-    console.tron.log("pool " + JSON.stringify(pool));
-
     // Step 2A: Remove based on ROM Check
 
     // Step 2B: Remove based on Weight Check
@@ -35,28 +33,18 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     errors.push(...velocityResults.failed);
     pool = velocityResults.passed;
 
-    console.tron.log("pool " + JSON.stringify(pool));
-    console.tron.log("error " + JSON.stringify(errors));
-
     // Step 3A: Split by workout
     const workouts = splitByWorkoutAndWeight(pool);
 
     // Step 3B: Unused via Fastest Check
     const fastestResults = fastestCheck(workouts);
-    errors.push(...fastestResults.failed);
+    unused.push(...fastestResults.failed);
     pool = fastestResults.passed;
-
-    console.tron.log("pool " + JSON.stringify(pool));
-    console.tron.log("error " + JSON.stringify(errors));
 
     // Step 3C: Active via Buckets
     const thinResults = thinSets(pool);
     unused.push(...thinResults.failed);
     active.push(...thinResults.passed);
-
-    console.tron.log("active " + JSON.stringify(active));
-    console.tron.log("unused " + JSON.stringify(unused));
-    console.tron.log("error " + JSON.stringify(errors));
 
     // Step 4: Convert into chart points
     const activeChartData = active.map((set) => {
@@ -70,7 +58,10 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     });
 
     // Step 5: Calculate Regression
-    const regressionResults = calculateRegression(activeChartData, velocity);
+    const exerciseData = activeChartData.map((point) => {
+        return [point.x, point.y];
+    });
+    const regressionResults = calculateRegression(exerciseData, velocity);
 
     // return
     return {
@@ -249,12 +240,6 @@ const thinSets = (pool) => {
             
             // find the latest set aka most recent set
             let latest = bucket.reduce((prev, curr) => {
-                if (!prev.reps) { 
-                    console.tron.log("OMG NO REPS " + JSON.stringify(prev));
-                }
-                if (!curr.reps) { 
-                    console.tron.log("OMG NO REPS " + JSON.stringify(curr));
-                }
                 if (SetUtils.startTime(prev) < SetUtils.startTime(curr)) {
                     return curr;
                 } else {
@@ -339,12 +324,9 @@ const calculateRegression = (data, velocity) => {
         // var regressionPoints = data.map((set) => {
         //     return { x: parseFloat(set.weight), y: result.predict(set.weight), setID: set.setID };
         // });
-        var regressionPoints = result.points;
-
-        console.tron.log(JSON.stringify(result));
-        console.tron.log(e1RM);
-        console.tron.log(r2);
-        console.tron.log(regressionPoints);
+        var regressionPoints = result.points.map((pointArray) => {
+            return {x: pointArray[0], y: pointArray[1]};
+        });
     }
 
     // return

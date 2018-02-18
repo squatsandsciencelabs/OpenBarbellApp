@@ -20,9 +20,9 @@ const mapStateToProps = (state) => {
     // otherwise it's slow on launch every time, especially with every action
     if (isR2HighEnough) {
         // there's a regression line, showcase x axis
-        var highestWeight = OneRMCalculator.highestWeightPossible(regressionLine);
+        var highestWeight = OneRMCalculator.highestWeightPossible(regressionPoints);
     } else {
-        // no regerssion line, just use the largest ACTUAL lift
+        // no regression line, just use the largest ACTUAL lift
         var highestWeight = OneRMCalculator.highestWeight(activeChartData);
     }
 

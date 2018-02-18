@@ -21,14 +21,14 @@ import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 class OneRMChartView extends Component {
 
     _render1rm(r2) {
-        if (this.props.chartData && this.props.chartData.length > 3 && this.props.isR2HighEnough) {
+        if (this.props.activeChartData && this.props.activeChartData.length > 0 && this.props.isR2HighEnough) {
             let e1rm = this.props.e1rm ? this.props.e1rm : "---";
-            let e1rmVelocity = this.props.e1rmVelocity ? this.props.e1rmVelocity : "---";
+            let velocity = this.props.velocity ? this.props.velocity : "---";
 
             return (
                 <View>
                     <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{e1rm}</Text> {this.props.metric}</Text>
-                    <Text style={{ textAlign: 'center', fontSize: 15, marginBottom: 20 }}>@ <Text style={{ fontWeight: 'bold' }}> {this.props.e1rmVelocity} m/s</Text></Text> 
+                    <Text style={{ textAlign: 'center', fontSize: 15, marginBottom: 20 }}>@ <Text style={{ fontWeight: 'bold' }}> {velocity} m/s</Text></Text> 
                     <Text style={styles.r2Text}>r² : {this.props.r2} %</Text>
                 </View>
             );
@@ -73,7 +73,7 @@ class OneRMChartView extends Component {
     }
 
     _renderChartArea() {
-        if (this.props.chartData && this.props.chartData.length > 3) {
+        if (this.props.activeChartData && this.props.activeChartData.length > 0) {
             return (
                 <View>
                     {this._renderChart()}
@@ -96,21 +96,31 @@ class OneRMChartView extends Component {
                     {this._render1RMBar()}
                     <VictoryAxis crossAxis />
                     <VictoryAxis dependentAxis crossAxis />
-                        <VictoryScatter
-                            style={{ data: { fill: "#c43a31" } }}
-                            width={400}
-                            size={5}
-                            // events={[{
-                            //   target: "data",
-                            //   eventHandlers: {
-                            //     onPressIn: (evt, clickedProps) => {
-                            //       const setID = clickedProps.datum.setID;
-                            //       this.props.tapPoint(setID);
-                            //     }
-                            //   }
-                            // }]}
-                            data={this.props.chartData} />
-                        {this._renderRegressionLine()}
+                    <VictoryScatter
+                        style={{ data: { fill: "blue" } }}
+                        width={400}
+                        size={5}
+                        data={this.props.unusedChartData} />
+                    <VictoryScatter
+                        style={{ data: { fill: "red" } }}
+                        width={400}
+                        size={5}
+                        data={this.props.errorChartData} />
+                    <VictoryScatter
+                        style={{ data: { fill: "green" } }}
+                        width={400}
+                        size={5}
+                        // events={[{
+                        //   target: "data",
+                        //   eventHandlers: {
+                        //     onPressIn: (evt, clickedProps) => {
+                        //       const setID = clickedProps.datum.setID;
+                        //       this.props.tapPoint(setID);
+                        //     }
+                        //   }
+                        // }]}
+                        data={this.props.activeChartData} />
+                    {this._renderRegressionLine()}
                 
                 </VictoryChart>
             </View>

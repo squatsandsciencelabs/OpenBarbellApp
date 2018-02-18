@@ -57,7 +57,7 @@ export default initializeStore = () => {
             'scannedDevices',
             'killSwitch',
             'suggestions',
-            'durations'
+            'durations',
         ],
         // note, everything in sets is to be persisted so not blacklisting or transforming them
         // note, everything in workoutCollapsed and historyCollapsed are to be persisted so not blacklisting or transforming
@@ -67,9 +67,9 @@ export default initializeStore = () => {
             createFilter('collapsedSettings', ['metric1', 'quantifier1', 'metric2', 'quantifier2', 'metric3', 'quantifier3', 'metric4', 'quantifier4', 'metric5', 'quantifier5']),            
             createFilter('workout', ['removedCounter', 'restoredCounter']),
             createFilter('history', ['viewedCounter']),
+            createFilter('analysis', ['exercise', 'velocitySlider']),
             createFilter('appState', ['multiTaskCounter', 'lockedCounter']),
             createFilter('connectedDevice', ['numDisconnects', 'numReconnects']),
-            createFilter('analysis', ['e1RMExercise', 'e1RMVelocity', 'velocitySlider', 'e1RMDaysRange', 'tagsToInclude', 'tagsToExclude', 'e1rm', 'r2', 'chartData', 'regLineData']),
             createFilter('survey', ['surveyURL', 'completedSurveyURLs', 'optedOutEndWorkoutPromptSurveyURLs']),
         ]}, async (fsError, fsResult) => {
             // Android filesystem migration

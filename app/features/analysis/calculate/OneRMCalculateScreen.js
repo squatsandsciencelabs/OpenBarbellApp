@@ -11,15 +11,15 @@ import * as OneRMCalculator from 'app/math/OneRMCalculator';
 
 const mapStateToProps = (state) => ({
     velocity: AnalysisSelectors.getVelocitySlider(state),
-    exercise: AnalysisSelectors.getAnalysisE1RMExercise(state),
-    days: AnalysisSelectors.getAnalysisRange(state),
+    exercise: AnalysisSelectors.getExercise(state),
+    days: AnalysisSelectors.getDaysRange(state),
     tagsToInclude: AnalysisSelectors.getTagsToInclude(state),
     tagsToExclude: AnalysisSelectors.getTagsToExclude(state),
 });
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        calcE1rm: Actions.calcE1rm,
+        calcE1RM: Actions.calcE1RM,
         tappedExercise: Actions.presentSelectExercise,
         tappedTagsToInclude: Actions.presentTagsToInclude,
         tappedTagsToExclude: Actions.presentTagsToExclude,

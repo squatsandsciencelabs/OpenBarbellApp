@@ -190,7 +190,7 @@ class OneRMView extends Component {
     _renderCalculate1rm() {
         return (
             <View style={[styles.button, {marginTop: 20}]}>
-                <TouchableOpacity onPress={ () => this.props.calcE1rm() }>
+                <TouchableOpacity onPress={ () => this.props.calcE1RM() }>
                     <Text style={styles.buttonText}>Calculate</Text>
                 </TouchableOpacity>
             </View>

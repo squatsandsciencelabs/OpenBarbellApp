@@ -21,7 +21,7 @@ import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 class OneRMChartView extends Component {
 
     _render1RM(r2) {
-        if (this.props.activeChartData && this.props.activeChartData.length > 1 && this.props.isR2HighEnough) {
+        if (this.props.isR2HighEnough) {
             let e1RM = this.props.e1RM ? this.props.e1RM : "---";
             let velocity = this.props.velocity ? this.props.velocity : "---";
 
@@ -73,6 +73,8 @@ class OneRMChartView extends Component {
     }
 
     _renderChartArea() {
+        // TODO: need to check against ALL points rather than just active points to render a chart
+        // NOTE: using > 1 for now as for active chart, I need that in order to get a domain
         if (this.props.activeChartData && this.props.activeChartData.length > 1) {
             return (
                 <View>

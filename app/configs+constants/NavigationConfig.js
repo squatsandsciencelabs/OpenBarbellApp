@@ -6,7 +6,7 @@ import SettingsTab from 'app/features/settings/SettingsTab';
 import AnalysisScreen from 'app/features/analysis/AnalysisScreen';
 import HistoryScreen from 'app/features/history/HistoryScreen';
 
-export const initialIndex = 2;
+export const initialIndex = 3;
 
 export const routes = [
     { key: '0', title: 'WORKOUT' },

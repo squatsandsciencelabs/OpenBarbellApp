@@ -18,6 +18,7 @@ class WhatIsOneRMView extends Component {
 
     render() {
         const body = "Estimated One-Rep Max is based on the first rep of a given exercise within a specified date range, extrapolated to the lowest velocity at which you think you can successfully complete a max lift attempt.\n\nThis estimate is provided with an r² based on how much exercise data is included and how well that data adheres to a general trend. While outliers sometimes occur naturally, the key to accurate estimation is recording set information as fully and carefully as possible."
+        const top = Platform.OS === 'ios' ? 0 : 5;
 
         return (
             <View>
@@ -31,7 +32,7 @@ class WhatIsOneRMView extends Component {
                         <View style={styles.bodyContainer}>
                             <Text style={styles.titleText}>What is e1RM?</Text>
 
-                            <View style={{position: 'absolute', left: 0, top: 0}}>
+                            <View style={{position: 'absolute', left: 0, top}}>
                                 <TouchableOpacity onPress={() => this._close() }>
                                     <View style={styles.nav}>
                                     <Icon name="times-circle" size={20} color='red' />

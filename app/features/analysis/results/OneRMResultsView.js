@@ -18,83 +18,6 @@ import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 
 class OneRMChartView extends Component {
 
-    // TODO: temp, proving that it can display something
-    constructor() {
-        super();
-        this.state = {
-            xAxis: {
-                position: 'BOTTOM',
-            },
-            yAxis: {
-                right: {
-                    drawLabels: false,
-                    drawAxisLine: false,
-                    drawGridLines: false,
-                }
-            },
-      
-            data: {
-              barData: {
-                dataSets: [{
-                  values: [40, 5, 50, 23, 79],
-                  label: 'max bar',
-                  config: {
-                    drawValues: false,
-                    colors: [processColor('red')],
-                    highlightEnabled: false,
-                  }
-      
-                }]
-              },
-              lineData: {
-                dataSets: [{
-                  values: [50, 100],
-                  label: 'regression line',
-                  config: {
-                    drawValues: false,
-                    colors: [processColor('green')],
-                    mode: "LINEAR",
-                    drawCircles: false,
-                    lineWidth: 2,
-                    highlightEnabled: false,
-                  }
-                }],
-              },
-              scatterData: {
-                dataSets: [{
-                  values: [{x: 0.5, y: 15}, {x: 2, y: 40}, {x: 3, y: 77}, 81, 43],
-                  label: 'unused points',
-                  config: {
-                    colors: [processColor('purple')],
-                    drawValues: false,
-                    scatterShape: 'SQUARE',
-                    highlightEnabled: false,
-                  }
-      
-                }, {
-                  values: [40, 5, 50, 23, 79],
-                  label: 'error points',
-                  config: {
-                    drawValues: false,
-                    colors: [processColor('grey')],
-                    scatterShape: 'CIRCLE',
-                    highlightEnabled: true,
-                  }
-                }, {
-                  values: [10, 55, 35, 90, 82],
-                  label: 'active points',
-                  config: {
-                    drawValues: false,
-                    colors: [processColor('brown')],
-                    scatterShape: 'TRIANGLE',
-                    highlightEnabled: true,
-                  }
-                }],
-              },
-            }
-          };
-    }
-
     _render1RM(r2) {
         if (this.props.isR2HighEnough) {
             let e1RM = this.props.e1RM ? this.props.e1RM : "---";
@@ -167,54 +90,62 @@ class OneRMChartView extends Component {
     }
 
     _renderChart() {
-        return (
-            <View style={{marginLeft: 25}}>
-                <VictoryChart
-                    theme={VictoryTheme.material}
-                    containerComponent={<VictoryZoomContainer zoomDomain={{x: [this.props.lowestWeight, this.props.highestWeight], y: [0, this.props.highestVel] }}/>}
-                    domain={{x: [this.props.lowestWeight, this.props.highestWeight], y: [0, this.props.highestVel] }}>
+        // set the data
+        // NOTE: Android crashes if the data is length 0, so ONLY add it if data exists
+        let data = {
+            bubbleData: {
+                dataSets: []
+            }
+        };
+        if (this.props.unusedChartData && this.props.unusedChartData.length > 0) {
+            data.bubbleData.dataSets.push({
+                values: this.props.unusedChartData,
+                label: 'Unused Points',
+                config: {
+                    colors: [processColor('rgba(47, 128, 237, 0.2)')],
+                    drawValues: false,
+                    highlightEnabled: false,
+                    normalizeSizeEnabled: false,
+                }
+            });
+        }
+        if (this.props.errorChartData && this.props.errorChartData.length > 0) {
+            data.bubbleData.dataSets.push({
+                values: this.props.errorChartData,
+                label: 'Error Points',
+                config: {
+                    colors: [processColor('red')],
+                    drawValues: false,
+                    highlightEnabled: true,
+                    normalizeSizeEnabled: false,
+                }
+            });
+        }
+        if (this.props.activeChartData && this.props.activeChartData.length > 0) {
+            data.bubbleData.dataSets.push({
+                values: this.props.activeChartData,
+                label: 'Active Points',
+                config: {
+                    colors: [processColor('rgba(47, 128, 237, 1)')],
+                    drawValues: false,
+                    highlightEnabled: true,
+                    normalizeSizeEnabled: false,
+                }
+            });
+        }
 
-                    {this._render1RMBar()}
-                    <VictoryAxis crossAxis />
-                    <VictoryAxis dependentAxis crossAxis />
-                    <VictoryScatter
-                        style={{ data: { fill: "rgba(47, 128, 237, 0.15)" } }}
-                        width={400}
-                        size={5}
-                        data={this.props.unusedChartData} />
-                    <VictoryScatter
-                        style={{ data: { fill: "red" } }}
-                        width={400}
-                        size={5}
-                        data={this.props.errorChartData} />
-                    <VictoryScatter
-                        style={{ data: { fill: "rgba(47, 128, 237, 1)" } }}
-                        width={400}
-                        size={5}
-                        // events={[{
-                        //   target: "data",
-                        //   eventHandlers: {
-                        //     onPressIn: (evt, clickedProps) => {
-                        //       const setID = clickedProps.datum.setID;
-                        //       this.props.tapPoint(setID);
-                        //     }
-                        //   }
-                        // }]}
-                        data={this.props.activeChartData} />
-                    {this._renderRegressionLine()}
-                
-                </VictoryChart>
-            </View>
-        );
-    }
-
-    render() {
         return (
             <View style={styles.chartContainer}>
                 <CombinedChart
-                    data={this.state.data}
-                    xAxis={this.state.xAxis}
-                    yAxis={this.state.yAxis}
+                    data={data}
+                    xAxis={{position: 'BOTTOM'}}
+                    yAxis={{
+                        right: {
+                            drawLabels: false,
+                            drawAxisLine: false,
+                            drawGridLines: false,
+                        }
+                    }}
                     legend={{enabled: false}}
                     onSelect={this.handleSelect.bind(this)}
                     chartDescription={{text: ''}}
@@ -222,6 +153,9 @@ class OneRMChartView extends Component {
                     style={styles.chart}/>
             </View>
         );
+    }
+
+    render() {
         return (
             <View style={ [SETTINGS_PANEL_STYLES.panel, { borderBottomWidth: 0, flexDirection: 'column', alignItems: 'center' }] }>
                 <Text style={[styles.titleText, {marginBottom: 10}]}>Results</Text>

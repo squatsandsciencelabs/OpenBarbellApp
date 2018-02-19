@@ -6,15 +6,6 @@ import {
     StyleSheet,
     TouchableOpacity,
 } from 'react-native';
-import { 
-    VictoryScatter,
-    VictoryChart,
-    VictoryTheme,
-    VictoryLine,
-    VictoryZoomContainer,
-    VictoryBar,
-    VictoryAxis,
-} from "victory-native";
 import * as Device from 'app/utility/Device';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 

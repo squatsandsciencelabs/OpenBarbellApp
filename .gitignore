@@ -25,6 +25,11 @@ project.xcworkspace
 # Pods
 Pods/
 
+# Carthage
+# Note that the ios label in front is needed
+ios/Carthage/Builds
+ios/Carthage/Checkouts
+
 # Android/IJ
 #
 *.iml
@@ -67,5 +72,5 @@ android/keystores/debug.keystore
 */fastlane/Preview.html
 */fastlane/screenshots
 
-# test json data
+# test json data - TODO: Change this later once a publicly approved TestData.json is pushed
 TestData.json

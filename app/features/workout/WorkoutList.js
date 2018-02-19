@@ -19,6 +19,7 @@ import EditWorkoutTagsScreen from './tags/EditWorkoutTagsScreen';
 import SetDataLabelRow from 'app/shared_features/set_card/expanded/SetDataLabelRow';
 import SetDataRow from 'app/shared_features/set_card/expanded/SetDataRow';
 import DeleteSetRow from 'app/shared_features/set_card/expanded/DeleteSetRow';
+import RestoreSetRow from 'app/shared_features/set_card/expanded/RestoreSetRow';
 import SetRestRow from 'app/shared_features/set_card/SetRestRow';
 import LiveRestRow from 'app/shared_features/set_card/expanded/LiveRestRow';
 import WorkoutVideoButtonScreen from './card/expanded/form/WorkoutVideoButtonScreen';
@@ -157,6 +158,12 @@ class WorkoutList extends Component {
                 return (
                     <View>
                         <DeleteSetRow onPressDelete={() => this.props.deleteSet(item.setID)} />
+                    </View>
+                );
+            case "restore footer":
+                return (
+                    <View>
+                        <RestoreSetRow onPressRestore={() => this.props.restoreSet(item.setID)} />
                     </View>
                 );
             case "bottom border":

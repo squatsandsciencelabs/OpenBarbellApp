@@ -23,6 +23,7 @@ import ListLoadingFooter from '../history/loading/ListLoadingFooter';
 import SetDataLabelRow from 'app/shared_features/set_card/expanded/SetDataLabelRow';
 import SetDataRow from 'app/shared_features/set_card/expanded/SetDataRow';
 import DeleteSetRow from 'app/shared_features/set_card/expanded/DeleteSetRow';
+import RestoreSetRow from 'app/shared_features/set_card/expanded/RestoreSetRow';
 import SetRestRow from 'app/shared_features/set_card/SetRestRow';
 import HistoryVideoButtonScreen from './card/expanded/form/HistoryVideoButtonScreen';
 import HistoryVideoRecorderScreen from './camera/HistoryVideoRecorderScreen';
@@ -147,6 +148,12 @@ class HistoryList extends Component {
                 return (
                     <View>
                         <DeleteSetRow onPressDelete={() => this.props.deleteSet(item.setID)} />
+                    </View>
+                );
+            case "restore footer":
+                return (
+                    <View>
+                        <RestoreSetRow onPressRestore={() => this.props.restoreSet(item.setID)} />
                     </View>
                 );
             case "bottom border":

@@ -40,6 +40,18 @@ export const deleteSet = (setID) => (dispatch) => {
     );
 };
 
+export const restoreSet = (setID) => (dispatch) => {
+    Alert.alert(
+        'Are you sure?',
+        "",
+        [
+          {text: 'Restore Set', onPress: () => dispatch({ type: RESTORE_WORKOUT_SET, setID: setID })},
+          {text: 'Cancel', style: 'cancel'},
+        ],
+        { cancelable: false }
+    );    
+};
+
 
 export const removeRep = (setID, repIndex) => (dispatch, getState) => {
     const state = getState();

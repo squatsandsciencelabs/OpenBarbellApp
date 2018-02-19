@@ -90,6 +90,11 @@ const createViewModels = (state, sets) => {
                 lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
                 array.push(createDeleteFooter(set));
                 array.push(createBottomBorder(set));
+            } else if (!isLastSet && !isCollapsed && isRemoved) {
+                // new set, reset the end time
+                lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
+                array.push(createRestoreFooter(set));
+                array.push(createBottomBorder(set));                
             } else {
                 array.push(createBottomBorder(set));
             }
@@ -112,7 +117,24 @@ const createViewModels = (state, sets) => {
             }
 
             // update variable for calculation purposes
-            lastSetEndTime = SetUtils.endTime(set);
+            lastSetEndTime = SetTimeCalculator.endTime(set);
+        }  else if (isRemoved && !SetEmptyCheck.hasEmptyFields(set)) {
+            // add footer if valid
+            if (lastSetEndTime !== null) {
+                if (isCollapsed) {
+                    array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
+                } else {
+                    array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
+                    array.push(createRestoreFooter(set));
+                }    
+            } else {
+                if (!isCollapsed) {
+                    array.push(createRestoreFooter(set));
+                    array.push(createBottomBorder(set));
+                } else {
+                    array.push(createBottomBorder(set));
+                }
+            }            
         } else if (isLastSet && lastSetEndTime !== null && set.reps.length === 0) {
             // working set, live rest mode
             array.push(createWorkingSetFooterVM(set, lastSetEndTime));
@@ -287,6 +309,12 @@ const createDeleteFooter = (set) => ({
     key: set.setID + "deleteSet",
     setID: set.setID,
     removed: set.removed,
+});
+
+const createRestoreFooter = (set) => ({
+    type: "restore footer",
+    key: set.setID + "restoreSet",
+    setID: set.setID,
 });
 
 const createBottomBorder = (set) => ({

@@ -61,6 +61,10 @@ const SetsReducer = (state = createDefaultState(), action) => {
             return deleteWorkoutVideo(state, action);
         case DELETE_HISTORY_VIDEO:
             return deleteHistoryVideo(state, action);
+        case RESTORE_WORKOUT_SET:
+            return restoreWorkoutSet(state, action);
+        case RESTORE_HISTORY_SET:
+            return restoreHistorySet(state, action);
         case LOAD_PERSISTED_SET_DATA:
             return loadPersistedSetData(state, action);
         // NOTE: it feels weird to have end workout here, but ending a workout affects the SETS not the workout itself, so the set reducer needs to handle it
@@ -180,15 +184,24 @@ const deleteWorkoutSet = (state, action) => {
     // get set
     let setIndex = newWorkoutData.findIndex( set => set.setID === action.setID );
 
-    newWorkoutData[setIndex].exercise = "";
-    newWorkoutData[setIndex].weight = "";
-    newWorkoutData[setIndex].rpe = "";
-    newWorkoutData[setIndex].tags = [];
+    newWorkoutData[setIndex].removed = true;
 
-    // update set and its reps
-    newWorkoutData[setIndex].reps.forEach((rep) => {
-        rep.removed = true;
-    });
+    return {
+        ...state,
+        workoutData: newWorkoutData,
+    }
+};
+
+// RESTORE_WORKOUT_SET
+
+const restoreWorkoutSet = (state, action) => {
+    // copy workout data
+    let newWorkoutData = state.workoutData.slice(0);
+
+    // get set
+    let setIndex = newWorkoutData.findIndex( set => set.setID === action.setID );
+
+    newWorkoutData[setIndex].removed = false;
 
     return {
         ...state,
@@ -258,15 +271,22 @@ const deleteHistorySet = (state, action) => {
     let newHistoryData = { ...state.historyData };
 
     // update set and its rep
-    newHistoryData[action.setID].exercise = "";
-    newHistoryData[action.setID].weight = "";
-    newHistoryData[action.setID].rpe = "";
-    newHistoryData[action.setID].tags = [];
+    newHistoryData[action.setID].removed = true;
 
-    // update set and its reps
-    newHistoryData[action.setID].reps.forEach((rep) => {
-        rep.removed = true;
-    });
+    return {
+        ...state,
+        historyData: newHistoryData,
+    }    
+}
+
+// RESTORE_HISTORY_SET
+
+const restoreHistorySet = (state, action) => {
+    // copy workout data
+    let newHistoryData = { ...state.historyData };
+
+    // update set and its rep
+    newHistoryData[action.setID].removed = false;
 
     return {
         ...state,

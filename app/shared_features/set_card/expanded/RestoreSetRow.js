@@ -7,19 +7,19 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-class DeleteSetRow extends PureComponent {
+class RestoreSetRow extends PureComponent {
 
-    _onPressDelete() {
-        this.props.onPressDelete();
+    _onPressRestore() {
+        this.props.onPressRestore();
     }
 
     render() {
         
         return (
             <View style={[styles.border, {flex:1, alignItems:'stretch', backgroundColor:'white'}]}>
-                <TouchableOpacity style={{flex:1}} onPress={ () => this._onPressDelete() } >
+                <TouchableOpacity style={{flex:1}} onPress={ () => this._onPressRestore() } >
                     <View style={styles.bar}>
-                        <Text style={{color: 'red'}}>Delete Set</Text>
+                        <Text style={{color: 'rgba(47, 128, 237, 1)'}}>Restore Set</Text>
                     </View>
                 </TouchableOpacity>
             </View>
@@ -61,4 +61,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default DeleteSetRow;
+export default RestoreSetRow;

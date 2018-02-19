@@ -33,10 +33,22 @@ export const deleteSet = (setID) => (dispatch) => {
         "",
         [
           {text: 'Delete Set', style: 'destructive', onPress: () => dispatch({ type: DELETE_HISTORY_SET, setID: setID })},
-          {text: 'Cancel', style: 'cancel'},,
+          {text: 'Cancel', style: 'cancel'},
         ],
         { cancelable: false }
     );
+};
+
+export const restoreSet = (setID) => (dispatch) => {
+    Alert.alert(
+        'Are you sure?',
+        "",
+        [
+          {text: 'Restore Set', onPress: () => dispatch({ type: RESTORE_HISTORY_SET, setID: setID })},
+          {text: 'Cancel', style: 'cancel'},
+        ],
+        { cancelable: false }
+    );    
 };
 
 export const finishLoading = () => ({

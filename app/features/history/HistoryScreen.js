@@ -115,18 +115,18 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
             array.push(createBottomBorder(set));
         } else if (isInitialSet && !isCollapsed) {
             // new set, reset the end time
-            lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
+            lastSetEndTime = isRemoved ? null : SetUtils.endTime(set);
 
             if (isCollapsed) {
                 array.push(createBottomBorder(set));
             } else if (!isCollapsed && !isRemoved) {
                 // new set, reset the end time
-                lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
+                lastSetEndTime = isRemoved ? null : SetUtils.endTime(set);
                 array.push(createDeleteFooter(set));
                 array.push(createBottomBorder(set));
             } else if (!isCollapsed && isRemoved) {
                 // new set, reset the end time
-                lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
+                lastSetEndTime = isRemoved ? null : SetUtils.endTime(set);
                 array.push(createRestoreFooter(set));
                 array.push(createBottomBorder(set));
             } else {
@@ -151,8 +151,8 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
             }
 
             // update variable for calculation purposes
-            lastSetEndTime = SetTimeCalculator.endTime(set);
-        } else if (isRemoved && !SetEmptyCheck.hasEmptyData(set)) {
+            lastSetEndTime = SetUtils.endTime(set);
+        } else if (isRemoved && !SetUtils.hasEmptyData(set)) {
             if (!isCollapsed) {
                 array.push(createRestoreFooter(set));
                 array.push(createBottomBorder(set));            

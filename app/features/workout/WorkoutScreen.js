@@ -81,18 +81,18 @@ const createViewModels = (state, sets) => {
         // rest footer
         if (isInitialSet) {
             // new set, reset the end time
-            lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
+            lastSetEndTime = isRemoved ? null : SetUtils.endTime(set);
 
             if (isLastSet) {
                 array.push(createBottomBorder(set));
             } else if (!isLastSet && !isCollapsed && !isRemoved) {
                 // new set, reset the end time
-                lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
+                lastSetEndTime = isRemoved ? null : SetUtils.endTime(set);
                 array.push(createDeleteFooter(set));
                 array.push(createBottomBorder(set));
-            } else if (!isLastSet && !isCollapsed && (isRemoved && (!SetEmptyCheck.hasEmptyData(set) || !SetEmptyCheck.hasEmptyReps(set)))) {
+            } else if (!isLastSet && !isCollapsed && (isRemoved && (!SetUtils.hasEmptyData(set) || !SetUtils.hasEmptyReps(set)))) {
                 // new set, reset the end time
-                lastSetEndTime = isRemoved ? null : SetTimeCalculator.endTime(set);
+                lastSetEndTime = isRemoved ? null : SetUtils.endTime(set);
                 array.push(createRestoreFooter(set));
                 array.push(createBottomBorder(set));                
             } else {
@@ -117,8 +117,8 @@ const createViewModels = (state, sets) => {
             }
 
             // update variable for calculation purposes
-            lastSetEndTime = SetTimeCalculator.endTime(set);
-        }  else if (isRemoved && (!SetEmptyCheck.hasEmptyData(set) || !SetEmptyCheck.hasEmptyReps(set))) {
+            lastSetEndTime = SetUtils.endTime(set);
+        }  else if (isRemoved && (!SetUtils.hasEmptyData(set) || !SetUtils.hasEmptyReps(set))) {
             // add footer if valid
             if (lastSetEndTime !== null) {
                 if (isCollapsed) {

@@ -23,6 +23,8 @@ import {
     DELETE_WORKOUT_SET,
     DELETE_HISTORY_SET,
     TEST_ONE_RM,
+    RESTORE_WORKOUT_SET,
+    RESTORE_HISTORY_SET,
 } from 'app/configs+constants/ActionTypes';
 import uuidV4 from 'uuid/v4';
 import DeviceInfo from 'react-native-device-info';

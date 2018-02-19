@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {
     ScrollView,
-    StyleSheet,
     Image,
     View,
     Text,
@@ -16,8 +15,6 @@ import OneRMProtocolView from './protocol/OneRMProtocolView';
 import HowToBestResultsScreen from './results/bestresults/HowToBestResultsScreen';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 
-// Hack for svg bug with scrolling in victory charts on Android
-// https://github.com/FormidableLabs/victory-native/issues/96
 class AnalysisTab extends Component {
     // separated Chart and Screen to ensure android hack works along with calculate button
     constructor(props) {
@@ -54,7 +51,6 @@ class AnalysisTab extends Component {
                     <OneRMCalculateScreen />
                     <View ref={(ref) => { this.results = ref }} onLayout={() => {}} collapsable={false} >
                         <OneRMResultsScreen />
-                        <Image style={styles.pseudoScrollView} source={require('app/appearance/images/blank.png')} />
                         <HowToBestResultsScreen />
                     </View>
                     <OneRMProtocolView />
@@ -66,15 +62,15 @@ class AnalysisTab extends Component {
     }
 }
 
-const styles = StyleSheet.create({
-    pseudoScrollView: {
-        opacity: 0,
-        position: 'absolute',
-        top: 0,    
-        left: 0,
-        width:"100%",
-        height:"100%",
-    },
-});
+// const styles = StyleSheet.create({
+//     pseudoScrollView: {
+//         opacity: 0,
+//         position: 'absolute',
+//         top: 0,    
+//         left: 0,
+//         width:"100%",
+//         height:"100%",
+//     },
+// });
 
 export default AnalysisTab;

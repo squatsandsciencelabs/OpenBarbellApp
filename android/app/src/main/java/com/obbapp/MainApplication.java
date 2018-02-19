@@ -6,7 +6,6 @@ import com.brentvatne.react.ReactVideoPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.facebook.react.ReactApplication;
 import com.RNFetchBlob.RNFetchBlobPackage;
-import com.horcrux.svg.SvgPackage;
 import com.corbt.keepawake.KCKeepAwakePackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
@@ -22,6 +21,7 @@ import io.invertase.firebase.config.RNFirebaseRemoteConfigPackage;
 import io.invertase.firebase.fabric.crashlytics.RNFirebaseCrashlyticsPackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
+import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,16 +38,16 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
               new MainReactPackage(),
-            new RNFetchBlobPackage(),
-            new SvgPackage(),
-            new KCKeepAwakePackage(),
-            new RNGoogleSigninPackage(),
-            new RNDeviceInfo(),
-            new VectorIconsPackage(),
-            new RCTCameraPackage(),
-            new ReactVideoPackage(),
+              new RNFetchBlobPackage(),
+              new KCKeepAwakePackage(),
+              new RNGoogleSigninPackage(),
+              new RNDeviceInfo(),
+              new VectorIconsPackage(),
+              new RCTCameraPackage(),
+              new ReactVideoPackage(),
               new BackgroundTimerPackage(),
               new RFDuinoServicePackage(),
+              new MPAndroidChartPackage(),
               new RNFirebasePackage(),
               new RNFirebaseAnalyticsPackage(),
               new RNFirebaseCrashPackage(),

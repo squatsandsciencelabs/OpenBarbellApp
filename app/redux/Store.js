@@ -5,7 +5,7 @@ import { createFilter } from 'redux-persist-transform-filter';
 import _ from 'lodash';
 
 // store imports
-import FilesystemStorage from 'redux-persist-filesystem-storage'
+import FilesystemStorage from 'redux-persist-filesystem-storage';
 import { compose, createStore, applyMiddleware }  from 'redux';
 import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';

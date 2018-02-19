@@ -62,15 +62,4 @@ class AnalysisTab extends Component {
     }
 }
 
-// const styles = StyleSheet.create({
-//     pseudoScrollView: {
-//         opacity: 0,
-//         position: 'absolute',
-//         top: 0,    
-//         left: 0,
-//         width:"100%",
-//         height:"100%",
-//     },
-// });
-
 export default AnalysisTab;

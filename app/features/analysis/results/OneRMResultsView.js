@@ -5,11 +5,95 @@ import {
     Image,
     StyleSheet,
     TouchableOpacity,
+    processColor,
 } from 'react-native';
+import {
+    CombinedChart,
+    ScatterChart,
+    BarChart,
+    LineChart,
+} from 'react-native-charts-wrapper';
 import * as Device from 'app/utility/Device';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 
 class OneRMChartView extends Component {
+
+    // TODO: temp, proving that it can display something
+    constructor() {
+        super();
+        this.state = {
+            xAxis: {
+                position: 'BOTTOM',
+            },
+            yAxis: {
+                right: {
+                    drawLabels: false,
+                    drawAxisLine: false,
+                    drawGridLines: false,
+                }
+            },
+      
+            data: {
+              barData: {
+                dataSets: [{
+                  values: [40, 5, 50, 23, 79],
+                  label: 'max bar',
+                  config: {
+                    drawValues: false,
+                    colors: [processColor('red')],
+                    highlightEnabled: false,
+                  }
+      
+                }]
+              },
+              lineData: {
+                dataSets: [{
+                  values: [50, 100],
+                  label: 'regression line',
+                  config: {
+                    drawValues: false,
+                    colors: [processColor('green')],
+                    mode: "LINEAR",
+                    drawCircles: false,
+                    lineWidth: 2,
+                    highlightEnabled: false,
+                  }
+                }],
+              },
+              scatterData: {
+                dataSets: [{
+                  values: [{x: 0.5, y: 15}, {x: 2, y: 40}, {x: 3, y: 77}, 81, 43],
+                  label: 'unused points',
+                  config: {
+                    colors: [processColor('purple')],
+                    drawValues: false,
+                    scatterShape: 'SQUARE',
+                    highlightEnabled: false,
+                  }
+      
+                }, {
+                  values: [40, 5, 50, 23, 79],
+                  label: 'error points',
+                  config: {
+                    drawValues: false,
+                    colors: [processColor('grey')],
+                    scatterShape: 'CIRCLE',
+                    highlightEnabled: true,
+                  }
+                }, {
+                  values: [10, 55, 35, 90, 82],
+                  label: 'active points',
+                  config: {
+                    drawValues: false,
+                    colors: [processColor('brown')],
+                    scatterShape: 'TRIANGLE',
+                    highlightEnabled: true,
+                  }
+                }],
+              },
+            }
+          };
+    }
 
     _render1RM(r2) {
         if (this.props.isR2HighEnough) {
@@ -78,6 +162,10 @@ class OneRMChartView extends Component {
         }
     }
 
+    handleSelect(event) {
+        console.tron.log("selected " + JSON.stringify(event.nativeEvent));
+    }
+
     _renderChart() {
         return (
             <View style={{marginLeft: 25}}>
@@ -122,6 +210,19 @@ class OneRMChartView extends Component {
 
     render() {
         return (
+            <View style={styles.chartContainer}>
+                <CombinedChart
+                    data={this.state.data}
+                    xAxis={this.state.xAxis}
+                    yAxis={this.state.yAxis}
+                    legend={{enabled: false}}
+                    onSelect={this.handleSelect.bind(this)}
+                    chartDescription={{text: ''}}
+                    onChange={(event) => console.log(event.nativeEvent)}
+                    style={styles.chart}/>
+            </View>
+        );
+        return (
             <View style={ [SETTINGS_PANEL_STYLES.panel, { borderBottomWidth: 0, flexDirection: 'column', alignItems: 'center' }] }>
                 <Text style={[styles.titleText, {marginBottom: 10}]}>Results</Text>
                 {this._render1RM(this.props.r2)}
@@ -159,6 +260,17 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    chartContainer: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    chart: {
+        width: 300,
+        height: 400,
+        justifyContent: 'center',
+        alignItems: 'stretch',
+        backgroundColor: 'lightgray',
     },
 });
 

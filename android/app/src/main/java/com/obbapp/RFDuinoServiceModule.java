@@ -93,15 +93,19 @@ public class RFDuinoServiceModule extends ReactContextBaseJavaModule implements 
      */
     @ReactMethod
     public void start() {
-        devices = new HashMap<>();
-        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        try {
+            devices = new HashMap<>();
+            bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            bluetoothLeScanner = bluetoothAdapter.getBluetoothLeScanner();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                bluetoothLeScanner = bluetoothAdapter.getBluetoothLeScanner();
+            }
+
+            // set initial state
+            state = bluetoothAdapter.isEnabled() ? STATE_DISCONNECTED : STATE_BLUETOOTH_OFF;
+        } catch (Exception e) {
+
         }
-
-        // set initial state
-        state = bluetoothAdapter.isEnabled() ? STATE_DISCONNECTED : STATE_BLUETOOTH_OFF;
     }
 
     // called when app is navigated to

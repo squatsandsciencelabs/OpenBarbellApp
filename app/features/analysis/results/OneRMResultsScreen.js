@@ -43,9 +43,9 @@ const mapStateToProps = (state) => {
         activeChartData: activeChartData,
         errorChartData: errorChartData,
         unusedChartData: unusedChartData,
-        highestWeight: highestWeight,
-        lowestWeight: OneRMCalculator.lowestWeight(activeChartData),
-        highestVel: OneRMCalculator.highestVelocity(activeChartData),
+        // highestWeight: highestWeight,
+        // lowestWeight: OneRMCalculator.lowestWeight(activeChartData),
+        // highestVel: OneRMCalculator.highestVelocity(activeChartData),
         regLeftPoint: regLeftPoint,
         regRightPoint: regRightPoint,
     };

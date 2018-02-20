@@ -23,9 +23,10 @@ class OneRMChartView extends Component {
             let e1RM = this.props.e1RM ? this.props.e1RM : "---";
             let velocity = this.props.velocity ? this.props.velocity : "---";
 
+            // TODO: use this.props.metric instead of LBs, for now just doing LBs
             return (
                 <View>
-                    <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{e1RM}</Text> {this.props.metric}</Text>
+                    <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{e1RM}</Text> LBs</Text>
                     <Text style={{ textAlign: 'center', fontSize: 15, marginBottom: 20 }}>@ <Text style={{ fontWeight: 'bold' }}> {velocity} m/s</Text></Text> 
                     <Text style={styles.r2Text}>r² : {this.props.r2} %</Text>
                 </View>

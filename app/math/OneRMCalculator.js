@@ -50,15 +50,15 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     // TODO: this should handle KGs or LBs
     let activeChartData = active.map((set) => {
         let x = parseFloat(SetUtils.weightInLBs(set));
-        return { x: x, y: Number(RepDataMap.averageVelocity(SetUtils.getFirstValidUnremovedRep(set).data)), size: 10, setID: set.setID };
+        return { x: x, y: SetUtils.getFastestUsableAvgVelocity(set), size: 10, setID: set.setID };
     });
     let errorChartData = errors.map((set) => {
         let x = parseFloat(SetUtils.weightInLBs(set));
-        return { x: x, y: Number(RepDataMap.averageVelocity(SetUtils.getFirstValidUnremovedRep(set).data)), size: 10, setID: set.setID };
+        return { x: x, y: SetUtils.getFastestUsableAvgVelocity(set), size: 10, setID: set.setID };
     });
     let unusedChartData = unused.map((set) => {
         let x = parseFloat(SetUtils.weightInLBs(set));
-        return { x: x, y: Number(RepDataMap.averageVelocity(SetUtils.getFirstValidUnremovedRep(set).data)), size: 10, setID: set.setID };
+        return { x: x, y: SetUtils.getFastestUsableAvgVelocity(set), size: 10, setID: set.setID };
     });
 
     // Step 4B: Sort by weight
@@ -106,8 +106,8 @@ const velocityCheck = (pool) => {
     let failed = [];
     let passed = [];
 
-    pool.map((set) => {
-        if (SetUtils.hasInvalidVelocity(set)) {
+    pool.forEach((set) => {
+        if (SetUtils.hasUnusableReps(set)) {
             failed.push(set);
         } else {
             passed.push(set);
@@ -126,7 +126,7 @@ const splitByWorkoutAndWeight = (pool) => {
     let workouts = {};
 
     // split it into workouts and weights
-    pool.map((set) => {
+    pool.forEach((set) => {
         const lbs = SetUtils.weightInLBs(set);
 
         // create workout (dictionary of weights) if needed
@@ -285,7 +285,7 @@ const isValidFor1RMCalc = (set, exercise, tagsToInclude, tagsToExclude, daysRang
     return startTime != null
         && set.exercise
         && set.exercise.trim().toLowerCase() === exercise.trim().toLowerCase()
-        && SetUtils.numValidUnremovedReps(set) > 0
+        && SetUtils.numUsableReps(set) > 0
         && set.weight
         && !isNaN(set.weight)
         && DateUtils.checkDateWithinRange(daysRange, startTime)

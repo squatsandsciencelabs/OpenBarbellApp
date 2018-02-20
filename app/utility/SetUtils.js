@@ -41,6 +41,12 @@ export const hasEmptyReps = (set) => {
     return activeRep === undefined;
 };
 
+// NOTE: this considers infinity / 0 invalid
+export const usableReps = (set) => {
+    return set.reps.filter(rep => !rep.removed && isRepUsable(rep));
+};
+
+// NOTE: this does not consider infinity / 0 invalid
 export const validUnremovedReps = (set) => {
     return set.reps.filter(rep => rep.isValid && !rep.removed);
 };
@@ -71,32 +77,34 @@ export const numFieldsEntered = (set) => {
     return num_fields_entered;
 };
 
-export const numValidUnremovedReps = (set) => {
-    return set.reps.reduce((sum, rep) => {
-        if (rep.isValid === false || rep.removed === true) {
-            return sum;
-        } else {
-            return sum+1;
-        }
-    }, 0);
+// NOTE: this does not consider infinity / 0 invalid
+export const numValidUnremovedReps = (set) => validUnremovedReps(set).length;
+
+// NOTE: this considers infinity / 0 invalid
+export const numUsableReps = (set) => usableReps(set).length;
+
+// NOTE: this considers infinity / 0 invalid
+export const isRepUsable = (rep) => {
+    if (!rep.isValid || !rep.data) {
+        return false;
+    }
+    const velocity = RepDataMap.averageVelocity(rep.data); // this should always return a string
+    return !(!velocity || isNaN(velocity) || velocity.toLowerCase().includes('nf') || Number(velocity) <= 0);
 };
 
-export const hasInvalidVelocity = (set) => {
-    set.reps.map((rep) => {
-        if (rep.isValid && !rep.removed && rep.data) {
-            const velocity = RepDataMap.averageVelocity(rep.data); // this should always return a string
-            if (!velocity || isNaN(velocity) || velocity.toLowerCase().includes('nf') || Number(velocity) <= 0) {
-                return true;
-            }
-        }
-    });
-    return false;
+// NOTE: this considers infinity / 0 invalid
+export const hasUnusableReps = (set) => {
+    return set.reps.some(rep => !isRepUsable(rep));
 };
 
-export const getFirstValidUnremovedRep = (set) => {
-    return set.reps.find((rep) => {
-        return rep.isValid && !rep.removed;
-    });
+// NOTE: this considers infinity / 0 invalid
+export const getFastestUsableAvgVelocity = (set) => {
+    const reps = usableReps(set);
+    if (!reps || reps.length === 0) {
+        return null;
+    }
+
+    return Math.max.apply(Math, reps.map(rep => Number(RepDataMap.averageVelocity(rep.data))));
 };
 
 // this is here because of legacy issues

@@ -64,6 +64,19 @@ export const weightInLBs = (set) => {
     }
 };
 
+export const weightInKGs = (set) => {
+    if (!set.hasOwnProperty('weight') || set.weight === null) {
+        return null;
+    } else if (set.metric === 'kgs') {
+        return set.weight;
+    } else if (set.metric === 'lbs') {
+        return Number(set.weight) * 0.45359237;
+    } else {
+        // should never reach here
+        return null;
+    }
+};
+
 export const numFieldsEntered = (set) => {
     let fields = [set.exercise, set.weight, set.rpe, set.tags.length];
     let num_fields_entered = 0;

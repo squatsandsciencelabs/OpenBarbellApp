@@ -10,6 +10,7 @@ import {
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 import * as OneRMCalculator from 'app/math/OneRMCalculator';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
+import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 
 export const presentSelectExercise = () => ({
     type: PRESENT_SELECT_EXERCISE,
@@ -44,9 +45,10 @@ export const calcE1RM = () => (dispatch, getState) => {
     const daysRange = AnalysisSelectors.getDaysRange(state);
     const velocity = AnalysisSelectors.getVelocitySlider(state);
     const allSets = SetsSelectors.getAllSets(state);
+    const metric = SettingsSelectors.getDefaultMetric(state);
 
     // calculate
-    const results = OneRMCalculator.calculate1RM(exercise, tagsToInclude, tagsToExclude, daysRange, velocity, allSets);
+    const results = OneRMCalculator.calculate1RM(exercise, tagsToInclude, tagsToExclude, daysRange, velocity, metric, allSets);
 
     dispatch({
         type: CALC_ONE_RM,

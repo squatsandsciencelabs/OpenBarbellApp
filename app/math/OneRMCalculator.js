@@ -16,7 +16,7 @@ import * as RepDataMap from 'app/utility/RepDataMap';
 //   errors as [] of ? representing bad points
 //   unused as [] of ? representing unused points
 //   active as [] of ? representing points used for the regression calculation
-export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, velocity, allSets) => {
+export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, velocity, metric, allSets) => {
     let errors = [];
     let unused = [];
     let active = [];
@@ -49,16 +49,28 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     // Right now doing so for simplicity and to avoid extra loops
     // TODO: this should handle KGs or LBs
     let activeChartData = active.map((set) => {
-        let x = parseFloat(SetUtils.weightInLBs(set));
-        return { x: x, y: SetUtils.getFastestUsableAvgVelocity(set), size: 10, setID: set.setID };
+        if (metric === 'lbs') {
+            var weight = SetUtils.weightInLBs(set);
+        } else {
+            var weight = SetUtils.weightInKGs(set);
+        }
+        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), size: 10, setID: set.setID };
     });
     let errorChartData = errors.map((set) => {
-        let x = parseFloat(SetUtils.weightInLBs(set));
-        return { x: x, y: SetUtils.getFastestUsableAvgVelocity(set), size: 10, setID: set.setID };
+        if (metric === 'lbs') {
+            var weight = SetUtils.weightInLBs(set);
+        } else {
+            var weight = SetUtils.weightInKGs(set);
+        }
+        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), size: 10, setID: set.setID };
     });
     let unusedChartData = unused.map((set) => {
-        let x = parseFloat(SetUtils.weightInLBs(set));
-        return { x: x, y: SetUtils.getFastestUsableAvgVelocity(set), size: 10, setID: set.setID };
+        if (metric === 'lbs') {
+            var weight = SetUtils.weightInLBs(set);
+        } else {
+            var weight = SetUtils.weightInKGs(set);
+        }
+        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), size: 10, setID: set.setID };
     });
 
     // Step 4B: Sort by weight

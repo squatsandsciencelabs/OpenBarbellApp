@@ -135,6 +135,21 @@ class OneRMChartView extends Component {
                 }
             });
         }
+        if (this.props.regLeftPoint && this.props.regRightPoint) {
+            data.lineData = {
+                dataSets: [{
+                    values: [this.props.regLeftPoint, this.props.regRightPoint],
+                    label: 'Regression line',
+    
+                    config: {
+                        drawValues: false,
+                        colors: [processColor('rgba(47, 128, 237, 1)')],
+                        drawCircles: false,
+                        lineWidth: 2,
+                    }
+                }]
+            };
+        }
 
         return (
             <View style={styles.chartContainer}>

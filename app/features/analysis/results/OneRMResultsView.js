@@ -229,8 +229,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     chartContainer: {
-        flex: 1,
         alignItems: 'center',
+        width: 300,
+        height: 400,
     },
     chart: {
         width: 300,

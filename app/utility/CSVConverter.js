@@ -50,7 +50,7 @@ export const convert = (sets) => {
         lastSetEndTime = SetUtils.endTime(set);
 
         // reps
-        let reps = set.reps.filter((rep) => rep.removed === false && rep.isValid === true);
+        let reps = SetUtils.validUnremovedReps(set);
         if (set.tags) {
             var tags = set.tags.join();
         } else {

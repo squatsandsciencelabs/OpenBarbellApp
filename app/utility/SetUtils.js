@@ -41,6 +41,10 @@ export const hasEmptyReps = (set) => {
     return activeRep === undefined;
 };
 
+export const validUnremovedReps = (set) => {
+    return set.reps.filter(rep => rep.isValid && !rep.removed);
+};
+
 export const weightInLBs = (set) => {
     if (!set.hasOwnProperty('weight') || set.weight === null) {
         return null;
@@ -104,7 +108,7 @@ export const startTime = (set) => {
         return null;
     } else if (set.startTime === undefined) {
         // time of first rep
-        let validReps = set.reps.filter((rep) => !rep.removed && rep.isValid);        
+        let validReps = validUnremovedReps(set);
         if (validReps.length > 0 && validReps[0].time !== undefined) {
             return validReps[0].time;
         } else if (set.initialStartTime !== undefined) {
@@ -121,7 +125,7 @@ export const startTime = (set) => {
 export const endTime = (set) => {
     if (set.endTime === undefined) {
         // time of last rep
-        let validReps = set.reps.filter((rep) => !rep.removed && rep.isValid);        
+        let validReps = validUnremovedReps(set);
         if (validReps.length > 0) {
             return validReps[validReps.length-1].time;
         } else {

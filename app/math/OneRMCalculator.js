@@ -47,17 +47,24 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     active.push(...thinResults.passed);
 
     // Step 4: Convert into chart points
-    const activeChartData = active.map((set) => {
+    let activeChartData = active.map((set) => {
         return { x: parseFloat(set.weight), y: Number(RepDataMap.averageVelocity(SetUtils.getFirstValidUnremovedRep(set).data)), size: 10, setID: set.setID };
     });
-    const errorChartData = errors.map((set) => {
+    let errorChartData = errors.map((set) => {
         return { x: parseFloat(set.weight), y: Number(RepDataMap.averageVelocity(SetUtils.getFirstValidUnremovedRep(set).data)), size: 10, setID: set.setID };
     });
-    const unusedChartData = unused.map((set) => {
+    let unusedChartData = unused.map((set) => {
         return { x: parseFloat(set.weight), y: Number(RepDataMap.averageVelocity(SetUtils.getFirstValidUnremovedRep(set).data)), size: 10, setID: set.setID };
     });
 
-    // Step 5: Calculate Regression
+    // Step 5: Sort
+
+    // sort by weight
+    activeChartData = activeChartData.sort((a, b) => a.x - b.x);
+    errorChartData = errorChartData.sort((a, b) => a.x - b.x);
+    unusedChartData = unusedChartData.sort((a, b) => a.x - b.x);
+
+    // Step 6: Calculate Regression
     const exerciseData = activeChartData.map((point) => {
         return [point.x, point.y];
     });

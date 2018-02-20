@@ -177,7 +177,8 @@ class OneRMChartView extends Component {
                             drawGridLines: false,
                         }
                     }}
-                    maxVisibleValueCount={9000}
+                    pinchZoom={true}
+                    maxVisibleValueCount={9001} // Assuming we'll never have this many sets
                     legend={{enabled: false}}
                     onSelect={this.handleSelect.bind(this)}
                     chartDescription={{text: ''}}

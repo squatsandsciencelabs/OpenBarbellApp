@@ -388,18 +388,18 @@ export const getRPE1RM = (set, useLBs=false) => {
         return null;
     }
 
-    const reps = SetUtils.validUnremovedReps(set);
+    // rep length
+    const numReps = SetUtils.numValidUnremovedReps(set);
+    if (numReps <= 0 || numReps > 10) {
+        return null;
+    }
+
     if (useLBs) {
         var weight = SetUtils.weightInLBs(set);
     } else {
         var weight = set.weight;
     }
     const rpe = Number(set.rpe.replace(',','.'));
-
-    // rep length check
-    if (reps.length <= 0 || reps.length > 10) {
-        return null;
-    }
 
     // RPE percentages of 1rm correlated to reps @ RPE values
     // "RPE":{"REP#": Percentage of 1rm, ...}
@@ -421,7 +421,7 @@ export const getRPE1RM = (set, useLBs=false) => {
     }
 
     // rpe percent lookup
-    const rpePercent = rpeTable[reps.length];
+    const rpePercent = rpeTable[numReps];
     if (!rpePercent) {
         return null;
     }

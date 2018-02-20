@@ -3,8 +3,8 @@
 * install react (https://facebook.github.io/react-native/docs/getting-started.html)
 * git clone https://github.com/squatsandsciencelabs/OpenBarbellApp.git
 * npm install
-* create android/local.properties and point it at your Android SDK `sdk.dir = /Users/SquatsAndScience/Library/Android/sdk`
-* set up provisioning profiles in XCode 
+* cd ios && carthage bootstrap && pod install
+* create android/local.properties and point it at your Android SDK eg `sdk.dir = /Users/SquatsAndScience/Library/Android/sdk`
 
 # RUNNING IT
 
@@ -15,7 +15,6 @@
 
 * Install Reactotron https://github.com/infinitered/reactotron/blob/master/docs/installing.md which will allow you to sniff network requests and see the state of the Redux store. Note that you can modify ReactotronConfig.js to allow Reactotron debugging of an iPhone or Android device.
 * Optionally, use VSCode with React Native extensions https://github.com/Microsoft/vscode-react-native as when set up properly you have breakpoints.
-* For Android, if you wish to run it on the emulator, comment out the body of the start function of RFDuinoServiceModule.java. This will disable BlueTooth functionality which the Android emulator does not support.
 
 # CODEBASE PRACTICES
 
@@ -33,6 +32,8 @@
 A development version of the keystore and Google Sign In keys have been included in the repository to make getting started easier. The app is also pointed at the development version of the server, which in turn uses a development database.
 
 Be careful when using react-native link. It duplicates imports for the React Native Google Sign In and React Native Device Info Libraries which will cause builds to fail. The solution is to REMOVE the additional Google Sign In and Device Info changes to the Android project after running link. If you have to use react-native link, use it only on the new packages that you just installed.
+
+Use Carthage for all iOS Swift only native libraries such as SwiftyJSON and Charts. Use Cocoapods for all other iOS libraries.
 
 # APP ARCHITECTURE
 

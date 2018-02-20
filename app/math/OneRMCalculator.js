@@ -33,20 +33,18 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     errors.push(...velocityResults.failed);
     pool = velocityResults.passed;
 
-    // Step 3A: Split by workout
+    // Step 3A: Cherry pick a single Set per Workout per Weight
     const workouts = splitByWorkoutAndWeight(pool);
+    const cherryPickResults = cherryPick(workouts);
+    unused.push(...cherryPickResults.failed);
+    pool = cherryPickResults.passed;
 
-    // Step 3B: Unused via Fastest Check
-    const fastestResults = fastestCheck(workouts);
-    unused.push(...fastestResults.failed);
-    pool = fastestResults.passed;
-
-    // Step 3C: Active via Buckets
+    // Step 3B: Thin sets based on predefined "Buckets" of weights
     const thinResults = thinSets(pool);
     unused.push(...thinResults.failed);
     active.push(...thinResults.passed);
 
-    // Step 4: Convert into chart points
+    // Step 4A: Convert into chart points
     // TODO: size shouldn't be passed in via the calculator as it's not a calculated value, it's display only
     // Right now doing so for simplicity and to avoid extra loops
     // TODO: this should handle KGs or LBs
@@ -63,14 +61,12 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
         return { x: x, y: Number(RepDataMap.averageVelocity(SetUtils.getFirstValidUnremovedRep(set).data)), size: 10, setID: set.setID };
     });
 
-    // Step 5: Sort
-
-    // sort by weight
+    // Step 4B: Sort by weight
     activeChartData = activeChartData.sort((a, b) => a.x - b.x);
     errorChartData = errorChartData.sort((a, b) => a.x - b.x);
     unusedChartData = unusedChartData.sort((a, b) => a.x - b.x);
 
-    // Step 6: Calculate Regression
+    // Step 5: Calculate Regression
     const exerciseData = activeChartData.map((point) => {
         return [point.x, point.y];
     });
@@ -156,7 +152,7 @@ const splitByWorkoutAndWeight = (pool) => {
 // returns an object with:
 //   passed as [] of sets representing fastest
 //   failed as [] of sets representing slower ones, meant to be unused
-const fastestCheck = (workouts) => {
+const cherryPick = (workouts) => {
     let passed = [];
     let failed = [];
 

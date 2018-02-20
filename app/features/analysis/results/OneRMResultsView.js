@@ -118,6 +118,7 @@ class OneRMChartView extends Component {
                     drawValues: false,
                     highlightEnabled: true,
                     normalizeSizeEnabled: false,
+                    highlightCircleWidth: 5,
                 }
             });
         }
@@ -130,6 +131,7 @@ class OneRMChartView extends Component {
                     drawValues: false,
                     highlightEnabled: true,
                     normalizeSizeEnabled: false,
+                    highlightCircleWidth: 5,
                 }
             });
         }
@@ -146,6 +148,7 @@ class OneRMChartView extends Component {
                             drawGridLines: false,
                         }
                     }}
+                    maxVisibleValueCount={9000}
                     legend={{enabled: false}}
                     onSelect={this.handleSelect.bind(this)}
                     chartDescription={{text: ''}}

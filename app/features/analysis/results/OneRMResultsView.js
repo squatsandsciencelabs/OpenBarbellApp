@@ -97,6 +97,20 @@ class OneRMChartView extends Component {
                 dataSets: []
             }
         };
+        if (this.props.e1RM) {
+            data.bubbleData.dataSets.push({
+                values: [{x: this.props.e1RM, y: this.props.velocity, size: 15}],
+                label: '1RM',
+    
+                config: {
+                    drawValues: false,
+                    colors: [processColor('green')],
+                    highlightEnabled: false,
+                    normalizeSizeEnabled: false,
+                }
+    
+            });
+        }
         if (this.props.unusedChartData && this.props.unusedChartData.length > 0) {
             data.bubbleData.dataSets.push({
                 values: this.props.unusedChartData,
@@ -143,7 +157,7 @@ class OneRMChartView extends Component {
     
                     config: {
                         drawValues: false,
-                        colors: [processColor('rgba(47, 128, 237, 1)')],
+                        colors: [processColor('green')],
                         drawCircles: false,
                         lineWidth: 2,
                     }

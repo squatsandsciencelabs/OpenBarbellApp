@@ -47,6 +47,8 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     active.push(...thinResults.passed);
 
     // Step 4: Convert into chart points
+    // TODO: size shouldn't be passed in via the calculator as it's not a calculated value, it's display only
+    // Right now doing so for simplicity and to avoid extra loops
     let activeChartData = active.map((set) => {
         return { x: parseFloat(set.weight), y: Number(RepDataMap.averageVelocity(SetUtils.getFirstValidUnremovedRep(set).data)), size: 10, setID: set.setID };
     });

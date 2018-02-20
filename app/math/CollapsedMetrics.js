@@ -388,7 +388,7 @@ export const getRPE1RM = (set, useLBs=false) => {
         return null;
     }
 
-    const reps = set.reps.filter(rep => rep.isValid && !rep.removed);
+    const reps = SetUtils.validUnremovedReps(set);
     if (useLBs) {
         var weight = SetUtils.weightInLBs(set);
     } else {

@@ -20,6 +20,7 @@ import {
     SET_LOSS_QUANTIFIER,
     PEAK_END_QUANTIFIER,
 } from 'app/configs+constants/CollapsedMetricTypes';
+import * as SetUtils from 'app/utility/SetUtils';
 
 // unique metrics
 
@@ -381,14 +382,18 @@ export const canCalcRPE1RM = (set) => {
     return false;
 };
 
-export const getRPE1RM = (set) => {
+export const getRPE1RM = (set, useLBs=false) => {
     // empty rpe / weight check
     if (!set.rpe || !set.weight) {
         return null;
     }
 
     const reps = set.reps.filter(rep => rep.isValid && !rep.removed);
-    const weight = set.weight;
+    if (useLBs) {
+        var weight = SetUtils.weightInLBs(set);
+    } else {
+        var weight = set.weight;
+    }
     const rpe = Number(set.rpe.replace(',','.'));
 
     // rep length check

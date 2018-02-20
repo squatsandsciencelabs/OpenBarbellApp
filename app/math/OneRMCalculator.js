@@ -49,14 +49,18 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     // Step 4: Convert into chart points
     // TODO: size shouldn't be passed in via the calculator as it's not a calculated value, it's display only
     // Right now doing so for simplicity and to avoid extra loops
+    // TODO: this should handle KGs or LBs
     let activeChartData = active.map((set) => {
-        return { x: parseFloat(set.weight), y: Number(RepDataMap.averageVelocity(SetUtils.getFirstValidUnremovedRep(set).data)), size: 10, setID: set.setID };
+        let x = parseFloat(SetUtils.weightInLBs(set));
+        return { x: x, y: Number(RepDataMap.averageVelocity(SetUtils.getFirstValidUnremovedRep(set).data)), size: 10, setID: set.setID };
     });
     let errorChartData = errors.map((set) => {
-        return { x: parseFloat(set.weight), y: Number(RepDataMap.averageVelocity(SetUtils.getFirstValidUnremovedRep(set).data)), size: 10, setID: set.setID };
+        let x = parseFloat(SetUtils.weightInLBs(set));
+        return { x: x, y: Number(RepDataMap.averageVelocity(SetUtils.getFirstValidUnremovedRep(set).data)), size: 10, setID: set.setID };
     });
     let unusedChartData = unused.map((set) => {
-        return { x: parseFloat(set.weight), y: Number(RepDataMap.averageVelocity(SetUtils.getFirstValidUnremovedRep(set).data)), size: 10, setID: set.setID };
+        let x = parseFloat(SetUtils.weightInLBs(set));
+        return { x: x, y: Number(RepDataMap.averageVelocity(SetUtils.getFirstValidUnremovedRep(set).data)), size: 10, setID: set.setID };
     });
 
     // Step 5: Sort
@@ -127,6 +131,8 @@ const splitByWorkoutAndWeight = (pool) => {
 
     // split it into workouts and weights
     pool.map((set) => {
+        const lbs = SetUtils.weightInLBs(set);
+
         // create workout (dictionary of weights) if needed
         if (!workouts.hasOwnProperty(set.workoutID)) {
             workouts[set.workoutID] = {};
@@ -136,12 +142,12 @@ const splitByWorkoutAndWeight = (pool) => {
         let workout = workouts[set.workoutID];
 
         // create weight (array of sets) if needed
-        if (!workout.hasOwnProperty(set.weight)) {
-            workout[set.weight] = [];
+        if (!workout.hasOwnProperty(lbs)) {
+            workout[lbs] = [];
         }
 
         // push set
-        workout[set.weight].push(set);
+        workout[lbs].push(set);
     });
 
     return workouts;
@@ -168,7 +174,7 @@ const fastestCheck = (workouts) => {
                     if (useRPE) {
                         // calculate 1rms
                         const e1RMs = sets.map((set) => {
-                            return {rpe1RM: CollapsedMetrics.getRPE1RM(set), set: set};
+                            return {rpe1RM: CollapsedMetrics.getRPE1RM(set, true), set: set};
                         });
                         
                         // calculate max and add failed
@@ -233,7 +239,8 @@ const thinSets = (pool) => {
 
     // split it into buckets
     pool.forEach((set) => {
-        const bucketWeight = getBucketWeight(set.weight);
+        const weight = SetUtils.weightInLBs(set);
+        const bucketWeight = getBucketWeight(weight);
 
         if (!buckets.hasOwnProperty(bucketWeight)) {
             buckets[bucketWeight] = [];
@@ -330,9 +337,6 @@ const calculateRegression = (data, velocity) => {
         var r2 = Number((result.r2 * 100).toFixed(0));
 
         // regression line
-        // var regressionPoints = data.map((set) => {
-        //     return { x: parseFloat(set.weight), y: result.predict(set.weight), setID: set.setID };
-        // });
         var regressionPoints = result.points.map((pointArray) => {
             return {x: pointArray[0], y: pointArray[1]};
         });

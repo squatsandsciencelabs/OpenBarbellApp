@@ -53,7 +53,7 @@ export const validUnremovedReps = (set) => {
 
 const isRepValid = (rep) => {
     if (!rep.data || rep.data.length <= 0) {
-        return null;
+        return false;
     }
 
     const velocity = RepDataMap.averageVelocity(rep.data);

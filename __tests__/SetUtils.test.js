@@ -466,38 +466,43 @@ describe('usableReps', () => {
 });
 
 describe('validUnremovedReps', () => {
-    // test for valid and unremoved reps
-    // test for INF
-    // test for 0 and invalid
-    const set = {
-        reps: [
-            {removed: true, isValid: true, data: ['-1', '2', '2.5', '2', '8']}, 
-            {removed: false, isValid: true, data: ['-2', '3', '0', '1', '7']}, 
-            {removed: true, isValid: false, data: ['-3', '4', '7.8', '1', '3']}, 
-            {removed: false, isValid: false, data: ['-4', '6', '4', '1', '2']}, 
-            {removed: false, isValid: true, data: ['1', '0', '0', '1', '8']},
+    test('return valid unremoved reps that are not Inf or 0', () => {
+        // test for valid and unremoved reps
+        // test for INF
+        // test for 0 
+        const set = {
+            reps: [
+                {removed: true, isValid: true, data: ['-1', '2', '2.5', '2', '8']}, 
+                {removed: false, isValid: true, data: ['-2', '3', '0', '1', '7']}, 
+                {removed: true, isValid: false, data: ['-3', '4', '7.8', '1', '3']}, 
+                {removed: false, isValid: false, data: ['-4', '6', '4', '1', '2']}, 
+                {removed: false, isValid: true, data: ['1', '0', '0', '1', '8']},
+                {removed: false, isValid: true, data: ['0', '2', '12', '1', '4']},
+                {removed: false, isValid: true, data: ['0', '2', '7', '1', '8']},
+                {removed: false, isValid: true, data: ['0', '2', '0', '1', '14']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', '8']},
+                {removed: false, isValid: true, data: ['-2', '4', 'INF', '1', '2']},
+                {removed: true, isValid: false, data: ['-3', '2', 'INF', '1', '3']},
+                {removed: null, isValid: null, data: [null, null, null, null, null]},
+                {removed: false, isValid: true, data: [null, null, null, null, null]},
+                {removed: false, isValid: true, data: []},
+                {removed: false, isValid: true},
+                {removed: false, isValid: true, data: [null, null, '5', '1', '2']},
+                {removed: false, isValid: true, data: [null, null, 'INF', '2', '4']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', 'INF']},
+            ]
+        };
+
+        const result = sut.validUnremovedReps(set);
+
+        expect(result).toEqual([
             {removed: false, isValid: true, data: ['0', '2', '12', '1', '4']},
             {removed: false, isValid: true, data: ['0', '2', '7', '1', '8']},
-            {removed: false, isValid: true, data: ['0', '2', '0', '1', '14']},
             {removed: false, isValid: true, data: ['-1', '3', '5', '1', '8']},
-            {removed: false, isValid: true, data: ['-2', '4', 'INF', '1', '2']},
-            {removed: true, isValid: false, data: ['-3', '2', 'INF', '1', '3']},
-            {removed: null, isValid: null, data: [null, null, null, null, null]},
             {removed: false, isValid: true, data: [null, null, '5', '1', '2']},
-            {removed: false, isValid: true, data: [null, null, 'INF', '2', '4']},
             {removed: false, isValid: true, data: ['-1', '3', '5', '1', 'INF']},
-        ]
-    };
-
-    const result = sut.validUnremovedReps(set);
-
-    expect(result).toEqual([
-        {removed: false, isValid: true, data: ['0', '2', '12', '1', '4']},
-        {removed: false, isValid: true, data: ['0', '2', '7', '1', '8']},
-        {removed: false, isValid: true, data: ['-1', '3', '5', '1', '8']},
-        {removed: false, isValid: true, data: [null, null, '5', '1', '2']},
-        {removed: false, isValid: true, data: ['-1', '3', '5', '1', 'INF']},
-    ])
+        ]);
+    });
 })
 
 describe('numFieldsEntered', () => {

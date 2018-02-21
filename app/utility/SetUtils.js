@@ -48,8 +48,18 @@ export const usableReps = (set) => {
 
 // NOTE: this does not consider infinity / 0 invalid
 export const validUnremovedReps = (set) => {
-    return set.reps.filter(rep => rep.isValid && !rep.removed);
+    return set.reps.filter(rep => rep.isValid && !rep.removed && isRepValid(rep));
 };
+
+const isRepValid = (rep) => {
+    if (!rep.data || rep.data.length <= 0) {
+        return null;
+    }
+
+    const velocity = RepDataMap.averageVelocity(rep.data);
+
+    return !(!velocity || isNaN(velocity) || velocity.toLowerCase().includes('nf') || Number(velocity) <= 0);
+}
 
 export const weightInLBs = (set) => {
     if (!set.hasOwnProperty('weight') || set.weight === null) {

@@ -93,13 +93,13 @@ class OneRMChartView extends Component {
         // set the data
         // NOTE: Android crashes if the data is length 0, so ONLY add it if data exists
         let data = {
-            bubbleData: {
+            scatterData: {
                 dataSets: []
             }
         };
         if (this.props.e1RM) {
-            data.bubbleData.dataSets.push({
-                values: [{x: this.props.e1RM, y: this.props.velocity, size: 15}],
+            data.scatterData.dataSets.push({
+                values: [{x: this.props.e1RM, y: this.props.velocity}],
                 label: '1RM',
     
                 config: {
@@ -107,12 +107,14 @@ class OneRMChartView extends Component {
                     colors: [processColor('green')],
                     highlightEnabled: false,
                     normalizeSizeEnabled: false,
+                    scatterShape: 'CROSS',
+                    scatterShapeSize: 25,
                 }
     
             });
         }
         if (this.props.unusedChartData && this.props.unusedChartData.length > 0) {
-            data.bubbleData.dataSets.push({
+            data.scatterData.dataSets.push({
                 values: this.props.unusedChartData,
                 label: 'Unused Points',
                 config: {
@@ -120,11 +122,13 @@ class OneRMChartView extends Component {
                     drawValues: false,
                     highlightEnabled: false,
                     normalizeSizeEnabled: false,
+                    scatterShape: 'CIRCLE',
+                    drawHighlightIndicators: false,
                 }
             });
         }
         if (this.props.errorChartData && this.props.errorChartData.length > 0) {
-            data.bubbleData.dataSets.push({
+            data.scatterData.dataSets.push({
                 values: this.props.errorChartData,
                 label: 'Error Points',
                 config: {
@@ -133,11 +137,13 @@ class OneRMChartView extends Component {
                     highlightEnabled: true,
                     normalizeSizeEnabled: false,
                     highlightCircleWidth: 5,
+                    scatterShape: 'CIRCLE',
+                    drawHighlightIndicators: false,
                 }
             });
         }
         if (this.props.activeChartData && this.props.activeChartData.length > 0) {
-            data.bubbleData.dataSets.push({
+            data.scatterData.dataSets.push({
                 values: this.props.activeChartData,
                 label: 'Active Points',
                 config: {
@@ -146,6 +152,8 @@ class OneRMChartView extends Component {
                     highlightEnabled: true,
                     normalizeSizeEnabled: false,
                     highlightCircleWidth: 5,
+                    scatterShape: 'CIRCLE',
+                    drawHighlightIndicators: false,
                 }
             });
         }
@@ -176,6 +184,11 @@ class OneRMChartView extends Component {
                             drawAxisLine: false,
                             drawGridLines: false,
                         }
+                    }}
+                    marker={{enabled: true,
+                        markerColor: processColor('#F0C0FF8C'),
+                        textColor: processColor('white'),
+                        markerFontSize: 14,
                     }}
                     pinchZoom={true}
                     maxVisibleValueCount={9001} // Assuming we'll never have this many sets

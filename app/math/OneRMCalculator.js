@@ -45,7 +45,7 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     active.push(...thinResults.passed);
 
     // Step 4A: Convert into chart points
-    // TODO: size shouldn't be passed in via the calculator as it's not a calculated value, it's display only
+    // TODO: marker shouldn't be passed in via the calculator as it's not a calculated value, it's display only
     // Right now doing so for simplicity and to avoid extra loops
     // TODO: this should handle KGs or LBs
     let activeChartData = active.map((set) => {
@@ -54,7 +54,7 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
         } else {
             var weight = SetUtils.weightInKGs(set);
         }
-        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), size: 10, setID: set.setID };
+        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), marker: "    ", setID: set.setID };
     });
     let errorChartData = errors.map((set) => {
         if (metric === 'lbs') {
@@ -62,7 +62,7 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
         } else {
             var weight = SetUtils.weightInKGs(set);
         }
-        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), size: 10, setID: set.setID };
+        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), marker: "    ", setID: set.setID };
     });
     let unusedChartData = unused.map((set) => {
         if (metric === 'lbs') {
@@ -70,7 +70,7 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
         } else {
             var weight = SetUtils.weightInKGs(set);
         }
-        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), size: 10, setID: set.setID };
+        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), marker: "    ", setID: set.setID };
     });
 
     // Step 4B: Sort by weight

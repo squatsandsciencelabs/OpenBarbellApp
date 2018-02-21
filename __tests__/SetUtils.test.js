@@ -428,6 +428,44 @@ describe('hasEmptyReps', () => {
     });
 });
 
+describe('usableReps', () => {
+    // test for removed or invalid reps
+    // test for INF
+    // test for > 0 and < 10 
+    // test peak is < 10
+    test('returns usable reps only', () => {
+        const set = {
+            reps: [
+                {removed: true, isValid: true, data: ['-1', '2', '2.5', '2', '8']}, 
+                {removed: false, isValid: true, data: ['-2', '3', '1.2', '1', '7']}, 
+                {removed: true, isValid: false, data: ['-3', '4', '7.8', '1', '3']}, 
+                {removed: false, isValid: false, data: ['-4', '6', '4', '1', '2']}, 
+                {removed: false, isValid: true, data: ['1', '0', '10', '1', '8']},
+                {removed: false, isValid: true, data: ['0', '2', '12', '1', '4']},
+                {removed: false, isValid: true, data: ['0', '2', '7', '1', '8']},
+                {removed: false, isValid: true, data: ['0', '2', '7', '1', '14']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', '8']},
+                {removed: false, isValid: true, data: ['-2', '4', 'INF', '1', '2']},
+                {removed: true, isValid: false, data: ['-3', '2', 'INF', '1', '3']},
+                {removed: null, isValid: null, data: [null, null, null, null, null]},
+                {removed: false, isValid: true, data: [null, null, '5', '1', '2']},
+                {removed: false, isValid: true, data: [null, null, 'INF', '2', '4']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', 'INF']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', 'INF']},
+            ]
+        }
+
+        const result = sut.usableReps(set);
+
+        expect(result).toEqual([
+            {removed: false, isValid: true, data: ['-2', '3', '1.2', '1', '7']}, 
+            {removed: false, isValid: true, data: ['0', '2', '7', '1', '8']},
+            {removed: false, isValid: true, data: ['-1', '3', '5', '1', '8']},
+            {removed: false, isValid: true, data: [null, null, '5', '1', '2']},
+        ]);
+    });
+});
+
 describe('numFieldsEntered', () => {
     test('0 when none', () => {
         const set = {

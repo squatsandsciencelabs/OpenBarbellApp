@@ -563,6 +563,115 @@ describe('numUsableReps', () => {
     })
 })
 
+describe('getFastestUsableAvgVelocity', () => {
+    // test with vel > 10
+    // test with removed and invalid with highest vels
+    test('return fastest usable avg vel', () => {
+        const set = {
+            reps: [
+                {removed: true, isValid: true, data: ['-1', '2', '2.5', '2', '8']}, 
+                {removed: false, isValid: true, data: ['-2', '3', '0', '1', '7']}, 
+                {removed: true, isValid: false, data: ['-3', '4', '7.8', '1', '3']}, 
+                {removed: false, isValid: false, data: ['-4', '6', '4', '1', '2']}, 
+                {removed: false, isValid: true, data: ['1', '0', '0', '1', '8']},
+                {removed: false, isValid: true, data: ['0', '2', '12', '1', '4']},
+                {removed: false, isValid: true, data: ['0', '2', '7', '1', '8']},
+                {removed: false, isValid: true, data: ['0', '2', '0', '1', '14']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', '8']},
+                {removed: false, isValid: true, data: ['-2', '4', 'INF', '1', '2']},
+                {removed: true, isValid: false, data: ['-3', '2', 'INF', '1', '3']},
+                {removed: null, isValid: null, data: [null, null, null, null, null]},
+                {removed: false, isValid: true, data: [null, null, null, null, null]},
+                {removed: false, isValid: true, data: []},
+                {removed: false, isValid: true},
+                {removed: false, isValid: true, data: [null, null, '5', '1', '2']},
+                {removed: false, isValid: true, data: [null, null, 'INF', '2', '4']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', 'INF']},
+            ]
+        };
+        
+        const result = sut.getFastestUsableAvgVelocity(set);
+
+        expect(result).toBe(7);
+    });
+});
+
+describe('weightInLBs', () => {
+    // test for valid num
+    test('return null if weight is invalid num', () => {
+        const set = { metric: 'lbs', weight: 'Hooplah' };
+
+        const result = sut.weightInLBs(set);
+
+        expect(result).toBe(null);
+    });
+
+    // test for no weight
+    test('return null if no weight', () => {
+        const set = { metric: 'lbs', weight: null };
+
+        const result = sut.weightInLBs(set);
+
+        expect(result).toBe(null);
+    });
+
+    // test for LBs
+    test('return weight in lbs if metric is lbs', () => {
+        const set = { metric: 'lbs', weight: '250' };
+
+        const result = sut.weightInLBs(set);
+
+        expect(result).toBe(250);
+    });
+
+    // test for KGs
+    test('return weight converted to lbs if metric is kg', () => {
+        const set = { metric: 'kgs', weight: '120' };
+
+        const result = sut.weightInLBs(set);
+
+        expect(result).toBe(265);
+    });
+});
+
+describe('weightInKGs', () => {
+    // test for valid num
+    test('return null if weight is invalid num', () => {
+        const set = { metric: 'kgs', weight: 'Haduken' };
+
+        const result = sut.weightInKGs(set);
+
+        expect(result).toBe(null);
+    });
+
+    // test for no weight
+    test('return null if no weight', () => {
+        const set = { metric: 'kgs', weight: null };
+
+        const result = sut.weightInKGs(set);
+
+        expect(result).toBe(null);
+    });
+
+    // test for LBs
+    test('return weight in kgs if metric is kgs', () => {
+        const set = { metric: 'kgs', weight: '100' };
+
+        const result = sut.weightInKGs(set);
+
+        expect(result).toBe(100);
+    });
+
+    // test for KGs
+    test('return weight converted to kgs if metric is lbs', () => {
+        const set = { metric: 'lbs', weight: '265' };
+
+        const result = sut.weightInKGs(set);
+
+        expect(result).toBe(120);
+    });
+});
+
 describe('validUnremovedReps', () => {
     test('return valid unremoved reps that are not Inf or 0', () => {
         // test for valid and unremoved reps

@@ -62,12 +62,12 @@ const isRepValid = (rep) => {
 }
 
 export const weightInLBs = (set) => {
-    if (!set.hasOwnProperty('weight') || set.weight === null) {
+    if (!set.hasOwnProperty('weight') || set.weight === null || !Number(set.weight)) {
         return null;
     } else if (set.metric === 'lbs') {
-        return set.weight;
+        return Number(set.weight);
     } else if (set.metric === 'kgs') {
-        return Number(set.weight) * 2.20462262;
+        return Math.round(Number(set.weight) * 2.20462262);
     } else {
         // should never reach here
         return null;
@@ -75,12 +75,12 @@ export const weightInLBs = (set) => {
 };
 
 export const weightInKGs = (set) => {
-    if (!set.hasOwnProperty('weight') || set.weight === null) {
+    if (!set.hasOwnProperty('weight') || set.weight === null || !Number(set.weight)) {
         return null;
     } else if (set.metric === 'kgs') {
-        return set.weight;
+        return Number(set.weight);
     } else if (set.metric === 'lbs') {
-        return Number(set.weight) * 0.45359237;
+        return Math.round(Number(set.weight) * 0.45359237);
     } else {
         // should never reach here
         return null;

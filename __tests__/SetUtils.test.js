@@ -597,6 +597,15 @@ describe('getFastestUsableAvgVelocity', () => {
 });
 
 describe('weightInLBs', () => {
+    // test for valid metric
+    test('return null if metric is invalid', () => {
+        const set = { metric: 'triggered', weight: '560' }
+
+        const result = sut.weightInLBs(set);
+
+        expect(result).toBe(null);
+    })
+    
     // test for valid num
     test('return null if weight is invalid num', () => {
         const set = { metric: 'lbs', weight: 'Hooplah' };
@@ -635,6 +644,15 @@ describe('weightInLBs', () => {
 });
 
 describe('weightInKGs', () => {
+    // test for valid metric
+    test('return null if metric is invalid', () => {
+        const set = { metric: 'fma brotherhood is better', weight: '425' }
+
+        const result = sut.weightInKGs(set);
+
+        expect(result).toBe(null);
+    })
+
     // test for valid num
     test('return null if weight is invalid num', () => {
         const set = { metric: 'kgs', weight: 'Haduken' };

@@ -2,7 +2,7 @@ import * as RepDataMap from 'app/utility/RepDataMap';
 
 // no data and no active reps
 export const isEmpty = (set) => {
-    return hasEmptyData(set) && hasEmptyReps(set);
+    return (hasEmptyData(set) && hasEmptyReps(set)) || hasRemovedFlag(set);
 };
 
 // no data and no reps at all
@@ -30,6 +30,10 @@ export const hasNoReps = (set) => {
         return true;
     }
     return set.reps.length === 0;
+};
+
+export const hasRemovedFlag = (set) => {
+    return set.removed;
 };
 
 export const hasEmptyReps = (set) => {

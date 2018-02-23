@@ -70,7 +70,7 @@ const createViewModels = (state, sets) => {
         } else if (!isRemoved) {
             array.push(createSummaryViewModel(set));
             array.push(createAnalysisViewModel(set));
-        }
+        } 
         lastExerciseName = set.exercise;
 
         // reps
@@ -82,23 +82,72 @@ const createViewModels = (state, sets) => {
         if (isInitialSet) {
             // new set, reset the end time
             lastSetEndTime = isRemoved ? null : SetUtils.endTime(set);
-            array.push(createBottomBorder(set));
+
+            if (isLastSet) {
+                array.push(createBottomBorder(set));
+            } else if (!isLastSet && !isCollapsed && !isRemoved) {
+                // new set, reset the end time
+                lastSetEndTime = isRemoved ? null : SetUtils.endTime(set);
+                array.push(createDeleteFooter(set));
+                array.push(createBottomBorder(set));
+            } else if (!isLastSet && !isCollapsed && (isRemoved && (!SetUtils.hasEmptyData(set) || !SetUtils.hasEmptyReps(set)))) {
+                // new set, reset the end time
+                lastSetEndTime = isRemoved ? null : SetUtils.endTime(set);
+                array.push(createRestoreFooter(set));
+                array.push(createBottomBorder(set));                
+            } else {
+                array.push(createBottomBorder(set));
+            }
         } else if (!isRemoved && set.reps.length > 0) { // ignore removed sets in rest calculations
             // add footer if valid
             if (lastSetEndTime !== null) {
-                array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
+                if (isCollapsed) {
+                    array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
+                } else {
+                    array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
+                    array.push(createDeleteFooter(set));
+                }    
             } else {
-                array.push(createBottomBorder(set));
+                if (!isCollapsed) {
+                    array.push(createDeleteFooter(set));
+                    array.push(createBottomBorder(set));
+                } else {
+                    array.push(createBottomBorder(set));
+                }
             }
 
             // update variable for calculation purposes
             lastSetEndTime = SetUtils.endTime(set);
+        }  else if (isRemoved && (!SetUtils.hasEmptyData(set) || !SetUtils.hasEmptyReps(set))) {
+            // add footer if valid
+            if (lastSetEndTime !== null) {
+                if (isCollapsed) {
+                    array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
+                } else {
+                    array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
+                    array.push(createRestoreFooter(set));
+                }    
+            } else {
+                if (!isCollapsed) {
+                    array.push(createRestoreFooter(set));
+                    array.push(createBottomBorder(set));
+                } else {
+                    array.push(createBottomBorder(set));
+                }
+            }            
         } else if (isLastSet && lastSetEndTime !== null && set.reps.length === 0) {
             // working set, live rest mode
             array.push(createWorkingSetFooterVM(set, lastSetEndTime));
-        } else {
+        } else if (isLastSet && !lastSetEndTime && set.reps.length === 0) {
             array.push(createBottomBorder(set));
-        }
+        } else if (!isLastSet) {
+            if (!isCollapsed && !isRemoved) {
+                array.push(createDeleteFooter(set));
+                array.push(createBottomBorder(set));
+            } else {
+                array.push(createBottomBorder(set));
+            }
+        } 
 
         // insert set card data
         Array.prototype.splice.apply(section.data, array);
@@ -159,6 +208,7 @@ const createSummaryViewModel = (set) => {
         numReps: numReps ? numReps : '0 reps',
         metric: set.metric,
         tags: set.tags,
+        removed: set.removed,
     };
 };
 
@@ -253,6 +303,20 @@ const createFooterVM = (set, lastSetEndTime, isCollapsed) => {
     };
     return footerVM;
 };
+
+const createDeleteFooter = (set) => ({
+    type: "delete footer",
+    key: set.setID + "deleteSet",
+    setID: set.setID,
+    removed: set.removed,
+});
+
+const createRestoreFooter = (set) => ({
+    type: "restore footer",
+    key: set.setID + "restoreSet",
+    setID: set.setID,
+});
+
 const createBottomBorder = (set) => ({
     type: "bottom border",
     key: set.setID + 'bottomborder',
@@ -275,6 +339,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
+        deleteSet: Actions.deleteSet,
+        restoreSet: Actions.restoreSet,
         endSet: Actions.endSet,
         removeRep: Actions.removeRep,
         restoreRep: Actions.restoreRep,

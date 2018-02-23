@@ -8,8 +8,6 @@ import {
     UPDATE_SET_DATA_FROM_SERVER,
     FINISH_UPLOADING_SETS,
     FAILED_UPLOAD_SETS,
-    DELETE_HISTORY_SET,
-    DELETE_WORKOUT_SET,
 } from 'app/configs+constants/ActionTypes';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as SetUtils from 'app/utility/SetUtils';
@@ -55,11 +53,6 @@ const saveWorkoutSet = (setID, exercise = null, weight = null, metric = null, rp
     return action;
 };
 
-export const deleteWorkoutSet = (set) => ({
-    type: DELETE_WORKOUT_SET,
-    setID: set.setID,
-});
-
 export const saveHistoryExerciseName = (setID, exercise = null) => saveHistorySet(setID, exercise);
 
 export const saveHistoryForm = (setID, weight = null, metric = null, rpe = null) => {
@@ -88,11 +81,6 @@ const saveHistorySet = (setID, exercise = null, weight = null, metric = null, rp
 
     return action;
 };
-
-export const deleteHistorySet = (set) => ({
-    type: DELETE_HISTORY_SET,
-    set: set
-});
 
 export const endSet = (manuallyStarted=false, wasSanityCheck=false) => (dispatch, getState) => {
     const state = getState();

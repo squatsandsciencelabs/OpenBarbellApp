@@ -6,6 +6,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     processColor,
+    Platform,
 } from 'react-native';
 import {
     CombinedChart,
@@ -18,6 +19,61 @@ import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 import OneRMEditSetScreen from '../edit_set/OneRMEditSetScreen';
 
 class OneRMChartView extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            setID: null,
+            workoutID: null,
+            touching: false,
+        };
+    }
+
+    // TOUCHES
+
+    _handleSelect(event) {
+        const nativeEvent = event.nativeEvent;
+        if (nativeEvent.hasOwnProperty('data')) {
+            const data = nativeEvent.data;
+            if (data.hasOwnProperty('setID') && data.hasOwnProperty('workoutID')) {
+                if (Platform.OS === 'ios') {
+                    if (!this.state.touching) {
+                        this.props.tappedSet(data.setID, data.workoutID);
+                    }
+                } else {
+                    this.setState({setID: data.setID, workoutID: data.workoutID});
+                }
+            } else if (Platform.OS !== 'ios') {
+                this.setState({setID: null, workoutID: null});
+            }
+        }
+    }
+
+    _handleTouchStart() {
+        if (Platform.OS === 'ios') {
+            this.setState({touching: true});
+        }
+    }
+
+    _handleTouchEndCapture() {
+        if (Platform.OS === 'ios') {
+            this.setState({touching: false});
+        } else {
+            if (this.state.setID && this.state.workoutID) {
+                this.props.tappedSet(this.state.setID, this.state.workoutID);
+                this.setState({setID: null, workoutID: null});
+            }
+        }
+    };
+
+    _handleTouchMove() {
+        if (Platform.OS !== 'ios') {
+            this.setState({setID: null, workoutID: null});
+        }
+    }
+
+    // RENDER
 
     _render1RM(r2) {
         if (this.props.isR2HighEnough) {
@@ -83,17 +139,6 @@ class OneRMChartView extends Component {
         } else {
             const size = Device.isSmallDevice() ? 250 : 300;
             return <Image style={{width: size, height: size, marginTop: 20}} source={require('app/appearance/images/grayed_chart.png')} />
-        }
-    }
-
-    handleSelect(event) {
-        console.tron.log("selected " + JSON.stringify(event.nativeEvent));
-        const nativeEvent = event.nativeEvent;
-        if (nativeEvent.hasOwnProperty('data')) {
-            const data = event.nativeEvent.data;
-            if (data.hasOwnProperty('setID') && data.hasOwnProperty('workoutID')) {
-                this.props.tappedSet(data.setID, data.workoutID);
-            }
         }
     }
 
@@ -201,7 +246,10 @@ class OneRMChartView extends Component {
                     pinchZoom={true}
                     maxVisibleValueCount={9001} // Assuming we'll never have this many sets
                     legend={{enabled: false}}
-                    onSelect={this.handleSelect.bind(this)}
+                    onSelect={this._handleSelect.bind(this)}
+                    onTouchStart={this._handleTouchStart.bind(this)}
+                    onTouchEndCapture={this._handleTouchEndCapture.bind(this)}
+                    onTouchMove={this._handleTouchMove.bind(this)}
                     chartDescription={{text: ''}}
                     onChange={(event) => console.log(event.nativeEvent)}
                     style={styles.chart}/>

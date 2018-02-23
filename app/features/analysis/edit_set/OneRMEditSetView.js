@@ -6,6 +6,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     SectionList,
+    Platform,
 } from 'react-native';
 
 // TODO: make analysis versions of this for the analytics
@@ -35,6 +36,33 @@ class OneRMEditSetView extends Component {
     }
 
     // RENDER
+
+    _renderNavigation() {
+        if (Platform.OS === 'ios') {
+            var statusBar = (<View style={{height: 20, width: 9001, backgroundColor: 'black'}}></View>);
+        } else {
+            var statusBar = null;
+        }
+
+        return (
+            <View style={styles.container}>
+                { statusBar }
+
+                <View style={styles.navTitle}>
+                    <Text style={{color: 'rgba(77, 77, 77, 1)'}}>{this.props.setID}</Text>
+                </View>
+
+                <View style={{position: 'absolute', left: 0, top: 0}}>
+                    <TouchableOpacity onPress={() => this.props.dismissModal()}>
+                        <View style={styles.nav}>
+                            <Text style={[{color: 'rgba(47, 128, 237, 1)'}]}>Close</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
+            </View>
+        )
+    }
 
     _renderSectionHeader(section) {
         return (
@@ -133,6 +161,7 @@ class OneRMEditSetView extends Component {
                     <HistoryVideoRecorderScreen />
                     <HistoryVideoPlayerScreen />
 
+                    {this._renderNavigation()}
                     <View style={{ flex: 1, backgroundColor: 'white' }}>
                         {list}
                     </View>
@@ -142,5 +171,21 @@ class OneRMEditSetView extends Component {
     }
 
 }
+
+const styles = StyleSheet.create({
+    container: {
+        height: Platform.OS === 'ios' ? 70 : 50,
+        alignItems: 'center'
+    },
+    nav: {
+        paddingTop: Platform.OS === 'ios' ? 35 : 15,
+        paddingRight: 10,
+        paddingBottom: 10,
+        paddingLeft: 10
+    },
+    navTitle: {
+        paddingTop: 15,
+    },
+});
 
 export default OneRMEditSetView;

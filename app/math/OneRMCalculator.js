@@ -55,7 +55,7 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
         } else {
             var weight = SetUtils.weightInKGs(set);
         }
-        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), marker: "    ", setID: set.setID, workoutID: set.workoutID };
+        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), marker: set.setID, setID: set.setID, workoutID: set.workoutID };
     });
     let errorChartData = errors.map((set) => {
         if (metric === 'lbs') {
@@ -63,7 +63,7 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
         } else {
             var weight = SetUtils.weightInKGs(set);
         }
-        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), marker: "    ", setID: set.setID, workoutID: set.workoutID };
+        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), marker: set.setID, setID: set.setID, workoutID: set.workoutID };
     });
     let unusedChartData = unused.map((set) => {
         if (metric === 'lbs') {

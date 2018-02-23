@@ -244,11 +244,13 @@ const mapStateToProps = (state) => {
         const sections = createViewModels(state, sets, setID);
 
         return {
+            setID: setID,
             sections: sections,
             isModalShowing: true,
         };
     } else {
         return {
+            setID: null,
             sections: [],
             isModalShowing: false,
         }
@@ -259,6 +261,7 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         removeRep: Actions.removeRep,
         restoreRep: Actions.restoreRep,
+        dismissModal: Actions.dismissEditSet,
     }, dispatch);
 };
 

@@ -88,7 +88,13 @@ class OneRMChartView extends Component {
 
     handleSelect(event) {
         console.tron.log("selected " + JSON.stringify(event.nativeEvent));
-        this.props.tappedSet(event.nativeEvent.data.setID, event.nativeEvent.data.workoutID);
+        const nativeEvent = event.nativeEvent;
+        if (nativeEvent.hasOwnProperty('data')) {
+            const data = event.nativeEvent.data;
+            if (data.hasOwnProperty('setID') && data.hasOwnProperty('workoutID')) {
+                this.props.tappedSet(data.setID, data.workoutID);
+            }
+        }
     }
 
     _renderChart() {

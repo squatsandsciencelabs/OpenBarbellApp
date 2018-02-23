@@ -1,11 +1,11 @@
 import {
     PRESENT_HISTORY_EXPANDED,
     LOADING_HISTORY,
-    SAVE_HISTORY_REP,
     COLLAPSE_HISTORY_SET,
     EXPAND_HISTORY_SET,
 } from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
+import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 
 export const collapseSet = (setID) => (dispatch, getState) => {
     dispatch({
@@ -31,40 +31,6 @@ export const finishLoading = () => ({
     isLoading: false
 });
 
-export const removeRep = (setID, repIndex) => (dispatch, getState) => {
-    const state = getState();
-    logRemoveRepAnalytics(state, setID);
+export const removeRep = (setID, repIndex) => SetsActionCreators.removeHistoryRep(setID, repIndex);
 
-    dispatch({
-        type: SAVE_HISTORY_REP,
-        setID: setID,
-        repIndex: repIndex,
-        removed: true
-    });
-};
-
-export const restoreRep = (setID, repIndex) => (dispatch, getState) => {
-    const state = getState();
-    logRestoreRepAnalytics(state, setID);
-
-    dispatch({
-        type: SAVE_HISTORY_REP,
-        setID: setID,
-        repIndex: repIndex,
-        removed: false
-    });
-};
-
-const logRemoveRepAnalytics = (state, setID) => {
-    Analytics.logEventWithAppState('remove_rep', {
-        is_working_set: false,
-        is_history: true,
-    }, state);
-};
-
-const logRestoreRepAnalytics = (state, setID) => {
-    Analytics.logEventWithAppState('restore_rep', {
-        is_working_set: false,
-        is_history: true,
-    }, state);
-};
+export const restoreRep = (setID, repIndex) => SetsActionCreators.restoreHistoryRep(setID, repIndex);

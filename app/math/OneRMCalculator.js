@@ -48,13 +48,14 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     // TODO: marker shouldn't be passed in via the calculator as it's not a calculated value, it's display only
     // Right now doing so for simplicity and to avoid extra loops
     // TODO: this should handle KGs or LBs
+    // NOTE: workoutID is passed here to reduce the amount of searching necessary each time you tap, but it is a bit odd
     let activeChartData = active.map((set) => {
         if (metric === 'lbs') {
             var weight = SetUtils.weightInLBs(set);
         } else {
             var weight = SetUtils.weightInKGs(set);
         }
-        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), marker: "    ", setID: set.setID };
+        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), marker: "    ", setID: set.setID, workoutID: set.workoutID };
     });
     let errorChartData = errors.map((set) => {
         if (metric === 'lbs') {
@@ -62,7 +63,7 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
         } else {
             var weight = SetUtils.weightInKGs(set);
         }
-        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), marker: "    ", setID: set.setID };
+        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), marker: "    ", setID: set.setID, workoutID: set.workoutID };
     });
     let unusedChartData = unused.map((set) => {
         if (metric === 'lbs') {
@@ -70,7 +71,7 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
         } else {
             var weight = SetUtils.weightInKGs(set);
         }
-        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), marker: "    ", setID: set.setID };
+        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), marker: "    ", setID: set.setID, workoutID: set.workoutID };
     });
 
     // Step 4B: Sort by weight

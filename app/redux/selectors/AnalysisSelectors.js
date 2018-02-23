@@ -41,6 +41,10 @@ export const getUnusedChartData = (state) => stateRoot(state).unusedChartData;
 
 export const getRegressionPoints = (state) => stateRoot(state).regressionPoints;
 
+export const getSetID = (state) => stateRoot(state).setID;
+
+export const getWorkoutID = (state) => stateRoot(state).workoutID;
+
 // scroll
 
 export const getScroll = (state) => stateRoot(state).scroll;

@@ -52,7 +52,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
-        tapPoint: Actions.tapPoint,
+        tappedSet: Actions.tappedSet,
     }, dispatch);
 };
 

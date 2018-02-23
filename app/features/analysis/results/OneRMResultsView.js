@@ -150,6 +150,7 @@ class OneRMChartView extends Component {
                 dataSets: []
             }
         };
+        const dotMultiplier = Platform.OS === 'ios' ? 1 : 4;
         if (this.props.e1RM) {
             data.scatterData.dataSets.push({
                 values: [{x: this.props.e1RM, y: this.props.velocity}],
@@ -161,7 +162,7 @@ class OneRMChartView extends Component {
                     highlightEnabled: false,
                     normalizeSizeEnabled: false,
                     scatterShape: 'CROSS',
-                    scatterShapeSize: 25,
+                    scatterShapeSize: 25 * dotMultiplier,
                 }
     
             });
@@ -177,6 +178,7 @@ class OneRMChartView extends Component {
                     normalizeSizeEnabled: false,
                     scatterShape: 'CIRCLE',
                     drawHighlightIndicators: false,
+                    scatterShapeSize: 12 * dotMultiplier,
                 }
             });
         }
@@ -192,6 +194,7 @@ class OneRMChartView extends Component {
                     highlightCircleWidth: 5,
                     scatterShape: 'CIRCLE',
                     drawHighlightIndicators: false,
+                    scatterShapeSize: 12 * dotMultiplier,
                 }
             });
         }
@@ -207,6 +210,7 @@ class OneRMChartView extends Component {
                     highlightCircleWidth: 5,
                     scatterShape: 'CIRCLE',
                     drawHighlightIndicators: false,
+                    scatterShapeSize: 12 * dotMultiplier,
                 }
             });
         }

@@ -15,6 +15,7 @@ import {
 } from 'react-native-charts-wrapper';
 import * as Device from 'app/utility/Device';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
+import OneRMEditSetScreen from '../edit_set/OneRMEditSetScreen';
 
 class OneRMChartView extends Component {
 
@@ -87,6 +88,7 @@ class OneRMChartView extends Component {
 
     handleSelect(event) {
         console.tron.log("selected " + JSON.stringify(event.nativeEvent));
+        this.props.tappedSet(event.nativeEvent.data.setID, event.nativeEvent.data.workoutID);
     }
 
     _renderChart() {
@@ -197,6 +199,7 @@ class OneRMChartView extends Component {
                     chartDescription={{text: ''}}
                     onChange={(event) => console.log(event.nativeEvent)}
                     style={styles.chart}/>
+                    <OneRMEditSetScreen />
             </View>
         );
     }

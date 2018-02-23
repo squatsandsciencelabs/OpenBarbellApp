@@ -1,10 +1,11 @@
 import {
-    Linking,
-} from 'react-native';
+    EDIT_ANALYSIS_SET
+} from 'app/configs+constants/ActionTypes';
 
-import * as AppStateActionCreators from 'app/redux/shared_actions/AppStateActionCreators';
-
-export const tapPoint = (setID) => {
-    // change tab and set where to scroll to
-    return AppStateActionCreators.changeTab(1, setID);
+export const tappedSet = (setID, workoutID) => {
+    return {
+        type: EDIT_ANALYSIS_SET,
+        setID: setID,
+        workoutID: workoutID,
+    };
 };

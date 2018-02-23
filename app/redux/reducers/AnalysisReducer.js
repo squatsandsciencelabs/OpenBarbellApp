@@ -16,6 +16,7 @@ import {
     PRESENT_INFO_MODAL,
     SHOW_BEST_RESULTS_MODAL,
     DISMISS_INFO_MODAL,
+    EDIT_ANALYSIS_SET,
 } from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
@@ -40,6 +41,8 @@ const defaultState = {
     unusedChartData: null,
     errorChartData: null,
     regressionPoints: null,
+    setID: null,
+    workoutID: null,
 
     // scroll
     scroll: false,
@@ -125,7 +128,12 @@ const AnalysisReducer = (state = defaultState, action) => {
                 regressionPoints: action.regressionPoints,
                 scroll: !state.scroll,
             };
-
+        case EDIT_ANALYSIS_SET:
+            return {
+                ...state,
+                setID: action.setID,
+                workoutID: action.workoutID,
+            };
         default: 
             return state;
     }

@@ -10,6 +10,7 @@ import {
     FAILED_UPLOAD_SETS,
     DELETE_HISTORY_SET,
     DELETE_WORKOUT_SET,
+    SAVE_HISTORY_REP,
 } from 'app/configs+constants/ActionTypes';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as SetUtils from 'app/utility/SetUtils';
@@ -25,6 +26,8 @@ export const getDefaultMetric = () => (dispatch, getState) => {
         defaultMetric: defaultMetric
     });
 }
+
+// WORKOUT
 
 export const saveWorkoutExerciseName = (setID, exercise = null) => saveWorkoutSet(setID, exercise);
 
@@ -60,6 +63,24 @@ export const deleteWorkoutSet = (set) => ({
     setID: set.setID,
 });
 
+export const endSet = (manuallyStarted=false, wasSanityCheck=false) => (dispatch, getState) => {
+    const state = getState();
+    const set = SetsSelectors.getWorkingSet(state);
+    
+    // check if set form has any data
+    if (!SetUtils.isUntouched(set)) {
+        logEndSetAnalytics(manuallyStarted, wasSanityCheck, state);
+        const defaultMetric = state.settings.defaultMetric;        
+
+        dispatch({
+            type: END_SET,
+            defaultMetric: defaultMetric
+        });
+    }
+};
+
+// HISTORY
+
 export const saveHistoryExerciseName = (setID, exercise = null) => saveHistorySet(setID, exercise);
 
 export const saveHistoryForm = (setID, weight = null, metric = null, rpe = null) => {
@@ -94,21 +115,31 @@ export const deleteHistorySet = (set) => ({
     set: set
 });
 
-export const endSet = (manuallyStarted=false, wasSanityCheck=false) => (dispatch, getState) => {
+export const removeHistoryRep = (setID, repIndex) => (dispatch, getState) => {
     const state = getState();
-    const set = SetsSelectors.getWorkingSet(state);
-    
-    // check if set form has any data
-    if (!SetUtils.isUntouched(set)) {
-        logEndSetAnalytics(manuallyStarted, wasSanityCheck, state);
-        const defaultMetric = state.settings.defaultMetric;        
+    logRemoveRepAnalytics(state, setID);
 
-        dispatch({
-            type: END_SET,
-            defaultMetric: defaultMetric
-        });
-    }
+    dispatch({
+        type: SAVE_HISTORY_REP,
+        setID: setID,
+        repIndex: repIndex,
+        removed: true
+    });
 };
+
+export const restoreHistoryRep = (setID, repIndex) => (dispatch, getState) => {
+    const state = getState();
+    logRestoreRepAnalytics(state, setID);
+
+    dispatch({
+        type: SAVE_HISTORY_REP,
+        setID: setID,
+        repIndex: repIndex,
+        removed: false
+    });
+};
+
+// SYNCING
 
 export const beginUploadingSets = () => ({ type: BEGIN_UPLOADING_SETS });
 
@@ -178,4 +209,18 @@ const logEndSetAnalytics = (manuallyStarted, wasSanityCheck, state) => {
         was_sanity_check: wasSanityCheck,
         previous_set_has_reps: previous_set_has_reps      
     }, state);    
+};
+
+const logRemoveRepAnalytics = (state, setID) => {
+    Analytics.logEventWithAppState('remove_rep', {
+        is_working_set: false,
+        is_history: true,
+    }, state);
+};
+
+const logRestoreRepAnalytics = (state, setID) => {
+    Analytics.logEventWithAppState('restore_rep', {
+        is_working_set: false,
+        is_history: true,
+    }, state);
 };

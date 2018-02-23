@@ -7,7 +7,7 @@ import * as Actions from './OneRMDebugActions';
 const mapStateToProps = (state) => {
     // TODO: set this to false to remove it from the live production app
     return {
-        visible: true,
+        visible: __DEV__,
     };
 };
 

@@ -160,6 +160,10 @@ export const failedUploadSets = () => ({ type: FAILED_UPLOAD_SETS });
 // UTILITY
 
 const fixRPE = (rpe) => {
+    if (rpe === null || rpe === '') {
+        return rpe;
+    }
+
     const rpeWithoutCommas = rpe.replace(',','.');
 
     if (Number(rpeWithoutCommas) <= 5.5 || isNaN(rpeWithoutCommas)) {

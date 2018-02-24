@@ -71,6 +71,10 @@ export const getWorkoutSet = (state, setID) => {
     return stateRoot(state).workoutData.find( set => set.setID == setID );
 };
 
+export const getIsWorkoutSet = (state, setID) => {
+    return getWorkoutSet(state, setID) !== undefined;
+};
+
 export const getNumWorkoutReps = (state) => {
     const sets = getWorkoutSets(state);
     var num_reps = 0;

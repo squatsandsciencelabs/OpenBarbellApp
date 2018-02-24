@@ -1,5 +1,5 @@
 import {
-    DISMISS_EDIT_ANALYSIS_SET,
+    DISMISS_EDIT_1RM_SET,
 } from 'app/configs+constants/ActionTypes';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 
@@ -11,6 +11,6 @@ export const dismissEditSet = () => {
     // TODO: analytics
 
     return {
-        type: DISMISS_EDIT_ANALYSIS_SET
+        type: DISMISS_EDIT_1RM_SET
     };
 };

@@ -12,7 +12,7 @@ import {
     SAVE_WORKOUT_SET,
     SAVE_HISTORY_SET,
     SAVE_HISTORY_VIDEO,
-    TEST_ONE_RM,
+    TEST_1RM,
 } from 'app/configs+constants/ActionTypes';
 import API from 'app/services/API';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
@@ -25,7 +25,7 @@ import * as Analytics from 'app/services/Analytics';
 const SyncSaga = function* SyncSaga() {
     // prevent all syncing once testing 1RM mode is enabled
     const task = yield fork(syncLoop);
-    yield take(TEST_ONE_RM);
+    yield take(TEST_1RM);
     yield cancel(task);
 };
 

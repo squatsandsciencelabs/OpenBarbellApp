@@ -22,7 +22,7 @@ import {
     LOGOUT,
     DELETE_WORKOUT_SET,
     DELETE_HISTORY_SET,
-    TEST_ONE_RM,
+    TEST_1RM,
 } from 'app/configs+constants/ActionTypes';
 import uuidV4 from 'uuid/v4';
 import DeviceInfo from 'react-native-device-info';
@@ -78,7 +78,7 @@ const SetsReducer = (state = createDefaultState(), action) => {
             return clearHistory(state, action);
         case FINISH_UPLOADING_SETS:
             return finishUploadingSets(state, action);
-        case TEST_ONE_RM:
+        case TEST_1RM:
             return overrideWithTestData(state, action);
         default:
             return state;
@@ -604,7 +604,7 @@ const finishUploadingSets = (state, action) => {
     });
 };
 
-// TEST_ONE_RM
+// TEST_1RM
 
 const overrideWithTestData = (state, action) => {
     // dump of test data

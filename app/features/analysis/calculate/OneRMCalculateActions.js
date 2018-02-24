@@ -4,7 +4,7 @@ import {
     CHANGE_1RM_DAYS_RANGE,
     PRESENT_INCLUDES_TAGS,
     PRESENT_EXCLUDES_TAGS,
-    CALC_ONE_RM,
+    CALC_1RM,
     PRESENT_INFO_MODAL,
 } from 'app/configs+constants/ActionTypes';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
@@ -51,7 +51,7 @@ export const calcE1RM = () => (dispatch, getState) => {
     const results = OneRMCalculator.calculate1RM(exercise, tagsToInclude, tagsToExclude, daysRange, velocity, metric, allSets);
 
     dispatch({
-        type: CALC_ONE_RM,
+        type: CALC_1RM,
         velocity: velocity,
         e1RM: results.e1RM,
         r2: results.r2,

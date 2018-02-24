@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import SetForm from 'app/shared_features/set_card/expanded/SetForm';
-import * as Actions from './EditHistorySetFormActions';
+import * as Actions from './OneRMEditSetFormActions';
 import * as DateUtils from 'app/utility/DateUtils';
 
 const mapStateToProps = (state, ownProps) => {

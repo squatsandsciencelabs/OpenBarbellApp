@@ -46,6 +46,10 @@ export const usableReps = (set) => {
     return set.reps.filter(rep => !rep.removed && isRepUsable(rep));
 };
 
+export const hasUnremovedRep = (set) => {
+    return set.reps.some(rep => !rep.removed);
+};
+
 // NOTE: this does not consider infinity / 0 invalid
 export const validUnremovedReps = (set) => {
     return set.reps.filter(rep => rep.isValid && !rep.removed);

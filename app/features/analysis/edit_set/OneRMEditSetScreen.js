@@ -83,7 +83,7 @@ const createViewModels = (state, sets, setID) => {
                 array.push({type: "subheader", key: set.setID+"subheader"});
             }
             Array.prototype.push.apply(array, createRowViewModels(set));
-            if (!isInitialSet && SetUtils.validUnremovedReps(set).length > 0 && lastSetEndTime != null) {
+            if (!isInitialSet && SetUtils.hasUnremovedRep(set) && lastSetEndTime != null) {
                 array.push(createFooterVM(set, lastSetEndTime));
             } else {
                 array.push(createBottomBorder(set));
@@ -98,7 +98,7 @@ const createViewModels = (state, sets, setID) => {
         if (isInitialSet) {
             // new set, reset the end time
             lastSetEndTime = isRemoved ? null : SetUtils.endTime(set);
-        } else if (SetUtils.validUnremovedReps(set).length > 0) { // ignore removed sets in rest calculations
+        } else if (SetUtils.hasUnremovedRep(set)) { // ignore removed sets in rest calculations
             // update variable for calculation purposes
             lastSetEndTime = SetUtils.endTime(set);
         }

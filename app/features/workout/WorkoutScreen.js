@@ -83,7 +83,7 @@ const createViewModels = (state, sets) => {
             // new set, reset the end time
             lastSetEndTime = isRemoved ? null : SetUtils.endTime(set);
             array.push(createBottomBorder(set));
-        } else if (!isRemoved && set.reps.length > 0) { // ignore removed sets in rest calculations
+        } else if (SetUtils.hasUnremovedRep(set)) { // ignore removed sets in rest calculations
             // add footer if valid
             if (lastSetEndTime !== null) {
                 array.push(createFooterVM(set, lastSetEndTime, isCollapsed));

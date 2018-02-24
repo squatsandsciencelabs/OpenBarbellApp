@@ -9,16 +9,13 @@ import {
     Platform,
 } from 'react-native';
 
-// TODO: make analysis versions of this for the analytics
-// for now, making them history just to make it work and test other issues
-// come back and fix this before release or the analytics will be super wrong
-import EditHistorySetFormScreen from 'app/features/history/card/expanded/form/EditHistorySetFormScreen';
-import EditHistoryTitleExpandedScreen from 'app/features/history/card/expanded/title/EditHistoryTitleExpandedScreen';
-import EditHistoryExerciseScreen from 'app/features/history/exercise_name/EditHistoryExerciseScreen';
-import EditHistoryTagsScreen from 'app/features/history/tags/EditHistoryTagsScreen';
-import HistoryVideoButtonScreen from 'app/features/history/card/expanded/form/HistoryVideoButtonScreen';
-import HistoryVideoRecorderScreen from 'app/features/history/camera/HistoryVideoRecorderScreen';
-import HistoryVideoPlayerScreen from 'app/features/history/video/HistoryVideoPlayerScreen';
+import OneRMEditSetFormScreen from './form/OneRMEditSetFormScreen';
+import OneRMEditSetTitleScreen from './form/OneRMEditSetTitleScreen';
+import OneRMEditSetExerciseScreen from './exercise_name/OneRMEditSetExerciseScreen';
+import OneRMEditSetTagsScreen from './tags/OneRMEditSetTagsScreen';
+import OneRMEditSetVideoButtonScreen from './form/OneRMEditSetVideoButtonScreen';
+import OneRMEditSetVideoRecorderScreen from './camera/OneRMEditSetVideoRecorderScreen';
+import OneRMEditSetVideoPlayerScreen from './video/OneRMEditSetVideoPlayerScreen';
 
 import SetDataLabelRow from 'app/shared_features/set_card/expanded/SetDataLabelRow';
 import SetDataRow from 'app/shared_features/set_card/expanded/SetDataRow';
@@ -78,7 +75,7 @@ class OneRMEditSetView extends Component {
         switch (item.type) {
             case "title":
                 return (<View style={{borderTopWidth: 1, borderColor: '#e0e0e0'}}>
-                            <EditHistoryTitleExpandedScreen
+                            <OneRMEditSetTitleScreen
                                 setID={item.setID}
                                 exercise={item.exercise}
                                 removed={item.removed}
@@ -93,7 +90,7 @@ class OneRMEditSetView extends Component {
                 // note: on focus will avoid the Redux store for simplicity and just do it through the callback function
                 // technically an action to scroll should be application state and therefore should go through the global store
                 return (<View style={{backgroundColor: 'white'}}>
-                            <EditHistorySetFormScreen
+                            <OneRMEditSetFormScreen
                                 setID={item.setID}
                                 initialStartTime={item.initialStartTime}
                                 removed={item.removed}
@@ -106,9 +103,9 @@ class OneRMEditSetView extends Component {
                                 }}
                                 renderDetailComponent={()=> {
                                     if (item.videoFileURL !== null && item.videoFileURL !== undefined) {
-                                        return (<HistoryVideoButtonScreen setID={item.setID} mode='watch' videoFileURL={item.videoFileURL} />);
+                                        return (<OneRMEditSetVideoButtonScreen setID={item.setID} mode='watch' videoFileURL={item.videoFileURL} />);
                                     } else {
-                                        return (<HistoryVideoButtonScreen setID={item.setID} mode='commentary' />);
+                                        return (<OneRMEditSetVideoButtonScreen setID={item.setID} mode='commentary' />);
                                     }
                                 }}
                             />
@@ -156,10 +153,10 @@ class OneRMEditSetView extends Component {
         return (
             <Modal visible={this.props.isModalShowing} animationType='fade'>
                 <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
-                    <EditHistoryExerciseScreen />
-                    <EditHistoryTagsScreen />
-                    <HistoryVideoRecorderScreen />
-                    <HistoryVideoPlayerScreen />
+                    <OneRMEditSetExerciseScreen />
+                    <OneRMEditSetTagsScreen />
+                    <OneRMEditSetVideoRecorderScreen />
+                    <OneRMEditSetVideoPlayerScreen />
 
                     {this._renderNavigation()}
                     <View style={{ flex: 1, backgroundColor: 'white' }}>

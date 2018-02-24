@@ -38,7 +38,6 @@ const logSaveExerciseNameAnalytics = (setID, exercise, state) => {
     const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 
     Analytics.logEventWithAppState('save_exercise_name', {
-        value: duration,
         is_working_set: is_working_set,
     }, state);
 };
@@ -47,7 +46,6 @@ const logCancelEditExerciseNameAnalytics = (setID, state) => {
     const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 
     Analytics.logEventWithAppState('cancel_edit_exercise_name', {
-        value: duration,
         is_working_set: is_working_set,
     }, state);
 };

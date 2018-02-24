@@ -16,6 +16,9 @@ import * as RepDataMap from 'app/utility/RepDataMap';
 //   errors as [] of ? representing bad points
 //   unused as [] of ? representing unused points
 //   active as [] of ? representing points used for the regression calculation
+//   minX
+//   maxX
+//   maxY
 export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, velocity, metric, allSets) => {
     let errors = [];
     let unused = [];
@@ -49,41 +52,40 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     // Right now doing so for simplicity and to avoid extra loops
     // TODO: this should handle KGs or LBs
     // NOTE: workoutID is passed here to reduce the amount of searching necessary each time you tap, but it is a bit odd
-    let activeChartData = active.map((set) => {
-        if (metric === 'lbs') {
-            var weight = SetUtils.weightInLBs(set);
-        } else {
-            var weight = SetUtils.weightInKGs(set);
-        }
-        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), marker: set.setID, setID: set.setID, workoutID: set.workoutID };
-    });
-    let errorChartData = errors.map((set) => {
-        if (metric === 'lbs') {
-            var weight = SetUtils.weightInLBs(set);
-        } else {
-            var weight = SetUtils.weightInKGs(set);
-        }
-        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), marker: set.setID, setID: set.setID, workoutID: set.workoutID };
-    });
-    let unusedChartData = unused.map((set) => {
-        if (metric === 'lbs') {
-            var weight = SetUtils.weightInLBs(set);
-        } else {
-            var weight = SetUtils.weightInKGs(set);
-        }
-        return { x: parseFloat(weight), y: SetUtils.getFastestUsableAvgVelocity(set), marker: "    ", setID: set.setID, workoutID: set.workoutID };
-    });
+    let activeConversion = convertToChartData(active, metric);
+    let errorConversion = convertToChartData(errors, metric);
+    let unusedConversion = convertToChartData(unused, metric, false);
 
     // Step 4B: Sort by weight
-    activeChartData = activeChartData.sort((a, b) => a.x - b.x);
-    errorChartData = errorChartData.sort((a, b) => a.x - b.x);
-    unusedChartData = unusedChartData.sort((a, b) => a.x - b.x);
+    let activeChartData = activeConversion.data.sort((a, b) => a.x - b.x);
+    let errorChartData = errorConversion.data.sort((a, b) => a.x - b.x);
+    let unusedChartData = unusedConversion.data.sort((a, b) => a.x - b.x);
+
+    // Step 4C: calculate min max
+    let minArray = [activeConversion.minX, errorConversion.minX, unusedConversion.minX].filter((x) => x !== null);
+    if (minArray.length <= 0) {
+        var minX = 0;
+    } else {
+        var minX = Math.min(...minArray);
+    }
+    const maxX = Math.max(activeConversion.maxX, errorConversion.maxX, unusedConversion.maxX);
+    const maxY = Math.max(activeConversion.maxY, errorConversion.maxY, unusedConversion.maxY);
 
     // Step 5: Calculate Regression
     const exerciseData = activeChartData.map((point) => {
         return [point.x, point.y];
     });
     const regressionResults = calculateRegression(exerciseData, velocity);
+    const yInt = velocityAt0Weight(regressionResults.regressionPoints);
+    const xInt = highestWeightPossible(regressionResults.regressionPoints);
+    if (yInt !== null && xInt !== null) {
+        var regressionPoints = [
+            {x: 0, y: yInt},
+            {x: xInt, y: 0}
+        ];
+    } else {
+        var regressionPoints = [null, null];
+    }
 
     // return
     return {
@@ -92,7 +94,51 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
         active: activeChartData,
         errors: errorChartData,
         unused: unusedChartData,
-        regressionPoints: regressionResults.regressionPoints,
+        regressionPoints: regressionPoints,
+        minX: minX,
+        maxX: maxX,
+        maxY: maxY,
+    };
+};
+
+const convertToChartData = (array, metric, displayMarker=true) => {
+    let minX = null;
+    let maxX = null;
+    let maxY = null;
+    let data = array.map((set) => {
+        if (metric === 'lbs') {
+            var weight = SetUtils.weightInLBs(set);
+        } else {
+            var weight = SetUtils.weightInKGs(set);
+        }
+        const x = parseFloat(weight);
+        const y = SetUtils.getFastestUsableAvgVelocity(set);
+        const marker = displayMarker ? set.setID : "    ";
+
+        // x
+        if (minX === null) {
+            minX = x;
+            maxX = x;
+        } else {
+            minX = Math.min(minX, x);
+            maxX = Math.max(maxX, x);
+        }
+
+        // y
+        if (maxY === null) {
+            maxY = y;
+        } else {
+            maxY = Math.max(maxY, y);
+        }
+
+        return {x: x, y: y, marker: marker, setID: set.setID, workoutID: set.workoutID };
+    });
+
+    return {
+        minX: minX,
+        maxX: maxX,
+        maxY: maxY,
+        data: data,
     };
 };
 
@@ -359,30 +405,22 @@ const calculateRegression = (data, velocity) => {
     };    
 };
 
-// RANGES
+// INTERCEPTS
 
-export const lowestWeightPoint = (data) => {
-    if (!data) {
+// aka y intercept
+const velocityAt0Weight = (regressionPoints) => {
+    if (!regressionPoints || regressionPoints.length <= 1) {
         return null;
     }
-    return data.reduce((prev, point) => point.x < prev.x ? point : prev, data[0]);
+    const first = regressionPoints[0];
+    const second = regressionPoints[regressionPoints.length - 1];
+    const slope = (second.y - first.y) / (second.x - first.x);
+    const yint = first.y - (slope * first.x);
+    return yint;
 };
 
-export const lowestWeight = (data) => {
-    if (!data) {
-        return null;
-    }
-    return Math.min.apply(Math, data.map((point) => { return point.x; }));
-};
-
-export const highestWeight = (data) => {
-    if (!data) {
-        return null;
-    }
-    return Math.max.apply(Math, data.map((point) => { return point.x; }));
-};
-
-export const highestWeightPossible = (regressionPoints) => {
+// aka x intercept
+const highestWeightPossible = (regressionPoints) => {
     if (!regressionPoints || regressionPoints.length <= 1) {
         return null;
     }
@@ -391,13 +429,6 @@ export const highestWeightPossible = (regressionPoints) => {
     const slope = (second.y - first.y) / (second.x - first.x);
     const yint = first.y - (slope * first.x);
     return -1 * yint / slope;
-};
-
-export const highestVelocity = (data) => {
-    if (!data) {
-        return null;
-    }
-    return Math.max.apply(Math, data.map((point) => { return point.y; }));
 };
 
 // Get all tags for an exercises

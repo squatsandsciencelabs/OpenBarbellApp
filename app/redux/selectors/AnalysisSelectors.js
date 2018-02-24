@@ -41,6 +41,12 @@ export const getUnusedChartData = (state) => stateRoot(state).unusedChartData;
 
 export const getRegressionPoints = (state) => stateRoot(state).regressionPoints;
 
+export const getMinX = (state) => stateRoot(state).minX;
+
+export const getMaxX = (state) => stateRoot(state).maxX;
+
+export const getMaxY = (state) => stateRoot(state).maxY;
+
 export const getSetID = (state) => stateRoot(state).setID;
 
 export const getWorkoutID = (state) => stateRoot(state).workoutID;

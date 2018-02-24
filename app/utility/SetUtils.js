@@ -57,7 +57,7 @@ export const weightInLBs = (set) => {
     } else if (set.metric === 'lbs') {
         return Number(set.weight);
     } else if (set.metric === 'kgs') {
-        return Math.round(Number(set.weight) * 2.20462262);
+        return Number(set.weight) * 2.20462262;
     } else {
         // should never reach here
         return null;
@@ -70,7 +70,7 @@ export const weightInKGs = (set) => {
     } else if (set.metric === 'kgs') {
         return Number(set.weight);
     } else if (set.metric === 'lbs') {
-        return Math.round(Number(set.weight) * 0.45359237);
+        return Number(set.weight) * 0.45359237;
     } else {
         // should never reach here
         return null;

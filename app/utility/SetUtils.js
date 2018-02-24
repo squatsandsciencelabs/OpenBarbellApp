@@ -52,7 +52,7 @@ export const validUnremovedReps = (set) => {
 };
 
 export const weightInLBs = (set) => {
-    if (!set.hasOwnProperty('weight') || set.weight === null || !Number(set.weight)) {
+    if (!set.hasOwnProperty('weight') || set.weight === null || isNaN(set.weight)) {
         return null;
     } else if (set.metric === 'lbs') {
         return Number(set.weight);
@@ -65,7 +65,7 @@ export const weightInLBs = (set) => {
 };
 
 export const weightInKGs = (set) => {
-    if (!set.hasOwnProperty('weight') || set.weight === null || !Number(set.weight)) {
+    if (!set.hasOwnProperty('weight') || set.weight === null || isNaN(set.weight)) {
         return null;
     } else if (set.metric === 'kgs') {
         return Number(set.weight);

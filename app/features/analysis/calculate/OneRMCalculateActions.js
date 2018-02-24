@@ -59,6 +59,9 @@ export const calcE1RM = () => (dispatch, getState) => {
         errorChartData: results.errors,
         unusedChartData: results.unused,
         regressionPoints: results.regressionPoints,
+        minX: results.minX,
+        maxX: results.maxX,
+        maxY: results.maxY,
     });
 };
 

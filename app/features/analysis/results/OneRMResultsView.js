@@ -234,12 +234,20 @@ class OneRMChartView extends Component {
             <View style={styles.chartContainer}>
                 <CombinedChart
                     data={data}
-                    xAxis={{position: 'BOTTOM'}}
+                    xAxis={{
+                        position: 'BOTTOM',
+                        axisMinimum: this.props.minX,
+                        axisMaximum: this.props.maxX,
+                    }}
                     yAxis={{
                         right: {
                             drawLabels: false,
                             drawAxisLine: false,
                             drawGridLines: false,
+                        },
+                        left: {
+                            axisMinimum: 0,
+                            axisMaximum: this.props.maxY,
                         }
                     }}
                     marker={{enabled: true,

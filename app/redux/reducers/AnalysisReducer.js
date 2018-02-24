@@ -60,6 +60,9 @@ const defaultState = {
     unusedChartData: null,
     errorChartData: null,
     regressionPoints: null,
+    minX: null,
+    maxX: null,
+    maxY: null,
 
     // edit set
     // TODO: Since there's only one setID ever at any point, shouldn't need this many setIDs
@@ -160,6 +163,9 @@ const AnalysisReducer = (state = defaultState, action) => {
                 errorChartData: action.errorChartData,
                 unusedChartData: action.unusedChartData,
                 regressionPoints: action.regressionPoints,
+                minX: action.minX,
+                maxX: action.maxX,
+                maxY: action.maxY,
                 scroll: !state.scroll,
             };
         

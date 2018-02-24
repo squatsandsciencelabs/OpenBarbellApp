@@ -15,21 +15,24 @@ const mapStateToProps = (state) => {
     const unusedChartData = AnalysisSelectors.getUnusedChartData(state);
     const regressionPoints = AnalysisSelectors.getRegressionPoints(state);
     const isR2HighEnough = AnalysisSelectors.getIsR2HighEnough(state);
+    const minX = AnalysisSelectors.getMinX(state) * 0.9;
+    var maxX = AnalysisSelectors.getMaxX(state);
+    const maxY = AnalysisSelectors.getMaxY(state) * 1.1;
 
     // TODO: store regression point and weight values instead of recalculating them every single time for speed
     // otherwise it's slow on launch every time, especially with every action
-    if (isR2HighEnough) {
-        // there's a regression line, showcase x axis
-        var highestWeight = OneRMCalculator.highestWeightPossible(regressionPoints);
-        var regLeftPoint = OneRMCalculator.lowestWeightPoint(regressionPoints);
-        var regRightPoint = {x: highestWeight, y: 0};
+    if (isR2HighEnough && regressionPoints && regressionPoints.length === 2) {
+        // there's a regression line
+        var regLeftPoint = regressionPoints[0];
+        var regRightPoint = regressionPoints[1];
         var e1RM = AnalysisSelectors.getE1RM(state);
+        maxX = Math.max(maxX, regRightPoint.x);
     } else {
-        // no regression line, just use the largest ACTUAL lift
-        var highestWeight = OneRMCalculator.highestWeight(activeChartData);
+        // no regression line
         var regLeftPoint = null;
         var regRightPoint = null;
         var e1RM = null;
+        maxX = maxX * 1.1;
     }
 
     return {
@@ -38,15 +41,14 @@ const mapStateToProps = (state) => {
         metric: SettingsSelectors.getDefaultMetric(state),
         r2: AnalysisSelectors.getR2(state),
         isR2HighEnough: isR2HighEnough,
-
         activeChartData: activeChartData,
         errorChartData: errorChartData,
         unusedChartData: unusedChartData,
-        // highestWeight: highestWeight,
-        // lowestWeight: OneRMCalculator.lowestWeight(activeChartData),
-        // highestVel: OneRMCalculator.highestVelocity(activeChartData),
         regLeftPoint: regLeftPoint,
         regRightPoint: regRightPoint,
+        minX: minX,
+        maxX: maxX,
+        maxY: maxY,
     };
 };
 

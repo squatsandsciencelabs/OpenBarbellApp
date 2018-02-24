@@ -12,12 +12,29 @@ import {
     SAVE_EXCLUDES_TAGS,
     DISMISS_INCLUDES_TAGS,
     DISMISS_EXCLUDES_TAGS,
-    CALC_ONE_RM,
+    CALC_1RM,
     PRESENT_INFO_MODAL,
     SHOW_BEST_RESULTS_MODAL,
     DISMISS_INFO_MODAL,
-    PRESENT_EDIT_ANALYSIS_SET,
-    DISMISS_EDIT_ANALYSIS_SET,
+    PRESENT_EDIT_1RM_SET,
+    DISMISS_EDIT_1RM_SET,
+    PRESENT_1RM_EXERCISE,
+    DISMISS_1RM_EXERCISE,
+    PRESENT_1RM_TAGS,
+    PRESENT_1RM_VIDEO_RECORDER,
+    DISMISS_1RM_VIDEO_RECORDER,
+    PRESENT_1RM_VIDEO_PLAYER,
+    DISMISS_1RM_VIDEO_PLAYER,
+    START_EDITING_1RM_RPE,
+    START_EDITING_1RM_WEIGHT,
+    END_EDITING_1RM_RPE,
+    END_EDITING_1RM_WEIGHT,
+    START_RECORDING_1RM,
+    STOP_RECORDING_1RM,
+    SAVE_WORKOUT_VIDEO,
+    SAVE_HISTORY_VIDEO,
+    DELETE_WORKOUT_VIDEO,
+    DELETE_HISTORY_VIDEO,
 } from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
@@ -42,8 +59,20 @@ const defaultState = {
     unusedChartData: null,
     errorChartData: null,
     regressionPoints: null,
+
+    // edit set
     setID: null,
     workoutID: null,
+    editingExerciseName: '',
+    editingExerciseSetID: null,
+    editingTags: [],
+    editingTagsSetID: null,
+    recordingSetID: null,
+    recordingVideoType: null,
+    isRecording: false,
+    isSavingVideo: false,    
+    watchSetID: null,
+    watchFileURL: null,
 
     // scroll
     scroll: false,
@@ -117,7 +146,7 @@ const AnalysisReducer = (state = defaultState, action) => {
             });
 
         // results
-        case CALC_ONE_RM:
+        case CALC_1RM:
             return {
                 ...state,
                 e1RM: action.e1RM,
@@ -129,18 +158,77 @@ const AnalysisReducer = (state = defaultState, action) => {
                 regressionPoints: action.regressionPoints,
                 scroll: !state.scroll,
             };
-        case PRESENT_EDIT_ANALYSIS_SET:
+        
+        // edit
+        case PRESENT_EDIT_1RM_SET:
             return {
                 ...state,
                 setID: action.setID,
                 workoutID: action.workoutID,
             };
-        case DISMISS_EDIT_ANALYSIS_SET:
+        case DISMISS_EDIT_1RM_SET:
             return {
                 ...state,
                 setID: null,
                 workoutID: null,
             };
+        case PRESENT_1RM_EXERCISE:
+            return Object.assign({}, state, {
+                editingExerciseSetID: action.setID,
+                editingExerciseName: action.exercise,
+            });
+        case PRESENT_1RM_TAGS:
+            return Object.assign({}, state, {
+                editingTagsSetID: action.setID,
+                editingTags: action.tags,
+            });
+        case DISMISS_1RM_EXERCISE:
+            return Object.assign({}, state, {
+                editingExerciseSetID: null,
+                editingExerciseName: '',
+            });
+        case DISMISS_1RM_TAGS:
+            return Object.assign({}, state, {
+                editingTagsSetID: null,
+                editingTags: [],
+            });
+        case PRESENT_1RM_VIDEO_RECORDER:
+            return Object.assign({}, state, {
+                recordingSetID: action.setID,
+                recordingVideoType: action.isCommentary ? 'commentary' : 'lift',
+                isRecording: false,
+                isSavingVideo: false,
+            });
+        case SAVE_WORKOUT_VIDEO: // workout sets will use save workout video
+        case SAVE_HISTORY_VIDEO: // history sets will use save history video
+        case DISMISS_1RM_VIDEO_RECORDER:
+            return Object.assign({}, state, {
+                recordingSetID: null,
+                recordingVideoType: null,
+                isRecording: false,
+                isSavingVideo: false,
+            });
+        case START_RECORDING_1RM:
+            return Object.assign({}, state, {
+                isRecording: true,
+            });
+        case STOP_RECORDING_1RM:
+            return Object.assign({}, state, {
+                isRecording: false,
+                isSavingVideo: true,
+            });
+        case PRESENT_1RM_VIDEO_PLAYER:
+            return Object.assign({}, state, {
+                watchSetID: action.setID,
+                watchFileURL: action.videoFileURL,
+            });
+        case DISMISS_1RM_VIDEO_PLAYER:
+        case DELETE_WORKOUT_VIDEO: // workout sets will use delete workout video
+        case DELETE_HISTORY_VIDEO: // history sets will use delete history video
+            return Object.assign({}, state, {
+                watchSetID: null,
+                watchFileURL: null
+            });
         default: 
             return state;
     }

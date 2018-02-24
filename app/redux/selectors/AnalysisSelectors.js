@@ -55,11 +55,25 @@ export const getEditingTagsSetID = (state) => stateRoot(state).editingTagsSetID;
 
 export const getEditingTags = (state) => stateRoot(state).editingTags;
 
+// edit video player
+
 export const getWatchSetID = (state) => stateRoot(state).watchSetID;
 
 export const getIsVideoPlayerVisible = (state) => stateRoot(state).watchSetID !== null;
 
 export const getWatchFileURL = (state) => stateRoot(state).watchFileURL;
+
+// edit video recorder
+
+export const getIsRecording = (state) => stateRoot(state).isRecording;
+
+export const getRecordingVideoType = (state) => stateRoot(state).recordingVideoType;
+
+export const getIsCameraVisible = (state) => stateRoot(state).recordingSetID !== null;
+
+export const getRecordingSetID = (state) => stateRoot(state).recordingSetID;
+
+export const getIsSavingVideo = (state) => stateRoot(state).isSavingVideo;
 
 // scroll
 

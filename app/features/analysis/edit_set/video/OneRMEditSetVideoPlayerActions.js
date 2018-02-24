@@ -1,48 +1,51 @@
 import {
     DELETE_WORKOUT_VIDEO,
-    DISMISS_WORKOUT_VIDEO_PLAYER
+    DELETE_HISTORY_VIDEO,
+    DISMISS_1RM_VIDEO_PLAYER,
 } from 'app/configs+constants/ActionTypes';
-import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as Analytics from 'app/services/Analytics';
 
 export const deleteVideo = (setID) => (dispatch, getState) => {
     const state = getState();
-    logDeleteVideoAnalytics(setID, state);
+    logDeleteVideoAnalytics(state, setID);
 
-    dispatch({
-        type: DELETE_WORKOUT_VIDEO,
-        setID: setID,
-    });
+    if (SetsSelectors.getIsWorkingSet(state, setID)) {
+        dispatch({
+            type: DELETE_WORKOUT_VIDEO,
+            setID: setID,
+        });
+    } else {
+        dispatch({
+            type: DELETE_HISTORY_VIDEO,
+            setID: setID,
+        });
+    }
 };
 
 export const closeModal = (setID) => (dispatch, getState) => {
     const state = getState();
-    logCancelWatchVideoAnalytics(setID, state);
-    Analytics.setCurrentScreen('workout');
+    logCancelWatchVideoAnalytics(state, setID);
+    Analytics.setCurrentScreen('one_rm_edit_set');
     
     dispatch({
-        type: DISMISS_WORKOUT_VIDEO_PLAYER
+        type: DISMISS_1RM_VIDEO_PLAYER
     });
 };
 
-const logDeleteVideoAnalytics = (setID, state) => {
-    const duration = DurationsSelectors.getWorkoutVideoPlayerDuration(state);
+const logDeleteVideoAnalytics = (state, setID) => {
     const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 
     Analytics.logEventWithAppState('delete_video', {
-        duration: duration,
         is_working_set: is_working_set,
         set_id: setID,
     }, state);
 }
 
-const logCancelWatchVideoAnalytics = (setID, state) => {
-    const duration = DurationsSelectors.getWorkoutVideoPlayerDuration(state);
+const logCancelWatchVideoAnalytics = (state, setID) => {
     const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 
     Analytics.logEventWithAppState('cancel_watch_video', {
-        duration: duration,
         is_working_set: is_working_set,
         set_id: setID,
     }, state);

@@ -55,6 +55,12 @@ export const getEditingTagsSetID = (state) => stateRoot(state).editingTagsSetID;
 
 export const getEditingTags = (state) => stateRoot(state).editingTags;
 
+export const getWatchSetID = (state) => stateRoot(state).watchSetID;
+
+export const getIsVideoPlayerVisible = (state) => stateRoot(state).watchSetID !== null;
+
+export const getWatchFileURL = (state) => stateRoot(state).watchFileURL;
+
 // scroll
 
 export const getScroll = (state) => stateRoot(state).scroll;

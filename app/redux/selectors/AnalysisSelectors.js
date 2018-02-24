@@ -45,6 +45,12 @@ export const getSetID = (state) => stateRoot(state).setID;
 
 export const getWorkoutID = (state) => stateRoot(state).workoutID;
 
+// edit
+
+export const getEditingExerciseName = (state) => stateRoot(state).editingExerciseName;
+
+export const getEditingExerciseSetID = (state) => stateRoot(state).editingExerciseSetID;
+
 // scroll
 
 export const getScroll = (state) => stateRoot(state).scroll;

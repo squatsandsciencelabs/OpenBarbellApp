@@ -21,6 +21,7 @@ import {
     PRESENT_1RM_EXERCISE,
     DISMISS_1RM_EXERCISE,
     PRESENT_1RM_TAGS,
+    DISMISS_1RM_TAGS,
     PRESENT_1RM_VIDEO_RECORDER,
     DISMISS_1RM_VIDEO_RECORDER,
     PRESENT_1RM_VIDEO_PLAYER,
@@ -61,6 +62,9 @@ const defaultState = {
     regressionPoints: null,
 
     // edit set
+    // TODO: Since there's only one setID ever at any point, shouldn't need this many setIDs
+    // it's currently just using the IDs to indicate if the modal is showing or not
+    // leaving the setIDs in because when copy pasting, this is much easier
     setID: null,
     workoutID: null,
     editingExerciseName: '',

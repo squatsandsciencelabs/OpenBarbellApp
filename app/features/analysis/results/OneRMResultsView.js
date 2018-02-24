@@ -225,6 +225,7 @@ class OneRMChartView extends Component {
                         colors: [processColor('green')],
                         drawCircles: false,
                         lineWidth: 2,
+                        highlightEnabled: false,
                     }
                 }]
             };

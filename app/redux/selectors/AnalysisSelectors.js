@@ -51,6 +51,10 @@ export const getEditingExerciseName = (state) => stateRoot(state).editingExercis
 
 export const getEditingExerciseSetID = (state) => stateRoot(state).editingExerciseSetID;
 
+export const getEditingTagsSetID = (state) => stateRoot(state).editingTagsSetID;
+
+export const getEditingTags = (state) => stateRoot(state).editingTags;
+
 // scroll
 
 export const getScroll = (state) => stateRoot(state).scroll;

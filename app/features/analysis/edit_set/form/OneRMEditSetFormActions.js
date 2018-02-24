@@ -130,7 +130,6 @@ const logSaveWeightAnalytics = (setID, state) => {
     const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 
     Analytics.logEventWithAppState('save_weight', {
-        value: duration,
         is_working_set: is_working_set,
     }, state);
 };
@@ -139,8 +138,7 @@ const logSaveRPEAnalytics = (setID, state) => {
     const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
 
     Analytics.logEventWithAppState('save_rpe', {
-        value: duration,
-        is_working_set: is_working_set,,
+        is_working_set: is_working_set,
     }, state);
 };
 

@@ -116,8 +116,12 @@ export const isRepUsable = (rep) => {
         return false;
     }
     const velocity = RepDataMap.averageVelocity(rep.data); // this should always return a string
-    const peakVelocity = RepDataMap.peakVelocity(rep.data); 
-    return (!(!velocity || isNaN(velocity) || velocity.toLowerCase().includes('nf') || Number(velocity) < 0 || Number(velocity) >= 10) && !(!peakVelocity || isNaN(peakVelocity) || peakVelocity.toLowerCase().includes('nf') || Number(peakVelocity) < 0 || Number(peakVelocity) >= 10));
+    const peakVelocity = RepDataMap.peakVelocity(rep.data);
+    return isVelocityUsable(velocity) && isVelocityUsable(peakVelocity);
+};
+
+const isVelocityUsable = (velocity) => {
+    return !(!velocity || isNaN(velocity) || velocity.toLowerCase().includes('nf') || Number(velocity) < 0 || Number(velocity) >= 10);
 };
 
 // NOTE: this considers infinity / 0 invalid

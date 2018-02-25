@@ -9,7 +9,7 @@ import * as Analytics from 'app/services/Analytics';
 export const saveTags = (tags = []) => (dispatch, getState) => {
     const state = getState();
     logSaveTagsAnalytics(state);
-    Analytics.setCurrentScreen('one_rm_edit_set');
+    Analytics.setCurrentScreen('analysis');
 
     dispatch({
         type: SAVE_INCLUDES_TAGS,
@@ -20,7 +20,7 @@ export const saveTags = (tags = []) => (dispatch, getState) => {
 export const cancelTags = () => (dispatch, getState) => {
     const state = getState();
     logCancelEditTagsAnalytics(state);
-    Analytics.setCurrentScreen('one_rm_edit_set');
+    Analytics.setCurrentScreen('analysis');
 
     dispatch({ type: DISMISS_INCLUDES_TAGS });
 };

@@ -128,6 +128,16 @@ const logEditExcludeTagsAnalytics = (state) => {
     }, state);
 };
 
+const logCalculate1RMAnalytics = (state, exercise, includeTags, excludeTags, daysRange, velocity) => {
+    Analytics.logEventWithAppState('one_rm_calculate', {
+        exercise: exercise,
+        include_tag_count = includeTags ? includeTags.length : 0,
+        exclude_tag_count = excludeTags ? excludeTags.length : 0,
+        days_range: daysRange,
+        velocity: velocity,
+    }, state);
+};
+
 const logInfoAnalytics = (state) => {
     Analytics.logEventWithAppState('one_rm_info', {
     }, state);

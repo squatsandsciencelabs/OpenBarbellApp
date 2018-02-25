@@ -8,10 +8,15 @@ export const presentBestResults = () => AnalysisActionCreators.presentBestResult
 
 export const dismissInfoModal = () => (dispatch, getState) => {
     const state = getState();
+    logDismissInfoAnalytics(state);
+    Analytics.setCurrentScreen('one_rm_edit_set');
 
     dispatch({ type: DISMISS_INFO_MODAL });
 };
 
 // ANALYTICS
 
-
+const logDismissInfoAnalytics = (state) => {
+    Analytics.logEventWithAppState('one_rm_close_info', {
+    }, state);
+};

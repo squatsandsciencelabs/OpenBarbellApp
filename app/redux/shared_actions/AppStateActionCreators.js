@@ -39,7 +39,10 @@ export const changeTab = (tabIndex, setID) => (dispatch, getState) => {
             Analytics.setCurrentScreen('history');
             dispatch({ type: HISTORY_VIEWED });
             break;
-        case 2: 
+        case 2:
+            Analytics.setCurrentScreen('analysis');
+            break;
+        case 3: 
             Analytics.setCurrentScreen('settings');
             break;
     }

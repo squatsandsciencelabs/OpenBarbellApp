@@ -67,7 +67,7 @@ export default initializeStore = () => {
             createFilter('collapsedSettings', ['metric1', 'quantifier1', 'metric2', 'quantifier2', 'metric3', 'quantifier3', 'metric4', 'quantifier4', 'metric5', 'quantifier5']),            
             createFilter('workout', ['removedCounter', 'restoredCounter']),
             createFilter('history', ['viewedCounter']),
-            createFilter('analysis', ['exercise', 'velocitySlider']),
+            createFilter('analysis', ['exercise', 'velocitySlider', 'daysRange', 'tagsToInclude', 'tagsToExclude']),
             createFilter('appState', ['multiTaskCounter', 'lockedCounter']),
             createFilter('connectedDevice', ['numDisconnects', 'numReconnects']),
             createFilter('survey', ['surveyURL', 'completedSurveyURLs', 'optedOutEndWorkoutPromptSurveyURLs']),

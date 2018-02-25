@@ -33,7 +33,6 @@ const defaultState = {
     watchSetID: null,
     watchFileURL: null,
     viewedCounter: 0,
-    scrollToSetID: null,
 };
 
 const HistoryReducer = (state = defaultState, action) => {
@@ -113,11 +112,6 @@ const HistoryReducer = (state = defaultState, action) => {
                 watchSetID: null,
                 watchFileURL: null
             });
-        case CHANGE_TAB:
-            return {
-                ...state,
-                scrollToSetID: null,
-            };
         default:
             return state;
     }

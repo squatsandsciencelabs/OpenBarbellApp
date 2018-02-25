@@ -25,6 +25,3 @@ export const getWatchFileURL = (state) => stateRoot(state).watchFileURL;
 // history viewed 
 
 export const getHistoryViewedCounter = (state) => stateRoot(state).viewedCounter;
-
-// scrollToSetID
-export const getScrollToSetID = (state) => stateRoot(state).scrollToSetID;

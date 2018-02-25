@@ -42,19 +42,6 @@ class HistoryList extends Component {
         return differentShowRemoved || differentSections;
     }
 
-    componentWillReceiveProps(nextProps) {
-        let setID = nextProps.scrollToSetID;
-
-        if (setID) {
-            this._scrollToLocation(setID)
-        }
-    }
-
-    _scrollToLocation(setID) {
-        const scrollTo = Sections.findInSection(this.props.sections, setID);
-        return this.sectionList.scrollToLocation(scrollTo);
-    }
-
     // RENDER
 
     _renderSectionHeader(section) {

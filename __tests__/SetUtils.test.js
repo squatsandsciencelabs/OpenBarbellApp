@@ -443,10 +443,12 @@ describe('usableReps', () => {
                 {removed: false, isValid: true, data: ['1', '0', '10', '1', '8']},
                 {removed: false, isValid: true, data: ['0', '2', '12', '1', '4']},
                 {removed: false, isValid: true, data: ['0', '2', '7', '1', '8']},
+                {removed: false, isValid: true, data: ['-2', '4', undefined, '1', '2']},
                 {removed: false, isValid: true, data: ['0', '2', '7', '1', '14']},
                 {removed: false, isValid: true, data: ['-1', '3', '5', '1', '8']},
-                {removed: false, isValid: true, data: ['-2', '4', 'INF', '1', '2']},
+                {removed: false, isValid: true, data: ['-2', '4', undefined, '1', '2']},
                 {removed: true, isValid: false, data: ['-3', '2', 'INF', '1', '3']},
+                {removed: false, isValid: true, data: ['-2', '4', undefined, '1', '2']},
                 {removed: null, isValid: null, data: [null, null, null, null, null]},
                 {removed: false, isValid: true, data: [null, null, '5', '1', '2']},
                 {removed: false, isValid: true, data: [null, null, 'INF', '2', '4']},
@@ -639,7 +641,7 @@ describe('weightInLBs', () => {
 
         const result = sut.weightInLBs(set);
 
-        expect(result).toBe(265);
+        expect(result).toBe(264.55471439999997);
     });
 });
 
@@ -686,7 +688,7 @@ describe('weightInKGs', () => {
 
         const result = sut.weightInKGs(set);
 
-        expect(result).toBe(120);
+        expect(result).toBe(120.20197805000001);
     });
 });
 
@@ -721,11 +723,18 @@ describe('validUnremovedReps', () => {
         const result = sut.validUnremovedReps(set);
 
         expect(result).toEqual([
-            {removed: false, isValid: true, data: ['0', '2', '12', '1', '4']},
-            {removed: false, isValid: true, data: ['0', '2', '7', '1', '8']},
-            {removed: false, isValid: true, data: ['-1', '3', '5', '1', '8']},
-            {removed: false, isValid: true, data: [null, null, '5', '1', '2']},
-            {removed: false, isValid: true, data: ['-1', '3', '5', '1', 'INF']},
+            {"data": ["-2", "3", "0", "1", "7"], "isValid": true, "removed": false}, 
+            {"data": ["1", "0", "0", "1", "8"], "isValid": true, "removed": false}, 
+            {"data": ["0", "2", "12", "1", "4"], "isValid": true, "removed": false}, 
+            {"data": ["0", "2", "7", "1", "8"], "isValid": true, "removed": false}, 
+            {"data": ["0", "2", "0", "1", "14"], "isValid": true, "removed": false}, 
+            {"data": ["-1", "3", "5", "1", "8"], "isValid": true, "removed": false}, 
+            {"data": ["-2", "4", "Haduken", "1", "2"], "isValid": true, "removed": false}, 
+            {"data": [null, null, null, null, null], "isValid": true, "removed": false}, 
+            {"data": [], "isValid": true, "removed": false}, {"isValid": true, "removed": false},
+            {"data": [null, null, "5", "1", "2"], "isValid": true, "removed": false}, 
+            {"data": [null, null, "INF", "2", "4"], "isValid": true, "removed": false}, 
+            {"data": ["-1", "3", "5", "1", "INF"], "isValid": true, "removed": false}
         ]);
     });
 });
@@ -980,6 +989,6 @@ describe('numValidUnremovedReps', () => {
 
         const result = sut.numValidUnremovedReps(set);
 
-        expect(result).toBe(5);
+        expect(result).toBe(10);
     });
 });

@@ -77,7 +77,7 @@ class OneRMChartView extends Component {
     // RENDER
 
     _render1RM(r2) {
-        if (this.props.isR2HighEnough && this.props.isRegressionNegative) {
+        if (this.props.shouldDisplayRegression) {
             let e1RM = this.props.e1RM ? this.props.e1RM : "---";
             let velocity = this.props.velocity ? this.props.velocity : "---";
 

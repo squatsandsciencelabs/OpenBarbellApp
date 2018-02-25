@@ -559,14 +559,19 @@ export const getTagsToIncludeSuggestions = (state, exercise) => {
     const tagsToExclude = AnalysisSelectors.getTagsToExclude(state);
     const tags = [];
 
+    exercise = exercise.toLowerCase();
+
     sets.forEach((set) => {
-        if (set.exercise === exercise && set.tags) {
-            set.tags.forEach((tag) => {
-                const lowerTag = tag.toLowerCase();
-                if (!tags.includes(lowerTag) && !tagsToExclude.includes(lowerTag) && !tagsToInclude.includes(lowerTag) && lowerTag !== 'bug') {
-                    tags.push(lowerTag);
-                }
-            });
+        if (set.hasOwnProperty('exercise') && set.exercise) {
+            let lower = set.exercise.toLowerCase();
+            if (lower === exercise && set.tags) {
+                set.tags.forEach((tag) => {
+                    const lowerTag = tag.toLowerCase();
+                    if (!tags.includes(lowerTag) && !tagsToExclude.includes(lowerTag) && !tagsToInclude.includes(lowerTag) && lowerTag !== 'bug') {
+                        tags.push(lowerTag);
+                    }
+                });
+            }
         }
     });
 
@@ -582,14 +587,19 @@ export const getTagsToExcludeSuggestions = (state, exercise) => {
     const tagsToExclude = AnalysisSelectors.getTagsToExclude(state);
     const tags = [];
 
+    exercise = exercise.toLowerCase();
+
     sets.forEach((set) => {
-        if (set.exercise === exercise && set.tags) {
-            set.tags.forEach((tag) => {
-                const lowerTag = tag.toLowerCase();
-                if (!tags.includes(lowerTag) && !tagsToInclude.includes(lowerTag) && !tagsToExclude.includes(lowerTag) && lowerTag !== 'bug') {
-                    tags.push(lowerTag);
-                }
-            });
+        if (set.hasOwnProperty('exercise') && set.exercise) {
+            let lower = set.exercise.toLowerCase();
+            if (lower === exercise && set.tags) {
+                set.tags.forEach((tag) => {
+                    const lowerTag = tag.toLowerCase();
+                    if (!tags.includes(lowerTag) && !tagsToInclude.includes(lowerTag) && !tagsToExclude.includes(lowerTag) && lowerTag !== 'bug') {
+                        tags.push(lowerTag);
+                    }
+                });
+            }
         }
     });
 

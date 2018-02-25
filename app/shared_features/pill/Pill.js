@@ -21,9 +21,10 @@ class Pill extends PureComponent {
                 </View>
             );
         } else {
+            let text = this.props.text.toLowerCase();
             return (
                 <View style={styles.pill} ref='COMMON_THREAD_ROW'>
-                    <Text style={styles.pillText}>{this.props.text}</Text>
+                    <Text style={styles.pillText}>{text}</Text>
                 </View>                
             );
         }

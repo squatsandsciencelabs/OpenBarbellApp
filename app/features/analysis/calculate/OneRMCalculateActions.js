@@ -75,6 +75,29 @@ export const calcE1RM = () => (dispatch, getState) => {
     // calculate
     const results = OneRMCalculator.calculate1RM(exercise, tagsToInclude, tagsToExclude, daysRange, velocity, metric, allSets);
 
+    // analytics
+    logCalculate1RMAnalytics(
+        state,
+        exercise,
+        tagsToInclude ? tagsToInclude.length : 0,
+        tagsToExclude ? tagsToExclude.length : 0,
+        daysRange,
+        velocity,
+        results.e1RM,
+        results.r2,
+        results.active ? results.active.length : 0,
+        results.errors ? results.errors.length : 0,
+        results.unused ? results.unused.length : 0,
+        results.isRegressionNegative,
+        results.slope,
+        results.minX,
+        results.maxX,
+        results.minY,
+        results.maxY,
+        metric
+    );
+
+    // dispatch
     dispatch({
         type: CALC_1RM,
         velocity: velocity,
@@ -128,13 +151,25 @@ const logEditExcludeTagsAnalytics = (state) => {
     }, state);
 };
 
-const logCalculate1RMAnalytics = (state, exercise, includeTags, excludeTags, daysRange, velocity) => {
+const logCalculate1RMAnalytics = (state, exercise, numIncludeTags, numExcludeTags, daysRange, velocity, oneRepMax, r2, numActivePoints, numErrorPoints, numUnusedPoints, hasNegSlope, slope, minWeight, maxWeight, minVelocity, maxVelocity, metric) => {
     Analytics.logEventWithAppState('one_rm_calculate', {
         exercise: exercise,
-        include_tag_count = includeTags ? includeTags.length : 0,
-        exclude_tag_count = excludeTags ? excludeTags.length : 0,
+        num_include_tags: numIncludeTags,
+        num_exclude_tags: numExcludeTags,
         days_range: daysRange,
         velocity: velocity,
+        one_rep_max: oneRepMax,
+        r2: r2,
+        num_active_points: numActivePoints,
+        num_error_points: numErrorPoints,
+        num_unused_points: numUnusedPoints,
+        has_negative_slope: hasNegSlope,
+        slope: slope,
+        min_weight: minWeight,
+        max_weight: maxWeight,
+        min_velocity: minVelocity,
+        max_velocity: maxVelocity,
+        metric: metric
     }, state);
 };
 

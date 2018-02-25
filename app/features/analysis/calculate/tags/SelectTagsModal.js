@@ -262,7 +262,7 @@ class EditTextModal extends Component {
     }
 
     _renderRow(item) {
-        if (item.key === 'Bug') {
+        if (item.key === 'bug') {
             // hack to get bug pill working
             // TODO: make this generic rather than specific so you can have multiple pill types
             return (

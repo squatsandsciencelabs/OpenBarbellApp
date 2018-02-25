@@ -16,7 +16,7 @@ import * as Analytics from 'app/services/Analytics';
 export const presentSelectExercise = () => (dispatch, getState) => {
     const state = getState();
 
-    dispatch({ type: PRESENT_SELECT_EXERCIS });
+    dispatch({ type: PRESENT_SELECT_EXERCISE });
 };
 
 export const changeVelocitySlider = (velocity) => (dispatch, getState) => {
@@ -39,12 +39,16 @@ export const changeE1RMDays = (days) => (dispatch, getState) => {
 
 export const presentTagsToExclude = () => (dispatch, getState) => {
     const state = getState();
+    logEditExcludeTagsAnalytics(state);
+    Analytics.setCurrentScreen('one_rm_exclude_tags');
 
     dispatch({ type: PRESENT_EXCLUDES_TAGS });
 };
 
 export const presentTagsToInclude = () => (dispatch, getState) => {
     const state = getState();
+    logEditIncludeTagsAnalytics(state);
+    Analytics.setCurrentScreen('one_rm_include_tags');
 
     dispatch({ type: PRESENT_INCLUDES_TAGS });
 };
@@ -90,6 +94,16 @@ export const presentInfoModal = () => (dispatch, getState) => {
 };
 
 // ANALYTICS
+
+const logEditIncludeTagsAnalytics = (state) => {
+    Analytics.logEventWithAppState('one_rm_edit_include_tags', {
+    }, state);
+};
+
+const logEditExcludeTagsAnalytics = (state) => {
+    Analytics.logEventWithAppState('one_rm_edit_exclude_tags', {
+    }, state);
+};
 
 const logInfoAnalytics = (state) => {
     Analytics.logEventWithAppState('one_rm_info', {

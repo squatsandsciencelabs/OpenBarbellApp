@@ -333,7 +333,6 @@ const mapStateToProps = (state) => {
         email: state.auth.email,
         sections: storedSections,
         shouldShowRemoved: shouldShowRemoved,
-        scrollToSetID: HistorySelectors.getScrollToSetID(state),
     };
 };
 

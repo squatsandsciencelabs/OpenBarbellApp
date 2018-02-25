@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Pill from 'app/shared_features/pill/Pill';
+import * as Analytics from 'app/services/Analytics';
 
 class SetForm extends Component {
 
@@ -76,6 +77,9 @@ class SetForm extends Component {
     }
 
     _tapDisabledRPE() {
+        // TODO: move this to actions, it doesn't belong here
+        // doing it here right now for raw speed as no time
+        Analytics.logEvent('old_rpe_alert', {});
         Alert.alert(
             '',
             "It has been too long since this set to log RPE.",

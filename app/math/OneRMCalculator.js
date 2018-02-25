@@ -193,6 +193,14 @@ const cherryPick = (workouts) => {
                             if (previous.rpe1RM > current.rpe1RM) {
                                 failed.push(current.set);
                                 return previous;
+                            } else if (previous.rpe1RM === current.rpe1RM) {
+                                if (SetUtils.startTime(previous) < SetUtils.startTime(current)) {
+                                    failed.push(current.set)
+                                    return previous
+                                } else {
+                                    failed.push(previous.set)
+                                    return current;
+                                }
                             } else {
                                 failed.push(previous.set);
                                 return current;

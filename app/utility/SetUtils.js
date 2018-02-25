@@ -55,7 +55,7 @@ export const weightInLBs = (set) => {
     if (!set.hasOwnProperty('weight') || set.weight === null || isNaN(set.weight)) {
         return null;
     } else if (set.metric === 'lbs') {
-        return Number(set.weight);
+        return set.weight;
     } else if (set.metric === 'kgs') {
         return Number(set.weight) * 2.20462262;
     } else {
@@ -68,7 +68,7 @@ export const weightInKGs = (set) => {
     if (!set.hasOwnProperty('weight') || set.weight === null || isNaN(set.weight)) {
         return null;
     } else if (set.metric === 'kgs') {
-        return Number(set.weight);
+        return set.weight;
     } else if (set.metric === 'lbs') {
         return Number(set.weight) * 0.45359237;
     } else {

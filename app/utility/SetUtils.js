@@ -56,10 +56,10 @@ export const validUnremovedReps = (set) => {
 };
 
 export const weightInLBs = (set) => {
-    if (!set.hasOwnProperty('weight') || set.weight === null) {
+    if (!set.hasOwnProperty('weight') || set.weight === null || isNaN(set.weight)) {
         return null;
     } else if (set.metric === 'lbs') {
-        return set.weight;
+        return Number(set.weight);
     } else if (set.metric === 'kgs') {
         return Number(set.weight) * 2.20462262;
     } else {
@@ -69,10 +69,10 @@ export const weightInLBs = (set) => {
 };
 
 export const weightInKGs = (set) => {
-    if (!set.hasOwnProperty('weight') || set.weight === null) {
+    if (!set.hasOwnProperty('weight') || set.weight === null || isNaN(set.weight)) {
         return null;
     } else if (set.metric === 'kgs') {
-        return set.weight;
+        return Number(set.weight);
     } else if (set.metric === 'lbs') {
         return Number(set.weight) * 0.45359237;
     } else {
@@ -106,7 +106,12 @@ export const isRepUsable = (rep) => {
         return false;
     }
     const velocity = RepDataMap.averageVelocity(rep.data); // this should always return a string
-    return !(!velocity || isNaN(velocity) || velocity.toLowerCase().includes('nf') || Number(velocity) <= 0);
+    const peakVelocity = RepDataMap.peakVelocity(rep.data);
+    return isVelocityUsable(velocity) && isVelocityUsable(peakVelocity);
+};
+
+const isVelocityUsable = (velocity) => {
+    return !(!velocity || isNaN(velocity) || velocity.toLowerCase().includes('nf') || Number(velocity) < 0 || Number(velocity) >= 10);
 };
 
 // NOTE: this considers infinity / 0 invalid

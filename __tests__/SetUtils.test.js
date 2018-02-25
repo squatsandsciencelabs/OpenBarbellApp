@@ -428,6 +428,308 @@ describe('hasEmptyReps', () => {
     });
 });
 
+describe('usableReps', () => {
+    // test for removed or invalid reps
+    // test for INF
+    // test for > 0 and < 10 
+    // test peak is < 10
+    test('returns usable reps only', () => {
+        const set = {
+            reps: [
+                {removed: true, isValid: true, data: ['-1', '2', '2.5', '2', '8']}, 
+                {removed: false, isValid: true, data: ['-2', '3', '1.2', '1', '7']}, 
+                {removed: true, isValid: false, data: ['-3', '4', '7.8', '1', '3']}, 
+                {removed: false, isValid: false, data: ['-4', '6', '4', '1', '2']}, 
+                {removed: false, isValid: true, data: ['1', '0', '10', '1', '8']},
+                {removed: false, isValid: true, data: ['0', '2', '12', '1', '4']},
+                {removed: false, isValid: true, data: ['0', '2', '7', '1', '8']},
+                {removed: false, isValid: true, data: ['0', '2', '7', '1', '14']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', '8']},
+                {removed: false, isValid: true, data: ['-2', '4', 'INF', '1', '2']},
+                {removed: true, isValid: false, data: ['-3', '2', 'INF', '1', '3']},
+                {removed: null, isValid: null, data: [null, null, null, null, null]},
+                {removed: false, isValid: true, data: [null, null, '5', '1', '2']},
+                {removed: false, isValid: true, data: [null, null, 'INF', '2', '4']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', 'INF']},
+            ]
+        };
+
+        const result = sut.usableReps(set);
+
+        expect(result).toEqual([
+            {removed: false, isValid: true, data: ['-2', '3', '1.2', '1', '7']}, 
+            {removed: false, isValid: true, data: ['0', '2', '7', '1', '8']},
+            {removed: false, isValid: true, data: ['-1', '3', '5', '1', '8']},
+            {removed: false, isValid: true, data: [null, null, '5', '1', '2']},
+        ]);
+    });
+});
+
+describe('hasUnusableReps', () => {
+    // test for removed or invalid reps
+    // test for INF
+    // test for > 0 and < 10 
+    // test peak is < 10
+    test('returns true if unusable reps', () => {
+        const set = {
+            reps: [
+                {removed: true, isValid: true, data: ['-1', '2', '2.5', '2', '8']}, 
+                {removed: false, isValid: true, data: ['-2', '3', '1.2', '1', '7']}, 
+                {removed: true, isValid: false, data: ['-3', '4', '7.8', '1', '3']}, 
+                {removed: false, isValid: false, data: ['-4', '6', '4', '1', '2']}, 
+                {removed: false, isValid: true, data: ['1', '0', '10', '1', '8']},
+                {removed: false, isValid: true, data: ['0', '2', '12', '1', '4']},
+                {removed: false, isValid: true, data: ['0', '2', '7', '1', '8']},
+                {removed: false, isValid: true, data: ['0', '2', '7', '1', '14']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', '8']},
+                {removed: false, isValid: true, data: ['-2', '4', 'INF', '1', '2']},
+                {removed: true, isValid: false, data: ['-3', '2', 'INF', '1', '3']},
+                {removed: null, isValid: null, data: [null, null, null, null, null]},
+                {removed: false, isValid: true, data: [null, null, '5', '1', '2']},
+                {removed: false, isValid: true, data: [null, null, 'INF', '2', '4']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', 'INF']},
+            ]
+        };
+
+        const result = sut.hasUnusableReps(set);
+
+        expect(result).toEqual(true);
+    });
+    
+    test('return false if no unusable reps', () => {
+        const set = {
+            reps: [
+                {removed: false, isValid: true, data: ['-2', '3', '1.2', '1', '7']}, 
+                {removed: false, isValid: true, data: ['0', '2', '7', '1', '8']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', '8']},
+                {removed: false, isValid: true, data: [null, null, '5', '1', '2']},
+            ]
+        };
+
+        const result = sut.hasUnusableReps(set);
+
+        expect(result).toEqual(false);
+    });
+});
+
+describe('numUsableReps', () => {
+    test('return number of usable reps', () => {
+        const set = {
+            reps: [
+                {removed: true, isValid: true, data: ['-1', '2', '2.5', '2', '8']}, 
+                {removed: false, isValid: true, data: ['-2', '3', '1.2', '1', '7']}, 
+                {removed: true, isValid: false, data: ['-3', '4', '7.8', '1', '3']}, 
+                {removed: false, isValid: false, data: ['-4', '6', '4', '1', '2']}, 
+                {removed: false, isValid: true, data: ['1', '0', '10', '1', '8']},
+                {removed: false, isValid: true, data: ['0', '2', '12', '1', '4']},
+                {removed: false, isValid: true, data: ['0', '2', '7', '1', '8']},
+                {removed: false, isValid: true, data: ['0', '2', '7', '1', '14']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', '8']},
+                {removed: false, isValid: true, data: ['-2', '4', 'INF', '1', '2']},
+                {removed: true, isValid: false, data: ['-3', '2', 'INF', '1', '3']},
+                {removed: null, isValid: null, data: [null, null, null, null, null]},
+                {removed: false, isValid: true, data: [null, null, '5', '1', '2']},
+                {removed: false, isValid: true, data: [null, null, 'INF', '2', '4']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', 'INF']},
+            ]
+        };
+
+        const result = sut.numUsableReps(set);
+
+        expect(result).toEqual(4);
+    });
+
+    test('return 0 if no usable reps', () => {
+        const set = {
+            reps: [
+                {removed: true, isValid: true, data: ['-1', '2', '2.5', '2', '8']}, 
+                {removed: true, isValid: false, data: ['-3', '4', '7.8', '1', '3']}, 
+                {removed: false, isValid: false, data: ['-4', '6', '4', '1', '2']}, 
+                {removed: false, isValid: true, data: ['1', '0', '10', '1', '8']},
+                {removed: false, isValid: true, data: ['0', '2', '12', '1', '4']},
+                {removed: false, isValid: true, data: ['0', '2', 'One Puuuuuuunch', '1', '4']},
+                {removed: false, isValid: true, data: ['0', '2', '7', '1', '14']},
+                {removed: false, isValid: true, data: ['-2', '4', 'Blah', '1', '2']},
+                {removed: true, isValid: false, data: ['-3', '2', 'INF', '1', '3']},
+                {removed: null, isValid: null, data: [null, null, null, null, null]},
+                {removed: false, isValid: true, data: [null, null, 'Kamehkamehhaaa', '2', '4']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', 'INF']},
+            ]
+        }; 
+        
+        const result = sut.numUsableReps(set);
+
+        expect(result).toEqual(0);
+    })
+})
+
+describe('getFastestUsableAvgVelocity', () => {
+    // test with vel > 10
+    // test with removed and invalid with highest vels
+    test('return fastest usable avg vel', () => {
+        const set = {
+            reps: [
+                {removed: true, isValid: true, data: ['-1', '2', '2.5', '2', '8']}, 
+                {removed: false, isValid: true, data: ['-2', '3', '0', '1', '7']}, 
+                {removed: true, isValid: false, data: ['-3', '4', '7.8', '1', '3']}, 
+                {removed: false, isValid: false, data: ['-4', '6', '4', '1', '2']}, 
+                {removed: false, isValid: true, data: ['1', '0', '0', '1', '8']},
+                {removed: false, isValid: true, data: ['0', '2', '12', '1', '4']},
+                {removed: false, isValid: true, data: ['0', '2', '7', '1', '8']},
+                {removed: false, isValid: true, data: ['0', '2', '0', '1', '14']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', '8']},
+                {removed: false, isValid: true, data: ['-2', '4', 'INF', '1', '2']},
+                {removed: true, isValid: false, data: ['-3', '2', 'INF', '1', '3']},
+                {removed: null, isValid: null, data: [null, null, null, null, null]},
+                {removed: false, isValid: true, data: [null, null, null, null, null]},
+                {removed: false, isValid: true, data: []},
+                {removed: false, isValid: true},
+                {removed: false, isValid: true, data: [null, null, '5', '1', '2']},
+                {removed: false, isValid: true, data: [null, null, 'INF', '2', '4']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', 'INF']},
+            ]
+        };
+        
+        const result = sut.getFastestUsableAvgVelocity(set);
+
+        expect(result).toBe(7);
+    });
+});
+
+describe('weightInLBs', () => {
+    // test for valid metric
+    test('return null if metric is invalid', () => {
+        const set = { metric: 'triggered', weight: '560' }
+
+        const result = sut.weightInLBs(set);
+
+        expect(result).toBe(null);
+    })
+    
+    // test for valid num
+    test('return null if weight is invalid num', () => {
+        const set = { metric: 'lbs', weight: 'Hooplah' };
+
+        const result = sut.weightInLBs(set);
+
+        expect(result).toBe(null);
+    });
+
+    // test for no weight
+    test('return null if no weight', () => {
+        const set = { metric: 'lbs', weight: null };
+
+        const result = sut.weightInLBs(set);
+
+        expect(result).toBe(null);
+    });
+
+    // test for LBs
+    test('return weight in lbs if metric is lbs', () => {
+        const set = { metric: 'lbs', weight: '250' };
+
+        const result = sut.weightInLBs(set);
+
+        expect(result).toBe(250);
+    });
+
+    // test for KGs
+    test('return weight converted to lbs if metric is kg', () => {
+        const set = { metric: 'kgs', weight: '120' };
+
+        const result = sut.weightInLBs(set);
+
+        expect(result).toBe(265);
+    });
+});
+
+describe('weightInKGs', () => {
+    // test for valid metric
+    test('return null if metric is invalid', () => {
+        const set = { metric: 'fma brotherhood is better', weight: '425' }
+
+        const result = sut.weightInKGs(set);
+
+        expect(result).toBe(null);
+    })
+
+    // test for valid num
+    test('return null if weight is invalid num', () => {
+        const set = { metric: 'kgs', weight: 'Haduken' };
+
+        const result = sut.weightInKGs(set);
+
+        expect(result).toBe(null);
+    });
+
+    // test for no weight
+    test('return null if no weight', () => {
+        const set = { metric: 'kgs', weight: null };
+
+        const result = sut.weightInKGs(set);
+
+        expect(result).toBe(null);
+    });
+
+    // test for LBs
+    test('return weight in kgs if metric is kgs', () => {
+        const set = { metric: 'kgs', weight: '100' };
+
+        const result = sut.weightInKGs(set);
+
+        expect(result).toBe(100);
+    });
+
+    // test for KGs
+    test('return weight converted to kgs if metric is lbs', () => {
+        const set = { metric: 'lbs', weight: '265' };
+
+        const result = sut.weightInKGs(set);
+
+        expect(result).toBe(120);
+    });
+});
+
+describe('validUnremovedReps', () => {
+    test('return valid unremoved reps that are not Inf or 0', () => {
+        // test for valid and unremoved reps
+        // test for INF
+        // test for 0 
+        const set = {
+            reps: [
+                {removed: true, isValid: true, data: ['-1', '2', '2.5', '2', '8']}, 
+                {removed: false, isValid: true, data: ['-2', '3', '0', '1', '7']}, 
+                {removed: true, isValid: false, data: ['-3', '4', '7.8', '1', '3']}, 
+                {removed: false, isValid: false, data: ['-4', '6', '4', '1', '2']}, 
+                {removed: false, isValid: true, data: ['1', '0', '0', '1', '8']},
+                {removed: false, isValid: true, data: ['0', '2', '12', '1', '4']},
+                {removed: false, isValid: true, data: ['0', '2', '7', '1', '8']},
+                {removed: false, isValid: true, data: ['0', '2', '0', '1', '14']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', '8']},
+                {removed: false, isValid: true, data: ['-2', '4', 'Haduken', '1', '2']},
+                {removed: true, isValid: false, data: ['-3', '2', 'INF', '1', '3']},
+                {removed: null, isValid: null, data: [null, null, null, null, null]},
+                {removed: false, isValid: true, data: [null, null, null, null, null]},
+                {removed: false, isValid: true, data: []},
+                {removed: false, isValid: true},
+                {removed: false, isValid: true, data: [null, null, '5', '1', '2']},
+                {removed: false, isValid: true, data: [null, null, 'INF', '2', '4']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', 'INF']},
+            ]
+        };
+
+        const result = sut.validUnremovedReps(set);
+
+        expect(result).toEqual([
+            {removed: false, isValid: true, data: ['0', '2', '12', '1', '4']},
+            {removed: false, isValid: true, data: ['0', '2', '7', '1', '8']},
+            {removed: false, isValid: true, data: ['-1', '3', '5', '1', '8']},
+            {removed: false, isValid: true, data: [null, null, '5', '1', '2']},
+            {removed: false, isValid: true, data: ['-1', '3', '5', '1', 'INF']},
+        ]);
+    });
+});
+
 describe('numFieldsEntered', () => {
     test('0 when none', () => {
         const set = {
@@ -657,29 +959,27 @@ describe('numValidUnremovedReps', () => {
             exercise: 'Bench',
             weight: 100,
             metric: 'lbs',
-            reps: [{
-                isValid: false,
-                removed: false,
-            }, {
-                isValid: true,
-                removed: false,
-            }, {
-                isValid: true,
-                removed: false,
-            }, {
-                isValid: true,
-                removed: true,
-            }, {
-                isValid: false,
-                removed: true,
-            }, {
-                isValid: true,
-                removed: false,
-            }],
+            reps: [
+                {removed: true, isValid: true, data: ['-1', '2', '2.5', '2', '8']}, 
+                {removed: false, isValid: true, data: ['-2', '3', '0', '1', '7']}, 
+                {removed: true, isValid: false, data: ['-3', '4', '7.8', '1', '3']}, 
+                {removed: false, isValid: false, data: ['-4', '6', '4', '1', '2']}, 
+                {removed: false, isValid: true, data: ['1', '0', '0', '1', '8']},
+                {removed: false, isValid: true, data: ['0', '2', '12', '1', '4']},
+                {removed: false, isValid: true, data: ['0', '2', '7', '1', '8']},
+                {removed: false, isValid: true, data: ['0', '2', '0', '1', '14']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', '8']},
+                {removed: false, isValid: true, data: ['-2', '4', 'Bah', '1', '2']},
+                {removed: true, isValid: false, data: ['-3', '2', 'INF', '1', '3']},
+                {removed: null, isValid: null, data: [null, null, null, null, null]},
+                {removed: false, isValid: true, data: [null, null, '5', '1', '2']},
+                {removed: false, isValid: true, data: [null, null, 'Blue', '2', '4']},
+                {removed: false, isValid: true, data: ['-1', '3', '5', '1', 'INF']},
+            ],
         };
 
         const result = sut.numValidUnremovedReps(set);
 
-        expect(result).toBe(3);
+        expect(result).toBe(5);
     });
 });

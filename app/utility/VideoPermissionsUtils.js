@@ -3,6 +3,7 @@ import {
     Platform
 } from 'react-native';
 import Permissions from 'react-native-permissions';
+import * as Analytics from 'app/services/Analytics';
 
 export const checkWatchVideoPermissions = () => {
     return new Promise(async (resolve, reject) => {
@@ -21,6 +22,7 @@ export const checkWatchVideoPermissions = () => {
                     [{text: 'OK'}],
                     { cancelable: false }
                 );
+                Analytics.logEventWithAppState('watch_video_permissions_warning', {}, state);
                 reject();
             };
         });
@@ -43,6 +45,7 @@ export const checkRecordingPermissions = () => {
                     [{text: 'OK'}],
                     { cancelable: false }
                 );
+                Analytics.logEventWithAppState('record_video_permissions_warning', {}, state);
                 reject();
             };
         }).catch((error) => {

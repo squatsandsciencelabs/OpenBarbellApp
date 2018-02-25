@@ -49,6 +49,7 @@ const mapStateToProps = (state) => {
         minX: minX,
         maxX: maxX,
         maxY: maxY,
+        isRegressionNegative: AnalysisSelectors.getIsRegressionNegative(state),
     };
 };
 

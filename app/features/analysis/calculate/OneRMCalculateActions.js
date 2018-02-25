@@ -62,6 +62,7 @@ export const calcE1RM = () => (dispatch, getState) => {
         minX: results.minX,
         maxX: results.maxX,
         maxY: results.maxY,
+        isRegressionNegative: results.isRegressionNegative,
     });
 };
 

@@ -225,6 +225,7 @@ class EditTextModal extends Component {
                         underlineColorAndroid={'transparent'}
                         editable = {true}
                         autoFocus={true}
+                        autoCapitalize={'none'}
                         placeholder={this.props.placeholder}
                         returnKeyType={returnKeyType}
                         value={this.state.text}

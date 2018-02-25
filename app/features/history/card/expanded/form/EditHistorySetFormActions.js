@@ -115,7 +115,6 @@ export const presentWatchVideo = (setID, videoFileURL) => (dispatch, getState) =
 const logToggleMetricAnalytics = (setID, state) => {
     Analytics.logEventWithAppState('toggle_weight_metric', {
         is_working_set: false,
-        is_history: true,
     }, state);
 };
 
@@ -126,7 +125,6 @@ const logSaveWeightAnalytics = (setID, state) => {
         value: duration,
         duration: duration,
         is_working_set: false,
-        is_history: true,
     }, state);
 };
 
@@ -137,7 +135,6 @@ const logSaveRPEAnalytics = (setID, state) => {
         value: duration,
         duration: duration,
         is_working_set: false,
-        is_history: true,
     }, state);
 };
 

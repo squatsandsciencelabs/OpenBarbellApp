@@ -41,8 +41,6 @@ const mapStateToProps = (state) => {
         maxX = maxX * 1.1;
     }
 
-    
-
     return {
         velocity: AnalysisSelectors.getAnalysisVelocity(state),
         e1RM: e1RM,    

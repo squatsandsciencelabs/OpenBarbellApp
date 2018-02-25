@@ -15,6 +15,8 @@ import * as Analytics from 'app/services/Analytics';
 
 export const presentSelectExercise = () => (dispatch, getState) => {
     const state = getState();
+    logEditExerciseAnalytics(state);
+    Analytics.setCurrentScreen('one_rm_exercise_name');
 
     dispatch({ type: PRESENT_SELECT_EXERCISE });
 };
@@ -94,6 +96,11 @@ export const presentInfoModal = () => (dispatch, getState) => {
 };
 
 // ANALYTICS
+
+const logEditExerciseAnalytics = (state) => {
+    Analytics.logEventWithAppState('one_rm_edit_exercise', {
+    }, state);
+};
 
 const logEditIncludeTagsAnalytics = (state) => {
     Analytics.logEventWithAppState('one_rm_edit_include_tags', {

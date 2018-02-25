@@ -12,7 +12,7 @@ class Pill extends PureComponent {
     }
 
     _renderPill() {
-        if (this.props.text === 'Bug') {
+        if (this.props.text === 'bug') {
             // hack to get bug pill working
             // TODO: make this generic rather than specific so you can have multiple pill types
             return (

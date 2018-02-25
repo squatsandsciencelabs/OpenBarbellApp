@@ -56,14 +56,14 @@ const generateSuggestions = (model, input, bias, showBug=false, ignore = []) => 
     // TODO: if we do more than just the special bug tag, make this a generic system instead so you can add more types
     if (showBug) {
         // remove all bugs from suggestions so you can re-add it at the end
-        matches = matches.filter((e) => e !== 'Bug');
+        matches = matches.filter((e) => e !== 'bug');
 
         // add Bug if possible
         if (ignore.filter((e) => e === 'bug').length <= 0) {
             if (matches.length === 10) {
-                matches[9] = 'Bug';
+                matches[9] = 'bug';
             } else {
-                matches[matches.length] = 'Bug';
+                matches[matches.length] = 'bug';
             }
         }
     }

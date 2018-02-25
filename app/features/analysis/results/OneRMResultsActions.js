@@ -5,8 +5,8 @@ import * as Analytics from 'app/services/Analytics';
 
 export const tappedSet = (setID, workoutID) => (dispatch, getState) => {
     const state = getState();
-    Analytics.setCurrentScreen('one_rm_exercise_name');
     logEditSetAnalytics(state, setID);
+    Analytics.setCurrentScreen('one_rm_exercise_name');
 
     dispatch({
         type: PRESENT_EDIT_1RM_SET,

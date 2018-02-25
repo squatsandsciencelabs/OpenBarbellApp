@@ -154,11 +154,11 @@ class OneRMChartView extends Component {
         if (this.props.e1RM) {
             data.scatterData.dataSets.push({
                 values: [{x: this.props.e1RM, y: this.props.velocity}],
-                label: '1RM',
+                label: '1 Rep Max',
     
                 config: {
                     drawValues: false,
-                    colors: [processColor('green')],
+                    colors: [processColor('black')],
                     highlightEnabled: false,
                     normalizeSizeEnabled: false,
                     scatterShape: 'CROSS',
@@ -170,7 +170,7 @@ class OneRMChartView extends Component {
         if (this.props.unusedChartData && this.props.unusedChartData.length > 0) {
             data.scatterData.dataSets.push({
                 values: this.props.unusedChartData,
-                label: 'Unused Points',
+                label: 'Unused Sets',
                 config: {
                     colors: [processColor('rgba(47, 128, 237, 0.2)')],
                     drawValues: false,
@@ -185,7 +185,7 @@ class OneRMChartView extends Component {
         if (this.props.errorChartData && this.props.errorChartData.length > 0) {
             data.scatterData.dataSets.push({
                 values: this.props.errorChartData,
-                label: 'Error Points',
+                label: 'Errors',
                 config: {
                     colors: [processColor('red')],
                     drawValues: false,
@@ -201,7 +201,7 @@ class OneRMChartView extends Component {
         if (this.props.activeChartData && this.props.activeChartData.length > 0) {
             data.scatterData.dataSets.push({
                 values: this.props.activeChartData,
-                label: 'Active Points',
+                label: 'Active Sets',
                 config: {
                     colors: [processColor('rgba(47, 128, 237, 1)')],
                     drawValues: false,
@@ -218,7 +218,7 @@ class OneRMChartView extends Component {
             data.lineData = {
                 dataSets: [{
                     values: [this.props.regLeftPoint, this.props.regRightPoint],
-                    label: 'Regression line',
+                    label: 'Regression',
     
                     config: {
                         drawValues: false,
@@ -258,7 +258,7 @@ class OneRMChartView extends Component {
                     }}
                     pinchZoom={true}
                     maxVisibleValueCount={9001} // Assuming we'll never have this many sets
-                    legend={{enabled: false}}
+                    legend={{enabled: true}}
                     onSelect={this._handleSelect.bind(this)}
                     onTouchStart={this._handleTouchStart.bind(this)}
                     onTouchEndCapture={this._handleTouchEndCapture.bind(this)}
@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
         height: 400,
         justifyContent: 'center',
         alignItems: 'stretch',
-        backgroundColor: 'lightgray',
+        backgroundColor: 'transparent',
     },
 });
 

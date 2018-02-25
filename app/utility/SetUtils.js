@@ -43,15 +43,24 @@ export const hasEmptyReps = (set) => {
 
 // NOTE: this considers infinity / 0 invalid
 export const usableReps = (set) => {
+    if (!set || !set.hasOwnProperty('reps')) {
+        return false;
+    }
     return set.reps.filter(rep => !rep.removed && isRepUsable(rep));
 };
 
 export const hasUnremovedRep = (set) => {
+    if (!set || !set.hasOwnProperty('reps')) {
+        return false;
+    }
     return set.reps.some(rep => !rep.removed);
 };
 
 // NOTE: this does not consider infinity / 0 invalid
 export const validUnremovedReps = (set) => {
+    if (!set || !set.hasOwnProperty('reps')) {
+        return [];
+    }
     return set.reps.filter(rep => rep.isValid && !rep.removed);
 };
 
@@ -116,6 +125,9 @@ const isVelocityUsable = (velocity) => {
 
 // NOTE: this considers infinity / 0 invalid
 export const hasUnusableReps = (set) => {
+    if (!set || !set.hasOwnProperty('reps')) {
+        return false;
+    }
     return set.reps.some(rep => !isRepUsable(rep));
 };
 

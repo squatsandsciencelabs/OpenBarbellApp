@@ -31,11 +31,14 @@ export const changeVelocitySlider = (velocity) => (dispatch, getState) => {
 };
 
 export const changeE1RMDays = (days) => (dispatch, getState) => {
+    days = Math.abs(days);
+
     const state = getState();
+    logEditDateRangeAnalytics(state, days);
 
     dispatch({
         type: CHANGE_1RM_DAYS_RANGE,
-        days: Math.abs(days),
+        days: days,
     });
 };
 
@@ -99,6 +102,12 @@ export const presentInfoModal = () => (dispatch, getState) => {
 
 const logEditExerciseAnalytics = (state) => {
     Analytics.logEventWithAppState('one_rm_edit_exercise', {
+    }, state);
+};
+
+const logEditDateRangeAnalytics = (state, days) => {
+    Analytics.logEventWithAppState('one_rm_set_date_range', {
+        to_days: days,
     }, state);
 };
 

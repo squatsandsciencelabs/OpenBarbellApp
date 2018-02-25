@@ -18,8 +18,8 @@ export const dismissTags = () => {
 
 export const cancelTags = (setID) => (dispatch, getState) => {
     const state = getState();
-    Analytics.setCurrentScreen('one_rm_edit_set');
     logCancelEditTagsAnalytics(state, setID);
+    Analytics.setCurrentScreen('one_rm_edit_set');
 
     dispatch({
         type: DISMISS_1RM_TAGS,
@@ -60,6 +60,8 @@ export const addPill = (setID) => (dispatch, getState) => {
         type: ADD_1RM_TAG,
     });
 };
+
+// ANALYTICS
 
 const logSaveTagsAnalytics = (state, setID) => {
     const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);

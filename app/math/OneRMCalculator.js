@@ -450,9 +450,10 @@ const checkIncludesTags = (tags, tagsToInclude) => {
         return true;
     }
 
-    return tagsToInclude.every((tagToInclude) => {
-        return tags.includes(tagToInclude);
-    });
+    const tagsInsensitive = tags.map(tag => tag.trim().toLowerCase());
+    const includeTagsInsensitive = tagsToInclude.map(tag => tag.trim().toLowerCase());
+
+    return includeTagsInsensitive.every((tagToInclude) => tagsInsensitive.includes(tagToInclude));
 };
 
 const checkExcludesTags = (tags, tagsToExclude) => {
@@ -460,9 +461,10 @@ const checkExcludesTags = (tags, tagsToExclude) => {
         return true;
     }
 
-    return tagsToExclude.every((tagToExclude) => {
-        return !tags.includes(tagToExclude);
-    });
+    const tagsInsensitive = tags.map(tag => tag.trim().toLowerCase());
+    const excludeTagsInsensitive = tagsToExclude.map(tag => tag.trim().toLowerCase());
+
+    return excludeTagsInsensitive.every((tagToExclude) => !tagsInsensitive.includes(tagToExclude));
 };
 
 // CALCULATION

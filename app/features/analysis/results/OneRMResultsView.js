@@ -82,9 +82,31 @@ class OneRMChartView extends Component {
 
             return (
                 <View>
-                    <Text style={styles.oneRMText}>e1RM: <Text style={{fontWeight: 'bold'}}>{e1RM}</Text> {this.props.metric}</Text>
-                    <Text style={{ textAlign: 'center', fontSize: 15, marginBottom: 20 }}>@ <Text style={{ fontWeight: 'bold' }}> {velocity} m/s</Text></Text> 
-                    <Text style={styles.r2Text}>r² : {this.props.r2} %</Text>
+                    <View style={{flexDirection: 'row'}}>
+                        <View>
+                            <Text style={styles.oneRMText}>
+                                e1RM:
+                            </Text>
+                        </View>
+                        <View style={{flexDirection: 'column'}}>
+                            <View>
+                                <Text style={styles.oneRMValue}>
+                                    {e1RM}
+                                    <Text style={styles.oneRMMetric}>{this.props.metric}</Text>
+                                </Text>
+                            </View>
+                            <View>
+                                <Text style={{ textAlign: 'left', fontSize: 15}}>
+                                    <Text style={styles.oneRMVelocityAt}>@ </Text>
+                                    <Text style={styles.oneRMVelocity}>{velocity}</Text>
+                                    <Text style={styles.oneRMVelocityMetric}>m/s</Text>
+                                </Text>
+                            </View>
+                        </View>
+                    </View>
+                    <View>
+                        <Text style={styles.r2Text}>r² : {this.props.r2}%</Text>
+                    </View>
                 </View>
             );
         } else {
@@ -138,7 +160,7 @@ class OneRMChartView extends Component {
             );
         } else {
             const size = Device.isSmallDevice() ? 250 : 300;
-            return <Image style={{width: size, height: size, marginTop: 20}} source={require('app/appearance/images/grayed_chart.png')} />
+            return <Image style={{width: size, height: size, marginTop: 5}} source={require('app/appearance/images/grayed_chart.png')} />
         }
     }
 
@@ -239,6 +261,7 @@ class OneRMChartView extends Component {
                         position: 'BOTTOM',
                         axisMinimum: this.props.minX,
                         axisMaximum: this.props.maxX,
+                        textColor: processColor('rgba(77, 77, 77, 1)'),
                     }}
                     yAxis={{
                         right: {
@@ -249,6 +272,7 @@ class OneRMChartView extends Component {
                         left: {
                             axisMinimum: 0,
                             axisMaximum: this.props.maxY,
+                            textColor: processColor('rgba(77, 77, 77, 1)'),
                         }
                     }}
                     marker={{enabled: true,
@@ -258,7 +282,10 @@ class OneRMChartView extends Component {
                     }}
                     pinchZoom={true}
                     maxVisibleValueCount={9001} // Assuming we'll never have this many sets
-                    legend={{enabled: true}}
+                    legend={{
+                        enabled: true,
+                        textColor: processColor('rgba(77, 77, 77, 1)')
+                    }}
                     onSelect={this._handleSelect.bind(this)}
                     onTouchStart={this._handleTouchStart.bind(this)}
                     onTouchEndCapture={this._handleTouchEndCapture.bind(this)}
@@ -276,7 +303,7 @@ class OneRMChartView extends Component {
             <View style={ [SETTINGS_PANEL_STYLES.panel, { borderBottomWidth: 0, flexDirection: 'column', alignItems: 'center' }] }>
                 <Text style={[styles.titleText, {marginBottom: 10}]}>Results</Text>
                 {this._render1RM(this.props.r2)}
-                <Text style={{textAlign: 'center', fontStyle: 'italic', fontWeight: 'bold', color: 'rgba(77, 77, 77, 1)'}}>Tap a point to view and edit the data</Text>
+                <Text style={{textAlign: 'center', color: 'rgba(77, 77, 77, 1)', fontSize: 12}}>Tap a point to view and edit the data</Text>
                 {this._renderChartArea()}
             </View>
         );
@@ -287,28 +314,57 @@ const styles = StyleSheet.create({
     oneRMText: {
         color: 'rgba(77, 77, 77, 1)',
         marginTop: 10,
-        marginBottom: 5,
+        marginBottom: 0,
         fontSize: 32, 
+        textAlign: 'left'
+    },
+    oneRMValue: {
+        color: 'rgba(77, 77, 77, 1)',
+        marginTop: 10,
+        marginBottom: 0,
+        fontSize: 32, 
+        textAlign: 'left',
+        fontWeight: 'bold',
+    },
+    oneRMMetric: {
+        color: 'rgba(77, 77, 77, 1)',
+        fontSize: 15, 
+        textAlign: 'left'
+    },
+    oneRMVelocityAt: {
+        color: 'rgba(77, 77, 77, 1)',
+        fontSize: 15, 
+        textAlign: 'left'
+    },
+    oneRMVelocity: {
+        color: 'rgba(77, 77, 77, 1)',
+        fontSize: 15, 
+        textAlign: 'left',
+        fontWeight: 'bold',
+    },
+    oneRMVelocityMetric: {
+        color: 'rgba(77, 77, 77, 1)',
+        fontSize: 10, 
         textAlign: 'center'
     },
     r2Text: {
         color: 'rgba(77, 77, 77, 1)',
-        marginBottom: 20,
-        fontSize: 18,
+        marginBottom: 25,
+        marginTop: 15,
+        fontSize: 15,
         textAlign: 'center',
         fontWeight: 'bold',
     },
     errorText: {
         color: 'rgba(77, 77, 77, 1)',
         marginBottom: 20, 
-        fontSize: 20, 
+        fontSize: 18, 
         textAlign: 'center',
-        fontWeight: 'bold'
     },
     titleText: {
         color: 'rgba(77, 77, 77, 1)',
         textAlign: 'center',
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: 'bold',
     },
     chartContainer: {

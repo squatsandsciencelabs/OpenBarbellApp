@@ -54,7 +54,7 @@ class OneRMView extends Component {
 
     _displayTagsToInclude() {
         if (this.props.tagsToInclude === undefined || this.props.tagsToInclude === null || this.props.tagsToInclude.length === 0) {
-            return (<Text style={[styles.tagText, styles.placeholderText]}>Tags to Include</Text>);
+            return (<Text style={[styles.tagText, styles.placeholderText]}>Tags</Text>);
         }
 
         let position = 0;
@@ -78,7 +78,7 @@ class OneRMView extends Component {
 
     _displayTagsToExclude() {
         if (this.props.tagsToExclude === undefined || this.props.tagsToExclude === null || this.props.tagsToExclude.length === 0) {
-            return (<Text style={[styles.tagText, styles.placeholderText]}>Tags to Exclude</Text>);
+            return (<Text style={[styles.tagText, styles.placeholderText]}>Tags</Text>);
         }
 
         let position = 0;
@@ -105,16 +105,16 @@ class OneRMView extends Component {
             return (
                 <View>
                     <View>
-                        <TouchableOpacity onPress={() => this._tappedExercise()} style={[SETTINGS_PANEL_STYLES.blueButton, {width: 200, height: 35, alignSelf: 'center', marginBottom: 20}]}>
+                        <TouchableOpacity onPress={() => this._tappedExercise()} style={[SETTINGS_PANEL_STYLES.blueButton, {flex: 1, marginBottom: 20}]}>
                             <Text style={{fontSize: 18, color: 'white', textAlign: 'center'}}>
                                 {this.props.exercise}
                             </Text>
                             <Icon name="caret-down" size={10} color='white' style={{right: 5, position:'absolute'}} />
                         </TouchableOpacity>
-                        <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Include:</Text>
-                        <View style={{marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
-                        <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Exclude:</Text>
-                        <View>{ this._renderTagsToExclude() }</View>
+                        <Text style={styles.labelText}>Tags to Include:</Text>
+                        <View style={{marginTop: 5, marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
+                        <Text style={styles.labelText}>Tags to Exclude:</Text>
+                        <View style={{marginTop: 5}}>{ this._renderTagsToExclude() }</View>
                     </View>
                     <ExercisePicker />
                     <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
@@ -126,12 +126,14 @@ class OneRMView extends Component {
         } else {
             return (
                 <View>
-                    <View style={[{flex: 0.37, width: 200, alignSelf: 'center'}, styles.dropdownButton]}><ExercisePicker color={'white'} /></View>
-                    <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10, marginTop: 15}}>Tags to Include:</Text>
-                    <View style={{marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
-                    <Text style={{textAlign: 'center', fontSize: 15, marginBottom: 10}}>Tags to Exclude:</Text>
-                    <View>{ this._renderTagsToExclude() }</View>
-                    <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white', marginBottom: 20 }}>
+                    <View style={[{flex: 1, marginBottom: 15}, styles.dropdownButton]}>
+                        <ExercisePicker color={'white'} />
+                    </View>
+                    <Text style={styles.labelText}>Tags to Include:</Text>
+                    <View style={{marginTop: 5, marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
+                    <Text style={styles.labelText}>Tags to Exclude:</Text>
+                    <View style={{marginTop: 5}}>{ this._renderTagsToExclude() }</View>
+                    <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white', marginBottom: 0 }}>
                         <EditAnalysisTagsToIncludeScreen />
                         <EditAnalysisTagsToExcludeScreen />
                     </View>
@@ -148,7 +150,7 @@ class OneRMView extends Component {
         }
 
         return (
-            <View style={{ marginTop: 20 }}>
+            <View style={{ marginTop: Platform.OS === 'ios' ? 20 : 15 }}>
                 <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>    
                     <Text style={styles.labelText}>
                         Date Range
@@ -157,6 +159,7 @@ class OneRMView extends Component {
                 </View>
                 <Slider
                     value={this.props.days * -1} 
+                    style={styles.slider}
                     onValueChange={(value) => this.setState({ slidingDays: true, days: Number(value.toFixed(2)) })}
                     onSlidingComplete={(value) => this._changeDaysSlider(value)}
                     minimumValue={-60}
@@ -166,14 +169,15 @@ class OneRMView extends Component {
                     minimumTrackTintColor={'#368fff'}
                     animateTransitions={true}
                 />
-                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
                     <Text style={styles.labelText}>
                         Velocity
                     </Text>
                     <Text style={styles.numberStyle}>{this.state.velocity} m/s</Text>
                 </View>
                 <Slider
-                    value={this.props.velocity} 
+                    value={this.props.velocity}
+                    style={styles.slider}
                     onValueChange={(value) => this.setState({ slidingVelocity: true, velocity: Number(value.toFixed(2)) })}
                     onSlidingComplete={(value) => this._changeVelocitySlider(value)}
                     minimumValue={.01}
@@ -189,7 +193,7 @@ class OneRMView extends Component {
 
     _renderCalculate1RM() {
         return (
-            <View style={[styles.button, {marginTop: 20}]}>
+            <View style={[styles.button, {marginTop: 25}]}>
                 <TouchableOpacity onPress={ () => this.props.calcE1RM() }>
                     <Text style={styles.buttonText}>Calculate</Text>
                 </TouchableOpacity>
@@ -203,7 +207,7 @@ class OneRMView extends Component {
                 <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
                     <Text style={[{marginBottom: 25}, styles.titleText]}>Estimated One-Rep Max</Text>
                     <TouchableOpacity style={{alignItems: 'center', position: 'absolute', right: 0, top: 0}} onPress={ () => this.props.presentInfoModal() }>
-                        <Icon name="question-circle" size={25} color='rgba(47, 128, 237, 1)'></Icon>
+                        <Icon name="question-circle" size={20} color='rgba(47, 128, 237, 1)'></Icon>
                     </TouchableOpacity>
                     <WhatIsOneRMScreen />
                     {this._renderForms()}
@@ -226,17 +230,16 @@ const styles = StyleSheet.create({
         color: 'rgba(77, 77, 77, 1)',
         fontSize: 16,
         fontWeight: 'bold',
-        textAlign: 'center',
-        marginBottom: 5
+        textAlign: 'left',
+        marginBottom: 0,
     },
     numberStyle: {
-        fontSize: 16
+        fontSize: 16,
+        color: 'rgba(77, 77, 77, 1)',
     },
     dropdownButton: {
         backgroundColor: 'rgba(47, 128, 237, 1)',
         borderRadius: 3,
-        marginLeft: 5,
-        marginBottom: 5,
         height: 40,
     },
     field: {
@@ -282,6 +285,9 @@ const styles = StyleSheet.create({
     placeholderText: {
         color: 'rgba(189, 189, 189, 1)'
     },
+    slider: {
+        marginTop: Platform.OS === 'ios' ? -5 : 10
+    },
     button: {
         backgroundColor: 'rgba(47, 128, 237, 1)',
         borderColor: 'rgba(47, 128, 237, 1)',        
@@ -292,13 +298,6 @@ const styles = StyleSheet.create({
         color: 'white',
         padding: 5,
         textAlign: 'center'
-    },
-    dropdownButton: {
-        backgroundColor: 'rgba(47, 128, 237, 1)',
-        borderRadius: 3,
-        marginLeft: 5,
-        marginBottom: 5,
-        height: 40,
     },
 });
 

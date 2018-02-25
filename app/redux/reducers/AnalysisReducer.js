@@ -1,3 +1,6 @@
+// TODO: break up analysis into multiple reducers and selectors
+// This has gotten too unwieldy
+
 import {
     CHANGE_VELOCITY_SLIDER,
     CHANGE_1RM_DAYS_RANGE,
@@ -81,6 +84,15 @@ const defaultState = {
     isSavingVideo: false,    
     watchSetID: null,
     watchFileURL: null,
+
+    // analytics
+    didEditSet: false,
+    didChangeWeight: false,
+    didChangeExercise: false,
+    didChangeTags: false,
+    didChangeRPE: false,
+    didRemoveRep: false,
+    didRestoreRep: false,
 
     // scroll
     scroll: false,
@@ -177,6 +189,13 @@ const AnalysisReducer = (state = defaultState, action) => {
                 ...state,
                 setID: action.setID,
                 workoutID: action.workoutID,
+                didEditSet: false,
+                didChangeWeight: false,
+                didChangeExercise: false,
+                didChangeTags: false,
+                didChangeRPE: false,
+                didRemoveRep: false,
+                didRestoreRep: false,
             };
         case DISMISS_EDIT_1RM_SET:
             return {

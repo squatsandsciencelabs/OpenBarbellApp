@@ -50,7 +50,7 @@ const defaultState = {
 
     // calculate
     velocitySlider: .01,
-    exercise: 'Squat',
+    exercise: 'squat',
     daysRange: 7,
     tagsToInclude: [],
     tagsToExclude: [],

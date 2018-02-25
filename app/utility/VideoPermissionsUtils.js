@@ -22,7 +22,8 @@ export const checkWatchVideoPermissions = () => {
                     [{text: 'OK'}],
                     { cancelable: false }
                 );
-                Analytics.logEventWithAppState('watch_video_permissions_warning', {}, state);
+                // TODO: should put it in the catch so can pass in state
+                Analytics.logEvent('watch_video_permissions_warning', {});
                 reject();
             };
         });
@@ -45,7 +46,8 @@ export const checkRecordingPermissions = () => {
                     [{text: 'OK'}],
                     { cancelable: false }
                 );
-                Analytics.logEventWithAppState('record_video_permissions_warning', {}, state);
+                // TODO: should put it in the catch so can pass in state
+                Analytics.logEvent('record_video_permissions_warning', {});
                 reject();
             };
         }).catch((error) => {

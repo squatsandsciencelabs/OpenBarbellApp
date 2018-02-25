@@ -23,6 +23,7 @@ export const presentSelectExercise = () => (dispatch, getState) => {
 
 export const changeVelocitySlider = (velocity) => (dispatch, getState) => {
     const state = getState();
+    logEditVelocityAnalytics(state, velocity);
 
     dispatch({
         type: CHANGE_VELOCITY_SLIDER,
@@ -108,6 +109,12 @@ const logEditExerciseAnalytics = (state) => {
 const logEditDateRangeAnalytics = (state, days) => {
     Analytics.logEventWithAppState('one_rm_set_date_range', {
         to_days: days,
+    }, state);
+};
+
+const logEditVelocityAnalytics = (state, velocity) => {
+    Analytics.logEventWithAppState('one_rm_set_velocity', {
+        to_velocity: velocity,
     }, state);
 };
 

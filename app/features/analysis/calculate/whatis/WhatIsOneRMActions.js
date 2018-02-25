@@ -1,18 +1,17 @@
 import {
-    Linking,
-} from 'react-native';
-
-import {
-    PRESENT_BEST_RESULTS,
     DISMISS_INFO_MODAL,
 } from 'app/configs+constants/ActionTypes';
+import * as Analytics from 'app/services/Analytics';
+import * as AnalysisActionCreators from 'app/redux/shared_actions/AnalysisActionCreators';
 
-export const presentBestResults = () => (dispatch, getState) => {
-    // TODO: analytics
-    Linking.openURL("http://www.squatsandscience.com/onerepmax/");
-    dispatch({ type: PRESENT_BEST_RESULTS });
+export const presentBestResults = () => AnalysisActionCreators.presentBestResults();
+
+export const dismissInfoModal = () => (dispatch, getState) => {
+    const state = getState();
+
+    dispatch({ type: DISMISS_INFO_MODAL });
 };
 
-export const dismissInfoModal = () => ({
-    type: DISMISS_INFO_MODAL,
-});
+// ANALYTICS
+
+

@@ -29,6 +29,9 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     let pool = getSetsFor1RM(exercise, tagsToInclude, tagsToExclude, daysRange, velocity, allSets);
 
     // Step 2A: Remove based on ROM Check
+    const romResults = romCheck(pool);
+    errors.push(...romResults.failed);
+    pool = romResults.passed;
 
     // Step 2B: Remove based on Weight Check
 
@@ -159,6 +162,70 @@ const getSetsFor1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, veloci
     });
 
     return data;
+};
+
+// returns an object with:
+//   failed as [] of sets representing bad sets
+//   passed as [] of sets representing the set that passed
+const romCheck = (pool) => {
+    let failed = [];
+    let passed0Check = [];
+    let passed = [];
+    let roms = [];
+
+    // ROM 0 check and obtain array of all ROMs
+    pool.forEach((set) => {
+        var hasFailedROM = false;
+
+        SetUtils.validUnremovedReps(set).forEach((rep) => {
+            const rom = RepDataMap.rangeOfMotion(rep.data);
+            if (rom !== null && isFinite(rom) && rom > 0) {
+                roms.push(rom);
+            } else {
+                hasFailedROM = true;
+            }
+        });
+
+        if (hasFailedROM) {
+            failed.push(set);
+        } else {
+            passed0Check.push(set);
+        }
+    });
+
+    // sanity check for no passing ROMs
+    if (passed0Check.length <= 0) {
+        return {
+            failed: failed,
+            passed: [],
+        };
+    }
+
+    // calculate bounds
+    const mean = average(roms);
+    const std = standardDeviation(roms, mean);  
+    const minValidROM = mean - (2.5*std);
+    const maxValidROM = mean + (2.5*std);
+
+    // remove sets with roms below min or above max
+    passed0Check.forEach((set) => {
+        const hasBadROM = SetUtils.validUnremovedReps(set).some((rep) => {
+            const rom = RepDataMap.rangeOfMotion(rep.data);
+            return rom < minValidROM || rom > maxValidROM;
+        });
+        if (hasBadROM) {
+            failed.push(set);
+        } else {
+            passed.push(set);
+        }
+    });
+
+    // return
+    return {
+        failed: failed,
+        passed: passed,
+    };
+
 };
 
 // returns an object with:
@@ -498,3 +565,35 @@ export const getTagsToExcludeSuggestions = (state, exercise) => {
 
     return tags;
 };
+
+
+
+
+// STD convenience functions
+// taken from https://derickbailey.com/2014/09/21/calculating-standard-deviation-with-array-map-and-array-reduce-in-javascript/
+
+function standardDeviation(values, avg=null) {
+    if(avg === null) {
+        avg = average(values);
+    }
+    
+    var squareDiffs = values.map(function(value){
+      var diff = value - avg;
+      var sqrDiff = diff * diff;
+      return sqrDiff;
+    });
+    
+    var avgSquareDiff = average(squareDiffs);
+  
+    var stdDev = Math.sqrt(avgSquareDiff);
+    return stdDev;
+}
+  
+function average(data) {
+    var sum = data.reduce(function(sum, value){
+      return sum + value;
+    }, 0);
+
+    var avg = sum / data.length;
+    return avg;
+}

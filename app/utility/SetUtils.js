@@ -44,7 +44,7 @@ export const hasEmptyReps = (set) => {
 // NOTE: this considers infinity / 0 invalid
 export const usableReps = (set) => {
     if (!set || !set.hasOwnProperty('reps')) {
-        return false;
+        return [];
     }
     return set.reps.filter(rep => !rep.removed && isRepUsable(rep));
 };

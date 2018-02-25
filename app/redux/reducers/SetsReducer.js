@@ -186,9 +186,10 @@ const saveWorkoutSetTags = (state, action) => {
     let newWorkoutData = state.workoutData.slice(0);
     let setIndex = newWorkoutData.findIndex( set => set.setID === action.setID );
     let set = newWorkoutData[setIndex];
+    let tags = action.hasOwnProperty('tags') && action.tags ? action.tags.map((tag) => tag.toLowerCase()) : [];
 
     let changes = {
-        tags: [...action.tags]
+        tags: [...tags]
     };
     if (!set.initialStartTime) {
         changes.initialStartTime = new Date();
@@ -255,10 +256,11 @@ const saveHistorySetTags = (state, action) => {
     let setID = action.setID;
     let historyData = state.historyData;
     let set = historyData[setID];
+    let tags = action.hasOwnProperty('tags') && action.tags ? action.tags.map((tag) => tag.toLowerCase()) : [];
 
     // new set
     let setChanges = {
-        tags: [...action.tags]
+        tags: [...tags]
     };
     let newSet = Object.assign({}, set, setChanges);
 

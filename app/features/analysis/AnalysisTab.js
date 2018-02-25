@@ -46,7 +46,11 @@ class AnalysisTab extends Component {
         if (this.props.isLoggedIn) {
             // TODO: test the hack still works on Android
             return (
-                <ScrollView style={{flex: 1}} ref={(ref) => { this.scrollView = ref}}>
+                <ScrollView
+                    style={{flex: 1}}
+                    keyboardDismissMode='on-drag'
+                    keyboardShouldPersistTaps='always'
+                    ref={(ref) => { this.scrollView = ref}}>
                     <OneRMDebugScreen />
                     <OneRMCalculateScreen />
                     <View ref={(ref) => { this.results = ref }} onLayout={() => {}} collapsable={false} >

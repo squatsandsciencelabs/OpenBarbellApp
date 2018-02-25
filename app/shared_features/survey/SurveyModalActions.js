@@ -81,7 +81,10 @@ const resetScreen = (state) => {
         case 1:
             Analytics.setCurrentScreen('history');
             break;
-        case 2: 
+        case 2:
+            Analytics.setCurrentScreen('analysis');
+            break;
+        case 3: 
             Analytics.setCurrentScreen('settings');
             break;
         default:

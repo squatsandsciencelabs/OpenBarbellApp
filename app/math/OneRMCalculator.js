@@ -77,6 +77,7 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
         return [point.x, point.y];
     });
     const regressionResults = calculateRegression(exerciseData, velocity);
+    const isRegressionNegative = hasNegativeSlope(regressionResults.regressionPoints);
     const yInt = velocityAt0Weight(regressionResults.regressionPoints);
     const xInt = highestWeightPossible(regressionResults.regressionPoints);
     if (yInt !== null && xInt !== null) {
@@ -99,7 +100,7 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
         minX: minX,
         maxX: maxX,
         maxY: maxY,
-        isRegressionNegative: hasNegativeSlope(regressionPoints),
+        isRegressionNegative: isRegressionNegative,
     };
 };
 

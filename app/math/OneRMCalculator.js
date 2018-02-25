@@ -562,8 +562,9 @@ export const getTagsToIncludeSuggestions = (state, exercise) => {
     sets.forEach((set) => {
         if (set.exercise === exercise && set.tags) {
             set.tags.forEach((tag) => {
-                if (!tags.includes(tag) && !tagsToExclude.includes(tag) && !tagsToInclude.includes(tag) && tag !== 'bug') {
-                    tags.push(tag);
+                const lowerTag = tag.toLowerCase();
+                if (!tags.includes(lowerTag) && !tagsToExclude.includes(lowerTag) && !tagsToInclude.includes(lowerTag) && lowerTag !== 'bug') {
+                    tags.push(lowerTag);
                 }
             });
         }
@@ -584,8 +585,9 @@ export const getTagsToExcludeSuggestions = (state, exercise) => {
     sets.forEach((set) => {
         if (set.exercise === exercise && set.tags) {
             set.tags.forEach((tag) => {
-                if (!tags.includes(tag) && !tagsToInclude.includes(tag) && !tagsToExclude.includes(tag) && tag !== 'bug') {
-                    tags.push(tag);
+                const lowerTag = tag.toLowerCase();
+                if (!tags.includes(lowerTag) && !tagsToInclude.includes(lowerTag) && !tagsToExclude.includes(lowerTag) && lowerTag !== 'bug') {
+                    tags.push(lowerTag);
                 }
             });
         }

@@ -121,7 +121,6 @@ const logToggleMetricAnalytics = (setID, state) => {
 
     Analytics.logEventWithAppState('toggle_weight_metric', {
         is_working_set: is_working_set,
-        is_history: false,
     }, state);
 };
 
@@ -133,7 +132,6 @@ const logSaveWeightAnalytics = (setID, state) => {
         value: duration,
         duration: duration,
         is_working_set: is_working_set,
-        is_history: false,
     }, state);
 }
 
@@ -145,7 +143,6 @@ const logSaveRPEAnalytics = (setID, state) => {
         value: duration,
         duration: duration,
         is_working_set: is_working_set,
-        is_history: false,
     }, state);
 };
 

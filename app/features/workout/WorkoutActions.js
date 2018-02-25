@@ -60,7 +60,6 @@ const logRemoveRepAnalytics = (state, setID) => {
 
     Analytics.logEventWithAppState('remove_rep', {
         is_working_set: is_working_set,
-        is_history: false,
     }, state);
 };
 
@@ -69,6 +68,5 @@ const logRestoreRepAnalytics = (state, setID) => {
 
     Analytics.logEventWithAppState('restore_rep', {
         is_working_set: is_working_set,
-        is_history: false,
     }, state);
 };

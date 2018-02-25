@@ -40,7 +40,6 @@ const logSaveExerciseNameAnalytics = (setID, exercise, state) => {
         value: duration,
         duration: duration,
         is_working_set: is_working_set,
-        is_history: false,
     }, state);
 };
 

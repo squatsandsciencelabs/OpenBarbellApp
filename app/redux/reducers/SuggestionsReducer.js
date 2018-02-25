@@ -47,9 +47,9 @@ const generateAutocompleteExerciseModel = (workoutData, historyData) => {
     sets.map((set) => {
         let lowercaseExercise = set.exercise.toLowerCase();
         if (dictionary[lowercaseExercise] === undefined) {
-            dictionary[lowercaseExercise] = { suggestion: set.exercise, seed: 1 };
+            dictionary[lowercaseExercise] = { suggestion: lowercaseExercise, seed: 1 };
         } else {
-            dictionary[lowercaseExercise] = { suggestion: set.exercise, seed: dictionary[lowercaseExercise].seed + 1};
+            dictionary[lowercaseExercise] = { suggestion: lowercaseExercise, seed: dictionary[lowercaseExercise].seed + 1};
         }
     });
 
@@ -79,9 +79,9 @@ const generateAutocompleteTagsModel = (workoutData, historyData) => {
         set.tags.map((tag) => {
             let lowercaseTag = tag.toLowerCase();
             if (model[lowercaseTag] === undefined) {
-                model[lowercaseTag] = { suggestion: tag, seed: 1 };
+                model[lowercaseTag] = { suggestion: lowercaseTag, seed: 1 };
             } else {
-                model[lowercaseTag] = { suggestion: tag, seed: model[lowercaseTag].seed + 1};
+                model[lowercaseTag] = { suggestion: lowercaseTag, seed: model[lowercaseTag].seed + 1};
             }
         });
     });

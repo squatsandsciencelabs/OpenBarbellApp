@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     processColor,
     Platform,
+    Dimensions,
 } from 'react-native';
 import {
     CombinedChart,
@@ -254,7 +255,7 @@ class OneRMChartView extends Component {
         }
 
         return (
-            <View style={styles.chartContainer}>
+            <View>
                 <CombinedChart
                     data={data}
                     xAxis={{
@@ -367,14 +368,11 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
     },
-    chartContainer: {
-        alignItems: 'center',
-        width: 300,
-        height: 400,
-    },
     chart: {
-        width: 300,
-        height: 400,
+        // NOTE: flex is weird within scrollviews and charts
+        // it's easier to just get it working by manually setting its size
+        width: Dimensions.get('window').width - 45,
+        height: (Dimensions.get('window').width - 45) * 1.25,
         justifyContent: 'center',
         alignItems: 'stretch',
         backgroundColor: 'transparent',

@@ -11,28 +11,43 @@ import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 import * as OneRMCalculator from 'app/math/OneRMCalculator';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
+import * as Analytics from 'app/services/Analytics';
 
-export const presentSelectExercise = () => ({
-    type: PRESENT_SELECT_EXERCISE,
-});
+export const presentSelectExercise = () => (dispatch, getState) => {
+    const state = getState();
 
-export const changeVelocitySlider = (velocity) => ({
-    type: CHANGE_VELOCITY_SLIDER,
-    velocity: velocity
-});
+    dispatch({ type: PRESENT_SELECT_EXERCIS });
+};
 
-export const changeE1RMDays = (days) => ({
-    type: CHANGE_1RM_DAYS_RANGE,
-    days: Math.abs(days),
-});
+export const changeVelocitySlider = (velocity) => (dispatch, getState) => {
+    const state = getState();
 
-export const presentTagsToExclude = () => ({
-    type: PRESENT_EXCLUDES_TAGS,
-})
+    dispatch({
+        type: CHANGE_VELOCITY_SLIDER,
+        velocity: velocity,
+    });
+};
 
-export const presentTagsToInclude = () => ({
-    type: PRESENT_INCLUDES_TAGS,
-});
+export const changeE1RMDays = (days) => (dispatch, getState) => {
+    const state = getState();
+
+    dispatch({
+        type: CHANGE_1RM_DAYS_RANGE,
+        days: Math.abs(days),
+    });
+};
+
+export const presentTagsToExclude = () => (dispatch, getState) => {
+    const state = getState();
+
+    dispatch({ type: PRESENT_EXCLUDES_TAGS });
+};
+
+export const presentTagsToInclude = () => (dispatch, getState) => {
+    const state = getState();
+
+    dispatch({ type: PRESENT_INCLUDES_TAGS });
+};
 
 // TODO: consider passing in variables rather than pulling them from the store here
 // going with pulling for now for simplicity
@@ -66,8 +81,17 @@ export const calcE1RM = () => (dispatch, getState) => {
     });
 };
 
-export const presentInfoModal = () => ({
-    type: PRESENT_INFO_MODAL,
-});
+export const presentInfoModal = () => (dispatch, getState) => {
+    const state = getState();
+    logInfoAnalytics(state);
+    Analytics.setCurrentScreen('one_rm_info');
 
+    dispatch({ type: PRESENT_INFO_MODAL });
+};
 
+// ANALYTICS
+
+const logInfoAnalytics = (state) => {
+    Analytics.logEventWithAppState('one_rm_info', {
+    }, state);
+};

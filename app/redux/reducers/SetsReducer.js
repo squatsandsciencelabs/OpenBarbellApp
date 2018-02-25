@@ -149,7 +149,7 @@ const saveWorkoutSet = (state, action) => {
 
     let changes = {};
     if ('exercise' in action) {
-        changes.exercise = action.exercise;
+        changes.exercise = action.exercise.toLowerCase();
     }
     if ('weight' in action) {
         changes.weight = action.weight;
@@ -211,7 +211,7 @@ const saveHistorySet = (state, action) => {
     // new set
     let setChanges = {};
     if ('exercise' in action) {
-        setChanges.exercise = action.exercise;
+        setChanges.exercise = action.exercise.toLowerCase();
     }
     if ('weight' in action) {
         setChanges.weight = action.weight;

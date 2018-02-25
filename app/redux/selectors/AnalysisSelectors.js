@@ -47,6 +47,8 @@ export const getMaxX = (state) => stateRoot(state).maxX;
 
 export const getMaxY = (state) => stateRoot(state).maxY;
 
+export const getIsRegressionNegative = (state) => stateRoot(state).isRegressionNegative;
+
 export const getSetID = (state) => stateRoot(state).setID;
 
 export const getWorkoutID = (state) => stateRoot(state).workoutID;

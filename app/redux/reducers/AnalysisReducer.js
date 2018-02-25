@@ -63,6 +63,7 @@ const defaultState = {
     minX: null,
     maxX: null,
     maxY: null,
+    isRegressionNegative: null,
 
     // edit set
     // TODO: Since there's only one setID ever at any point, shouldn't need this many setIDs
@@ -166,6 +167,7 @@ const AnalysisReducer = (state = defaultState, action) => {
                 minX: action.minX,
                 maxX: action.maxX,
                 maxY: action.maxY,
+                isRegressionNegative: action.isRegressionNegative,
                 scroll: !state.scroll,
             };
         

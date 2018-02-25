@@ -19,6 +19,7 @@ import * as RepDataMap from 'app/utility/RepDataMap';
 //   minX
 //   maxX
 //   maxY
+//   isRegressionNegative for if the regression is actually a negative slope
 export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, velocity, metric, allSets) => {
     let errors = [];
     let unused = [];
@@ -98,6 +99,7 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
         minX: minX,
         maxX: maxX,
         maxY: maxY,
+        isRegressionNegative: hasNegativeSlope(regressionPoints),
     };
 };
 
@@ -414,6 +416,17 @@ const calculateRegression = (data, velocity) => {
 };
 
 // INTERCEPTS
+
+const hasNegativeSlope = (regressionPoints) => {
+    if (!regressionPoints || regressionPoints.length <= 1) {
+        return false;
+    }
+
+    const first = regressionPoints[0];
+    const second = regressionPoints[regressionPoints.length - 1];
+    const slope = (second.y - first.y) / (second.x - first.x);
+    return isFinite(slope) && !isNaN(slope) && slope < 0;
+};
 
 // aka y intercept
 const velocityAt0Weight = (regressionPoints) => {

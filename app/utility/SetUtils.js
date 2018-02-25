@@ -111,7 +111,7 @@ export const isRepUsable = (rep) => {
 };
 
 const isVelocityUsable = (velocity) => {
-    return !(!velocity || isNaN(velocity) || velocity.toLowerCase().includes('nf') || Number(velocity) < 0 || Number(velocity) >= 10);
+    return !(!velocity || isNaN(velocity) || !isFinite(velocity) || Number(velocity) < 0 || Number(velocity) >= 10);
 };
 
 // NOTE: this considers infinity / 0 invalid

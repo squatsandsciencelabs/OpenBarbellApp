@@ -77,7 +77,7 @@ class OneRMChartView extends Component {
     // RENDER
 
     _render1RM(r2) {
-        if (this.props.isR2HighEnough) {
+        if (this.props.isR2HighEnough && this.props.isRegressionNegative) {
             let e1RM = this.props.e1RM ? this.props.e1RM : "---";
             let velocity = this.props.velocity ? this.props.velocity : "---";
 
@@ -117,35 +117,6 @@ class OneRMChartView extends Component {
                         R² is too low, please clean up or log more data
                     </Text>
                 </View>
-            );
-        }
-    }
-
-    _render1RMBar() {
-        if (this.props.isR2HighEnough && this.props.e1RM) {
-            return (
-                <VictoryBar
-                    data={[
-                        { x: this.props.e1RM, y: 20, y0: 0, width: 20, fill: "#ffe5e5" },
-                    ]}
-                />
-            )
-        }
-    }
-    
-    _renderRegressionLine() {
-        if (this.props.isR2HighEnough) {
-            return (
-                <VictoryLine
-                    style={{
-                        data: { stroke: "#368fff" },
-                        parent: { border: "1px solid #ccc"}
-                    }}
-                    data={[
-                        this.props.regLeftPoint,
-                        this.props.regRightPoint,
-                    ]}
-                />
             );
         }
     }

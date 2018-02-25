@@ -454,9 +454,11 @@ export const generateExerciseItems = (state) => {
     let exercises = [];
 
     sets.forEach((set) => {
-        if (set.exercise && !exerciseExists(set.exercise, exercises) && SetUtils.numValidUnremovedReps(set) > 0) {
+        if (set.exercise) {
             const lowercase = set.exercise.toLowerCase();
-            exercises.push({ label: lowercase, value: lowercase });
+            if (!exerciseExists(lowercase, exercises) && SetUtils.numValidUnremovedReps(set) > 0) {
+                exercises.push({ label: lowercase, value: lowercase });
+            }
         }
     });
 

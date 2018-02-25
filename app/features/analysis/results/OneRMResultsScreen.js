@@ -19,9 +19,15 @@ const mapStateToProps = (state) => {
     var maxX = AnalysisSelectors.getMaxX(state);
     const maxY = AnalysisSelectors.getMaxY(state) * 1.1;
 
+    const shouldDisplayRegression = isR2HighEnough
+                                    && regressionPoints
+                                    && regressionPoints.length === 2
+                                    && activeChartData.length >= 5
+                                    && AnalysisSelectors.getIsRegressionNegative(state);
+
     // TODO: store regression point and weight values instead of recalculating them every single time for speed
     // otherwise it's slow on launch every time, especially with every action
-    if (isR2HighEnough && regressionPoints && regressionPoints.length === 2) {
+    if (shouldDisplayRegression) {
         // there's a regression line
         var regLeftPoint = regressionPoints[0];
         var regRightPoint = regressionPoints[1];
@@ -35,12 +41,14 @@ const mapStateToProps = (state) => {
         maxX = maxX * 1.1;
     }
 
+    
+
     return {
         velocity: AnalysisSelectors.getAnalysisVelocity(state),
         e1RM: e1RM,    
         metric: SettingsSelectors.getDefaultMetric(state),
         r2: AnalysisSelectors.getR2(state),
-        isR2HighEnough: isR2HighEnough,
+        shouldDisplayRegression: shouldDisplayRegression,
         activeChartData: activeChartData,
         errorChartData: errorChartData,
         unusedChartData: unusedChartData,
@@ -49,7 +57,6 @@ const mapStateToProps = (state) => {
         minX: minX,
         maxX: maxX,
         maxY: maxY,
-        isRegressionNegative: AnalysisSelectors.getIsRegressionNegative(state),
     };
 };
 

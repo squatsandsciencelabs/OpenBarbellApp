@@ -19,6 +19,7 @@ import * as RepDataMap from 'app/utility/RepDataMap';
 //   minX
 //   maxX
 //   maxY
+//   slope
 //   isRegressionNegative for if the regression is actually a negative slope
 export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, velocity, metric, allSets) => {
     let errors = [];
@@ -66,11 +67,17 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     let unusedChartData = unusedConversion.data.sort((a, b) => a.x - b.x);
 
     // Step 4C: calculate min max
-    let minArray = [activeConversion.minX, errorConversion.minX, unusedConversion.minX].filter((x) => x !== null);
-    if (minArray.length <= 0) {
+    let minXArray = [activeConversion.minX, errorConversion.minX, unusedConversion.minX].filter((x) => x !== null);
+    if (minXArray.length <= 0) {
         var minX = 0;
     } else {
-        var minX = Math.min(...minArray);
+        var minX = Math.min(...minXArray);
+    }
+    let minYArray = [activeConversion.minY, errorConversion.minY, unusedConversion.minY].filter((y) => y !== null);
+    if (minYArray.length <= 0) {
+        var minY = 0;
+    } else {
+        var minY = Math.min(...minYArray);
     }
     const maxX = Math.max(activeConversion.maxX, errorConversion.maxX, unusedConversion.maxX);
     const maxY = Math.max(activeConversion.maxY, errorConversion.maxY, unusedConversion.maxY);
@@ -80,6 +87,7 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
         return [point.x, point.y];
     });
     const regressionResults = calculateRegression(exerciseData, velocity);
+    const slope = calcSlope(regressionResults.regressionPoints);
     const isRegressionNegative = hasNegativeSlope(regressionResults.regressionPoints);
     const yInt = velocityAt0Weight(regressionResults.regressionPoints);
     const xInt = highestWeightPossible(regressionResults.regressionPoints);
@@ -102,7 +110,9 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
         regressionPoints: regressionPoints,
         minX: minX,
         maxX: maxX,
+        minY: minY,
         maxY: maxY,
+        slope: slope,
         isRegressionNegative: isRegressionNegative,
     };
 };
@@ -110,6 +120,7 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
 const convertToChartData = (array, metric, displayMarker=true) => {
     let minX = null;
     let maxX = null;
+    let minY = null;
     let maxY = null;
     let data = array.map((set) => {
         if (metric === 'lbs') {
@@ -132,8 +143,10 @@ const convertToChartData = (array, metric, displayMarker=true) => {
 
         // y
         if (maxY === null) {
+            minY = y;
             maxY = y;
         } else {
+            minY = Math.min(minY, y);
             maxY = Math.max(maxY, y);
         }
 
@@ -143,6 +156,7 @@ const convertToChartData = (array, metric, displayMarker=true) => {
     return {
         minX: minX,
         maxX: maxX,
+        minY: minY,
         maxY: maxY,
         data: data,
     };
@@ -484,6 +498,18 @@ const calculateRegression = (data, velocity) => {
 };
 
 // INTERCEPTS
+// TODO: make these calculations less resource intensive
+// can pass in values that you need rather than recalculating them constantly
+
+const calcSlope = (regressionPoints) => {
+    if (!regressionPoints || regressionPoints.length <= 1) {
+        return false;
+    }
+
+    const first = regressionPoints[0];
+    const second = regressionPoints[regressionPoints.length - 1];
+    return (second.y - first.y) / (second.x - first.x);
+};
 
 const hasNegativeSlope = (regressionPoints) => {
     if (!regressionPoints || regressionPoints.length <= 1) {

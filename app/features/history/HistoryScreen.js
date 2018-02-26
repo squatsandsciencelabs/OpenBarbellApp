@@ -50,8 +50,8 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
             set.rpe = "";
         }
 
-        // ignore completely empty set
-        if (!shouldShowRemoved && SetUtils.isEmpty(set)) {
+        // ignore deleted sets
+        if (!shouldShowRemoved && SetUtils.isDeleted(set)) {
             continue;
         }
 
@@ -74,7 +74,7 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
 
         // set state booleans
         isCollapsed = HistoryCollapsedSelectors.getIsCollapsed(state, set.setID);
-        isRemoved = SetUtils.isEmpty(set);
+        isRemoved = SetUtils.isDeleted(set);
 
         // card header
         if (isInitialSet) {

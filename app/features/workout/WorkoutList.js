@@ -28,6 +28,7 @@ import TimerProgressBarScreen from 'app/features/workout/card/expanded/TimerProg
 import SetSummary from 'app/shared_features/set_card/collapsed/SetSummary';
 import SetAnalysisScreen from 'app/shared_features/set_card/analysis/SetAnalysisScreen';
 import DeleteSetRow from 'app/shared_features/set_card/expanded/DeleteSetRow';
+import RestoreSetRow from 'app/shared_features/set_card/restore/RestoreSetRow';
 
 class WorkoutList extends Component {
 
@@ -76,6 +77,8 @@ class WorkoutList extends Component {
 
     _renderRow(section, index, item) {
         switch (item.type) {
+            case 'restore':
+                return (<RestoreSetRow tappedRestore={() => this.props.restoreSet(item.setID)} />);
             case "title":
                 if (!item.isCollapsed) {
                     return (<View>

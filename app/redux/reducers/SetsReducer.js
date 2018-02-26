@@ -41,6 +41,10 @@ const SetsReducer = (state = createDefaultState(), action) => {
             return deleteWorkoutSet(state, action);
         case DELETE_HISTORY_SET:
             return deleteHistorySet(state, action);
+        case RESTORE_WORKOUT_SET:
+            return restoreWorkoutSet(state, action);
+        case RESTORE_HISTORY_SET:
+            return restoreHistorySet(state, action);
         case SAVE_WORKOUT_SET_TAGS:
             return saveWorkoutSetTags(state, action);
         case SAVE_HISTORY_SET:

@@ -89,22 +89,24 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
         }
 
         array.push(createTitleViewModel(state, set, setNumber, isRemoved, isCollapsed));
-        if (!isCollapsed) {
-            array.push(createFormViewModel(set, setNumber, isRemoved));
-            if (!isRemoved) {
+        if (!isRemoved) {
+            if (!isCollapsed) {
+                array.push(createFormViewModel(set, setNumber, isRemoved));
+                if (!isRemoved) {
+                    array.push(createAnalysisViewModel(set));
+                }
+                if (set.reps.length > 0) {
+                    array.push({type: "subheader", key: set.setID+"subheader"});
+                }
+            } else if (!isRemoved) {
+                array.push(createSummaryViewModel(set));
                 array.push(createAnalysisViewModel(set));
             }
-            if (set.reps.length > 0) {
-                array.push({type: "subheader", key: set.setID+"subheader"});
-            }
-        } else if (!isRemoved) {
-            array.push(createSummaryViewModel(set));
-            array.push(createAnalysisViewModel(set));
+            lastExerciseName = set.exercise;
         }
-        lastExerciseName = set.exercise;
 
         // reps
-        if (!isCollapsed) {
+        if (!isRemoved && !isCollapsed) {
             Array.prototype.push.apply(array, createRowViewModels(set, shouldShowRemoved));
         }
 
@@ -112,7 +114,7 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
         if (isInitialSet) {
             // new set, reset the end time
             lastSetEndTime = isRemoved ? null : SetUtils.endTime(set);
-        } else if (SetUtils.hasUnremovedRep(set)) { // ignore removed sets in rest calculations
+        } else if (!isRemoved && SetUtils.hasUnremovedRep(set)) { // ignore removed sets in rest calculations
             // add rest footer if valid
             if (lastSetEndTime !== null) {
                 array.push(createRestVM(set, lastSetEndTime, isCollapsed));
@@ -123,7 +125,7 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
         }
 
         // delete set row
-        if (!isCollapsed) {
+        if (!isRemoved && !isCollapsed) {
             array.push(createDeleteVM(set));
         } else {
             array.push(createBottomBorder(set));

@@ -8,13 +8,14 @@ import OneRMEditSetView from './OneRMEditSetView';
 
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
+import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as DateUtils from 'app/utility/DateUtils';
 import * as RepDataMap from 'app/utility/RepDataMap';
 import * as SetUtils from 'app/utility/SetUtils';
 import * as DurationCalculator from 'app/utility/DurationCalculator';
 
 // assumes chronological sets
-const createViewModels = (state, sets, setID) => {
+const createViewModels = (state, sets, setID, metric) => {
     // declare variables
     let sections = []; // the return value
     let section = null; // contains the actual data
@@ -24,6 +25,7 @@ const createViewModels = (state, sets, setID) => {
     let lastSetEndTime = null; // to help calculate rest time
     let isInitialSet = false; // to help determine when to display rest time
     let isRemoved = false;
+    let title = '';
     
     // ignore if initialStartTime is null as that was a bug, it's supposed to be undefined or an actual date
     sets = sets.filter((set) => set.initialStartTime !== null);
@@ -65,6 +67,9 @@ const createViewModels = (state, sets, setID) => {
 
         // model for actual set
         if (set.setID === setID) {
+            // title
+            title = SetUtils.markerDisplayValue(set, metric);
+
             // set card data
             let array = [0, 0];
 
@@ -94,7 +99,7 @@ const createViewModels = (state, sets, setID) => {
 
             // add and return
             Array.prototype.splice.apply(section.data, array);
-            return sections;
+            return { title: title, sections: sections };
         }
 
         // last set end time
@@ -109,7 +114,7 @@ const createViewModels = (state, sets, setID) => {
 
     // cannot find the set in question, should be impossible
     // TODO: error this
-    return null;
+    return {title: title, sections: null};
 }
 
 const createRestoreViewModel = (set) => {
@@ -259,15 +264,17 @@ const mapStateToProps = (state) => {
     const workoutID = AnalysisSelectors.getWorkoutID(state);
     if (setID && workoutID) {
         const sets = SetsSelectors.getAnalysisWorkoutSetsChronological(state, workoutID);
-        const sections = createViewModels(state, sets, setID);
+        const {title, sections} = createViewModels(state, sets, setID, SettingsSelectors.getDefaultMetric(state));
 
         return {
+            title: title,
             setID: setID,
             sections: sections,
             isModalShowing: true,
         };
     } else {
         return {
+            title: '',
             setID: null,
             sections: [],
             isModalShowing: false,

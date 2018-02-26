@@ -48,7 +48,7 @@ class OneRMEditSetView extends Component {
                 { statusBar }
 
                 <View style={styles.navTitle}>
-                    <Text style={{color: 'rgba(77, 77, 77, 1)'}}>{this.props.setID}</Text>
+                    <Text style={{color: 'rgba(77, 77, 77, 1)'}}>{this.props.title}</Text>
                 </View>
 
                 <View style={{position: 'absolute', left: 0, top: 0}}>

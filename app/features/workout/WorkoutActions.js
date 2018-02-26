@@ -1,6 +1,5 @@
 import {
     PRESENT_WORKOUT_EXPANDED,
-    SAVE_WORKOUT_REP,
     COLLAPSE_WORKOUT_SET,
     EXPAND_WORKOUT_SET,
     DELETE_WORKOUT_SET,
@@ -33,46 +32,10 @@ export const deleteSet = (setID) => SetsActionCreators.deleteWorkoutSet(setID);
 
 export const restoreSet = (setID) => SetsActionCreators.restoreWorkoutSet(setID);
 
-export const removeRep = (setID, repIndex) => (dispatch, getState) => {
-    const state = getState();
-    logRemoveRepAnalytics(state, setID);
+export const removeRep = (setID, repIndex) => SetsActionCreators.removeWorkoutRep(setID, repIndex);
 
-    dispatch({
-        type: SAVE_WORKOUT_REP,
-        setID: setID,
-        repIndex: repIndex,
-        removed: true
-    });
-};
-
-export const restoreRep = (setID, repIndex) => (dispatch, getState) => {
-    const state = getState();
-    logRestoreRepAnalytics(state, setID);
-
-    dispatch({
-        type: SAVE_WORKOUT_REP,
-        setID: setID,
-        repIndex: repIndex,
-        removed: false
-    });
-};
+export const restoreRep = (setID, repIndex) => SetsActionCreators.restoreWorkoutRep(setID, repIndex);
 
 export const endSet = () => {
     return SetsActionCreators.endSet(true, false);
-};
-
-const logRemoveRepAnalytics = (state, setID) => {
-    const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
-
-    Analytics.logEventWithAppState('remove_rep', {
-        is_working_set: is_working_set,
-    }, state);
-};
-
-const logRestoreRepAnalytics = (state, setID) => {
-    const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
-
-    Analytics.logEventWithAppState('restore_rep', {
-        is_working_set: is_working_set,
-    }, state);
 };

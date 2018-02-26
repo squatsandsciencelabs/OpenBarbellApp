@@ -51,7 +51,7 @@ export default initializeStore = () => {
     } else {
         var storageMechanism = FilesystemStorage;
     }
-    persistStore(store, {
+    const fsPersistor = persistStore(store, {
         storage: storageMechanism,
         blacklist: [
             'scannedDevices',

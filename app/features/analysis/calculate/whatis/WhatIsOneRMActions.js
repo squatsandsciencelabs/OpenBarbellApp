@@ -4,6 +4,8 @@ import {
 import * as Analytics from 'app/services/Analytics';
 import * as AnalysisActionCreators from 'app/redux/shared_actions/AnalysisActionCreators';
 
+export const presentAlgorithm = () => AnalysisActionCreators.presentAlgorithm();
+
 export const presentBestResults = () => AnalysisActionCreators.presentBestResults();
 
 export const dismissInfoModal = () => (dispatch, getState) => {

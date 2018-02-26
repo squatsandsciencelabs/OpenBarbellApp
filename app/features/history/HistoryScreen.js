@@ -112,17 +112,19 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
         if (isInitialSet) {
             // new set, reset the end time
             lastSetEndTime = isRemoved ? null : SetUtils.endTime(set);
-            array.push(createBottomBorder(set));
         } else if (SetUtils.hasUnremovedRep(set)) { // ignore removed sets in rest calculations
-            // add footer if valid
+            // add rest footer if valid
             if (lastSetEndTime !== null) {
-                array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
-            } else {
-                array.push(createBottomBorder(set));
+                array.push(createRestVM(set, lastSetEndTime, isCollapsed));
             }
 
             // update variable for calculation purposes
             lastSetEndTime = SetUtils.endTime(set);
+        }
+
+        // delete set row
+        if (!isCollapsed) {
+            array.push(createDeleteVM(set));
         } else {
             array.push(createBottomBorder(set));
         }
@@ -255,16 +257,22 @@ const createRowViewModels = (set, shouldShowRemoved) => {
     return array;
 };
 
-const createFooterVM = (set, lastSetEndTime, isCollapsed) => {
+const createRestVM = (set, lastSetEndTime, isCollapsed) => {
     let restInMS = new Date(SetUtils.startTime(set)) - new Date(lastSetEndTime);
     let footerVM = {
-        type: "footer",
+        type: "rest",
         rest: DateUtils.restInSentenceFormat(restInMS),
         key: set.setID + 'rest',
         isCollapsed: isCollapsed
     };
     return footerVM;
 };
+
+const createDeleteVM = (set) => ({
+    type: "delete",
+    setID: set.setID,
+    key: set.setID + 'delete',
+});
 
 const createBottomBorder = (set) => ({
     type: "bottom border",
@@ -313,8 +321,10 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         removeRep: Actions.removeRep,
         restoreRep: Actions.restoreRep,
+        deleteSet: Actions.deleteSet,
+        restoreSet: Actions.restoreSet,
         finishLoading: Actions.finishLoading,
-        tapCard: Actions.presentExpanded
+        tapCard: Actions.presentExpanded,
     }, dispatch);
 };
 

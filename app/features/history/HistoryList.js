@@ -28,6 +28,7 @@ import HistoryVideoRecorderScreen from './camera/HistoryVideoRecorderScreen';
 import HistoryVideoPlayerScreen from './video/HistoryVideoPlayerScreen';
 import SetSummary from 'app/shared_features/set_card/collapsed/SetSummary';
 import SetAnalysisScreen from 'app/shared_features/set_card/analysis/SetAnalysisScreen';
+import DeleteSetRow from 'app/shared_features/set_card/expanded/DeleteSetRow';
 import * as Sections from 'app/utility/Sections';
 
 class HistoryList extends Component {
@@ -140,13 +141,16 @@ class HistoryList extends Component {
                             onPressRestore={() => this.props.restoreRep(item.setID, item.rep) }
                             onPressRow={() => this.props.tapCard(item.setID) }
                         />);
-            case "footer":
-                return (
-                    <View style={{marginBottom: 15}}>                    
-                        <SetRestRow item={item} />
-                    </View>);
             case "bottom border":
                 return (<View style={{flex: 1, backgroundColor: '#e0e0e0', height: 1, marginBottom: 15}} />);
+            case "rest":
+                return (
+                    <SetRestRow item={item} />
+                );
+            case "delete":
+                return (
+                    <DeleteSetRow onPressDelete={() => this.props.deleteSet(item.setID)} />
+                );
             default:
                 break;
         }

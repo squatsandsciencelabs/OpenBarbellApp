@@ -1327,4 +1327,50 @@ describe('collapsed metrics', () => {
     
     });
     
+    describe('canCalcRPE1RM', () => {
+        
+        test('return if canCalcRPE', () => {
+            const set = { rpe: '8' };
+
+            const result = sut.canCalcRPE1RM(set);
+
+            expect(result).toBe(true);
+        });
+
+        // test if no rpe
+        test('set with no RPE', () => {
+            const set = { rpe: null };
+
+            const result = sut.canCalcRPE1RM(set);
+
+            expect(result).toBe(false);
+        });
+
+        // test rpe with commas
+        test('RPE with commas', () => {
+            const set = { rpe: '7,5' };
+
+            const result = sut.canCalcRPE1RM(set);
+
+            expect(result).toBe(true);
+        });
+
+        // test NaN rpe
+        test('RPE with NAN', () => {
+            const set = { rpe: undefined };
+
+            const result = sut.canCalcRPE1RM(set);
+
+            expect(result).toBe(false);
+        });
+
+        // test under RPE 6.5
+        test('RPE under 6.5', () => {
+            const set = { rpe: '4.5' };
+
+            const result = sut.canCalcRPE1RM(set);
+
+            expect(result).toBe(false);
+        });
+    });
 });

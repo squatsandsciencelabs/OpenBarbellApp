@@ -21,7 +21,7 @@ export const multiTask = () => ({
     type: MULTI_TASK_SCREEN
 })
 
-export const changeTab = (tabIndex, setID) => (dispatch, getState) => {
+export const changeTab = (tabIndex) => (dispatch, getState) => {
     // analytics for leave history
     if (tabIndex !== 1) {
         const state = getState();

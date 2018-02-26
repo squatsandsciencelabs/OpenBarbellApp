@@ -149,9 +149,6 @@ class WorkoutList extends Component {
                                 weight={item.weight}
                                 metric={item.metric}
                                 rpe={item.rpe}
-                                onFocus={() => {
-                                    this.sectionList.scrollToLocation({sectionIndex: section.position, itemIndex: index});
-                                }}
                                 renderDetailComponent={()=> {
                                     if (item.videoFileURL !== null && item.videoFileURL !== undefined) {
                                         return (<WorkoutVideoButtonScreen setID={item.setID} mode='watch' videoFileURL={item.videoFileURL} />);

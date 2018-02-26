@@ -16,7 +16,6 @@ import {
     DELETE_HISTORY_VIDEO,
     SAVE_HISTORY_VIDEO,
     END_WORKOUT,
-    CHANGE_TAB,
 } from 'app/configs+constants/ActionTypes';
 
 const defaultState = {

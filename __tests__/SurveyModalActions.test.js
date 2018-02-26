@@ -64,7 +64,7 @@ describe('SettingsSurveyActions Analytics', () => {
                 surveyURL: expectedURL
             },
             appState: {
-                tabIndex: 2
+                tabIndex: 3
             }
         });
 

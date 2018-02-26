@@ -8,13 +8,13 @@ import {
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as Analytics from 'app/services/Analytics';
-import * as AppStateActionCreators from 'app/redux/shared_actions/AppStateActionCreators';
+import * as AuthActionCreators from 'app/redux/shared_actions/AuthActionCreators';
 
 export const tappedLoginBanner = () => (dispatch, getState) => {
     const state = getState();
     logLoginBannerAnalytics(state);
 
-    dispatch(AppStateActionCreators.changeTab(3));
+    dispatch(AuthActionCreators.requestLogin());
 };
 
 export const collapseSet = (setID) => (dispatch, getState) => {

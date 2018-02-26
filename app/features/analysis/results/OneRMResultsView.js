@@ -277,7 +277,10 @@ class OneRMChartView extends Component {
                 {this._render1RM(this.props.r2)}
                 <Text style={{textAlign: 'center', color: 'rgba(77, 77, 77, 1)', fontSize: 12}}>Tap a point to view and edit the data</Text>
                 {this._renderChartArea()}
-                <TouchableOpacity style={{alignItems: 'center', marginBottom: 15, marginTop: 25}} onPress={ () => this.props.presentBestResults() }>
+                <TouchableOpacity style={{alignItems: 'center', marginBottom: 15, marginTop: 25}} onPress={ () => this.props.presentAlgorithm() }>
+                    <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >How does the algorithm work?</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={{alignItems: 'center', marginBottom: 15}} onPress={ () => this.props.presentBestResults() }>
                     <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >How can I get the best results?</Text>
                 </TouchableOpacity>
             </View>

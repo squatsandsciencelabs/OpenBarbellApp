@@ -61,6 +61,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         tappedSet: Actions.tappedSet,
+        presentAlgorithm: Actions.presentAlgorithm,
         presentBestResults: Actions.presentBestResults,
     }, dispatch);
 };

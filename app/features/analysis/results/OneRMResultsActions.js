@@ -24,6 +24,8 @@ export const tappedSet = (setID) => (dispatch, getState) => {
     });
 };
 
+export const presentAlgorithm = () => AnalysisActionCreators.presentAlgorithm();
+
 export const presentBestResults = () => AnalysisActionCreators.presentBestResults();
 
 // ANALYTICS

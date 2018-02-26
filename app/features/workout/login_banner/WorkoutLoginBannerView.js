@@ -10,11 +10,19 @@ import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 
 class WorkoutLoginBannerView extends Component {
     render() {
-        return (
-            <TouchableOpacity style={styles.container} onPress={ () => this.props.tappedBanner() } >
-                <Text style={styles.text}>Don't lose all your data - tap to sign in and save it!</Text>
-            </TouchableOpacity>
-        );
+        if (this.props.isLoggingIn) {
+            return (
+                <View style={styles.container}>
+                    <Text style={styles.text}>Logging in...</Text>
+                </View>
+            );
+        } else {
+            return (
+                <TouchableOpacity style={styles.container} onPress={ () => this.props.tappedBanner() } >
+                    <Text style={styles.text}>Don't lose all your data - tap to sign in and save it!</Text>
+                </TouchableOpacity>
+            );
+        }
     }
 }
 

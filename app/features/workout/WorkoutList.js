@@ -47,7 +47,10 @@ class WorkoutList extends Component {
         if (!this.props.isLoggedIn) {
             return (
                 <View style={styles.loginBannerContainer}>
-                    <WorkoutLoginBannerView tappedBanner={() => this.props.tappedLoginBanner()} />
+                    <WorkoutLoginBannerView
+                        isLoggingIn={this.props.isLoggingIn}
+                        tappedBanner={() => this.props.tappedLoginBanner()}
+                    />
                 </View>
             );
         } else {

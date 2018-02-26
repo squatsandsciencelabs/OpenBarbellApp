@@ -307,6 +307,7 @@ const mapStateToProps = (state) => {
         sets: sets,
         isAddEnabled: isAddEnabled,
         isLoggedIn: AuthSelectors.getIsLoggedIn(state),
+        isLoggingIn: AuthSelectors.getIsLoggingIn(state),
     }
 };
 

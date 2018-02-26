@@ -1,7 +1,5 @@
 const stateRoot = (state) => state.history;
 
-export const getExpandedSetID = (state) => stateRoot(state).expandedSetID;
-
 // video recorder / camera
 
 export const getIsRecording = (state) => stateRoot(state).isRecording;

@@ -4,7 +4,6 @@ import BackgroundTimer from 'react-native-background-timer';
 import { 
     PRESENT_WORKOUT_EXERCISE,
     PRESENT_WORKOUT_TAGS,
-    PRESENT_WORKOUT_EXPANDED,
     START_EDITING_WORKOUT_RPE,
     START_EDITING_WORKOUT_WEIGHT,
     PRESENT_WORKOUT_VIDEO_RECORDER,
@@ -12,7 +11,6 @@ import {
     START_RECORDING_WORKOUT,
     DISMISS_WORKOUT_EXERCISE,
     DISMISS_WORKOUT_TAGS,
-    DISMISS_WORKOUT_EXPANDED,
     END_EDITING_WORKOUT_RPE,
     END_EDITING_WORKOUT_WEIGHT,
     DISMISS_WORKOUT_VIDEO_RECORDER,
@@ -29,7 +27,6 @@ const TimerSaga = function * TimerSaga() {
     yield all([
         takeEvery(PRESENT_WORKOUT_EXERCISE, pauseTimer),
         takeEvery(PRESENT_WORKOUT_TAGS, pauseTimer),
-        takeEvery(PRESENT_WORKOUT_EXPANDED, pauseTimer),
         takeEvery(START_EDITING_WORKOUT_RPE, pauseTimer),
         takeEvery(START_EDITING_WORKOUT_WEIGHT, pauseTimer),
         takeEvery(PRESENT_WORKOUT_VIDEO_RECORDER, pauseTimer),
@@ -37,7 +34,6 @@ const TimerSaga = function * TimerSaga() {
         takeEvery(START_RECORDING_WORKOUT, pauseTimer),
         takeEvery(DISMISS_WORKOUT_EXERCISE, resumeTimer),
         takeEvery(DISMISS_WORKOUT_TAGS, resumeTimer),
-        takeEvery(DISMISS_WORKOUT_EXPANDED, resumeTimer),
         takeEvery(END_EDITING_WORKOUT_RPE, resumeTimer),
         takeEvery(END_EDITING_WORKOUT_WEIGHT, resumeTimer),
         takeEvery(DISMISS_WORKOUT_VIDEO_RECORDER, resumeTimer),

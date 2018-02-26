@@ -10,9 +10,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 class SetDataRow extends PureComponent {
 
     _onPressRow() {
-        // full screen mode
-        // this.props.onPressRow();
-
         // temp just toggle remove
         if (this.props.item.removed) {
             this.props.onPressRestore();

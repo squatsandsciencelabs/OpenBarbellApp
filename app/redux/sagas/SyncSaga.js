@@ -5,12 +5,11 @@ import {
     TOKENS_READY,
     CHANGE_TAB,
     END_WORKOUT,
-    SAVE_WORKOUT_REP,
     SAVE_HISTORY_REP,
-    SAVE_WORKOUT_SET_TAGS,
     SAVE_HISTORY_SET_TAGS,
-    SAVE_WORKOUT_SET,
     SAVE_HISTORY_SET,
+    DELETE_HISTORY_SET,
+    RESTORE_HISTORY_SET,
     SAVE_HISTORY_VIDEO,
     TEST_1RM,
 } from 'app/configs+constants/ActionTypes';
@@ -46,13 +45,12 @@ function* executeSync() {
             TOKENS_READY,
             CHANGE_TAB,
             END_WORKOUT,
-            SAVE_WORKOUT_SET,
             SAVE_HISTORY_SET,
-            SAVE_WORKOUT_REP,
             SAVE_HISTORY_REP,
-            SAVE_WORKOUT_SET_TAGS,
             SAVE_HISTORY_SET_TAGS,
-            SAVE_HISTORY_VIDEO
+            SAVE_HISTORY_VIDEO,
+            DELETE_HISTORY_SET,
+            RESTORE_HISTORY_SET,
         ]);
 
         // login check - do not need to check is uploading as relying on the cancel instead

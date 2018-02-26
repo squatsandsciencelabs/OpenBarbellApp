@@ -7,6 +7,8 @@ import {
     START_EDITING_1RM_WEIGHT,
     END_EDITING_1RM_RPE,
     END_EDITING_1RM_WEIGHT,
+    EDIT_1RM_SET_WEIGHT,
+    EDIT_1RM_SET_RPE,
 } from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as VideoPermissionsUtils from 'app/utility/VideoPermissionsUtils';
@@ -117,6 +119,18 @@ export const presentWatchVideo = (setID, videoFileURL) => (dispatch, getState) =
         });
     }).catch(() => {});
 };
+
+export const updateWeight = (weight) => ({
+    type: EDIT_1RM_SET_WEIGHT,
+    weight: weight,
+});
+
+export const updateRPE = (rpe) => ({
+    type: EDIT_1RM_SET_RPE,
+    weight: rpe,
+});
+
+// ANALYTICS
 
 const logToggleMetricAnalytics = (setID, state) => {
     const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);

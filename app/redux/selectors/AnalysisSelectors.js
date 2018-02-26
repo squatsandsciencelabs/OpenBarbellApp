@@ -89,7 +89,11 @@ export const getOrigExerciseName = (state) => stateRoot(state).origExerciseName;
 
 export const getOrigRPE = (state) => stateRoot(state).origRPE;
 
+export const getCurrentRPE = (state) => stateRoot(state).currentRPE;
+
 export const getOrigWeight = (state) => stateRoot(state).origWeight;
+
+export const getCurrentWeight = (state) => stateRoot(state).currentWeight;
 
 export const getOrigMetric = (state) => stateRoot(state).origMetric;
 
@@ -97,9 +101,9 @@ export const getOrigTags = (state) => stateRoot(state).origTags;
 
 export const getDidUpdateExerciseName = (state, set) => !areEqual(set.exercise, getOrigExerciseName(state));
 
-export const getDidUpdateRPE = (state, set) => !areEqual(set.rpe, getOrigRPE(state));
+export const getDidUpdateRPE = (state, set) => !areEqual(getCurrentRPE(state), getOrigRPE(state));
 
-export const getDidUpdateWeight = (state, set) => !areEqual(set.weight, getOrigWeight(state));
+export const getDidUpdateWeight = (state, set) => !areEqual(getCurrentWeight(state), getOrigWeight(state));
 
 export const getDidUpdateMetric = (state, set) => !areEqual(set.metric, getOrigMetric(state));
 

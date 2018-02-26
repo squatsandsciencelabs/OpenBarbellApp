@@ -37,6 +37,8 @@ import {
     DELETE_HISTORY_VIDEO,
     SAVE_WORKOUT_REP,
     SAVE_HISTORY_REP,
+    EDIT_1RM_SET_WEIGHT,
+    EDIT_1RM_SET_RPE,
 } from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
@@ -85,7 +87,9 @@ const defaultState = {
 
     // analytics
     origExerciseName: null,
+    currentRPE: null, // hack to get around keyboard dismiss timing issues
     origRPE: null,
+    currentWeight: null, // hack to get around keyboard dismiss timing issues
     origWeight: null,
     origMetric: null,
     origTags: [],
@@ -188,7 +192,9 @@ const AnalysisReducer = (state = defaultState, action) => {
                 workoutID: action.workoutID,
                 origExerciseName: action.origExerciseName,
                 origRPE: action.origRPE,
+                currentRPE: action.origRPE,
                 origWeight: action.origWeight,
+                currentWeight: action.origWeight,
                 origMetric: action.origMetric,
                 origTags: [...action.origTags],
                 didUpdateReps: false,
@@ -200,7 +206,9 @@ const AnalysisReducer = (state = defaultState, action) => {
                 workoutID: null,
                 origExerciseName: null,
                 origRPE: null,
+                currentRPE: null,
                 origWeight: null,
+                currentWeight: null,
                 origMetric: null,
                 origTags: [],
                 didUpdateReps: false,
@@ -269,7 +277,15 @@ const AnalysisReducer = (state = defaultState, action) => {
             return Object.assign({}, state, {
                 didUpdateReps: true,
             });
-        
+        case EDIT_1RM_SET_WEIGHT:
+            return Object.assign({}, state, {
+                currentWeight: action.weight,
+            });
+        case EDIT_1RM_SET_RPE:
+            return Object.assign({}, state, {
+                currentRPE: action.rpe,
+            });
+
         default: 
             return state;
     }

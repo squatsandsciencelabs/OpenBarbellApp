@@ -9,7 +9,9 @@ import {
     FINISH_UPLOADING_SETS,
     FAILED_UPLOAD_SETS,
     DELETE_HISTORY_SET,
+    RESTORE_HISTORY_SET,
     DELETE_WORKOUT_SET,
+    RESTORE_WORKOUT_SET,
     SAVE_HISTORY_REP,
 } from 'app/configs+constants/ActionTypes';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
@@ -58,9 +60,14 @@ const saveWorkoutSet = (setID, exercise = null, weight = null, metric = null, rp
     return action;
 };
 
-export const deleteWorkoutSet = (set) => ({
+export const deleteWorkoutSet = (setID) => ({
     type: DELETE_WORKOUT_SET,
-    setID: set.setID,
+    setID: setID,
+});
+
+export const restoreWorkoutSet = (setID) => ({
+    type: RESTORE_WORKOUT_SET,
+    setID: setID,
 });
 
 export const endSet = (manuallyStarted=false, wasSanityCheck=false) => (dispatch, getState) => {
@@ -110,9 +117,14 @@ const saveHistorySet = (setID, exercise = null, weight = null, metric = null, rp
     return action;
 };
 
-export const deleteHistorySet = (set) => ({
+export const deleteHistorySet = (setID) => ({
     type: DELETE_HISTORY_SET,
-    set: set
+    setID: setID,
+});
+
+export const restoreHistorySet = (setID) => ({
+    type: RESTORE_HISTORY_SET,
+    setID: setID,
 });
 
 export const removeHistoryRep = (setID, repIndex) => (dispatch, getState) => {

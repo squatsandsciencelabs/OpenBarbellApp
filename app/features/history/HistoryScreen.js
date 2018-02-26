@@ -147,11 +147,20 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
     return sections;
 }
 
-const createRestoreViewModel = (set) => ({
-    type: 'restore',
-    setID: set.setID,
-    key: set.setID + 'restore',
-});
+const createRestoreViewModel = (set) => {
+    const numReps = SetUtils.numValidUnremovedReps(set);
+    return {
+        type: 'restore',
+        setID: set.setID,
+        exercise: set.exercise ? set.exercise.toLowerCase() : null,
+        weight: set.weight ? set.weight : 0,
+        rpe: set.rpe ? set.rpe : 0,
+        numReps: numReps ? numReps : '0 reps',
+        metric: set.metric,
+        tags: set.tags ? set.tags.map((tag) => tag.toLowerCase()) : [],
+        key: set.setID + 'restore',
+    };
+};
 
 const createTitleViewModel = (state, set, setNumber, isCollapsed=false) => ({
     type: 'title',

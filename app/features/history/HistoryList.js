@@ -76,7 +76,17 @@ class HistoryList extends Component {
     _renderRow(section, index, item) {
         switch (item.type) {
             case 'restore':
-                return (<RestoreSetRow tappedRestore={() => this.props.restoreSet(item.setID)} />);
+                return (
+                    <RestoreSetRow
+                        tappedRestore={() => this.props.restoreSet(item.setID)}
+                        exercise={item.exercise}
+                        weight={item.weight}
+                        metric={item.metric}
+                        rpe={item.rpe}
+                        numReps={item.numReps}
+                        tags={item.tags}
+                    />
+                );
             case "title":
                 if (!item.isCollapsed) {
                     return (<View style={{borderTopWidth: 1, borderColor: '#e0e0e0'}}>

@@ -433,7 +433,8 @@ const getBucketWeight = (weight) => (parseInt(weight / 1.25) + 1) * 1.25;
 
 const isValidFor1RMCalc = (set, exercise, tagsToInclude, tagsToExclude, daysRange) => {
     const startTime = SetUtils.startTime(set);
-    return startTime != null
+    return !SetUtils.isDeleted(set)
+        && startTime != null
         && set.exercise
         && set.exercise.trim().toLowerCase() === exercise.trim().toLowerCase()
         && SetUtils.numUsableReps(set) > 0

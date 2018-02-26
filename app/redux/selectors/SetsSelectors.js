@@ -322,6 +322,20 @@ export const getTimeSinceLastWorkout = (state) => {
     }
 };
 
+// Workout / History
+
+export const getSet = (state, setID) => {
+    // check workout
+    let set = getWorkoutSet(state, setID);
+
+    // check history
+    if (set === undefined) {
+        set = getHistorySet(state, setID);
+    }
+
+    return set;
+};
+
 // Analysis
 
 export const getAnalysisWorkoutSetsChronological = (state, workoutID) => {

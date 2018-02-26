@@ -3,6 +3,8 @@ import {
     SAVE_WORKOUT_REP,
     COLLAPSE_WORKOUT_SET,
     EXPAND_WORKOUT_SET,
+    DELETE_WORKOUT_SET,
+    RESTORE_WORKOUT_SET,
 } from 'app/configs+constants/ActionTypes';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
@@ -25,6 +27,16 @@ export const expandSet = (setID) => (dispatch, getState) => {
 export const presentExpanded = (setID) => ({
     type: PRESENT_WORKOUT_EXPANDED,
     setID: setID
+});
+
+export const deleteSet = (setID) => ({
+    type: DELETE_WORKOUT_SET,
+    setID: setID,
+});
+
+export const restoreSet = (setID) => ({
+    type: RESTORE_WORKOUT_SET,
+    setID: setID,
 });
 
 export const removeRep = (setID, repIndex) => (dispatch, getState) => {

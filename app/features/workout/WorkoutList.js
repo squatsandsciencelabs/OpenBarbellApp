@@ -27,6 +27,7 @@ import ListLoadingFooter from '../history/loading/ListLoadingFooter';
 import TimerProgressBarScreen from 'app/features/workout/card/expanded/TimerProgressBarScreen';
 import SetSummary from 'app/shared_features/set_card/collapsed/SetSummary';
 import SetAnalysisScreen from 'app/shared_features/set_card/analysis/SetAnalysisScreen';
+import DeleteSetRow from 'app/shared_features/set_card/expanded/DeleteSetRow';
 
 class WorkoutList extends Component {
 
@@ -142,11 +143,12 @@ class WorkoutList extends Component {
                             onPressRestore={() => this.props.restoreRep(item.setID, item.rep) }
                             onPressRow={() => this.props.tapCard(item.setID) }
                         />);
-            case "footer":
+            case "rest":
+                return (<SetRestRow item={item} />);
+            case "delete":
                 return (
-                    <View style={{marginBottom: 15}}>
-                        <SetRestRow item={item} />
-                    </View>);
+                    <DeleteSetRow onPressDelete={() => this.props.deleteSet(item.setID)} />
+                );
             case "working set header":
                 return (
                     <View style={{marginTop: 15}}>

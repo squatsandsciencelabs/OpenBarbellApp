@@ -42,7 +42,7 @@ const createViewModels = (state, sets) => {
         isCollapsed = isLastSet ? false : WorkoutCollapsedSelectors.getIsCollapsed(state, set.setID);
         isRemoved = SetUtils.isDeleted(set);
 
-        // card header
+        // card header logic
         if (isInitialSet) {
             lastExerciseName = null;
             setNumber = 1;
@@ -53,28 +53,33 @@ const createViewModels = (state, sets) => {
                 setNumber = 1;
             }
         }
+
+        // card header view
         if (isLastSet) {
             array.push({type: 'working set header', key: set.setID+'end set timer'});
+        }
+        if (isRemoved) {
+            array.push(createTitleViewModel(state, set, setNumber, lastExerciseName, isLastSet, isRemoved, isCollapsed));
         } else {
             array.push(createTopBorder(set));
-        }
-        array.push(createTitleViewModel(state, set, setNumber, lastExerciseName, isLastSet, isRemoved, isCollapsed));
-        if (!isCollapsed) {
-            array.push(createFormViewModel(set, setNumber, isRemoved));
-            if (!isRemoved) {
+            array.push(createTitleViewModel(state, set, setNumber, lastExerciseName, isLastSet, isRemoved, isCollapsed));
+            if (!isCollapsed) {
+                array.push(createFormViewModel(set, setNumber, isRemoved));
+                if (!isRemoved) {
+                    array.push(createAnalysisViewModel(set));
+                }
+                if (set.reps.length > 0) {
+                    array.push({type: "subheader", key: set.setID+"subheader"});
+                }
+            } else if (!isRemoved) {
+                array.push(createSummaryViewModel(set));
                 array.push(createAnalysisViewModel(set));
             }
-            if (set.reps.length > 0) {
-                array.push({type: "subheader", key: set.setID+"subheader"});
-            }
-        } else if (!isRemoved) {
-            array.push(createSummaryViewModel(set));
-            array.push(createAnalysisViewModel(set));
+            lastExerciseName = set.exercise;
         }
-        lastExerciseName = set.exercise;
 
         // reps
-        if (!isCollapsed) {
+        if (!isRemoved && !isCollapsed) {
             Array.prototype.push.apply(array, createRowViewModels(set));
         }
 
@@ -82,13 +87,10 @@ const createViewModels = (state, sets) => {
         if (isInitialSet) {
             // new set, reset the end time
             lastSetEndTime = isRemoved ? null : SetUtils.endTime(set);
-            array.push(createBottomBorder(set));
-        } else if (SetUtils.hasUnremovedRep(set)) { // ignore removed sets in rest calculations
+        } else if (!isRemoved && SetUtils.hasUnremovedRep(set)) { // ignore removed sets in rest calculations
             // add footer if valid
             if (lastSetEndTime !== null) {
-                array.push(createFooterVM(set, lastSetEndTime, isCollapsed));
-            } else {
-                array.push(createBottomBorder(set));
+                array.push(createRestVM(set, lastSetEndTime, isCollapsed, isLastSet));
             }
 
             // update variable for calculation purposes
@@ -96,8 +98,19 @@ const createViewModels = (state, sets) => {
         } else if (isLastSet && lastSetEndTime !== null && set.reps.length === 0) {
             // working set, live rest mode
             array.push(createWorkingSetFooterVM(set, lastSetEndTime));
+        }
+
+        // delete set row
+        if (isLastSet) {
+            if (lastSetEndTime === null || set.reps.length > 0) {
+                array.push(createBottomBorder(set));
+            }
         } else {
-            array.push(createBottomBorder(set));
+            if (!isRemoved && !isCollapsed) {
+                array.push(createDeleteVM(set));
+            } else {
+                array.push(createBottomBorder(set));
+            }
         }
 
         // insert set card data
@@ -242,16 +255,23 @@ const createWorkingSetFooterVM = (set, restStartTime) => {
     return footerVM;
 };
 
-const createFooterVM = (set, lastSetEndTime, isCollapsed) => {
+const createRestVM = (set, lastSetEndTime, isCollapsed, isWorkingSet) => {
     let restInMS = new Date(SetUtils.startTime(set)) - new Date(lastSetEndTime);
     let footerVM = {
-        type: "footer",
+        type: "rest",
         rest: DateUtils.restInSentenceFormat(restInMS),
         key: set.setID + 'rest',
         isCollapsed: isCollapsed,
+        isWorkingSet: isWorkingSet,
     };
     return footerVM;
 };
+
+const createDeleteVM = (set) => ({
+    type: "delete",
+    setID: set.setID,
+    key: set.setID + 'delete',
+});
 
 const createBottomBorder = (set) => ({
     type: "bottom border",
@@ -278,6 +298,8 @@ const mapDispatchToProps = (dispatch) => {
         endSet: Actions.endSet,
         removeRep: Actions.removeRep,
         restoreRep: Actions.restoreRep,
+        deleteSet: Actions.deleteSet,
+        restoreSet: Actions.restoreSet,
         tapCard: Actions.presentExpanded,
         getDefaultMetric: SetsActionCreators.getDefaultMetric
     }, dispatch);

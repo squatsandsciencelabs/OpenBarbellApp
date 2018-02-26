@@ -76,7 +76,7 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
         isCollapsed = HistoryCollapsedSelectors.getIsCollapsed(state, set.setID);
         isRemoved = SetUtils.isDeleted(set);
 
-        // card header
+        // card header logic
         if (isInitialSet) {
             lastExerciseName = null;
             setNumber = 1;
@@ -88,6 +88,7 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
             }
         }
 
+        // card header view
         array.push(createTitleViewModel(state, set, setNumber, isRemoved, isCollapsed));
         if (!isRemoved) {
             if (!isCollapsed) {

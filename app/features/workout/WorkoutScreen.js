@@ -40,7 +40,7 @@ const createViewModels = (state, sets) => {
 
         // set state booleans
         isCollapsed = isLastSet ? false : WorkoutCollapsedSelectors.getIsCollapsed(state, set.setID);
-        isRemoved = SetUtils.isEmpty(set);
+        isRemoved = SetUtils.isDeleted(set);
 
         // card header
         if (isInitialSet) {

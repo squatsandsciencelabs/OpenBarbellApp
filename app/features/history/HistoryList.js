@@ -135,7 +135,6 @@ class HistoryList extends Component {
                 return (<SetDataRow item={item}
                             onPressRemove={() =>this.props.removeRep(item.setID, item.rep) }
                             onPressRestore={() => this.props.restoreRep(item.setID, item.rep) }
-                            onPressRow={() => this.props.tapCard(item.setID) }
                         />);
             case "bottom border":
                 return (<View style={{flex: 1, backgroundColor: '#e0e0e0', height: 1, marginBottom: 15}} />);

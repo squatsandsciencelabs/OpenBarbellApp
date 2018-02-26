@@ -129,7 +129,6 @@ class OneRMEditSetView extends Component {
                 return (<SetDataRow item={item}
                             onPressRemove={() =>this.props.removeRep(item.setID, item.rep) }
                             onPressRestore={() => this.props.restoreRep(item.setID, item.rep) }
-                            onPressRow={() => this.props.tapCard(item.setID) }
                         />);
             case "rest":
                 return (<SetRestRow item={item} />);

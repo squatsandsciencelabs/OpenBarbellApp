@@ -3,10 +3,8 @@ import {
     LOADING_HISTORY,
     PRESENT_HISTORY_EXERCISE,
     PRESENT_HISTORY_TAGS,
-    PRESENT_HISTORY_EXPANDED,
     DISMISS_HISTORY_EXERCISE,
     DISMISS_HISTORY_TAGS,
-    DISMISS_HISTORY_EXPANDED,
     PRESENT_HISTORY_VIDEO_RECORDER,
     DISMISS_HISTORY_VIDEO_RECORDER,
     START_RECORDING_HISTORY,
@@ -24,7 +22,6 @@ const defaultState = {
     editingExerciseSetID: null,
     editingTags: [],
     editingTagsSetID: null,
-    expandedSetID: null,
     recordingSetID: null,
     recordingVideoType: null,
     isRecording: false,
@@ -58,10 +55,6 @@ const HistoryReducer = (state = defaultState, action) => {
                 editingTagsSetID: action.setID,
                 editingTags: action.tags
             });
-        case PRESENT_HISTORY_EXPANDED:
-            return Object.assign({}, state, {
-                expandedSetID: action.setID,
-            });
         case DISMISS_HISTORY_EXERCISE:
             return Object.assign({}, state, {
                 editingExerciseSetID: null,
@@ -71,10 +64,6 @@ const HistoryReducer = (state = defaultState, action) => {
             return Object.assign({}, state, {
                 editingTagsSetID: null,
                 editingTags: []
-            });
-        case DISMISS_HISTORY_EXPANDED:
-            return Object.assign({}, state, {
-                expandedSetID: null,
             });
         case PRESENT_HISTORY_VIDEO_RECORDER:
             return Object.assign({}, state, {

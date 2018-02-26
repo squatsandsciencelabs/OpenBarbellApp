@@ -1,5 +1,4 @@
 import {
-    PRESENT_WORKOUT_EXPANDED,
     COLLAPSE_WORKOUT_SET,
     EXPAND_WORKOUT_SET,
     DELETE_WORKOUT_SET,
@@ -30,11 +29,6 @@ export const expandSet = (setID) => (dispatch, getState) => {
         setID: setID,
     });
 };
-
-export const presentExpanded = (setID) => ({
-    type: PRESENT_WORKOUT_EXPANDED,
-    setID: setID
-});
 
 export const deleteSet = (setID) => SetsActionCreators.deleteWorkoutSet(setID);
 

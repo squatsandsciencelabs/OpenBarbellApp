@@ -1,12 +1,10 @@
 import {
     PRESENT_WORKOUT_EXERCISE,
     PRESENT_WORKOUT_TAGS,
-    PRESENT_WORKOUT_EXPANDED,
     START_EDITING_WORKOUT_RPE,
     START_EDITING_WORKOUT_WEIGHT,
     DISMISS_WORKOUT_EXERCISE,
     DISMISS_WORKOUT_TAGS,
-    DISMISS_WORKOUT_EXPANDED,
     END_EDITING_WORKOUT_RPE,
     END_EDITING_WORKOUT_WEIGHT,
     PRESENT_WORKOUT_VIDEO_RECORDER,
@@ -33,9 +31,6 @@ const defaultState = {
     editingExerciseBias: null,
     editingTagsSetID: null,
     editingTags: [],
-
-    // expanded
-    expandedSetID: null,
 
     // video
     recordingSetID: null,
@@ -79,16 +74,6 @@ const WorkoutReducer = (state = defaultState, action) => {
             return Object.assign({}, state, {
                 editingTagsSetID: null,
                 editingTags: [],
-                isEditing: false
-            });
-        case PRESENT_WORKOUT_EXPANDED:
-            return Object.assign({}, state, {
-                expandedSetID: action.setID,
-                isEditing: true
-            });
-        case DISMISS_WORKOUT_EXPANDED:
-            return Object.assign({}, state, {
-                expandedSetID: null,
                 isEditing: false
             });
         case PRESENT_WORKOUT_VIDEO_RECORDER:
@@ -195,7 +180,7 @@ const WorkoutReducer = (state = defaultState, action) => {
 };
 
 const isModalVisible = (state) => {
-    return (state.editingExerciseSetID !== null || state.editingTagsSetID !== null || state.expandedSetID !== null || state.recordingSetID !== null || state.watchSetID !== null);
+    return (state.editingExerciseSetID !== null || state.editingTagsSetID !== null || state.recordingSetID !== null || state.watchSetID !== null);
 };
 
 export default WorkoutReducer;

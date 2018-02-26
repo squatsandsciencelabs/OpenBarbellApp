@@ -1,5 +1,4 @@
 import {
-    PRESENT_HISTORY_EXPANDED,
     LOADING_HISTORY,
     COLLAPSE_HISTORY_SET,
     EXPAND_HISTORY_SET,
@@ -20,11 +19,6 @@ export const expandSet = (setID) => (dispatch, getState) => {
         setID: setID,
     });
 };
-
-export const presentExpanded = (setID) => ({
-    type: PRESENT_HISTORY_EXPANDED,
-    setID: setID
-});
 
 export const deleteSet = (setID) => SetsActionCreators.deleteHistorySet(setID);
 

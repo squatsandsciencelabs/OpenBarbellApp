@@ -11,6 +11,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
+        presentAlgorithm: Actions.presentAlgorithm,
         presentBestResults: Actions.presentBestResults,
         closeModal: Actions.dismissInfoModal,
     }, dispatch);

@@ -35,14 +35,18 @@ class WhatIsOneRMView extends Component {
                             <View style={{position: 'absolute', left: 0, top}}>
                                 <TouchableOpacity onPress={() => this._close() }>
                                     <View style={styles.nav}>
-                                    <Icon name="times-circle" size={20} color='red' />
+                                        <Icon name="times-circle" size={20} color='red' />
                                     </View>
                                 </TouchableOpacity>
                             </View>
 
-                            <Text style={{marginBottom: 20}}>{body}</Text>
+                            <Text>{body}</Text>
 
-                            <TouchableOpacity style={{alignItems: 'center', marginBottom: 15}} onPress={ () => this.props.presentBestResults() }>
+                            <TouchableOpacity style={{alignItems: 'center', marginTop: 20}} onPress={ () => this.props.presentAlgorithm() }>
+                                <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >How does the algorithm work?</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={{alignItems: 'center', marginTop: 15}} onPress={ () => this.props.presentBestResults() }>
                                 <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >How can I get the best results?</Text>
                             </TouchableOpacity>
 

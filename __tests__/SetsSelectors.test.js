@@ -1722,7 +1722,7 @@ describe('SetsSelectors', () => {
                     {"label": "close grip bench press", "value": "close grip bench press"}, 
                     {"label": "reverse band bench", "value": "reverse band bench"}, 
                     {"label": "deadlift w/ chains", "value": "deadlift w/ chains"}
-                ]
+                ];
 
                 const result = sut.generateExerciseItems(state);
 

@@ -318,7 +318,8 @@ const mapDispatchToProps = (dispatch) => {
         deleteSet: Actions.deleteSet,
         restoreSet: Actions.restoreSet,
         tapCard: Actions.presentExpanded,
-        getDefaultMetric: SetsActionCreators.getDefaultMetric
+        getDefaultMetric: SetsActionCreators.getDefaultMetric,
+        tappedLoginBanner: Actions.tappedLoginBanner,
     }, dispatch);
 };
 

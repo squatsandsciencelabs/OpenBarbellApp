@@ -8,6 +8,14 @@ import {
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as Analytics from 'app/services/Analytics';
+import * as AppStateActionCreators from 'app/redux/shared_actions/AppStateActionCreators';
+
+export const tappedLoginBanner = () => (dispatch, getState) => {
+    const state = getState();
+    logLoginBannerAnalytics(state);
+
+    dispatch(AppStateActionCreators.changeTab(3));
+};
 
 export const collapseSet = (setID) => (dispatch, getState) => {
     dispatch({
@@ -38,4 +46,11 @@ export const restoreRep = (setID, repIndex) => SetsActionCreators.restoreWorkout
 
 export const endSet = () => {
     return SetsActionCreators.endSet(true, false);
+};
+
+// ANALYTICS
+
+const logLoginBannerAnalytics = (state) => {
+    Analytics.logEventWithAppState('workout_login_banner', {
+    }, state);
 };

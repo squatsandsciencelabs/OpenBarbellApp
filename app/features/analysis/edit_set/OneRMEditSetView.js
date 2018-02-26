@@ -48,7 +48,7 @@ class OneRMEditSetView extends Component {
                 { statusBar }
 
                 <View style={styles.navTitle}>
-                    <Text style={{color: 'rgba(77, 77, 77, 1)'}}>{this.props.title}</Text>
+                    <Text style={{color: 'rgba(77, 77, 77, 1)', fontWeight: 'bold'}}>{this.props.title}</Text>
                 </View>
 
                 <View style={{position: 'absolute', left: 0, top: 0}}>
@@ -66,7 +66,7 @@ class OneRMEditSetView extends Component {
     _renderSectionHeader(section) {
         return (
             <View>
-                <View style={{height:40, justifyContent: 'flex-end', alignItems: 'center'}}>
+                <View style={{height:35, justifyContent: 'flex-end', alignItems: 'center'}}>
                     <Text style={{color: 'rgba(77, 77, 77, 1)'}}>{section.key}</Text>
                 </View>
             </View>
@@ -185,7 +185,9 @@ class OneRMEditSetView extends Component {
 const styles = StyleSheet.create({
     container: {
         height: Platform.OS === 'ios' ? 70 : 50,
-        alignItems: 'center'
+        alignItems: 'center',
+        borderColor: '#e0e0e0',
+        borderBottomWidth: 1,
     },
     nav: {
         paddingTop: Platform.OS === 'ios' ? 35 : 15,

@@ -1486,5 +1486,142 @@ describe('1RM', () => {
                 {"marker": "    ", "setID": "m", "workoutID": "abc", "x": 245, "y": 0.29}
             ]
         });
-    });    
+    });
+    
+    describe('getTagsToIn/ExcludeSuggestions', () => {
+        const state = {
+            sets: {
+                workoutData: [{
+                    setID: 'h',
+                    exercise: 'Squat',
+                    weight: 100,
+                    metric: 'lbs',
+                    reps: [{
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.333368, 388, 65, 24, 9, 12]
+                    }, {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.033368, 378, 43, 69, 13, 8]
+                    }, {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
+                    }],
+                    tags: ['D', 'A', 'B', 'C'],
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
+                },
+                {
+                    setID: 'x',
+                    exercise: 'Bench',
+                    weight: 100,
+                    metric: 'lbs',
+                    reps: [{
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.333368, 388, 65, 24, 9, 12]
+                    }, {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.033368, 378, 43, 69, 13, 8]
+                    }, {
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
+                    }],
+                    tags: ['X', 'A', 'B', 'C'],
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
+                }],
+                historyData: {
+                    a: {
+                        setID: 'a',
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.833368, 200, 19, 10, 1, 4]
+                        }, {
+                            isValid: false,
+                            removed: false,
+                            data: [-3456, 37, 10.533368, 500, 70, 80, 1, 70]
+                        }, {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 2.433368, 250, 25, 15, 1, 10]
+                        }, {
+                            isValid: true,
+                            removed: true,
+                            data: [-3456, 37, 0.533368, 50, 10, 20, 1, 2]
+                        }, {
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 0.233368, 400, 40, 30, 1, 20]
+                        }],
+                        tags: ['A', 'B', 'G', 'C'],
+                        initialStartTime: '1-2-18'
+                    },
+                    b: {
+                        setID: 'b',
+                        exercise: 'Squat',
+                        weight: 200,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.943368, 388, 38, 28, 1, 18]
+                        }],
+                        tags: ['A', 'B', 'C'],
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
+                    },
+                    c: {
+                        setID: 'c',
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.733368, 288, 28, 18, 1, 8]
+                        }],
+                        tags: ['A', 'E', 'B', 'V', 'C'],
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
+                    },
+                    d: {
+                        setID: 'd',
+                        exercise: 'Bench',
+                        weight: 200,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 1.833368, 188, 18, 8, 1, 4]
+                        }],
+                        tags: ['A', 'B', 'F', 'C'],
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
+                    },
+                }
+            },
+            analysis: {
+                e1RMDaysRange: 7,
+                tagsToInclude: ['A', 'B', 'C'],
+                tagsToExclude: ['E'],
+            }
+        };
+
+        test('get all tag suggestions to include for an exercise', () => {
+            const result = sut.getTagsToIncludeSuggestions(state, 'Bench');
+
+            expect(result).toEqual(["g", "v", "f", "x"]);
+        });
+
+        test('get all tag suggestions to exclude for an exercise', () => {
+            const result = sut.getTagsToExcludeSuggestions(state, 'Bench');
+
+            expect(result).toEqual(["g", "v", "f", "x"]);
+        });
+
+    });
 });

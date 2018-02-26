@@ -570,6 +570,7 @@ const get1RMTagSuggestions = (state, exercise, input, ignore, isInclude=true) =>
     } else {
         var oppositeTags = AnalysisSelectors.getTagsToInclude(state);
     }
+    oppositeTags = oppositeTags.map((tag) => tag.toLowerCase());
     const tags = [];
 
     input = input.toLowerCase();

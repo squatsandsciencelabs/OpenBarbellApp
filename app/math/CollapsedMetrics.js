@@ -375,7 +375,7 @@ export const canCalcRPE1RM = (set) => {
         return false;
     }
 
-    if (rpe === "6.5" || rpe === "7" || rpe === "7.5" || rpe === "8" || rpe === "8.5" || rpe === "9" || rpe === "9.5" || rpe === "10") {
+    if (rpeWithoutCommas === "6.5" || rpeWithoutCommas === "7" || rpeWithoutCommas === "7.5" || rpeWithoutCommas === "8" || rpeWithoutCommas === "8.5" || rpeWithoutCommas === "9" || rpeWithoutCommas === "9.5" || rpeWithoutCommas === "10") {
         return true;
     }
 

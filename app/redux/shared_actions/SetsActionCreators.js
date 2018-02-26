@@ -61,15 +61,25 @@ const saveWorkoutSet = (setID, exercise = null, weight = null, metric = null, rp
     return action;
 };
 
-export const deleteWorkoutSet = (setID) => ({
-    type: DELETE_WORKOUT_SET,
-    setID: setID,
-});
+export const deleteWorkoutSet = (setID) => (dispatch, getState) => {
+    const state = getState();
+    logDeleteSetAnalytics(state, setID);
 
-export const restoreWorkoutSet = (setID) => ({
-    type: RESTORE_WORKOUT_SET,
-    setID: setID,
-});
+    dispatch({
+        type: DELETE_WORKOUT_SET,
+        setID: setID,
+    });
+};
+
+export const restoreWorkoutSet = (setID) => (dispatch, getState) => {
+    const state = getState();
+    logRestoreSetAnalytics(state, setID);
+
+    dispatch({
+        type: RESTORE_WORKOUT_SET,
+        setID: setID,
+    });
+};
 
 export const removeWorkoutRep = (setID, repIndex) => (dispatch, getState) => {
     const state = getState();
@@ -142,15 +152,25 @@ const saveHistorySet = (setID, exercise = null, weight = null, metric = null, rp
     return action;
 };
 
-export const deleteHistorySet = (setID) => ({
-    type: DELETE_HISTORY_SET,
-    setID: setID,
-});
+export const deleteHistorySet = (setID) => (dispatch, getState) => {
+    const state = getState();
+    logDeleteSetAnalytics(state, setID);
 
-export const restoreHistorySet = (setID) => ({
-    type: RESTORE_HISTORY_SET,
-    setID: setID,
-});
+    dispatch({
+        type: DELETE_HISTORY_SET,
+        setID: setID,
+    });
+};
+
+export const restoreHistorySet = (setID) => (dispatch, getState) => {
+    const state = getState();
+    logRestoreSetAnalytics(state, setID);
+
+    dispatch({
+        type: RESTORE_HISTORY_SET,
+        setID: setID,
+    });
+};
 
 export const removeHistoryRep = (setID, repIndex) => (dispatch, getState) => {
     const state = getState();
@@ -254,7 +274,13 @@ const logEndSetAnalytics = (manuallyStarted, wasSanityCheck, state) => {
 
 const logDeleteSetAnalytics = (state, setID) => {
     Analytics.logEventWithAppState('delete_set', {
-        is_working_set: false,
+        set_id: setID,
+    }, state);
+};
+
+const logRestoreSetAnalytics = (state, setID) => {
+    Analytics.logEventWithAppState('restore_set', {
+        set_id: setID,
     }, state);
 };
 

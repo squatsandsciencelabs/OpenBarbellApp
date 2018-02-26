@@ -6,6 +6,24 @@ import * as Analytics from 'app/services/Analytics';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
+export const deleteSet = (setID) => (dispatch, getState) => {
+    const state = getState();
+    if (SetsSelectors.getIsWorkoutSet(state, setID)) {
+        dispatch(SetsActionCreators.deleteWorkoutSet(setID));
+    } else {
+        dispatch(SetsActionCreators.deleteHistorySet(setID));
+    }
+};
+
+export const restoreSet = (setID) => (dispatch, getState) => {
+    const state = getState();
+    if (SetsSelectors.getIsWorkoutSet(state, setID)) {
+        dispatch(SetsActionCreators.restoreWorkoutSet(setID));
+    } else {
+        dispatch(SetsActionCreators.restoreHistorySet(setID));
+    }
+};
+
 export const removeRep = (setID, repIndex) => (dispatch, getState) => {
     const state = getState();
     if (SetsSelectors.getIsWorkoutSet(state, setID)) {

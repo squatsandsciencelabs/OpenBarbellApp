@@ -21,6 +21,8 @@ import SetDataLabelRow from 'app/shared_features/set_card/expanded/SetDataLabelR
 import SetDataRow from 'app/shared_features/set_card/expanded/SetDataRow';
 import SetRestRow from 'app/shared_features/set_card/SetRestRow';
 import SetAnalysisScreen from 'app/shared_features/set_card/analysis/SetAnalysisScreen';
+import DeleteSetRow from 'app/shared_features/set_card/expanded/DeleteSetRow';
+import RestoreSetRow from 'app/shared_features/set_card/restore/RestoreSetRow';
 
 // TODO: add a close button on this shit
 class OneRMEditSetView extends Component {
@@ -73,6 +75,18 @@ class OneRMEditSetView extends Component {
 
     _renderRow(section, index, item) {
         switch (item.type) {
+            case 'restore':
+                return (
+                    <RestoreSetRow
+                        tappedRestore={() => this.props.restoreSet(item.setID)}
+                        exercise={item.exercise}
+                        weight={item.weight}
+                        metric={item.metric}
+                        rpe={item.rpe}
+                        numReps={item.numReps}
+                        tags={item.tags}
+                    />
+                );
             case "title":
                 return (<View style={{borderTopWidth: 1, borderColor: '#e0e0e0'}}>
                             <OneRMEditSetTitleScreen
@@ -120,13 +134,15 @@ class OneRMEditSetView extends Component {
                             onPressRestore={() => this.props.restoreRep(item.setID, item.rep) }
                             onPressRow={() => this.props.tapCard(item.setID) }
                         />);
-            case "footer":
+            case "rest":
                 return (
                     <View style={{marginBottom: 15}}>                    
                         <SetRestRow item={item} />
                     </View>);
-            case "bottom border":
-                return (<View style={{flex: 1, backgroundColor: '#e0e0e0', height: 1, marginBottom: 15}} />);
+            case "delete":
+                return (
+                    <DeleteSetRow onPressDelete={() => this.props.deleteSet(item.setID)} />
+                );
             default:
                 break;
         }

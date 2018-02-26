@@ -265,33 +265,39 @@ const saveHistorySet = (state, action) => {
 // DELETE_HISTORY_SET
 
 const deleteHistorySet = (state, action) => {
-    // copy history data
+    const setID = action.setID;
+    let stateChanges = {};
+
+    // update the set
     let newHistoryData = { ...state.historyData };
+    newHistoryData[setID].deleted = true;
+    stateChanges.historyData = newHistoryData;
 
-    // update set and its rep
-    newHistoryData[action.setID].deleted = true;
+    // sync
+    if (!state.setIDsToUpload.includes(setID)) {
+        stateChanges.setIDsToUpload = [...state.setIDsToUpload, setID];
+    }
 
-    // return
-    return {
-        ...state,
-        historyData: newHistoryData,
-    };
+    return Object.assign({}, state, stateChanges);
 };
 
 // RESTORE_HISTORY_SET
 
 const restoreHistorySet = (state, action) => {
-    // copy history data
+    const setID = action.setID;
+    let stateChanges = {};
+
+    // update the set
     let newHistoryData = { ...state.historyData };
+    newHistoryData[setID].deleted = false;
+    stateChanges.historyData = newHistoryData;
 
-    // update set and its rep
-    newHistoryData[action.setID].deleted = false;
+    // sync
+    if (!state.setIDsToUpload.includes(setID)) {
+        stateChanges.setIDsToUpload = [...state.setIDsToUpload, setID];
+    }
 
-    // return
-    return {
-        ...state,
-        historyData: newHistoryData,
-    };
+    return Object.assign({}, state, stateChanges);
 };
 
 // SAVE_HISTORY_SET_TAGS

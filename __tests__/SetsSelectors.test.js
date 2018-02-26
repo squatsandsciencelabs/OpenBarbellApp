@@ -1717,11 +1717,12 @@ describe('SetsSelectors', () => {
                 }
                 
                 const expected = [
-                    {"label": "Box Squat w/ Bands", "value": "Box Squat w/ Bands"}, 
-                    {"label": "Good Mornings w/ Bands & Chains in Belt Squat", "value": "Good Mornings w/ Bands & Chains in Belt Squat"}, 
-                    {"label": "Close Grip Bench Press", "value": "Close Grip Bench Press"}, 
-                    {"label": "Reverse Band Bench", "value": "Reverse Band Bench"}, 
-                    {"label": "Deadlift w/ Chains", "value": "Deadlift w/ Chains"}]
+                    {"label": "box squat w/ bands", "value": "box squat w/ bands"}, 
+                    {"label": "good mornings w/ bands & chains in belt squat", "value": "good mornings w/ bands & chains in belt squat"}, 
+                    {"label": "close grip bench press", "value": "close grip bench press"}, 
+                    {"label": "reverse band bench", "value": "reverse band bench"}, 
+                    {"label": "deadlift w/ chains", "value": "deadlift w/ chains"}
+                ]
 
                 const result = sut.generateExerciseItems(state);
 

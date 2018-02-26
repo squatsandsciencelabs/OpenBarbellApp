@@ -3,6 +3,7 @@ import {
 } from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
+import * as AnalysisActionCreators from 'app/redux/shared_actions/AnalysisActionCreators';
 
 export const tappedSet = (setID) => (dispatch, getState) => {
     const state = getState();
@@ -22,6 +23,8 @@ export const tappedSet = (setID) => (dispatch, getState) => {
         origTags: set.hasOwnProperty('tags') ? set.tags : [],
     });
 };
+
+export const presentBestResults = () => AnalysisActionCreators.presentBestResults();
 
 // ANALYTICS
 

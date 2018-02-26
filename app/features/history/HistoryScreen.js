@@ -89,8 +89,8 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
         }
 
         // card header view
-        array.push(createTitleViewModel(state, set, setNumber, isRemoved, isCollapsed));
         if (!isRemoved) {
+            array.push(createTitleViewModel(state, set, setNumber, isCollapsed));
             if (!isCollapsed) {
                 array.push(createFormViewModel(set, setNumber, isRemoved));
                 if (!isRemoved) {
@@ -104,6 +104,8 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
                 array.push(createAnalysisViewModel(set));
             }
             lastExerciseName = set.exercise;
+        } else {
+            array.push(createRestoreViewModel(set));
         }
 
         // reps
@@ -145,14 +147,20 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
     return sections;
 }
 
-const createTitleViewModel = (state, set, setNumber, isRemoved=false, isCollapsed=false) => ({
+const createRestoreViewModel = (set) => ({
+    type: 'restore',
+    setID: set.setID,
+    key: set.setID + 'restore',
+});
+
+const createTitleViewModel = (state, set, setNumber, isCollapsed=false) => ({
     type: 'title',
     key: set.setID+'title',
     setNumber: setNumber,
     exercise: set.exercise ? set.exercise.toLowerCase() : null,
     setID: set.setID,
     isCollapsed: isCollapsed,
-    removed: isRemoved,
+    removed: false,
     videoFileURL: set.videoFileURL,
 });
 

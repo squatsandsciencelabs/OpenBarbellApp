@@ -58,11 +58,9 @@ const createViewModels = (state, sets) => {
         if (isLastSet) {
             array.push({type: 'working set header', key: set.setID+'end set timer'});
         }
-        if (isRemoved) {
-            array.push(createTitleViewModel(state, set, setNumber, lastExerciseName, isLastSet, isRemoved, isCollapsed));
-        } else {
+        if (!isRemoved) {
             array.push(createTopBorder(set));
-            array.push(createTitleViewModel(state, set, setNumber, lastExerciseName, isLastSet, isRemoved, isCollapsed));
+            array.push(createTitleViewModel(state, set, setNumber, lastExerciseName, isLastSet, isCollapsed));
             if (!isCollapsed) {
                 array.push(createFormViewModel(set, setNumber, isRemoved));
                 if (!isRemoved) {
@@ -76,6 +74,8 @@ const createViewModels = (state, sets) => {
                 array.push(createAnalysisViewModel(set));
             }
             lastExerciseName = set.exercise;
+        } else {
+            array.push(createRestoreViewModel(set));
         }
 
         // reps
@@ -131,17 +131,23 @@ const createViewModels = (state, sets) => {
 }
 
 const createTopBorder = (set) => ({
-    type: "top border",
+    type: 'top border',
     key: set.setID + 'topborder',
 });
 
-const createTitleViewModel = (state, set, setNumber, bias=null, isLastSet=false, isRemoved=false, isCollapsed=false) => ({
+const createRestoreViewModel = (set) => ({
+    type: 'restore',
+    setID: set.setID,
+    key: set.setID + 'restore',
+});
+
+const createTitleViewModel = (state, set, setNumber, bias=null, isLastSet=false, isCollapsed=false) => ({
     type: 'title',
     key: set.setID+'title',
     setNumber: setNumber,
     exercise: set.exercise ? set.exercise.toLowerCase() : null,
     setID: set.setID,
-    removed: isRemoved,
+    removed: false,
     isWorkingSet: isLastSet,
     bias: bias,
     isCollapsed: isCollapsed,

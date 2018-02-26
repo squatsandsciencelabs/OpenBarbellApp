@@ -252,6 +252,7 @@ const createFooterVM = (set, lastSetEndTime, isCollapsed) => {
     };
     return footerVM;
 };
+
 const createBottomBorder = (set) => ({
     type: "bottom border",
     key: set.setID + 'bottomborder',

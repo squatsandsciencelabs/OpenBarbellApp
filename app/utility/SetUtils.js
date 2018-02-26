@@ -151,6 +151,15 @@ export const getFastestUsableAvgVelocity = (set) => {
     return Math.max.apply(Math, reps.map(rep => Number(RepDataMap.averageVelocity(rep.data))));
 };
 
+export const markerDisplayValue = (set, metric) => {
+    if (metric === 'lbs') {
+        var weight = weightInLBs(set);
+    } else {
+        var weight = weightInKGs(set);
+    }
+    return Number(weight).toFixed(2) + metric + ", " + getFastestUsableAvgVelocity(set) + "m/s";
+};
+
 // this is here because of legacy issues
 // originally, sets saved their start and end times
 // however, once rep deletion was added, the rest calculation is off

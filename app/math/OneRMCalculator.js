@@ -130,7 +130,7 @@ const convertToChartData = (array, metric) => {
         }
         const x = parseFloat(weight);
         const y = SetUtils.getFastestUsableAvgVelocity(set);
-        const marker = Math.round(weight) + set.metric + ", " + y + "m/s";
+        const marker = SetUtils.markerDisplayValue(set, metric);
 
         // x
         if (minX === null) {

@@ -4,6 +4,7 @@ import {
 
 import { 
     SAVE_1RM_EXERCISE,
+    PRESENT_ALGORITHM,
     PRESENT_BEST_RESULTS,
 } from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
@@ -13,15 +14,28 @@ export const saveSelected1RMExercise = (exercise = 'Squat') => ({
     exercise: exercise,
 });
 
+export const presentAlgorithm = () => (dispatch, getState) => {
+    const state = getState();
+    logAlgorithmAnalytics(state);
+    
+    Linking.openURL("http://squatsandscience.com/1rmalgorithm/");
+    dispatch({ type: PRESENT_ALGORITHM });
+};
+
 export const presentBestResults = () => (dispatch, getState) => {
     const state = getState();
     logBestResultsAnalytics(state);
     
-    Linking.openURL("http://www.squatsandscience.com/onerepmax/");
+    Linking.openURL("http://squatsandscience.com/1rmbestresults/");
     dispatch({ type: PRESENT_BEST_RESULTS });
 };
 
 // ANALYTICS
+
+const logAlgorithmAnalytics = (state) => {
+    Analytics.logEventWithAppState('one_rm_about_algorithm', {
+    }, state);
+};
 
 const logBestResultsAnalytics = (state) => {
     Analytics.logEventWithAppState('one_rm_best_results', {

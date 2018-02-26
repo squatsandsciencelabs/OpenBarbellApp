@@ -83,6 +83,56 @@ export const getRecordingSetID = (state) => stateRoot(state).recordingSetID;
 
 export const getIsSavingVideo = (state) => stateRoot(state).isSavingVideo;
 
+// analytics
+
+export const getOrigExerciseName = (state) => stateRoot(state).origExerciseName;
+
+export const getOrigRPE = (state) => stateRoot(state).origRPE;
+
+export const getOrigWeight = (state) => stateRoot(state).origWeight;
+
+export const getOrigMetric = (state) => stateRoot(state).origMetric;
+
+export const getOrigTags = (state) => stateRoot(state).origTags;
+
+export const getDidUpdateExerciseName = (state, set) => !areEqual(set.exercise, getOrigExerciseName(state));
+
+export const getDidUpdateRPE = (state, set) => !areEqual(set.rpe, getOrigRPE(state));
+
+export const getDidUpdateWeight = (state, set) => !areEqual(set.weight, getOrigWeight(state));
+
+export const getDidUpdateMetric = (state, set) => !areEqual(set.metric, getOrigMetric(state));
+
+export const getDidUpdateTags = (state, set) => !areArraysEqual(set.tags, getOrigTags(state));
+
+export const getDidUpdateReps = (state) => stateRoot(state).didUpdateReps;
+
+// helpers
+
+const isEmpty = (x) => x === null || x === '' || x === undefined;
+
+const areEqual = (x, y) => {
+    if (isEmpty(x) && isEmpty(y)) {
+        return true;
+    }
+    return x === y;
+};
+
+const areArraysEqual = (a, b) => {
+    if (isEmpty(a)) {
+        a = [];
+    }
+    if (isEmpty(b)) {
+        b = [];
+    }
+
+    if (a.length !== b.length) {
+        return false;
+    }
+
+    return a.every((v, i) => v === b[i]);
+};
+
 // scroll
 
 export const getScroll = (state) => stateRoot(state).scroll;

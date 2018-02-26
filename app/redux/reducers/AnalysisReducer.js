@@ -29,16 +29,14 @@ import {
     DISMISS_1RM_VIDEO_RECORDER,
     PRESENT_1RM_VIDEO_PLAYER,
     DISMISS_1RM_VIDEO_PLAYER,
-    START_EDITING_1RM_RPE,
-    START_EDITING_1RM_WEIGHT,
-    END_EDITING_1RM_RPE,
-    END_EDITING_1RM_WEIGHT,
     START_RECORDING_1RM,
     STOP_RECORDING_1RM,
     SAVE_WORKOUT_VIDEO,
     SAVE_HISTORY_VIDEO,
     DELETE_WORKOUT_VIDEO,
     DELETE_HISTORY_VIDEO,
+    SAVE_WORKOUT_REP,
+    SAVE_HISTORY_REP,
 } from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
@@ -86,13 +84,12 @@ const defaultState = {
     watchFileURL: null,
 
     // analytics
-    didEditSet: false,
-    didChangeWeight: false,
-    didChangeExercise: false,
-    didChangeTags: false,
-    didChangeRPE: false,
-    didRemoveRep: false,
-    didRestoreRep: false,
+    origExerciseName: null,
+    origRPE: null,
+    origWeight: null,
+    origMetric: null,
+    origTags: [],
+    didUpdateReps: false,
 
     // scroll
     scroll: false,
@@ -189,19 +186,24 @@ const AnalysisReducer = (state = defaultState, action) => {
                 ...state,
                 setID: action.setID,
                 workoutID: action.workoutID,
-                didEditSet: false,
-                didChangeWeight: false,
-                didChangeExercise: false,
-                didChangeTags: false,
-                didChangeRPE: false,
-                didRemoveRep: false,
-                didRestoreRep: false,
+                origExerciseName: action.origExerciseName,
+                origRPE: action.origRPE,
+                origWeight: action.origWeight,
+                origMetric: action.origMetric,
+                origTags: [...action.origTags],
+                didUpdateReps: false,
             };
         case DISMISS_EDIT_1RM_SET:
             return {
                 ...state,
                 setID: null,
                 workoutID: null,
+                origExerciseName: null,
+                origRPE: null,
+                origWeight: null,
+                origMetric: null,
+                origTags: [],
+                didUpdateReps: false,
             };
         case PRESENT_1RM_EXERCISE:
             return Object.assign({}, state, {
@@ -260,6 +262,14 @@ const AnalysisReducer = (state = defaultState, action) => {
                 watchSetID: null,
                 watchFileURL: null
             });
+        
+        // analytics
+        case SAVE_WORKOUT_REP:
+        case SAVE_HISTORY_REP:
+            return Object.assign({}, state, {
+                didUpdateReps: true,
+            });
+        
         default: 
             return state;
     }

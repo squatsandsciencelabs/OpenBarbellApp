@@ -3,10 +3,26 @@ import {
 } from 'app/configs+constants/ActionTypes';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as Analytics from 'app/services/Analytics';
+import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
+import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
-export const removeRep = (setID, repIndex) => SetsActionCreators.removeHistoryRep(setID, repIndex);
+export const removeRep = (setID, repIndex) => (dispatch, getState) => {
+    const state = getState();
+    if (SetsSelectors.getIsWorkoutSet(state, setID)) {
+        dispatch(SetsActionCreators.removeWorkoutRep(setID, repIndex));
+    } else {
+        dispatch(SetsActionCreators.removeHistoryRep(setID, repIndex));
+    }
+};
 
-export const restoreRep = (setID, repIndex) => SetsActionCreators.restoreHistoryRep(setID, repIndex);
+export const restoreRep = (setID, repIndex) => (dispatch, getState) => {
+    const state = getState();
+    if (SetsSelectors.getIsWorkoutSet(state, setID)) {
+        dispatch(SetsActionCreators.restoreWorkoutRep(setID, repIndex));
+    } else {
+        dispatch(SetsActionCreators.restoreHistoryRep(setID, repIndex));
+    }
+};
 
 export const dismissEditSet = () => (dispatch, getState) => {
     const state = getState();
@@ -21,7 +37,25 @@ export const dismissEditSet = () => (dispatch, getState) => {
 // ANALYTICS
 
 const logCloseEditSetAnalytics = (state) => {
-    // TODO: this has a bunch
+    const setID = AnalysisSelectors.getSetID(state);
+    const set = SetsSelectors.getSet(state, setID);
+
+    const didChangeExercise = AnalysisSelectors.getDidUpdateExerciseName(state, set);
+    const didChangeWeight = AnalysisSelectors.getDidUpdateWeight(state, set);
+    const didChangeMetric = AnalysisSelectors.getDidUpdateMetric(state, set);
+    const didChangeRPE = AnalysisSelectors.getDidUpdateRPE(state, set);
+    const didChangeTags = AnalysisSelectors.getDidUpdateTags(state, set);
+    const didChangeReps = AnalysisSelectors.getDidUpdateReps(state, set);
+
+    const didEditSet = didChangeExercise || didChangeWeight || didChangeMetric || didChangeRPE || didChangeTags || didChangeReps;
+
     Analytics.logEventWithAppState('one_rm_close_edit_set', {
+        did_edit_set: didEditSet,
+        did_change_exercise: didChangeExercise,
+        did_change_weight: didChangeWeight,
+        did_change_metric: didChangeMetric,
+        did_change_rpe: didChangeRPE,
+        did_change_tags: didChangeTags,
+        did_change_reps: didChangeReps,
     }, state);
 };

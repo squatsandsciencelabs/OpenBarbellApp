@@ -23,6 +23,8 @@ export const tappedSet = (setID) => (dispatch, getState) => {
     });
 };
 
+// ANALYTICS
+
 const logEditSetAnalytics = (state, setID) => {
     Analytics.logEventWithAppState('one_rm_edit_set', {
         set_id: setID

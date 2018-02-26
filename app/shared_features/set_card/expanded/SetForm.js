@@ -47,6 +47,18 @@ class SetForm extends Component {
         });
     }
 
+    componentWillUpdate(nextProps, nextState) {
+        // meant to be update only for analytics purposes
+        // do NOT read the weight values from this
+        if (this.props.hasOwnProperty('updateWeight') && this.state.weight !== nextState.weight) {
+            this.props.updateWeight(nextState.weight);
+        }
+
+        if (this.props.hasOwnProperty('updateRPE') && this.state.rpe !== nextState.rpe) {
+            this.props.updateRPE(nextState.rpe);
+        }
+    }
+
     // KEYBOARD
 
     componentWillMount() {

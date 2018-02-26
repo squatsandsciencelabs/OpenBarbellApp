@@ -23,6 +23,8 @@ const mapDispatchToProps = (dispatch) => {
         dismissRPE: Actions.dismissRPE,
         dismissWeight: Actions.dismissWeight,
         toggleMetric: Actions.toggleMetric,
+        updateWeight: Actions.updateWeight,
+        updateRPE: Actions.updateRPE,
     }, dispatch);
 };
 

@@ -12,7 +12,6 @@ import OneRMCalculateScreen from './calculate/OneRMCalculateScreen';
 import OneRMResultsScreen from './results/OneRMResultsScreen';
 import OneRMLoggedOutView from './logged_out/OneRMLoggedOutView';
 import OneRMProtocolView from './protocol/OneRMProtocolView';
-import HowToBestResultsScreen from './results/bestresults/HowToBestResultsScreen';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 
 class AnalysisTab extends Component {
@@ -55,7 +54,6 @@ class AnalysisTab extends Component {
                     <OneRMCalculateScreen />
                     <View ref={(ref) => { this.results = ref }} onLayout={() => {}} collapsable={false} >
                         <OneRMResultsScreen />
-                        <HowToBestResultsScreen />
                     </View>
                     <OneRMProtocolView />
                 </ScrollView>

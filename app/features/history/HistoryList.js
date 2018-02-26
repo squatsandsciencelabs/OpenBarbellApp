@@ -30,7 +30,6 @@ import SetSummary from 'app/shared_features/set_card/collapsed/SetSummary';
 import SetAnalysisScreen from 'app/shared_features/set_card/analysis/SetAnalysisScreen';
 import DeleteSetRow from 'app/shared_features/set_card/expanded/DeleteSetRow';
 import RestoreSetRow from 'app/shared_features/set_card/restore/RestoreSetRow';
-import * as Sections from 'app/utility/Sections';
 
 class HistoryList extends Component {
 

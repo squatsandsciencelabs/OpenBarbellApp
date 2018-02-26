@@ -632,7 +632,7 @@ describe('weightInLBs', () => {
 
         const result = sut.weightInLBs(set);
 
-        expect(result).toBe("250");
+        expect(result).toBe(250);
     });
 
     // test for KGs
@@ -679,7 +679,7 @@ describe('weightInKGs', () => {
 
         const result = sut.weightInKGs(set);
 
-        expect(result).toBe("100");
+        expect(result).toBe(100);
     });
 
     // test for KGs

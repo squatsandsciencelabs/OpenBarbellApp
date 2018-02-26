@@ -1,5 +1,15 @@
 import * as RepDataMap from 'app/utility/RepDataMap';
 
+export const isDeleted = (set) => {
+    if (set.hasOwnProperty('deleted')) {
+        // new sets used the deleted flag
+        return set.deleted;
+    } else {
+        // old sets use isEmpty checks
+        return isEmpty(set);
+    }
+};
+
 // no data and no active reps
 export const isEmpty = (set) => {
     return hasEmptyData(set) && hasEmptyReps(set);

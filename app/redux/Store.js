@@ -1,5 +1,5 @@
 import { AsyncStorage, Platform } from 'react-native';
-import {persistStore, autoRehydrate} from 'redux-persist'
+import {persistStore, autoRehydrate, getStoredState} from 'redux-persist';
 import Reactotron from 'reactotron-react-native';
 import { createFilter } from 'redux-persist-transform-filter';
 import _ from 'lodash';

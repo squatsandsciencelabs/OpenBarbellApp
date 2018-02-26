@@ -586,7 +586,8 @@ const get1RMTagSuggestions = (state, exercise, input, ignore, isInclude=true) =>
                     if (!tags.includes(lowerTag)
                         && !oppositeTags.includes(lowerTag)
                         && lowerTag !== 'bug'
-                        && !ignore.includes(lowerTag)) {
+                        && !ignore.includes(lowerTag)
+                        && lowerTag.includes(input)) {
                         tags.push(lowerTag);
                     }
                 });

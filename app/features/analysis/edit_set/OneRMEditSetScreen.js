@@ -34,8 +34,8 @@ const createViewModels = (state, sets, setID) => {
         let set = sets[i];
         let rpe = String(sets[i].rpe);
 
-        // ignore completely empty set
-        if (SetUtils.isEmpty(set)) {
+        // ignore deleted set
+        if (set.setID !== setID && SetUtils.isDeleted(set)) {
             continue;
         }
 
@@ -50,7 +50,7 @@ const createViewModels = (state, sets, setID) => {
         }
 
         // set num and last exercise
-        isRemoved = SetUtils.isEmpty(set);
+        isRemoved = SetUtils.isDeleted(set);
         if (isInitialSet) {
             lastExerciseName = null;
             setNumber = 1;
@@ -76,17 +76,20 @@ const createViewModels = (state, sets, setID) => {
             }
 
             // card views
-            array.push(createTitleViewModel(state, set, setNumber, isRemoved, false));
-            array.push(createFormViewModel(set, setNumber, isRemoved));
-            array.push(createAnalysisViewModel(set));
-            if (set.reps.length > 0) {
-                array.push({type: "subheader", key: set.setID+"subheader"});
-            }
-            Array.prototype.push.apply(array, createRowViewModels(set));
-            if (!isInitialSet && SetUtils.hasUnremovedRep(set) && lastSetEndTime != null) {
-                array.push(createFooterVM(set, lastSetEndTime));
+            if (!isRemoved) {
+                array.push(createTitleViewModel(state, set, setNumber));
+                array.push(createFormViewModel(set, setNumber));
+                array.push(createAnalysisViewModel(set));
+                if (set.reps.length > 0) {
+                    array.push({type: "subheader", key: set.setID+"subheader"});
+                }
+                Array.prototype.push.apply(array, createRowViewModels(set));
+                if (!isInitialSet && SetUtils.hasUnremovedRep(set) && lastSetEndTime != null) {
+                    array.push(createRestVM(set, lastSetEndTime));
+                }
+                array.push(createDeleteVM(set));
             } else {
-                array.push(createBottomBorder(set));
+                array.push(createRestoreViewModel(set));
             }
 
             // add and return
@@ -109,23 +112,38 @@ const createViewModels = (state, sets, setID) => {
     return null;
 }
 
-const createTitleViewModel = (state, set, setNumber, isRemoved=false) => ({
+const createRestoreViewModel = (set) => {
+    const numReps = SetUtils.numValidUnremovedReps(set);
+    return {
+        type: 'restore',
+        setID: set.setID,
+        exercise: set.exercise ? set.exercise.toLowerCase() : null,
+        weight: set.weight ? set.weight : 0,
+        rpe: set.rpe ? set.rpe : 0,
+        numReps: numReps ? numReps : '0 reps',
+        metric: set.metric,
+        tags: set.tags ? set.tags.map((tag) => tag.toLowerCase()) : [],
+        key: set.setID + 'restore',
+    };
+};
+
+const createTitleViewModel = (state, set, setNumber) => ({
     type: 'title',
     key: set.setID+'title',
     setNumber: setNumber,
     exercise: set.exercise ? set.exercise.toLowerCase() : null,
     setID: set.setID,
     isCollapsed: false,
-    removed: isRemoved,
+    removed: false,
     videoFileURL: set.videoFileURL,
 });
 
-const createFormViewModel = (set, setNumber, isRemoved) => ({
+const createFormViewModel = (set, setNumber) => ({
     type: 'form',
     key: set.setID+'form',
     setID: set.setID,
     initialStartTime: set.initialStartTime,
-    removed: isRemoved,
+    removed: false,
     setNumber: setNumber,
     tags: set.tags ? set.tags.map((tag) => tag.toLowerCase()) : [],
     weight: set.weight,
@@ -219,20 +237,21 @@ const createRowViewModels = (set) => {
     return array;
 };
 
-const createFooterVM = (set, lastSetEndTime) => {
+const createRestVM = (set, lastSetEndTime) => {
     let restInMS = new Date(SetUtils.startTime(set)) - new Date(lastSetEndTime);
-    let footerVM = {
-        type: "footer",
+    let restVM = {
+        type: "rest",
         rest: DateUtils.restInSentenceFormat(restInMS),
         key: set.setID + 'rest',
         isCollapsed: false,
     };
-    return footerVM;
+    return restVM;
 };
 
-const createBottomBorder = (set) => ({
-    type: "bottom border",
-    key: set.setID + 'bottomborder',
+const createDeleteVM = (set) => ({
+    type: "delete",
+    setID: set.setID,
+    key: set.setID + 'delete',
 });
 
 const mapStateToProps = (state) => {
@@ -258,6 +277,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
+        deleteSet: Actions.deleteSet,
+        restoreSet: Actions.restoreSet,
         removeRep: Actions.removeRep,
         restoreRep: Actions.restoreRep,
         dismissModal: Actions.dismissEditSet,

@@ -29,15 +29,9 @@ export const presentExpanded = (setID) => ({
     setID: setID
 });
 
-export const deleteSet = (setID) => ({
-    type: DELETE_WORKOUT_SET,
-    setID: setID,
-});
+export const deleteSet = (setID) => SetsActionCreators.deleteWorkoutSet(setID);
 
-export const restoreSet = (setID) => ({
-    type: RESTORE_WORKOUT_SET,
-    setID: setID,
-});
+export const restoreSet = (setID) => SetsActionCreators.restoreWorkoutSet(setID);
 
 export const removeRep = (setID, repIndex) => (dispatch, getState) => {
     const state = getState();

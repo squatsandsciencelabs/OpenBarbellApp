@@ -27,7 +27,7 @@ class SettingsAccountPanel extends Component {
                 "All your data is safely on the cloud, so when you log back in you'll get access to your old history again.",
                 [
                     {text: 'Cancel', onPress: () => this.props.cancelSignOut(), style: 'cancel'},
-                    {text: 'Logout', onPress: () => this.props.signOut()},
+                    {text: 'Logout', onPress: () => this.props.signOut(), style: 'destructive'},
                 ]
             );
         }

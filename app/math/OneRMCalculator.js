@@ -117,7 +117,7 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     };
 };
 
-const convertToChartData = (array, metric) => {
+const convertToChartData = (array, metric, displayMarker=true) => {
     let minX = null;
     let maxX = null;
     let minY = null;
@@ -130,7 +130,11 @@ const convertToChartData = (array, metric) => {
         }
         const x = parseFloat(weight);
         const y = SetUtils.getFastestUsableAvgVelocity(set);
-        const marker = SetUtils.markerDisplayValue(set, metric);
+        if (displayMarker) {
+            var marker = SetUtils.markerDisplayValue(set, metric);
+        } else {
+            var marker = '';
+        }
 
         // x
         if (minX === null) {

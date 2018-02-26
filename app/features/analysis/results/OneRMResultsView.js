@@ -275,7 +275,7 @@ class OneRMChartView extends Component {
             <View style={ [SETTINGS_PANEL_STYLES.panel, { borderBottomWidth: 0, flexDirection: 'column', alignItems: 'center' }] }>
                 <Text style={[styles.titleText, {marginBottom: 10}]}>Results</Text>
                 {this._render1RM(this.props.r2)}
-                <Text style={{textAlign: 'center', color: 'rgba(77, 77, 77, 1)', fontSize: 12}}>Tap a point to view and edit the data</Text>
+                <Text style={{textAlign: 'center', color: 'rgba(77, 77, 77, 1)', fontSize: 12}}>Tap a point to view and edit the data, then calculate again to see the updated 1RM</Text>
                 {this._renderChartArea()}
                 <TouchableOpacity style={{alignItems: 'center', marginBottom: 15, marginTop: 25}} onPress={ () => this.props.presentAlgorithm() }>
                     <Text style= {[SETTINGS_PANEL_STYLES.tappableText]} >How does the algorithm work?</Text>

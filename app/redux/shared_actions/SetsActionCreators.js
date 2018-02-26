@@ -13,6 +13,7 @@ import {
     DELETE_WORKOUT_SET,
     RESTORE_WORKOUT_SET,
     SAVE_HISTORY_REP,
+    SAVE_WORKOUT_REP,
 } from 'app/configs+constants/ActionTypes';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as SetUtils from 'app/utility/SetUtils';
@@ -69,6 +70,30 @@ export const restoreWorkoutSet = (setID) => ({
     type: RESTORE_WORKOUT_SET,
     setID: setID,
 });
+
+export const removeWorkoutRep = (setID, repIndex) => (dispatch, getState) => {
+    const state = getState();
+    logRemoveRepAnalytics(state, setID, true);
+
+    dispatch({
+        type: SAVE_WORKOUT_REP,
+        setID: setID,
+        repIndex: repIndex,
+        removed: true,
+    });
+};
+
+export const restoreWorkoutRep = (setID, repIndex) => (dispatch, getState) => {
+    const state = getState();
+    logRestoreRepAnalytics(state, setID, true);
+
+    dispatch({
+        type: SAVE_WORKOUT_REP,
+        setID: setID,
+        repIndex: repIndex,
+        removed: false,
+    });
+};
 
 export const endSet = (manuallyStarted=false, wasSanityCheck=false) => (dispatch, getState) => {
     const state = getState();
@@ -227,14 +252,34 @@ const logEndSetAnalytics = (manuallyStarted, wasSanityCheck, state) => {
     }, state);    
 };
 
-const logRemoveRepAnalytics = (state, setID) => {
-    Analytics.logEventWithAppState('remove_rep', {
+const logDeleteSetAnalytics = (state, setID) => {
+    Analytics.logEventWithAppState('delete_set', {
         is_working_set: false,
     }, state);
 };
 
-const logRestoreRepAnalytics = (state, setID) => {
+const logRemoveRepAnalytics = (state, setID, isWorkout=false) => {
+    if (isWorkout) {
+        var is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
+    } else {
+        var is_working_set = false;
+    }
+
+    Analytics.logEventWithAppState('remove_rep', {
+        is_working_set: is_working_set,
+        set_id: setID,
+    }, state);
+};
+
+const logRestoreRepAnalytics = (state, setID, isWorkout=false) => {
+    if (isWorkout) {
+        var is_working_set = SetsSelectors.getIsWorkingSet(state, setID);
+    } else {
+        var is_working_set = false;
+    }
+
     Analytics.logEventWithAppState('restore_rep', {
-        is_working_set: false,
+        is_working_set: is_working_set,
+        set_id: setID,
     }, state);
 };

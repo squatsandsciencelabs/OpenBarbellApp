@@ -248,7 +248,7 @@ class OneRMChartView extends Component {
                         }
                     }}
                     marker={{enabled: true,
-                        markerColor: processColor('#F0C0FF8C'),
+                        markerColor: processColor('rgba(47, 128, 237, 0.7)'),
                         textColor: processColor('white'),
                         markerFontSize: 14,
                     }}

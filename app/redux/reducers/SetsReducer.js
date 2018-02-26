@@ -21,7 +21,9 @@ import {
     LOGIN_SUCCESS,
     LOGOUT,
     DELETE_WORKOUT_SET,
+    RESTORE_WORKOUT_SET,
     DELETE_HISTORY_SET,
+    RESTORE_HISTORY_SET,
     TEST_1RM,
 } from 'app/configs+constants/ActionTypes';
 import uuidV4 from 'uuid/v4';
@@ -96,7 +98,8 @@ const createSet = (setNumber = 1, metric = "kgs") => ({
     initialStartTime: null, // time of first edit, used to calculate times for sets with no reps
     // startTime: null, // LEGACY - use rep time instead
     // endTime: null, // LEGACY - use rep time instead
-    removed: false, // NOTE: THIS IS USELESS NOW, removed has changed definitions over time, should no longer use it!
+    // removed: false, // LEGACY - use deleted instead, and removed / if the entire set is empty if deleted doesn't exist
+    deleted: false,
     reps : [],
     tags: [],
     videoFileURL: null,
@@ -174,9 +177,32 @@ const saveWorkoutSet = (state, action) => {
 // DELETE_WORKOUT_SET
 
 const deleteWorkoutSet = (state, action) => {
+    // copy workout data
+    let newWorkoutData = state.workoutData.slice(0);
+
+    // get set
+    let setIndex = newWorkoutData.findIndex( set => set.setID === action.setID );
+    newWorkoutData[setIndex].deleted = true;
+
     return {
         ...state,
-        workoutData: state.workoutData.filter(set => set.setID !== action.setID)
+        workoutData: newWorkoutData,
+    };
+};
+
+// RESTORE_WORKOUT_SET
+
+const restoreWorkoutSet = (state, action) => {
+    // copy workout data
+    let newWorkoutData = state.workoutData.slice(0);
+
+    // get set
+    let setIndex = newWorkoutData.findIndex( set => set.setID === action.setID );
+    newWorkoutData[setIndex].deleted = false;
+
+    return {
+        ...state,
+        workoutData: newWorkoutData,
     };
 };
 
@@ -239,14 +265,32 @@ const saveHistorySet = (state, action) => {
 // DELETE_HISTORY_SET
 
 const deleteHistorySet = (state, action) => {
+    // copy history data
+    let newHistoryData = { ...state.historyData };
+
+    // update set and its rep
+    newHistoryData[action.setID].deleted = true;
+
+    // return
     return {
         ...state,
-        historyData: Object.keys(state.historyData).reduce((result, setID) => {
-            if (setID !== action.setID) {
-                result[setID] = state.historyData[setID];
-            }
-            return result;
-        }, {})
+        historyData: newHistoryData,
+    };
+};
+
+// RESTORE_HISTORY_SET
+
+const restoreHistorySet = (state, action) => {
+    // copy history data
+    let newHistoryData = { ...state.historyData };
+
+    // update set and its rep
+    newHistoryData[action.setID].deleted = false;
+
+    // return
+    return {
+        ...state,
+        historyData: newHistoryData,
     };
 };
 

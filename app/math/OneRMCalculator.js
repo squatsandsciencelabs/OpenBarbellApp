@@ -558,21 +558,35 @@ const highestWeightPossible = (regressionPoints) => {
 // TODO: not sure if this is the right place to put this
 // it's kinda a selector, but it accesses from multiple reducers
 // for now leaving it here
-export const getTagsToIncludeSuggestions = (state, exercise) => {
+
+export const getTagsToIncludeSuggestions = (state, exercise, input, ignore) => get1RMTagSuggestions(state, exercise, input, ignore, true);
+
+export const getTagsToExcludeSuggestions = (state, exercise, input, ignore) => get1RMTagSuggestions(state, exercise, input, ignore, false);
+
+const get1RMTagSuggestions = (state, exercise, input, ignore, isInclude=true) => {
     const sets = SetsSelectors.getAllSets(state);
-    const tagsToInclude = AnalysisSelectors.getTagsToInclude(state);
-    const tagsToExclude = AnalysisSelectors.getTagsToExclude(state);
+    if (isInclude) {
+        var oppositeTags = AnalysisSelectors.getTagsToExclude(state);
+    } else {
+        var oppositeTags = AnalysisSelectors.getTagsToInclude(state);
+    }
     const tags = [];
 
+    input = input.toLowerCase();
     exercise = exercise.toLowerCase();
+    ignore = ignore.map((tag) => tag.toLowerCase());
 
+    // generate pool of usable tags
     sets.forEach((set) => {
         if (set.hasOwnProperty('exercise') && set.exercise) {
             let lower = set.exercise.toLowerCase();
             if (lower === exercise && set.tags) {
                 set.tags.forEach((tag) => {
                     const lowerTag = tag.toLowerCase();
-                    if (!tags.includes(lowerTag) && !tagsToExclude.includes(lowerTag) && !tagsToInclude.includes(lowerTag) && lowerTag !== 'bug') {
+                    if (!tags.includes(lowerTag)
+                        && !oppositeTags.includes(lowerTag)
+                        && lowerTag !== 'bug'
+                        && !ignore.includes(lowerTag)) {
                         tags.push(lowerTag);
                     }
                 });
@@ -583,33 +597,6 @@ export const getTagsToIncludeSuggestions = (state, exercise) => {
     return tags;
 };
 
-// TODO: not sure if this is the right place to put this
-// it's kinda a selector, but it accesses from multiple reducers
-// for now leaving it here
-export const getTagsToExcludeSuggestions = (state, exercise) => {
-    const sets = SetsSelectors.getAllSets(state);
-    const tagsToInclude = AnalysisSelectors.getTagsToInclude(state);
-    const tagsToExclude = AnalysisSelectors.getTagsToExclude(state);
-    const tags = [];
-
-    exercise = exercise.toLowerCase();
-
-    sets.forEach((set) => {
-        if (set.hasOwnProperty('exercise') && set.exercise) {
-            let lower = set.exercise.toLowerCase();
-            if (lower === exercise && set.tags) {
-                set.tags.forEach((tag) => {
-                    const lowerTag = tag.toLowerCase();
-                    if (!tags.includes(lowerTag) && !tagsToInclude.includes(lowerTag) && !tagsToExclude.includes(lowerTag) && lowerTag !== 'bug') {
-                        tags.push(lowerTag);
-                    }
-                });
-            }
-        }
-    });
-
-    return tags;
-};
 
 
 

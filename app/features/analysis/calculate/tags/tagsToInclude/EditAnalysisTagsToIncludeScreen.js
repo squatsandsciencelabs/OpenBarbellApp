@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
         placeholder: 'Enter Tag',
         text: '',
         inputs: AnalysisSelectors.getTagsToInclude(state),
-        generateSuggestions: OneRMCalculator.getTagsToIncludeSuggestions(state, exercise),
+        generateSuggestions: (input, ignore) => OneRMCalculator.getTagsToIncludeSuggestions(state, exercise, input, ignore),
         isModalShowing: AnalysisSelectors.getIsEditingIncludeTags(state),
     };
 };

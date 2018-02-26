@@ -15,7 +15,7 @@ import {
 
 import Pill from 'app/shared_features/pill/Pill';
 
-class EditTextModal extends Component {
+class SelectTagsModal extends Component {
 
     constructor(props) {
         super(props);
@@ -40,10 +40,10 @@ class EditTextModal extends Component {
         if (text === null || text === undefined) {
             text = '';
         }
-        this._updateText(text, nextProps.bias);
+        this._updateText(text);
 
         // update suggestions
-        this._updateSuggestions(text, inputs, nextProps.bias);
+        this._updateSuggestions(text, inputs);
     }
 
     // HELPERS
@@ -81,15 +81,15 @@ class EditTextModal extends Component {
         this._updateSuggestions(this.state.text, inputsCopy);
     }
 
-    _updateText(input, bias=this.props.bias) {
+    _updateText(input) {
         this.setState({
             text: input,
         });
-        this._updateSuggestions(input, bias);
+        this._updateSuggestions(input);
     }
 
-    _updateSuggestions(input=this.state.text, inputs=this.state.inputs, bias=null) {
-        var suggestions = this.props.generateSuggestions;
+    _updateSuggestions(input=this.state.text, inputs=this.state.inputs) {
+        var suggestions = this.props.generateSuggestions(input, inputs);
 
         let suggestionsVM = suggestions.map((suggestion) => { return {key: suggestion}} );
         this.setState({
@@ -361,4 +361,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default EditTextModal;
+export default SelectTagsModal;

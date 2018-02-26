@@ -1081,7 +1081,7 @@ describe('collapsed metrics', () => {
         });
     });
     
-    describe('getRPE1rm', () => {
+    describe('getRPE1RM', () => {
         const validRep = {isValid: true, removed: false};
         const invalidRep = {isValid: false, removed: true};
         const removedRep = {isValid: true, removed: true};
@@ -1094,7 +1094,7 @@ describe('collapsed metrics', () => {
                 rpe: null,
             };
     
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(null);
         });
@@ -1106,7 +1106,7 @@ describe('collapsed metrics', () => {
                 rpe: '11',
             };
     
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(null);
         });
@@ -1118,7 +1118,7 @@ describe('collapsed metrics', () => {
                 rpe: '5,5-6',
             };
     
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(null);
         });
@@ -1130,7 +1130,7 @@ describe('collapsed metrics', () => {
                 rpe: '5',
             };
     
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(null)
         });
@@ -1142,7 +1142,7 @@ describe('collapsed metrics', () => {
                 rpe: '6,5',
             };
 
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
 
             expect(actual).toBe(431);
         });
@@ -1153,7 +1153,7 @@ describe('collapsed metrics', () => {
                 reps: [validRep, validRep],
             };
     
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(null);
         });
@@ -1165,7 +1165,7 @@ describe('collapsed metrics', () => {
                 rpe: '8',
             };
     
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(null);
         });
@@ -1176,7 +1176,7 @@ describe('collapsed metrics', () => {
                 rpe: '8',
             };
     
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(null);
         });
@@ -1188,7 +1188,7 @@ describe('collapsed metrics', () => {
                 rpe: '8',
             };
     
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(null);
         });
@@ -1200,7 +1200,7 @@ describe('collapsed metrics', () => {
                 rpe: '7',
             };
     
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(489);
         });
@@ -1212,7 +1212,7 @@ describe('collapsed metrics', () => {
                 rpe: '9',
             };
     
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(473);
         });
@@ -1224,7 +1224,7 @@ describe('collapsed metrics', () => {
                 rpe: '8',
             };
     
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(640);
         });
@@ -1236,7 +1236,7 @@ describe('collapsed metrics', () => {
                 rpe: '7',
             };
     
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(482);
         });
@@ -1248,7 +1248,7 @@ describe('collapsed metrics', () => {
                 rpe: '6.5',
             };
     
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(438);
         });
@@ -1260,7 +1260,7 @@ describe('collapsed metrics', () => {
                 rpe: '8',
             };
     
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(null);
         });
@@ -1272,7 +1272,7 @@ describe('collapsed metrics', () => {
                 rpe: '6.5',
             };
 
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(null);
         });
@@ -1284,7 +1284,7 @@ describe('collapsed metrics', () => {
                 rpe: '6.5',
             };
 
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(null);
         });
@@ -1296,7 +1296,7 @@ describe('collapsed metrics', () => {
                 rpe: '6.5',
             };
 
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(null);
         });
@@ -1308,7 +1308,7 @@ describe('collapsed metrics', () => {
                 rpe: '6.5',
             };
 
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(null);
         });
@@ -1320,7 +1320,7 @@ describe('collapsed metrics', () => {
                 rpe: '6.5',
             };
 
-            const actual = sut.getRPE1rm(set);
+            const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(null);
         });

@@ -3,7 +3,7 @@ import {
     View,
     StyleSheet,
     Text,
-    ScrollView
+    ScrollView,
 } from 'react-native';
 
 import Pill from 'app/shared_features/pill/Pill';

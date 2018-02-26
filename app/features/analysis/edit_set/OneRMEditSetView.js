@@ -135,10 +135,7 @@ class OneRMEditSetView extends Component {
                             onPressRow={() => this.props.tapCard(item.setID) }
                         />);
             case "rest":
-                return (
-                    <View style={{marginBottom: 15}}>                    
-                        <SetRestRow item={item} />
-                    </View>);
+                return (<SetRestRow item={item} />);
             case "delete":
                 return (
                     <DeleteSetRow onPressDelete={() => this.props.deleteSet(item.setID)} />

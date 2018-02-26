@@ -10,6 +10,7 @@ import WorkoutList from './WorkoutList';
 import * as Actions from './WorkoutActions';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
 import * as WorkoutCollapsedSelectors from 'app/redux/selectors/WorkoutCollapsedSelectors';
+import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 
 // assumes chronological sets
 const createViewModels = (state, sets) => {
@@ -304,7 +305,8 @@ const mapStateToProps = (state) => {
     return {
         sections: createViewModels(state, sets),
         sets: sets,
-        isAddEnabled: isAddEnabled
+        isAddEnabled: isAddEnabled,
+        isLoggedIn: AuthSelectors.getIsLoggedIn(state),
     }
 };
 

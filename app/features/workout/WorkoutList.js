@@ -29,6 +29,7 @@ import SetSummary from 'app/shared_features/set_card/collapsed/SetSummary';
 import SetAnalysisScreen from 'app/shared_features/set_card/analysis/SetAnalysisScreen';
 import DeleteSetRow from 'app/shared_features/set_card/expanded/DeleteSetRow';
 import RestoreSetRow from 'app/shared_features/set_card/restore/RestoreSetRow';
+import WorkoutLoginBannerView from './login_banner/WorkoutLoginBannerView';
 
 class WorkoutList extends Component {
 
@@ -42,22 +43,35 @@ class WorkoutList extends Component {
 
     // RENDER
 
+    _renderLoginBanner() {
+        if (!this.props.isLoggedIn) {
+            return (
+                <View style={styles.loginBannerContainer}>
+                    <WorkoutLoginBannerView />
+                </View>
+            );
+        } else {
+            return null;
+        }
+    }
+
     _renderSectionHeader(section) {
-        let sets = this.props.sets;
-        let currentSetIndex = (this.props.sets.length) - 1;
-        let set = sets[currentSetIndex];
+        const sets = this.props.sets;
+        const currentSetIndex = (this.props.sets.length) - 1;
+        const set = sets[currentSetIndex];
+        const marginTop = this.props.isLoggedIn ? 0 : 40;
 
         // if there is no set data show disabled add set button
         if (section.key === 0) {
             if (!this.props.isAddEnabled) {
                 return (
-                    <View style={styles.disabledButton}>
+                    <View style={[styles.disabledButton, { marginTop: marginTop }]}>
                         <Text style={styles.buttonText}>CREATE NEW SET</Text>
                     </View>
                 );                
             } else {
                 return (
-                    <View style={styles.button}>
+                    <View style={[styles.button, { marginTop: marginTop }]}>
                         <TouchableOpacity onPress={ () => this.props.endSet() }>
                             <Text style={styles.buttonText}>CREATE NEW SET</Text>
                         </TouchableOpacity>
@@ -210,6 +224,8 @@ class WorkoutList extends Component {
                     {list}
                 </View>
 
+                {this._renderLoginBanner()}
+
                 <View style={{height: 50}}>
                     <WorkoutBottomBarScreen />
                 </View>
@@ -220,6 +236,12 @@ class WorkoutList extends Component {
 
 //NOTE: currently container names reference the React Native flexDirection which imo is confusing
 const styles = StyleSheet.create({
+    loginBannerContainer: {
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        right: 0,
+    },
     sectionHeaderText: {
         fontFamily: 'AvenirNext-Medium',
         fontSize: 16,

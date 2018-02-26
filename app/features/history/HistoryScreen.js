@@ -96,7 +96,7 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
                 if (!isRemoved) {
                     array.push(createAnalysisViewModel(set));
                 }
-                if (set.reps.length > 0) {
+                if ((shouldShowRemoved && !SetUtils.hasNoReps(set)) || (!shouldShowRemoved && SetUtils.numValidUnremovedReps(set) > 0)) {
                     array.push({type: "subheader", key: set.setID+"subheader"});
                 }
             } else if (!isRemoved) {

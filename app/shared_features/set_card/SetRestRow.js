@@ -10,7 +10,10 @@ import {
 class SetRestRow extends PureComponent {
 
     render() {
-        if (this.props.item.isCollapsed) {
+        if (this.props.item.hasOwnProperty('isWorkingSet') && this.props.item.isWorkingSet) {
+            var marginTop = 15;
+            var marginBottom = 15;
+        } else if (this.props.item.isCollapsed) {
             var marginTop = 0;
             var marginBottom = 15;
         } else {

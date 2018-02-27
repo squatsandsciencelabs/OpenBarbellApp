@@ -44,12 +44,14 @@ const generateAutocompleteExerciseModel = (workoutData, historyData) => {
     sets = sets.filter((set) => set.exercise !== null && set.exercise !== '');
 
     // generate dictionary with counts
-    sets.map((set) => {
-        let lowercaseExercise = set.exercise.toLowerCase();
-        if (dictionary[lowercaseExercise] === undefined) {
-            dictionary[lowercaseExercise] = { suggestion: lowercaseExercise, seed: 1 };
-        } else {
-            dictionary[lowercaseExercise] = { suggestion: lowercaseExercise, seed: dictionary[lowercaseExercise].seed + 1};
+    sets.forEach((set) => {
+        if (set.exercise) {
+            let lowercaseExercise = set.exercise.toLowerCase();
+            if (dictionary[lowercaseExercise] === undefined) {
+                dictionary[lowercaseExercise] = { suggestion: lowercaseExercise, seed: 1 };
+            } else {
+                dictionary[lowercaseExercise] = { suggestion: lowercaseExercise, seed: dictionary[lowercaseExercise].seed + 1};
+            }
         }
     });
 

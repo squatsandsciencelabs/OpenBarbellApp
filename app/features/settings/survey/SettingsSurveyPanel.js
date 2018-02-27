@@ -39,6 +39,8 @@ class SettingsSurveyPanel extends Component {
 
 const styles = StyleSheet.create({
     avatar: {
+        borderRadius: 4,
+        borderWidth: 0,
         height: 80,
         width: 80,
     },

@@ -26,10 +26,10 @@ class SetForm extends Component {
         this.state = {
             tags: this.props.tags,
             weight: this.props.weight,
-            didChangeWeight: false,
+            weightFocused: false,
             metric: this.props.metric,
             rpe: this.props.rpe,
-            didChangeRPE: false,
+            rpeFocused: false,
             removed: this.props.removed,
         };
     }
@@ -38,11 +38,9 @@ class SetForm extends Component {
     componentWillReceiveProps(nextProps) {
         this.setState({
             tags: nextProps.tags,
-            weight: this.state.didChangeWeight ? this.state.weight : nextProps.weight,
-            didChangeWeight: false,
+            weight: this.state.weightFocused ? this.state.weight : nextProps.weight,
             metric: nextProps.metric,
-            rpe: this.state.didChangeRPE ? this.state.rpe : nextProps.rpe,
-            didChangeRPE: false,
+            rpe: this.state.rpeFocused ? this.state.rpe : nextProps.rpe,
             removed: nextProps.removed
         });
     }
@@ -65,39 +63,21 @@ class SetForm extends Component {
     _onChangeWeight(weight) {
         this.setState({
             weight: weight,
-            didChangeWeight: true,
         }, () => {
-            // hack to guarantee that the weight won't be overriden by updateWeight
             if (this.props.hasOwnProperty('updateWeight')) {
-                this.setState({
-                    weight: weight,
-                    didChangeWeight: true,
-                });
+                this.props.updateWeight(weight);
             }
         });
-
-        if (this.props.hasOwnProperty('updateWeight')) {
-            this.props.updateWeight(weight);
-        }
     }
 
     _onChangeRPE(rpe) {
         this.setState({
             rpe: rpe,
-            didChangeRPE: true,
         }, () => {
-            // hack to guarantee that the rpe won't be overriden by updateRPE
             if (this.props.hasOwnProperty('updateRPE')) {
-                this.setState({
-                    rpe: rpe,
-                    didChangeRPE: true,
-                });
+                this.props.updateRPE(rpe);
             }
         });
-
-        if (this.props.hasOwnProperty('updateRPE')) {
-            this.props.updateRPE(rpe);
-        }
     }
 
     _tapDisabledRPE() {
@@ -113,9 +93,19 @@ class SetForm extends Component {
         );
     }
 
+    _onBeginEditWeight() {
+        this.setState({weightFocused: true});
+        this.props.tapWeight(this.props.setID);
+    }
+
     _onEndEditWeight() {
         this._save();
         this.props.dismissWeight(this.props.setID);
+    }
+
+    _onBeginEditRPE() {
+        this.setState({rpeFocused: false});
+        this.props.tapRPE(this.props.setID);
     }
 
     _onEndEditRPE() {
@@ -190,7 +180,7 @@ class SetForm extends Component {
                     value={this.state.weight}
 
                     onEndEditing={() => this._onEndEditWeight() }
-                    onFocus={() => this.props.tapWeight(this.props.setID) }
+                    onFocus={() => this._onBeginEditWeight() }
                     onChangeText={(weight) => this._onChangeWeight(weight) }
                 />
                 <View style={styles.fieldDetails}>
@@ -238,7 +228,7 @@ class SetForm extends Component {
                         onEndEditing={() => this._onEndEditRPE() }
                         placeholderTextColor={'rgba(189, 189, 189, 1)'}
                         value = {this.state.rpe}
-                        onFocus={() => this.props.tapRPE(this.props.setID) }
+                        onFocus={() => this._onBeginEditRPE() }
                         onChangeText={(rpe) => this._onChangeRPE(rpe) }
                     />
                     <View style={styles.fieldDetails} pointerEvents='none'>

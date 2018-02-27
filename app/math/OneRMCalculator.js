@@ -573,8 +573,12 @@ const get1RMTagSuggestions = (state, exercise, input, ignore, isInclude=true) =>
     oppositeTags = oppositeTags.map((tag) => tag.toLowerCase());
     const tags = [];
 
-    input = input.toLowerCase();
-    exercise = exercise.toLowerCase();
+    if (input) {
+        input = input.toLowerCase();
+    }
+    if (exercise) {
+        exercise = exercise.toLowerCase();
+    }
     ignore = ignore.map((tag) => tag.toLowerCase());
 
     // generate pool of usable tags

@@ -196,7 +196,7 @@ const romCheck = (pool) => {
         var hasFailedROM = false;
 
         SetUtils.validUnremovedReps(set).forEach((rep) => {
-            const rom = RepDataMap.rangeOfMotion(rep.data);
+            const rom = Number(RepDataMap.rangeOfMotion(rep.data));
             if (rom !== null && isFinite(rom) && rom > 0) {
                 roms.push(rom);
             } else {

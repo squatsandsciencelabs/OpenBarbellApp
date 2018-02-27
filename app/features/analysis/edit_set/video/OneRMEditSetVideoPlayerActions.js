@@ -10,7 +10,7 @@ export const deleteVideo = (setID) => (dispatch, getState) => {
     const state = getState();
     logDeleteVideoAnalytics(state, setID);
 
-    if (SetsSelectors.getIsWorkingSet(state, setID)) {
+    if (SetsSelectors.getIsWorkoutSet(state, setID)) {
         dispatch({
             type: DELETE_WORKOUT_VIDEO,
             setID: setID,

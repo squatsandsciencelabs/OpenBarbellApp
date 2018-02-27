@@ -222,8 +222,8 @@ const romCheck = (pool) => {
     // calculate bounds
     const mean = average(roms);
     const std = standardDeviation(roms, mean);  
-    const minValidROM = mean - (2.5*std);
-    const maxValidROM = mean + (2.5*std);
+    const minValidROM = mean - (6.0*std);
+    const maxValidROM = mean + (6.0*std);
 
     // remove sets with roms below min or above max
     passed0Check.forEach((set) => {

@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import VideoRecorder from 'app/shared_features/camera/VideoRecorder';
-import * as Actions from './OneRMEditSetVideoRecorderScreen';
+import * as Actions from './OneRMEditSetVideoRecorderActions';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 
 const mapStateToProps = (state) => ({

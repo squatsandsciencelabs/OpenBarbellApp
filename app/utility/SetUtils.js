@@ -133,12 +133,12 @@ const isVelocityUsable = (velocity) => {
     return !(!velocity || isNaN(velocity) || !isFinite(velocity) || Number(velocity) < 0 || Number(velocity) >= 10);
 };
 
-// NOTE: this considers infinity / 0 invalid
+// NOTE: this considers infinity / 0 invalid, but only considers not removed reps
 export const hasUnusableReps = (set) => {
     if (!set || !set.hasOwnProperty('reps')) {
         return false;
     }
-    return set.reps.some(rep => !isRepUsable(rep));
+    return set.reps.some(rep => !rep.removed && !isRepUsable(rep));
 };
 
 // NOTE: this considers infinity / 0 invalid

@@ -99,16 +99,18 @@ class SetForm extends Component {
     }
 
     _onEndEditWeight() {
+        this.setState({weightFocused: false});
         this._save();
         this.props.dismissWeight(this.props.setID);
     }
 
     _onBeginEditRPE() {
-        this.setState({rpeFocused: false});
+        this.setState({rpeFocused: true});
         this.props.tapRPE(this.props.setID);
     }
 
     _onEndEditRPE() {
+        this.setState({rpeFocused: false});
         this._save();
         this.props.dismissRPE(this.props.setID);
     }

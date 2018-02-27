@@ -47,18 +47,6 @@ class SetForm extends Component {
         });
     }
 
-    componentWillUpdate(nextProps, nextState) {
-        // meant to be update only for analytics purposes
-        // do NOT read the weight values from this
-        if (this.props.hasOwnProperty('updateWeight') && this.state.weight !== nextState.weight) {
-            this.props.updateWeight(nextState.weight);
-        }
-
-        if (this.props.hasOwnProperty('updateRPE') && this.state.rpe !== nextState.rpe) {
-            this.props.updateRPE(nextState.rpe);
-        }
-    }
-
     // KEYBOARD
 
     componentWillMount() {
@@ -77,15 +65,39 @@ class SetForm extends Component {
     _onChangeWeight(weight) {
         this.setState({
             weight: weight,
-            didChangeWeight: true
+            didChangeWeight: true,
+        }, () => {
+            // hack to guarantee that the weight won't be overriden by updateWeight
+            if (this.props.hasOwnProperty('updateWeight')) {
+                this.setState({
+                    weight: weight,
+                    didChangeWeight: true,
+                });
+            }
         });
+
+        if (this.props.hasOwnProperty('updateWeight')) {
+            this.props.updateWeight(weight);
+        }
     }
 
     _onChangeRPE(rpe) {
         this.setState({
             rpe: rpe,
-            didChangeRPE: true
+            didChangeRPE: true,
+        }, () => {
+            // hack to guarantee that the rpe won't be overriden by updateRPE
+            if (this.props.hasOwnProperty('updateRPE')) {
+                this.setState({
+                    rpe: rpe,
+                    didChangeRPE: true,
+                });
+            }
         });
+
+        if (this.props.hasOwnProperty('updateRPE')) {
+            this.props.updateRPE(rpe);
+        }
     }
 
     _tapDisabledRPE() {

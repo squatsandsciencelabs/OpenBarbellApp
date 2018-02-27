@@ -11,14 +11,13 @@ import {
     StatusBar,
     StyleSheet,
     View,
-    SafeAreaView,
     ListView,
     Dimensions,
     Alert,
     Platform
 } from 'react-native';
 import { TabViewAnimated, TabBar } from 'react-native-tab-view';
-
+import * as Device from 'app/utility/Device';
 import * as NavigationConfig from 'app/configs+constants/NavigationConfig';
 import SurveyModalScreen from 'app/shared_features/survey/SurveyModalScreen';
 
@@ -92,7 +91,7 @@ class ApplicationView extends Component {
         }
 
         return (
-            <SafeAreaView style={[{flex: 1}, styles.container]}>
+            <View style={[{flex: 1}, styles.container]}>
                 <StatusBar
                     backgroundColor="black"
                     barStyle="light-content"
@@ -109,7 +108,7 @@ class ApplicationView extends Component {
 
                 <SurveyModalScreen />
 
-            </SafeAreaView>
+            </View>
         );
     }
 
@@ -132,8 +131,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#f2f2f2'
     },
     statusBar: {
-        height: 20,
-        backgroundColor: 'black'
+        height: Device.isIphoneX ? 30 : 20,
+        backgroundColor: Device.isIphoneX ? '#333333' : 'black'
     }
 });
 

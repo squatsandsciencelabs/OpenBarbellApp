@@ -1780,7 +1780,7 @@ describe('getTagsToIn/ExcludeSuggestions', () => {
                     removed: false,
                     data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
                 }],
-                tags: ['D', 'A', 'B', 'C'],
+                tags: ['aD', 'aA', 'aB', 'aC'],
                 initialStartTime: '2018-01-03T04:06:12.640Z'
             },
             {
@@ -1801,7 +1801,7 @@ describe('getTagsToIn/ExcludeSuggestions', () => {
                     removed: false,
                     data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
                 }],
-                tags: ['X', 'A', 'B', 'C'],
+                tags: ['bX', 'aA', 'aB', 'aC'],
                 initialStartTime: '2018-01-03T04:06:12.640Z'
             }],
             historyData: {
@@ -1831,7 +1831,7 @@ describe('getTagsToIn/ExcludeSuggestions', () => {
                         removed: false,
                         data: [-3456, 37, 0.233368, 400, 40, 30, 1, 20]
                     }],
-                    tags: ['A', 'B', 'G', 'C'],
+                    tags: ['aA', 'aB', 'bR', 'bG', 'aC'],
                     initialStartTime: '1-2-18'
                 },
                 b: {
@@ -1844,7 +1844,7 @@ describe('getTagsToIn/ExcludeSuggestions', () => {
                         removed: false,
                         data: [-3456, 37, 1.943368, 388, 38, 28, 1, 18]
                     }],
-                    tags: ['A', 'B', 'C'],
+                    tags: ['aA', 'aB', 'aC'],
                     initialStartTime: '2018-01-03T04:06:12.640Z'
                 },
                 c: {
@@ -1857,7 +1857,7 @@ describe('getTagsToIn/ExcludeSuggestions', () => {
                         removed: false,
                         data: [-3456, 37, 1.733368, 288, 28, 18, 1, 8]
                     }],
-                    tags: ['A', 'E', 'B', 'V', 'C'],
+                    tags: ['aA', 'bE', 'aB', 'bV', 'bR', 'aC'],
                     initialStartTime: '2018-01-03T04:06:12.640Z'
                 },
                 d: {
@@ -1870,28 +1870,28 @@ describe('getTagsToIn/ExcludeSuggestions', () => {
                         removed: false,
                         data: [-3456, 37, 1.833368, 188, 18, 8, 1, 4]
                     }],
-                    tags: ['A', 'B', 'F', 'C'],
+                    tags: ['aA', 'aB', 'aF', 'aC'],
                     initialStartTime: '2018-01-03T04:06:12.640Z'
                 },
             }
         },
         analysis: {
             e1RMDaysRange: 7,
-            tagsToInclude: ['A', 'B', 'C'],
-            tagsToExclude: ['E'],
+            tagsToInclude: ['aA', 'aB', 'aC', 'bV'],
+            tagsToExclude: ['bE'],
         }
     };
 
     test('get all tag suggestions to include for an exercise', () => {
-        const result = sut.getTagsToIncludeSuggestions(state, 'Bench');
+        const result = sut.getTagsToIncludeSuggestions(state, 'Bench', 'b', ['ab', "bv"]);
 
-        expect(result).toEqual(["g", "v", "f", "x"]);
+        expect(result).toEqual(expect.arrayContaining(["br", "bg", "bx"]));
     });
 
     test('get all tag suggestions to exclude for an exercise', () => {
-        const result = sut.getTagsToExcludeSuggestions(state, 'Bench');
+        const result = sut.getTagsToExcludeSuggestions(state, 'Bench', 'b', ['bx']);
 
-        expect(result).toEqual(["g", "v", "f", "x"]);
+        expect(result).toEqual(expect.arrayContaining(["bg", "br", "be"]));
     });
 
 });

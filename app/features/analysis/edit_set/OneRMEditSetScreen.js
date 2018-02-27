@@ -262,7 +262,7 @@ const createDeleteVM = (set) => ({
 const mapStateToProps = (state) => {
     const setID = AnalysisSelectors.getSetID(state);
     const workoutID = AnalysisSelectors.getWorkoutID(state);
-    if (setID && workoutID) {
+    if (setID) { // no workoutID means it's a live workout
         const sets = SetsSelectors.getAnalysisWorkoutSetsChronological(state, workoutID);
         const {title, sections} = createViewModels(state, sets, setID, SettingsSelectors.getDefaultMetric(state));
 

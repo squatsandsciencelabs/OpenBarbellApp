@@ -11,6 +11,7 @@ import {
     StatusBar,
     StyleSheet,
     View,
+    SafeAreaView,
     ListView,
     Dimensions,
     Alert,
@@ -91,7 +92,7 @@ class ApplicationView extends Component {
         }
 
         return (
-            <View style={[{flex: 1}, styles.container]}>
+            <SafeAreaView style={[{flex: 1}, styles.container]}>
                 <StatusBar
                     backgroundColor="black"
                     barStyle="light-content"
@@ -108,7 +109,7 @@ class ApplicationView extends Component {
 
                 <SurveyModalScreen />
 
-            </View>
+            </SafeAreaView>
         );
     }
 

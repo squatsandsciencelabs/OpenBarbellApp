@@ -339,7 +339,7 @@ export const getSet = (state, setID) => {
 // Analysis
 
 export const getAnalysisWorkoutSetsChronological = (state, workoutID) => {
-    const sets = getHistorySets(state);
+    const sets = getAllSets(state);
     let analysisSets = sets.filter((set) => set.workoutID === workoutID);
     analysisSets.sort((set1, set2) => {
         let set1Start = SetUtils.startTime(set1);

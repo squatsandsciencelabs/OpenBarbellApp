@@ -39,6 +39,7 @@ import {
     SAVE_HISTORY_REP,
     EDIT_1RM_SET_WEIGHT,
     EDIT_1RM_SET_RPE,
+    ANALYSIS_DRAGGED,
 } from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
@@ -96,7 +97,8 @@ const defaultState = {
     didUpdateReps: false,
 
     // scroll
-    scroll: false,
+    scroll: false, // used to scroll on calculate
+    dragged: false, // hack to detect touch drag on the chart and prevent opening set as a result, aka it acts like touch canceled
 };
 
 const AnalysisReducer = (state = defaultState, action) => {
@@ -167,6 +169,11 @@ const AnalysisReducer = (state = defaultState, action) => {
             });
 
         // results
+        case ANALYSIS_DRAGGED:
+            return {
+                ...state,
+                dragged: !state.dragged,
+            };
         case CALC_1RM:
             return {
                 ...state,

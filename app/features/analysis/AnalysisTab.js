@@ -49,6 +49,7 @@ class AnalysisTab extends Component {
                     style={{flex: 1}}
                     keyboardDismissMode='on-drag'
                     keyboardShouldPersistTaps='always'
+                    onScrollBeginDrag = {() => this.props.dragged() }
                     ref={(ref) => { this.scrollView = ref}}>
                     <OneRMDebugScreen />
                     <OneRMCalculateScreen />

@@ -19,6 +19,8 @@ import * as Device from 'app/utility/Device';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 import OneRMEditSetScreen from '../edit_set/OneRMEditSetScreen';
 
+// TODO: confirm that this works on workout sets because workout sets dont have workoutIDs so wtf? but i saw it working so very confused
+
 class OneRMChartView extends Component {
 
     constructor(props) {
@@ -27,66 +29,135 @@ class OneRMChartView extends Component {
         this.state = {
             setID: null,
             workoutID: null,
-            touching: false,
+            selected: false,
+            touchStarted: false,
+            touchEnded: false,
+
+            // cancels
+            multiTouchStart: false,
+            multiSelect: false,
+            pinchpan: false,
+            dragged: false,
+
+            // external check
+            lastDrag: false,
         };
     }
 
     // TOUCHES
 
+    componentWillReceiveProps(nextProps) {
+        // dragged, aka touch cancel, reset the state
+        // NOTE: this is done separately from touchCancel because touchCancel doesn't fire on drag on iOS
+        if (nextProps.dragged !== this.state.lastDrag) {
+            console.tron.log("drag detected");
+            this.setState({
+                lastDrag: nextProps.dragged,
+                dragged: true,
+            });
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        // TODO: confirm how this works on android
+        // a gesture is considered ended with a touch ended and a point was selected or it was pinched (as that can avoid select) or panned or dragged (can avoid select)
+        const gestureEnded = this.state.touchEnded && (this.state.selected || this.state.pinchpan || this.state.dragged);
+
+        // if gestured ended, there's a single touch, an actual point was selected, and it wasn't cancelled
+        if (gestureEnded && this.state.touchStarted && this.state.setID && !this.state.multiTouchStart && !this.state.pinchpan && !this.state.dragged && !this.state.multiSelect) {
+            // tapped, open up the set
+            console.tron.log("conditions met, opening up the set and resetting state");
+            this.props.tappedSet(this.state.setID, this.state.workoutID);
+        }
+        
+        if (gestureEnded) {
+            console.tron.log("resetting state!");
+            // reset the state
+            this.setState({
+                setID: null,
+                workoutID: null,
+                selected: false,
+                touchStarted: false,
+                touchEnded: false,
+                multiTouchStart: false,
+                pinchpan: false,
+                multiSelect: false,
+                dragged: false,
+            });
+        }
+    }
+
     _handleSelect(event) {
         const nativeEvent = event.nativeEvent;
-        if (nativeEvent.hasOwnProperty('data')) {
-            const data = nativeEvent.data;
-            if (data.hasOwnProperty('setID') && data.hasOwnProperty('workoutID')) {
-                if (Platform.OS === 'ios') {
-                    // on iOS, because handle select runs AFTER touches ended, ensure touches are false
-                    if (!this.state.touching) {
-                        this.props.tappedSet(data.setID, data.workoutID);
-                    }
-                } else {
-                    // on android, just save the information to be determined later
-                    this.setState({setID: data.setID, workoutID: data.workoutID});
-                }
-            } else if (Platform.OS !== 'ios') {
-                // on android, it's a bad tap so remove the saved setID and workoutID
-                this.setState({setID: null, workoutID: null});
-            }
+
+        if (this.state.selected) {
+            // multi select
+            console.tron.log("multiple select, cancel");
+            this.setState({
+                multiSelect: true,
+                setID: null,
+                workoutID: null,
+                selected: true,
+            });
+        } else if (nativeEvent.hasOwnProperty('data') && nativeEvent.data.hasOwnProperty('setID') && nativeEvent.data.hasOwnProperty('workoutID')) {
+            // actually selected a datapoint
+            console.tron.log("datapoint selected!");
+            this.setState({
+                setID: nativeEvent.data.setID,
+                workoutID: nativeEvent.data.workoutID,
+                selected: true,
+            });
+        } else {
+            // blank select
+            console.tron.log("blank selected!");
+            this.setState({
+                setID: null,
+                workoutID: null,
+                selected: true,
+            });
         }
     }
 
     _handleTouchStart() {
-        if (Platform.OS !== 'ios' && this.state.touching) {
-            // android disable multiple touch as it's a zoom
-            this.setState({touching: false});
+        if (this.state.touchStarted) {
+            console.tron.log("multi touch detected");
+            this.setState({
+                multiTouchStart: true,
+            });
         } else {
-            // you started touching, applies to both
-            this.setState({touching: true});
+            console.tron.log("touch started, include reset because of dirty values");
+            this.setState({
+                setID: null,
+                workoutID: null,
+                selected: false,
+                touchStarted: true,
+                touchEnded: false,
+                multiTouchStart: false,
+                pinchpan: false,
+                multiSelect: false,
+                dragged: false,
+            });
         }
     }
 
-    _handleTouchEndCapture() {
-        // on android, tap happens on ending capture
-        if (Platform.OS !== 'ios') {
-            const hasSelectedSet = (this.state.setID && this.state.workoutID);
-
-            if (hasSelectedSet && this.state.touching) {
-                this.props.tappedSet(this.state.setID, this.state.workoutID);
-            }
-
-            if (hasSelectedSet) {
-                this.setState({setID: null, workoutID: null});
-            }
-        }
-
-        // end the touch, both ios and android
-        this.setState({touching: false});
-    };
+    _handleTouchEnd() {
+        console.tron.log("touch end");
+        this.setState({
+            touchEnded: true,
+        });
+    }
 
     _handleTouchCancel() {
-        // on android, canceling touch means you dragged the scrollview
-        if (Platform.OS !== 'ios') {
-            this.setState({setID: null, workoutID: null});
-        }
+        console.tron.log("touch cancel");
+        // android only touch cancel as iOS doesn't appear to ever cancel touches
+        
+    }
+
+    _handleOnChange() {
+        console.tron.log("pinch/pan detected");
+        this.setState({
+            pinchpan: true,
+        });
     }
 
     // RENDER
@@ -275,10 +346,11 @@ class OneRMChartView extends Component {
                     }}
                     onSelect={this._handleSelect.bind(this)}
                     onTouchStart={this._handleTouchStart.bind(this)}
-                    onTouchEndCapture={this._handleTouchEndCapture.bind(this)}
+                    onTouchEnd={this._handleTouchEnd.bind(this)}
                     onTouchCancel={this._handleTouchCancel.bind(this)}
                     chartDescription={{text: ''}}
-                    onChange={(event) => console.log(event.nativeEvent)}
+                    onChange={this._handleOnChange.bind(this)}
+                    doubleTapToZoomEnabled={false}
                     style={styles.chart}/>
                     <OneRMEditSetScreen />
             </View>

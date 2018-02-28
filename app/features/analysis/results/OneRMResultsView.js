@@ -34,6 +34,7 @@ class OneRMChartView extends Component {
             touchEnded: false,
 
             // cancels
+            touchCanceled: false,
             multiTouchStart: false,
             multiSelect: false,
             pinchpan: false,
@@ -47,31 +48,34 @@ class OneRMChartView extends Component {
     // TOUCHES
 
     componentWillReceiveProps(nextProps) {
-        // dragged, aka touch cancel, reset the state
-        // NOTE: this is done separately from touchCancel because touchCancel doesn't fire on drag on iOS
-        if (nextProps.dragged !== this.state.lastDrag) {
-            console.tron.log("drag detected");
-            this.setState({
-                lastDrag: nextProps.dragged,
-                dragged: true,
-            });
+        // NOTE: iOS only drag detection as cancelTouch doesn't fire on it
+        if (Platform.OS === 'ios') {
+            if (nextProps.dragged !== this.state.lastDrag) {
+                this.setState({
+                    lastDrag: nextProps.dragged,
+                    dragged: true,
+                });
+            }
         }
     }
 
     componentDidUpdate(prevProps, prevState) {
-        // TODO: confirm how this works on android
         // a gesture is considered ended with a touch ended and a point was selected or it was pinched (as that can avoid select) or panned or dragged (can avoid select)
-        const gestureEnded = this.state.touchEnded && (this.state.selected || this.state.pinchpan || this.state.dragged);
+        if (Platform.OS === 'ios') {
+            // iOS does not assume select happens before end, but it does assume that end ALWAYS happens
+            var gestureEnded = this.state.touchEnded && (this.state.selected || this.state.pinchpan || this.state.dragged);
+        } else {
+            // android assumes select has to happen before end. If it isn't true, then weird things may happen
+            var gestureEnded = (this.state.touchStarted && this.state.touchEnded) || this.state.multiTouchStart || this.state.pinchpan || this.state.dragged || this.state.multiSelect || this.state.touchCanceled;
+        }
 
         // if gestured ended, there's a single touch, an actual point was selected, and it wasn't cancelled
-        if (gestureEnded && this.state.touchStarted && this.state.setID && !this.state.multiTouchStart && !this.state.pinchpan && !this.state.dragged && !this.state.multiSelect) {
+        if (gestureEnded && this.state.touchStarted && this.state.selected && this.state.setID && !this.state.multiTouchStart && !this.state.pinchpan && !this.state.dragged && !this.state.multiSelect && !this.state.touchCanceled) {
             // tapped, open up the set
-            console.tron.log("conditions met, opening up the set and resetting state");
             this.props.tappedSet(this.state.setID, this.state.workoutID);
         }
         
         if (gestureEnded) {
-            console.tron.log("resetting state!");
             // reset the state
             this.setState({
                 setID: null,
@@ -79,6 +83,7 @@ class OneRMChartView extends Component {
                 selected: false,
                 touchStarted: false,
                 touchEnded: false,
+                touchCanceled: false,
                 multiTouchStart: false,
                 pinchpan: false,
                 multiSelect: false,
@@ -92,7 +97,6 @@ class OneRMChartView extends Component {
 
         if (this.state.selected) {
             // multi select
-            console.tron.log("multiple select, cancel");
             this.setState({
                 multiSelect: true,
                 setID: null,
@@ -101,7 +105,6 @@ class OneRMChartView extends Component {
             });
         } else if (nativeEvent.hasOwnProperty('data') && nativeEvent.data.hasOwnProperty('setID') && nativeEvent.data.hasOwnProperty('workoutID')) {
             // actually selected a datapoint
-            console.tron.log("datapoint selected!");
             this.setState({
                 setID: nativeEvent.data.setID,
                 workoutID: nativeEvent.data.workoutID,
@@ -109,7 +112,6 @@ class OneRMChartView extends Component {
             });
         } else {
             // blank select
-            console.tron.log("blank selected!");
             this.setState({
                 setID: null,
                 workoutID: null,
@@ -120,18 +122,18 @@ class OneRMChartView extends Component {
 
     _handleTouchStart() {
         if (this.state.touchStarted) {
-            console.tron.log("multi touch detected");
+            // multi touch is zoom on android, but not necessarily so on iOS
             this.setState({
                 multiTouchStart: true,
             });
         } else {
-            console.tron.log("touch started, include reset because of dirty values");
             this.setState({
                 setID: null,
                 workoutID: null,
                 selected: false,
                 touchStarted: true,
                 touchEnded: false,
+                touchCanceled: false,
                 multiTouchStart: false,
                 pinchpan: false,
                 multiSelect: false,
@@ -141,23 +143,28 @@ class OneRMChartView extends Component {
     }
 
     _handleTouchEnd() {
-        console.tron.log("touch end");
         this.setState({
             touchEnded: true,
         });
     }
 
     _handleTouchCancel() {
-        console.tron.log("touch cancel");
         // android only touch cancel as iOS doesn't appear to ever cancel touches
-        
+        if (Platform.OS !== 'ios') {
+            this.setState({
+                touchCanceled: true,
+            });
+        }
     }
 
     _handleOnChange() {
-        console.tron.log("pinch/pan detected");
-        this.setState({
-            pinchpan: true,
-        });
+        // iOS only pinch pan detection
+        /// android doesn't need it as multi touch is zoom and pan doesn't cause issues on it due to order assumption
+        if (Platform.OS === 'ios') {
+            this.setState({
+                pinchpan: true,
+            });
+        }
     }
 
     // RENDER

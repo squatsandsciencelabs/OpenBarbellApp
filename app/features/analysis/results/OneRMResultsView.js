@@ -39,36 +39,51 @@ class OneRMChartView extends Component {
             const data = nativeEvent.data;
             if (data.hasOwnProperty('setID') && data.hasOwnProperty('workoutID')) {
                 if (Platform.OS === 'ios') {
+                    // on iOS, because handle select runs AFTER touches ended, ensure touches are false
                     if (!this.state.touching) {
                         this.props.tappedSet(data.setID, data.workoutID);
                     }
                 } else {
+                    // on android, just save the information to be determined later
                     this.setState({setID: data.setID, workoutID: data.workoutID});
                 }
             } else if (Platform.OS !== 'ios') {
+                // on android, it's a bad tap so remove the saved setID and workoutID
                 this.setState({setID: null, workoutID: null});
             }
         }
     }
 
     _handleTouchStart() {
-        if (Platform.OS === 'ios') {
+        if (Platform.OS !== 'ios' && this.state.touching) {
+            // android disable multiple touch as it's a zoom
+            this.setState({touching: false});
+        } else {
+            // you started touching, applies to both
             this.setState({touching: true});
         }
     }
 
     _handleTouchEndCapture() {
-        if (Platform.OS === 'ios') {
-            this.setState({touching: false});
-        } else {
-            if (this.state.setID && this.state.workoutID) {
+        // on android, tap happens on ending capture
+        if (Platform.OS !== 'ios') {
+            const hasSelectedSet = (this.state.setID && this.state.workoutID);
+
+            if (hasSelectedSet && this.state.touching) {
                 this.props.tappedSet(this.state.setID, this.state.workoutID);
+            }
+
+            if (hasSelectedSet) {
                 this.setState({setID: null, workoutID: null});
             }
         }
+
+        // end the touch, both ios and android
+        this.setState({touching: false});
     };
 
-    _handleTouchMove() {
+    _handleTouchCancel() {
+        // on android, canceling touch means you dragged the scrollview
         if (Platform.OS !== 'ios') {
             this.setState({setID: null, workoutID: null});
         }
@@ -261,7 +276,7 @@ class OneRMChartView extends Component {
                     onSelect={this._handleSelect.bind(this)}
                     onTouchStart={this._handleTouchStart.bind(this)}
                     onTouchEndCapture={this._handleTouchEndCapture.bind(this)}
-                    onTouchMove={this._handleTouchMove.bind(this)}
+                    onTouchCancel={this._handleTouchCancel.bind(this)}
                     chartDescription={{text: ''}}
                     onChange={(event) => console.log(event.nativeEvent)}
                     style={styles.chart}/>

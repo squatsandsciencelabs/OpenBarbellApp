@@ -24,6 +24,8 @@ export const getDaysRange = (state) => stateRoot(state).daysRange;
 
 // results
 
+export const getAnalysisDragged = (state) => stateRoot(state).dragged;
+
 // this is the velocity last used to calculate it, not the current velocity value
 export const getAnalysisVelocity = (state) => stateRoot(state).velocity;
 

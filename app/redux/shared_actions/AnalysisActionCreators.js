@@ -6,6 +6,7 @@ import {
     SAVE_1RM_EXERCISE,
     PRESENT_ALGORITHM,
     PRESENT_BEST_RESULTS,
+    ANALYSIS_DRAGGED,
 } from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 
@@ -29,6 +30,10 @@ export const presentBestResults = () => (dispatch, getState) => {
     Linking.openURL("http://squatsandscience.com/1rmbestresults/");
     dispatch({ type: PRESENT_BEST_RESULTS });
 };
+
+export const analysisDragged = () => ({
+    type: ANALYSIS_DRAGGED,
+});
 
 // ANALYTICS
 

@@ -55,6 +55,7 @@ const mapStateToProps = (state) => {
         minX: minX,
         maxX: maxX,
         maxY: maxY,
+        dragged: AnalysisSelectors.getAnalysisDragged(state),
     };
 };
 

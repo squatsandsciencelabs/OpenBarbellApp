@@ -290,25 +290,25 @@ describe('1RM', () => {
                     {"marker": "330.00lbs, 0.37m/s", "setID": "i", "workoutID": "abc", "x": 330, "y": 0.37}, 
                     {"marker": "350.00lbs, 0.41m/s", "setID": "c", "workoutID": "ab", "x": 350, "y": 0.41}, 
                     {"marker": "354.94lbs, 0.42m/s", "setID": "o", "workoutID": null, "x": 354.94424182, "y": 0.42}, 
-                    {"marker": "375.00lbs, 0.35m/s", "setID": "p", "workoutID": null, "x": 375, "y": 0.35}], 
-                "e1RM": 590, 
-                "errors": [
-                    {"marker": "308.65lbs, 0.49m/s", "setID": "b", "workoutID": "ab", "x": 308.6471668, "y": 0.49}, 
+                    {"marker": "375.00lbs, 0.35m/s", "setID": "p", "workoutID": null, "x": 375, "y": 0.35},
                     {"marker": "396.83lbs, 0.3m/s", "setID": "q", "workoutID": null, "x": 396.83207159999995, "y": 0.3}
+                ], 
+                "e1RM": 543, 
+                "errors": [
+                    {"marker": "308.65lbs, 0.49m/s", "setID": "b", "workoutID": "ab", "x": 308.6471668, "y": 0.49}
                 ], 
                 "isRegressionNegative": true, 
                 "maxX": 396.83207159999995, 
                 "maxY": 0.51, 
                 "minX": 270, 
                 "minY": 0.3, 
-                "r2": 57, 
+                "r2": 71, 
                 "regressionPoints": [
-                    {"x": 0, "y": 0.74}, {"x": 740.0000000000001, "y": 0}
+                    {"x": 0, "y": 0.8014031506219639}, 
+                    {"x": 667.82946478318, "y": 0}
                 ], 
-                "slope": -0.0009999999999999998, 
-                "unused": [
-                    {"marker": "", "setID": "j", "workoutID": "abc", "x": 375, "y": 0.31}
-                ]
+                "slope": -0.0012000116689702368, 
+                "unused": [{"marker": "", "setID": "j", "workoutID": "abc", "x": 375, "y": 0.31}]
             }
         );
     });
@@ -995,30 +995,31 @@ describe('1RM', () => {
 
         const results = sut.calculate1RM(exercise, tagsToInclude, tagsToExclude, daysRange, velocity, metric, allSets);
 
-        expect(results).toEqual({
-            "active": [
-                {"marker": "202.00lbs, 0.37m/s", "setID": "e", "workoutID": "ab", "x": 202, "y": 0.37}, 
-                {"marker": "215.00lbs, 0.31m/s", "setID": "l", "workoutID": "abc", "x": 215, "y": 0.31}, 
-                {"marker": "230.00lbs, 0.34m/s", "setID": "f", "workoutID": "ab", "x": 230, "y": 0.34}, 
-                {"marker": "235.00lbs, 0.37m/s", "setID": "r", "workoutID": null, "x": 235, "y": 0.37}, 
-                {"marker": "245.00lbs, 0.34m/s", "setID": "s", "workoutID": null, "x": 245, "y": 0.34}], 
-            "e1RM": 2185, 
-            "errors": [
-                {"marker": "255.00lbs, 0.29m/s", "setID": "t", "workoutID": null, "x": 255, "y": 0.29}
-            ], 
-            "isRegressionNegative": true, 
-            "maxX": 255, 
-            "maxY": 0.37, 
-            "minX": 202, 
-            "minY": 0.29, 
-            "r2": 0, 
-            "regressionPoints": [
-                {"x": 0, "y": 0.3685000000000001}, 
-                {"x": 3684.999999999979, "y": 0}
-            ], 
-            "slope": -0.0001000000000000006, 
-            "unused": []
-        });
+        expect(results).toEqual(
+            {
+                "active": [
+                    {"marker": "202.00lbs, 0.37m/s", "setID": "e", "workoutID": "ab", "x": 202, "y": 0.37}, 
+                    {"marker": "215.00lbs, 0.31m/s", "setID": "l", "workoutID": "abc", "x": 215, "y": 0.31}, 
+                    {"marker": "230.00lbs, 0.34m/s", "setID": "f", "workoutID": "ab", "x": 230, "y": 0.34}, 
+                    {"marker": "235.00lbs, 0.37m/s", "setID": "r", "workoutID": null, "x": 235, "y": 0.37}, 
+                    {"marker": "245.00lbs, 0.34m/s", "setID": "s", "workoutID": null, "x": 245, "y": 0.34}, 
+                    {"marker": "255.00lbs, 0.29m/s", "setID": "t", "workoutID": null, "x": 255, "y": 0.29}], 
+                "e1RM": 464, 
+                "errors": [], 
+                "isRegressionNegative": true, 
+                "maxX": 255, 
+                "maxY": 0.37, 
+                "minX": 202, 
+                "minY": 0.29, 
+                "r2": 23, 
+                "regressionPoints": [
+                    {"x": 0, "y": 0.5208999999999999}, 
+                    {"x": 651.125, "y": 0}
+                ], 
+                "slope": -0.0007999999999999998, 
+                "unused": []
+            }
+        );
     });
 
     test('return proper data with tags empty', () => {
@@ -1200,30 +1201,32 @@ describe('1RM', () => {
 
         const results = sut.calculate1RM(exercise, tagsToInclude, tagsToExclude, daysRange, velocity, metric, allSets);
 
-        expect(results).toEqual({
-            "active": [
-                {"marker": "175.00lbs, 0.41m/s", "setID": "d", "workoutID": "ab", "x": 175, "y": 0.41}, 
-                {"marker": "190.00lbs, 0.34m/s", "setID": "k", "workoutID": "abc", "x": 190, "y": 0.34}, 
-                {"marker": "202.00lbs, 0.37m/s", "setID": "e", "workoutID": "ab", "x": 202, "y": 0.37}, 
-                {"marker": "215.00lbs, 0.31m/s", "setID": "l", "workoutID": "abc", "x": 215, "y": 0.31}, 
-                {"marker": "235.00lbs, 0.37m/s", "setID": "r", "workoutID": null, "x": 235, "y": 0.37}], 
-            "e1RM": 503, 
-            "errors": [
-                {"marker": "255.00lbs, 0.29m/s", "setID": "t", "workoutID": null, "x": 255, "y": 0.29}
-            ], 
-            "isRegressionNegative": true, 
-            "maxX": 255, 
-            "maxY": 0.41, 
-            "minX": 175, 
-            "minY": 0.29, 
-            "r2": 17, 
-            "regressionPoints": [
-                {"x": 0, "y": 0.5024000000000002}, 
-                {"x": 717.7142857142853, "y": 0}
-            ], 
-            "slope": -0.0007000000000000006,
-            "unused": []
-        });
+        expect(results).toEqual(
+            {
+                "active": [
+                    {"marker": "175.00lbs, 0.41m/s", "setID": "d", "workoutID": "ab", "x": 175, "y": 0.41}, 
+                    {"marker": "190.00lbs, 0.34m/s", "setID": "k", "workoutID": "abc", "x": 190, "y": 0.34}, 
+                    {"marker": "202.00lbs, 0.37m/s", "setID": "e", "workoutID": "ab", "x": 202, "y": 0.37}, 
+                    {"marker": "215.00lbs, 0.31m/s", "setID": "l", "workoutID": "abc", "x": 215, "y": 0.31}, 
+                    {"marker": "235.00lbs, 0.37m/s", "setID": "r", "workoutID": null, "x": 235, "y": 0.37}, 
+                    {"marker": "255.00lbs, 0.29m/s", "setID": "t", "workoutID": null, "x": 255, "y": 0.29}
+                ], 
+                "e1RM": 410, 
+                "errors": [], 
+                "isRegressionNegative": true, 
+                "maxX": 255, 
+                "maxY": 0.41, 
+                "minX": 175, 
+                "minY": 0.29, 
+                "r2": 47, 
+                "regressionPoints": [
+                    {"x": 0, "y": 0.5602999999999999}, 
+                    {"x": 560.3000000000002, "y": 0}
+                ], 
+                "slope": -0.0009999999999999996, 
+                "unused": []
+            }
+        );
     });
 
     test('tags to exclude empty', () => {
@@ -1733,27 +1736,29 @@ describe('1RM', () => {
                 "active": [
                     {"marker": "290.00lbs, 0.41m/s", "setID": "h", "workoutID": "abc", "x": 290, "y": 0.41}, 
                     {"marker": "330.00lbs, 0.37m/s", "setID": "i", "workoutID": "abc", "x": 330, "y": 0.37}, 
+                    {"marker": "350.00lbs, 0.41m/s", "setID": "c", "workoutID": "ab", "x": 350, "y": 0.41}, 
                     {"marker": "354.94lbs, 0.42m/s", "setID": "o", "workoutID": null, "x": 354.94424182, "y": 0.42}, 
-                    {"marker": "375.00lbs, 0.31m/s", "setID": "j", "workoutID": "abc", "x": 375, "y": 0.31}, 
+                    {"marker": "375.00lbs, 0.35m/s", "setID": "p", "workoutID": null, "x": 375, "y": 0.35}, 
                     {"marker": "396.83lbs, 0.3m/s", "setID": "q", "workoutID": null, "x": 396.83207159999995, "y": 0.3}], 
-                "e1RM": 561, 
+                "e1RM": 601, 
                 "errors": [
                     {"marker": "270.00lbs, 0.51m/s", "setID": "a", "workoutID": "ab", "x": 270, "y": 0.51}, 
-                    {"marker": "308.65lbs, 0.49m/s", "setID": "b", "workoutID": "ab", "x": 308.6471668, "y": 0.49}, 
-                    {"marker": "350.00lbs, 0.41m/s", "setID": "c", "workoutID": "ab", "x": 350, "y": 0.41}, 
-                    {"marker": "375.00lbs, 0.35m/s", "setID": "p", "workoutID": null, "x": 375, "y": 0.35}
+                    {"marker": "308.65lbs, 0.49m/s", "setID": "b", "workoutID": "ab", "x": 308.6471668, "y": 0.49}
                 ], 
                 "isRegressionNegative": true, 
                 "maxX": 396.83207159999995, 
                 "maxY": 0.51, 
                 "minX": 270, 
                 "minY": 0.3, 
-                "r2": 58, 
+                "r2": 47, 
                 "regressionPoints": [
-                    {"x": 0, "y": 0.7113128632686243}, 
-                    {"x": 711.5266567415732, "y": 0}], 
-                    "slope": -0.0009996995285124974, 
-                "unused": []
+                    {"x": 0, "y": 0.6910672861433971}, 
+                    {"x": 768.2431781477628, "y": 0}
+                ], 
+                "slope": -0.0008995423660117137, 
+                "unused": [
+                    {"marker": "", "setID": "j", "workoutID": "abc", "x": 375, "y": 0.31}
+                ]
             }
         );
     });

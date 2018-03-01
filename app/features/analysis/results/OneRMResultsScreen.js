@@ -16,7 +16,7 @@ const mapStateToProps = (state) => {
     const regressionPoints = AnalysisSelectors.getRegressionPoints(state);
     const isR2HighEnough = AnalysisSelectors.getIsR2HighEnough(state);
     const minX = AnalysisSelectors.getMinX(state) * 0.9;
-    var maxX = AnalysisSelectors.getMaxX(state);
+    var maxX = AnalysisSelectors.getMaxX(state) * 1.1;
     const maxY = AnalysisSelectors.getMaxY(state) * 1.1;
 
     const shouldDisplayRegression = isR2HighEnough
@@ -38,7 +38,6 @@ const mapStateToProps = (state) => {
         var regLeftPoint = null;
         var regRightPoint = null;
         var e1RM = null;
-        maxX = maxX * 1.1;
     }
 
     return {

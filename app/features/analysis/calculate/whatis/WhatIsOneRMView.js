@@ -17,7 +17,7 @@ class WhatIsOneRMView extends Component {
     }
 
     render() {
-        const body = "Estimated One-Rep Max is based on the fastest rep of a given exercise within a specified date range, extrapolated to the lowest velocity at which you think you can successfully complete a max lift attempt.\n\nThis estimate is provided with an r² based on how much exercise data is included and how well that data adheres to a general trend. While outliers sometimes occur naturally, the key to accurate estimation is recording set information as fully and carefully as possible."
+        const body = "Estimated One-Rep Max is based on the fastest velocity of each set of a given exercise within a specified date range, extrapolated to the lowest velocity at which you think you can successfully complete a max lift attempt.\n\nThis estimate is provided with an r² based on how much exercise data is included and how well that data adheres to a general trend. While outliers sometimes occur naturally, the key to accurate estimation is recording set information as fully and carefully as possible."
         const top = Platform.OS === 'ios' ? 0 : 5;
 
         return (

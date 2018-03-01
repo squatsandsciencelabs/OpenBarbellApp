@@ -23,7 +23,7 @@ describe('1RM', () => {
                 { setID: 'o', exercise: 'Squat', weight: '161', RPE: '7', workoutID: null, reps: [
                         {isValid: true, removed: false, data: ['0', '1', '.41', '560', '.51']}, 
                         {isValid: true, removed: false, data: ['0', '2', '.38', '562', '.48']}, 
-                        {isValid: true, removed: false, data: ['0', '3', '.42', '558', '.46']}, 
+                        {isValid: false, removed: true, data: ['0', '3', '.42', '558', '.46']}, 
                         {isValid: true, removed: true, data: ['0', '4', '.46', '561', '.43']}, 
                         {isValid: true, removed: false, data: ['0', '5', '.30', '560', '.40']},
                     ],
@@ -44,6 +44,15 @@ describe('1RM', () => {
                 { setID: 'q', exercise: 'Squat', weight: '180', RPE: '9', workoutID: null, reps: [
                         {isValid: true, removed: false, data: ['0', '1', '.30', '555', '.40']},
                         {isValid: true, removed: false, data: ['0', '2', '.26', '561', '.36']},
+                        {isValid: true, removed: false, data: ['0', '3', '.23', '566', '.33']},
+                    ],
+                    tags: ['b', 'A', 'c'],
+                    metric: 'kgs',
+                    initialStartTime: '2018-01-21T04:06:12.640Z',
+                },
+                { setID: 'invalidRemoved', exercise: 'Squat', weight: '200', RPE: '9', workoutID: null, reps: [
+                        {isValid: true, removed: false, data: ['0', '1', '.30', '555', '.40']},
+                        {isValid: false, removed: false, data: ['0', '2', '.26', '561', '.36']},
                         {isValid: true, removed: false, data: ['0', '3', '.23', '566', '.33']},
                     ],
                     tags: ['b', 'A', 'c'],
@@ -209,6 +218,16 @@ describe('1RM', () => {
                     metric: 'lbs',
                     initialStartTime: '2018-01-14T04:06:12.640Z',
                 },
+                invalidRemoved2: { setID: 'invalidRemoved2', exercise: 'Squat', weight: '210', RPE: '7', workoutID: null, reps: [
+                        {isValid: true, removed: false, data: ['0', '1', '.30', '555', '.40']},
+                        {isValid: false, removed: false, data: ['0', '2', '.26', '561', '.36']},
+                        {isValid: false, removed: true, data: ['0', '2', '.26', '561', '.36']},
+                        {isValid: true, removed: false, data: ['0', '3', '.23', '566', '.33']},
+                    ],
+                    tags: ['b', 'A', 'c'],
+                    metric: 'kgs',
+                    initialStartTime: '2018-01-21T04:06:12.640Z',
+                },
                 m: { setID: 'm', exercise: 'Bench', weight: '245', RPE: '8', workoutID: 'abc', reps: [
                         {isValid: true, removed: false, data: ['0', '1', '.29', '555', '.39']},
                         {isValid: true, removed: false, data: ['0', '2', '.26', '561', '.37']},
@@ -289,23 +308,25 @@ describe('1RM', () => {
                     {"marker": "290.00lbs, 0.41m/s", "setID": "h", "workoutID": "abc", "x": 290, "y": 0.41}, 
                     {"marker": "330.00lbs, 0.37m/s", "setID": "i", "workoutID": "abc", "x": 330, "y": 0.37}, 
                     {"marker": "350.00lbs, 0.41m/s", "setID": "c", "workoutID": "ab", "x": 350, "y": 0.41}, 
-                    {"marker": "354.94lbs, 0.42m/s", "setID": "o", "workoutID": null, "x": 354.94424182, "y": 0.42}, 
+                    {"marker": "354.94lbs, 0.41m/s", "setID": "o", "workoutID": null, "x": 354.94424182, "y": 0.41}, 
                     {"marker": "375.00lbs, 0.35m/s", "setID": "p", "workoutID": null, "x": 375, "y": 0.35},
                     {"marker": "396.83lbs, 0.3m/s", "setID": "q", "workoutID": null, "x": 396.83207159999995, "y": 0.3}
                 ], 
-                "e1RM": 543, 
+                "e1RM": 542, 
                 "errors": [
-                    {"marker": "308.65lbs, 0.49m/s", "setID": "b", "workoutID": "ab", "x": 308.6471668, "y": 0.49}
+                    {"marker": "308.65lbs, 0.49m/s", "setID": "b", "workoutID": "ab", "x": 308.6471668, "y": 0.49},
+                    {"marker": "440.92lbs, 0.3m/s", "setID": "invalidRemoved", "workoutID": null, "x": 440.92452399999996, "y": 0.3},
+                    {"marker": "462.97lbs, 0.3m/s", "setID": "invalidRemoved2", "workoutID": null, "x": 462.9707502, "y": 0.3}
                 ], 
                 "isRegressionNegative": true, 
-                "maxX": 396.83207159999995, 
+                "maxX": 462.9707502, 
                 "maxY": 0.51, 
                 "minX": 270, 
                 "minY": 0.3, 
-                "r2": 71, 
+                "r2": 73, 
                 "regressionPoints": [
-                    {"x": 0, "y": 0.8014031506219639}, 
-                    {"x": 667.82946478318, "y": 0}
+                    {"x": 0, "y": 0.8000031506219639}, 
+                    {"x": 666.6628094612353, "y": 0}
                 ], 
                 "slope": -0.0012000116689702368, 
                 "unused": [{"marker": "", "setID": "j", "workoutID": "abc", "x": 375, "y": 0.31}]

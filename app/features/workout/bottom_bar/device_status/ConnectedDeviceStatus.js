@@ -8,6 +8,7 @@ import {
     TouchableHighlight,
     TouchableOpacity
 } from 'react-native';
+import * as Device from 'app/utility/Device';
 
 class ConnectedDeviceStatus extends Component {
 
@@ -46,7 +47,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        paddingLeft: 10
+        paddingLeft: 10,
+        marginBottom: Device.isIphoneX() ? 25 : 0
     },
     textStyle: {
         color: 'white',

@@ -3,6 +3,8 @@
 import React, {Component} from 'react';
 import {
     View,
+    SafeAreaView,
+    StatusBar,
     Text,
     TextInput,
     TouchableHighlight,
@@ -12,6 +14,7 @@ import {
     FlatList,
     Platform,
 }  from 'react-native';
+import * as Device from 'app/utility/Device';
 
 import Pill from 'app/shared_features/pill/Pill';
 
@@ -140,8 +143,17 @@ class SelectTagsModal extends Component {
 
     // TODO: grab the blue color for cancel from a global stylesheet
     _renderNavigation() {
-        if (Platform.OS === 'ios') {
+        if (Platform.OS === 'ios' && !Device.isIphoneX()) {
             var statusBar = (<View style={{height: 20, width: 9001, backgroundColor: 'black'}}></View>);
+        } else if (Device.isIphoneX()) {
+            var statusBar = (
+                <View>
+                    <StatusBar
+                        backgroundColor="white"
+                        barStyle="dark-content"
+                    />
+                </View>
+            )
         } else {
             var statusBar = null;
         }
@@ -309,7 +321,7 @@ class SelectTagsModal extends Component {
     render() {
         return (
             <Modal visible={this.props.isModalShowing} animationType='fade'>
-                <View style={{flex: 1, flexDirection: 'column', backgroundColor: 'rgba(242, 242, 242, 1)'}}>
+                <View style={{flex: 1, paddingTop: Device.isIphoneX() ? 40 : 0, flexDirection: 'column', backgroundColor: 'rgba(242, 242, 242, 1)'}}>
                     {this._renderNavigation()}
                     {this._renderHeader()}
                     {this._renderTextField()}

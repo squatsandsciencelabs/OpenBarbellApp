@@ -9,12 +9,16 @@ import * as Analytics from 'app/services/Analytics';
 export const saveTags = (tags = []) => (dispatch, getState) => {
     const state = getState();
     logSaveTagsAnalytics(state);
-    Analytics.setCurrentScreen('analysis');
 
     dispatch({
         type: SAVE_EXCLUDES_TAGS,
         tags: tags,
     });
+};
+
+export const dismissTags = () => {
+    Analytics.setCurrentScreen('analysis');
+    return { type: DISMISS_EXCLUDES_TAGS };
 };
 
 export const cancelTags = () => (dispatch, getState) => {

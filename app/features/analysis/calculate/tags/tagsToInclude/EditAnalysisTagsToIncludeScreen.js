@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         save: Actions.saveTags,
-        closeModal: Actions.cancelTags,
+        closeModal: Actions.dismissTags,
         cancelModal: Actions.cancelTags,
         tappedPill: Actions.tappedPill,
         addPill: Actions.addPill,

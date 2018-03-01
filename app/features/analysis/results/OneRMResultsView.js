@@ -93,7 +93,6 @@ class OneRMChartView extends Component {
     }
 
     _handleSelect(event) {
-        // sanity check for delayed actions
         const nativeEvent = event.nativeEvent;
 
         if (this.state.selected) {

@@ -30,6 +30,7 @@ import uuidV4 from 'uuid/v4';
 import DeviceInfo from 'react-native-device-info';
 import { Platform } from 'react-native';
 import * as SetUtils from 'app/utility/SetUtils';
+import * as RepDataMap from 'app/utility/RepDataMap';
 
 const SetsReducer = (state = createDefaultState(), action) => {
     switch (action.type) {
@@ -346,10 +347,18 @@ const addRepData = (state, action) => {
         data: [...action.data]
     };
 
-    let setChanges = {
-        reps: [...set.reps, rep ],
-        removed: false
-    };
+    if (RepDataMap.averageVelocity(rep.data)) {
+        let setChanges = {
+            reps: [...set.reps, rep ],
+            removed: false
+        };
+    } else {
+        let setChanges = {
+            reps: set.reps,
+            removed: false
+        };
+    }
+
     if (!set.initialStartTime) {
         setChanges.initialStartTime = new Date();
     }

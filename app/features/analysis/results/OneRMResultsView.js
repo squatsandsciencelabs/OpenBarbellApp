@@ -93,6 +93,7 @@ class OneRMChartView extends Component {
     }
 
     _handleSelect(event) {
+        // sanity check for delayed actions
         const nativeEvent = event.nativeEvent;
 
         if (this.state.selected) {
@@ -160,7 +161,7 @@ class OneRMChartView extends Component {
     _handleOnChange() {
         // iOS only pinch pan detection
         /// android doesn't need it as multi touch is zoom and pan doesn't cause issues on it due to order assumption
-        if (Platform.OS === 'ios') {
+        if (Platform.OS === 'ios' && this.state.touchStarted) {
             this.setState({
                 pinchpan: true,
             });
@@ -351,6 +352,7 @@ class OneRMChartView extends Component {
                         enabled: true,
                         textColor: processColor('rgba(77, 77, 77, 1)')
                     }}
+                    dragDecelerationEnabled={false}
                     onSelect={this._handleSelect.bind(this)}
                     onTouchStart={this._handleTouchStart.bind(this)}
                     onTouchEnd={this._handleTouchEnd.bind(this)}

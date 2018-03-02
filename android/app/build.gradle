@@ -106,7 +106,7 @@ android {
         applicationId "com.openbarbellapp"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 30
+        versionCode 31
         versionName "3.3.0"
         multiDexEnabled true
         ndk {

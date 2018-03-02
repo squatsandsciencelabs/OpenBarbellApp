@@ -9,7 +9,6 @@ import TimerSaga from './TimerSaga';
 import TimerUnlockSaga from './TimerUnlockSaga';
 import EndOldWorkoutSaga from './EndOldWorkoutSaga';
 import ReconnectSaga from './ReconnectSaga';
-import CollapseRemovedSetSaga from './CollapseRemovedSetSaga';
 import SurveySaga from './SurveySaga';
 import InitializedAnalyticsSaga from './InitializedAnalyticsSaga';
 
@@ -24,7 +23,6 @@ const Sagas = function* Sagas() {
         call(TimerUnlockSaga),
         call(EndOldWorkoutSaga),
         call(ReconnectSaga),
-        call(CollapseRemovedSetSaga),
         call(SurveySaga),
         call(InitializedAnalyticsSaga),
     ]);

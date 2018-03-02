@@ -347,17 +347,10 @@ const addRepData = (state, action) => {
         data: [...action.data]
     };
 
-    if (RepDataMap.averageVelocity(rep.data)) {
-        let setChanges = {
-            reps: [...set.reps, rep ],
-            removed: false
-        };
-    } else {
-        let setChanges = {
-            reps: set.reps,
-            removed: false
-        };
-    }
+    let setChanges = {
+        reps: [...set.reps, rep ],
+        removed: false
+    };
 
     if (!set.initialStartTime) {
         setChanges.initialStartTime = new Date();

@@ -10,7 +10,7 @@ const mapStateToProps = (state) => {
     const exercise = AnalysisSelectors.getExercise(state);
 
     return {
-        title: 'Tags to Include',
+        title: 'Tags Must Include',
         placeholder: 'Enter Tag',
         text: '',
         inputs: AnalysisSelectors.getTagsToInclude(state),

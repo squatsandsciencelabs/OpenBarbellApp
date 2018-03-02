@@ -111,9 +111,9 @@ class OneRMView extends Component {
                             </Text>
                             <Icon name="caret-down" size={10} color='white' style={{right: 5, position:'absolute'}} />
                         </TouchableOpacity>
-                        <Text style={styles.labelText}>Tags to Include:</Text>
+                        <Text style={styles.labelText}>Tags Must Include:</Text>
                         <View style={{marginTop: 5, marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
-                        <Text style={styles.labelText}>Tags to Exclude:</Text>
+                        <Text style={styles.labelText}>Tags Must Exclude:</Text>
                         <View style={{marginTop: 5}}>{ this._renderTagsToExclude() }</View>
                     </View>
                     <ExercisePicker />
@@ -129,9 +129,9 @@ class OneRMView extends Component {
                     <View style={[{flex: 1, marginBottom: 15}, styles.dropdownButton]}>
                         <ExercisePicker color={'white'} />
                     </View>
-                    <Text style={styles.labelText}>Tags to Include:</Text>
+                    <Text style={styles.labelText}>Tags Must Include:</Text>
                     <View style={{marginTop: 5, marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
-                    <Text style={styles.labelText}>Tags to Exclude:</Text>
+                    <Text style={styles.labelText}>Tags Must Exclude:</Text>
                     <View style={{marginTop: 5}}>{ this._renderTagsToExclude() }</View>
                     <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white', marginBottom: 0 }}>
                         <EditAnalysisTagsToIncludeScreen />
@@ -171,7 +171,7 @@ class OneRMView extends Component {
                 />
                 <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
                     <Text style={styles.labelText}>
-                        Velocity
+                        Velocity at 1RM
                     </Text>
                     <Text style={styles.numberStyle}>{this.state.velocity} m/s</Text>
                 </View>

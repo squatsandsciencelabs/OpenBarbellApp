@@ -113,7 +113,7 @@ class OneRMView extends Component {
                         </TouchableOpacity>
                         <Text style={styles.labelText}>Tags Must Include:</Text>
                         <View style={{marginTop: 5, marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
-                        <Text style={styles.labelText}>Tags Must Exclude:</Text>
+                        <Text style={styles.labelText}>Tags to Exclude:</Text>
                         <View style={{marginTop: 5}}>{ this._renderTagsToExclude() }</View>
                     </View>
                     <ExercisePicker />
@@ -131,7 +131,7 @@ class OneRMView extends Component {
                     </View>
                     <Text style={styles.labelText}>Tags Must Include:</Text>
                     <View style={{marginTop: 5, marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
-                    <Text style={styles.labelText}>Tags Must Exclude:</Text>
+                    <Text style={styles.labelText}>Tags to Exclude:</Text>
                     <View style={{marginTop: 5}}>{ this._renderTagsToExclude() }</View>
                     <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white', marginBottom: 0 }}>
                         <EditAnalysisTagsToIncludeScreen />

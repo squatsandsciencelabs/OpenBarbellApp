@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
     const exercise = AnalysisSelectors.getExercise(state);
     
     return {
-        title: 'Tags Must Exclude',
+        title: 'Tags to Exclude',
         placeholder: 'Enter Tag',
         text: '',
         inputs: AnalysisSelectors.getTagsToExclude(state),

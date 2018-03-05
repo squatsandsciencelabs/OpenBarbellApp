@@ -54,6 +54,17 @@ describe('collapsed metrics', () => {
     
             expect(result).toEqual([]);
         });
+
+        test('[] if set deleted', () => {
+            const set = {
+                reps: [],
+                deleted: true,
+            };
+    
+            const result = sut.getAvgVelocities(set);
+    
+            expect(result).toEqual([]);
+        });
         
         test('returns average velocities from set with reps', () => {
             const result = sut.getAvgVelocities(set);
@@ -146,6 +157,17 @@ describe('collapsed metrics', () => {
     
             expect(result).toEqual([]);
         });
+
+        test('[] if set deleted', () => {
+            const set = {
+                reps: [],
+                deleted: true,
+            };
+    
+            const result = sut.getPKHs(set);
+    
+            expect(result).toEqual([]);
+        });
         
         test('return PKHs from set with reps', () => {
             const result = sut.getPKHs(set);
@@ -186,6 +208,17 @@ describe('collapsed metrics', () => {
         test('[] when empty', () => {
             const set = {
                 reps: [],
+            };
+    
+            const result = sut.getROMs(set);
+    
+            expect(result).toEqual([]);
+        });
+
+        test('[] if set deleted', () => {
+            const set = {
+                reps: [],
+                deleted: true,
             };
     
             const result = sut.getROMs(set);
@@ -234,6 +267,17 @@ describe('collapsed metrics', () => {
         test('[] when empty', () => {
             const set = {
                 reps: [],
+            };
+    
+            const result = sut.getDurations(set);
+    
+            expect(result).toEqual([]);
+        });
+
+        test('[] if set deleted', () => {
+            const set = {
+                reps: [],
+                deleted: true,
             };
     
             const result = sut.getDurations(set);

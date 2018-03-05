@@ -101,6 +101,8 @@ export const getOrigMetric = (state) => stateRoot(state).origMetric;
 
 export const getOrigTags = (state) => stateRoot(state).origTags;
 
+export const getOrigDeletedFlag = (state) => stateRoot(state).origDeletedFlag;
+
 export const getDidUpdateExerciseName = (state, set) => !areEqual(set.exercise, getOrigExerciseName(state));
 
 export const getDidUpdateRPE = (state, set) => !areEqual(getCurrentRPE(state), getOrigRPE(state));
@@ -110,6 +112,8 @@ export const getDidUpdateWeight = (state, set) => !areEqual(getCurrentWeight(sta
 export const getDidUpdateMetric = (state, set) => !areEqual(set.metric, getOrigMetric(state));
 
 export const getDidUpdateTags = (state, set) => !areArraysEqual(set.tags, getOrigTags(state));
+
+export const getDidDeleteOrRestoreSet = (state, set) => Boolean(set.deleted) !== getOrigDeletedFlag(state);
 
 export const getDidUpdateReps = (state) => stateRoot(state).didUpdateReps;
 

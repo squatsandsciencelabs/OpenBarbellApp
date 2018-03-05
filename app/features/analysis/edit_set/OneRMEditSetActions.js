@@ -64,8 +64,9 @@ const logCloseEditSetAnalytics = (state) => {
     const didChangeRPE = AnalysisSelectors.getDidUpdateRPE(state, set);
     const didChangeTags = AnalysisSelectors.getDidUpdateTags(state, set);
     const didChangeReps = AnalysisSelectors.getDidUpdateReps(state, set);
+    const didDeleteOrRestoreSet = AnalysisSelectors.getDidDeleteOrRestoreSet(state, set);
 
-    const didEditSet = didChangeExercise || didChangeWeight || didChangeMetric || didChangeRPE || didChangeTags || didChangeReps;
+    const didEditSet = didChangeExercise || didChangeWeight || didChangeMetric || didChangeRPE || didChangeTags || didChangeReps || didDeleteOrRestoreSet;
 
     Analytics.logEventWithAppState('one_rm_close_edit_set', {
         did_edit_set: didEditSet,
@@ -75,5 +76,6 @@ const logCloseEditSetAnalytics = (state) => {
         did_change_rpe: didChangeRPE,
         did_change_tags: didChangeTags,
         did_change_reps: didChangeReps,
+        did_delete_or_restore_set: didDeleteOrRestoreSet,
     }, state);
 };

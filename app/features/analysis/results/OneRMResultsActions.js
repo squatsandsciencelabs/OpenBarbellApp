@@ -21,6 +21,7 @@ export const tappedSet = (setID) => (dispatch, getState) => {
         origWeight: set.hasOwnProperty('weight') ? set.weight : null,
         origMetric: set.hasOwnProperty('metric') ? set.metric : null,
         origTags: set.hasOwnProperty('tags') ? set.tags : [],
+        origDeletedFlag: set.hasOwnProperty('deleted') ? set.deleted : false,
     });
 };
 

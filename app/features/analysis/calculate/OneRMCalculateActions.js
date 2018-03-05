@@ -167,8 +167,10 @@ const logCalculate1RMAnalytics = (state, exercise, numIncludeTags, numExcludeTag
         slope: slope,
         min_weight: minWeight,
         max_weight: maxWeight,
+        weight_range: maxWeight - minWeight,
         min_velocity: minVelocity,
         max_velocity: maxVelocity,
+        velocity_range: maxVelocity - minVelocity,
         metric: metric
     }, state);
 };

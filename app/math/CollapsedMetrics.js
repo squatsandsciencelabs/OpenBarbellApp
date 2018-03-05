@@ -27,13 +27,15 @@ import * as SetUtils from 'app/utility/SetUtils';
 const getMetrics = (set, metricFunction) => {
     const metrics = [];
     
-    set.reps.forEach((rep) => {                
-        if (rep.isValid === true && rep.removed === false) {
-            const repData = rep.data;
-            const metric = Number(metricFunction(repData));
-            metrics.push(metric);
-        }
-    });
+    if (!SetUtils.isDeleted(set)) {
+        set.reps.forEach((rep) => {                
+            if (rep.isValid === true && rep.removed === false) {
+                const repData = rep.data;
+                const metric = Number(metricFunction(repData));
+                metrics.push(metric);
+            }
+        });
+    }
 
     return metrics;
 };

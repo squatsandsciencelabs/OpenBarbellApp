@@ -571,7 +571,7 @@ const endWorkout = (state, action) => {
     }
 
     let newSetIDsToUpload = [...state.setIDsToUpload, ...workoutSetIDs];
-    let newWorkoutData = [ createSet() ];
+    let newWorkoutData = [ createSet(1, action.defaultMetric) ];
     let newHistoryData = Object.assign({}, state.historyData, historyChanges);
 
     return Object.assign({}, state, {

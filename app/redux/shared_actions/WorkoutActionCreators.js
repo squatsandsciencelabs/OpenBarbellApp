@@ -8,23 +8,25 @@ import * as SetUtils from 'app/utility/SetUtils';
 import * as WorkoutSelectors from 'app/redux/selectors/WorkoutSelectors';
 import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 import * as AppStateSelectors from 'app/redux/selectors/AppStateSelectors';
+import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDeviceStatusSelectors';
 
 export const endWorkout = () => (dispatch, getState) => {
     var state = getState();
-    var isWorkoutEmpty = SetsSelectors.getIsWorkoutEmpty(state)
+    var isWorkoutEmpty = SetsSelectors.getIsWorkoutEmpty(state);
     var isLoggedIn = AuthSelectors.getIsLoggedIn(state);
+    var defaultMetric = SettingsSelectors.getDefaultMetric(state);
 
     logEndWorkoutAnalytics(true, state);
 
     if (!isWorkoutEmpty && isLoggedIn) {
-        dispatch({ type: END_WORKOUT, manual: true });
+        dispatch({ type: END_WORKOUT, manual: true, defaultMetric: defaultMetric });
     } else if(!isLoggedIn) {
         Alert.alert(
             'Heads up!',
             "You are not logged in, the data from this workout will be lost,\nPlease sign in under settings to save your data to the cloud",
             [
-              {text: 'Delete Workout', style: 'destructive', onPress: () => dispatch({ type: END_WORKOUT, manual: true })},
+              {text: 'Delete Workout', style: 'destructive', onPress: () => dispatch({ type: END_WORKOUT, manual: true, defaultMetric: defaultMetric })},
               {text: 'Cancel', style: 'cancel'},,
             ],
             { cancelable: false }
@@ -34,10 +36,11 @@ export const endWorkout = () => (dispatch, getState) => {
 
 export const autoEndWorkout = () => (dispatch, getState) => { 
     var state = getState();
+    var defaultMetric = SettingsSelectors.getDefaultMetric(state);
 
     logEndWorkoutAnalytics(false, state);
 
-    dispatch({ type: END_WORKOUT, manual: false });
+    dispatch({ type: END_WORKOUT, manual: false, defaultMetric: defaultMetric });
 };
 
 const logEndWorkoutAnalytics = (manuallyEnded, state) => {    

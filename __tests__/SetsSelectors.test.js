@@ -1422,6 +1422,26 @@ describe('SetsSelectors', () => {
             }],
         };
 
+        var deletedSet = {
+            exercise: 'Squat',
+            weight: 200,
+            metric: 'kgs',
+            reps: [{
+                isValid: false,
+                removed: true,
+            }, {
+                isValid: true,
+                removed: true,
+            }, {
+                isValid: true,
+                removed: false,
+            }, {
+                isValid: false,
+                removed: false,
+            }],
+            deleted: true,
+        };
+
         describe('getFastestAvgVelocityEver', () => {
 
             test('fastest avg vel found in history', () => {
@@ -1504,6 +1524,13 @@ describe('SetsSelectors', () => {
                 expect(result).toBe(null);
             });
 
+            test('return null if set is deleted', () => {
+
+                const result = sut.getFastestAvgVelocityEver(state, deletedSet);
+
+                expect(result).toBe(null);
+            });
+
         });
         
         describe('getFastestPKVEver', () => {
@@ -1543,6 +1570,14 @@ describe('SetsSelectors', () => {
 
                 const result = sut.getFastestPKVEver(state, set);
         
+                expect(result).toBe(null);
+            });
+
+
+            test('return null if set is deleted', () => {
+
+                const result = sut.getFastestPKVEver(state, deletedSet);
+
                 expect(result).toBe(null);
             });
 
@@ -1588,6 +1623,14 @@ describe('SetsSelectors', () => {
                 expect(result).toBe(null);
             });
 
+
+            test('return null if set is deleted', () => {
+
+                const result = sut.getSlowestPKVEver(state, deletedSet);
+
+                expect(result).toBe(null);
+            });
+
         });
         
         describe('getFastestDurationEver', () => {
@@ -1630,6 +1673,14 @@ describe('SetsSelectors', () => {
                 expect(result).toBe(null);
             });
 
+
+            test('return null if set is deleted', () => {
+
+                const result = sut.getFastestDurationEver(state, deletedSet);
+
+                expect(result).toBe(null);
+            });
+
         });
 
         describe('getSlowestDurationEver', () => {
@@ -1669,6 +1720,14 @@ describe('SetsSelectors', () => {
 
                 const result = sut.getSlowestDurationEver(state, set);
         
+                expect(result).toBe(null);
+            });
+
+
+            test('return null if set is deleted', () => {
+
+                const result = sut.getSlowestDurationEver(state, deletedSet);
+
                 expect(result).toBe(null);
             });
 

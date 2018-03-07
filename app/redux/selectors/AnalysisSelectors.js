@@ -113,7 +113,9 @@ export const getDidUpdateMetric = (state, set) => !areEqual(set.metric, getOrigM
 
 export const getDidUpdateTags = (state, set) => !areArraysEqual(set.tags, getOrigTags(state));
 
-export const getDidDeleteOrRestoreSet = (state, set) => Boolean(set.deleted) !== getOrigDeletedFlag(state);
+export const getDidDeleteSet = (state, set) => (Boolean(set.deleted) !== (getOrigDeletedFlag(state))) && !getOrigDeletedFlag(state);
+
+export const getDidRestoreSet = (state, set) => (Boolean(set.deleted) !== (getOrigDeletedFlag(state))) && getOrigDeletedFlag(state);
 
 export const getDidUpdateReps = (state) => stateRoot(state).didUpdateReps;
 

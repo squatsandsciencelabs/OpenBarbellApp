@@ -12,6 +12,7 @@ import * as OneRMCalculator from 'app/math/OneRMCalculator';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as Analytics from 'app/services/Analytics';
+import * as SetUtils from 'app/utility/SetUtils';
 
 export const presentSelectExercise = () => (dispatch, getState) => {
     const state = getState();
@@ -167,13 +168,21 @@ const logCalculate1RMAnalytics = (state, exercise, numIncludeTags, numExcludeTag
         slope: slope,
         min_weight: minWeight,
         max_weight: maxWeight,
-        weight_range: maxWeight - minWeight,
+        weight_lb_range: weightInLBRange(metric, maxWeight, minWeight),
         min_velocity: minVelocity,
         max_velocity: maxVelocity,
         velocity_range: maxVelocity - minVelocity,
         metric: metric
     }, state);
 };
+
+const weightInLBRange = (metric, maxWeight, minWeight) => {
+    if (metric === 'lbs') {
+        return maxWeight - minWeight;
+    } else if (metric === 'kgs') {
+        return (maxWeight * 2.20462262) - (minWeight * 2.20462262);
+    }
+}
 
 const logInfoAnalytics = (state) => {
     Analytics.logEventWithAppState('one_rm_info', {

@@ -168,7 +168,9 @@ const logCalculate1RMAnalytics = (state, exercise, numIncludeTags, numExcludeTag
         slope: slope,
         min_weight: minWeight,
         max_weight: maxWeight,
-        weight_lb_range: weightInLBRange(metric, maxWeight, minWeight),
+        min_weight_in_lb: weightInLB(metric, minWeight),
+        max_weight_in_lb: weightInLB(metric, maxWeight),
+        weight_lb_range: weightInLB(metric, (maxWeight - minWeight)),
         min_velocity: minVelocity,
         max_velocity: maxVelocity,
         velocity_range: maxVelocity - minVelocity,
@@ -176,11 +178,11 @@ const logCalculate1RMAnalytics = (state, exercise, numIncludeTags, numExcludeTag
     }, state);
 };
 
-const weightInLBRange = (metric, maxWeight, minWeight) => {
+const weightInLB = (metric, weight) => {
     if (metric === 'lbs') {
-        return maxWeight - minWeight;
+        return weight;
     } else if (metric === 'kgs') {
-        return (maxWeight * 2.20462262) - (minWeight * 2.20462262);
+        return weight * 2.20462262;
     }
 }
 

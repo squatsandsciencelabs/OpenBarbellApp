@@ -30,7 +30,6 @@ import uuidV4 from 'uuid/v4';
 import DeviceInfo from 'react-native-device-info';
 import { Platform } from 'react-native';
 import * as SetUtils from 'app/utility/SetUtils';
-import * as RepDataMap from 'app/utility/RepDataMap';
 
 const SetsReducer = (state = createDefaultState(), action) => {
     switch (action.type) {

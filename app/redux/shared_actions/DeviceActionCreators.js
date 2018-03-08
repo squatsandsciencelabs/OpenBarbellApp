@@ -204,7 +204,7 @@ export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, g
     dispatch(TimerActionCreators.sanityCheckTimer());
     dispatch({
         type: ADD_REP_DATA,
-        isValid: isValid,
+        isValid: infinityCheck(data) ? false : isValid,
         data: data,
         deviceName: state.connectedDevice.deviceName,
         deviceIdentifier: state.connectedDevice.deviceIdentifier,
@@ -212,6 +212,16 @@ export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, g
     });
     dispatch(TimerActionCreators.startEndSetTimer());
 };
+
+const infinityCheck = (repData) => {
+    let averageVelocity = RepDataMap.averageVelocity(repData);
+
+    if (!isFinite(averageVelocity) && averageVelocity < 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 // ANALYTICS
 

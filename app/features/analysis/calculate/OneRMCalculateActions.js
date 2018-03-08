@@ -13,6 +13,7 @@ import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as Analytics from 'app/services/Analytics';
 import * as SetUtils from 'app/utility/SetUtils';
+import * as WeightConversion from 'app/utility/WeightConversion';
 
 export const presentSelectExercise = () => (dispatch, getState) => {
     const state = getState();
@@ -168,23 +169,15 @@ const logCalculate1RMAnalytics = (state, exercise, numIncludeTags, numExcludeTag
         slope: slope,
         min_weight: minWeight,
         max_weight: maxWeight,
-        min_weight_in_lb: weightInLB(metric, minWeight),
-        max_weight_in_lb: weightInLB(metric, maxWeight),
-        weight_lb_range: weightInLB(metric, (maxWeight - minWeight)),
+        min_lb_weight: WeightConversion.weightInLBs(metric, minWeight),
+        max_lb_weight: WeightConversion.weightInLBs(metric, maxWeight),
+        weight_lb_range: WeightConversion.weightInLBs(metric, (maxWeight - minWeight)),
         min_velocity: minVelocity,
         max_velocity: maxVelocity,
         velocity_range: maxVelocity - minVelocity,
         metric: metric
     }, state);
 };
-
-const weightInLB = (metric, weight) => {
-    if (metric === 'lbs') {
-        return weight;
-    } else if (metric === 'kgs') {
-        return weight * 2.20462262;
-    }
-}
 
 const logInfoAnalytics = (state) => {
     Analytics.logEventWithAppState('one_rm_info', {

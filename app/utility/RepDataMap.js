@@ -59,21 +59,21 @@ export const isValidData = (repData) => {
     let initialFlag = parseData(repData, 0);
     console.tron.log("initial flag is " + initialFlag);
 
-    if (initialFlag == -3456) {
+    if (initialFlag == -3456 || !infinityCheck(repData)) {
         // v3 bulk data flag check
         const bulkDataTransmissionFlag = parseData(repData, 21);
         console.tron.log("bulk data flag check at 21 " + bulkDataTransmissionFlag);
         if (bulkDataTransmissionFlag == -9999) {
             return true;
         }
-    } else if (initialFlag == -2345) {
+    } else if (initialFlag == -2345 || !infinityCheck(repData)) {
         // v2 bulk data flag check
         const bulkDataTransmissionFlag = parseData(repData, 18);
         console.tron.log("bulk data flag check at 18 " + bulkDataTransmissionFlag);
         if (bulkDataTransmissionFlag == -9999) {
             return true;
         }
-    } else if (initialFlag == -1234) {
+    } else if (initialFlag == -1234 || !infinityCheck(repData)) {
         // v1 bulk data flag check
         const bulkDataTransmissionFlag = parseData(repData, 6);
         console.tron.log("bulk data flag check at 6 " + bulkDataTransmissionFlag);
@@ -85,3 +85,13 @@ export const isValidData = (repData) => {
     // default
     return false;
 };
+
+const infinityCheck = (repData) => {
+    let averageVelocity = RepDataMap.averageVelocity(repData);
+
+    if (!isFinite(averageVelocity) && averageVelocity < 0) {
+        return true;
+    } else {
+        return false;
+    }
+}

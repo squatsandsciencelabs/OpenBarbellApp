@@ -1,4 +1,5 @@
 import * as RepDataMap from 'app/utility/RepDataMap';
+import * as WeightConversion from 'app/utility/WeightConversion';
 
 export const isDeleted = (set) => {
     if (set.hasOwnProperty('deleted')) {
@@ -75,29 +76,20 @@ export const validUnremovedReps = (set) => {
 };
 
 export const weightInLBs = (set) => {
-    if (!set.hasOwnProperty('weight') || set.weight === null || isNaN(set.weight)) {
+    if (!set.hasOwnProperty('weight') || set.weight === null || isNaN(set.weight) || !set.metric) {
         return null;
-    } else if (set.metric === 'lbs') {
-        return Number(set.weight);
-    } else if (set.metric === 'kgs') {
-        return Number(set.weight) * 2.20462262;
-    } else {
-        // should never reach here
-        return null;
-    }
+    } 
+
+    return WeightConversion.weightInLBs(set.metric, set.weight);
+
 };
 
 export const weightInKGs = (set) => {
     if (!set.hasOwnProperty('weight') || set.weight === null || isNaN(set.weight)) {
         return null;
-    } else if (set.metric === 'kgs') {
-        return Number(set.weight);
-    } else if (set.metric === 'lbs') {
-        return Number(set.weight) * 0.45359237;
-    } else {
-        // should never reach here
-        return null;
-    }
+    } 
+
+    return WeightConversion.weightInKGs(set.metric, set.weight);
 };
 
 export const numFieldsEntered = (set) => {

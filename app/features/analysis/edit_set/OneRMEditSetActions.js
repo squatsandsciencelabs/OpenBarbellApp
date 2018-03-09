@@ -5,6 +5,7 @@ import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators
 import * as Analytics from 'app/services/Analytics';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
+import * as SetUtils from 'app/utility/SetUtils';
 
 export const deleteSet = (setID) => (dispatch, getState) => {
     const state = getState();

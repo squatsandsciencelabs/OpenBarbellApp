@@ -4,6 +4,7 @@ import {
 import * as Analytics from 'app/services/Analytics';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as AnalysisActionCreators from 'app/redux/shared_actions/AnalysisActionCreators';
+import * as SetUtils from 'app/utility/SetUtils';
 
 export const tappedSet = (setID) => (dispatch, getState) => {
     const state = getState();
@@ -21,7 +22,7 @@ export const tappedSet = (setID) => (dispatch, getState) => {
         origWeight: set.hasOwnProperty('weight') ? set.weight : null,
         origMetric: set.hasOwnProperty('metric') ? set.metric : null,
         origTags: set.hasOwnProperty('tags') ? set.tags : [],
-        origDeletedFlag: set.hasOwnProperty('deleted') ? set.deleted : false,
+        origDeletedFlag: set.hasOwnProperty('deleted') ? set.deleted : SetUtils.isDeleted(set),
     });
 };
 

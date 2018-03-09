@@ -26,6 +26,7 @@ import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as Analytics from 'app/services/Analytics';
 import * as ScannedDevicesSelectors from 'app/redux/selectors/ScannedDevicesSelectors';
+import * as RepDataMap from 'app/utility/RepDataMap';
 
 const RFDuinoLib = NativeModules.RFDuinoLib;
 
@@ -204,7 +205,7 @@ export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, g
     dispatch(TimerActionCreators.sanityCheckTimer());
     dispatch({
         type: ADD_REP_DATA,
-        isValid: infinityCheck(data) ? false : isValid,
+        isValid: RepDataMap.isValidData(data),
         data: data,
         deviceName: state.connectedDevice.deviceName,
         deviceIdentifier: state.connectedDevice.deviceIdentifier,
@@ -212,16 +213,6 @@ export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, g
     });
     dispatch(TimerActionCreators.startEndSetTimer());
 };
-
-const infinityCheck = (repData) => {
-    let averageVelocity = RepDataMap.averageVelocity(repData);
-
-    if (!isFinite(averageVelocity) && averageVelocity < 0) {
-        return true;
-    } else {
-        return false;
-    }
-}
 
 // ANALYTICS
 

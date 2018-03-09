@@ -31,16 +31,13 @@ class SetDataRow extends PureComponent {
         }
 
         var dataStyle = this.props.item.removed ? styles.removedData : styles.data;
-
-        let averageVelocity = this.props.item.averageVelocity;
-        let validVelocity = isFinite(averageVelocity) && averageVelocity > 0 ? averageVelocity : 'Invalid' 
         
         return (
             <View style={[styles.border, {flex:1, alignItems:'stretch', backgroundColor:'white'}]}>
                 <TouchableOpacity style={{flex:1}} onPress={ () => this._onPressRow() } >
                     <View style={styles.bar}>
                         <Text style={dataStyle}> { this.props.item.repDisplay } </Text>
-                        <Text style={dataStyle}> { validVelocity } </Text>
+                        <Text style={dataStyle}> { this.props.item.averageVelocity } </Text>
                         <Text style={dataStyle}> { this.props.item.peakVelocity } </Text>
                         <Text style={dataStyle}> { this.props.item.peakVelocityLocation } </Text>
                         <Text style={dataStyle}> { this.props.item.rangeOfMotion } </Text>

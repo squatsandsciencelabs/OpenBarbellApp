@@ -85,7 +85,7 @@ export const weightInLBs = (set) => {
 };
 
 export const weightInKGs = (set) => {
-    if (!set.hasOwnProperty('weight') || set.weight === null || isNaN(set.weight)) {
+    if (!set.hasOwnProperty('weight') || set.weight === null || isNaN(set.weight) || !set.metric) {
         return null;
     } 
 

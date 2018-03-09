@@ -6,7 +6,7 @@ import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as AnalysisActionCreators from 'app/redux/shared_actions/AnalysisActionCreators';
 import * as SetUtils from 'app/utility/SetUtils';
 
-export const tappedSet = (setID) => (dispatch, getState) => {
+export const tappedSet = (setID, workoutID, wasError) => (dispatch, getState) => {
     const state = getState();
     logEditSetAnalytics(state, setID);
     Analytics.setCurrentScreen('one_rm_edit_set');
@@ -23,6 +23,7 @@ export const tappedSet = (setID) => (dispatch, getState) => {
         origMetric: set.hasOwnProperty('metric') ? set.metric : null,
         origTags: set.hasOwnProperty('tags') ? set.tags : [],
         origDeletedFlag: SetUtils.isDeleted(set),
+        wasError: wasError,
     });
 };
 

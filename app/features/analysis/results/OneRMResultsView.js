@@ -29,6 +29,7 @@ class OneRMChartView extends Component {
         this.state = {
             setID: null,
             workoutID: null,
+            error: false,
             selected: false,
             touchStarted: false,
             touchEnded: false,
@@ -72,7 +73,7 @@ class OneRMChartView extends Component {
         // if gestured ended, there's a single touch, an actual point was selected, and it wasn't cancelled
         if (gestureEnded && this.state.touchStarted && this.state.selected && this.state.setID && !this.state.multiTouchStart && !this.state.pinchpan && !this.state.dragged && !this.state.multiSelect && !this.state.touchCanceled) {
             // tapped, open up the set
-            this.props.tappedSet(this.state.setID, this.state.workoutID);
+            this.props.tappedSet(this.state.setID, this.state.workoutID, this.state.error);
         }
         
         if (gestureEnded) {
@@ -103,11 +104,12 @@ class OneRMChartView extends Component {
                 workoutID: null,
                 selected: true,
             });
-        } else if (nativeEvent.hasOwnProperty('data') && nativeEvent.data.hasOwnProperty('setID') && nativeEvent.data.hasOwnProperty('workoutID')) {
+        } else if (nativeEvent.hasOwnProperty('data') && nativeEvent.data.hasOwnProperty('setID') && nativeEvent.data.hasOwnProperty('workoutID') && nativeEvent.data.hasOwnProperty('error')) {
             // actually selected a datapoint
             this.setState({
                 setID: nativeEvent.data.setID,
                 workoutID: nativeEvent.data.workoutID,
+                error: nativeEvent.data.error,
                 selected: true,
             });
         } else {

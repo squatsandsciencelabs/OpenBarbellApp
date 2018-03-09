@@ -105,6 +105,8 @@ export const getOrigTags = (state) => stateRoot(state).origTags;
 
 export const getOrigDeletedFlag = (state) => stateRoot(state).origDeletedFlag;
 
+export const getWasError = (state, set) => stateRoot(state).wasError;
+
 export const getDidUpdateExerciseName = (state, set) => !areEqual(set.exercise, getOrigExerciseName(state));
 
 export const getDidUpdateRPE = (state, set) => !areEqual(getCurrentRPE(state), getOrigRPE(state));

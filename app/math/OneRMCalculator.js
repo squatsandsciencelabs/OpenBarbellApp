@@ -58,7 +58,7 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     // TODO: this should handle KGs or LBs
     // NOTE: workoutID is passed here to reduce the amount of searching necessary each time you tap, but it is a bit odd
     let activeConversion = convertToChartData(active, metric);
-    let errorConversion = convertToChartData(errors, metric);
+    let errorConversion = convertToChartData(errors, metric, true, true);
     let unusedConversion = convertToChartData(unused, metric, false);
 
     // Step 4B: Sort by weight
@@ -117,7 +117,7 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     };
 };
 
-const convertToChartData = (array, metric, displayMarker=true) => {
+const convertToChartData = (array, metric, displayMarker=true, error=false) => {
     let minX = null;
     let maxX = null;
     let minY = null;
@@ -154,7 +154,7 @@ const convertToChartData = (array, metric, displayMarker=true) => {
             maxY = Math.max(maxY, y);
         }
 
-        return {x: x, y: y, marker: marker, setID: set.setID, workoutID: set.workoutID };
+        return {x: x, y: y, marker: marker, setID: set.setID, workoutID: set.workoutID, error: error };
     });
 
     return {

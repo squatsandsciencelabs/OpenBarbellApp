@@ -95,6 +95,7 @@ const defaultState = {
     origMetric: null,
     origTags: [],
     origDeletedFlag: false,
+    wasError: false,
     didUpdateReps: false,
 
     // scroll
@@ -206,6 +207,7 @@ const AnalysisReducer = (state = defaultState, action) => {
                 origMetric: action.origMetric,
                 origTags: [...action.origTags],
                 origDeletedFlag: action.origDeletedFlag,
+                wasError: action.wasError,
                 didUpdateReps: false,
             };
         case DISMISS_EDIT_1RM_SET:
@@ -221,6 +223,7 @@ const AnalysisReducer = (state = defaultState, action) => {
                 origMetric: null,
                 origTags: [],
                 origDeletedFlag: false,
+                wasError: false,
                 didUpdateReps: false,
             };
         case PRESENT_1RM_EXERCISE:

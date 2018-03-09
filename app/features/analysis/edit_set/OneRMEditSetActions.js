@@ -67,6 +67,7 @@ const logCloseEditSetAnalytics = (state) => {
     const didChangeReps = AnalysisSelectors.getDidUpdateReps(state, set);
     const didDeleteSet = AnalysisSelectors.getDidDeleteSet(state, set);
     const didRestoreSet = AnalysisSelectors.getDidRestoreSet(state, set);
+    const wasRemoved = AnalysisSelectors.getWasError(state)
 
     const didEditSet = didChangeExercise || didChangeWeight || didChangeMetric || didChangeRPE || didChangeTags || didChangeReps || didDeleteSet || didRestoreSet;
 
@@ -80,5 +81,6 @@ const logCloseEditSetAnalytics = (state) => {
         did_change_reps: didChangeReps,
         did_delete_set: didDeleteSet,
         did_restore_set: didRestoreSet,
+        was_removed: wasRemoved,
     }, state);
 };

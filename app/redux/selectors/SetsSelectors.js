@@ -387,9 +387,11 @@ const getBestEverOfMetric = (state, set, metricFunction, isMax=true) => {
     // find all instances of this exercise with weight and reps
     const matchedSets = historySets.concat(workoutSets).filter(historySet => areSetsComparable(historySet, set));
     
-    let metrics = matchedSets.map((matchedSet) => {
+    let metrics = [];
+
+    matchedSets.forEach((matchedSet) => {
         if (!SetUtils.isDeleted(matchedSet)) {
-            return metricFunction(matchedSet);
+            metrics.push(metricFunction(matchedSet));
         }
     });
 

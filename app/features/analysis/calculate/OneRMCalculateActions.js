@@ -154,13 +154,14 @@ const logEditExcludeTagsAnalytics = (state) => {
 };
 
 const logCalculate1RMAnalytics = (state, exercise, numIncludeTags, numExcludeTags, daysRange, velocity, oneRepMax, r2, numActivePoints, numErrorPoints, numUnusedPoints, hasNegSlope, slope, minWeight, maxWeight, minVelocity, maxVelocity, metric) => {
-    Analytics.logEventWithAppState('one_rm_calculate', {
+    Analytics.logEvent('one_rm_calculate', {
         exercise: exercise,
         num_include_tags: numIncludeTags,
         num_exclude_tags: numExcludeTags,
         days_range: daysRange,
         velocity: velocity,
         one_rep_max: oneRepMax,
+        one_rep_max_lb: WeightConversion.weightInLBs(metric, oneRepMax),
         r2: r2,
         num_active_points: numActivePoints,
         num_error_points: numErrorPoints,

@@ -371,18 +371,17 @@ const styles = StyleSheet.create({
         paddingBottom: Platform.os === 'ios' ? 0 : 10,
     },
     container: {
-        height: Platform.OS === 'ios' ? 70 : 50,
+        height: Platform.OS === 'ios' && !Device.isiPhoneX() ? 70 : 50,
         alignItems: 'center'
     },
     nav: {
-        paddingTop: Platform.OS === 'ios' ? 35 : 15,
+        paddingTop: Platform.OS === 'ios' && !Device.isiPhoneX() ? 35 : 15,
         paddingRight: 10,
         paddingBottom: 10,
         paddingLeft: 10
     },
     navTitle: {
         paddingTop: 15,
-        marginTop: Device.isiPhoneX ? 20 : 0,
     },
     addButton: {
         alignItems: 'center',

@@ -117,7 +117,7 @@ export const calculate1RM = (exercise, tagsToInclude, tagsToExclude, daysRange, 
     };
 };
 
-const convertToChartData = (array, metric, displayMarker=true, error=false) => {
+const convertToChartData = (array, metric, displayMarker=true, wasError=false) => {
     let minX = null;
     let maxX = null;
     let minY = null;
@@ -154,7 +154,7 @@ const convertToChartData = (array, metric, displayMarker=true, error=false) => {
             maxY = Math.max(maxY, y);
         }
 
-        return {x: x, y: y, marker: marker, setID: set.setID, workoutID: set.workoutID, error: error };
+        return {x: x, y: y, marker: marker, setID: set.setID, workoutID: set.workoutID, wasError: wasError };
     });
 
     return {

@@ -165,9 +165,7 @@ class EditTextModal extends Component {
 
     // TODO: grab the blue color for cancel from a global stylesheet
     _renderNavigation() {
-        if (Platform.OS === 'ios' && !Device.isiPhoneX()) {
-            var statusBar = (<View style={{height: 20, width: 9001, backgroundColor: 'black'}}></View>);
-        } else if (Device.isiPhoneX()) {
+        if (Device.isiPhoneX()) {
             var statusBar = (
                 <View>
                     <StatusBar
@@ -175,7 +173,9 @@ class EditTextModal extends Component {
                         barStyle="dark-content"
                     />
                 </View>
-            )
+            );
+        } else if (Platform.OS === 'ios') {
+            var statusBar = (<View style={{height: 20, width: 9001, backgroundColor: 'black'}}></View>);
         } else {
             var statusBar = null;
         }

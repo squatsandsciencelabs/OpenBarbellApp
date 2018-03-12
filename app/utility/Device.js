@@ -12,4 +12,5 @@ export const isiPhoneX = () => {
     return (
         Platform.OS === 'ios' && (height === 812 || width === 812)
     );
-}
+};
+

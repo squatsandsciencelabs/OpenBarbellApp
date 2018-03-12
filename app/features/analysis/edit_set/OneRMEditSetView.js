@@ -39,9 +39,7 @@ class OneRMEditSetView extends Component {
     // RENDER
 
     _renderNavigation() {
-        if (Platform.OS === 'ios' && !Device.isiPhoneX()) {
-            var statusBar = (<View style={{height: 20, width: 9001, backgroundColor: 'black'}}></View>);
-        } else if (Device.isiPhoneX()) {
+        if (Device.isiPhoneX()) {
             var statusBar = (
                 <View>
                     <StatusBar
@@ -49,7 +47,9 @@ class OneRMEditSetView extends Component {
                         barStyle="dark-content"
                     />
                 </View>
-            )
+            );
+        } else if (Platform.OS === 'ios') {
+            var statusBar = (<View style={{height: 20, width: 9001, backgroundColor: 'black'}}></View>);
         } else {
             var statusBar = null;
         }
@@ -191,13 +191,13 @@ class OneRMEditSetView extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        height: Platform.OS === 'ios' ? 70 : 50,
+        height: Platform.OS === 'ios' && !Device.isiPhoneX() ? 70 : 50,
         alignItems: 'center',
         borderColor: '#e0e0e0',
         borderBottomWidth: 1,
     },
     nav: {
-        paddingTop: Platform.OS === 'ios' ? 35 : 15,
+        paddingTop: Platform.OS === 'ios' && !Device.isiPhoneX() ? 35 : 15,
         paddingRight: 10,
         paddingBottom: 10,
         paddingLeft: 10

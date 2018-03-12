@@ -205,7 +205,7 @@ export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, g
     dispatch(TimerActionCreators.sanityCheckTimer());
     dispatch({
         type: ADD_REP_DATA,
-        isValid: RepDataMap.isValidData(data),
+        isValid: isValid,
         data: data,
         deviceName: state.connectedDevice.deviceName,
         deviceIdentifier: state.connectedDevice.deviceIdentifier,

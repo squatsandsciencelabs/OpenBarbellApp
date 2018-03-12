@@ -10,6 +10,7 @@ import {
 }  from 'react-native';
 import Camera from 'react-native-camera';
 import KeepAwake from 'react-native-keep-awake';
+import * as Device from 'app/utility/Device';
 
 class VideoRecorder extends Component {
 
@@ -166,7 +167,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     cancelButton: {
-        marginTop: 30,
+        marginTop: Device.isiPhoneX() ? 50 : 30,
         marginLeft: 20,
         width: 100,
         backgroundColor: '#333333',

@@ -6,7 +6,7 @@ export const isSmallDevice = () => {
     return (width <= 350);
 };
 
-export const isIphoneX = () => {
+export const isiPhoneX = () => {
     const { width, height } = Dimensions.get('window');
   
     return (

@@ -131,8 +131,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#f2f2f2'
     },
     statusBar: {
-        height: Device.isIphoneX() ? 30 : 20,
-        backgroundColor: Device.isIphoneX() ? '#333333' : 'black'
+        height: Device.isiPhoneX() ? 30 : 20,
+        backgroundColor: Device.isiPhoneX() ? '#333333' : 'black'
     }
 });
 

@@ -165,9 +165,9 @@ class EditTextModal extends Component {
 
     // TODO: grab the blue color for cancel from a global stylesheet
     _renderNavigation() {
-        if (Platform.OS === 'ios' && !Device.isIphoneX()) {
+        if (Platform.OS === 'ios' && !Device.isiPhoneX()) {
             var statusBar = (<View style={{height: 20, width: 9001, backgroundColor: 'black'}}></View>);
-        } else if (Device.isIphoneX()) {
+        } else if (Device.isiPhoneX()) {
             var statusBar = (
                 <View>
                     <StatusBar
@@ -350,7 +350,7 @@ class EditTextModal extends Component {
     render() {
         return (
             <Modal visible={this.props.isModalShowing} animationType='fade'>
-                <View style={{flex: 1, paddingTop: Device.isIphoneX() ? 40 : 0, flexDirection: 'column', backgroundColor: 'rgba(242, 242, 242, 1)'}}>
+                <View style={{flex: 1, paddingTop: Device.isiPhoneX() ? 40 : 0, flexDirection: 'column', backgroundColor: 'rgba(242, 242, 242, 1)'}}>
                     {this._renderNavigation()}
                     {this._renderHeader()}
                     {this._renderTextField()}

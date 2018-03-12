@@ -11,6 +11,7 @@ import {
 }  from 'react-native';
 import Video from 'react-native-video';
 import KeepAwake from 'react-native-keep-awake';
+import * as Device from 'app/utility/Device';
 
 class VideoPlayer extends Component {
 
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
     cancelButton: {
         position: 'absolute',
         left: 20,
-        top: 30,
+        top: Device.isiPhoneX() ? 50 : 30,
         width: 100,
         backgroundColor: '#333333',
         justifyContent: 'center',
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
     deleteButton: {
         position: 'absolute',
         right: 20,
-        top: 30,
+        top: Device.isiPhoneX() ? 50 : 30,
         width: 100,
         backgroundColor: 'red',
         justifyContent: 'center',

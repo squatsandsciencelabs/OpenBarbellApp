@@ -40,13 +40,13 @@ const styles = StyleSheet.create({
         bottom: 0,
         backgroundColor: 'rgba(47, 128, 237, 1)',
         position: 'absolute',
-        height: Device.isIphoneX() ? 70 : 50,
+        height: Device.isiPhoneX() ? 70 : 50,
         padding:0,
     },
     buttonText: {
         color:'white',
         marginRight: 5,
-        marginBottom: Device.isIphoneX() ? 25 : 0
+        marginBottom: Device.isiPhoneX() ? 25 : 0
     }
 });
 

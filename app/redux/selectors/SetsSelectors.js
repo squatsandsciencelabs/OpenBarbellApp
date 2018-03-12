@@ -388,7 +388,9 @@ const getBestEverOfMetric = (state, set, metricFunction, isMax=true) => {
     const matchedSets = historySets.concat(workoutSets).filter(historySet => areSetsComparable(historySet, set));
     
     let metrics = matchedSets.map((matchedSet) => {
-        return metricFunction(matchedSet);
+        if (!SetUtils.isDeleted(matchedSet)) {
+            return metricFunction(matchedSet);
+        }
     });
 
     metrics = metrics.reduce((a, b) => a.concat(b), []);

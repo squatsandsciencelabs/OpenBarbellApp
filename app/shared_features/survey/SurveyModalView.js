@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {
     View,
+    StatusBar,
     Text,
     Modal,
     TouchableOpacity,
@@ -9,7 +10,8 @@ import {
     StyleSheet,
  }  from 'react-native';
  import Icon from 'react-native-vector-icons/FontAwesome';
- 
+ import * as Device from 'app/utility/Device';
+
  class SurveyModalView extends Component {
 
     _close() {
@@ -20,8 +22,17 @@ import {
 
     // TODO: grab the blue color for cancel from a global stylesheet
     _renderNavigation() {
-        if (Platform.OS === 'ios') {
+        if (Platform.OS === 'ios' && !Device.isiPhoneX()) {
             var statusBar = (<View style={{height: 20, width: 9001, backgroundColor: 'black'}}></View>);
+        } else if (Device.isiPhoneX()) {
+            var statusBar = (
+                <View>
+                    <StatusBar
+                        backgroundColor="white"
+                        barStyle="dark-content"
+                    />
+                </View>
+            )
         } else {
             var statusBar = null;
         }
@@ -54,7 +65,7 @@ import {
                 transparent={true}
                 visible={this.props.isModalShowing} >
 
-                <View style={{flex:1, backgroundColor: 'rgba(0,0,0,0.6)', justifyContent: 'flex-end' }}>
+                <View style={{flex: 1, paddingTop: Device.isiPhoneX() ? 40 : 0, flexDirection: 'column', backgroundColor: 'rgba(242, 242, 242, 1)'}}>
                     {this._renderNavigation()}
 
                     <WebView

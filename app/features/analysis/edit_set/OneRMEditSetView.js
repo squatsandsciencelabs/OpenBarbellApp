@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {
     Text,
     View,
+    StatusBar,
     Modal,
     StyleSheet,
     TouchableOpacity,
@@ -23,6 +24,7 @@ import SetRestRow from 'app/shared_features/set_card/SetRestRow';
 import SetAnalysisScreen from 'app/shared_features/set_card/analysis/SetAnalysisScreen';
 import DeleteSetRow from 'app/shared_features/set_card/expanded/DeleteSetRow';
 import RestoreSetRow from 'app/shared_features/set_card/restore/RestoreSetRow';
+import * as Device from 'app/utility/Device';
 
 // TODO: add a close button on this shit
 class OneRMEditSetView extends Component {
@@ -37,8 +39,17 @@ class OneRMEditSetView extends Component {
     // RENDER
 
     _renderNavigation() {
-        if (Platform.OS === 'ios') {
+        if (Platform.OS === 'ios' && !Device.isiPhoneX()) {
             var statusBar = (<View style={{height: 20, width: 9001, backgroundColor: 'black'}}></View>);
+        } else if (Device.isiPhoneX()) {
+            var statusBar = (
+                <View>
+                    <StatusBar
+                        backgroundColor="white"
+                        barStyle="dark-content"
+                    />
+                </View>
+            )
         } else {
             var statusBar = null;
         }
@@ -161,7 +172,7 @@ class OneRMEditSetView extends Component {
         }
         return (
             <Modal visible={this.props.isModalShowing} animationType='fade'>
-                <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
+                <View style={{flex: 1, paddingTop: Device.isiPhoneX() ? 40 : 0, flexDirection: 'column', backgroundColor: 'rgba(242, 242, 242, 1)'}}>
                     <OneRMEditSetExerciseScreen />
                     <OneRMEditSetTagsScreen />
                     <OneRMEditSetVideoRecorderScreen />

@@ -382,6 +382,7 @@ const styles = StyleSheet.create({
     },
     navTitle: {
         paddingTop: 15,
+        marginTop: Device.isiPhoneX ? 20 : 0,
     },
     addButton: {
         alignItems: 'center',

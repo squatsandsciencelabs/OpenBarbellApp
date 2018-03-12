@@ -377,7 +377,7 @@ export const hasChangesToSync = (state) => {
 
 const getBestEverOfMetric = (state, set, metricFunction, isMax=true) => {
     // null if not enough data entered
-    if (!isSetComparable(set) || SetUtils.isDeleted(set)) {
+    if (!isSetComparable(set)) {
         return null;
     }
 

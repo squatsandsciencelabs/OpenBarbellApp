@@ -26,7 +26,6 @@ import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as Analytics from 'app/services/Analytics';
 import * as ScannedDevicesSelectors from 'app/redux/selectors/ScannedDevicesSelectors';
-import * as RepDataMap from 'app/utility/RepDataMap';
 
 const RFDuinoLib = NativeModules.RFDuinoLib;
 

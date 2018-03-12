@@ -87,11 +87,11 @@ export const isValidData = (repData) => {
 };
 
 const isInfinityorNegative = (repData) => {
-    let averageVelocity = RepDataMap.averageVelocity(repData);
+    const averageVelocity = RepDataMap.averageVelocity(repData);
 
-    if (!isFinite(averageVelocity) && averageVelocity < 0) {
+    if (!isFinite(averageVelocity) || averageVelocity < 0) {
         return true;
     } else {
         return false;
     }
-}
+};

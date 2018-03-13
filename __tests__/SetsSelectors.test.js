@@ -1531,6 +1531,35 @@ describe('SetsSelectors', () => {
                 expect(result).toBe(null);
             });
 
+            test('return null if set is deleted with same exercise/tags', () => {
+                const deletedSet = {
+                    setID: 'i',
+                    exercise: 'Squat',
+                    weight: 200,
+                    metric: 'kgs',
+                    reps: [{
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.933368, 188, 18, 18, 1, 18]
+                    }, {
+                        isValid: false,
+                        removed: false,
+                        data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
+                    }, {
+                        isValid: true,
+                        removed: true,
+                        data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
+                    }],
+                    deleted: true,
+                    tags: ['A', 'B', 'C'],
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
+                };
+
+                const result = sut.getFastestAvgVelocityEver(state, deletedSet);
+
+                expect(result).toBe(null);
+            });
+
         });
         
         describe('getFastestPKVEver', () => {
@@ -1575,6 +1604,35 @@ describe('SetsSelectors', () => {
 
 
             test('return null if set is deleted', () => {
+
+                const result = sut.getFastestPKVEver(state, deletedSet);
+
+                expect(result).toBe(null);
+            });
+
+            test('return null if set is deleted with same exercise/tags', () => {
+                const deletedSet = {
+                    setID: 'i',
+                    exercise: 'Squat',
+                    weight: 200,
+                    metric: 'kgs',
+                    reps: [{
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.933368, 188, 18, 18, 1, 18]
+                    }, {
+                        isValid: false,
+                        removed: false,
+                        data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
+                    }, {
+                        isValid: true,
+                        removed: true,
+                        data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
+                    }],
+                    deleted: true,
+                    tags: ['A', 'B', 'C'],
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
+                };
 
                 const result = sut.getFastestPKVEver(state, deletedSet);
 
@@ -1631,6 +1689,35 @@ describe('SetsSelectors', () => {
                 expect(result).toBe(null);
             });
 
+            test('return null if set is deleted with same exercise/tags', () => {
+                const deletedSet = {
+                    setID: 'i',
+                    exercise: 'Squat',
+                    weight: 200,
+                    metric: 'kgs',
+                    reps: [{
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.933368, 188, 18, 18, 1, 18]
+                    }, {
+                        isValid: false,
+                        removed: false,
+                        data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
+                    }, {
+                        isValid: true,
+                        removed: true,
+                        data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
+                    }],
+                    deleted: true,
+                    tags: ['A', 'B', 'C'],
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
+                };
+
+                const result = sut.getSlowestPKVEver(state, deletedSet);
+
+                expect(result).toBe(null);
+            });
+
         });
         
         describe('getFastestDurationEver', () => {
@@ -1681,6 +1768,35 @@ describe('SetsSelectors', () => {
                 expect(result).toBe(null);
             });
 
+            test('return null if set is deleted with same exercise/tags', () => {
+                const deletedSet = {
+                    setID: 'i',
+                    exercise: 'Squat',
+                    weight: 200,
+                    metric: 'kgs',
+                    reps: [{
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.933368, 188, 18, 18, 1, 18]
+                    }, {
+                        isValid: false,
+                        removed: false,
+                        data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
+                    }, {
+                        isValid: true,
+                        removed: true,
+                        data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
+                    }],
+                    deleted: true,
+                    tags: ['A', 'B', 'C'],
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
+                };
+
+                const result = sut.getFastestDurationEver(state, deletedSet);
+
+                expect(result).toBe(null);
+            });
+
         });
 
         describe('getSlowestDurationEver', () => {
@@ -1725,6 +1841,35 @@ describe('SetsSelectors', () => {
 
 
             test('return null if set is deleted', () => {
+
+                const result = sut.getSlowestDurationEver(state, deletedSet);
+
+                expect(result).toBe(null);
+            });
+
+            test('return null if set is deleted with same exercise/tags', () => {
+                const deletedSet = {
+                    setID: 'i',
+                    exercise: 'Squat',
+                    weight: 200,
+                    metric: 'kgs',
+                    reps: [{
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 1.933368, 188, 18, 18, 1, 18]
+                    }, {
+                        isValid: false,
+                        removed: false,
+                        data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
+                    }, {
+                        isValid: true,
+                        removed: true,
+                        data: [-3456, 37, 1.453368, 328, 83, 72, 11, 15]
+                    }],
+                    deleted: true,
+                    tags: ['A', 'B', 'C'],
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
+                };
 
                 const result = sut.getSlowestDurationEver(state, deletedSet);
 

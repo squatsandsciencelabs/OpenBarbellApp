@@ -40,6 +40,7 @@ import {
     EDIT_1RM_SET_WEIGHT,
     EDIT_1RM_SET_RPE,
     ANALYSIS_DRAGGED,
+    CLEAR_E1RM,
 } from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
@@ -68,6 +69,7 @@ const defaultState = {
     maxX: null,
     maxY: null,
     isRegressionNegative: null,
+    count: 0,
 
     // edit set
     // TODO: Since there's only one setID ever at any point, shouldn't need this many setIDs
@@ -191,8 +193,13 @@ const AnalysisReducer = (state = defaultState, action) => {
                 maxY: action.maxY,
                 isRegressionNegative: action.isRegressionNegative,
                 scroll: !state.scroll,
+                calcCount: state.calcCount += 1,
             };
-        
+        case CLEAR_E1RM:
+            return {
+                ...state,
+                ...defaultState,
+            }
         // edit
         case PRESENT_EDIT_1RM_SET:
             return {

@@ -1101,7 +1101,7 @@ describe('SetsSelectors', () => {
         var state = {
             sets: {
                 workoutData: [{
-                    setID: 'h',
+                    setID: 'q',
                     exercise: 'Squat',
                     weight: 100,
                     metric: 'lbs',
@@ -1121,7 +1121,7 @@ describe('SetsSelectors', () => {
                     tags: ['D', 'A', 'B', 'C'],
                     initialStartTime: '2018-01-03T04:06:12.640Z'
                 }, {
-                    setID: 'i',
+                    setID: 'r',
                     exercise: 'Squat',
                     weight: 200,
                     metric: 'kgs',
@@ -1141,7 +1141,7 @@ describe('SetsSelectors', () => {
                     tags: ['A', 'B', 'C'],
                     initialStartTime: '2018-01-03T04:06:12.640Z'
                 }, {
-                    setID: 'j',
+                    setID: 's',
                     exercise: 'Squat',
                     weight: 200,
                     metric: 'kgs',
@@ -1153,7 +1153,7 @@ describe('SetsSelectors', () => {
                     tags: ['A', 'B', 'C'],
                     initialStartTime: '2018-01-03T04:06:12.640Z'
                 }, {
-                    setID: 'k',
+                    setID: 't',
                     exercise: 'Bench',
                     weight: 100,
                     metric: 'lbs',
@@ -1173,6 +1173,7 @@ describe('SetsSelectors', () => {
                     tags: ['A', 'B', 'C'],
                     initialStartTime: '2018-01-03T04:06:12.640Z'
                 }, {
+                    setID: 'u',
                     exercise: 'Deadlift',
                     weight: 100,
                     metric: 'lbs',
@@ -1190,6 +1191,86 @@ describe('SetsSelectors', () => {
                         data: [-3456, 37, 1.453368, 328, 32, 22, 1, 12]
                     }],
                     tags: ['A', 'B', 'C'],
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
+                },
+                {
+                    setID: 'v',
+                    exercise: 'Squat',
+                    weight: 200,
+                    metric: 'kgs',
+                    reps: [{
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 4.034, 312, 34, 35, 1, 36]
+                    }],
+                    tags: ['A', 'B', 'C'],
+                    deleted: true,
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
+                }, 
+                {
+                    setID: 'w',
+                    exercise: 'Squat',
+                    weight: 200,
+                    metric: 'kgs',
+                    reps: [{
+                        isValid: true,
+                        removed: false,
+                        data: [-3456, 37, 5.034, 312, 34, 35, 1, 36]
+                    }],
+                    tags: ['A', 'B', 'C'],
+                    deleted: true,
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
+                },
+                {
+                    setID: 'x',
+                    exercise: 'Squat',
+                    weight: 200,
+                    metric: 'kgs',
+                    reps: [{
+                        isValid: true,
+                        removed: true,
+                        data: [-3456, 37, 6.034, 312, 34, 35, 1, 36]
+                    }],
+                    tags: ['A', 'B', 'C'],
+                    deleted: false,
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
+                },
+                {
+                    setID: 'y',
+                    exercise: 'Squat',
+                    weight: 200,
+                    metric: 'kgs',
+                    reps: [{
+                        isValid: false,
+                        removed: false,
+                        data: [-3456, 37, 4.034, 312, 34, 35, 1, 36]
+                    }],
+                    tags: ['A', 'B', 'C'],
+                    deleted: false,
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
+                },
+                {
+                    setID: 'z',
+                    exercise: 'Squat',
+                    weight: 200,
+                    metric: 'kgs',
+                    reps: [],
+                    tags: ['A', 'B', 'C'],
+                    deleted: false,
+                    initialStartTime: '2018-01-03T04:06:12.640Z'
+                },
+                {
+                    setID: 'aa',
+                    exercise: 'Squat',
+                    weight: 200,
+                    metric: 'kgs',
+                    reps: [{
+                        isValid: false,
+                        removed: true,
+                        data: [-3456, 37, 6.034, 312, 34, 35, 1, 36]
+                    }],
+                    tags: ['A', 'B', 'C'],
+                    deleted: false,
                     initialStartTime: '2018-01-03T04:06:12.640Z'
                 }],
                 historyData: {
@@ -1369,6 +1450,86 @@ describe('SetsSelectors', () => {
                         tags: ['F'],
                         initialStartTime: '2018-01-03T04:06:12.640Z'
                     },
+                    k: {
+                        setID: 'm',
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 3.034, 312, 34, 35, 1, 36]
+                        }],
+                        tags: ['A', 'B', 'C'],
+                        deleted: true,
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
+                    }, 
+                    l: {
+                        setID: 'n',
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: false,
+                            data: [-3456, 37, 4.034, 312, 34, 35, 1, 36]
+                        }],
+                        tags: ['A', 'B', 'C'],
+                        deleted: true,
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
+                    },
+                    m: {
+                        setID: 'o',
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: true,
+                            removed: true,
+                            data: [-3456, 37, 5.034, 312, 34, 35, 1, 36]
+                        }],
+                        tags: ['A', 'B', 'C'],
+                        deleted: false,
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
+                    },
+                    n: {
+                        setID: 'p',
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: false,
+                            removed: false,
+                            data: [-3456, 37, 6.034, 312, 34, 35, 1, 36]
+                        }],
+                        tags: ['A', 'B', 'C'],
+                        deleted: false,
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
+                    },
+                    o: {
+                        setID: 'q',
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [],
+                        tags: ['A', 'B', 'C'],
+                        deleted: false,
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
+                    },
+                    p: {
+                        setID: 'r',
+                        exercise: 'Bench',
+                        weight: 100,
+                        metric: 'lbs',
+                        reps: [{
+                            isValid: false,
+                            removed: true,
+                            data: [-3456, 37, 6.034, 312, 34, 35, 1, 36]
+                        }],
+                        tags: ['A', 'B', 'C'],
+                        deleted: false,
+                        initialStartTime: '2018-01-03T04:06:12.640Z'
+                    }
                 }
             },
             analysis: {

@@ -27,7 +27,6 @@ const InitializedAnalyticsSaga = function * InitializedAnalyticsSaga() {
     Analytics.logEventWithAppState('initialized', {
         num_workout_sets: numWorkoutSets,
         one_rm_last_calculate_count: e1RMLastCalcCount,
-        // TODO CHANGE THIS TO BE A DIFFERENT COUNTER
         one_rm_last_calculate: e1RMLastCalc,
     }, state);
 

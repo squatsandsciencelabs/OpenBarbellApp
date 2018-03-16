@@ -69,7 +69,7 @@ const defaultState = {
     maxX: null,
     maxY: null,
     isRegressionNegative: null,
-    e1RMCalcs: [],
+    e1RMCalcs: {},
     e1RMCalcsCount: 0,
 
     // edit set
@@ -180,9 +180,9 @@ const AnalysisReducer = (state = defaultState, action) => {
                 dragged: !state.dragged,
             };
         case CALC_1RM:
-            let calcs = state.e1RMCalcs;
-
-            let filteredCalcs = calcs.filter((calc) => calc.exercise !== action.e1RMCalc.exercise);
+            let e1RMCalcs = state.e1RMCalcs;
+            let e1RMCalcExercise = action.e1RMCalc.exercise;
+            e1RMCalcs[e1RMCalcExercise] = action.e1RMCalc;
 
             return {
                 ...state,
@@ -198,13 +198,13 @@ const AnalysisReducer = (state = defaultState, action) => {
                 maxY: action.maxY,
                 isRegressionNegative: action.isRegressionNegative,
                 scroll: !state.scroll,
-                e1RMCalcs: [ ...filteredCalcs, action.e1RMCalc ],
+                e1RMCalcs: e1RMCalcs,
                 e1RMCalcsCount: state.e1RMCalcsCount += 1,
             };
         case CLEAR_E1RM:
             return {
                 ...state,
-                e1RMCalcs: [],
+                e1RMCalcs: {},
                 e1RMCalcsCount: 0,
             }
         // edit

@@ -21,13 +21,13 @@ const InitializedAnalyticsSaga = function * InitializedAnalyticsSaga() {
         var numWorkoutSets = SetsSelectors.getNumWorkoutSets(state);
     }
 
-    const e1RMLastCalc = AnalysisSelectors.getE1RMCalcs(state);
+    const e1RMLastCalcs = AnalysisSelectors.getE1RMCalcs(state);
     const e1RMLastCalcCount = AnalysisSelectors.getE1RMCalcsCount(state);
 
     Analytics.logEventWithAppState('initialized', {
         num_workout_sets: numWorkoutSets,
         one_rm_last_calculate_count: e1RMLastCalcCount,
-        one_rm_last_calculate: e1RMLastCalc,
+        one_rm_last_calculate: e1RMLastCalcs,
     }, state);
 
     yield put(AnalysisActionCreators.clearE1RM());

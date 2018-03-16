@@ -24,6 +24,10 @@ export const getVelocitySlider = (state) => stateRoot(state).velocitySlider;
 
 export const getDaysRange = (state) => stateRoot(state).daysRange;
 
+export const getE1RMCalcs = (state) => stateRoot(state).e1RMCalcs;
+
+export const getE1RMCalcsCount = (state) => stateRoot(state).e1RMCalcsCount;
+
 // results
 
 export const getAnalysisDragged = (state) => stateRoot(state).dragged;

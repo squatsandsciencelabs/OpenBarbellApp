@@ -69,7 +69,8 @@ const defaultState = {
     maxX: null,
     maxY: null,
     isRegressionNegative: null,
-    count: 0,
+    e1RMCalcs: [],
+    e1RMCalcsCount: 0,
 
     // edit set
     // TODO: Since there's only one setID ever at any point, shouldn't need this many setIDs
@@ -179,6 +180,10 @@ const AnalysisReducer = (state = defaultState, action) => {
                 dragged: !state.dragged,
             };
         case CALC_1RM:
+            let calcs = state.e1RMCalcs;
+
+            let filteredCalcs = calcs.filter((calc) => calc.exercise !== action.e1RMCalc.exercise);
+
             return {
                 ...state,
                 e1RM: action.e1RM,
@@ -193,12 +198,14 @@ const AnalysisReducer = (state = defaultState, action) => {
                 maxY: action.maxY,
                 isRegressionNegative: action.isRegressionNegative,
                 scroll: !state.scroll,
-                calcCount: state.calcCount += 1,
+                e1RMCalcs: [ ...filteredCalcs, action.e1RMCalc ],
+                e1RMCalcsCount: state.e1RMCalcsCount += 1,
             };
         case CLEAR_E1RM:
             return {
                 ...state,
-                ...defaultState,
+                e1RMCalcs: [],
+                e1RMCalcsCount: 0,
             }
         // edit
         case PRESENT_EDIT_1RM_SET:

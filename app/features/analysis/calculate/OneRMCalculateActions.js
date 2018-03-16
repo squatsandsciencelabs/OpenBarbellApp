@@ -78,7 +78,8 @@ export const calcE1RM = () => (dispatch, getState) => {
     const results = OneRMCalculator.calculate1RM(exercise, tagsToInclude, tagsToExclude, daysRange, velocity, metric, allSets);
 
     // analytics
-    logCalculate1RMAnalytics(
+
+    const params = analyticsParams(
         state,
         exercise,
         tagsToInclude ? tagsToInclude.length : 0,
@@ -96,8 +97,10 @@ export const calcE1RM = () => (dispatch, getState) => {
         results.maxX,
         results.minY,
         results.maxY,
-        metric
+        metric,
     );
+
+    logCalculate1RMAnalytics(params, state);
 
     // dispatch
     dispatch({
@@ -113,6 +116,7 @@ export const calcE1RM = () => (dispatch, getState) => {
         maxX: results.maxX,
         maxY: results.maxY,
         isRegressionNegative: results.isRegressionNegative,
+        e1RMCalc: params,
     });
 };
 
@@ -153,8 +157,8 @@ const logEditExcludeTagsAnalytics = (state) => {
     }, state);
 };
 
-const logCalculate1RMAnalytics = (state, exercise, numIncludeTags, numExcludeTags, daysRange, velocity, oneRepMax, r2, numActivePoints, numErrorPoints, numUnusedPoints, hasNegSlope, slope, minWeight, maxWeight, minVelocity, maxVelocity, metric) => {
-    Analytics.logEvent('one_rm_calculate', {
+const analyticsParams = (state, exercise, numIncludeTags, numExcludeTags, daysRange, velocity, oneRepMax, r2, numActivePoints, numErrorPoints, numUnusedPoints, hasNegSlope, slope, minWeight, maxWeight, minVelocity, maxVelocity, metric) => {
+    return {
         exercise: exercise,
         num_include_tags: numIncludeTags,
         num_exclude_tags: numExcludeTags,
@@ -174,7 +178,11 @@ const logCalculate1RMAnalytics = (state, exercise, numIncludeTags, numExcludeTag
         max_velocity: maxVelocity,
         velocity_range: maxVelocity - minVelocity,
         metric: metric
-    }, state);
+    }
+};
+
+const logCalculate1RMAnalytics = (analyticsParams, state) => {
+    Analytics.logEventWithAppState('one_rm_calculate', analyticsParams, state);
 };
 
 const logInfoAnalytics = (state) => {

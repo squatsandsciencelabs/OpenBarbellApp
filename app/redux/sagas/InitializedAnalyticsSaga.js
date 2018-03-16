@@ -21,14 +21,14 @@ const InitializedAnalyticsSaga = function * InitializedAnalyticsSaga() {
         var numWorkoutSets = SetsSelectors.getNumWorkoutSets(state);
     }
 
+    const e1RMLastCalc = AnalysisSelectors.getE1RMCalcs(state);
+    const e1RMLastCalcCount = AnalysisSelectors.getE1RMCalcsCount(state);
+
     Analytics.logEventWithAppState('initialized', {
         num_workout_sets: numWorkoutSets,
-        exercise: AnalysisSelectors.getExercise(state),
-        num_include_tags: AnalysisSelectors.getTagsToInclude(state),
-        num_exclude_tags: AnalysisSelectors.getTagsToExclude(state),
-        days_range: AnalysisSelectors.getDaysRange(state),
-        velocity: AnalysisSelectors.getAnalysisVelocity(state),
-        one_rep_max: AnalysisSelectors.getE1RM(state),
+        one_rm_last_calculate_count: e1RMLastCalcCount,
+        // TODO CHANGE THIS TO BE A DIFFERENT COUNTER
+        one_rm_last_calculate: e1RMLastCalc,
     }, state);
 
     yield put(AnalysisActionCreators.clearE1RM());

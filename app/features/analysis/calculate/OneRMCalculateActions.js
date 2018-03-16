@@ -160,7 +160,6 @@ const logCalculate1RMAnalytics = (state, exercise, numIncludeTags, numExcludeTag
         num_exclude_tags: numExcludeTags,
         days_range: daysRange,
         velocity: velocity,
-        one_rep_max: oneRepMax,
         one_rep_max_lb: WeightConversion.weightInLBs(metric, oneRepMax),
         r2: r2,
         num_active_points: numActivePoints,

@@ -167,8 +167,6 @@ const logCalculate1RMAnalytics = (state, exercise, numIncludeTags, numExcludeTag
         num_unused_points: numUnusedPoints,
         has_negative_slope: hasNegSlope,
         slope: slope,
-        min_weight: minWeight,
-        max_weight: maxWeight,
         min_lb_weight: WeightConversion.weightInLBs(metric, minWeight),
         max_lb_weight: WeightConversion.weightInLBs(metric, maxWeight),
         weight_lb_range: WeightConversion.weightInLBs(metric, (maxWeight - minWeight)),

@@ -22,8 +22,8 @@ const OneRMLastCalculateAnalyticsSaga = function * OneRMLastCalculateAnalyticsSa
     
         logLast1RMCalcAnalytics(
             e1RMLastCalc.exercise,
-            e1RMLastCalc.num_include_tags ? e1RMLastCalc.num_include_tags.length : 0,
-            e1RMLastCalc.num_exclude_tags ? e1RMLastCalc.num_include_tags.length : 0,
+            e1RMLastCalc.num_include_tags, 
+            e1RMLastCalc.num_exclude_tags,
             e1RMLastCalc.days_range,
             e1RMLastCalc.velocity,
             e1RMLastCalc.one_rep_max,

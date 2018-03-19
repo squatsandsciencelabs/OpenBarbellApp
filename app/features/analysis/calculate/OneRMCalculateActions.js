@@ -79,10 +79,10 @@ export const calcE1RM = () => (dispatch, getState) => {
 
     // analytics
 
-    const params = analyticsParams(
+    const calculateE1RMParams = analyticsParams(
         exercise,
-        tagsToInclude,
-        tagsToExclude,
+        tagsToInclude ? tagsToInclude.length : 0,
+        tagsToExclude ? tagsToExclude.length : 0,
         daysRange,
         velocity,
         results.e1RM,
@@ -99,7 +99,13 @@ export const calcE1RM = () => (dispatch, getState) => {
         metric,
     );
 
-    logCalculate1RMAnalytics(params, state);
+    const e1RMCalcParams = { 
+        ...calculateE1RMParams,
+        tags_to_include: tagsToInclude,
+        tags_to_exclude: tagsToExclude,
+    };
+
+    logCalculate1RMAnalytics(calculateE1RMParams, state);
 
     // dispatch
     dispatch({
@@ -115,7 +121,7 @@ export const calcE1RM = () => (dispatch, getState) => {
         maxX: results.maxX,
         maxY: results.maxY,
         isRegressionNegative: results.isRegressionNegative,
-        e1RMCalc: params,
+        e1RMCalc: e1RMCalcParams,
     });
 };
 
@@ -176,7 +182,7 @@ const analyticsParams = (exercise, numIncludeTags, numExcludeTags, daysRange, ve
         min_velocity: minVelocity,
         max_velocity: maxVelocity,
         velocity_range: maxVelocity - minVelocity,
-        metric: metric
+        metric: metric,
     }
 };
 

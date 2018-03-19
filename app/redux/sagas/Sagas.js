@@ -11,6 +11,7 @@ import EndOldWorkoutSaga from './EndOldWorkoutSaga';
 import ReconnectSaga from './ReconnectSaga';
 import SurveySaga from './SurveySaga';
 import InitializedAnalyticsSaga from './InitializedAnalyticsSaga';
+import OneRMLastCalculateSaga from './OneRMLastCalculateAnalyticsSaga';
 
 const Sagas = function* Sagas() {
     yield all([
@@ -25,6 +26,7 @@ const Sagas = function* Sagas() {
         call(ReconnectSaga),
         call(SurveySaga),
         call(InitializedAnalyticsSaga),
+        call(OneRMLastCalculateSaga),
     ]);
 };
 

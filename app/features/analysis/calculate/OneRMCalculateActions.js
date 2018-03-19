@@ -80,10 +80,9 @@ export const calcE1RM = () => (dispatch, getState) => {
     // analytics
 
     const params = analyticsParams(
-        state,
         exercise,
-        tagsToInclude ? tagsToInclude.length : 0,
-        tagsToExclude ? tagsToExclude.length : 0,
+        tagsToInclude,
+        tagsToExclude,
         daysRange,
         velocity,
         results.e1RM,
@@ -157,7 +156,7 @@ const logEditExcludeTagsAnalytics = (state) => {
     }, state);
 };
 
-const analyticsParams = (state, exercise, numIncludeTags, numExcludeTags, daysRange, velocity, oneRepMax, r2, numActivePoints, numErrorPoints, numUnusedPoints, hasNegSlope, slope, minWeight, maxWeight, minVelocity, maxVelocity, metric) => {
+const analyticsParams = (exercise, numIncludeTags, numExcludeTags, daysRange, velocity, oneRepMax, r2, numActivePoints, numErrorPoints, numUnusedPoints, hasNegSlope, slope, minWeight, maxWeight, minVelocity, maxVelocity, metric) => {
     return {
         exercise: exercise,
         num_include_tags: numIncludeTags,

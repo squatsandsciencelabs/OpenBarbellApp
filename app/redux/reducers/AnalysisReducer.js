@@ -1,5 +1,6 @@
 // TODO: break up analysis into multiple reducers and selectors
 // This has gotten too unwieldy
+import _ from 'lodash';
 
 import {
     CHANGE_VELOCITY_SLIDER,
@@ -40,7 +41,7 @@ import {
     EDIT_1RM_SET_WEIGHT,
     EDIT_1RM_SET_RPE,
     ANALYSIS_DRAGGED,
-    CLEAR_E1RM,
+    CLEAR_E1RM_CALCS,
 } from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
@@ -69,7 +70,7 @@ const defaultState = {
     maxX: null,
     maxY: null,
     isRegressionNegative: null,
-    e1RMCalcs: {},
+    e1RMCalcs: [],
     e1RMCalcsCount: 0,
 
     // edit set
@@ -181,8 +182,12 @@ const AnalysisReducer = (state = defaultState, action) => {
             };
         case CALC_1RM:
             let e1RMCalcs = state.e1RMCalcs;
-            let e1RMCalcExercise = action.e1RMCalc.exercise;
-            e1RMCalcs[e1RMCalcExercise] = action.e1RMCalc;
+            let newCalc = action.e1RMCalc;
+            
+            // filter out existing exercise + tags combos
+            let filteredCalcs = e1RMCalcs.filter((calc) => {
+                return !compareByExerciseAndTags(calc, newCalc);
+            });
 
             return {
                 ...state,
@@ -198,13 +203,13 @@ const AnalysisReducer = (state = defaultState, action) => {
                 maxY: action.maxY,
                 isRegressionNegative: action.isRegressionNegative,
                 scroll: !state.scroll,
-                e1RMCalcs: e1RMCalcs,
+                e1RMCalcs: [ ...filteredCalcs, newCalc ],
                 e1RMCalcsCount: state.e1RMCalcsCount += 1,
             };
-        case CLEAR_E1RM:
+        case CLEAR_E1RM_CALCS:
             return {
                 ...state,
-                e1RMCalcs: {},
+                e1RMCalcs: [],
                 e1RMCalcsCount: 0,
             }
         // edit
@@ -317,5 +322,23 @@ const AnalysisReducer = (state = defaultState, action) => {
             return state;
     }
 };
+
+const compareByExerciseAndTags = (calc1, calc2) => {
+
+    const areExercisesEqual = calc1.exercise === calc2.exercise;
+    const areTagsToIncludeEqual = areArraysEqual(calc1.num_include_tags, calc2.num_include_tags);
+    const areTagsToExcludeEqual = areArraysEqual(calc1.num_exclude_tags, calc2.num_exclude_tags);
+
+    return areExercisesEqual && areTagsToIncludeEqual && areTagsToExcludeEqual;
+
+}
+
+const areArraysEqual = (array1, array2) => {
+    if (!array1 || !array2 || array1.length !== array2.length) {
+        return false;
+    }
+    
+    return _.isEqual(array1.sort(), array2.sort());
+}
 
 export default AnalysisReducer;

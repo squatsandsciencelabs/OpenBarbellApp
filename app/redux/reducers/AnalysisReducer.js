@@ -326,8 +326,8 @@ const AnalysisReducer = (state = defaultState, action) => {
 const compareByExerciseAndTags = (calc1, calc2) => {
 
     const areExercisesEqual = calc1.exercise === calc2.exercise;
-    const areTagsToIncludeEqual = areArraysEqual(calc1.num_include_tags, calc2.num_include_tags);
-    const areTagsToExcludeEqual = areArraysEqual(calc1.num_exclude_tags, calc2.num_exclude_tags);
+    const areTagsToIncludeEqual = areArraysEqual(calc1.tags_to_include, calc2.tags_to_include);
+    const areTagsToExcludeEqual = areArraysEqual(calc1.tags_to_exclude, calc2.tags_to_exclude);
 
     return areExercisesEqual && areTagsToIncludeEqual && areTagsToExcludeEqual;
 

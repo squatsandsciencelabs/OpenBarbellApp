@@ -11,8 +11,16 @@ import {
 import Camera from 'react-native-camera';
 import KeepAwake from 'react-native-keep-awake';
 import * as Device from 'app/utility/Device';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class VideoRecorder extends Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            cameraType: 'back',
+        }
+    }
 
     componentDidUpdate(prevProps) {
         if (prevProps.isRecording !== this.props.isRecording) {
@@ -37,6 +45,15 @@ class VideoRecorder extends Component {
         if (!this.timer) {
             this.props.closeModal(this.props.setID);
         }
+    }
+
+    // toggle
+    _toggleCameraType() {
+        
+        const cameraType = this.state.cameraType === 'back' ? 'front' : 'back';
+
+        this.setState({ cameraType });
+
     }
 
     // record
@@ -110,14 +127,21 @@ class VideoRecorder extends Component {
                     <Camera
                         ref={(cam) => {this.camera = cam}}
                         style={{flex: 1}}
-                        aspect={Camera.constants.Aspect.fit}>
-
+                        type={this.state.cameraType}
+                        aspect={Camera.constants.Aspect.fit}
+                    >
                         <View style={styles.cancelButton}>
                             <View>
                             <TouchableOpacity onPress={()=>this._closeModal()}>
                                 <View><Text style={styles.cancelText}>Cancel</Text></View>
                             </TouchableOpacity>
                             </View>
+                        </View>
+
+                        <View style={{marginLeft: 50}}>
+                            <TouchableOpacity onPress={()=>this._toggleCameraType()}>
+                                <View><Icon name="repeat" size={25} color='white' /></View>
+                            </TouchableOpacity>    
                         </View>
 
                         <View style={{position: 'absolute', bottom: 50, left: 0, right: 0, alignItems: 'center'}}>

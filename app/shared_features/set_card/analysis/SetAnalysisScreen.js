@@ -27,6 +27,7 @@ import * as CollapsedSettingsSelectors from 'app/redux/selectors/CollapsedSettin
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as CollapsedMetrics from 'app/math/CollapsedMetrics';
 import * as DurationCalculator from 'app/utility/DurationCalculator';
+import * as SetUtils from 'app/utility/SetUtils';
 
 const metricValue = (state, set, quantifier, metric) => {
     let returnValue = null;
@@ -228,7 +229,7 @@ const mapStateToProps = (state, ownProps) => {
     // raw values
     const set = ownProps.set;
     const rpe = set.rpe;
-    const numReps = set.reps.length
+    const numReps = SetUtils.numValidUnremovedReps(set);
     const weightMetric = set.metric;
     const metric1 = CollapsedSettingsSelectors.getMetric1(state);
     const quantifier1 = CollapsedSettingsSelectors.getQuantifier1(state);

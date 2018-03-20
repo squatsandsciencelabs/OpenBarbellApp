@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { AppRegistry } from 'react-native';
+import { AppRegistry, Text, TextInput } from 'react-native';
+Text.defaultProps.allowFontScaling = false;
+TextInput.defaultProps.allowFontScaling = false;
 import { Provider } from 'react-redux';
 
 import 'app/configs+constants/ReactotronConfig';

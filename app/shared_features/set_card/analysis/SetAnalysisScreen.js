@@ -201,10 +201,16 @@ const metricValue = (state, set, quantifier, metric) => {
     return returnValue ? returnValue : '---';    
 };
 
-const metricDescription = (quantifier, metric, rpe, weightMetric) => {
+const metricDescription = (quantifier, metric, rpe, numReps, weightMetric) => {
     if (metric === RPE_METRIC) {
-        if (rpe) {
-            return weightMetric + ' @ ' + rpe + " " + CollapsedMetrics.metricAbbreviation(metric) +  "\ne1RM";       
+        if (rpe >= 6.5) {
+            if (numReps > 0 && numReps <= 10) {
+                return weightMetric + ' @ ' + rpe + " " + CollapsedMetrics.metricAbbreviation(metric) +  "\ne1RM";       
+            } else {
+                return 'RPE';
+            }
+        } else if (rpe < 6.5 || rpe.includes('<')) {
+            return 'RPE';
         } else {
             return "---\nRPE e1RM";
         }
@@ -222,6 +228,7 @@ const mapStateToProps = (state, ownProps) => {
     // raw values
     const set = ownProps.set;
     const rpe = set.rpe;
+    const numReps = set.reps.length
     const weightMetric = set.metric;
     const metric1 = CollapsedSettingsSelectors.getMetric1(state);
     const quantifier1 = CollapsedSettingsSelectors.getQuantifier1(state);
@@ -238,18 +245,18 @@ const mapStateToProps = (state, ownProps) => {
     return {
         value1: metricValue(state, set, quantifier1, metric1),
         unit1: unit(metric1, quantifier1),
-        description1: metricDescription(quantifier1, metric1, rpe, weightMetric),
+        description1: metricDescription(quantifier1, metric1, rpe, numReps, weightMetric),
         value2: metricValue(state, set, quantifier2, metric2),
-        description2: metricDescription(quantifier2, metric2, rpe, weightMetric),
+        description2: metricDescription(quantifier2, metric2, rpe, numReps, weightMetric),
         unit2: unit(metric2, quantifier2),
         value3: metricValue(state, set, quantifier3, metric3),
-        description3: metricDescription(quantifier3, metric3, rpe, weightMetric),
+        description3: metricDescription(quantifier3, metric3, rpe, numReps, weightMetric),
         unit3: unit(metric3, quantifier3),
         value4: metricValue(state, set, quantifier4, metric4),
-        description4: metricDescription(quantifier4, metric4, rpe, weightMetric),
+        description4: metricDescription(quantifier4, metric4, rpe, numReps, weightMetric),
         unit4: unit(metric4, quantifier4),
         value5: metricValue(state, set, quantifier5, metric5),
-        description5: metricDescription(quantifier5, metric5, rpe, weightMetric),
+        description5: metricDescription(quantifier5, metric5, rpe, numReps, weightMetric),
         unit5: unit(metric5, quantifier5),
         rpe: rpe,
     };

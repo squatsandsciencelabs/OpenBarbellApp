@@ -71,7 +71,6 @@ const defaultState = {
     maxY: null,
     isRegressionNegative: null,
     e1RMCalcs: [],
-    e1RMCalcsCount: 0,
 
     // edit set
     // TODO: Since there's only one setID ever at any point, shouldn't need this many setIDs
@@ -204,13 +203,11 @@ const AnalysisReducer = (state = defaultState, action) => {
                 isRegressionNegative: action.isRegressionNegative,
                 scroll: !state.scroll,
                 e1RMCalcs: [ ...filteredCalcs, newCalc ],
-                e1RMCalcsCount: state.e1RMCalcsCount += 1,
             };
         case CLEAR_E1RM_CALCS:
             return {
                 ...state,
                 e1RMCalcs: [],
-                e1RMCalcsCount: 0,
             }
         // edit
         case PRESENT_EDIT_1RM_SET:

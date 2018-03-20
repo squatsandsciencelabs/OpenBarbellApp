@@ -16,7 +16,6 @@ const OneRMLastCalculateAnalyticsSaga = function * OneRMLastCalculateAnalyticsSa
     const state = yield select();
 
     const e1RMLastCalcs = AnalysisSelectors.getE1RMCalcs(state);
-    const e1RMLastCalcCount = AnalysisSelectors.getE1RMCalcsCount(state);
 
     e1RMLastCalcs.forEach((e1RMLastCalc) => {
     

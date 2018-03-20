@@ -390,10 +390,21 @@ export const getRPE1RM = (set, useLBs=false) => {
         return null;
     }
 
+    // in set metrics show < 5.5 or < 5,5 if that is the rpe
+    const rpe = set.rpe.includes('<') ? set.rpe : Number(set.rpe.replace(',','.'));
+
     // rep length
     const numReps = SetUtils.numValidUnremovedReps(set);
-    if (numReps <= 0 || numReps > 10) {
-        return null;
+
+    // if we cannot calculate a 1rm from it, just return the RPE
+
+    if (numReps < 1 || numReps > 10) {
+        return rpe;
+    }
+
+    // toString() as error is thrown if rpe is valid number
+    if (rpe < 6.5 || rpe.toString().includes('<')) {
+       return rpe;
     }
 
     if (useLBs) {
@@ -401,7 +412,6 @@ export const getRPE1RM = (set, useLBs=false) => {
     } else {
         var weight = set.weight;
     }
-    const rpe = Number(set.rpe.replace(',','.'));
 
     // RPE percentages of 1rm correlated to reps @ RPE values
     // "RPE":{"REP#": Percentage of 1rm, ...}
@@ -417,12 +427,14 @@ export const getRPE1RM = (set, useLBs=false) => {
 	};
 
     // rpe table lookup
+    // returning rpe incase it is 6 or < 5.5 or < 5,5
     const rpeTable = RPEIntensity[rpe];
     if (!rpeTable) {
         return null;
     }
 
     // rpe percent lookup
+    // returning rpe incase it is 6 or < 5.5 or < 5,5
     const rpePercent = rpeTable[numReps];
     if (!rpePercent) {
         return null;

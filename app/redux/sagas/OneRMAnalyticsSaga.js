@@ -11,11 +11,11 @@ import {
     STORE_INITIALIZED,
 } from 'app/configs+constants/ActionTypes';
 
-const OneRMLastCalculateAnalyticsSaga = function * OneRMLastCalculateAnalyticsSaga() {
+const OneRMAnalyticsSaga = function * OneRMAnalyticsSaga() {
     yield take(STORE_INITIALIZED);
     const state = yield select();
 
-    const e1RMLastCalcs = AnalysisSelectors.getE1RMCalcs(state);
+    const e1RMLastCalcs = AnalysisSelectors.get1RMAnalytics(state);
 
     e1RMLastCalcs.forEach((e1RMLastCalc) => {
     
@@ -25,7 +25,7 @@ const OneRMLastCalculateAnalyticsSaga = function * OneRMLastCalculateAnalyticsSa
             e1RMLastCalc.num_exclude_tags,
             e1RMLastCalc.days_range,
             e1RMLastCalc.velocity,
-            e1RMLastCalc.one_rep_max,
+            e1RMLastCalc.one_rep_max_lb,
             e1RMLastCalc.r2,
             e1RMLastCalc.num_active_points,
             e1RMLastCalc.num_error_points,
@@ -44,18 +44,18 @@ const OneRMLastCalculateAnalyticsSaga = function * OneRMLastCalculateAnalyticsSa
 
     });
 
-    yield put(AnalysisActionCreators.clearE1RMCalcs());
+    yield put(AnalysisActionCreators.clear1RMAnalytics());
 };
 
 
-const logLast1RMCalcAnalytics = (exercise, numIncludeTags, numExcludeTags, daysRange, velocity, oneRepMax, r2, numActivePoints, numErrorPoints, numUnusedPoints, hasNegSlope, slope, minWeightLB, maxWeightLB, weightLBRange, minVelocity, maxVelocity, velocityRange, metric, state) => {
+const logLast1RMCalcAnalytics = (exercise, numIncludeTags, numExcludeTags, daysRange, velocity, oneRepMaxLB, r2, numActivePoints, numErrorPoints, numUnusedPoints, hasNegSlope, slope, minWeightLB, maxWeightLB, weightLBRange, minVelocity, maxVelocity, velocityRange, metric, state) => {
     Analytics.logEventWithAppState('one_rm_last_calculate', {
         exercise: exercise,
         num_include_tags: numIncludeTags,
         num_exclude_tags: numExcludeTags,
         days_range: daysRange,
         velocity: velocity,
-        one_rep_max: oneRepMax,
+        one_rep_max_lb: oneRepMaxLB,
         r2: r2,
         num_active_points: numActivePoints,
         num_error_points: numErrorPoints,
@@ -75,4 +75,4 @@ const logLast1RMCalcAnalytics = (exercise, numIncludeTags, numExcludeTags, daysR
 // TODO: write a unit test for this
 // this is waiting for a system to test sagas
 
-export default OneRMLastCalculateAnalyticsSaga;
+export default OneRMAnalyticsSaga;

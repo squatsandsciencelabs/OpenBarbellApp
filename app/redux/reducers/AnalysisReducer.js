@@ -41,7 +41,7 @@ import {
     EDIT_1RM_SET_WEIGHT,
     EDIT_1RM_SET_RPE,
     ANALYSIS_DRAGGED,
-    CLEAR_E1RM_CALCS,
+    CLEAR_1RM_ANALYTICS,
 } from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
@@ -70,7 +70,7 @@ const defaultState = {
     maxX: null,
     maxY: null,
     isRegressionNegative: null,
-    e1RMCalcs: [],
+    oneRMAnalytics: [],
 
     // edit set
     // TODO: Since there's only one setID ever at any point, shouldn't need this many setIDs
@@ -180,12 +180,12 @@ const AnalysisReducer = (state = defaultState, action) => {
                 dragged: !state.dragged,
             };
         case CALC_1RM:
-            let e1RMCalcs = state.e1RMCalcs;
-            let newCalc = action.e1RMCalc;
+            let storedOneRMAnalytics = state.oneRMAnalytics;
+            let currentOneRMAnalytics = action.oneRMAnalytics;
             
             // filter out existing exercise + tags combos
-            let filteredCalcs = e1RMCalcs.filter((calc) => {
-                return !compareByExerciseAndTags(calc, newCalc);
+            storedOneRMAnalytics = storedOneRMAnalytics.filter((storedOneRMAnalytic) => {
+                return !compareByExerciseAndTags(storedOneRMAnalytic, currentOneRMAnalytics);
             });
 
             return {
@@ -202,12 +202,12 @@ const AnalysisReducer = (state = defaultState, action) => {
                 maxY: action.maxY,
                 isRegressionNegative: action.isRegressionNegative,
                 scroll: !state.scroll,
-                e1RMCalcs: [ ...filteredCalcs, newCalc ],
+                oneRMAnalytics: [ ...storedOneRMAnalytics, currentOneRMAnalytics ],
             };
-        case CLEAR_E1RM_CALCS:
+        case CLEAR_1RM_ANALYTICS:
             return {
                 ...state,
-                e1RMCalcs: [],
+                oneRMAnalytics: [],
             };
         // edit
         case PRESENT_EDIT_1RM_SET:

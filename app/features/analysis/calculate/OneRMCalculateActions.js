@@ -79,7 +79,7 @@ export const calcE1RM = () => (dispatch, getState) => {
 
     // analytics
 
-    const calculateE1RMParams = analyticsParams(
+    const oneRMAnalyticsParams = analyticsParams(
         exercise,
         tagsToInclude ? tagsToInclude.length : 0,
         tagsToExclude ? tagsToExclude.length : 0,
@@ -99,13 +99,13 @@ export const calcE1RM = () => (dispatch, getState) => {
         metric,
     );
 
-    const e1RMCalcParams = { 
-        ...calculateE1RMParams,
+    const storedAnalyticsParams = { 
+        ...oneRMAnalyticsParams,
         tags_to_include: tagsToInclude,
         tags_to_exclude: tagsToExclude,
     };
 
-    logCalculate1RMAnalytics(calculateE1RMParams, state);
+    logCalculate1RMAnalytics(oneRMAnalyticsParams, state);
 
     // dispatch
     dispatch({
@@ -121,7 +121,7 @@ export const calcE1RM = () => (dispatch, getState) => {
         maxX: results.maxX,
         maxY: results.maxY,
         isRegressionNegative: results.isRegressionNegative,
-        e1RMCalc: e1RMCalcParams,
+        oneRMAnalytics: storedAnalyticsParams,
     });
 };
 

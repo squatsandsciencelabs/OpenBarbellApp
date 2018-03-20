@@ -7,7 +7,7 @@ import {
     PRESENT_ALGORITHM,
     PRESENT_BEST_RESULTS,
     ANALYSIS_DRAGGED,
-    CLEAR_E1RM_CALCS,
+    CLEAR_1RM_ANALYTICS,
 } from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 
@@ -48,6 +48,6 @@ const logBestResultsAnalytics = (state) => {
     }, state);
 };
 
-export const clearE1RMCalcs = () => ({
-    type: CLEAR_E1RM_CALCS,
+export const clear1RMAnalytics = () => ({
+    type: CLEAR_1RM_ANALYTICS,
 });

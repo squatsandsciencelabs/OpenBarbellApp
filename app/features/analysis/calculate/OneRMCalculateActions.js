@@ -183,7 +183,7 @@ const analyticsParams = (exercise, numIncludeTags, numExcludeTags, daysRange, ve
         max_velocity: maxVelocity,
         velocity_range: maxVelocity - minVelocity,
         metric: metric,
-    }
+    };
 };
 
 const logCalculate1RMAnalytics = (analyticsParams, state) => {

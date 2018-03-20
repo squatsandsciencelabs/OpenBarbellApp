@@ -208,7 +208,7 @@ const AnalysisReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 e1RMCalcs: [],
-            }
+            };
         // edit
         case PRESENT_EDIT_1RM_SET:
             return {
@@ -321,14 +321,12 @@ const AnalysisReducer = (state = defaultState, action) => {
 };
 
 const compareByExerciseAndTags = (calc1, calc2) => {
-
     const areExercisesEqual = calc1.exercise === calc2.exercise;
     const areTagsToIncludeEqual = areArraysEqual(calc1.tags_to_include, calc2.tags_to_include);
     const areTagsToExcludeEqual = areArraysEqual(calc1.tags_to_exclude, calc2.tags_to_exclude);
 
     return areExercisesEqual && areTagsToIncludeEqual && areTagsToExcludeEqual;
-
-}
+};
 
 const areArraysEqual = (array1, array2) => {
     if (!array1 || !array2 || array1.length !== array2.length) {
@@ -336,6 +334,6 @@ const areArraysEqual = (array1, array2) => {
     }
     
     return _.isEqual(array1.sort(), array2.sort());
-}
+};
 
 export default AnalysisReducer;

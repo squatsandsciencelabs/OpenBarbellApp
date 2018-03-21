@@ -75,7 +75,7 @@ export const saveSet = (setID, weight = null, metric = null, rpe = null) => {
 };
 
 export const presentRecordVideo = (setID) => (dispatch, getState) => {
-    VideoPermissionsUtils.checkRecordingPermissions().then(() => {        
+    // VideoPermissionsUtils.checkRecordingPermissions().then(() => {        
         const state = getState();
         Analytics.setCurrentScreen('workout_record_video');
         logVideoRecorderAnalytics(setID, state);
@@ -83,13 +83,13 @@ export const presentRecordVideo = (setID) => (dispatch, getState) => {
         dispatch({
             type: PRESENT_WORKOUT_VIDEO_RECORDER,
             setID: setID,
-            isCommentary: false
+            isCommentary: false,
         });
-    }).catch(() => {});
+    // }).catch(() => {});
 };
 
 export const presentRecordCommentary = (setID) => (dispatch, getState) => {
-    VideoPermissionsUtils.checkRecordingPermissions().then(() => {        
+    // VideoPermissionsUtils.checkRecordingPermissions().then(() => {        
         const state = getState();
         Analytics.setCurrentScreen('workout_record_video_log');
         logVideoLogRecorderAnalytics(setID, state);
@@ -97,9 +97,9 @@ export const presentRecordCommentary = (setID) => (dispatch, getState) => {
         dispatch({
             type: PRESENT_WORKOUT_VIDEO_RECORDER,
             setID: setID,
-            isCommentary: true
+            isCommentary: true,
         });
-    }).catch(() => {});
+    // }).catch(() => {});
 };
 
 export const presentWatchVideo = (setID, videoFileURL) => (dispatch, getState) => {

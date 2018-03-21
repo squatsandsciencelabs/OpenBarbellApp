@@ -4,6 +4,7 @@ import {
     DISMISS_HISTORY_VIDEO_RECORDER,
     SAVE_HISTORY_VIDEO,
     SAVE_VIDEO_ERROR,
+    TOGGLE_HISTORY_CAMERA_TYPE,
 } from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as DurationsSelectors from 'app/redux/selectors/DurationsSelectors';
@@ -51,7 +52,11 @@ export const saveVideoError = (setID, error) => (dispatch, getState) => {
     dispatch({
         type: SAVE_VIDEO_ERROR,
     });
-}
+};
+
+export const toggleCameraType = () => ({
+    type: TOGGLE_HISTORY_CAMERA_TYPE,
+});
 
 const logStartRecordingVideoAnalytics = (state, setID) => {
     Analytics.logEventWithAppState('start_recording_video', {

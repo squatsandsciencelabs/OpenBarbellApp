@@ -14,6 +14,7 @@ import {
     DELETE_HISTORY_VIDEO,
     SAVE_HISTORY_VIDEO,
     END_WORKOUT,
+    TOGGLE_HISTORY_CAMERA_TYPE,
 } from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
@@ -24,6 +25,7 @@ const defaultState = {
     editingTagsSetID: null,
     recordingSetID: null,
     recordingVideoType: null,
+    cameraType: null,
     isRecording: false,
     isSavingVideo: false,    
     watchSetID: null,
@@ -69,9 +71,18 @@ const HistoryReducer = (state = defaultState, action) => {
             return Object.assign({}, state, {
                 recordingSetID: action.setID,
                 recordingVideoType: action.isCommentary ? 'commentary' : 'lift',
+                cameraType: action.isCommentary ? 'front' : 'back',
                 isRecording: false,                
                 isSavingVideo: false                
             });
+        case TOGGLE_HISTORY_CAMERA_TYPE: {
+            let cameraType = state.cameraType;
+
+            return {
+                ...state,
+                cameraType: cameraType === 'front' ? 'back' : 'front',
+            };
+        };    
         case SAVE_HISTORY_VIDEO:
         case DISMISS_HISTORY_VIDEO_RECORDER:
             return Object.assign({}, state, {

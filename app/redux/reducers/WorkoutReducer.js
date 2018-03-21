@@ -21,6 +21,7 @@ import {
     RESUME_END_SET_TIMER,
     SAVE_WORKOUT_REP,
     END_WORKOUT,
+    TOGGLE_WORKOUT_CAMERA_TYPE,
 } from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
@@ -35,6 +36,7 @@ const defaultState = {
     // video
     recordingSetID: null,
     recordingVideoType: null,
+    cameraType: null,
     isRecording: false,
     isSavingVideo: false,
     watchSetID: null,
@@ -80,10 +82,19 @@ const WorkoutReducer = (state = defaultState, action) => {
             return Object.assign({}, state, {
                 recordingSetID: action.setID,
                 recordingVideoType: action.isCommentary ? 'commentary' : 'lift',
+                cameraType: action.isCommentary ? 'front' : 'back',
                 isRecording: false,
                 isSavingVideo: false,
                 isEditing: true             
             });
+        case TOGGLE_WORKOUT_CAMERA_TYPE: {
+            let cameraType = state.cameraType;
+
+            return {
+                ...state,
+                cameraType: cameraType === 'front' ? 'back' : 'front',
+            };
+        };
         case SAVE_WORKOUT_VIDEO:
         case DISMISS_WORKOUT_VIDEO_RECORDER:
             return Object.assign({}, state, {

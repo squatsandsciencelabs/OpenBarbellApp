@@ -8,6 +8,7 @@ import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
 const mapStateToProps = (state) => ({
     setID: AnalysisSelectors.getRecordingSetID(state),
     videoType: AnalysisSelectors.getRecordingVideoType(state),
+    cameraType: AnalysisSelectors.getCameraType(state),
     isModalShowing: AnalysisSelectors.getIsCameraVisible(state),
     isRecording: AnalysisSelectors.getIsRecording(state),
     isSaving: AnalysisSelectors.getIsSavingVideo(state)
@@ -19,7 +20,8 @@ const mapDispatchToProps = (dispatch) => {
         tappedStart: Actions.startRecording,
         tappedStop: Actions.stopRecording,
         saveVideo: Actions.saveVideo,
-        saveVideoError: Actions.saveVideoError
+        saveVideoError: Actions.saveVideoError,
+        toggleCameraType: Actions.toggleCameraType,
     }, dispatch);
 };
 

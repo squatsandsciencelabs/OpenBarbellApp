@@ -5,6 +5,7 @@ import {
     SAVE_WORKOUT_VIDEO,
     SAVE_HISTORY_VIDEO,
     SAVE_VIDEO_ERROR,
+    TOGGLE_1RM_VIDEO_RECORDER_CAMERA_TYPE,
 } from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
@@ -62,6 +63,10 @@ export const saveVideoError = (setID, error) => (dispatch, getState) => {
         type: SAVE_VIDEO_ERROR,
     });
 };
+
+export const toggleCameraType = () => ({
+    type: TOGGLE_1RM_VIDEO_RECORDER_CAMERA_TYPE,
+});
 
 const logStartRecordingVideoAnalytics = (state, setID) => {
     const is_working_set = SetsSelectors.getIsWorkingSet(state, setID);

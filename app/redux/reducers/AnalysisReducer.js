@@ -42,6 +42,7 @@ import {
     EDIT_1RM_SET_RPE,
     ANALYSIS_DRAGGED,
     CLEAR_1RM_ANALYTICS,
+    TOGGLE_1RM_VIDEO_RECORDER_CAMERA_TYPE,
 } from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
@@ -84,6 +85,7 @@ const defaultState = {
     editingTagsSetID: null,
     recordingSetID: null,
     recordingVideoType: null,
+    cameraType: null,
     isRecording: false,
     isSavingVideo: false,    
     watchSetID: null,
@@ -266,9 +268,18 @@ const AnalysisReducer = (state = defaultState, action) => {
             return Object.assign({}, state, {
                 recordingSetID: action.setID,
                 recordingVideoType: action.isCommentary ? 'commentary' : 'lift',
+                cameraType: action.isCommentary ? 'front' : 'back',
                 isRecording: false,
                 isSavingVideo: false,
             });
+        case TOGGLE_1RM_VIDEO_RECORDER_CAMERA_TYPE: {
+            let cameraType = state.cameraType;
+
+            return {
+                ...state,
+                cameraType: cameraType === 'front' ? 'back' : 'front',
+            };
+        };    
         case SAVE_WORKOUT_VIDEO: // workout sets will use save workout video
         case SAVE_HISTORY_VIDEO: // history sets will use save history video
         case DISMISS_1RM_VIDEO_RECORDER:

@@ -126,10 +126,10 @@ class VideoRecorder extends Component {
                             </View>
                         </View>
 
-                        <View style={{alignItems: 'flex-end', marginRight: 35, backgroundColor: '#00000000' }}>
+                        <View style={styles.flipButton}>
                             <TouchableOpacity onPress={()=>this._toggleCameraType()}>
                                 <View>
-                                    <Icon name="repeat" size={30} style={{ backgroundColor: 'red', padding: 10, borderRadius: 22.5, overflow: 'hidden' }} color='white' />
+                                    <Icon name="repeat" size={30} style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', padding: 10, borderRadius: 22.5, overflow: 'hidden' }} color='white' />
                                 </View>
                             </TouchableOpacity>    
                         </View>
@@ -196,7 +196,18 @@ const styles = StyleSheet.create({
         height: 30,
         paddingTop: 5,
         textAlign: 'center'
-    }
+    },
+    flipButton: {
+        alignItems: 'flex-end', 
+        marginRight: 20, 
+        backgroundColor: '#00000000' 
+    },
+    flipIcon: {
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+        padding: 10, 
+        borderRadius: 22.5, 
+        overflow: 'hidden',
+    },
 });
 
 export default VideoRecorder;

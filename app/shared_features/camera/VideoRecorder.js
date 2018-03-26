@@ -109,7 +109,10 @@ class VideoRecorder extends Component {
     }
 
     _renderToggleCameraTypeButton() {
-        if (!this.props.isRecording) {
+        // need to return empty view as button remains but is not clickable if not returning anything
+        if (this.props.isRecording) {
+            return <View></View>
+        } else {
             return (
                 <View style={styles.flipButton}>
                     <TouchableOpacity onPress={()=>this._toggleCameraType()}>
@@ -119,8 +122,6 @@ class VideoRecorder extends Component {
                     </TouchableOpacity>    
                 </View>
             );
-        } else {
-            return;
         }
     }
 

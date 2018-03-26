@@ -27,7 +27,7 @@ class VideoRecorder extends Component {
     componentWillUnmount() {
         if (this.timer) {
             clearTimeout(this.timer);
-            this.timer = nil;
+            this.timer = null;
         }
     }
 

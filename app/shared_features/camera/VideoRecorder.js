@@ -119,6 +119,8 @@ class VideoRecorder extends Component {
                     </TouchableOpacity>    
                 </View>
             );
+        } else {
+            return;
         }
     }
 

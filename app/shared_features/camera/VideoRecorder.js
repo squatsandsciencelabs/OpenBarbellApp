@@ -108,6 +108,20 @@ class VideoRecorder extends Component {
         }
     }
 
+    _renderToggleCameraTypeButton() {
+        if (!this.props.isRecording) {
+            return (
+                <View style={styles.flipButton}>
+                    <TouchableOpacity onPress={()=>this._toggleCameraType()}>
+                        <View>
+                            <Icon name="repeat" size={30} style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', padding: 10, borderRadius: 22.5, overflow: 'hidden' }} color='white' />
+                        </View>
+                    </TouchableOpacity>    
+                </View>
+            );
+        }
+    }
+
     _renderCamera() {
         if (this.props.isModalShowing) {
             return (
@@ -126,13 +140,7 @@ class VideoRecorder extends Component {
                             </View>
                         </View>
 
-                        <View style={styles.flipButton}>
-                            <TouchableOpacity onPress={()=>this._toggleCameraType()}>
-                                <View>
-                                    <Icon name="repeat" size={30} style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', padding: 10, borderRadius: 22.5, overflow: 'hidden' }} color='white' />
-                                </View>
-                            </TouchableOpacity>    
-                        </View>
+                        {this._renderToggleCameraTypeButton()}
 
                         <View style={{position: 'absolute', bottom: 50, left: 0, right: 0, alignItems: 'center'}}>
                             { this._renderActionButton() }

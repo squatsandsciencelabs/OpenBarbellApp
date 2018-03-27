@@ -34,9 +34,9 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
     let isInitialSet = false; // to help determine when to display rest time
     let isCollapsed = false;
     let isRemoved = false;
-    
+
     // ignore if initialStartTime is null as that was a bug, it's supposed to be undefined or an actual date
-    sets = sets.filter((set) => set.initialStartTime !== null);
+    sets = HistorySelectors.filterHistory(sets, state);
 
     // build view models
     for (let i=0; i<sets.length; i++) {

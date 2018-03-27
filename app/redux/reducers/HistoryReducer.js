@@ -31,6 +31,19 @@ const defaultState = {
     watchSetID: null,
     watchFileURL: null,
     viewedCounter: 0,
+
+    // filter
+    exercise: null,
+    tagsToInclude: [],
+    tagsToExclude: [],
+    startingRPE: null,
+    endingRPE: null,
+    startingWeight: null,
+    endingWeight: null,
+    startingRepRange: null,
+    endingRepRange: null,
+    startingDate: null,
+    endingDate: null,
 };
 
 const HistoryReducer = (state = defaultState, action) => {

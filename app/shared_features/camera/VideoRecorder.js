@@ -110,7 +110,7 @@ class VideoRecorder extends Component {
 
     _renderToggleCameraTypeButton() {
         // need to return empty view as button remains but is not clickable if not returning anything
-        if (this.props.isRecording) {
+        if (this.props.isRecording || this.props.isSaving) {
             return <View></View>
         } else {
             return (

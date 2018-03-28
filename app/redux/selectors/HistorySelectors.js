@@ -78,25 +78,22 @@ export const filterHistory = (allSets, state) => {
 };
 
 const isValidForHistoryFilter = (set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, endingWeight, startingRepRange, endingRepRange, startingDate, endingDate) => {
-    const startTime = SetUtils.startTime(set);
-    return !SetUtils.isDeleted(set) 
-    && startTime != null
+    return !SetUtils.isDeleted(set)
     && checkExercise(set.exercise, exercise)
     && checkIncludesTags(set.tags, tagsToInclude)
     && checkExcludesTags(set.tags, tagsToExclude)
     && checkWeightRange(set.weight, startingWeight, endingWeight)
     && checkRPERange(set.rpe, startingRPE, endingRPE)
-    && checkDateRange(set.initialStartTime, startingDate, endignDate)
+    && checkDateRange(set.initialStartTime, startingDate, endingDate)
+    && checkRepRange(set, startingRepRange, endingRepRange)
 }
 
-// TODO: Refactor this out to utilities since one rm calc uses it too
-
-const checkExercise = (exercise, setExercise) => {
+const checkExercise = (setExercise, exercise) => {
     if (!exercise) {
         return true;
     }
 
-    return exercise.trim().toLowerCase === exercise.trim().toLowerCase();
+    return setExercise.trim().toLowerCase() === exercise.trim().toLowerCase();
 }
 
 const checkIncludesTags = (tags, tagsToInclude) => {
@@ -145,14 +142,28 @@ const checkRPERange = (setRPE, startingRPE, endingRPE) => {
     }
 };
 
-const checkDateRange = (setInitialStartTime, startDate, endDate) => {
-    if (!startDate && !endDate) {
+const checkRepRange = (set, startingRepRange, endingRepRange) => {
+    const validUnremovedReps = SetUtils.numValidUnremovedReps(set);
+
+    if (!startingRepRange && !endingRepRange) {
         return true;
-    } else if (startDate && !endDate) {
-        return new Date(setInitialStartTime) >= new Date(startDate);
-    } else if (!startDate && endDate) {
-        return new Date(setInitialStartTime) <= new Date(endDate);
+    } else if (!startingRepRange && endingRepRange) {
+        return validUnremovedReps <= endingRepRange;
+    } else if (startingRepRange && !endingRepRange) {
+        return validUnremovedReps >= startingRepRange;
     } else {
-        return new Date(setInitialStartTime) >= new Date(startDate) && new Date(setInitialStartTime) <= new Date(endDate);
+        return validUnremovedReps >= startingRepRange && validUnremovedReps <= endingRepRange;
+    }
+};
+
+const checkDateRange = (setInitialStartTime, startingDate, endingDate) => {
+    if (!startingDate && !endingDate) {
+        return true;
+    } else if (startingDate && !endingDate) {
+        return new Date(setInitialStartTime) >= new Date(startingDate);
+    } else if (!startingDate && endingDate) {
+        return new Date(setInitialStartTime) <= new Date(endingDate);
+    } else {
+        return new Date(setInitialStartTime) >= new Date(startingDate) && new Date(setInitialStartTime) <= new Date(endingDate);
     }
 };

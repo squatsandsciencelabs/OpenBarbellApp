@@ -119,6 +119,7 @@ const checkExcludesTags = (tags, tagsToExclude) => {
 };
 
 const checkWeightRange = (setWeight, startingWeight, endingWeight) => {
+    // turn into pounds
     if (!startingWeight && !endingWeight) {
         return true;
     } else if (!startingWeight && endingWeight) {
@@ -131,6 +132,7 @@ const checkWeightRange = (setWeight, startingWeight, endingWeight) => {
 };
 
 const checkRPERange = (setRPE, startingRPE, endingRPE) => {
+    // ACCOUNT FOR COMMAS
     if (!startingRPE && !endingRPE) {
         return true;
     } else if (!startingRPE && endingRPE) {

@@ -4,14 +4,10 @@ import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 describe('HistorySelectors', () => {
 
     describe('filterHistory', () => {
-
-        beforeAll(() => {
-            Date.now = () => 1522555200000;
-        });
-    
-        afterAll(() => {
-            Date.now = realNow;
-        });
+        var validUnremoved = { isValid: true, removed: false }; // acceptable
+        var invalidUnremoved = { isValid: false, removed: false }; // unacceptable
+        var validRemoved = { isValid: true, removed: true }; // unacceptable
+        var invalidRemoved = { isValid: false, removed: true }; // unacceptable
 
         var state = {
             sets: {
@@ -25,7 +21,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'A',
                         initialStartTime: '2018-03-11',
                         metric: 'kgs',
-                        reps: [{}]
+                        reps: [validUnremoved],
                     },
                     '2': {
                         setID: '2',
@@ -36,7 +32,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'A',
                         initialStartTime: '2018-03-11',
                         metric: 'kgs',
-                        reps: [{}]
+                        reps: [validUnremoved],
                     },
                     '3': {
                         setID: '3',
@@ -47,7 +43,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'A',
                         initialStartTime: '2018-03-11',
                         metric: 'kgs',
-                        reps: [{}]
+                        reps: [validRemoved],
                     },
                     '4': {
                         setID: '4',
@@ -58,7 +54,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'A',
                         initialStartTime: '2018-03-11',
                         metric: 'kgs',
-                        reps: [{}, {}, {}, {}, {}]
+                        reps: [validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved],
                     },
                     '5': {
                         setID: '5',
@@ -69,7 +65,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'A',
                         initialStartTime: '2018-03-11',
                         metric: 'kgs',
-                        reps: [{}, {}, {}, {}, {}]
+                        reps: [validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved],
                     },
                     '6': {
                         setID: '6',
@@ -80,7 +76,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'A',
                         initialStartTime: '2018-03-11',
                         metric: 'kgs',
-                        reps: [{}, {}, {}, {}, {}]
+                        reps: [validUnremoved, validRemoved, validUnremoved, validUnremoved, validUnremoved],
                     },
                     '7': {
                         setID: '7',
@@ -91,7 +87,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'A',
                         initialStartTime: '2018-03-11',
                         metric: 'kgs',
-                        reps: [{}, {}, {}, {}, {}]
+                        reps: [invalidUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved]
                     },
                     '8': {
                         setID: '8',
@@ -102,7 +98,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'A',
                         initialStartTime: '2018-03-11',
                         metric: 'kgs',
-                        reps: [{}, {}, {}, {}, {}]
+                        reps: [validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved],
                     },
                     '9': {
                         setID: '9',
@@ -113,7 +109,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'A',
                         initialStartTime: '2018-03-11',
                         metric: 'kgs',
-                        reps: [{}, {}, {}, {}, {}]
+                        reps: [validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved],
                     },
                     '10': {
                         setID: '10',
@@ -124,7 +120,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'B',
                         initialStartTime: '2018-03-13',
                         metric: 'kgs',
-                        reps: [{}]
+                        reps: [validUnremoved],
                     },
                     '11': {
                         setID: '11',
@@ -135,7 +131,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'B',
                         initialStartTime: '2018-03-13',
                         metric: 'kgs',
-                        reps: [{}]
+                        reps: [validUnremoved],
                     },
                     '12': {
                         setID: '12',
@@ -146,15 +142,16 @@ describe('HistorySelectors', () => {
                         workoutID: 'B',
                         initialStartTime: '2018-03-13',
                         metric: 'kgs',
-                        reps: [{}]
+                        reps: [invalidRemoved],
                     },
                     '13': {
                         setID: '13',
                         exercise: 'Bench',
-                        tags: [],
+                        tags: ['backoff'],
                         workoutID: 'B',
                         initialStartTime: '2018-03-13',
                         metric: 'kgs',
+                        reps: [validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved],
                     },
                     '14': {
                         setID: '14',
@@ -163,6 +160,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'B',
                         initialStartTime: '2018-03-13',
                         metric: 'kgs',
+                        reps: [validUnremoved, validUnremoved, invalidUnremoved, validUnremoved, validUnremoved],
                     },
                     '15': {
                         setID: '15',
@@ -171,6 +169,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'B',
                         initialStartTime: '2018-03-13',
                         metric: 'kgs',
+                        reps: [validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved],
                     },
                     '16': {
                         setID: '16',
@@ -179,6 +178,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'B',
                         initialStartTime: '2018-03-13',
                         metric: 'kgs',
+                        reps: [validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved],
                     },
                     '17': {
                         setID: '17',
@@ -187,6 +187,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'B',
                         initialStartTime: '2018-03-13',
                         metric: 'kgs',
+                        reps: [validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved],
                     },
                     '18': {
                         setID: '18',
@@ -195,6 +196,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'B',
                         initialStartTime: '2018-03-13',
                         metric: 'kgs',
+                        reps: [validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved],
                     },
                     '19': {
                         setID: '19',
@@ -203,6 +205,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'B',
                         initialStartTime: '2018-03-13',
                         metric: 'kgs',
+                        reps: [validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved],
                     },
                     '20': {
                         setID: '20',
@@ -211,6 +214,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'B',
                         initialStartTime: '2018-03-13',
                         metric: 'kgs',
+                        reps: [validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved],
                     },
                     '21': {
                         setID: '21',
@@ -219,6 +223,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'B',
                         initialStartTime: '2018-03-13',
                         metric: 'kgs',
+                        reps: [validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved],
                     },
                     '22': {
                         setID: '22',
@@ -229,6 +234,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'C',
                         initialStartTime: '2018-03-15',
                         metric: 'kgs',
+                        reps: [validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved],
                     },
                     '23': {
                         setID: '23',
@@ -239,6 +245,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'C',
                         initialStartTime: '2018-03-15',
                         metric: 'kgs',
+                        reps: [validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved],
                     },
                     '24': {
                         setID: '24',
@@ -249,6 +256,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'C',
                         initialStartTime: '2018-03-15',
                         metric: 'kgs',
+                        reps: [validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved],
                     },
                     '25': {
                         setID: '25',
@@ -259,7 +267,7 @@ describe('HistorySelectors', () => {
                         workoutID: 'C',
                         initialStartTime: '2018-03-15',
                         metric: 'kgs',
-                        reps: [{}, {}, {}]
+                        reps: [validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved, validUnremoved],
                     }
                 }
             },
@@ -267,14 +275,14 @@ describe('HistorySelectors', () => {
                 exercise: 'Squat',
                 tagsToInclude: [],
                 tagsToExclude: [],
-                startingRPE: 6.5,
+                startingRPE: 7,
                 endingRPE: 9,
                 startingWeight: 100,
-                endingWeight: 150,
-                startingReps: null,
-                endingReps: null,
-                startingDate: null,
-                endingDate: null,
+                endingWeight: 120,
+                startingRepRange: 1,
+                endingRepRange: 5,
+                startingDate: '2018-03-05',
+                endingDate: '2018-03-20',
             }
         }
 
@@ -283,7 +291,58 @@ describe('HistorySelectors', () => {
 
             const result = sut.filterHistory(historyData, state);
 
-            expect(result).toBe([]);
+            expect(result).toEqual([
+                {
+                    "exercise": "Squat", 
+                    "initialStartTime": "2018-03-11", 
+                    "metric": "kgs", 
+                    "reps": [
+                        {"isValid": true, "removed": false}, 
+                        {"isValid": true, "removed": false}, 
+                        {"isValid": true, "removed": false}, 
+                        {"isValid": true, "removed": false}, 
+                        {"isValid": true, "removed": false}], 
+                    "rpe": "8",
+                    "setID": "4", 
+                    "tags": [], 
+                    "weight": 120, 
+                    "workoutID": "A"
+                }, 
+                {
+                    "exercise": "Squat", 
+                    "initialStartTime": "2018-03-11", 
+                    "metric": "kgs", 
+                    "reps": [
+                        {"isValid": true, "removed": false}, 
+                        {"isValid": true, "removed": false}, 
+                        {"isValid": true, "removed": false}, 
+                        {"isValid": true, "removed": false}, 
+                        {"isValid": true, "removed": false}
+                    ], 
+                    "rpe": "8", 
+                    "setID": "5", 
+                    "tags": [], 
+                    "weight": 120, 
+                    "workoutID": "A"
+                }, 
+                {
+                    "exercise": "Squat", 
+                    "initialStartTime": "2018-03-11", 
+                    "metric": "kgs", 
+                    "reps": [
+                        {"isValid": true, "removed": false}, 
+                        {"isValid": true, "removed": true}, 
+                        {"isValid": true, "removed": false}, 
+                        {"isValid": true, "removed": false}, 
+                        {"isValid": true, "removed": false}
+                    ], 
+                    "rpe": "8", 
+                    "setID": "6", 
+                    "tags": [], 
+                    "weight": 120, 
+                    "workoutID": "A"
+                }
+            ]);
         });
 
     });

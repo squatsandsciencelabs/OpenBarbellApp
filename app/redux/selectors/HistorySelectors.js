@@ -76,7 +76,7 @@ export const filterHistory = (allSets, state) => {
     const endingDate = getHistoryFilterEndingDate(state);
 
     allSets.forEach((set) => {
-        if (isValidForHistoryFilter(set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric, startingRepRange, endingRepRange, startingDate, endingDate)) {
+        if (set.initialStartTime !== null && isValidForHistoryFilter(set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric, startingRepRange, endingRepRange, startingDate, endingDate)) {
             data.push(set);
         }
     });

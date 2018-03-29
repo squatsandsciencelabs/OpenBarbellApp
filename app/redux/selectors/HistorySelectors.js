@@ -152,6 +152,8 @@ const checkRPERange = (setRPE, startingRPE, endingRPE) => {
 
     if (!startingRPEWithoutCommas && !endingRPEWithoutCommas) {
         return true;
+    } else if ((startingRPEWithoutCommas || endingRPEWithoutCommas) && !setRPE) {
+        return false;
     } else if (!startingRPEWithoutCommas  && endingRPEWithoutCommas) {
         return setRPEWithoutCommas <= endingRPEWithoutCommas;
     } else if (startingRPEWithoutCommas && !endingRPEWithoutCommas) {

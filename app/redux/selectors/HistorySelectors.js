@@ -1,5 +1,6 @@
 import * as DateUtils from 'app/utility/DateUtils';
 import * as SetUtils from 'app/utility/SetUtils';
+import * as WeightConversion from 'app/utility/WeightConversion';
 
 const stateRoot = (state) => state.history;
 
@@ -43,6 +44,10 @@ export const getHistoryFilterEndingRPE = (state) => stateRoot(state).endingRPE;
 
 export const getHistoryFilterStartingWeight = (state) => stateRoot(state).startingWeight;
 
+export const getHistoryFilterStartingWeightMetric = (state) => stateRoot(state).startingWeightMetric;
+
+export const getHistoryFilterEndingWeightMetric = (state) => stateRoot(state).endingWeightMetric;
+
 export const getHistoryFilterEndingWeight = (state) => stateRoot(state).endingWeight;
 
 export const getHistoryFilterStartingRepRange = (state) => stateRoot(state).startingRepRange;
@@ -62,14 +67,16 @@ export const filterHistory = (allSets, state) => {
     const startingRPE = getHistoryFilterStartingRPE(state);
     const endingRPE = getHistoryFilterEndingRPE(state);
     const startingWeight = getHistoryFilterStartingWeight(state);
+    const startingWeightMetric = getHistoryFilterStartingWeightMetric(state);
     const endingWeight = getHistoryFilterEndingWeight(state);
+    const endingWeightMetric = getHistoryFilterEndingWeightMetric(state);
     const startingRepRange = getHistoryFilterStartingRepRange(state);
     const endingRepRange = getHistoryFilterEndingRepRange(state);
     const startingDate = getHistoryFilterStartingDate(state);
     const endingDate = getHistoryFilterEndingDate(state);
 
     allSets.forEach((set) => {
-        if (isValidForHistoryFilter(set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, endingWeight, startingRepRange, endingRepRange, startingDate, endingDate)) {
+        if (isValidForHistoryFilter(set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric, startingRepRange, endingRepRange, startingDate, endingDate)) {
             data.push(set);
         }
     });
@@ -77,12 +84,12 @@ export const filterHistory = (allSets, state) => {
     return data;
 };
 
-const isValidForHistoryFilter = (set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, endingWeight, startingRepRange, endingRepRange, startingDate, endingDate) => {
+const isValidForHistoryFilter = (set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric, startingRepRange, endingRepRange, startingDate, endingDate) => {
     return !SetUtils.isDeleted(set)
     && checkExercise(set.exercise, exercise)
     && checkIncludesTags(set.tags, tagsToInclude)
     && checkExcludesTags(set.tags, tagsToExclude)
-    && checkWeightRange(set.weight, startingWeight, endingWeight)
+    && checkWeightRange(set.weight, set.metric, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric)
     && checkRPERange(set.rpe, startingRPE, endingRPE)
     && checkDateRange(set.initialStartTime, startingDate, endingDate)
     && checkRepRange(set, startingRepRange, endingRepRange)
@@ -118,29 +125,39 @@ const checkExcludesTags = (tags, tagsToExclude) => {
     return excludeTagsInsensitive.every((tagToExclude) => !tagsInsensitive.includes(tagToExclude));
 };
 
-const checkWeightRange = (setWeight, startingWeight, endingWeight) => {
+const checkWeightRange = (setWeight, setMetric, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric) => {
     // turn into pounds
-    if (!startingWeight && !endingWeight) {
+    const setWeightLBs = WeightConversion.weightInLBs(setMetric, setWeight);
+    const startingWeightLBs = WeightConversion.weightInLBs(startingWeightMetric, startingWeight);
+    const endingWeightLBs = WeightConversion.weightInLBs(endingWeightMetric, endingWeight);
+    
+    if (!startingWeightLBs && !endingWeightLBs) {
         return true;
-    } else if (!startingWeight && endingWeight) {
-        return setWeight <= endingWeight;
-    } else if (startingWeight && !endingWeight) {
-        return setWeight >= startingWeight;
+    } else if ((startingWeightLBs || endingWeightLBs) && !setWeightLBs) {
+        return false;
+    } else if (!startingWeightLBs && endingWeightLBs && setWeightLBs) {
+        return setWeightLBs <= endingWeightLBs;
+    } else if (startingWeightLBs && !endingWeightLBs && setWeightLBs) {
+        return setWeightLBs >= startingWeightLBs;
     } else {
-        return setWeight >= startingWeight && setWeight <= endingWeight;
+        return setWeightLBs >= startingWeightLBs && setWeightLBs <= endingWeightLBs;
     }
 };
 
 const checkRPERange = (setRPE, startingRPE, endingRPE) => {
-    // ACCOUNT FOR COMMAS
-    if (!startingRPE && !endingRPE) {
+    // account for commas
+    const setRPEWithoutCommas = setRPE ? Number(setRPE.replace(',','.')) : setRPE;
+    const startingRPEWithoutCommas = startingRPE ? Number(startingRPE.replace(',','.')) : startingRPE;
+    const endingRPEWithoutCommas = endingRPE ? Number(endingRPE.replace(',','.')) : endingRPE;
+
+    if (!startingRPEWithoutCommas && !endingRPEWithoutCommas) {
         return true;
-    } else if (!startingRPE && endingRPE) {
-        return Number(setRPE) <= endingRPE;
-    } else if (startingRPE && !endingRPE) {
-        return Number(setRPE) >= startingRPE;
+    } else if (!startingRPEWithoutCommas  && endingRPEWithoutCommas) {
+        return setRPEWithoutCommas <= endingRPEWithoutCommas;
+    } else if (startingRPEWithoutCommas && !endingRPEWithoutCommas) {
+        return setRPEWithoutCommas >= startingRPEWithoutCommas ;
     } else {
-        return Number(setRPE) >= startingRPE && Number(setRPE) <= endingRPE;
+        return setRPEWithoutCommas >= startingRPEWithoutCommas && setRPEWithoutCommas <= endingRPEWithoutCommas;
     }
 };
 

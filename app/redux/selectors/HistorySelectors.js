@@ -135,9 +135,9 @@ const checkWeightRange = (setWeight, setMetric, startingWeight, startingWeightMe
         return true;
     } else if ((startingWeightLBs || endingWeightLBs) && !setWeightLBs) {
         return false;
-    } else if (!startingWeightLBs && endingWeightLBs && setWeightLBs) {
+    } else if (!startingWeightLBs && endingWeightLBs) {
         return setWeightLBs <= endingWeightLBs;
-    } else if (startingWeightLBs && !endingWeightLBs && setWeightLBs) {
+    } else if (startingWeightLBs && !endingWeightLBs) {
         return setWeightLBs >= startingWeightLBs;
     } else {
         return setWeightLBs >= startingWeightLBs && setWeightLBs <= endingWeightLBs;

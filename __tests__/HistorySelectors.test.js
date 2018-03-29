@@ -38,7 +38,7 @@ describe('HistorySelectors', () => {
                         setID: '3',
                         exercise: 'Squat',
                         weight: 140,
-                        rpe: '9',
+                        rpe: '7,5',
                         tags: ['single', 'belt'],
                         workoutID: 'A',
                         initialStartTime: '2018-03-11',
@@ -49,7 +49,7 @@ describe('HistorySelectors', () => {
                         setID: '4',
                         exercise: 'Squat',
                         weight: 120,
-                        rpe: '8',
+                        rpe: null,
                         tags: ['backoff', 'volume'],
                         workoutID: 'A',
                         initialStartTime: '2018-03-11',
@@ -229,7 +229,7 @@ describe('HistorySelectors', () => {
                         setID: '22',
                         exercise: 'Squat',
                         weight: 115,
-                        rpe: '7',
+                        rpe: '7,5',
                         tags: ['volume', 'belt', 'knee cave', 'knee wraps'],
                         workoutID: 'C',
                         initialStartTime: '2018-03-15',
@@ -262,7 +262,7 @@ describe('HistorySelectors', () => {
                         setID: '25',
                         exercise: 'Squat',
                         weight: 115,
-                        rpe: '7',
+                        rpe: '8.5',
                         tags: ['volume'],
                         workoutID: 'C',
                         initialStartTime: '2018-03-15',
@@ -277,9 +277,9 @@ describe('HistorySelectors', () => {
                 tagsToExclude: [],
                 startingRPE: '7',
                 endingRPE: '9',
-                startingWeight: 100,
+                startingWeight: 260,
                 startingWeightMetric: 'lbs',
-                endingWeight: 120,
+                endingWeight: 130,
                 endingWeightMetric: 'kgs',
                 startingRepRange: 1,
                 endingRepRange: 6,
@@ -292,7 +292,7 @@ describe('HistorySelectors', () => {
 
         // testing with invalidUnremoved, validUnremoved, invalidRemoved, etc.
         // TODO: Test with , RPE's
-        // TODO: Test with no weight sets
+        // TODO: Tests with no RPE's
 
         test('return filtered history list', () => {
             const result = sut.filterHistory(historyData, state);
@@ -304,23 +304,11 @@ describe('HistorySelectors', () => {
                 "reps": [{
                     "isValid": true,
                     "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
                 }],
-                "rpe": "8",
-                "setID": "4",
-                "tags": ["backoff", "volume"],
-                "weight": 120,
+                "rpe": "7",
+                "setID": "2",
+                "tags": ["belt", "single"],
+                "weight": 130,
                 "workoutID": "A"
             }, {
                 "exercise": "Squat",
@@ -372,118 +360,6 @@ describe('HistorySelectors', () => {
                 "tags": ["backoff"],
                 "weight": 120,
                 "workoutID": "A"
-            }, {
-                "exercise": "Squat",
-                "initialStartTime": "2018-03-15",
-                "metric": "kgs",
-                "reps": [{
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }],
-                "rpe": "7",
-                "setID": "22",
-                "tags": ["volume", "belt", "knee cave", "knee wraps"],
-                "weight": 115,
-                "workoutID": "C"
-            }, {
-                "exercise": "Squat",
-                "initialStartTime": "2018-03-15",
-                "metric": "kgs",
-                "reps": [{
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }],
-                "rpe": "7",
-                "setID": "23",
-                "tags": ["belt", "volume"],
-                "weight": 115,
-                "workoutID": "C"
-            }, {
-                "exercise": "Squat",
-                "initialStartTime": "2018-03-15",
-                "metric": "kgs",
-                "reps": [{
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }],
-                "rpe": "7",
-                "setID": "24",
-                "tags": ["volume"],
-                "weight": 115,
-                "workoutID": "C"
-            }, {
-                "exercise": "Squat",
-                "initialStartTime": "2018-03-15",
-                "metric": "kgs",
-                "reps": [{
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }],
-                "rpe": "7",
-                "setID": "25",
-                "tags": ["volume"],
-                "weight": 115,
-                "workoutID": "C"
             }]);
         });
 
@@ -683,7 +559,7 @@ describe('HistorySelectors', () => {
                     "isValid": true,
                     "removed": false
                 }],
-                "rpe": "7",
+                "rpe": "7,5",
                 "setID": "22",
                 "tags": ["volume", "belt", "knee cave", "knee wraps"],
                 "weight": 115,
@@ -767,7 +643,7 @@ describe('HistorySelectors', () => {
                     "isValid": true,
                     "removed": false
                 }],
-                "rpe": "7",
+                "rpe": "8.5",
                 "setID": "25",
                 "tags": ["volume"],
                 "weight": 115,
@@ -829,7 +705,7 @@ describe('HistorySelectors', () => {
                     "isValid": true,
                     "removed": true
                 }],
-                "rpe": "9",
+                "rpe": "7,5",
                 "setID": "3",
                 "tags": ["single", "belt"],
                 "weight": 140,
@@ -854,7 +730,7 @@ describe('HistorySelectors', () => {
                     "isValid": true,
                     "removed": false
                 }],
-                "rpe": "8",
+                "rpe": null,
                 "setID": "4",
                 "tags": ["backoff", "volume"],
                 "weight": 120,
@@ -1262,44 +1138,6 @@ describe('HistorySelectors', () => {
                 "metric": "kgs",
                 "reps": [{
                     "isValid": true,
-                    "removed": true
-                }],
-                "rpe": "9",
-                "setID": "3",
-                "tags": ["single", "belt"],
-                "weight": 140,
-                "workoutID": "A"
-            }, {
-                "exercise": "Squat",
-                "initialStartTime": "2018-03-11",
-                "metric": "kgs",
-                "reps": [{
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }],
-                "rpe": "8",
-                "setID": "4",
-                "tags": ["backoff", "volume"],
-                "weight": 120,
-                "workoutID": "A"
-            }, {
-                "exercise": "Squat",
-                "initialStartTime": "2018-03-11",
-                "metric": "kgs",
-                "reps": [{
-                    "isValid": true,
                     "removed": false
                 }, {
                     "isValid": true,
@@ -1370,6 +1208,34 @@ describe('HistorySelectors', () => {
                 "tags": ["single"],
                 "weight": 90,
                 "workoutID": "B"
+            }, {
+                "exercise": "Squat",
+                "initialStartTime": "2018-03-15",
+                "metric": "kgs",
+                "reps": [{
+                    "isValid": true,
+                    "removed": false
+                }, {
+                    "isValid": true,
+                    "removed": false
+                }, {
+                    "isValid": true,
+                    "removed": false
+                }, {
+                    "isValid": true,
+                    "removed": false
+                }, {
+                    "isValid": true,
+                    "removed": false
+                }, {
+                    "isValid": true,
+                    "removed": false
+                }],
+                "rpe": "8.5",
+                "setID": "25",
+                "tags": ["volume"],
+                "weight": 115,
+                "workoutID": "C"
             }]);
         });
 
@@ -1425,24 +1291,12 @@ describe('HistorySelectors', () => {
                 "metric": "kgs",
                 "reps": [{
                     "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
+                    "removed": true
                 }],
-                "rpe": "8",
-                "setID": "4",
-                "tags": ["backoff", "volume"],
-                "weight": 120,
+                "rpe": "7,5",
+                "setID": "3",
+                "tags": ["single", "belt"],
+                "weight": 140,
                 "workoutID": "A"
             }, {
                 "exercise": "Squat",
@@ -1634,7 +1488,7 @@ describe('HistorySelectors', () => {
                     "isValid": true,
                     "removed": false
                 }],
-                "rpe": "7",
+                "rpe": "7,5",
                 "setID": "22",
                 "tags": ["volume", "belt", "knee cave", "knee wraps"],
                 "weight": 115,
@@ -1695,38 +1549,10 @@ describe('HistorySelectors', () => {
                 "tags": ["volume"],
                 "weight": 115,
                 "workoutID": "C"
-            }, {
-                "exercise": "Squat",
-                "initialStartTime": "2018-03-15",
-                "metric": "kgs",
-                "reps": [{
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }, {
-                    "isValid": true,
-                    "removed": false
-                }],
-                "rpe": "7",
-                "setID": "25",
-                "tags": ["volume"],
-                "weight": 115,
-                "workoutID": "C"
             }]);
         });
 
-        // test for start weight but no end
+        // test for start weight but no end -- also tests for null weights as incline has no weights 
         test('return sets after start weight', () => {
             state.history = {
                 exercise: null,
@@ -1780,7 +1606,7 @@ describe('HistorySelectors', () => {
                     "isValid": true,
                     "removed": true
                 }],
-                "rpe": "9",
+                "rpe": "7,5",
                 "setID": "3",
                 "tags": ["single", "belt"],
                 "weight": 140,
@@ -1805,7 +1631,7 @@ describe('HistorySelectors', () => {
                     "isValid": true,
                     "removed": false
                 }],
-                "rpe": "8",
+                "rpe": null,
                 "setID": "4",
                 "tags": ["backoff", "volume"],
                 "weight": 120,
@@ -1883,7 +1709,7 @@ describe('HistorySelectors', () => {
                     "isValid": true,
                     "removed": false
                 }],
-                "rpe": "7",
+                "rpe": "7,5",
                 "setID": "22",
                 "tags": ["volume", "belt", "knee cave", "knee wraps"],
                 "weight": 115,
@@ -1967,7 +1793,7 @@ describe('HistorySelectors', () => {
                     "isValid": true,
                     "removed": false
                 }],
-                "rpe": "7",
+                "rpe": "8.5",
                 "setID": "25",
                 "tags": ["volume"],
                 "weight": 115,
@@ -1975,7 +1801,7 @@ describe('HistorySelectors', () => {
             }]);
         });
         
-        // test for no start weight but end
+        // test for no start weight but end -- Also tests against sets with no weights as Incline Bench should not appear
         test('return sets before end weight', () => {
             state.history = {
                 exercise: null,
@@ -2114,6 +1940,27 @@ describe('HistorySelectors', () => {
             }]);
         });
 
+        test('return no sets if there are no weights logged for the exercise', () => {
+            state.history = {
+                exercise: 'Incline Bench',
+                tagsToInclude: [],
+                tagsToExclude: [],
+                startingRPE: null,
+                startingWeight: 100,
+                startingWeightMetric: 'kgs',
+                endingWeight: 150,
+                endingWeightMetric: 'kgs',
+                startingRepRange: null,
+                endingRepRange: null,
+                startingDate: null,
+                endingDate: null,
+            };
+
+            const result = sut.filterHistory(historyData, state);
+
+            expect(result).toEqual([]);
+        });
+
         // test for tags to include 
         test('return sets with tags to include', () => {
             state.history = {
@@ -2121,6 +1968,7 @@ describe('HistorySelectors', () => {
                 tagsToInclude: ['volume', 'belt'],
                 tagsToExclude: ['knee cave', 'rounding', 'loose'],
                 startingRPE: null,
+                startingWeight: null,
                 startingWeightMetric: 'kgs',
                 endingWeight: null,
                 endingWeightMetric: 'kgs',
@@ -2206,7 +2054,7 @@ describe('HistorySelectors', () => {
                     "isValid": true,
                     "removed": true
                 }],
-                "rpe": "9",
+                "rpe": "7,5",
                 "setID": "3",
                 "tags": ["single", "belt"],
                 "weight": 140,

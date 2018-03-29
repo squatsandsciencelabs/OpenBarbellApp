@@ -18,6 +18,7 @@ import EditHistoryTitleCollapsedScreen from './card/collapsed/EditHistoryTitleCo
 import HistoryLoadingFooterScreen from './loading/HistoryLoadingFooterScreen';
 import EditHistoryExerciseScreen from './exercise_name/EditHistoryExerciseScreen';
 import EditHistoryTagsScreen from './tags/EditHistoryTagsScreen';
+import EditHistoryFilterView from './history_filter/EditHistoryFilterView';
 import UserLoggedOutPanel from './logged_out/UserLoggedOutPanel';
 import ListLoadingFooter from '../history/loading/ListLoadingFooter';
 import SetDataLabelRow from 'app/shared_features/set_card/expanded/SetDataLabelRow';
@@ -151,6 +152,14 @@ class HistoryList extends Component {
         }
     }
 
+    _renderFilterHeader() {
+        return (
+            <View>
+                <Text style={{ textAlign: 'center', paddingTop: 10, paddingBottom: 10, fontSize: 15, fontWeight: 'bold', fontSize: 20 }}>Filter</Text>
+            </View>
+        );
+    }
+
     render() {
         var list = null;
         if (this.props.sections.length > 0) {
@@ -180,7 +189,7 @@ class HistoryList extends Component {
                     <EditHistoryTagsScreen />
                     <HistoryVideoRecorderScreen />
                     <HistoryVideoPlayerScreen />
-
+                    {this._renderFilterHeader()}
                     <View style={{ flex: 1, backgroundColor: 'white' }}>
                         {list}
                     </View>

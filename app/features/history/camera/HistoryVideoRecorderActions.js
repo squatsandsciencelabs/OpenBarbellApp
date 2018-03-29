@@ -54,9 +54,14 @@ export const saveVideoError = (setID, error) => (dispatch, getState) => {
     });
 };
 
-export const toggleCameraType = () => ({
-    type: TOGGLE_HISTORY_CAMERA_TYPE,
-});
+export const toggleCameraType = () => (dispatch, getState) => {
+    const state = getState();
+    logToggleCameraAnalytics(state);
+
+    dispatch({
+        type: TOGGLE_HISTORY_CAMERA_TYPE,
+    });
+};
 
 const logStartRecordingVideoAnalytics = (state, setID) => {
     Analytics.logEventWithAppState('start_recording_video', {
@@ -92,5 +97,10 @@ const logSaveVideoErrorAnalytics = (state, setID, error) => {
         duration: duration,
         is_working_set: false,
         set_id: setID,
+    }, state);
+};
+
+const logToggleCameraAnalytics = (state) => {
+    Analytics.logEventWithAppState('toggle_camera', {
     }, state);
 };

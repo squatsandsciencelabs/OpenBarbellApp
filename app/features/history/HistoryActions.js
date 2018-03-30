@@ -2,6 +2,7 @@ import {
     LOADING_HISTORY,
     COLLAPSE_HISTORY_SET,
     EXPAND_HISTORY_SET,
+    PRESENT_HISTORY_FILTER,
 } from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 import * as SetsActionCreators from 'app/redux/shared_actions/SetsActionCreators';
@@ -32,3 +33,7 @@ export const finishLoading = () => ({
 export const removeRep = (setID, repIndex) => SetsActionCreators.removeHistoryRep(setID, repIndex);
 
 export const restoreRep = (setID, repIndex) => SetsActionCreators.restoreHistoryRep(setID, repIndex);
+
+export const presentHistoryFilter = () => ({
+    type: PRESENT_HISTORY_FILTER,
+});

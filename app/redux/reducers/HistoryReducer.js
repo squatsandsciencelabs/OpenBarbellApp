@@ -15,6 +15,8 @@ import {
     SAVE_HISTORY_VIDEO,
     END_WORKOUT,
     TOGGLE_HISTORY_CAMERA_TYPE,
+    PRESENT_HISTORY_FILTER,
+    CLOSE_HISTORY_FILTER,
 } from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
@@ -46,6 +48,7 @@ const defaultState = {
     endingRepRange: null,
     startingDate: null,
     endingDate: null,
+    showHistoryFilter: false,
 };
 
 const HistoryReducer = (state = defaultState, action) => {
@@ -126,6 +129,16 @@ const HistoryReducer = (state = defaultState, action) => {
                 watchSetID: null,
                 watchFileURL: null
             });
+        case PRESENT_HISTORY_FILTER:
+            return {
+                ...state,
+                showHistoryFilter: true,
+            };
+        case CLOSE_HISTORY_FILTER:
+            return {
+                ...state,
+                showHistoryFilter: false,
+            };
         default:
             return state;
     }

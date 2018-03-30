@@ -343,6 +343,7 @@ const mapDispatchToProps = (dispatch) => {
         deleteSet: Actions.deleteSet,
         restoreSet: Actions.restoreSet,
         finishLoading: Actions.finishLoading,
+        presentHistoryFilter: Actions.presentHistoryFilter,
     }, dispatch);
 };
 

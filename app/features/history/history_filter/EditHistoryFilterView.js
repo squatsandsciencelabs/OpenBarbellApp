@@ -7,14 +7,21 @@ import {
     Platform,
     TouchableHighlight,
     Image,
+    Modal,
 } from 'react-native';
 import { Slider } from 'react-native';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
+import EditHistoryFilterTagsToIncludeScreen from './tags/tagsToInclude/EditHistoryFilterTagsToIncludeScreen';
+import EditHistoryFilterTagsToExcludeScreen from './tags/tagsToExclude/EditHistoryFilterTagsToExcludeScreen';
 import Pill from 'app/shared_features/pill/Pill';
 import * as Device from 'app/utility/Device';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class EditHistoryFilterView extends Component {
+
+    _close() {
+        this.props.closeModal();
+    }
 
     // RENDER
 
@@ -64,67 +71,216 @@ class EditHistoryFilterView extends Component {
                 </TouchableHighlight>
             </View>
         );
-    }
+    };
 
-    _renderForms() {
-        if (Platform.OS === 'ios') {
+    _renderExercise() {
+        if (!this.props.exercise) {
             return (
                 <View>
-                    <View>
-                        <TouchableOpacity onPress={() => this._tappedExercise()} style={[SETTINGS_PANEL_STYLES.blueButton, {flex: 1, marginBottom: 20}]}>
-                            <Text style={{fontSize: 18, color: 'white', textAlign: 'center'}}>
-                                {this.props.exercise}
-                            </Text>
-                            <Icon name="caret-down" size={10} color='white' style={{right: 5, position:'absolute'}} />
-                        </TouchableOpacity>
-                        <Text style={styles.labelText}>Tags Must Include:</Text>
-                        <View style={{marginTop: 5, marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
-                        <Text style={styles.labelText}>Tags to Exclude:</Text>
-                        <View style={{marginTop: 5}}>{ this._renderTagsToExclude() }</View>
-                    </View>
-                    <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
-                    </View>
+                    <View style={styles.field}><Text style={[styles.tagText, styles.placeholderText]}>Exercise</Text></View>
                 </View>
             );
-        } else {
+        }
+    };
+
+    _renderStartingDate() {
+        if (!this.props.startDate) {
             return (
-                <View>
-                    <Text style={styles.labelText}>Tags Must Include:</Text>
-                    <View style={{marginTop: 5, marginBottom: 10}}>{ this._renderTagsToInclude() }</View>
-                    <Text style={styles.labelText}>Tags to Exclude:</Text>
-                    <View style={{marginTop: 5}}>{ this._renderTagsToExclude() }</View>
-                    <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white', marginBottom: 0 }}>
-                    </View>
-                </View>
+                <View style={[styles.field, { width: 150 }]}><Text style={[styles.tagText, styles.placeholderText]}>start</Text></View>
             );
         }
     }
 
-    render() {
+    _renderEndingDate() {
+        if (!this.props.endDate) {
+            return (
+                <View style={[styles.field, { width: 150, marginLeft: 10 }]}><Text style={[styles.tagText, styles.placeholderText]}>end</Text></View>
+            );
+        }
+    }
+
+    _renderDateRange() {
         return (
-            <View style={ [SETTINGS_PANEL_STYLES.panel, { flexDirection: 'column' }] }>
-                <View style={{flex: 1, alignItems: 'stretch', justifyContent: 'center'}}>
-                    <Text style={[{marginBottom: 25}, styles.titleText]}>Filters</Text>
-                    {this._renderForms()}
+            <View style={{flex: 1, flexDirection: 'row'}}>
+                {this._renderStartingDate()}
+                {this._renderEndingDate()}
+            </View>
+        );
+    };
+
+    _renderStartingRepRange() {
+        if (!this.props.startingRepRange) {
+            return (
+                <View style={[styles.field, { width: 150 }]}><Text style={[styles.tagText, styles.placeholderText]}>min</Text></View>
+            );
+        }
+    }
+
+    _renderEndingRepRange() {
+        if (!this.props.endingRepRange) {
+            return (
+                <View style={[styles.field, { width: 150, marginLeft: 10 }]}><Text style={[styles.tagText, styles.placeholderText]}>max</Text></View>
+            );
+        }
+    }
+
+    _renderRepRange() {
+        return (
+            <View style={{flex: 1, flexDirection: 'row'}}>
+                {this._renderStartingRepRange()}
+                {this._renderEndingRepRange()}
+            </View>
+        );        
+    }
+
+    _renderRPERange() {
+        return (
+            <View style={{flex: 1, flexDirection: 'row'}}>
+                <View style={[styles.field, { width: 150 }]}></View>
+                <View style={[styles.field, { width: 150, marginLeft: 10 }]}></View>
+            </View>
+        );
+    };
+
+    _renderRepRange() {
+        return (
+            <View style={{flex: 1, flexDirection: 'row'}}>
+                {this._renderStartingRepRange()}
+                {this._renderEndingRepRange()}
+            </View>
+        );
+    };
+
+    _renderForms() {
+        return (
+            <View>
+                <View>
+                    <Text style={[styles.labelText, {marginTop: 40}]}>Exercise Names Containing</Text>
+                    <View style={{padding: 10}}>{this._renderExercise()}</View>
+                    <Text style={styles.labelText}>Tags Must Include:</Text>
+                    <View style={{padding: 10}}>{ this._renderTagsToInclude() }</View>
+                    <Text style={[styles.labelText, {marginTop: 35}]}>Tags to Exclude:</Text>
+                    <View style={{padding: 10}}>{ this._renderTagsToExclude() }</View>
+                    <Text style={[styles.labelText, {marginTop: 35}]}>Date Range:</Text>
+                    <View style={{padding: 10}}>{ this._renderDateRange() }</View>
+                    <Text style={[styles.labelText, {marginTop: 35}]}>Rep Range:</Text>
+                    <View style={{padding: 10}}>{ this._renderRepRange() }</View>
+                    <View style={{ marginTop: 150, fontSize: 40 }}><Text style={{ textAlign: 'center' }}>Clear All</Text></View>
+                </View>
+                <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
+                    <EditHistoryFilterTagsToIncludeScreen />
+                    <EditHistoryFilterTagsToExcludeScreen />
                 </View>
             </View>
-        )     
+        );
+    }
+
+    _renderNavigation() {
+        if (Device.isiPhoneX()) {
+            var statusBar = (
+                <View>
+                    <StatusBar
+                        backgroundColor="white"
+                        barStyle="dark-content"
+                    />
+                </View>
+            );
+        } else if (Platform.OS === 'ios') {
+            var statusBar = (<View style={{height: 20, width: 9001, backgroundColor: 'black'}}></View>);
+        } else {
+            var statusBar = null;
+        }
+
+        return (
+            <View style={styles.container}>
+                { statusBar }
+
+                <View style={{position: 'absolute', left: 0, top: 0}}>
+                    <TouchableOpacity onPress={() => this.props.closeModal()}>
+                        <View style={styles.nav}>
+                            <Text style={[{color: 'rgba(47, 128, 237, 1)'}]}>X</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={styles.navTitle}>
+                    <Text style={styles.titleText}>FILTERS</Text>
+                </View>
+
+                <View style={{position: 'absolute', right: 0, top: 0}}>
+                    <TouchableOpacity onPress={() => this._tappedDone() }>
+                        <View style={styles.nav}>
+                            <Text style={[{color: 'rgba(47, 128, 237, 1)'}]}>Apply</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        )
+    }
+
+    render() {
+        return (
+            <Modal visible={this.props.isModalShowing} animationType='fade'>
+                <View style={{flex: 1, paddingTop: Device.isiPhoneX() ? 40 : 0, flexDirection: 'column', backgroundColor: 'rgba(242, 242, 242, 0)'}}>
+                    {this._renderNavigation()}
+                    {this._renderForms()}
+                </View>
+            </Modal>
+        );
     }
 }
 
 const styles = StyleSheet.create({
+    textField: {
+        height: 35,
+        margin: 10,
+        color: 'rgba(77, 77, 77, 1)',
+        fontSize: 14,
+        paddingBottom: Platform.os === 'ios' ? 0 : 10,
+    },
+    container: {
+        height: Platform.OS === 'ios' && !Device.isiPhoneX() ? 70 : 50,
+        alignItems: 'center'
+    },
+    nav: {
+        paddingTop: Platform.OS === 'ios' && !Device.isiPhoneX() ? 35 : 15,
+        paddingRight: 10,
+        paddingBottom: 10,
+        paddingLeft: 10
+    },
+    navTitle: {
+        paddingTop: 15,
+    },
+    addButton: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(47, 128, 237, 1)',
+        borderRadius: 5
+    },
+    disabled: {
+        opacity: 0.3
+    },
+    addText: {
+        color: 'white'
+    },
+    rowBorders: {
+        borderColor: '#e0e0e0',
+        borderLeftWidth: 1,
+        borderRightWidth: 1,
+    },
     titleText: {
         color: 'rgba(77, 77, 77, 1)',
         textAlign: 'center',
         fontSize: 16,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        marginTop: 30,
     },
     labelText: {
         color: 'rgba(77, 77, 77, 1)',
         fontSize: 16,
         fontWeight: 'bold',
         textAlign: 'left',
-        marginBottom: 0,
+        marginLeft: 10,
     },
     numberStyle: {
         fontSize: 16,
@@ -177,9 +333,6 @@ const styles = StyleSheet.create({
     },
     placeholderText: {
         color: 'rgba(189, 189, 189, 1)'
-    },
-    slider: {
-        marginTop: Platform.OS === 'ios' ? -5 : 10
     },
     button: {
         backgroundColor: 'rgba(47, 128, 237, 1)',

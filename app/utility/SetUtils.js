@@ -189,3 +189,97 @@ export const endTime = (set) => {
         return set.endTime;
     }
 };
+
+export const checkExercise = (setExercise, exercise) => {
+    if (!exercise) {
+        return true;
+    }
+
+    return setExercise.trim().toLowerCase() === exercise.trim().toLowerCase();
+};
+
+export const checkIncludesTags = (tags, tagsToInclude) => {
+    if (!tagsToInclude.length) {
+        return true;
+    }
+
+    const tagsInsensitive = tags.map(tag => tag.trim().toLowerCase());
+    const includeTagsInsensitive = tagsToInclude.map(tag => tag.trim().toLowerCase());
+
+    return includeTagsInsensitive.every((tagToInclude) => tagsInsensitive.includes(tagToInclude));
+};
+
+export const checkExcludesTags = (tags, tagsToExclude) => {
+    if (!tagsToExclude.length) {
+        return true;
+    }
+
+    const tagsInsensitive = tags.map(tag => tag.trim().toLowerCase());
+    const excludeTagsInsensitive = tagsToExclude.map(tag => tag.trim().toLowerCase());
+
+    return excludeTagsInsensitive.every((tagToExclude) => !tagsInsensitive.includes(tagToExclude));
+};
+
+export const checkWeightRange = (setWeight, setMetric, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric) => {
+    // turn into pounds
+    const setWeightLBs = WeightConversion.weightInLBs(setMetric, setWeight);
+    const startingWeightLBs = WeightConversion.weightInLBs(startingWeightMetric, startingWeight);
+    const endingWeightLBs = WeightConversion.weightInLBs(endingWeightMetric, endingWeight);
+    
+    if (!startingWeightLBs && !endingWeightLBs) {
+        return true;
+    } else if ((startingWeightLBs || endingWeightLBs) && !setWeightLBs) {
+        return false;
+    } else if (!startingWeightLBs && endingWeightLBs) {
+        return setWeightLBs <= endingWeightLBs;
+    } else if (startingWeightLBs && !endingWeightLBs) {
+        return setWeightLBs >= startingWeightLBs;
+    } else {
+        return setWeightLBs >= startingWeightLBs && setWeightLBs <= endingWeightLBs;
+    }
+};
+
+export const checkRPERange = (setRPE, startingRPE, endingRPE) => {
+    // account for commas
+    const setRPEWithoutCommas = setRPE ? Number(setRPE.replace(',','.')) : setRPE;
+    const startingRPEWithoutCommas = startingRPE ? Number(startingRPE.replace(',','.')) : startingRPE;
+    const endingRPEWithoutCommas = endingRPE ? Number(endingRPE.replace(',','.')) : endingRPE;
+
+    if (!startingRPEWithoutCommas && !endingRPEWithoutCommas) {
+        return true;
+    } else if ((startingRPEWithoutCommas || endingRPEWithoutCommas) && !setRPE) {
+        return false;
+    } else if (!startingRPEWithoutCommas  && endingRPEWithoutCommas) {
+        return setRPEWithoutCommas <= endingRPEWithoutCommas;
+    } else if (startingRPEWithoutCommas && !endingRPEWithoutCommas) {
+        return setRPEWithoutCommas >= startingRPEWithoutCommas ;
+    } else {
+        return setRPEWithoutCommas >= startingRPEWithoutCommas && setRPEWithoutCommas <= endingRPEWithoutCommas;
+    }
+};
+
+export const checkRepRange = (set, startingRepRange, endingRepRange) => {
+    const validUnremovedReps = SetUtils.numValidUnremovedReps(set);
+
+    if (!startingRepRange && !endingRepRange) {
+        return true;
+    } else if (!startingRepRange && endingRepRange) {
+        return validUnremovedReps <= endingRepRange;
+    } else if (startingRepRange && !endingRepRange) {
+        return validUnremovedReps >= startingRepRange;
+    } else {
+        return validUnremovedReps >= startingRepRange && validUnremovedReps <= endingRepRange;
+    }
+};
+
+export const checkDateRange = (setInitialStartTime, startingDate, endingDate) => {
+    if (!startingDate && !endingDate) {
+        return true;
+    } else if (startingDate && !endingDate) {
+        return new Date(setInitialStartTime) >= new Date(startingDate);
+    } else if (!startingDate && endingDate) {
+        return new Date(setInitialStartTime) <= new Date(endingDate);
+    } else {
+        return new Date(setInitialStartTime) >= new Date(startingDate) && new Date(setInitialStartTime) <= new Date(endingDate);
+    }
+};

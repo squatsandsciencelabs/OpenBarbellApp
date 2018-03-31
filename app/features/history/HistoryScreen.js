@@ -36,7 +36,7 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
     let isRemoved = false;
 
     // ignore if initialStartTime is null as that was a bug, it's supposed to be undefined or an actual date
-    sets = HistorySelectors.filterHistory(sets, state);
+    sets = SetsSelectors.filterHistory(sets, state);
 
     // build view models
     for (let i=0; i<sets.length; i++) {

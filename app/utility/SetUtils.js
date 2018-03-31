@@ -220,6 +220,8 @@ export const checkExcludesTags = (tags, tagsToExclude) => {
     return excludeTagsInsensitive.every((tagToExclude) => !tagsInsensitive.includes(tagToExclude));
 };
 
+// starting is the minimum, while ending is the maximum
+
 export const checkWeightRange = (setWeight, setMetric, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric) => {
     // turn into pounds
     const setWeightLBs = WeightConversion.weightInLBs(setMetric, setWeight);
@@ -259,7 +261,7 @@ export const checkRPERange = (setRPE, startingRPE, endingRPE) => {
 };
 
 export const checkRepRange = (set, startingRepRange, endingRepRange) => {
-    const validUnremovedReps = SetUtils.numValidUnremovedReps(set);
+    const validUnremovedReps = numValidUnremovedReps(set);
 
     if (!startingRepRange && !endingRepRange) {
         return true;
@@ -272,6 +274,7 @@ export const checkRepRange = (set, startingRepRange, endingRepRange) => {
     }
 };
 
+// startingDate is the minimum date, ending date is the maximum
 export const checkDateRange = (setInitialStartTime, startingDate, endingDate) => {
     if (!startingDate && !endingDate) {
         return true;

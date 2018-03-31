@@ -36,6 +36,10 @@ const defaultState = {
 
     // filter
     exercise: null,
+    editingFilterExerciseName: false,
+    editingFilterTagsToInclude: false,
+    editingRPERange: false,
+    editingRepRange: false,
     tagsToInclude: [],
     tagsToExclude: [],
     startingRPE: null,

@@ -8,6 +8,7 @@ import * as OneRMCalculator from 'app/math/OneRMCalculator';
 import * as CollapsedMetrics from 'app/math/CollapsedMetrics';
 import * as DateUtils from 'app/utility/DateUtils';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
+import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 
 const stateRoot = (state) => state.sets;
 
@@ -260,6 +261,25 @@ export const getNumHistorySets = (state) => {
     let sets = stateRoot(state);
     var array = dictToArray(sets.historyData);
     return array.length;
+};
+
+const isValidForHistoryFilter = (set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric, startingRepRange, endingRepRange, startingDate, endingDate) => {
+    return !SetUtils.isDeleted(set)
+    && SetUtils.checkExercise(set.exercise, exercise)
+    && SetUtils.checkIncludesTags(set.tags, tagsToInclude)
+    && SetUtils.checkExcludesTags(set.tags, tagsToExclude)
+    && SetUtils.checkWeightRange(set.weight, set.metric, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric)
+    && SetUtils.checkRPERange(set.rpe, startingRPE, endingRPE)
+    && SetUtils.checkDateRange(set.initialStartTime, startingDate, endingDate)
+    && SetUtils.checkRepRange(set, startingRepRange, endingRepRange);
+};
+
+const checkExercise = (setExercise, exercise) => {
+    if (!exercise) {
+        return true;
+    }
+
+    return setExercise.trim().toLowerCase() === exercise.trim().toLowerCase();
 };
 
 export const getNumHistoryReps = (state) => {

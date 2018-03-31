@@ -92,8 +92,8 @@ const isValidForHistoryFilter = (set, exercise, tagsToInclude, tagsToExclude, st
     && checkWeightRange(set.weight, set.metric, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric)
     && checkRPERange(set.rpe, startingRPE, endingRPE)
     && checkDateRange(set.initialStartTime, startingDate, endingDate)
-    && checkRepRange(set, startingRepRange, endingRepRange)
-}
+    && checkRepRange(set, startingRepRange, endingRepRange);
+};
 
 const checkExercise = (setExercise, exercise) => {
     if (!exercise) {
@@ -101,7 +101,7 @@ const checkExercise = (setExercise, exercise) => {
     }
 
     return setExercise.trim().toLowerCase() === exercise.trim().toLowerCase();
-}
+};
 
 const checkIncludesTags = (tags, tagsToInclude) => {
     if (!tagsToInclude.length) {

@@ -58,29 +58,3 @@ export const getHistoryFilterEndingRepRange = (state) => stateRoot(state).ending
 export const getHistoryFilterStartingDate = (state) => stateRoot(state).startingDate;
 
 export const getHistoryFilterEndingDate = (state) => stateRoot(state).endingDate;
-
-export const filterHistory = (allSets, state) => {
-    let data = [];
-
-    const exercise = getHistoryFilterExercise(state);
-    const tagsToInclude = getHistoryFilterTagsToInclude(state);
-    const tagsToExclude = getHistoryFilterTagsToExclude(state);
-    const startingRPE = getHistoryFilterStartingRPE(state);
-    const endingRPE = getHistoryFilterEndingRPE(state);
-    const startingWeight = getHistoryFilterStartingWeight(state);
-    const startingWeightMetric = getHistoryFilterStartingWeightMetric(state);
-    const endingWeight = getHistoryFilterEndingWeight(state);
-    const endingWeightMetric = getHistoryFilterEndingWeightMetric(state);
-    const startingRepRange = getHistoryFilterStartingRepRange(state);
-    const endingRepRange = getHistoryFilterEndingRepRange(state);
-    const startingDate = getHistoryFilterStartingDate(state);
-    const endingDate = getHistoryFilterEndingDate(state);
-
-    allSets.forEach((set) => {
-        if (set.initialStartTime !== null && SetsSelectors.isValidForHistoryFilter(set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric, startingRepRange, endingRepRange, startingDate, endingDate)) {
-            data.push(set);
-        }
-    });
-
-    return data;
-};

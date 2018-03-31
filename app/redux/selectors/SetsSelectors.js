@@ -263,7 +263,7 @@ export const getNumHistorySets = (state) => {
     return array.length;
 };
 
-const isValidForHistoryFilter = (set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric, startingRepRange, endingRepRange, startingDate, endingDate) => {
+export const isValidForHistoryFilter = (set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric, startingRepRange, endingRepRange, startingDate, endingDate) => {
     return !SetUtils.isDeleted(set)
     && SetUtils.checkExercise(set.exercise, exercise)
     && SetUtils.checkIncludesTags(set.tags, tagsToInclude)

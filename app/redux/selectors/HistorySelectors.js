@@ -1,6 +1,7 @@
 import * as DateUtils from 'app/utility/DateUtils';
 import * as SetUtils from 'app/utility/SetUtils';
 import * as WeightConversion from 'app/utility/WeightConversion';
+import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
 const stateRoot = (state) => state.history;
 
@@ -76,115 +77,10 @@ export const filterHistory = (allSets, state) => {
     const endingDate = getHistoryFilterEndingDate(state);
 
     allSets.forEach((set) => {
-        if (set.initialStartTime !== null && isValidForHistoryFilter(set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric, startingRepRange, endingRepRange, startingDate, endingDate)) {
+        if (set.initialStartTime !== null && SetsSelectors.isValidForHistoryFilter(set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric, startingRepRange, endingRepRange, startingDate, endingDate)) {
             data.push(set);
         }
     });
 
     return data;
-};
-
-const isValidForHistoryFilter = (set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric, startingRepRange, endingRepRange, startingDate, endingDate) => {
-    return !SetUtils.isDeleted(set)
-    && checkExercise(set.exercise, exercise)
-    && checkIncludesTags(set.tags, tagsToInclude)
-    && checkExcludesTags(set.tags, tagsToExclude)
-    && checkWeightRange(set.weight, set.metric, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric)
-    && checkRPERange(set.rpe, startingRPE, endingRPE)
-    && checkDateRange(set.initialStartTime, startingDate, endingDate)
-    && checkRepRange(set, startingRepRange, endingRepRange);
-};
-
-const checkExercise = (setExercise, exercise) => {
-    if (!exercise) {
-        return true;
-    }
-
-    return setExercise.trim().toLowerCase() === exercise.trim().toLowerCase();
-};
-
-const checkIncludesTags = (tags, tagsToInclude) => {
-    if (!tagsToInclude.length) {
-        return true;
-    }
-
-    const tagsInsensitive = tags.map(tag => tag.trim().toLowerCase());
-    const includeTagsInsensitive = tagsToInclude.map(tag => tag.trim().toLowerCase());
-
-    return includeTagsInsensitive.every((tagToInclude) => tagsInsensitive.includes(tagToInclude));
-};
-
-const checkExcludesTags = (tags, tagsToExclude) => {
-    if (!tagsToExclude.length) {
-        return true;
-    }
-
-    const tagsInsensitive = tags.map(tag => tag.trim().toLowerCase());
-    const excludeTagsInsensitive = tagsToExclude.map(tag => tag.trim().toLowerCase());
-
-    return excludeTagsInsensitive.every((tagToExclude) => !tagsInsensitive.includes(tagToExclude));
-};
-
-const checkWeightRange = (setWeight, setMetric, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric) => {
-    // turn into pounds
-    const setWeightLBs = WeightConversion.weightInLBs(setMetric, setWeight);
-    const startingWeightLBs = WeightConversion.weightInLBs(startingWeightMetric, startingWeight);
-    const endingWeightLBs = WeightConversion.weightInLBs(endingWeightMetric, endingWeight);
-    
-    if (!startingWeightLBs && !endingWeightLBs) {
-        return true;
-    } else if ((startingWeightLBs || endingWeightLBs) && !setWeightLBs) {
-        return false;
-    } else if (!startingWeightLBs && endingWeightLBs) {
-        return setWeightLBs <= endingWeightLBs;
-    } else if (startingWeightLBs && !endingWeightLBs) {
-        return setWeightLBs >= startingWeightLBs;
-    } else {
-        return setWeightLBs >= startingWeightLBs && setWeightLBs <= endingWeightLBs;
-    }
-};
-
-const checkRPERange = (setRPE, startingRPE, endingRPE) => {
-    // account for commas
-    const setRPEWithoutCommas = setRPE ? Number(setRPE.replace(',','.')) : setRPE;
-    const startingRPEWithoutCommas = startingRPE ? Number(startingRPE.replace(',','.')) : startingRPE;
-    const endingRPEWithoutCommas = endingRPE ? Number(endingRPE.replace(',','.')) : endingRPE;
-
-    if (!startingRPEWithoutCommas && !endingRPEWithoutCommas) {
-        return true;
-    } else if ((startingRPEWithoutCommas || endingRPEWithoutCommas) && !setRPE) {
-        return false;
-    } else if (!startingRPEWithoutCommas  && endingRPEWithoutCommas) {
-        return setRPEWithoutCommas <= endingRPEWithoutCommas;
-    } else if (startingRPEWithoutCommas && !endingRPEWithoutCommas) {
-        return setRPEWithoutCommas >= startingRPEWithoutCommas ;
-    } else {
-        return setRPEWithoutCommas >= startingRPEWithoutCommas && setRPEWithoutCommas <= endingRPEWithoutCommas;
-    }
-};
-
-const checkRepRange = (set, startingRepRange, endingRepRange) => {
-    const validUnremovedReps = SetUtils.numValidUnremovedReps(set);
-
-    if (!startingRepRange && !endingRepRange) {
-        return true;
-    } else if (!startingRepRange && endingRepRange) {
-        return validUnremovedReps <= endingRepRange;
-    } else if (startingRepRange && !endingRepRange) {
-        return validUnremovedReps >= startingRepRange;
-    } else {
-        return validUnremovedReps >= startingRepRange && validUnremovedReps <= endingRepRange;
-    }
-};
-
-const checkDateRange = (setInitialStartTime, startingDate, endingDate) => {
-    if (!startingDate && !endingDate) {
-        return true;
-    } else if (startingDate && !endingDate) {
-        return new Date(setInitialStartTime) >= new Date(startingDate);
-    } else if (!startingDate && endingDate) {
-        return new Date(setInitialStartTime) <= new Date(endingDate);
-    } else {
-        return new Date(setInitialStartTime) >= new Date(startingDate) && new Date(setInitialStartTime) <= new Date(endingDate);
-    }
 };

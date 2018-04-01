@@ -263,7 +263,7 @@ export const getNumHistorySets = (state) => {
     return array.length;
 };
 
-export const filterHistory = (allSets, state) => {
+export const getFilteredHistorySets = (allSets, state) => {
     let data = [];
 
     const exercise = HistorySelectors.getHistoryFilterExercise(state);

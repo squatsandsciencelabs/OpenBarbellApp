@@ -35,15 +35,39 @@ export const getHistoryViewedCounter = (state) => stateRoot(state).viewedCounter
 
 export const getHistoryFilterExercise = (state) => stateRoot(state).exercise;
 
+export const getIsEditingHistoryFilterExercise = (state) => stateRoot(state).isEditingFilterExerciseName;
+
+export const getEditingExerciseName = (state) => stateRoot(state).editingExerciseName;
+
 export const getHistoryFilterTagsToInclude = (state) => stateRoot(state).tagsToInclude;
+
+export const getIsEditingHistoryFilterTagsToInclude = (state) => stateRoot(state).isEditingFilterTagsToInclude;
+
+export const getEditingFilterTagsToInclude = (state) => stateRoot(state).editingFilterTagsToInclude;
 
 export const getHistoryFilterTagsToExclude = (state) => stateRoot(state).tagsToExclude;
 
+export const getIsEditingHistoryFilterTagsToExclude = (state) => stateRoot(state).isEditingFilterTagsToExclude;
+
+export const getEditingFilterTagsToExclude = (state) => stateRoot(state).editingFilterTagsToExclude;
+
 export const getHistoryFilterStartingRPE = (state) => stateRoot(state).startingRPE;
+
+export const getIsEditingHistoryFilterStartingRPE = (state) => stateRoot(state).isEditingStartingRPE;
+
+export const getEditingHistoryFilterStartingRPE = (state) => stateRoot(state).editingStartingRPE;
 
 export const getHistoryFilterEndingRPE = (state) => stateRoot(state).endingRPE;
 
+export const getIsEditingHistoryFilterEndingingRPE = (state) => stateRoot(state).isEditingEndingRPE;
+
+export const getEditingHistoryFilterEndingRPE = (state) => stateRoot(state).editingEndingRPE;
+
 export const getHistoryFilterStartingWeight = (state) => stateRoot(state).startingWeight;
+
+export const getIsEditingHistoryFilterStartingWeight = (state) => stateRoot(state).isEditingStartingWeight;
+
+export const getEditingHistoryFilterStartingWeight = (state) => stateRoot(state).editingStartingWeight;
 
 export const getHistoryFilterStartingWeightMetric = (state) => stateRoot(state).startingWeightMetric;
 
@@ -51,10 +75,30 @@ export const getHistoryFilterEndingWeightMetric = (state) => stateRoot(state).en
 
 export const getHistoryFilterEndingWeight = (state) => stateRoot(state).endingWeight;
 
+export const getIsEditingHistoryFilterEndingWeight = (state) => stateRoot(state).isEditingEndingWeight;
+
+export const getEditingHistoryFilterEndingWeight = (state) => stateRoot(state).editingEndingWeight;
+
 export const getHistoryFilterStartingRepRange = (state) => stateRoot(state).startingRepRange;
+
+export const getIsEditingHistoryFilterStartingRepRange = (state) => stateRoot(state).isEditingStartingRepRange;
+
+export const getEditingHistoryFilterStartingRepRange = (state) => stateRoot(state).editingStartingRepRange;
 
 export const getHistoryFilterEndingRepRange = (state) => stateRoot(state).endingRepRange;
 
+export const getIsEditingHistoryFilterEndingRepRange = (state) => stateRoot(state).isEditingEndingRepRange;
+
+export const getEditingHistoryFilterEndingRepRange = (state) => stateRoot(state).editingEndingRepRange;
+
 export const getHistoryFilterStartingDate = (state) => stateRoot(state).startingDate;
 
+export const getIsEditingHistoryFilterStartingDate = (state) => stateRoot(state).isEditingStartingDate;
+
+export const getEditingHistoryFilterStartingDate = (state) => stateRoot(state).editingStartingDate;
+
 export const getHistoryFilterEndingDate = (state) => stateRoot(state).endingDate;
+
+export const getIsEditingHistoryFilterEndingDate = (state) => stateRoot(state).isEditingEndingDate;
+
+export const getEditingHistoryFilterEndingDate = (state) => stateRoot(state).editingEndingDate;

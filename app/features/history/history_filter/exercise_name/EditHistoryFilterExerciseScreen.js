@@ -3,15 +3,15 @@ import { connect } from 'react-redux';
 
 import EditTextModal from 'app/shared_features/edit_set/EditTextModal';
 import * as SuggestionsSelectors from 'app/redux/selectors/SuggestionsSelectors';
+import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 import * as Actions from './EditHistoryFilterExerciseActions';
 
 const mapStateToProps = (state) => ({
     title: 'Edit Exercise',
     placeholder: 'Enter Exercise',
-    text: state.history.editingExerciseName,
-    setID: state.history.editingExerciseSetID,
+    text: HistorySelectors.getHistoryFilterExercise(state),
     generateSingleInputSuggestions: (input) => { return SuggestionsSelectors.generateExerciseNameSuggestions(state, input) },
-    isModalShowing: state.history.editingExerciseSetID !== null
+    isModalShowing: HistorySelectors.getIsEditingFilterExercise(state),
 });
 
 const mapDispatchToProps = (dispatch) => {

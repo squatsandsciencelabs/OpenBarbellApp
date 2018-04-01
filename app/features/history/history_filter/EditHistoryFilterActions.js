@@ -1,10 +1,10 @@
 import {
-    PRESENT_HISTORY_FILTER,
+    PRESENT_HISTORY_FILTER_EXERCISE,
     CLOSE_HISTORY_FILTER,
 } from 'app/configs+constants/ActionTypes';
 
-export const presentHistoryFilter = () => ({
-    type: PRESENT_HISTORY_FILTER,
+export const presentSelectExercise = () => ({ 
+    type: PRESENT_HISTORY_FILTER_EXERCISE,
 });
 
 export const dismissHistoryFilter = () => ({

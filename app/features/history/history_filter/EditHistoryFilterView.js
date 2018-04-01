@@ -13,6 +13,7 @@ import { Slider } from 'react-native';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 import EditHistoryFilterTagsToIncludeScreen from './tags/tagsToInclude/EditHistoryFilterTagsToIncludeScreen';
 import EditHistoryFilterTagsToExcludeScreen from './tags/tagsToExclude/EditHistoryFilterTagsToExcludeScreen';
+import EditHistoryExerciseScreen from './exercise_name/EditHistoryFilterExerciseScreen';
 import Pill from 'app/shared_features/pill/Pill';
 import * as Device from 'app/utility/Device';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -74,14 +75,11 @@ class EditHistoryFilterView extends Component {
     };
 
     _renderExercise() {
-        if (!this.props.exercise) {
-            return (
-                <View>
-                    <View style={styles.field}><Text style={[styles.tagText, styles.placeholderText]}>Exercise</Text></View>
-                </View>
-            );
+        if (this.props.exercise === null || this.props.exercise === '') {
+            return (<Text style={[styles.fieldText, styles.placeholderText]}>Exercise</Text>);
         }
-    };
+        return (<Text style={styles.fieldText}>{this.props.exercise}</Text>);
+    }
 
     _renderStartingDate() {
         if (!this.props.startDate) {
@@ -108,21 +106,29 @@ class EditHistoryFilterView extends Component {
         );
     };
 
+    _renderMin() {
+        return (
+            <View style={[styles.field, { width: 150 }]}><Text style={[styles.tagText, styles.placeholderText]}>min</Text></View>
+        );
+    };
+
+    _renderMax() {
+        return (
+            <View style={[styles.field, { width: 150, marginLeft: 10 }]}><Text style={[styles.tagText, styles.placeholderText]}>max</Text></View>
+        );
+    };
+
     _renderStartingRepRange() {
         if (!this.props.startingRepRange) {
-            return (
-                <View style={[styles.field, { width: 150 }]}><Text style={[styles.tagText, styles.placeholderText]}>min</Text></View>
-            );
+            return this._renderMin();
         }
-    }
+    };
 
     _renderEndingRepRange() {
         if (!this.props.endingRepRange) {
-            return (
-                <View style={[styles.field, { width: 150, marginLeft: 10 }]}><Text style={[styles.tagText, styles.placeholderText]}>max</Text></View>
-            );
+            return this._renderMax();
         }
-    }
+    };
 
     _renderRepRange() {
         return (
@@ -131,22 +137,47 @@ class EditHistoryFilterView extends Component {
                 {this._renderEndingRepRange()}
             </View>
         );        
-    }
+    };
+
+    _renderStartingRPE() {
+        if (!this.props.startingRPE) {
+            return this._renderMin();
+        }
+    };
+
+    _renderEndingRPE() {
+        if (!this.props.endingRPE) {
+            return this._renderMax();
+        }
+    };
+
 
     _renderRPERange() {
         return (
             <View style={{flex: 1, flexDirection: 'row'}}>
-                <View style={[styles.field, { width: 150 }]}></View>
-                <View style={[styles.field, { width: 150, marginLeft: 10 }]}></View>
+                {this._renderStartingRPE()}
+                {this._renderEndingRPE()}
             </View>
         );
     };
 
-    _renderRepRange() {
+    _renderStartWeight() {
+        if (!this.props.startWeight) {
+            return this._renderMin();
+        }
+    }
+
+    _renderEndWeight() {
+        if (!this.props.endWeight) {
+            return this._renderMax();
+        }
+    };
+
+    _renderWeightRange() {
         return (
             <View style={{flex: 1, flexDirection: 'row'}}>
-                {this._renderStartingRepRange()}
-                {this._renderEndingRepRange()}
+                {this._renderStartWeight()}
+                {this._renderEndWeight()}
             </View>
         );
     };
@@ -154,20 +185,31 @@ class EditHistoryFilterView extends Component {
     _renderForms() {
         return (
             <View>
-                <View>
-                    <Text style={[styles.labelText, {marginTop: 40}]}>Exercise Names Containing</Text>
-                    <View style={{padding: 10}}>{this._renderExercise()}</View>
-                    <Text style={styles.labelText}>Tags Must Include:</Text>
-                    <View style={{padding: 10}}>{ this._renderTagsToInclude() }</View>
+                <View style={{height: 300}}>
+                    <Text style={[styles.labelText, {marginTop: 25}]}>Exercise Names Containing</Text>
+                    <View style={{padding: 5}}>
+                        <View style={[styles.field, {flex: 1}]}>
+                            <TouchableHighlight onPress={() => this.props.tappedExercise()} underlayColor='#e0e0e0'>
+                                {this._renderExercise()}
+                            </TouchableHighlight>
+                        </View>
+                    </View>
+                    <Text style={[styles.labelText, {marginTop: 35}]}>Tags Must Include:</Text>
+                    <View style={{padding: 5}}>{ this._renderTagsToInclude() }</View>
                     <Text style={[styles.labelText, {marginTop: 35}]}>Tags to Exclude:</Text>
-                    <View style={{padding: 10}}>{ this._renderTagsToExclude() }</View>
+                    <View style={{padding: 5}}>{ this._renderTagsToExclude() }</View>
                     <Text style={[styles.labelText, {marginTop: 35}]}>Date Range:</Text>
-                    <View style={{padding: 10}}>{ this._renderDateRange() }</View>
+                    <View style={{padding: 5}}>{ this._renderDateRange() }</View>
+                    <Text style={[styles.labelText, {marginTop: 35}]}>Weight Range:</Text>
+                    <View style={{padding: 5}}>{ this._renderWeightRange() }</View>
+                    <Text style={[styles.labelText, {marginTop: 35}]}>RPE Range:</Text>
+                    <View style={{padding: 5}}>{ this._renderRPERange() }</View>
                     <Text style={[styles.labelText, {marginTop: 35}]}>Rep Range:</Text>
-                    <View style={{padding: 10}}>{ this._renderRepRange() }</View>
-                    <View style={{ marginTop: 150, fontSize: 40 }}><Text style={{ textAlign: 'center' }}>Clear All</Text></View>
+                    <View style={{padding: 5}}>{ this._renderRepRange() }</View>
+                    <Text style={{ textAlign: 'center', fontSize: 18, marginTop: 60 }}>Clear all</Text>
                 </View>
                 <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
+                    <EditHistoryExerciseScreen />
                     <EditHistoryFilterTagsToIncludeScreen />
                     <EditHistoryFilterTagsToExcludeScreen />
                 </View>
@@ -273,7 +315,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
         fontWeight: 'bold',
-        marginTop: 30,
+        marginTop: 20,
     },
     labelText: {
         color: 'rgba(77, 77, 77, 1)',

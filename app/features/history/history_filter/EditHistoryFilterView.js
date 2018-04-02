@@ -248,7 +248,7 @@ class EditHistoryFilterView extends Component {
         return (
             <View>
                 <View style={{height: 300}}>
-                    <Text style={[styles.labelText, {marginTop: Device.isSmallDevice() ? 5 : 25}]}>Exercise Names Containing</Text>
+                    <Text style={[styles.labelText, {marginTop: 10}]}>Exercise Names Containing</Text>
                     <View style={{padding: 5, paddingLeft: 20, paddingRight: 20}}>
                         <View style={[styles.field, {flex: 1}]}>
                             <TouchableHighlight onPress={() => this.props.tappedExercise()} underlayColor='#e0e0e0'>
@@ -262,11 +262,11 @@ class EditHistoryFilterView extends Component {
                     <View style={{padding: 5, paddingLeft: 18, paddingRight: 18}}>{ this._renderTagsToExclude() }</View>
                     <Text style={styles.labelText}>Date Range:</Text>
                     <View style={{padding: 5}}>{ this._renderDateRange() }</View>
-                    <Text style={[styles.labelText, { paddingTop: Device.isSmallDevice() ? 10 : 0 }]}>Weight Range:</Text>
+                    <Text style={[styles.labelText, { paddingTop: 10 }]}>Weight Range:</Text>
                     <View style={{padding: 5}}>{ this._renderWeightRange() }</View>
-                    <Text style={[styles.labelText, { paddingTop: Device.isSmallDevice() ? 10 : 0 }]}>RPE Range:</Text>
+                    <Text style={[styles.labelText, { paddingTop: 10 }]}>RPE Range:</Text>
                     <View style={{padding: 5}}>{ this._renderRPERange() }</View>
-                    <Text style={[styles.labelText, { paddingTop: Device.isSmallDevice() ? 10 : 0 }]}>Rep Range:</Text>
+                    <Text style={[styles.labelText, { paddingTop: 10 }]}>Rep Range:</Text>
                     <View style={{padding: 5}}>{ this._renderRepRange() }</View>
                     <TouchableOpacity onPress={() => this.props.clear()}>
                         <Text style={styles.clearButton}>Clear all</Text>
@@ -429,8 +429,8 @@ const styles = StyleSheet.create({
     },
     clearButton: {
         textAlign: 'center', 
-        fontSize: Device.isSmallDevice() ? 15 : 18, 
-        marginTop: Device.isSmallDevice() ? 40 : 60, 
+        fontSize: 15, 
+        marginTop: 40,
         color: 'rgba(47, 128, 237, 1)',
     }
 });

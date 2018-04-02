@@ -39,6 +39,9 @@ describe('endWorkout analytics', () => {
             connectedDevice: {
                 numDisconnects: 0,
                 numReconnects: 0,
+            },
+            settings: {
+                defaultMetric: 'kg',
             }
         });
     });

@@ -30,6 +30,12 @@ import {
     PRESENT_HISTORY_FILTER_END_DATE,
     SAVE_HISTORY_FILTER_START_DATE,
     SAVE_HISTORY_FILTER_END_DATE,
+    SAVE_HISTORY_FILTER_START_RPE,
+    SAVE_HISTORY_FILTER_END_RPE,
+    SAVE_HISTORY_FILTER_STARTING_REP_RANGE,
+    SAVE_HISTORY_FILTER_ENDING_REP_RANGE,
+    SAVE_HISTORY_FILTER_START_WEIGHT,
+    SAVE_HISTORY_FILTER_END_WEIGHT,
 } from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
@@ -240,6 +246,36 @@ const HistoryReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 editingEndingDate: action.date,
+            };
+        case SAVE_HISTORY_FILTER_START_RPE:
+            return {
+                ...state,
+                editingStartingRPE: action.rpe,
+            };
+        case SAVE_HISTORY_FILTER_END_RPE:
+            return {
+                ...state,
+                editingEndingRPE: action.rpe,
+            };
+        case SAVE_HISTORY_FILTER_STARTING_REP_RANGE:
+            return {
+                ...state,
+                editingStartingRepRange: action.startingRepRange,
+            };
+        case SAVE_HISTORY_FILTER_ENDING_REP_RANGE:
+            return {
+                ...state,
+                editingEndingRepRange: action.endingRepRange,
+            };
+        case SAVE_HISTORY_FILTER_START_WEIGHT:
+            return {
+                ...state,
+                editingStartingWeight: action.startWeight,
+            };
+        case SAVE_HISTORY_FILTER_END_WEIGHT:
+            return {
+                ...state,
+                editingEndingWeight: action.endWeight,
             };
         default:
             return state;

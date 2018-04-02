@@ -15,8 +15,8 @@ const mapStateToProps = (state) => ({
     endDate: HistorySelectors.getEditingHistoryFilterEndingDate(state),
     startWeight: HistorySelectors.getEditingHistoryFilterStartingWeight(state),
     endWeight: HistorySelectors.getEditingHistoryFilterEndingWeight(state),
-    startingRPE: HistorySelectors.getEditingHistoryFilterStartingRPE(state),
-    endingRPE: HistorySelectors.getEditingHistoryFilterEndingRPE(state),
+    startRPE: HistorySelectors.getEditingHistoryFilterStartingRPE(state),
+    endRPE: HistorySelectors.getEditingHistoryFilterEndingRPE(state),
     startingRepRange: HistorySelectors.getEditingHistoryFilterStartingRepRange(state),
     endingRepRange: HistorySelectors.getEditingHistoryFilterEndingRepRange(state),
 });
@@ -29,6 +29,12 @@ const mapDispatchToProps = (dispatch) => {
         tappedTagsToExclude: Actions.presentTagsToExclude,
         tappedStartDate: Actions.presentStartDate,
         tappedEndDate: Actions.presentEndDate,
+        updateStartRPE: Actions.updateStartRPE,
+        updateEndRPE: Actions.updateEndRPE,
+        updateStartingRepRange: Actions.updateStartingRepRange,
+        updateEndingRepRange: Actions.updateEndingRepRange,
+        updateStartWeight: Actions.updateStartWeight,
+        updateEndWeight: Actions.updateEndWeight,
     }, dispatch);
 };
 

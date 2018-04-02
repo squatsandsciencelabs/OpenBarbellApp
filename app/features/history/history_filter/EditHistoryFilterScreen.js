@@ -5,7 +5,6 @@ import EditHistoryFilterView from './EditHistoryFilterView';
 import * as Actions from './EditHistoryFilterActions';
 import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 
-// REFACTOR as selector When historyfilter is approved
 const mapStateToProps = (state) => ({
     isModalShowing: HistorySelectors.getShowHistoryFilter(state),
     exercise: HistorySelectors.getEditingExerciseName(state),
@@ -35,6 +34,8 @@ const mapDispatchToProps = (dispatch) => {
         updateEndingRepRange: Actions.updateEndingRepRange,
         updateStartWeight: Actions.updateStartWeight,
         updateEndWeight: Actions.updateEndWeight,
+        clear: Actions.clearHistoryFilter,
+        save: Actions.saveHistoryFilter,
     }, dispatch);
 };
 

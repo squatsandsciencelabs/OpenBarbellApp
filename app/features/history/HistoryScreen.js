@@ -37,6 +37,7 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
 
     // ignore if initialStartTime is null as that was a bug, it's supposed to be undefined or an actual date
     sets = SetsSelectors.getFilteredHistorySets(sets, state);
+    console.tron.log(sets);
 
     // build view models
     for (let i=0; i<sets.length; i++) {
@@ -329,10 +330,25 @@ const mapStateToProps = (state) => {
         storedShouldShowRemoved = shouldShowRemoved;
     }
 
+    const exercise = HistorySelectors.getHistoryFilterExercise(state);
+    const tagsToInclude = HistorySelectors.getHistoryFilterTagsToInclude(state);
+    const tagsToExclude = HistorySelectors.getHistoryFilterTagsToExclude(state);
+    const startingDate = HistorySelectors.getHistoryFilterStartingDate(state);
+    const endingDate = HistorySelectors.getHistoryFilterEndingDate(state);
+    const startingWeight = HistorySelectors.getHistoryFilterStartingWeight(state);
+    const endingWeight = HistorySelectors.getHistoryFilterEndingWeight(state);
+    const startingRPE = HistorySelectors.getHistoryFilterStartingRPE(state);
+    const endingRPE = HistorySelectors.getEditingHistoryFilterEndingRPE(state);
+    const startingRepRange = HistorySelectors.getHistoryFilterStartingRepRange(state);
+    const endingRepRange = HistorySelectors.getHistoryFilterEndingRepRange(state);
+
+    const isFiltering = exercise || tagsToInclude.length > 0 || tagsToExclude.length > 0 || startingDate || endingDate || startingWeight || endingWeight || startingRPE || endingRPE || startingRepRange || endingRepRange;
+
     return {
         email: state.auth.email,
         sections: storedSections,
         shouldShowRemoved: shouldShowRemoved,
+        isFiltering: isFiltering,
     };
 };
 

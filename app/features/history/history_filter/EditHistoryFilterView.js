@@ -202,7 +202,9 @@ class EditHistoryFilterView extends Component {
                     <View style={{padding: 5}}>{ this._renderRPERange() }</View>
                     <Text style={[styles.labelText, {marginTop: 35}]}>Rep Range:</Text>
                     <View style={{padding: 5}}>{ this._renderRepRange() }</View>
-                    <Text style={{ textAlign: 'center', fontSize: 18, marginTop: 60 }}>Clear all</Text>
+                    <TouchableOpacity onPress={() => this.props.clear()}>
+                        <Text style={{ textAlign: 'center', fontSize: 18, marginTop: 60, color: 'rgba(47, 128, 237, 1)' }}>Clear all</Text>
+                    </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
                     <EditHistoryExerciseScreen />
@@ -246,7 +248,7 @@ class EditHistoryFilterView extends Component {
                 </View>
 
                 <View style={{position: 'absolute', right: 0, top: 0}}>
-                    <TouchableOpacity onPress={() => this._tappedDone() }>
+                    <TouchableOpacity onPress={() => this.props.save() }>
                         <View style={styles.nav}>
                             <Text style={[{color: 'rgba(47, 128, 237, 1)'}]}>Apply</Text>
                         </View>

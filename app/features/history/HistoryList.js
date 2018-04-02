@@ -154,10 +154,12 @@ class HistoryList extends Component {
     }
 
     _renderFilterHeader() {
+        const filterTitle = this.props.isFiltering ? 'Edit Filters' : 'Add Filters';
+
         return (
             <TouchableOpacity onPress={ () => this.props.presentHistoryFilter() }>
-                <View>
-                    <Text style={{ textAlign: 'center', paddingTop: 10, paddingBottom: 10, fontSize: 15, fontWeight: 'bold', fontSize: 20 }}>Filter</Text>
+                <View style={{borderBottomWidth: 1, borderBottomColor: '#959595'}}>
+                    <Text style={{ textAlign: 'center', paddingTop: 10, paddingBottom: 10, fontSize: 15, fontWeight: 'bold', fontSize: 18, color: 'rgba(47, 128, 237, 1)' }}>{filterTitle}</Text>
                 </View>
             </TouchableOpacity>
         );

@@ -14,9 +14,13 @@ import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 import EditHistoryFilterTagsToIncludeScreen from './tags/tagsToInclude/EditHistoryFilterTagsToIncludeScreen';
 import EditHistoryFilterTagsToExcludeScreen from './tags/tagsToExclude/EditHistoryFilterTagsToExcludeScreen';
 import EditHistoryExerciseScreen from './exercise_name/EditHistoryFilterExerciseScreen';
+import EditFilterStartDateScreen from './dateRange/startDate/EditHistoryFilterStartScreen';
+import EditFilterEndDateScreen from './dateRange/endDate/EditHistoryFilterEndScreen';
 import Pill from 'app/shared_features/pill/Pill';
 import * as Device from 'app/utility/Device';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import EditHistoryFilterStartDateScreen from './dateRange/startDate/EditHistoryFilterStartScreen';
+import EditHistoryFilterEndDateScreen from './dateRange/endDate/EditHistoryFilterEndScreen';
 
 class EditHistoryFilterView extends Component {
 
@@ -79,29 +83,25 @@ class EditHistoryFilterView extends Component {
             return (<Text style={[styles.fieldText, styles.placeholderText]}>Exercise</Text>);
         }
         return (<Text style={styles.fieldText}>{this.props.exercise}</Text>);
-    }
+    };
 
-    _renderStartingDate() {
-        if (!this.props.startDate) {
-            return (
-                <View style={[styles.field, { width: 150 }]}><Text style={[styles.tagText, styles.placeholderText]}>start</Text></View>
-            );
-        }
-    }
+    _renderStartDate() {
+        return <EditHistoryFilterStartDateScreen />
+    };
 
-    _renderEndingDate() {
-        if (!this.props.endDate) {
-            return (
-                <View style={[styles.field, { width: 150, marginLeft: 10 }]}><Text style={[styles.tagText, styles.placeholderText]}>end</Text></View>
-            );
-        }
-    }
+    _renderEndDate() {
+        return (
+            // <View style={{marginLeft: 5}}>
+                <EditHistoryFilterEndDateScreen />
+            // </View>
+        );
+    };
 
     _renderDateRange() {
         return (
-            <View style={{flex: 1, flexDirection: 'row'}}>
-                {this._renderStartingDate()}
-                {this._renderEndingDate()}
+            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
+                {this._renderStartDate()}
+                {this._renderEndDate()}
             </View>
         );
     };
@@ -114,7 +114,7 @@ class EditHistoryFilterView extends Component {
 
     _renderMax() {
         return (
-            <View style={[styles.field, { width: 150, marginLeft: 10 }]}><Text style={[styles.tagText, styles.placeholderText]}>max</Text></View>
+            <View style={[styles.field, { width: 150 }]}><Text style={[styles.tagText, styles.placeholderText]}>max</Text></View>
         );
     };
 
@@ -132,7 +132,7 @@ class EditHistoryFilterView extends Component {
 
     _renderRepRange() {
         return (
-            <View style={{flex: 1, flexDirection: 'row'}}>
+            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
                 {this._renderStartingRepRange()}
                 {this._renderEndingRepRange()}
             </View>
@@ -154,7 +154,7 @@ class EditHistoryFilterView extends Component {
 
     _renderRPERange() {
         return (
-            <View style={{flex: 1, flexDirection: 'row'}}>
+            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
                 {this._renderStartingRPE()}
                 {this._renderEndingRPE()}
             </View>
@@ -165,7 +165,7 @@ class EditHistoryFilterView extends Component {
         if (!this.props.startWeight) {
             return this._renderMin();
         }
-    }
+    };
 
     _renderEndWeight() {
         if (!this.props.endWeight) {
@@ -175,9 +175,13 @@ class EditHistoryFilterView extends Component {
 
     _renderWeightRange() {
         return (
-            <View style={{flex: 1, flexDirection: 'row'}}>
-                {this._renderStartWeight()}
-                {this._renderEndWeight()}
+            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
+                <TouchableHighlight onPress={() => this.props.tappedStartDate()} underlayColor='#e0e0e0'>
+                    {this._renderStartWeight()}
+                </TouchableHighlight>
+                <TouchableHighlight onPress={() => this.props.tappedEndDate()} underlayColor='#e0e0e0'>
+                    {this._renderEndWeight()}
+                </TouchableHighlight>
             </View>
         );
     };
@@ -187,7 +191,7 @@ class EditHistoryFilterView extends Component {
             <View>
                 <View style={{height: 300}}>
                     <Text style={[styles.labelText, {marginTop: 25}]}>Exercise Names Containing</Text>
-                    <View style={{padding: 5}}>
+                    <View style={{padding: 5, paddingLeft: 20, paddingRight: 20}}>
                         <View style={[styles.field, {flex: 1}]}>
                             <TouchableHighlight onPress={() => this.props.tappedExercise()} underlayColor='#e0e0e0'>
                                 {this._renderExercise()}
@@ -195,9 +199,9 @@ class EditHistoryFilterView extends Component {
                         </View>
                     </View>
                     <Text style={[styles.labelText, {marginTop: 35}]}>Tags Must Include:</Text>
-                    <View style={{padding: 5}}>{ this._renderTagsToInclude() }</View>
+                    <View style={{padding: 5, paddingLeft: 20, paddingRight: 20}}>{ this._renderTagsToInclude() }</View>
                     <Text style={[styles.labelText, {marginTop: 35}]}>Tags to Exclude:</Text>
-                    <View style={{padding: 5}}>{ this._renderTagsToExclude() }</View>
+                    <View style={{padding: 5, paddingLeft: 18, paddingRight: 18}}>{ this._renderTagsToExclude() }</View>
                     <Text style={[styles.labelText, {marginTop: 35}]}>Date Range:</Text>
                     <View style={{padding: 5}}>{ this._renderDateRange() }</View>
                     <Text style={[styles.labelText, {marginTop: 35}]}>Weight Range:</Text>
@@ -322,7 +326,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         textAlign: 'left',
-        marginLeft: 10,
+        marginLeft: 25,
     },
     numberStyle: {
         fontSize: 16,

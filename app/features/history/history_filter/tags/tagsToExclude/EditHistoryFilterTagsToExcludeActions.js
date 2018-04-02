@@ -1,47 +1,23 @@
 import {
-    ADD_EXCLUDE_TAG,
-    REMOVE_EXCLUDE_TAG,
-    SAVE_EXCLUDES_TAGS,
-    DISMISS_EXCLUDES_TAGS,
+    ADD_HISTORY_FILTER_EXCLUDE_TAG,
+    REMOVE_HISTORY_FILTER_EXCLUDE_TAG,
+    SAVE_HISTORY_FILTER_EXCLUDES_TAGS,
+    DISMISS_HISTORY_FILTER_EXCLUDES_TAGS,
 } from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 
-export const saveTags = (tags = []) => (dispatch, getState) => {
-    const state = getState();
-    logSaveTagsAnalytics(state);
+export const saveTags = (tags = []) => ({
+    type: SAVE_HISTORY_FILTER_EXCLUDES_TAGS,
+    tags: tags,
+});
 
-    dispatch({
-        type: SAVE_EXCLUDES_TAGS,
-        tags: tags,
-    });
-};
+export const dismissTags = () => ({ type: DISMISS_HISTORY_FILTER_EXCLUDES_TAGS });
 
-export const dismissTags = () => {
-    Analytics.setCurrentScreen('analysis');
-    return { type: DISMISS_EXCLUDES_TAGS };
-};
+export const cancelTags = () => ({ type: DISMISS_HISTORY_FILTER_EXCLUDES_TAGS });;
 
-export const cancelTags = () => (dispatch, getState) => {
-    const state = getState();
-    logCancelEditTagsAnalytics(state);
-    Analytics.setCurrentScreen('analysis');
+export const tappedPill = () => ({ type: REMOVE_HISTORY_FILTER_EXCLUDE_TAG });
 
-    dispatch({ type: DISMISS_EXCLUDES_TAGS });
-};
-
-export const tappedPill = () => (dispatch, getState) => {
-    const state = getState();
-    logRemovedTagAnalytics(state);
-
-    dispatch({ type: REMOVE_EXCLUDE_TAG });
-};
-
-export const addPill = () => (dispatch, getState) => {
-    const state = getState();
-    logAddTagAnalytics(state);
-
-    dispatch({ type: ADD_EXCLUDE_TAG });
-};
+export const addPill = () => ({ type: ADD_HISTORY_FILTER_EXCLUDE_TAG });
 
 // ANALYTICS 
 // TODO: Add analytics for history filter tags

@@ -8,23 +8,27 @@ import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 // REFACTOR as selector When historyfilter is approved
 const mapStateToProps = (state) => ({
     isModalShowing: HistorySelectors.getShowHistoryFilter(state),
-    exercise: HistorySelectors.getHistoryFilterExercise(state),
-    tagsToInclude: HistorySelectors.getHistoryFilterTagsToInclude(state),
-    tagsToExclude: HistorySelectors.getHistoryFilterTagsToExclude(state),
-    startDate: HistorySelectors.getHistoryFilterStartingDate(state),
-    endDate: HistorySelectors.getHistoryFilterEndingDate(state),
-    startWeight: HistorySelectors.getHistoryFilterStartingWeight(state),
-    endWeight: HistorySelectors.getHistoryFilterEndingWeight(state),
-    startingRPE: HistorySelectors.getHistoryFilterStartingRPE(state),
-    endingRPE: HistorySelectors.getHistoryFilterEndingRPE(state),
-    startingRepRange: HistorySelectors.getHistoryFilterStartingRepRange(state),
-    endingRepRange: HistorySelectors.getHistoryFilterEndingRepRange(state),
+    exercise: HistorySelectors.getEditingExerciseName(state),
+    tagsToInclude: HistorySelectors.getEditingFilterTagsToInclude(state),
+    tagsToExclude: HistorySelectors.getEditingFilterTagsToExclude(state),
+    startDate: HistorySelectors.getEditingHistoryFilterStartingDate(state),
+    endDate: HistorySelectors.getEditingHistoryFilterEndingDate(state),
+    startWeight: HistorySelectors.getEditingHistoryFilterStartingWeight(state),
+    endWeight: HistorySelectors.getEditingHistoryFilterEndingWeight(state),
+    startingRPE: HistorySelectors.getEditingHistoryFilterStartingRPE(state),
+    endingRPE: HistorySelectors.getEditingHistoryFilterEndingRPE(state),
+    startingRepRange: HistorySelectors.getEditingHistoryFilterStartingRepRange(state),
+    endingRepRange: HistorySelectors.getEditingHistoryFilterEndingRepRange(state),
 });
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         closeModal: Actions.dismissHistoryFilter,
         tappedExercise: Actions.presentSelectExercise,
+        tappedTagsToInclude: Actions.presentTagsToInclude,
+        tappedTagsToExclude: Actions.presentTagsToExclude,
+        tappedStartDate: Actions.presentStartDate,
+        tappedEndDate: Actions.presentEndDate,
     }, dispatch);
 };
 

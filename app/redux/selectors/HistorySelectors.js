@@ -33,6 +33,8 @@ export const getHistoryViewedCounter = (state) => stateRoot(state).viewedCounter
 
 // history filters
 
+export const getShowHistoryFilter = (state) => stateRoot(state).showHistoryFilter;
+
 export const getHistoryFilterExercise = (state) => stateRoot(state).exercise;
 
 export const getIsEditingHistoryFilterExercise = (state) => stateRoot(state).isEditingFilterExerciseName;

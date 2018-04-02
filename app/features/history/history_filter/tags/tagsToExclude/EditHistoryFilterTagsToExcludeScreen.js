@@ -4,19 +4,20 @@ import { connect } from 'react-redux';
 import SelectTagsModal from '../SelectTagsModal';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as Actions from './EditHistoryFilterTagsToExcludeActions';
-import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
+import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 import * as OneRMCalculator from 'app/math/OneRMCalculator';
 
 const mapStateToProps = (state) => {
-    const exercise = AnalysisSelectors.getExercise(state);
+    const exercise = HistorySelectors.getEditingExerciseName(state);
     
+    // TODO move tags suggestion out
     return {
         title: 'Tags to Exclude',
         placeholder: 'Enter Tag',
         text: '',
-        inputs: AnalysisSelectors.getTagsToExclude(state),
+        inputs: HistorySelectors.getEditingFilterTagsToExclude(state),
         generateSuggestions: (input, ignore) => OneRMCalculator.getTagsToExcludeSuggestions(state, exercise, input, ignore),
-        isModalShowing: AnalysisSelectors.getIsEditingExcludeTags(state),
+        isModalShowing: HistorySelectors.getIsEditingHistoryFilterTagsToExclude(state),
     }
 };
 

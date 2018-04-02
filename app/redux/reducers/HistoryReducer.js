@@ -17,6 +17,19 @@ import {
     TOGGLE_HISTORY_CAMERA_TYPE,
     PRESENT_HISTORY_FILTER,
     CLOSE_HISTORY_FILTER,
+    PRESENT_HISTORY_FILTER_EXERCISE,
+    SAVE_HISTORY_FILTER_EXERCISE,
+    DISMISS_HISTORY_FILTER_EXERCISE,
+    PRESENT_HISTORY_FILTER_INCLUDES_TAGS,
+    DISMISS_HISTORY_FILTER_INCLUDES_TAGS,
+    SAVE_HISTORY_FILTER_INCLUDES_TAGS,
+    PRESENT_HISTORY_FILTER_EXCLUDES_TAGS,
+    DISMISS_HISTORY_FILTER_EXCLUDES_TAGS,
+    SAVE_HISTORY_FILTER_EXCLUDES_TAGS,
+    PRESENT_HISTORY_FILTER_START_DATE,
+    PRESENT_HISTORY_FILTER_END_DATE,
+    SAVE_HISTORY_FILTER_START_DATE,
+    SAVE_HISTORY_FILTER_END_DATE,
 } from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
@@ -54,8 +67,10 @@ const defaultState = {
     editingStartingRepRange: '',
     isEditingEndingRepRange: false,
     editingEndingRepRange: '',
+    showStartDatePickerModal: false,
     isEditingStartingDate: false,
     editingStartingDate: '',
+    showEndDatePickerModal: false,
     isEditingEndingDate: false,
     editingEndingDate: '',
     tagsToInclude: [],
@@ -160,6 +175,71 @@ const HistoryReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 showHistoryFilter: false,
+            };
+        case PRESENT_HISTORY_FILTER_EXERCISE:
+            return {
+                ...state,
+                isEditingFilterExerciseName: true,
+            };    
+        case SAVE_HISTORY_FILTER_EXERCISE:
+            return {
+                ...state,
+                editingExerciseName: action.exercise,
+            }
+        case DISMISS_HISTORY_FILTER_EXERCISE:
+            return {
+                ...state,
+                isEditingFilterExerciseName: false,
+            }
+        case PRESENT_HISTORY_FILTER_INCLUDES_TAGS:
+            return {
+                ...state,
+                isEditingFilterTagsToInclude: true,
+            };
+        case SAVE_HISTORY_FILTER_INCLUDES_TAGS:
+            return {
+                ...state,
+                editingFilterTagsToInclude: action.tags,
+            };
+        case DISMISS_HISTORY_FILTER_INCLUDES_TAGS:
+            return {
+                ...state,
+                isEditingFilterTagsToInclude: false,
+            };
+        case PRESENT_HISTORY_FILTER_EXCLUDES_TAGS:
+            return {
+                ...state,
+                isEditingFilterTagsToExclude: true,
+            };
+        case SAVE_HISTORY_FILTER_EXCLUDES_TAGS:
+            return {
+                ...state,
+                editingFilterTagsToExclude: action.tags,
+            };
+        case DISMISS_HISTORY_FILTER_EXCLUDES_TAGS:
+            return {
+                ...state,
+                isEditingFilterTagsToExclude: false,
+            };
+        case PRESENT_HISTORY_FILTER_START_DATE:
+            return {
+                ...state,
+                isEditingStartingDate: true,
+            }
+        case SAVE_HISTORY_FILTER_START_DATE:
+            return {
+                ...state,
+                editingStartingDate: action.date,
+            };
+        case PRESENT_HISTORY_FILTER_END_DATE:
+            return {
+                ...state,
+                isEditingEndingDate: true,
+            }
+        case SAVE_HISTORY_FILTER_END_DATE:
+            return {
+                ...state,
+                editingEndingDate: action.date,
             };
         default:
             return state;

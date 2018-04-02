@@ -16,7 +16,6 @@ import {
     END_WORKOUT,
     TOGGLE_HISTORY_CAMERA_TYPE,
     PRESENT_HISTORY_FILTER,
-    CLOSE_HISTORY_FILTER,
     PRESENT_HISTORY_FILTER_EXERCISE,
     SAVE_HISTORY_FILTER_EXERCISE,
     DISMISS_HISTORY_FILTER_EXERCISE,
@@ -36,8 +35,12 @@ import {
     SAVE_HISTORY_FILTER_ENDING_REP_RANGE,
     SAVE_HISTORY_FILTER_START_WEIGHT,
     SAVE_HISTORY_FILTER_END_WEIGHT,
+    SAVE_HISTORY_FILTER,
+    CLEAR_HISTORY_FILTER,
+    DISMISS_HISTORY_FILTER,
 } from 'app/configs+constants/ActionTypes';
 
+// isEditing for analytics
 const defaultState = {
     isLoadingHistory: true,
     editingExerciseName: '',
@@ -177,7 +180,7 @@ const HistoryReducer = (state = defaultState, action) => {
                 ...state,
                 showHistoryFilter: true,
             };
-        case CLOSE_HISTORY_FILTER:
+        case DISMISS_HISTORY_FILTER:
             return {
                 ...state,
                 showHistoryFilter: false,
@@ -276,6 +279,49 @@ const HistoryReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 editingEndingWeight: action.endWeight,
+            };
+        case CLEAR_HISTORY_FILTER:
+            return {
+                ...state,
+                editingExerciseName: '',
+                editingFilterTagsToInclude: [],
+                editingFilterTagsToExclude: [],
+                editingStartingDate: '',
+                editingEndingDate: '',
+                editingStartingWeight: '',
+                editingEndingWeight: '',
+                editingStartingRPE: '',
+                editingEndingRPE: '',
+                editingStartingRepRange: '',
+                editingEndingRepRange: '',
+            };  
+        case SAVE_HISTORY_FILTER:
+            const exercise = state.editingExerciseName;
+            const tagsToInclude = state.editingFilterTagsToInclude;
+            const tagsToExclude = state.editingFilterTagsToExclude;
+            const startingDate = state.editingStartingDate;
+            const endingDate = state.editingEndingDate;
+            const startingWeight = state.editingStartingWeight;
+            const endingWeight = state.editingEndingWeight;
+            const startingRPE = state.editingStartingRPE;
+            const endingRPE = state.editingEndingRPE;
+            const startingRepRange = state.editingStartingRepRange;
+            const endingRepRange = state.editingEndingRepRange;
+
+            return {
+                ...state,
+                exercise,
+                tagsToInclude,
+                tagsToExclude,
+                startingDate,
+                endingDate,
+                startingWeight,
+                endingWeight,
+                startingRPE,
+                endingRPE,
+                startingRepRange,
+                endingRepRange,
+                showHistoryFilter: false,
             };
         default:
             return state;

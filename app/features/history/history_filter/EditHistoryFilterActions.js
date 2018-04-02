@@ -4,13 +4,15 @@ import {
     PRESENT_HISTORY_FILTER_END_DATE,
     PRESENT_HISTORY_FILTER_INCLUDES_TAGS,
     PRESENT_HISTORY_FILTER_EXCLUDES_TAGS,
-    CLOSE_HISTORY_FILTER,
+    DISMISS_HISTORY_FILTER,
     SAVE_HISTORY_FILTER_START_RPE,
     SAVE_HISTORY_FILTER_END_RPE,
     SAVE_HISTORY_FILTER_STARTING_REP_RANGE,
     SAVE_HISTORY_FILTER_ENDING_REP_RANGE,
     SAVE_HISTORY_FILTER_START_WEIGHT,
     SAVE_HISTORY_FILTER_END_WEIGHT,
+    CLEAR_HISTORY_FILTER,
+    SAVE_HISTORY_FILTER,
 } from 'app/configs+constants/ActionTypes';
 
 export const presentSelectExercise = () => ({ 
@@ -18,7 +20,7 @@ export const presentSelectExercise = () => ({
 });
 
 export const dismissHistoryFilter = () => ({
-    type: CLOSE_HISTORY_FILTER,
+    type: DISMISS_HISTORY_FILTER,
 });
 
 export const presentTagsToInclude = () => ({ 
@@ -65,4 +67,12 @@ export const updateStartingRepRange = (reps) => ({
 export const updateEndingRepRange = (reps) => ({
     type: SAVE_HISTORY_FILTER_ENDING_REP_RANGE,
     endingRepRange: reps,
+});
+
+export const clearHistoryFilter = () => ({
+    type: CLEAR_HISTORY_FILTER,
+});
+
+export const saveHistoryFilter = () => ({
+    type: SAVE_HISTORY_FILTER,
 });

@@ -3,6 +3,8 @@ import DatePicker from 'react-native-datepicker'
 
 class DatePickerModal extends Component {
     render() {
+        const todaysDate = new Date().toISOString().slice(0,10); 
+
         return (
             <DatePicker
               style={{ width: 150 }}
@@ -11,14 +13,14 @@ class DatePickerModal extends Component {
               showIcon={false}
               placeholder={this.props.placeholder}
               format="YYYY-MM-DD"
-              minDate="2016-05-01"
-              maxDate="2016-06-01"
+              minDate="2016-06-17"
+              maxDate={todaysDate}
               confirmBtnText="Confirm"
               cancelBtnText="Cancel"
               customStyles={{
                 // ... You can check the source to find the other keys.
                 placeholderText: {
-                  color: 'rgba(189, 189, 189, 1)'
+                  color: 'rgba(189, 189, 189, 1)',
                 },
                 dateInput: {
                   backgroundColor: 'rgba(239, 239, 239, 1)',

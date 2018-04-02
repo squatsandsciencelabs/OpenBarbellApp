@@ -13,6 +13,10 @@ import {
     SAVE_HISTORY_FILTER_END_WEIGHT,
     CLEAR_HISTORY_FILTER,
     SAVE_HISTORY_FILTER,
+    TOGGLE_START_WEIGHT_METRIC,
+    TOGGLE_END_WEIGHT_METRIC,
+    CLEAR_START_DATE,
+    CLEAR_END_DATE,
 } from 'app/configs+constants/ActionTypes';
 
 export const presentSelectExercise = () => ({ 
@@ -75,4 +79,20 @@ export const clearHistoryFilter = () => ({
 
 export const saveHistoryFilter = () => ({
     type: SAVE_HISTORY_FILTER,
+});
+
+export const toggleStartWeightMetric = () => ({
+    type: TOGGLE_START_WEIGHT_METRIC,
+});
+
+export const toggleEndWeightMetric = () => ({
+    type: TOGGLE_END_WEIGHT_METRIC,
+});
+
+export const clearStartDate = () => ({
+    type: CLEAR_START_DATE,
+});
+
+export const clearEndDate = () => ({
+    type: CLEAR_END_DATE,
 });

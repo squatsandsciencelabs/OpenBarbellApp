@@ -40,7 +40,8 @@ class HistoryList extends Component {
     shouldComponentUpdate(nextProps) {
         const differentShowRemoved = nextProps.shouldShowRemoved !== this.props.shouldShowRemoved;
         const differentSections = nextProps.sections !== this.props.sections;
-        return differentShowRemoved || differentSections;
+        const differentIsFiltering = nextProps.isFiltering !== this.props.isFiltering;
+        return differentShowRemoved || differentSections || differentIsFiltering;
     }
 
     // RENDER

@@ -37,7 +37,6 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
 
     // ignore if initialStartTime is null as that was a bug, it's supposed to be undefined or an actual date
     sets = SetsSelectors.getFilteredHistorySets(sets, state);
-    console.tron.log(sets);
 
     // build view models
     for (let i=0; i<sets.length; i++) {
@@ -304,14 +303,14 @@ const createBottomBorder = (set) => ({
 const mapStateToProps = (state) => {
     // declare vars
     let shouldShowRemoved = SettingsSelectors.getShowRemoved(state);
-    let historyData = state.sets.historyData;
+    let historyData = SetsSelectors.getHistorySets(state);
     let historyCollapsed = HistoryCollapsedSelectors.getCollapsedModel(state);
     let rebuildViewModels = false;
 
     // determine rebuilding of viewmodels
     if (historyData !== storedHistoryData) {
         // data changed, redo it all
-        storedHistoryData = historyData;
+        storedHistoryData = SetsSelectors.getFilteredHistorySets(historyData, state);
         storedHistorySets = SetsSelectors.getHistorySetsChronological(state);
         rebuildViewModels = true;
     } else if (shouldShowRemoved !== storedShouldShowRemoved) {

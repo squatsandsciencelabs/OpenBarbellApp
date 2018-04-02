@@ -18,6 +18,8 @@ const mapStateToProps = (state) => ({
     endRPE: HistorySelectors.getEditingHistoryFilterEndingRPE(state),
     startingRepRange: HistorySelectors.getEditingHistoryFilterStartingRepRange(state),
     endingRepRange: HistorySelectors.getEditingHistoryFilterEndingRepRange(state),
+    startWeightMetric: HistorySelectors.getHistoryFilterStartingWeightMetric(state),
+    endWeightMetric: HistorySelectors.getHistoryFilterEndingWeightMetric(state),
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -36,6 +38,10 @@ const mapDispatchToProps = (dispatch) => {
         updateEndWeight: Actions.updateEndWeight,
         clear: Actions.clearHistoryFilter,
         save: Actions.saveHistoryFilter,
+        toggleStartWeightMetric: Actions.toggleStartWeightMetric,
+        toggleEndWeightMetric: Actions.toggleEndWeightMetric,
+        clearStartDate: Actions.clearStartDate,
+        clearEndDate: Actions.clearEndDate,
     }, dispatch);
 };
 

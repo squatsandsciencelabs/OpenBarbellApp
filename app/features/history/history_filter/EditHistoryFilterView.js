@@ -387,6 +387,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'rgba(77, 77, 77, 1)',
     },
+    detailText: {
+        fontSize: 13,
+        color: 'gray',
+        backgroundColor: 'rgba(0, 0, 0, 0)'
+    },
     dropdownButton: {
         backgroundColor: 'rgba(47, 128, 237, 1)',
         borderRadius: 3,

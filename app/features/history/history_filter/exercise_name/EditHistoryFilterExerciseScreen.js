@@ -9,9 +9,9 @@ import * as Actions from './EditHistoryFilterExerciseActions';
 const mapStateToProps = (state) => ({
     title: 'Edit Exercise',
     placeholder: 'Enter Exercise',
-    text: HistorySelectors.getHistoryFilterExercise(state),
+    text: HistorySelectors.getEditingExerciseName(state),
     generateSingleInputSuggestions: (input) => { return SuggestionsSelectors.generateExerciseNameSuggestions(state, input) },
-    isModalShowing: HistorySelectors.getIsEditingFilterExercise(state),
+    isModalShowing: HistorySelectors.getIsEditingHistoryFilterExercise(state),
 });
 
 const mapDispatchToProps = (dispatch) => {

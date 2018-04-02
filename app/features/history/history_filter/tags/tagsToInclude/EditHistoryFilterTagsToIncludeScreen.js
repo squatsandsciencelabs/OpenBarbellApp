@@ -2,21 +2,23 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import SelectTagsModal from '../SelectTagsModal';
+import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as Actions from './EditHistoryFilterTagsToIncludeActions';
-import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';
+import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 import * as OneRMCalculator from 'app/math/OneRMCalculator';
 
 const mapStateToProps = (state) => {
-    const exercise = AnalysisSelectors.getExercise(state);
-
+    const exercise = HistorySelectors.getEditingExerciseName(state);
+    
+    // TODO move tags suggestion out
     return {
-        title: 'Tags Must Include',
+        title: 'Tags to Include',
         placeholder: 'Enter Tag',
         text: '',
-        inputs: AnalysisSelectors.getTagsToInclude(state),
+        inputs: HistorySelectors.getEditingFilterTagsToInclude(state),
         generateSuggestions: (input, ignore) => OneRMCalculator.getTagsToIncludeSuggestions(state, exercise, input, ignore),
-        isModalShowing: AnalysisSelectors.getIsEditingIncludeTags(state),
-    };
+        isModalShowing: HistorySelectors.getIsEditingHistoryFilterTagsToInclude(state),
+    }
 };
 
 const mapDispatchToProps = (dispatch) => {

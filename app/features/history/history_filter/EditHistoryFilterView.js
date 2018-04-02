@@ -87,12 +87,32 @@ class EditHistoryFilterView extends Component {
     };
 
     _renderStartDate() {
-        return <EditHistoryFilterStartDateScreen />
+        return (
+            <View>
+                <EditHistoryFilterStartDateScreen />
+                <View style={styles.fieldDetails}>
+                    <TouchableOpacity onPress={() => this.props.clearStartDate()}>
+                        <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 35}}>
+                            <Icon name="times-circle" size={15} color="gray" />
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        );
     };
 
     _renderEndDate() {
         return (
-            <EditHistoryFilterEndDateScreen />
+            <View>
+                <EditHistoryFilterEndDateScreen />
+                <View style={styles.fieldDetails}>
+                    <TouchableOpacity onPress={() => this.props.clearEndDate()}>
+                        <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 35}}>
+                            <Icon name="times-circle" size={15} color="gray" />
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </View>
         );
     };
 
@@ -118,6 +138,47 @@ class EditHistoryFilterView extends Component {
                     value = {value}
                     onChangeText={(text) => onChangeText(text)}
                 />
+            </View>
+        );
+    };
+
+    _displayMetric(metric) {
+        if (metric === 'kgs') {
+            return "KGs";
+        } else if (metric === 'lbs') {
+            return "LBs";
+        }
+    };
+
+    _toggleMetric(range) {
+        if (range === 'min') {
+            this.props.toggleStartWeightMetric();
+        } else if (range === 'max') {
+            this.props.toggleEndWeightMetric();
+        }
+    }
+
+    _renderWeightField(range, value, onChangeText, metric) {
+        return (
+            <View style={[styles.field, { width: 150 }]}>
+                <TextInput
+                    style={styles.fieldText}
+                    keyboardType={'numeric'}
+                    underlineColorAndroid={'transparent'}
+                    editable = {true}
+                    placeholder={range}
+                    placeholderTextColor={'rgba(189, 189, 189, 1)'}
+                    value = {value}
+                    onChangeText={(text) => onChangeText(text)}
+                />
+                <View style={styles.fieldDetails}>
+                    <TouchableOpacity onPress={() => this._toggleMetric(range)}>
+                        <View style={{flexDirection: 'row', alignItems: 'center', }}>
+                            <Text style={styles.detailText}>{this._displayMetric(metric)} </Text>
+                            <Icon name="refresh" size={10} color="gray" />
+                        </View>
+                    </TouchableOpacity>
+                </View>
             </View>
         );
     };
@@ -158,22 +219,22 @@ class EditHistoryFilterView extends Component {
     };
 
     _renderStartWeight() {
-        return this._renderTextField('min', this.props.startWeight, this.props.updateStartWeight);
+        return (
+            this._renderWeightField('min', this.props.startWeight, this.props.updateStartWeight, this.props.startWeightMetric)
+        );
     };
 
     _renderEndWeight() {
-        return this._renderTextField('max', this.props.endWeight, this.props.updateEndWeight);
+        return (
+            this._renderWeightField('max', this.props.endWeight, this.props.updateEndWeight, this.props.endWeightMetric)
+        );
     };
 
     _renderWeightRange() {
         return (
             <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
-                <TouchableHighlight onPress={() => this.props.tappedStartDate()} underlayColor='#e0e0e0'>
-                    {this._renderStartWeight()}
-                </TouchableHighlight>
-                <TouchableHighlight onPress={() => this.props.tappedEndDate()} underlayColor='#e0e0e0'>
-                    {this._renderEndWeight()}
-                </TouchableHighlight>
+                {this._renderStartWeight()}
+                {this._renderEndWeight()}
             </View>
         );
     };
@@ -190,7 +251,7 @@ class EditHistoryFilterView extends Component {
                             </TouchableHighlight>
                         </View>
                     </View>
-                    <Text style={[styles.labelText, {marginTop: 35}]}>Tags Must Include:</Text>
+                    <Text style={[styles.labelText, {marginTop: 35}]}>Tags to Include:</Text>
                     <View style={{padding: 5, paddingLeft: 20, paddingRight: 20}}>{ this._renderTagsToInclude() }</View>
                     <Text style={[styles.labelText, {marginTop: 35}]}>Tags to Exclude:</Text>
                     <View style={{padding: 5, paddingLeft: 18, paddingRight: 18}}>{ this._renderTagsToExclude() }</View>

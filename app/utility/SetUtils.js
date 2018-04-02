@@ -194,9 +194,11 @@ export const endTime = (set) => {
 export const checkExercise = (setExercise, exercise) => {
     if (!exercise) {
         return true;
+    } else if (exercise && !setExercise) {
+        false;
+    } else {
+        return setExercise.trim().toLowerCase() === exercise.trim().toLowerCase();
     }
-
-    return setExercise.trim().toLowerCase() === exercise.trim().toLowerCase();
 };
 
 export const checkIncludesTags = (tags, tagsToInclude) => {

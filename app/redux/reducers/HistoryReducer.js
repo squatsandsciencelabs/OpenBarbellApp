@@ -38,6 +38,10 @@ import {
     SAVE_HISTORY_FILTER,
     CLEAR_HISTORY_FILTER,
     DISMISS_HISTORY_FILTER,
+    TOGGLE_START_WEIGHT_METRIC,
+    TOGGLE_END_WEIGHT_METRIC,
+    CLEAR_START_DATE,
+    CLEAR_END_DATE,
 } from 'app/configs+constants/ActionTypes';
 
 // isEditing for analytics
@@ -323,6 +327,32 @@ const HistoryReducer = (state = defaultState, action) => {
                 endingRepRange,
                 showHistoryFilter: false,
             };
+        case TOGGLE_START_WEIGHT_METRIC:
+            const startingWeightMetric = state.startingWeightMetric;
+            const newStartingWeightMetric = startingWeightMetric === 'kgs' ? 'lbs' : 'kgs';
+
+            return {
+                ...state,
+                startingWeightMetric: newStartingWeightMetric
+            };
+        case TOGGLE_END_WEIGHT_METRIC:
+            const endingWeightMetric = state.endingWeightMetric;
+            const newEndingWeightMetric = endingWeightMetric === 'kgs' ? 'lbs' : 'kgs';
+
+            return {
+                ...state,
+                endingWeightMetric: newEndingWeightMetric
+            };
+        case CLEAR_START_DATE:
+            return {
+                ...state,
+                editingStartingDate: '',
+            };
+        case CLEAR_END_DATE:
+            return {
+                ...state,
+                editingEndingDate: '',
+            }
         default:
             return state;
     }

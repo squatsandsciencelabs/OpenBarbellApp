@@ -1,5 +1,6 @@
 import * as RepDataMap from 'app/utility/RepDataMap';
 import * as WeightConversion from 'app/utility/WeightConversion';
+import * as DateUtils from 'app/utility/DateUtils';
 
 export const isDeleted = (set) => {
     if (set.hasOwnProperty('deleted')) {
@@ -279,10 +280,10 @@ export const checkDateRange = (setInitialStartTime, startingDate, endingDate) =>
     if (!startingDate && !endingDate) {
         return true;
     } else if (startingDate && !endingDate) {
-        return new Date(setInitialStartTime) >= new Date(startingDate);
+        return DateUtils.getDate(setInitialStartTime) >= DateUtils.getDate(startingDate);
     } else if (!startingDate && endingDate) {
-        return new Date(setInitialStartTime) <= new Date(endingDate);
+        return DateUtils.getDate(setInitialStartTime) <= DateUtils.getDate(endingDate);
     } else {
-        return new Date(setInitialStartTime) >= new Date(startingDate) && new Date(setInitialStartTime) <= new Date(endingDate);
+        return DateUtils.getDate(setInitialStartTime) >= DateUtils.getDate(startingDate) && DateUtils.getDate(setInitialStartTime) <= DateUtils.getDate(endingDate);
     }
 };

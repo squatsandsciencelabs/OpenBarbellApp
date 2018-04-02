@@ -304,19 +304,19 @@ describe('1RM', () => {
         expect(results).toEqual(
             {
                 "active": [
-                    {"marker": "270.00lbs, 0.51m/s", "setID": "a", "workoutID": "ab", "x": 270, "y": 0.51}, 
-                    {"marker": "290.00lbs, 0.41m/s", "setID": "h", "workoutID": "abc", "x": 290, "y": 0.41}, 
-                    {"marker": "330.00lbs, 0.37m/s", "setID": "i", "workoutID": "abc", "x": 330, "y": 0.37}, 
-                    {"marker": "350.00lbs, 0.41m/s", "setID": "c", "workoutID": "ab", "x": 350, "y": 0.41}, 
-                    {"marker": "354.94lbs, 0.41m/s", "setID": "o", "workoutID": null, "x": 354.94424182, "y": 0.41}, 
-                    {"marker": "375.00lbs, 0.35m/s", "setID": "p", "workoutID": null, "x": 375, "y": 0.35},
-                    {"marker": "396.83lbs, 0.3m/s", "setID": "q", "workoutID": null, "x": 396.83207159999995, "y": 0.3}
+                    {"marker": "270.00lbs, 0.51m/s", "setID": "a", "workoutID": "ab", "x": 270, "y": 0.51, "wasError": false}, 
+                    {"marker": "290.00lbs, 0.41m/s", "setID": "h", "workoutID": "abc", "x": 290, "y": 0.41, "wasError": false}, 
+                    {"marker": "330.00lbs, 0.37m/s", "setID": "i", "workoutID": "abc", "x": 330, "y": 0.37, "wasError": false}, 
+                    {"marker": "350.00lbs, 0.41m/s", "setID": "c", "workoutID": "ab", "x": 350, "y": 0.41, "wasError": false}, 
+                    {"marker": "354.94lbs, 0.41m/s", "setID": "o", "workoutID": null, "x": 354.94424182, "y": 0.41, "wasError": false}, 
+                    {"marker": "375.00lbs, 0.35m/s", "setID": "p", "workoutID": null, "x": 375, "y": 0.35, "wasError": false},
+                    {"marker": "396.83lbs, 0.3m/s", "setID": "q", "workoutID": null, "x": 396.83207159999995, "y": 0.3, "wasError": false}
                 ], 
                 "e1RM": 542, 
                 "errors": [
-                    {"marker": "308.65lbs, 0.49m/s", "setID": "b", "workoutID": "ab", "x": 308.6471668, "y": 0.49},
-                    {"marker": "440.92lbs, 0.3m/s", "setID": "invalidRemoved", "workoutID": null, "x": 440.92452399999996, "y": 0.3},
-                    {"marker": "462.97lbs, 0.3m/s", "setID": "invalidRemoved2", "workoutID": null, "x": 462.9707502, "y": 0.3}
+                    {"marker": "308.65lbs, 0.49m/s", "setID": "b", "workoutID": "ab", "x": 308.6471668, "y": 0.49, "wasError": true},
+                    {"marker": "440.92lbs, 0.3m/s", "setID": "invalidRemoved", "workoutID": null, "x": 440.92452399999996, "y": 0.3, "wasError": true},
+                    {"marker": "462.97lbs, 0.3m/s", "setID": "invalidRemoved2", "workoutID": null, "x": 462.9707502, "y": 0.3, "wasError": true}
                 ], 
                 "isRegressionNegative": true, 
                 "maxX": 462.9707502, 
@@ -329,7 +329,7 @@ describe('1RM', () => {
                     {"x": 666.6628094612353, "y": 0}
                 ], 
                 "slope": -0.0012000116689702368, 
-                "unused": [{"marker": "", "setID": "j", "workoutID": "abc", "x": 375, "y": 0.31}]
+                "unused": [{"marker": "", "setID": "j", "workoutID": "abc", "x": 375, "y": 0.31, "wasError": false}]
             }
         );
     });
@@ -573,13 +573,13 @@ describe('1RM', () => {
         expect(results).toEqual(
             {
                 "active": [
-                    {"marker": "175.00lbs, 0.41m/s", "setID": "d", "workoutID": "ab", "x": 175, "y": 0.41}, 
-                    {"marker": "202.00lbs, 0.37m/s", "setID": "e", "workoutID": "ab", "x": 202, "y": 0.37}, 
-                    {"marker": "215.00lbs, 0.29m/s", "setID": "m", "workoutID": "abc", "x": 215, "y": 0.29}, 
-                    {"marker": "230.00lbs, 0.34m/s", "setID": "f", "workoutID": "ab", "x": 230, "y": 0.34},
-                    {"marker": "235.00lbs, 0.37m/s", "setID": "r", "workoutID": null, "x": 235, "y": 0.37}, 
-                    {"marker": "245.00lbs, 0.34m/s", "setID": "s", "workoutID": null, "x": 245, "y": 0.34}, 
-                    {"marker": "255.00lbs, 0.29m/s", "setID": "t", "workoutID": null, "x": 255, "y": 0.29}], 
+                    {"marker": "175.00lbs, 0.41m/s", "setID": "d", "workoutID": "ab", "x": 175, "y": 0.41, "wasError": false}, 
+                    {"marker": "202.00lbs, 0.37m/s", "setID": "e", "workoutID": "ab", "x": 202, "y": 0.37, "wasError": false}, 
+                    {"marker": "215.00lbs, 0.29m/s", "setID": "m", "workoutID": "abc", "x": 215, "y": 0.29, "wasError": false}, 
+                    {"marker": "230.00lbs, 0.34m/s", "setID": "f", "workoutID": "ab", "x": 230, "y": 0.34, "wasError": false},
+                    {"marker": "235.00lbs, 0.37m/s", "setID": "r", "workoutID": null, "x": 235, "y": 0.37, "wasError": false}, 
+                    {"marker": "245.00lbs, 0.34m/s", "setID": "s", "workoutID": null, "x": 245, "y": 0.34, "wasError": false}, 
+                    {"marker": "255.00lbs, 0.29m/s", "setID": "t", "workoutID": null, "x": 255, "y": 0.29, "wasError": false}], 
                 "e1RM": 399, 
                 "errors": [], 
                 "isRegressionNegative": true, 
@@ -594,8 +594,8 @@ describe('1RM', () => {
                 ], 
                 "slope": -0.0011000000000000003, 
                 "unused": [
-                    {"marker": "", "setID": "k", "workoutID": "abc", "x": 215, "y": 0.34}, 
-                    {"marker": "", "setID": "l", "workoutID": "abc", "x": 215, "y": 0.31}
+                    {"marker": "", "setID": "k", "workoutID": "abc", "x": 215, "y": 0.34, "wasError": false}, 
+                    {"marker": "", "setID": "l", "workoutID": "abc", "x": 215, "y": 0.31, "wasError": false}
                 ]
             }
         );
@@ -839,13 +839,13 @@ describe('1RM', () => {
         // unused should have k and l
         expect(results).toEqual({
             "active": [
-                {"marker": "175.00lbs, 0.41m/s", "setID": "d", "workoutID": "ab", "x": 175, "y": 0.41}, 
-                {"marker": "202.00lbs, 0.37m/s", "setID": "e", "workoutID": "ab", "x": 202, "y": 0.37}, 
-                {"marker": "215.00lbs, 0.34m/s", "setID": "k", "workoutID": "abc", "x": 215, "y": 0.34}, 
-                {"marker": "230.00lbs, 0.34m/s", "setID": "f", "workoutID": "ab", "x": 230, "y": 0.34}, 
-                {"marker": "235.00lbs, 0.37m/s", "setID": "r", "workoutID": null, "x": 235, "y": 0.37}, 
-                {"marker": "245.00lbs, 0.34m/s", "setID": "s", "workoutID": null, "x": 245, "y": 0.34}, 
-                {"marker": "255.00lbs, 0.29m/s", "setID": "t", "workoutID": null, "x": 255, "y": 0.29}
+                {"marker": "175.00lbs, 0.41m/s", "setID": "d", "workoutID": "ab", "x": 175, "y": 0.41, "wasError": false}, 
+                {"marker": "202.00lbs, 0.37m/s", "setID": "e", "workoutID": "ab", "x": 202, "y": 0.37, "wasError": false}, 
+                {"marker": "215.00lbs, 0.34m/s", "setID": "k", "workoutID": "abc", "x": 215, "y": 0.34, "wasError": false}, 
+                {"marker": "230.00lbs, 0.34m/s", "setID": "f", "workoutID": "ab", "x": 230, "y": 0.34, "wasError": false}, 
+                {"marker": "235.00lbs, 0.37m/s", "setID": "r", "workoutID": null, "x": 235, "y": 0.37, "wasError": false}, 
+                {"marker": "245.00lbs, 0.34m/s", "setID": "s", "workoutID": null, "x": 245, "y": 0.34, "wasError": false}, 
+                {"marker": "255.00lbs, 0.29m/s", "setID": "t", "workoutID": null, "x": 255, "y": 0.29, "wasError": false}
             ], 
             "e1RM": 390, 
             "errors": [], 
@@ -861,8 +861,8 @@ describe('1RM', () => {
             ], 
             "slope": -0.0011999999999999997, 
             "unused": [
-                {"marker": "", "setID": "l", "workoutID": "abc", "x": 215, "y": 0.31}, 
-                {"marker": "", "setID": "m", "workoutID": "abc", "x": 215, "y": 0.29}
+                {"marker": "", "setID": "l", "workoutID": "abc", "x": 215, "y": 0.31, "wasError": false}, 
+                {"marker": "", "setID": "m", "workoutID": "abc", "x": 215, "y": 0.29, "wasError": false}
             ]
         });
     });
@@ -1019,12 +1019,12 @@ describe('1RM', () => {
         expect(results).toEqual(
             {
                 "active": [
-                    {"marker": "202.00lbs, 0.37m/s", "setID": "e", "workoutID": "ab", "x": 202, "y": 0.37}, 
-                    {"marker": "215.00lbs, 0.31m/s", "setID": "l", "workoutID": "abc", "x": 215, "y": 0.31}, 
-                    {"marker": "230.00lbs, 0.34m/s", "setID": "f", "workoutID": "ab", "x": 230, "y": 0.34}, 
-                    {"marker": "235.00lbs, 0.37m/s", "setID": "r", "workoutID": null, "x": 235, "y": 0.37}, 
-                    {"marker": "245.00lbs, 0.34m/s", "setID": "s", "workoutID": null, "x": 245, "y": 0.34}, 
-                    {"marker": "255.00lbs, 0.29m/s", "setID": "t", "workoutID": null, "x": 255, "y": 0.29}], 
+                    {"marker": "202.00lbs, 0.37m/s", "setID": "e", "workoutID": "ab", "x": 202, "y": 0.37, "wasError": false}, 
+                    {"marker": "215.00lbs, 0.31m/s", "setID": "l", "workoutID": "abc", "x": 215, "y": 0.31, "wasError": false}, 
+                    {"marker": "230.00lbs, 0.34m/s", "setID": "f", "workoutID": "ab", "x": 230, "y": 0.34, "wasError": false}, 
+                    {"marker": "235.00lbs, 0.37m/s", "setID": "r", "workoutID": null, "x": 235, "y": 0.37, "wasError": false}, 
+                    {"marker": "245.00lbs, 0.34m/s", "setID": "s", "workoutID": null, "x": 245, "y": 0.34, "wasError": false}, 
+                    {"marker": "255.00lbs, 0.29m/s", "setID": "t", "workoutID": null, "x": 255, "y": 0.29, "wasError": false}], 
                 "e1RM": 464, 
                 "errors": [], 
                 "isRegressionNegative": true, 
@@ -1225,12 +1225,12 @@ describe('1RM', () => {
         expect(results).toEqual(
             {
                 "active": [
-                    {"marker": "175.00lbs, 0.41m/s", "setID": "d", "workoutID": "ab", "x": 175, "y": 0.41}, 
-                    {"marker": "190.00lbs, 0.34m/s", "setID": "k", "workoutID": "abc", "x": 190, "y": 0.34}, 
-                    {"marker": "202.00lbs, 0.37m/s", "setID": "e", "workoutID": "ab", "x": 202, "y": 0.37}, 
-                    {"marker": "215.00lbs, 0.31m/s", "setID": "l", "workoutID": "abc", "x": 215, "y": 0.31}, 
-                    {"marker": "235.00lbs, 0.37m/s", "setID": "r", "workoutID": null, "x": 235, "y": 0.37}, 
-                    {"marker": "255.00lbs, 0.29m/s", "setID": "t", "workoutID": null, "x": 255, "y": 0.29}
+                    {"marker": "175.00lbs, 0.41m/s", "setID": "d", "workoutID": "ab", "x": 175, "y": 0.41, "wasError": false}, 
+                    {"marker": "190.00lbs, 0.34m/s", "setID": "k", "workoutID": "abc", "x": 190, "y": 0.34, "wasError": false}, 
+                    {"marker": "202.00lbs, 0.37m/s", "setID": "e", "workoutID": "ab", "x": 202, "y": 0.37, "wasError": false}, 
+                    {"marker": "215.00lbs, 0.31m/s", "setID": "l", "workoutID": "abc", "x": 215, "y": 0.31, "wasError": false}, 
+                    {"marker": "235.00lbs, 0.37m/s", "setID": "r", "workoutID": null, "x": 235, "y": 0.37, "wasError": false}, 
+                    {"marker": "255.00lbs, 0.29m/s", "setID": "t", "workoutID": null, "x": 255, "y": 0.29, "wasError": false}
                 ], 
                 "e1RM": 410, 
                 "errors": [], 
@@ -1486,11 +1486,11 @@ describe('1RM', () => {
 
         expect(results).toEqual({
             "active": [
-                {"marker": "190.00lbs, 0.34m/s", "setID": "k", "workoutID": "abc", "x": 190, "y": 0.34}, 
-                {"marker": "215.00lbs, 0.31m/s", "setID": "l", "workoutID": "abc", "x": 215, "y": 0.31}, 
-                {"marker": "235.00lbs, 0.37m/s", "setID": "r", "workoutID": null, "x": 235, "y": 0.37}, 
-                {"marker": "245.00lbs, 0.34m/s", "setID": "s", "workoutID": null, "x": 245, "y": 0.34}, 
-                {"marker": "255.00lbs, 0.29m/s", "setID": "t", "workoutID": null, "x": 255, "y": 0.29}
+                {"marker": "190.00lbs, 0.34m/s", "setID": "k", "workoutID": "abc", "x": 190, "y": 0.34, "wasError": false}, 
+                {"marker": "215.00lbs, 0.31m/s", "setID": "l", "workoutID": "abc", "x": 215, "y": 0.31, "wasError": false}, 
+                {"marker": "235.00lbs, 0.37m/s", "setID": "r", "workoutID": null, "x": 235, "y": 0.37, "wasError": false}, 
+                {"marker": "245.00lbs, 0.34m/s", "setID": "s", "workoutID": null, "x": 245, "y": 0.34, "wasError": false}, 
+                {"marker": "255.00lbs, 0.29m/s", "setID": "t", "workoutID": null, "x": 255, "y": 0.29, "wasError": false}
             ], 
             "e1RM": 828, 
             "errors": [], 
@@ -1506,7 +1506,7 @@ describe('1RM', () => {
             ], 
             "slope": -0.00029999999999999943, 
             "unused": [
-                {"marker": "", "setID": "m", "workoutID": "abc", "x": 245, "y": 0.29}
+                {"marker": "", "setID": "m", "workoutID": "abc", "x": 245, "y": 0.29, "wasError": false}
             ]
         });
     });
@@ -1755,16 +1755,16 @@ describe('1RM', () => {
             // should be hiojq in active
             {
                 "active": [
-                    {"marker": "290.00lbs, 0.41m/s", "setID": "h", "workoutID": "abc", "x": 290, "y": 0.41}, 
-                    {"marker": "330.00lbs, 0.37m/s", "setID": "i", "workoutID": "abc", "x": 330, "y": 0.37}, 
-                    {"marker": "350.00lbs, 0.41m/s", "setID": "c", "workoutID": "ab", "x": 350, "y": 0.41}, 
-                    {"marker": "354.94lbs, 0.42m/s", "setID": "o", "workoutID": null, "x": 354.94424182, "y": 0.42}, 
-                    {"marker": "375.00lbs, 0.35m/s", "setID": "p", "workoutID": null, "x": 375, "y": 0.35}, 
-                    {"marker": "396.83lbs, 0.3m/s", "setID": "q", "workoutID": null, "x": 396.83207159999995, "y": 0.3}], 
+                    {"marker": "290.00lbs, 0.41m/s", "setID": "h", "workoutID": "abc", "x": 290, "y": 0.41, "wasError": false}, 
+                    {"marker": "330.00lbs, 0.37m/s", "setID": "i", "workoutID": "abc", "x": 330, "y": 0.37, "wasError": false}, 
+                    {"marker": "350.00lbs, 0.41m/s", "setID": "c", "workoutID": "ab", "x": 350, "y": 0.41, "wasError": false}, 
+                    {"marker": "354.94lbs, 0.42m/s", "setID": "o", "workoutID": null, "x": 354.94424182, "y": 0.42, "wasError": false}, 
+                    {"marker": "375.00lbs, 0.35m/s", "setID": "p", "workoutID": null, "x": 375, "y": 0.35, "wasError": false}, 
+                    {"marker": "396.83lbs, 0.3m/s", "setID": "q", "workoutID": null, "x": 396.83207159999995, "y": 0.3, "wasError": false}], 
                 "e1RM": 601, 
                 "errors": [
-                    {"marker": "270.00lbs, 0.51m/s", "setID": "a", "workoutID": "ab", "x": 270, "y": 0.51}, 
-                    {"marker": "308.65lbs, 0.49m/s", "setID": "b", "workoutID": "ab", "x": 308.6471668, "y": 0.49}
+                    {"marker": "270.00lbs, 0.51m/s", "setID": "a", "workoutID": "ab", "x": 270, "y": 0.51, "wasError": true}, 
+                    {"marker": "308.65lbs, 0.49m/s", "setID": "b", "workoutID": "ab", "x": 308.6471668, "y": 0.49, "wasError": true}
                 ], 
                 "isRegressionNegative": true, 
                 "maxX": 396.83207159999995, 
@@ -1778,7 +1778,7 @@ describe('1RM', () => {
                 ], 
                 "slope": -0.0008995423660117137, 
                 "unused": [
-                    {"marker": "", "setID": "j", "workoutID": "abc", "x": 375, "y": 0.31}
+                    {"marker": "", "setID": "j", "workoutID": "abc", "x": 375, "y": 0.31, "wasError": false}
                 ]
             }
         );

@@ -35,9 +35,7 @@ class DatePickerModal extends Component {
                   height: 29,
                   paddingTop: 6,
                   paddingLeft: 4,
-                  fontSize: 13,
                   paddingRight: 30,
-                  color: 'rgba(77, 77, 77, 1)',
                 },
               }}
               onDateChange={(date) => {this.props.changeDate(date)}}
@@ -45,28 +43,5 @@ class DatePickerModal extends Component {
         );
     };
 };
-
-// const styles = StyleSheet.create({
-//   field: {
-//       backgroundColor: 'rgba(239, 239, 239, 1)',
-//       borderColor: 'rgba(239, 239, 239, 1)',
-//       borderWidth: 3,
-//       borderRadius: 3,
-//       marginBottom: 5,
-//       zIndex: 2,
-//       minHeight: 35,
-//   },
-//   tagText: {
-//       height: 29,
-//       paddingTop: 6,
-//       paddingLeft: 4,
-//       fontSize: 13,
-//       paddingRight: 30,
-//       color: 'rgba(77, 77, 77, 1)',
-//   },
-//   placeholderText: {
-//       color: 'rgba(189, 189, 189, 1)'
-//   },
-// });
 
 export default DatePickerModal;

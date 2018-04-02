@@ -126,8 +126,10 @@ class EditHistoryFilterView extends Component {
     };
 
     _renderTextField(placeholder, value, onChangeText) {
+        const width = Device.isSmallDevice() ? 100 : 150;
+
         return (
-            <View style={[styles.field, { width: 150 }]}>
+            <View style={[styles.field, { width: width }]}>
                 <TextInput
                     style={styles.fieldText}
                     keyboardType={'numeric'}
@@ -159,8 +161,10 @@ class EditHistoryFilterView extends Component {
     }
 
     _renderWeightField(range, value, onChangeText, metric) {
+        const width = Device.isSmallDevice() ? 100 : 150;
+
         return (
-            <View style={[styles.field, { width: 150 }]}>
+            <View style={[styles.field, { width: width }]}>
                 <TextInput
                     style={styles.fieldText}
                     keyboardType={'numeric'}
@@ -243,7 +247,7 @@ class EditHistoryFilterView extends Component {
         return (
             <View>
                 <View style={{height: 300}}>
-                    <Text style={[styles.labelText, {marginTop: 25}]}>Exercise Names Containing</Text>
+                    <Text style={[styles.labelText, {marginTop: Device.isSmallDevice() ? 5 : 25}]}>Exercise Names Containing</Text>
                     <View style={{padding: 5, paddingLeft: 20, paddingRight: 20}}>
                         <View style={[styles.field, {flex: 1}]}>
                             <TouchableHighlight onPress={() => this.props.tappedExercise()} underlayColor='#e0e0e0'>
@@ -251,20 +255,20 @@ class EditHistoryFilterView extends Component {
                             </TouchableHighlight>
                         </View>
                     </View>
-                    <Text style={[styles.labelText, {marginTop: 35}]}>Tags to Include:</Text>
+                    <Text style={styles.labelText}>Tags to Include:</Text>
                     <View style={{padding: 5, paddingLeft: 20, paddingRight: 20}}>{ this._renderTagsToInclude() }</View>
-                    <Text style={[styles.labelText, {marginTop: 35}]}>Tags to Exclude:</Text>
+                    <Text style={styles.labelText}>Tags to Exclude:</Text>
                     <View style={{padding: 5, paddingLeft: 18, paddingRight: 18}}>{ this._renderTagsToExclude() }</View>
-                    <Text style={[styles.labelText, {marginTop: 35}]}>Date Range:</Text>
+                    <Text style={styles.labelText}>Date Range:</Text>
                     <View style={{padding: 5}}>{ this._renderDateRange() }</View>
-                    <Text style={[styles.labelText, {marginTop: 35}]}>Weight Range:</Text>
+                    <Text style={[styles.labelText, { paddingTop: Device.isSmallDevice() ? 10 : 0 }]}>Weight Range:</Text>
                     <View style={{padding: 5}}>{ this._renderWeightRange() }</View>
-                    <Text style={[styles.labelText, {marginTop: 35}]}>RPE Range:</Text>
+                    <Text style={[styles.labelText, { paddingTop: Device.isSmallDevice() ? 10 : 0 }]}>RPE Range:</Text>
                     <View style={{padding: 5}}>{ this._renderRPERange() }</View>
-                    <Text style={[styles.labelText, {marginTop: 35}]}>Rep Range:</Text>
+                    <Text style={[styles.labelText, { paddingTop: Device.isSmallDevice() ? 10 : 0 }]}>Rep Range:</Text>
                     <View style={{padding: 5}}>{ this._renderRepRange() }</View>
                     <TouchableOpacity onPress={() => this.props.clear()}>
-                        <Text style={{ textAlign: 'center', fontSize: 18, marginTop: 60, color: 'rgba(47, 128, 237, 1)' }}>Clear all</Text>
+                        <Text style={styles.clearButton}>Clear all</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
@@ -352,29 +356,15 @@ const styles = StyleSheet.create({
     navTitle: {
         paddingTop: 15,
     },
-    addButton: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(47, 128, 237, 1)',
-        borderRadius: 5
-    },
-    disabled: {
-        opacity: 0.3
-    },
     addText: {
         color: 'white'
-    },
-    rowBorders: {
-        borderColor: '#e0e0e0',
-        borderLeftWidth: 1,
-        borderRightWidth: 1,
     },
     titleText: {
         color: 'rgba(77, 77, 77, 1)',
         textAlign: 'center',
         fontSize: 16,
         fontWeight: 'bold',
-        marginTop: 20,
+        marginTop: Device.isSmallDevice ? 10 : 20,
     },
     labelText: {
         color: 'rgba(77, 77, 77, 1)',
@@ -382,6 +372,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'left',
         marginLeft: 25,
+        marginTop: Device.isSmallDevice ? 25 : 35,
     },
     numberStyle: {
         fontSize: 16,
@@ -391,11 +382,6 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: 'gray',
         backgroundColor: 'rgba(0, 0, 0, 0)'
-    },
-    dropdownButton: {
-        backgroundColor: 'rgba(47, 128, 237, 1)',
-        borderRadius: 3,
-        height: 40,
     },
     field: {
         backgroundColor: 'rgba(239, 239, 239, 1)',
@@ -440,17 +426,12 @@ const styles = StyleSheet.create({
     placeholderText: {
         color: 'rgba(189, 189, 189, 1)'
     },
-    button: {
-        backgroundColor: 'rgba(47, 128, 237, 1)',
-        borderColor: 'rgba(47, 128, 237, 1)',        
-        borderWidth: 5,
-        borderRadius: 15,
-    },
-    buttonText: {
-        color: 'white',
-        padding: 5,
-        textAlign: 'center'
-    },
+    clearButton: {
+        textAlign: 'center', 
+        fontSize: Device.isSmallDevice() ? 15 : 18, 
+        marginTop: Device.isSmallDevice() ? 40 : 60, 
+        color: 'rgba(47, 128, 237, 1)',
+    }
 });
 
 export default EditHistoryFilterView;

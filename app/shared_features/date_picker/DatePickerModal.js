@@ -1,13 +1,15 @@
 import React, {Component} from 'react';
 import DatePicker from 'react-native-datepicker'
+import * as Device from 'app/utility/Device';
 
 class DatePickerModal extends Component {
     render() {
         const todaysDate = new Date().toISOString().slice(0,10); 
+        const width = Device.isSmallDevice() ? 100 : 150;
 
         return (
             <DatePicker
-              style={{ width: 150 }}
+              style={{ width: width }}
               date={this.props.date}
               mode="date"
               showIcon={false}

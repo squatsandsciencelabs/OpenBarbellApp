@@ -9,6 +9,7 @@ import {
     TouchableHighlight,
     Image,
     Modal,
+    StatusBar,
 } from 'react-native';
 import { Slider } from 'react-native';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';

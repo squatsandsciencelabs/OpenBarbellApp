@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
     Text,
+    TextInput,
     StyleSheet,
     View,
     TouchableOpacity,
@@ -91,9 +92,7 @@ class EditHistoryFilterView extends Component {
 
     _renderEndDate() {
         return (
-            // <View style={{marginLeft: 5}}>
-                <EditHistoryFilterEndDateScreen />
-            // </View>
+            <EditHistoryFilterEndDateScreen />
         );
     };
 
@@ -106,28 +105,29 @@ class EditHistoryFilterView extends Component {
         );
     };
 
-    _renderMin() {
+    _renderTextField(placeholder, value, onChangeText) {
         return (
-            <View style={[styles.field, { width: 150 }]}><Text style={[styles.tagText, styles.placeholderText]}>min</Text></View>
-        );
-    };
-
-    _renderMax() {
-        return (
-            <View style={[styles.field, { width: 150 }]}><Text style={[styles.tagText, styles.placeholderText]}>max</Text></View>
+            <View style={[styles.field, { width: 150 }]}>
+                <TextInput
+                    style={styles.fieldText}
+                    keyboardType={'numeric'}
+                    underlineColorAndroid={'transparent'}
+                    editable = {true}
+                    placeholder={placeholder}
+                    placeholderTextColor={'rgba(189, 189, 189, 1)'}
+                    value = {value}
+                    onChangeText={(text) => onChangeText(text)}
+                />
+            </View>
         );
     };
 
     _renderStartingRepRange() {
-        if (!this.props.startingRepRange) {
-            return this._renderMin();
-        }
+        return this._renderTextField('min', this.props.startingRepRange, this.props.updateStartingRepRange)
     };
 
     _renderEndingRepRange() {
-        if (!this.props.endingRepRange) {
-            return this._renderMax();
-        }
+        return this._renderTextField('max', this.props.endingRepRange, this.props.updateEndingRepRange);
     };
 
     _renderRepRange() {
@@ -140,15 +140,11 @@ class EditHistoryFilterView extends Component {
     };
 
     _renderStartingRPE() {
-        if (!this.props.startingRPE) {
-            return this._renderMin();
-        }
+        return this._renderTextField('min', this.props.startRPE, this.props.updateStartRPE);
     };
 
     _renderEndingRPE() {
-        if (!this.props.endingRPE) {
-            return this._renderMax();
-        }
+        return this._renderTextField('max', this.props.endRPE, this.props.updateEndRPE);
     };
 
 
@@ -162,15 +158,11 @@ class EditHistoryFilterView extends Component {
     };
 
     _renderStartWeight() {
-        if (!this.props.startWeight) {
-            return this._renderMin();
-        }
+        return this._renderTextField('min', this.props.startWeight, this.props.updateStartWeight);
     };
 
     _renderEndWeight() {
-        if (!this.props.endWeight) {
-            return this._renderMax();
-        }
+        return this._renderTextField('max', this.props.endWeight, this.props.updateEndWeight);
     };
 
     _renderWeightRange() {

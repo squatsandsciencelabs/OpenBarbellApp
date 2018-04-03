@@ -87,13 +87,32 @@ class EditHistoryFilterView extends Component {
         return (<Text style={styles.fieldText}>{this.props.exercise}</Text>);
     };
 
+    _renderStartDateDisplay() {
+        if (this.props.startDate === null || this.props.startDate === '') {
+            return (<Text style={[styles.fieldText, styles.placeholderText]}>from</Text>);
+        }
+        return (<Text style={styles.fieldText}>{this.props.startDate}</Text>);
+    }
+
+    _renderEndDateDisplay() {
+        if (this.props.endDate === null || this.props.endDate === '') {
+            return (<Text style={[styles.fieldText, styles.placeholderText]}>to</Text>);
+        }
+        return (<Text style={styles.fieldText}>{this.props.endDate}</Text>);
+    }
+
+
     _renderStartDate() {
+        const width = Device.isSmallDevice() ? 100 : 150;
+
         return (
-            <View>
-                <EditHistoryFilterStartDateScreen />
+            <View style={[styles.field, { width: width }]}>
+                <TouchableHighlight onPress={() => this.props.tappedStartDate()} underlayColor='#e0e0e0'>
+                    {this._renderStartDateDisplay()}
+                </TouchableHighlight>
                 <View style={styles.fieldDetails}>
                     <TouchableOpacity onPress={() => this.props.clearStartDate()}>
-                        <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 35}}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <Icon name="times-circle" size={15} color="gray" />
                         </View>
                     </TouchableOpacity>
@@ -103,12 +122,15 @@ class EditHistoryFilterView extends Component {
     };
 
     _renderEndDate() {
+        const width = Device.isSmallDevice() ? 100 : 150;
         return (
-            <View>
-                <EditHistoryFilterEndDateScreen />
+            <View style={[styles.field, { width: width }]}>
+                <TouchableHighlight onPress={() => this.props.tappedEndDate()} underlayColor='#e0e0e0'>
+                    {this._renderEndDateDisplay()}
+                </TouchableHighlight>
                 <View style={styles.fieldDetails}>
-                    <TouchableOpacity onPress={() => this.props.clearEndDate()}>
-                        <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 35}}>
+                    <TouchableOpacity onPress={() => this.props.clearStartDate()}>
+                        <View style={{flexDirection: 'row', alignItems: 'center'}}>
                             <Icon name="times-circle" size={15} color="gray" />
                         </View>
                     </TouchableOpacity>
@@ -276,6 +298,8 @@ class EditHistoryFilterView extends Component {
                     <EditHistoryExerciseScreen />
                     <EditHistoryFilterTagsToIncludeScreen />
                     <EditHistoryFilterTagsToExcludeScreen />
+                    <EditHistoryFilterStartDateScreen />
+                    <EditHistoryFilterEndDateScreen />
                 </View>
             </View>
         );

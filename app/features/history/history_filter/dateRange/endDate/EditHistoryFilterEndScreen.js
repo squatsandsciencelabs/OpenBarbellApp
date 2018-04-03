@@ -1,25 +1,24 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import DatePickerModal from 'app/shared_features/date_picker/DatePickerModal';
+import DatePicker from 'app/shared_features/date_picker/DatePicker';
 import * as Actions from './EditHistoryFilterEndDateActions';
 import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 
 const mapStateToProps = (state) => ({
-    isModalShowing: HistorySelectors.getIsEditingHistoryFilterEndingDate(state),
-    date: HistorySelectors.getEditingHistoryFilterEndingDate(state),
-    placeholder: 'to',
+    isVisible: HistorySelectors.getIsEditingHistoryFilterEndingDate(state),
 });
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         changeDate: Actions.changeDate,
+        closePicker: Actions.dismissPicker,
     }, dispatch);
 };
 
 const EditHistoryFilterEndDateScreen = connect(
     mapStateToProps,
     mapDispatchToProps
-)(DatePickerModal);
+)(DatePicker);
 
 export default EditHistoryFilterEndDateScreen;

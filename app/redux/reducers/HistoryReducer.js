@@ -40,8 +40,10 @@ import {
     DISMISS_HISTORY_FILTER,
     TOGGLE_START_WEIGHT_METRIC,
     TOGGLE_END_WEIGHT_METRIC,
-    CLEAR_START_DATE,
-    CLEAR_END_DATE,
+    CLEAR_HISTORY_FILTER_START_DATE,
+    CLEAR_HISTORY_FILTER_END_DATE,
+    DISMISS_HISTORY_FILTER_START_DATE,
+    DISMISS_HISTORY_FILTER_END_DATE,
 } from 'app/configs+constants/ActionTypes';
 
 // isEditing for analytics
@@ -80,10 +82,10 @@ const defaultState = {
     editingStartingRepRange: '',
     isEditingEndingRepRange: false,
     editingEndingRepRange: '',
-    showStartDatePickerModal: false,
+    showStartDatePicker: false,
     isEditingStartingDate: false,
     editingStartingDate: '',
-    showEndDatePickerModal: false,
+    showEndDatePicker: false,
     isEditingEndingDate: false,
     editingEndingDate: '',
     tagsToInclude: [],
@@ -343,16 +345,26 @@ const HistoryReducer = (state = defaultState, action) => {
                 ...state,
                 endingWeightMetric: newEndingWeightMetric
             };
-        case CLEAR_START_DATE:
+        case CLEAR_HISTORY_FILTER_START_DATE:
             return {
                 ...state,
                 editingStartingDate: '',
             };
-        case CLEAR_END_DATE:
+        case CLEAR_HISTORY_FILTER_END_DATE:
             return {
                 ...state,
                 editingEndingDate: '',
             }
+        case DISMISS_HISTORY_FILTER_START_DATE:
+            return {
+                ...state,
+                isEditingStartingDate: false,
+            };
+        case DISMISS_HISTORY_FILTER_END_DATE:
+            return {
+                ...state,
+                isEditingEndingDate: false,
+            };
         default:
             return state;
     }

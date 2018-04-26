@@ -17,8 +17,6 @@ import {
     TOGGLE_END_WEIGHT_METRIC,
     CLEAR_HISTORY_FILTER_START_DATE,
     CLEAR_HISTORY_FILTER_END_DATE,
-    CLOSE_HISTORY_FILTER_START_DATE,
-    CLOSE_HISTORY_FILTER_END_DATE,
 } from 'app/configs+constants/ActionTypes';
 
 export const presentSelectExercise = () => ({ 

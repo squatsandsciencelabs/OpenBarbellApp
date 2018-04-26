@@ -200,12 +200,12 @@ const HistoryReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 editingExerciseName: action.exercise,
-            }
+            };
         case DISMISS_HISTORY_FILTER_EXERCISE:
             return {
                 ...state,
                 isEditingFilterExerciseName: false,
-            }
+            };
         case PRESENT_HISTORY_FILTER_INCLUDES_TAGS:
             return {
                 ...state,
@@ -240,7 +240,7 @@ const HistoryReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 isEditingStartingDate: true,
-            }
+            };
         case SAVE_HISTORY_FILTER_START_DATE:
             return {
                 ...state,
@@ -250,7 +250,7 @@ const HistoryReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 isEditingEndingDate: true,
-            }
+            };
         case SAVE_HISTORY_FILTER_END_DATE:
             return {
                 ...state,
@@ -354,7 +354,7 @@ const HistoryReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 editingEndingDate: '',
-            }
+            };
         case DISMISS_HISTORY_FILTER_START_DATE:
             return {
                 ...state,

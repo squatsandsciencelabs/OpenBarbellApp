@@ -7,7 +7,6 @@ import {
     TouchableOpacity,
     Platform,
     TouchableHighlight,
-    Image,
     Modal,
     StatusBar,
 } from 'react-native';

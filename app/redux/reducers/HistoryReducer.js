@@ -99,7 +99,9 @@ const defaultState = {
     startingRepRange: null,
     endingRepRange: null,
     startingDate: null,
+    displayStartingDate: '',
     endingDate: null,
+    displayEndingDate: '',
     showHistoryFilter: false,
 };
 
@@ -245,6 +247,8 @@ const HistoryReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 editingStartingDate: action.date,
+                displayStartingDate: action.displayDate,
+                isEditingStartingDate: false,
             };
         case PRESENT_HISTORY_FILTER_END_DATE:
             return {
@@ -255,6 +259,8 @@ const HistoryReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 editingEndingDate: action.date,
+                displayEndingDate: action.displayDate,
+                isEditingEndingDate: false,
             };
         case SAVE_HISTORY_FILTER_START_RPE:
             return {
@@ -292,8 +298,10 @@ const HistoryReducer = (state = defaultState, action) => {
                 editingExerciseName: '',
                 editingFilterTagsToInclude: [],
                 editingFilterTagsToExclude: [],
-                editingStartingDate: '',
-                editingEndingDate: '',
+                editingStartingDate: null,
+                displayStartingDate: '',
+                editingEndingDate: null,
+                displayEndingDate: '',
                 editingStartingWeight: '',
                 editingEndingWeight: '',
                 editingStartingRPE: '',
@@ -306,7 +314,9 @@ const HistoryReducer = (state = defaultState, action) => {
             const tagsToInclude = state.editingFilterTagsToInclude;
             const tagsToExclude = state.editingFilterTagsToExclude;
             const startingDate = state.editingStartingDate;
+            const displayStartingDate = state.displayStartingDate;
             const endingDate = state.editingEndingDate;
+            const displayEndingDate = state.displayEndingDate;
             const startingWeight = state.editingStartingWeight;
             const endingWeight = state.editingEndingWeight;
             const startingRPE = state.editingStartingRPE;
@@ -348,12 +358,14 @@ const HistoryReducer = (state = defaultState, action) => {
         case CLEAR_HISTORY_FILTER_START_DATE:
             return {
                 ...state,
-                editingStartingDate: '',
+                editingStartingDate: null,
+                displayStartingDate: '',
             };
         case CLEAR_HISTORY_FILTER_END_DATE:
             return {
                 ...state,
-                editingEndingDate: '',
+                editingEndingDate: null,
+                displayEndingDate: '',
             };
         case DISMISS_HISTORY_FILTER_START_DATE:
             return {

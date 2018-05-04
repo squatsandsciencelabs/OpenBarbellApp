@@ -6,7 +6,6 @@ import {
 export const changeDate = (date) => ({
     type: SAVE_HISTORY_FILTER_START_DATE,
     date: date.toLocaleString(),
-    displayDate: date.toISOString().split('T')[0],
 });
 
 export const dismissPicker = () => ({

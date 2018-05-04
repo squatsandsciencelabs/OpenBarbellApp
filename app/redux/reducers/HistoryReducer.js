@@ -99,9 +99,7 @@ const defaultState = {
     startingRepRange: null,
     endingRepRange: null,
     startingDate: null,
-    displayStartingDate: '',
     endingDate: null,
-    displayEndingDate: '',
     showHistoryFilter: false,
 };
 
@@ -299,9 +297,7 @@ const HistoryReducer = (state = defaultState, action) => {
                 editingFilterTagsToInclude: [],
                 editingFilterTagsToExclude: [],
                 editingStartingDate: null,
-                displayStartingDate: '',
                 editingEndingDate: null,
-                displayEndingDate: '',
                 editingStartingWeight: '',
                 editingEndingWeight: '',
                 editingStartingRPE: '',

@@ -95,15 +95,11 @@ export const getEditingHistoryFilterEndingRepRange = (state) => stateRoot(state)
 
 export const getHistoryFilterStartingDate = (state) => stateRoot(state).startingDate;
 
-export const getHistoryFilterDisplayStartingDate = (state) => stateRoot(state).displayStartingDate;
-
 export const getIsEditingHistoryFilterStartingDate = (state) => stateRoot(state).isEditingStartingDate;
 
 export const getEditingHistoryFilterStartingDate = (state) => stateRoot(state).editingStartingDate;
 
 export const getHistoryFilterEndingDate = (state) => stateRoot(state).endingDate;
-
-export const getHistoryFilterDisplayEndingDate = (state) => stateRoot(state).displayEndingDate;
 
 export const getIsEditingHistoryFilterEndingDate = (state) => stateRoot(state).isEditingEndingDate;
 

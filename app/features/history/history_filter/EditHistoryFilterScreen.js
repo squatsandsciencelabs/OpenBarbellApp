@@ -1,43 +1,17 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import EditHistoryFilterView from './EditHistoryFilterView';
 import * as Actions from './EditHistoryFilterActions';
 import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 
 const mapStateToProps = (state) => {
-    const months = {
-        "January": "Jan",
-        "February": "Feb",
-        "March": "Mar",
-        "April": "Apr",
-        "May": "May",
-        "June": "Jun",
-        "July": "Jul",
-        "August": "Aug",
-        "September": "Sep",
-        "October": "Oct",
-        "November": "Nov",
-        "December": "Dec",
-    };
-
     const startDate = HistorySelectors.getEditingHistoryFilterStartingDate(state);
-    let formattedStartDate = null;
-
-    if (startDate) {
-        const startMonth = startDate.substring(0, startDate.indexOf(" "));
-        const shortStartMonth = months[startMonth];
-        formattedStartDate = shortStartMonth + " " + startDate.substring(startDate.indexOf(" ") + 1, startDate.indexOf(' at'));
-    }
+    const formattedStartDate = startDate ? moment(startDate).format('MM/DD/YYYY') : null;
 
     const endDate = HistorySelectors.getEditingHistoryFilterEndingDate(state);
-    let formattedendDate = null;
-
-    if (endDate) {
-        const endMonth = endDate.substring(0, endDate.indexOf(" "));
-        const shortendMonth = months[endMonth];
-        formattedendDate = shortendMonth + " " + endDate.substring(endDate.indexOf(" ") + 1, endDate.indexOf(' at'));
-    }
+    const formattedEndDate = endDate ? moment(endDate).format('MM/DD/YYYY') : null;
 
     return {
         isModalShowing: HistorySelectors.getShowHistoryFilter(state),
@@ -45,7 +19,7 @@ const mapStateToProps = (state) => {
         tagsToInclude: HistorySelectors.getEditingFilterTagsToInclude(state),
         tagsToExclude: HistorySelectors.getEditingFilterTagsToExclude(state),
         startDate: formattedStartDate,
-        endDate: formattedendDate,
+        endDate: formattedEndDate,
         startWeight: HistorySelectors.getEditingHistoryFilterStartingWeight(state),
         endWeight: HistorySelectors.getEditingHistoryFilterEndingWeight(state),
         startRPE: HistorySelectors.getEditingHistoryFilterStartingRPE(state),

@@ -281,7 +281,7 @@ export const getFilteredHistorySets = (allSets, state) => {
     const endingDate = HistorySelectors.getHistoryFilterEndingDate(state);
 
     allSets.forEach((set) => {
-        if (set.initialStartTime !== null && isValidForHistoryFilter(set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric, startingRepRange, endingRepRange, startingDate, endingDate)) {
+        if (SetUtils.startTime(set) !== null && isValidForHistoryFilter(set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric, startingRepRange, endingRepRange, startingDate, endingDate)) {
             data.push(set);
         }
     });
@@ -296,7 +296,7 @@ const isValidForHistoryFilter = (set, exercise, tagsToInclude, tagsToExclude, st
     && SetUtils.checkExcludesTags(set.tags, tagsToExclude)
     && SetUtils.checkWeightRange(set.weight, set.metric, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric)
     && SetUtils.checkRPERange(set.rpe, startingRPE, endingRPE)
-    && SetUtils.checkDateRange(set.initialStartTime, startingDate, endingDate)
+    && SetUtils.checkDateRange(SetUtils.startTime(set), startingDate, endingDate)
     && SetUtils.checkRepRange(set, startingRepRange, endingRepRange);
 };
 

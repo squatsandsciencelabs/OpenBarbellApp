@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import SelectTagsModal from '../SelectTagsModal';
+import SelectTagsModal from 'app/shared_features/tags/SelectTagsModal';
 import * as Actions from './EditHistoryFilterTagsToIncludeActions';
 import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 import * as OneRMCalculator from 'app/math/OneRMCalculator';

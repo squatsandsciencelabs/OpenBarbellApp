@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import SelectTagsModal from '../SelectTagsModal';
+import SelectTagsModal from 'app/shared_features/tags/SelectTagsModal';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as Actions from './EditAnalysisTagsToExcludeActions';
 import * as AnalysisSelectors from 'app/redux/selectors/AnalysisSelectors';

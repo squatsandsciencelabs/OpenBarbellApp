@@ -4,18 +4,16 @@ import { connect } from 'react-redux';
 import SelectTagsModal from 'app/shared_features/tags/SelectTagsModal';
 import * as Actions from './EditHistoryFilterTagsToIncludeActions';
 import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
-import * as OneRMCalculator from 'app/math/OneRMCalculator';
+import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 
 const mapStateToProps = (state) => {
-    const exercise = HistorySelectors.getEditingExerciseName(state);
-    
     // TODO move tags suggestion out
     return {
         title: 'Tags to Include',
         placeholder: 'Enter Tag',
         text: '',
         inputs: HistorySelectors.getEditingFilterTagsToInclude(state),
-        generateSuggestions: (input, ignore) => OneRMCalculator.getTagsToIncludeSuggestions(state, exercise, input, ignore),
+        generateSuggestions: (input, ignore) => SetsSelectors.getHistoryFilterTagsToIncludeSuggestions(state, input, ignore),
         isModalShowing: HistorySelectors.getIsEditingHistoryFilterTagsToInclude(state),
     }
 };

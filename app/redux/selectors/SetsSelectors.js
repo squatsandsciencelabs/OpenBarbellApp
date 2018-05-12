@@ -300,11 +300,11 @@ const isValidForHistoryFilter = (set, exercise, tagsToInclude, tagsToExclude, st
     && SetUtils.checkRepRange(set, startingRepRange, endingRepRange);
 };
 
-export const getHistoryFilterTagsToIncludeSuggestions = (state, input, ignore) => getHistoryFilterSuggestions(state, input, ignore, true);
+export const getHistoryFilterTagsToIncludeSuggestions = (state, input, ignore) => getHistoryFilterTagsSuggestions(state, input, ignore, true);
 
-export const getHistoryFilterTagsToExcludeSuggestions = (state, input, ignore) => getHistoryFilterSuggestions(state, input, ignore, false);
+export const getHistoryFilterTagsToExcludeSuggestions = (state, input, ignore) => getHistoryFilterTagsSuggestions(state, input, ignore, false);
 
-export const getHistoryFilterSuggestions = (state, input, ignore, isIncluded = true) => {
+export const getHistoryFilterTagsSuggestions = (state, input, ignore, isIncluded = true) => {
     const sets = getAllSets(state);
     if (isIncluded) {
         var oppositeTags = HistorySelectors.getEditingFilterTagsToExclude(state);

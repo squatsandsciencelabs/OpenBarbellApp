@@ -300,6 +300,45 @@ const isValidForHistoryFilter = (set, exercise, tagsToInclude, tagsToExclude, st
     && SetUtils.checkRepRange(set, startingRepRange, endingRepRange);
 };
 
+export const getHistoryFilterTagsToIncludeSuggestions = (state, input, ignore) => getHistoryFilterSuggestions(state, input, ignore, true);
+
+export const getHistoryFilterTagsToExcludeSuggestions = (state, input, ignore) => getHistoryFilterSuggestions(state, input, ignore, false);
+
+export const getHistoryFilterSuggestions = (state, input, ignore, isIncluded = true) => {
+    const sets = getAllSets(state);
+    if (isIncluded) {
+        var oppositeTags = HistorySelectors.getEditingFilterTagsToExclude(state);
+    } else {
+        var oppositeTags = HistorySelectors.getEditingFilterTagsToInclude(state);
+    }
+    oppositeTags = oppositeTags.map((tag) => tag.toLowerCase());
+    const tags = [];
+
+    if (input) {
+        input = input.toLowerCase();
+    }
+
+    ignore = ignore.map((tag) => tag.toLowerCase());
+
+    // generate pool of usable tags
+    sets.forEach((set) => {
+        if (set.tags) {
+            set.tags.forEach((tag) => {
+                const lowerTag = tag.toLowerCase();
+                if (!tags.includes(lowerTag)
+                    && !oppositeTags.includes(lowerTag)
+                    && lowerTag !== 'bug'
+                    && !ignore.includes(lowerTag)
+                    && lowerTag.includes(input)) {
+                    tags.push(lowerTag);
+                }
+            });
+        }
+    });
+
+    return tags;
+};
+
 export const getNumHistoryReps = (state) => {
     let sets = getHistorySetsChronological(state);
 

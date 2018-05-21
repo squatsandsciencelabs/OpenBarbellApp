@@ -39,7 +39,7 @@ export const getHistoryFilterExercise = (state) => stateRoot(state).exercise;
 
 export const getIsEditingHistoryFilterExercise = (state) => stateRoot(state).isEditingFilterExerciseName;
 
-export const getEditingExerciseName = (state) => stateRoot(state).editingExerciseName;
+export const getEditingFilterExerciseName = (state) => stateRoot(state).editingFilterExerciseName;
 
 export const getHistoryFilterTagsToInclude = (state) => stateRoot(state).tagsToInclude;
 

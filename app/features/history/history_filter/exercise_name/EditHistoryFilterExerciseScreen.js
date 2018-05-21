@@ -9,7 +9,7 @@ import * as Actions from './EditHistoryFilterExerciseActions';
 const mapStateToProps = (state) => ({
     title: 'Edit Exercise',
     placeholder: 'Enter Exercise',
-    text: HistorySelectors.getEditingExerciseName(state),
+    text: HistorySelectors.getEditingFilterExerciseName(state),
     generateSingleInputSuggestions: (input) => { return SuggestionsSelectors.generateExerciseNameSuggestions(state, input) },
     isModalShowing: HistorySelectors.getIsEditingHistoryFilterExercise(state),
 });

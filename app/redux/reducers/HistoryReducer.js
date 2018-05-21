@@ -65,7 +65,7 @@ const defaultState = {
     // filter
     exercise: null,
     isEditingFilterExerciseName: false,
-    editingExerciseName: '',
+    editingFilterExerciseName: '',
     isEditingFilterTagsToInclude: false,
     editingFilterTagsToInclude: [],
     isEditingFilterTagsToExclude: false,
@@ -199,7 +199,7 @@ const HistoryReducer = (state = defaultState, action) => {
         case SAVE_HISTORY_FILTER_EXERCISE:
             return {
                 ...state,
-                editingExerciseName: action.exercise,
+                editingFilterExerciseName: action.exercise,
             };
         case DISMISS_HISTORY_FILTER_EXERCISE:
             return {

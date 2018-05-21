@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
 
     return {
         isModalShowing: HistorySelectors.getShowHistoryFilter(state),
-        exercise: HistorySelectors.getEditingExerciseName(state),
+        exercise: HistorySelectors.getEditingFilterExerciseName(state),
         tagsToInclude: HistorySelectors.getEditingFilterTagsToInclude(state),
         tagsToExclude: HistorySelectors.getEditingFilterTagsToExclude(state),
         startDate: formattedStartDate,

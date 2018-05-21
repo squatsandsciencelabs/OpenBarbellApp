@@ -5,6 +5,7 @@ const exerciseNameModel = (state) => stateRoot(state).exerciseModel;
 const tagsModel = (state) => stateRoot(state).tagsModel;
 
 export const generateExerciseNameSuggestions = (state, input, bias = null) => {
+    console.tron.log(input);
     return generateSuggestions(exerciseNameModel(state), input, bias, false);
 };
 
@@ -25,7 +26,7 @@ const generateSuggestions = (model, input, bias, showBug=false, ignore = []) => 
 
     // declare variables
     let matches = [];
-
+    
     // get all matches
     for (var property in model) {
         if (property !== '' && model.hasOwnProperty(property) && !ignore.includes(property) && property.indexOf(lowercaseInput) !== -1) {

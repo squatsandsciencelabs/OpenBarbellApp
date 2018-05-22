@@ -27,6 +27,10 @@ class EditTextModal extends Component {
         };
     }
 
+    componentWillMount() {
+        this._updateSuggestions();
+    }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.setID === this.props.setID) {
             return;

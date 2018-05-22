@@ -14,7 +14,7 @@ import { Slider } from 'react-native';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 import EditHistoryFilterTagsToIncludeScreen from './tags/tagsToInclude/EditHistoryFilterTagsToIncludeScreen';
 import EditHistoryFilterTagsToExcludeScreen from './tags/tagsToExclude/EditHistoryFilterTagsToExcludeScreen';
-import EditHistoryExerciseScreen from './exercise_name/EditHistoryFilterExerciseScreen';
+import EditHistoryFilterExerciseScreen from './exercise_name/EditHistoryFilterExerciseScreen';
 import EditFilterStartDateScreen from './dateRange/startDate/EditHistoryFilterStartScreen';
 import EditFilterEndDateScreen from './dateRange/endDate/EditHistoryFilterEndScreen';
 import Pill from 'app/shared_features/pill/Pill';
@@ -296,7 +296,7 @@ class EditHistoryFilterView extends Component {
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
-                    <EditHistoryExerciseScreen />
+                    <EditHistoryFilterExerciseScreen />
                     <EditHistoryFilterTagsToIncludeScreen />
                     <EditHistoryFilterTagsToExcludeScreen />
                     <EditHistoryFilterStartDateScreen />

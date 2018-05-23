@@ -306,7 +306,7 @@ const HistoryReducer = (state = defaultState, action) => {
                 editingEndingRepRange: '',
             };  
         case SAVE_HISTORY_FILTER:
-            const exercise = state.editingExerciseName;
+            const exercise = state.editingFilterExerciseName;
             const tagsToInclude = state.editingFilterTagsToInclude;
             const tagsToExclude = state.editingFilterTagsToExclude;
             const startingDate = state.editingStartingDate;

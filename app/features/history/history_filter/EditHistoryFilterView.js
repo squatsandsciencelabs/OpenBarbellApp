@@ -9,6 +9,7 @@ import {
     TouchableHighlight,
     Modal,
     StatusBar,
+    ScrollView
 } from 'react-native';
 import { Slider } from 'react-native';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
@@ -103,7 +104,7 @@ class EditHistoryFilterView extends Component {
 
 
     _renderStartDate() {
-        const width = Device.isSmallDevice() ? 100 : 150;
+        const width = Device.isSmallDevice() ? 125 : 150;
 
         return (
             <View style={[styles.field, { width: width }]}>
@@ -122,7 +123,7 @@ class EditHistoryFilterView extends Component {
     };
 
     _renderEndDate() {
-        const width = Device.isSmallDevice() ? 100 : 150;
+        const width = Device.isSmallDevice() ? 125 : 150;
 
         return (
             <View style={[styles.field, { width: width }]}>
@@ -150,7 +151,7 @@ class EditHistoryFilterView extends Component {
     };
 
     _renderTextField(placeholder, value, onChangeText) {
-        const width = Device.isSmallDevice() ? 100 : 150;
+        const width = Device.isSmallDevice() ? 125 : 150;
 
         return (
             <View style={[styles.field, { width: width }]}>
@@ -185,7 +186,7 @@ class EditHistoryFilterView extends Component {
     }
 
     _renderWeightField(range, value, onChangeText, metric) {
-        const width = Device.isSmallDevice() ? 100 : 150;
+        const width = Device.isSmallDevice() ? 125 : 150;
 
         return (
             <View style={[styles.field, { width: width }]}>
@@ -270,8 +271,8 @@ class EditHistoryFilterView extends Component {
     _renderForms() {
         return (
             <View>
-                <View style={{height: 300}}>
-                    <Text style={[styles.labelText, {marginTop: 10}]}>Exercise Names Containing</Text>
+                <View>
+                    <Text style={[styles.labelText, {marginTop: 20}]}>Exercise Names Containing</Text>
                     <View style={{padding: 5, paddingLeft: 20, paddingRight: 20}}>
                         <View style={[styles.field, {flex: 1}]}>
                             <TouchableHighlight onPress={() => this.props.tappedExercise()} underlayColor='#e0e0e0'>
@@ -352,10 +353,12 @@ class EditHistoryFilterView extends Component {
     render() {
         return (
             <Modal visible={this.props.isModalShowing} animationType='fade'>
-                <View style={{flex: 1, paddingTop: Device.isiPhoneX() ? 40 : 0, flexDirection: 'column', backgroundColor: 'rgba(242, 242, 242, 0)'}}>
-                    {this._renderNavigation()}
-                    {this._renderForms()}
-                </View>
+                    <View style={{flex: 1, paddingTop: Device.isiPhoneX() ? 40 : 0, flexDirection: 'column' }}>
+                        {this._renderNavigation()}
+                        <ScrollView style={{flex: 1, backgroundColor: 'rgba(242, 242, 242, 0)'}}>
+                            {this._renderForms()}
+                        </ScrollView>
+                    </View>
             </Modal>
         );
     }
@@ -390,7 +393,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
         fontWeight: 'bold',
-        marginTop: Device.isSmallDevice ? 10 : 20,
+        marginTop: 10,
     },
     labelText: {
         color: 'rgba(77, 77, 77, 1)',
@@ -398,7 +401,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'left',
         marginLeft: 25,
-        marginTop: Device.isSmallDevice ? 25 : 35,
     },
     numberStyle: {
         fontSize: 16,
@@ -455,7 +457,8 @@ const styles = StyleSheet.create({
     clearButton: {
         textAlign: 'center', 
         fontSize: 15, 
-        marginTop: 40,
+        marginTop: 20,
+        paddingBottom: 50,
         color: 'rgba(47, 128, 237, 1)',
     }
 });

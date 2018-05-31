@@ -294,41 +294,37 @@ class EditHistoryFilterView extends Component {
 
     _renderForms() {
         return (
-            <View>
-                <View>
-                    <Text style={[styles.labelText, {marginTop: 20}]}>Exercise Names Containing</Text>
-                    <View style={{padding: 5, paddingLeft: 20, paddingRight: 20}}>
-                        <View style={[styles.field, {flex: 1}]}>
-                            <TouchableHighlight onPress={() => this.props.tappedExercise()} underlayColor='#e0e0e0'>
-                                {this._renderExercise()}
-                            </TouchableHighlight>
-                        </View>
+            <View style={{marginBottom: 200}}>
+                <Text style={[styles.labelText, {marginTop: 20}]}>Exercise Names Containing</Text>
+                <View style={{padding: 5, paddingLeft: 20, paddingRight: 20}}>
+                    <View style={[styles.field, {flex: 1}]}>
+                        <TouchableHighlight onPress={() => this.props.tappedExercise()} underlayColor='#e0e0e0'>
+                            {this._renderExercise()}
+                        </TouchableHighlight>
                     </View>
-                    <Text style={styles.labelText}>Tags to Include:</Text>
-                    <View style={{padding: 5, paddingLeft: 20, paddingRight: 20}}>{ this._renderTagsToInclude() }</View>
-                    <Text style={styles.labelText}>Tags to Exclude:</Text>
-                    <View style={{padding: 5, paddingLeft: 18, paddingRight: 18}}>{ this._renderTagsToExclude() }</View>
-                    <Text style={styles.labelText}>Date Range:</Text>
-                    <View style={{padding: 5}}>{ this._renderDateRange() }</View>
-                    <Text style={[styles.labelText, { paddingTop: 10 }]}>Weight Range:</Text>
-                    <View style={{padding: 5}}>{ this._renderWeightRange() }</View>
-                    <Text style={[styles.labelText, { paddingTop: 10 }]}>RPE Range:</Text>
-                    <View style={{padding: 5}}>{ this._renderRPERange() }</View>
-                    <Text style={[styles.labelText, { paddingTop: 10 }]}>Rep Range:</Text>
-                    <View style={{padding: 5}}>{ this._renderRepRange() }</View>
-                    <Text style={[styles.labelText, { paddingTop: 10 }]}>Show deleted sets and reps</Text>
-                    <View style={{padding: 5}}>{this._renderRemovedSwitch()}</View>
-                    <TouchableOpacity onPress={() => this.props.clear()}>
-                        <Text style={styles.clearButton}>Clear all</Text>
-                    </TouchableOpacity>
                 </View>
-                <View style={{ flex: 1, flexDirection: 'column', backgroundColor: 'white' }}>
-                    <EditHistoryFilterExerciseScreen />
-                    <EditHistoryFilterTagsToIncludeScreen />
-                    <EditHistoryFilterTagsToExcludeScreen />
-                    <EditHistoryFilterStartDateScreen />
-                    <EditHistoryFilterEndDateScreen />
-                </View>
+                <Text style={styles.labelText}>Tags to Include:</Text>
+                <View style={{padding: 5, paddingLeft: 20, paddingRight: 20}}>{ this._renderTagsToInclude() }</View>
+                <Text style={styles.labelText}>Tags to Exclude:</Text>
+                <View style={{padding: 5, paddingLeft: 18, paddingRight: 18}}>{ this._renderTagsToExclude() }</View>
+                <Text style={styles.labelText}>Date Range:</Text>
+                <View style={{padding: 5}}>{ this._renderDateRange() }</View>
+                <Text style={[styles.labelText, { paddingTop: 10 }]}>Weight Range:</Text>
+                <View style={{padding: 5}}>{ this._renderWeightRange() }</View>
+                <Text style={[styles.labelText, { paddingTop: 10 }]}>RPE Range:</Text>
+                <View style={{padding: 5}}>{ this._renderRPERange() }</View>
+                <Text style={[styles.labelText, { paddingTop: 10 }]}>Rep Range:</Text>
+                <View style={{padding: 5}}>{ this._renderRepRange() }</View>
+                <Text style={[styles.labelText, { paddingTop: 10 }]}>Show deleted sets and reps</Text>
+                <View style={{padding: 5}}>{this._renderRemovedSwitch()}</View>
+                <TouchableOpacity onPress={() => this.props.clear()}>
+                    <Text style={styles.clearButton}>Clear all</Text>
+                </TouchableOpacity>
+                <EditHistoryFilterExerciseScreen />
+                <EditHistoryFilterTagsToIncludeScreen />
+                <EditHistoryFilterTagsToExcludeScreen />
+                <EditHistoryFilterStartDateScreen />
+                <EditHistoryFilterEndDateScreen />
             </View>
         );
     }

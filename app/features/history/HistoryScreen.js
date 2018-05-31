@@ -303,7 +303,7 @@ const createBottomBorder = (set) => ({
 // TODO: use reselect instead perhaps?
 const mapStateToProps = (state) => {
     // declare vars
-    let shouldShowRemoved = SettingsSelectors.getShowRemoved(state);
+    let shouldShowRemoved = HistorySelectors.getShowRemoved(state);
     let historyData = SetsSelectors.getHistorySets(state);
     let historyCollapsed = HistoryCollapsedSelectors.getCollapsedModel(state);
     let rebuildViewModels = false;

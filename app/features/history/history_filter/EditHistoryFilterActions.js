@@ -15,6 +15,7 @@ import {
     SAVE_HISTORY_FILTER,
     TOGGLE_START_WEIGHT_METRIC,
     TOGGLE_END_WEIGHT_METRIC,
+    TOGGLE_SHOW_REMOVED,
     CLEAR_HISTORY_FILTER_START_DATE,
     CLEAR_HISTORY_FILTER_END_DATE,
 } from 'app/configs+constants/ActionTypes';
@@ -88,6 +89,10 @@ export const toggleStartWeightMetric = () => ({
 export const toggleEndWeightMetric = () => ({
     type: TOGGLE_END_WEIGHT_METRIC,
 });
+
+export const toggleShowRemoved = () => ({
+    type: TOGGLE_SHOW_REMOVED,
+})
 
 export const clearStartDate = () => ({
     type: CLEAR_HISTORY_FILTER_START_DATE,

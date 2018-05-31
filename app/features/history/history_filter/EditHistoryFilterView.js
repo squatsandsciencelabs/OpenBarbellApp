@@ -27,14 +27,6 @@ import EditHistoryFilterEndDateScreen from './dateRange/endDate/EditHistoryFilte
 
 class EditHistoryFilterView extends Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            showRemoved: false
-        };
-    }
-
     _close() {
         this.props.closeModal();
     }
@@ -282,8 +274,8 @@ class EditHistoryFilterView extends Component {
             return (
                 <Switch
                     style={{backgroundColor: 'white', marginLeft: 20, marginRight: 5}}
-                    value={this.state.showRemoved}
-                    onValueChange={(isSwitchOn) => this.setState({showRemoved: isSwitchOn})}
+                    value={this.props.showRemoved}
+                    onValueChange={(isSwitchOn) => this.props.toggleShowRemoved()}
                     onTintColor='rgba(47, 128, 237, 1)'
                     thumbTintColor='#e0e0e0'
                     tintColor='rgba(47, 128, 237, 1)'/>
@@ -291,8 +283,8 @@ class EditHistoryFilterView extends Component {
         } else {
             return (
                 <Switch
-                    value={this.state.showRemoved}
-                    onValueChange={(isSwitchOn) =>  this.setState({showRemoved: isSwitchOn})}
+                    value={this.props.showRemoved}
+                    onValueChange={(isSwitchOn) => this.props.toggleShowRemoved()}
                     onTintColor='rgba(47, 128, 237, 1)'
                     thumbTintColor='#e0e0e0'
                     tintColor='rgba(47, 128, 237, 1)'/>

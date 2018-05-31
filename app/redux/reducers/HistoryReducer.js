@@ -40,6 +40,7 @@ import {
     DISMISS_HISTORY_FILTER,
     TOGGLE_START_WEIGHT_METRIC,
     TOGGLE_END_WEIGHT_METRIC,
+    TOGGLE_SHOW_REMOVED,
     CLEAR_HISTORY_FILTER_START_DATE,
     CLEAR_HISTORY_FILTER_END_DATE,
     DISMISS_HISTORY_FILTER_START_DATE,
@@ -100,6 +101,8 @@ const defaultState = {
     endingRepRange: null,
     startingDate: null,
     endingDate: null,
+    editingShowRemoved: false,
+    showRemoved: false,
     showHistoryFilter: false,
 };
 
@@ -319,6 +322,7 @@ const HistoryReducer = (state = defaultState, action) => {
             const endingRPE = state.editingEndingRPE;
             const startingRepRange = state.editingStartingRepRange;
             const endingRepRange = state.editingEndingRepRange;
+            const showRemoved = state.editingShowRemoved;
 
             return {
                 ...state,
@@ -333,6 +337,7 @@ const HistoryReducer = (state = defaultState, action) => {
                 endingRPE,
                 startingRepRange,
                 endingRepRange,
+                showRemoved,
                 showHistoryFilter: false,
             };
         case TOGGLE_START_WEIGHT_METRIC:
@@ -350,6 +355,11 @@ const HistoryReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 endingWeightMetric: newEndingWeightMetric
+            };
+        case TOGGLE_SHOW_REMOVED:
+            return {
+                ...state,
+                editingShowRemoved: !state.editingShowRemoved
             };
         case CLEAR_HISTORY_FILTER_START_DATE:
             return {

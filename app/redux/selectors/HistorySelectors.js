@@ -104,3 +104,7 @@ export const getHistoryFilterEndingDate = (state) => stateRoot(state).endingDate
 export const getIsEditingHistoryFilterEndingDate = (state) => stateRoot(state).isEditingEndingDate;
 
 export const getEditingHistoryFilterEndingDate = (state) => stateRoot(state).editingEndingDate;
+
+export const getEditingShowRemoved = (state) => stateRoot(state).editingShowRemoved;
+
+export const getShowRemoved = (state) => stateRoot(state).showRemoved;

@@ -290,8 +290,7 @@ export const getFilteredHistorySets = (allSets, state) => {
 };
 
 const isValidForHistoryFilter = (set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric, startingRepRange, endingRepRange, startingDate, endingDate) => {
-    return !SetUtils.isDeleted(set)
-    && SetUtils.checkExercise(set.exercise, exercise)
+    return SetUtils.checkExercise(set.exercise, exercise)
     && SetUtils.checkIncludesTags(set.tags, tagsToInclude)
     && SetUtils.checkExcludesTags(set.tags, tagsToExclude)
     && SetUtils.checkWeightRange(set.weight, set.metric, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric)

@@ -50,6 +50,7 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
             set.rpe = "";
         }
 
+        // TODO: make this part of the filter call instead, aka show deleted should be done on that level
         // ignore deleted sets
         if (!shouldShowRemoved && SetUtils.isDeleted(set)) {
             continue;

@@ -192,6 +192,20 @@ const HistoryReducer = (state = defaultState, action) => {
         case DISMISS_HISTORY_FILTER:
             return {
                 ...state,
+                editingFilterExerciseName: state.exercise,
+                editingFilterTagsToInclude: state.tagsToInclude,
+                editingFilterTagsToExclude: state.tagsToExclude,
+                editingStartingDate: state.startingDate,
+                displayStartingDate: state.displayStartingDate, // TODO: this doesn't seem to be used?
+                editingEndingDate: state.endingDate,
+                displayEndingDate: state.displayEndingDate, // TODO: this doesn't seem to be used?
+                editingStartingWeight: state.startingWeight,
+                editingEndingWeight: state.endingWeight,
+                editingStartingRPE: state.startingRPE,
+                editingEndingRPE: state.endingRPE,
+                editingStartingRepRange: state.startingRepRange,
+                editingEndingRepRange: state.endingRepRange,
+                editingShowRemoved: state.showRemoved,
                 showHistoryFilter: false,
             };
         case PRESENT_HISTORY_FILTER_EXERCISE:
@@ -307,6 +321,7 @@ const HistoryReducer = (state = defaultState, action) => {
                 editingEndingRPE: '',
                 editingStartingRepRange: '',
                 editingEndingRepRange: '',
+                editingShowRemoved: false,
             };  
         case SAVE_HISTORY_FILTER:
             const exercise = state.editingFilterExerciseName;

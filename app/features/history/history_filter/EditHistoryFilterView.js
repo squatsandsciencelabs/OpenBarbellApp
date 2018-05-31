@@ -9,7 +9,8 @@ import {
     TouchableHighlight,
     Modal,
     StatusBar,
-    ScrollView
+    Switch,
+    ScrollView,
 } from 'react-native';
 import { Slider } from 'react-native';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
@@ -25,6 +26,14 @@ import EditHistoryFilterStartDateScreen from './dateRange/startDate/EditHistoryF
 import EditHistoryFilterEndDateScreen from './dateRange/endDate/EditHistoryFilterEndScreen';
 
 class EditHistoryFilterView extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            showRemoved: false
+        };
+    }
 
     _close() {
         this.props.closeModal();
@@ -78,14 +87,14 @@ class EditHistoryFilterView extends Component {
                 </TouchableHighlight>
             </View>
         );
-    };
+    }
 
     _renderExercise() {
         if (this.props.exercise === null || this.props.exercise === '') {
             return (<Text style={[styles.fieldText, styles.placeholderText]}>Exercise</Text>);
         }
         return (<Text style={styles.fieldText}>{this.props.exercise}</Text>);
-    };
+    }
 
     _renderStartDateDisplay() {
         if (this.props.startDate === null || this.props.startDate === '') {
@@ -93,14 +102,14 @@ class EditHistoryFilterView extends Component {
         }
         
         return (<Text style={styles.fieldText}>{this.props.startDate}</Text>);
-    };
+    }
 
     _renderEndDateDisplay() {
         if (this.props.endDate === null || this.props.endDate === '') {
             return (<Text style={[styles.fieldText, styles.placeholderText]}>to</Text>);
         }
         return (<Text style={styles.fieldText}>{this.props.endDate}</Text>);
-    };
+    }
 
 
     _renderStartDate() {
@@ -120,7 +129,7 @@ class EditHistoryFilterView extends Component {
                 </View>
             </View>
         );
-    };
+    }
 
     _renderEndDate() {
         const width = Device.isSmallDevice() ? 125 : 150;
@@ -139,7 +148,7 @@ class EditHistoryFilterView extends Component {
                 </View>
             </View>
         );
-    };
+    }
 
     _renderDateRange() {
         return (
@@ -148,7 +157,7 @@ class EditHistoryFilterView extends Component {
                 {this._renderEndDate()}
             </View>
         );
-    };
+    }
 
     _renderTextField(placeholder, value, onChangeText) {
         const width = Device.isSmallDevice() ? 125 : 150;
@@ -167,7 +176,7 @@ class EditHistoryFilterView extends Component {
                 />
             </View>
         );
-    };
+    }
 
     _displayMetric(metric) {
         if (metric === 'kgs') {
@@ -175,7 +184,7 @@ class EditHistoryFilterView extends Component {
         } else if (metric === 'lbs') {
             return "LBs";
         }
-    };
+    }
 
     _toggleMetric(range) {
         if (range === 'min') {
@@ -210,15 +219,15 @@ class EditHistoryFilterView extends Component {
                 </View>
             </View>
         );
-    };
+    }
 
     _renderStartingRepRange() {
         return this._renderTextField('min', this.props.startingRepRange, this.props.updateStartingRepRange)
-    };
+    }
 
     _renderEndingRepRange() {
         return this._renderTextField('max', this.props.endingRepRange, this.props.updateEndingRepRange);
-    };
+    }
 
     _renderRepRange() {
         return (
@@ -227,15 +236,15 @@ class EditHistoryFilterView extends Component {
                 {this._renderEndingRepRange()}
             </View>
         );        
-    };
+    }
 
     _renderStartingRPE() {
         return this._renderTextField('min', this.props.startRPE, this.props.updateStartRPE);
-    };
+    }
 
     _renderEndingRPE() {
         return this._renderTextField('max', this.props.endRPE, this.props.updateEndRPE);
-    };
+    }
 
 
     _renderRPERange() {
@@ -245,19 +254,19 @@ class EditHistoryFilterView extends Component {
                 {this._renderEndingRPE()}
             </View>
         );
-    };
+    }
 
     _renderStartWeight() {
         return (
             this._renderWeightField('min', this.props.startWeight, this.props.updateStartWeight, this.props.startWeightMetric)
         );
-    };
+    }
 
     _renderEndWeight() {
         return (
             this._renderWeightField('max', this.props.endWeight, this.props.updateEndWeight, this.props.endWeightMetric)
         );
-    };
+    }
 
     _renderWeightRange() {
         return (
@@ -266,7 +275,30 @@ class EditHistoryFilterView extends Component {
                 {this._renderEndWeight()}
             </View>
         );
-    };
+    }
+
+    _renderRemovedSwitch() {
+        if (Platform.OS === 'ios') {
+            return (
+                <Switch
+                    style={{backgroundColor: 'white', marginLeft: 20, marginRight: 5}}
+                    value={this.state.showRemoved}
+                    onValueChange={(isSwitchOn) => this.setState({showRemoved: isSwitchOn})}
+                    onTintColor='rgba(47, 128, 237, 1)'
+                    thumbTintColor='#e0e0e0'
+                    tintColor='rgba(47, 128, 237, 1)'/>
+            );
+        } else {
+            return (
+                <Switch
+                    value={this.state.showRemoved}
+                    onValueChange={(isSwitchOn) =>  this.setState({showRemoved: isSwitchOn})}
+                    onTintColor='rgba(47, 128, 237, 1)'
+                    thumbTintColor='#e0e0e0'
+                    tintColor='rgba(47, 128, 237, 1)'/>
+            );
+        }
+    }
 
     _renderForms() {
         return (
@@ -292,6 +324,8 @@ class EditHistoryFilterView extends Component {
                     <View style={{padding: 5}}>{ this._renderRPERange() }</View>
                     <Text style={[styles.labelText, { paddingTop: 10 }]}>Rep Range:</Text>
                     <View style={{padding: 5}}>{ this._renderRepRange() }</View>
+                    <Text style={[styles.labelText, { paddingTop: 10 }]}>Show deleted sets and reps</Text>
+                    <View style={{padding: 5}}>{this._renderRemovedSwitch()}</View>
                     <TouchableOpacity onPress={() => this.props.clear()}>
                         <Text style={styles.clearButton}>Clear all</Text>
                     </TouchableOpacity>

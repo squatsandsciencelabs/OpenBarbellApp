@@ -5,7 +5,6 @@ import {
     TouchableOpacity,
     Picker,
     Platform,
-    Switch,
     StyleSheet
 } from 'react-native';
 
@@ -26,46 +25,7 @@ class SettingsApplicationPanel extends Component {
         this.props.tapDefaultMetric()
     }
 
-    _tappedSwitch(isSwitchOn) {
-        if (isSwitchOn) {
-            this.props.showRemoved();
-        } else {
-            this.props.hideRemoved();
-        }
-    }
-
     // RENDER
-
-    _renderShowDeleted() {
-        if (Platform.OS === 'ios') {
-            return (
-                <View>            
-                    <Text style={[{marginBottom: 2}, styles.labelText]}>Show deleted sets and reps in history</Text>
-                    <Switch
-                        style={{backgroundColor: 'white', marginLeft: 3, marginRight: 5}}
-                        value={this.props.shouldShowRemoved}
-                        onValueChange={(isSwitchOn) => this._tappedSwitch(isSwitchOn)}
-                        onTintColor='rgba(47, 128, 237, 1)'
-                        thumbTintColor='#e0e0e0'
-                        tintColor='rgba(47, 128, 237, 1)'/>
-                </View>
-            );
-        } else {
-            return (
-                <View style={{flex: 1, flexDirection: 'column', marginTop: 4}}>            
-                    <Text style={[{fontSize: 16, marginLeft: 7}, styles.labelText]}>Show deleted sets and reps in history</Text>
-                    <View style={{width: 55, marginTop: 7}}>
-                        <Switch
-                            value={this.props.shouldShowRemoved}
-                            onValueChange={(isSwitchOn) => this._tappedSwitch(isSwitchOn)}
-                            onTintColor='rgba(47, 128, 237, 1)'
-                            thumbTintColor='#e0e0e0'
-                            tintColor='rgba(47, 128, 237, 1)'/>
-                    </View>
-                </View>
-            );
-        }
-    }
 
     render() {
         if (Platform.OS === 'ios') {
@@ -94,7 +54,6 @@ class SettingsApplicationPanel extends Component {
                         </TouchableOpacity>
                     </View>
                     <SettingsMetric />
-                    {this._renderShowDeleted()}
                 </View>
             );
         } else {
@@ -113,7 +72,6 @@ class SettingsApplicationPanel extends Component {
                         </Text>
                     </View>
                     <SettingsMetric />
-                    {this._renderShowDeleted()}
                 </View>
             );
         }

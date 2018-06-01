@@ -246,9 +246,9 @@ export const checkWeightRange = (setWeight, setMetric, startingWeight, startingW
 
 export const checkRPERange = (setRPE, startingRPE, endingRPE) => {
     // account for commas
-    const setRPEWithoutCommas = setRPE ? Number(setRPE.replace(',','.')) : setRPE;
-    const startingRPEWithoutCommas = startingRPE ? Number(startingRPE.replace(',','.')) : startingRPE;
-    const endingRPEWithoutCommas = endingRPE ? Number(endingRPE.replace(',','.')) : endingRPE;
+    const setRPEWithoutCommas = setRPE ? Number(setRPE.toString().replace(',','.')) : setRPE;
+    const startingRPEWithoutCommas = startingRPE ? Number(startingRPE.toString().replace(',','.')) : startingRPE;
+    const endingRPEWithoutCommas = endingRPE ? Number(endingRPE.toString().replace(',','.')) : endingRPE;
 
     if (!startingRPEWithoutCommas && !endingRPEWithoutCommas) {
         return true;

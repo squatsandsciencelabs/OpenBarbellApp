@@ -26,8 +26,8 @@ const mapStateToProps = (state) => {
         endRPE: HistorySelectors.getEditingHistoryFilterEndingRPE(state),
         startingRepRange: HistorySelectors.getEditingHistoryFilterStartingRepRange(state),
         endingRepRange: HistorySelectors.getEditingHistoryFilterEndingRepRange(state),
-        startWeightMetric: HistorySelectors.getHistoryFilterStartingWeightMetric(state),
-        endWeightMetric: HistorySelectors.getHistoryFilterEndingWeightMetric(state),
+        startWeightMetric: HistorySelectors.getEditingHistoryFilterStartingWeightMetric(state),
+        endWeightMetric: HistorySelectors.getEditingHistoryFilterEndingWeightMetric(state),
         showRemoved: HistorySelectors.getEditingShowRemoved(state),
     }
 };

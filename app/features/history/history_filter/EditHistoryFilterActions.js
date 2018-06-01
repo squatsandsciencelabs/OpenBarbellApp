@@ -1,3 +1,5 @@
+import { Alert } from 'react-native';
+
 import {
     PRESENT_HISTORY_FILTER_EXERCISE,
     PRESENT_HISTORY_FILTER_START_DATE,
@@ -19,6 +21,8 @@ import {
     CLEAR_HISTORY_FILTER_START_DATE,
     CLEAR_HISTORY_FILTER_END_DATE,
 } from 'app/configs+constants/ActionTypes';
+import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
+import * as WeightConversion from 'app/utility/WeightConversion';
 
 export const presentSelectExercise = () => ({ 
     type: PRESENT_HISTORY_FILTER_EXERCISE,
@@ -78,9 +82,41 @@ export const clearHistoryFilter = () => ({
     type: CLEAR_HISTORY_FILTER,
 });
 
-export const saveHistoryFilter = () => ({
-    type: SAVE_HISTORY_FILTER,
-});
+export const saveHistoryFilter = () => (dispatch, getState) => {
+    const state = getState();
+
+    // TODO: Consider putting some of this logic into utils
+
+    // weight
+    const startWeight = HistorySelectors.getEditingHistoryFilterStartingWeight(state);
+    const startWeightMetric = HistorySelectors.getEditingHistoryFilterStartingWeightMetric(state);
+    const startLbs = WeightConversion.weightInLBs(startWeightMetric, startWeight);
+    const endWeight = HistorySelectors.getEditingHistoryFilterEndingWeight(state);
+    const endWeightMetric = HistorySelectors.getEditingHistoryFilterEndingWeightMetric(state);
+    const endLbs = WeightConversion.weightInLBs(endWeightMetric, endWeight);
+
+    // rpe
+    const startingRPE = HistorySelectors.getEditingHistoryFilterStartingRPE(state);
+    const startingRPEWithoutCommas = startingRPE ? Number(startingRPE.toString().replace(',','.')) : startingRPE;
+    const endingRPE = HistorySelectors.getEditingHistoryFilterEndingRPE(state);
+    const endingRPEWithoutCommas = endingRPE ? Number(endingRPE.toString().replace(',','.')) : endingRPE;
+
+    // reps
+    const startingReps = HistorySelectors.getEditingHistoryFilterStartingRepRange(state);
+    const endingReps = HistorySelectors.getEditingHistoryFilterEndingRepRange(state);
+
+    if (startLbs && endLbs && startLbs > endLbs) {
+        Alert.alert("Invalid Weight Range", "Please enter a minimum weight that is less than your maximum weight.");
+    } else if (startingRPEWithoutCommas && endingRPEWithoutCommas && startingRPEWithoutCommas > endingRPEWithoutCommas) {
+        Alert.alert("Invalid RPE Range", "Please enter a minimum RPE that is less than your maximum RPE.");
+    } else if (startingReps && endingReps && startingReps > endingReps) {
+        Alert.alert("Invalid Rep Range", "Please enter a minimum number of reps that is less than your maximum number of reps.");
+    } else {
+        dispatch({
+            type: SAVE_HISTORY_FILTER,
+        });
+    }
+};
 
 export const toggleStartWeightMetric = () => ({
     type: TOGGLE_START_WEIGHT_METRIC,

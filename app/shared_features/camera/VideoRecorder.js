@@ -143,11 +143,11 @@ class VideoRecorder extends Component {
                             </View>
                         </View>
 
-                        {this._renderToggleCameraTypeButton()}
-
                         <View style={{position: 'absolute', bottom: 50, left: 0, right: 0, alignItems: 'center'}}>
                             { this._renderActionButton() }
                         </View>
+
+                        {this._renderToggleCameraTypeButton()}
 
                     </Camera>
                     <KeepAwake />
@@ -214,7 +214,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#00000000',
         position: 'absolute',
         bottom: 60,
-        left: 0,
         right: 0
     },
     flipIcon: {

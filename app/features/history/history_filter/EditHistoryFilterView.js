@@ -377,7 +377,11 @@ class EditHistoryFilterView extends Component {
             <Modal visible={this.props.isModalShowing} animationType='fade'>
                     <View style={{flex: 1, paddingTop: Device.isiPhoneX() ? 40 : 0, flexDirection: 'column' }}>
                         {this._renderNavigation()}
-                        <ScrollView style={{flex: 1, backgroundColor: 'rgba(242, 242, 242, 0)'}}>
+                        <ScrollView
+                            keyboardDismissMode='on-drag'
+                            keyboardShouldPersistTaps='always'
+                            style={{flex: 1, backgroundColor: 'rgba(242, 242, 242, 0)'}}
+                        >
                             {this._renderForms()}
                         </ScrollView>
                     </View>

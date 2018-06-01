@@ -94,9 +94,11 @@ const defaultState = {
     startingRPE: null,
     endingRPE: null,
     startingWeight: null,
-    startingWeightMetric: 'kgs',
+    startingWeightMetric: 'kgs', // TODO: make this based off default setting
+    editingStartingWeightMetric: 'kgs',
     endingWeight: null,
     endingWeightMetric: 'kgs',
+    editingEndingWeightMetric: 'kgs',
     startingRepRange: null,
     endingRepRange: null,
     startingDate: null,
@@ -200,7 +202,9 @@ const HistoryReducer = (state = defaultState, action) => {
                 editingEndingDate: state.endingDate,
                 displayEndingDate: state.displayEndingDate, // TODO: this doesn't seem to be used?
                 editingStartingWeight: state.startingWeight,
+                editingStartingWeightMetric: state.startingWeightMetric,
                 editingEndingWeight: state.endingWeight,
+                editingEndingWeightMetric: state.endingWeightMetric,
                 editingStartingRPE: state.startingRPE,
                 editingEndingRPE: state.endingRPE,
                 editingStartingRepRange: state.startingRepRange,
@@ -316,14 +320,16 @@ const HistoryReducer = (state = defaultState, action) => {
                 editingStartingDate: null,
                 editingEndingDate: null,
                 editingStartingWeight: '',
+                editingStartingWeightMetric: 'kgs', // TODO: set this to default kg/lb
                 editingEndingWeight: '',
+                editingEndingWeightMetric: 'kgs',
                 editingStartingRPE: '',
                 editingEndingRPE: '',
                 editingStartingRepRange: '',
                 editingEndingRepRange: '',
                 editingShowRemoved: false,
             };  
-        case SAVE_HISTORY_FILTER:
+        case SAVE_HISTORY_FILTER: {
             const exercise = state.editingFilterExerciseName;
             const tagsToInclude = state.editingFilterTagsToInclude;
             const tagsToExclude = state.editingFilterTagsToExclude;
@@ -332,7 +338,9 @@ const HistoryReducer = (state = defaultState, action) => {
             const endingDate = state.editingEndingDate;
             const displayEndingDate = state.displayEndingDate;
             const startingWeight = state.editingStartingWeight;
+            const startingWeightMetric = state.editingStartingWeightMetric;
             const endingWeight = state.editingEndingWeight;
+            const endingWeightMetric = state.editingEndingWeightMetric;
             const startingRPE = state.editingStartingRPE;
             const endingRPE = state.editingEndingRPE;
             const startingRepRange = state.editingStartingRepRange;
@@ -347,7 +355,9 @@ const HistoryReducer = (state = defaultState, action) => {
                 startingDate,
                 endingDate,
                 startingWeight,
+                startingWeightMetric,
                 endingWeight,
+                endingWeightMetric,
                 startingRPE,
                 endingRPE,
                 startingRepRange,
@@ -355,22 +365,25 @@ const HistoryReducer = (state = defaultState, action) => {
                 showRemoved,
                 showHistoryFilter: false,
             };
-        case TOGGLE_START_WEIGHT_METRIC:
-            const startingWeightMetric = state.startingWeightMetric;
+        }
+        case TOGGLE_START_WEIGHT_METRIC: {
+            const startingWeightMetric = state.editingStartingWeightMetric;
             const newStartingWeightMetric = startingWeightMetric === 'kgs' ? 'lbs' : 'kgs';
 
             return {
                 ...state,
-                startingWeightMetric: newStartingWeightMetric
+                editingStartingWeightMetric: newStartingWeightMetric
             };
-        case TOGGLE_END_WEIGHT_METRIC:
-            const endingWeightMetric = state.endingWeightMetric;
+        }
+        case TOGGLE_END_WEIGHT_METRIC: {
+            const endingWeightMetric = state.editingEndingWeightMetric;
             const newEndingWeightMetric = endingWeightMetric === 'kgs' ? 'lbs' : 'kgs';
 
             return {
                 ...state,
-                endingWeightMetric: newEndingWeightMetric
+                editingEndingWeightMetric: newEndingWeightMetric
             };
+        }
         case TOGGLE_SHOW_REMOVED:
             return {
                 ...state,

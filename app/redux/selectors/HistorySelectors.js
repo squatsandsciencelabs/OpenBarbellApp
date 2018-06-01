@@ -71,9 +71,9 @@ export const getIsEditingHistoryFilterStartingWeight = (state) => stateRoot(stat
 
 export const getEditingHistoryFilterStartingWeight = (state) => stateRoot(state).editingStartingWeight;
 
-export const getHistoryFilterStartingWeightMetric = (state) => stateRoot(state).startingWeightMetric;
+export const getHistoryFilterStartingWeightMetric = (state) => stateRoot(state).editingStartingWeightMetric;
 
-export const getHistoryFilterEndingWeightMetric = (state) => stateRoot(state).endingWeightMetric;
+export const getHistoryFilterEndingWeightMetric = (state) => stateRoot(state).editingEndingWeightMetric;
 
 export const getHistoryFilterEndingWeight = (state) => stateRoot(state).endingWeight;
 

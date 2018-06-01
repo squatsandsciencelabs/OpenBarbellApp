@@ -87,7 +87,7 @@ describe('endSet analytics', () => {
                     }],
                 },
                 settings: {
-                    defaultMetric: 'kg'
+                    defaultMetric: 'kgs'
                 }
             });
         });
@@ -126,7 +126,7 @@ describe('endSet analytics', () => {
                     }],
                 },
                 settings: {
-                    defaultMetric: 'kg'
+                    defaultMetric: 'kgs'
                 }
             });
         });

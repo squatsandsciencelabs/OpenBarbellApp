@@ -41,7 +41,7 @@ describe('endWorkout analytics', () => {
                 numReconnects: 0,
             },
             settings: {
-                defaultMetric: 'kg',
+                defaultMetric: 'kgs',
             }
         });
     });

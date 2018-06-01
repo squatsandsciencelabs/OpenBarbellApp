@@ -17,7 +17,7 @@ export const changeDate = (date) => (dispatch, getState) => {
             date: endDate,
         });
     } else {
-        Alert.alert("End date must be after start date")
+        Alert.alert("Invalid Date Filter", "Plesae select a date that is after your 'from' date.");
     }
 };
 

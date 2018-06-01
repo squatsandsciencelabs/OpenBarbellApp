@@ -211,7 +211,11 @@ const styles = StyleSheet.create({
     flipButton: {
         alignItems: 'flex-end', 
         marginRight: 20, 
-        backgroundColor: '#00000000' 
+        backgroundColor: '#00000000',
+        position: 'absolute',
+        bottom: 60,
+        left: 0,
+        right: 0
     },
     flipIcon: {
         backgroundColor: 'rgba(0, 0, 0, 0.5)', 

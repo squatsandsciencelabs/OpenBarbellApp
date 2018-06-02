@@ -33,7 +33,7 @@ A development version of the keystore and Google Sign In keys have been included
 
 Be careful when using react-native link. It duplicates imports for the React Native Google Sign In and React Native Device Info Libraries which will cause builds to fail. The solution is to REMOVE the additional Google Sign In and Device Info changes to the Android project after running link. If you have to use react-native link, use it only on the new packages that you just installed.
 
-Use Carthage for all iOS Swift only native libraries such as SwiftyJSON and Charts. Use Cocoapods for all other iOS libraries. If Carthage packages have issues, try running carthage update --platform iOS --no-use-binaries
+Use Carthage for all iOS Swift only native libraries such as SwiftyJSON and Charts. Use Cocoapods for all other iOS libraries. If Carthage packages have issues, try running `carthage update --platform iOS --no-use-binaries`
 
 # APP ARCHITECTURE
 

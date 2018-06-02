@@ -34,15 +34,10 @@ function* endOldWorkout() {
     console.tron.log("Time difference is " + timeDifference + " comparing " + endTime + " against " + currentTime + " with config timer " + OpenBarbellConfig.endWorkoutTimer);
 
     const isLoggedIn = yield select(AuthSelectors.getIsLoggedIn);    
-    // error
-    if (isLoggedIn) {
-        if (timeDifference >= OpenBarbellConfig.endWorkoutTimer) {
-            yield put(WorkoutActionCreators.autoEndWorkout());
+    if (timeDifference >= OpenBarbellConfig.endWorkoutTimer) {
+        yield put(WorkoutActionCreators.autoEndWorkout());
+        if(isLoggedIn) {
             Alert.alert("Ending Workout", "You can find your last workout on the History screen.");
-        }
-    } else {
-        if (timeDifference >= OpenBarbellConfig.endWorkoutTimer) {
-            yield put(WorkoutActionCreators.autoEndWorkout());
         }
     }
 };

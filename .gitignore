@@ -71,6 +71,3 @@ android/keystores/debug.keystore
 */fastlane/report.xml
 */fastlane/Preview.html
 */fastlane/screenshots
-
-# test json data - TODO: Change this later once a publicly approved TestData.json is pushed
-TestData.json

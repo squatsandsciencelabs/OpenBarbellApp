@@ -314,7 +314,7 @@ const HistoryReducer = (state = defaultState, action) => {
         case CLEAR_HISTORY_FILTER:
             return {
                 ...state,
-                editingExerciseName: '',
+                editingFilterExerciseName: '',
                 editingFilterTagsToInclude: [],
                 editingFilterTagsToExclude: [],
                 editingStartingDate: null,

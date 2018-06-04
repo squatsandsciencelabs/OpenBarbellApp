@@ -7,9 +7,10 @@ class DatePicker extends Component {
     render () {
         return (
             <DateTimePicker
-              isVisible={this.props.isVisible}
-              onConfirm={this.props.changeDate}
-              onCancel={this.props.closePicker}
+                date={this.props.date}
+                isVisible={this.props.isVisible}
+                onConfirm={this.props.changeDate}
+                onCancel={this.props.closePicker}
             />
         );
     }

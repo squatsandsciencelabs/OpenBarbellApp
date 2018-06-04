@@ -45,7 +45,8 @@ export const getIsFiltering = (state) =>
     || stateRoot(state).startingRPE
     || stateRoot(state).endingRPE
     || stateRoot(state).startingRepRange
-    || stateRoot(state).endingRepRange;
+    || stateRoot(state).endingRepRange
+    || stateRoot(state).showRemoved;
 
 export const getShowHistoryFilter = (state) => stateRoot(state).showHistoryFilter;
 

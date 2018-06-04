@@ -36,6 +36,7 @@ var storedFilters = {
     endingRPE: null,
     startingRepRange: null,
     endingRepRange: null,
+    shouldShowRemoved: false,
 };
 
 // assumes chronological sets

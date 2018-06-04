@@ -27,12 +27,15 @@ class EditTextModal extends Component {
         };
     }
 
-    componentWillMount() {
-        this._updateSuggestions();
-    }
-
     componentWillReceiveProps(nextProps) {
-        if (nextProps.setID === this.props.setID) {
+        const usesSetID = this.props.hasOwnProperty('setID');
+        if (usesSetID && nextProps.setID === this.props.setID) {
+            // wrong set, don't update
+            return;
+        }
+        
+        if (!this.props.isModalShowing && !nextProps.isModalShowing) {
+            // it's not showing, no point in updating it
             return;
         }
 
@@ -45,7 +48,7 @@ class EditTextModal extends Component {
         this.setState({inputs: inputs});
 
         // save set id
-        if (nextProps.setID !== null) {
+        if (usesSetID && nextProps.setID !== null) {
             this.setState({setID: nextProps.setID});
         }
 

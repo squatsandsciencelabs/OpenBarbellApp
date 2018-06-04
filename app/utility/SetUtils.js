@@ -202,8 +202,13 @@ export const checkExercise = (setExercise, exercise) => {
 };
 
 export const checkIncludesTags = (tags, tagsToInclude) => {
+    // nothing to include, it's fine
     if (!tagsToInclude.length) {
         return true;
+    }
+    // no tags, cannot possibly include
+    if (!tags) {
+        return false;
     }
 
     const tagsInsensitive = tags.map(tag => tag.trim().toLowerCase());
@@ -213,7 +218,8 @@ export const checkIncludesTags = (tags, tagsToInclude) => {
 };
 
 export const checkExcludesTags = (tags, tagsToExclude) => {
-    if (!tagsToExclude.length) {
+    // if no tags, or nothing to exclude, it is excluded
+    if (!tags || !tagsToExclude.length) {
         return true;
     }
 

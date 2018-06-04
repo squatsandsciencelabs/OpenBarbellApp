@@ -33,6 +33,20 @@ export const getHistoryViewedCounter = (state) => stateRoot(state).viewedCounter
 
 // history filters
 
+// NOTE: this does not check metrics because weight without metrics isn't actually filtering
+export const getIsFiltering = (state) =>
+    stateRoot(state).exercise
+    || stateRoot(state).tagsToInclude.length > 0
+    || stateRoot(state).tagsToExclude.length > 0
+    || stateRoot(state).startingDate
+    || stateRoot(state).endingDate
+    || stateRoot(state).startingWeight
+    || stateRoot(state).endingWeight
+    || stateRoot(state).startingRPE
+    || stateRoot(state).endingRPE
+    || stateRoot(state).startingRepRange
+    || stateRoot(state).endingRepRange;
+
 export const getShowHistoryFilter = (state) => stateRoot(state).showHistoryFilter;
 
 export const getHistoryFilterExercise = (state) => stateRoot(state).exercise;

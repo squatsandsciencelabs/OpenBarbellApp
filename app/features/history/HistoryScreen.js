@@ -3,6 +3,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import * as AuthSelectors from 'app/redux/selectors/AuthSelectors';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
@@ -16,10 +17,26 @@ import * as DurationCalculator from 'app/utility/DurationCalculator';
 
 // NOTE: this means that every history screen accesses previous values as singletons
 var storedSections = null; // the actual data
-var storedHistoryData = null; // for comparison purposes
+var storedHistoryData = null; // for comparison purposes, determine if things have changed
 var storedHistoryCollapsed = null;
 var storedHistorySets = null; // to remove the need to fetch the sets again in chronological order
 var storedShouldShowRemoved = null; // for comparison purposes
+// for comparison purposes
+var storedFilters = {
+    exercise: null,
+    tagsToInclude: [],
+    tagsToExclude: [],
+    startingDate: null,
+    endingDate: null,
+    startingWeight: null,
+    startingWeightMetric: 'kgs',
+    endingWeight: null,
+    endingWeightMetric: 'kgs',
+    startingRPE: null,
+    endingRPE: null,
+    startingRepRange: null,
+    endingRepRange: null,
+};
 
 // assumes chronological sets
 const createViewModels = (state, sets, shouldShowRemoved) => {
@@ -35,25 +52,22 @@ const createViewModels = (state, sets, shouldShowRemoved) => {
     let isCollapsed = false;
     let isRemoved = false;
 
-    // ignore if initialStartTime is null as that was a bug, it's supposed to be undefined or an actual date
-    sets = SetsSelectors.getFilteredHistorySets(sets, state);
-
     // build view models
     for (let i=0; i<sets.length; i++) {
         // get set
         let set = sets[i];
-        let rpe = String(sets[i].rpe);
 
+        // ignore if initialStartTime is null as that was a bug, it's supposed to be undefined or an actual date
+        if (set.initialStartTime === null) {
+            continue;
+        }
+
+        // rpe
+        let rpe = String(sets[i].rpe);
         if (set.rpe) {
             set.rpe = rpe;
         } else {
             set.rpe = "";
-        }
-
-        // TODO: make this part of the filter call instead, aka show deleted should be done on that level
-        // ignore deleted sets
-        if (!shouldShowRemoved && SetUtils.isDeleted(set)) {
-            continue;
         }
 
         // every workout is a section
@@ -302,20 +316,47 @@ const createBottomBorder = (set) => ({
 
 // TODO: use reselect instead perhaps?
 const mapStateToProps = (state) => {
-    // declare vars
-    let shouldShowRemoved = HistorySelectors.getShowRemoved(state);
-    let historyData = SetsSelectors.getHistorySets(state);
-    let historyCollapsed = HistoryCollapsedSelectors.getCollapsedModel(state);
+    // model vars
+    const historyData = SetsSelectors.getHistorySets(state);
+    const historyCollapsed = HistoryCollapsedSelectors.getCollapsedModel(state);
     let rebuildViewModels = false;
 
+    // filter vars
+    const shouldShowRemoved = HistorySelectors.getShowRemoved(state);
+    const exercise = HistorySelectors.getHistoryFilterExercise(state);
+    const tagsToInclude = HistorySelectors.getHistoryFilterTagsToInclude(state);
+    const tagsToExclude = HistorySelectors.getHistoryFilterTagsToExclude(state);
+    const startingDate = HistorySelectors.getHistoryFilterStartingDate(state);
+    const endingDate = HistorySelectors.getHistoryFilterEndingDate(state);
+    const startingWeight = HistorySelectors.getHistoryFilterStartingWeight(state);
+    const startingWeightMetric = HistorySelectors.getHistoryFilterStartingWeightMetric(state);
+    const endingWeight = HistorySelectors.getHistoryFilterEndingWeight(state);
+    const endingWeightMetric = HistorySelectors.getHistoryFilterEndingWeightMetric(state);
+    const startingRPE = HistorySelectors.getHistoryFilterStartingRPE(state);
+    const endingRPE = HistorySelectors.getEditingHistoryFilterEndingRPE(state);
+    const startingRepRange = HistorySelectors.getHistoryFilterStartingRepRange(state);
+    const endingRepRange = HistorySelectors.getHistoryFilterEndingRepRange(state);
+    const isFiltering = HistorySelectors.getIsFiltering(state);
+    const filtersChanged = shouldShowRemoved !== storedFilters.shouldShowRemoved
+        || exercise !== storedFilters.exercise
+        || tagsToInclude !== storedFilters.tagsToInclude
+        || tagsToExclude !== storedFilters.tagsToExclude
+        || startingDate !== storedFilters.startingDate
+        || endingDate !== storedFilters.endingDate
+        || startingWeight !== storedFilters.startingWeight
+        || startingWeightMetric !== storedFilters.startingWeightMetric
+        || endingWeight !== storedFilters.endingWeight
+        || endingWeightMetric !== storedFilters.endingWeightMetric
+        || startingRPE !== storedFilters.startingRPE
+        || endingRPE !== storedFilters.endingRPE
+        || startingRepRange !== storedFilters.startingRepRange
+        || endingRepRange !== storedFilters.endingRepRange;
+
     // determine rebuilding of viewmodels
-    if (historyData !== storedHistoryData) {
+    if (historyData !== storedHistoryData || filtersChanged) {
         // data changed, redo it all
-        storedHistoryData = SetsSelectors.getFilteredHistorySets(historyData, state);
-        storedHistorySets = SetsSelectors.getHistorySetsChronological(state);
-        rebuildViewModels = true;
-    } else if (shouldShowRemoved !== storedShouldShowRemoved) {
-        // toggled with no data changed, just rebuild viewmodels
+        storedHistoryData = historyData;
+        storedHistorySets = SetsSelectors.getFilteredHistorySets(state);
         rebuildViewModels = true;
     }
     if (historyCollapsed !== storedHistoryCollapsed) {
@@ -330,22 +371,9 @@ const mapStateToProps = (state) => {
         storedShouldShowRemoved = shouldShowRemoved;
     }
 
-    const exercise = HistorySelectors.getHistoryFilterExercise(state);
-    const tagsToInclude = HistorySelectors.getHistoryFilterTagsToInclude(state);
-    const tagsToExclude = HistorySelectors.getHistoryFilterTagsToExclude(state);
-    const startingDate = HistorySelectors.getHistoryFilterStartingDate(state);
-    const endingDate = HistorySelectors.getHistoryFilterEndingDate(state);
-    const startingWeight = HistorySelectors.getHistoryFilterStartingWeight(state);
-    const endingWeight = HistorySelectors.getHistoryFilterEndingWeight(state);
-    const startingRPE = HistorySelectors.getHistoryFilterStartingRPE(state);
-    const endingRPE = HistorySelectors.getEditingHistoryFilterEndingRPE(state);
-    const startingRepRange = HistorySelectors.getHistoryFilterStartingRepRange(state);
-    const endingRepRange = HistorySelectors.getHistoryFilterEndingRepRange(state);
-
-    const isFiltering = exercise || tagsToInclude.length > 0 || tagsToExclude.length > 0 || startingDate || endingDate || startingWeight || endingWeight || startingRPE || endingRPE || startingRepRange || endingRepRange;
-
+    // return
     return {
-        email: state.auth.email,
+        email: AuthSelectors.getEmail(state),
         sections: storedSections,
         shouldShowRemoved: shouldShowRemoved,
         isFiltering: isFiltering,

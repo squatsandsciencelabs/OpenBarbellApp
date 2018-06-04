@@ -263,9 +263,10 @@ export const getNumHistorySets = (state) => {
     return array.length;
 };
 
-export const getFilteredHistorySets = (allSets, state) => {
+export const getFilteredHistorySets = (state) => {
     let data = [];
-
+    
+    const allSets = getHistorySetsChronological(state);
     const exercise = HistorySelectors.getHistoryFilterExercise(state);
     const tagsToInclude = HistorySelectors.getHistoryFilterTagsToInclude(state);
     const tagsToExclude = HistorySelectors.getHistoryFilterTagsToExclude(state);
@@ -279,9 +280,10 @@ export const getFilteredHistorySets = (allSets, state) => {
     const endingRepRange = HistorySelectors.getHistoryFilterEndingRepRange(state);
     const startingDate = HistorySelectors.getHistoryFilterStartingDate(state);
     const endingDate = HistorySelectors.getHistoryFilterEndingDate(state);
+    const showRemoved = HistorySelectors.getShowRemoved(state);
 
     allSets.forEach((set) => {
-        if (SetUtils.startTime(set) !== null && isValidForHistoryFilter(set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric, startingRepRange, endingRepRange, startingDate, endingDate)) {
+        if (SetUtils.startTime(set) !== null && isValidForHistoryFilter(set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric, startingRepRange, endingRepRange, startingDate, endingDate, showRemoved)) {
             data.push(set);
         }
     });
@@ -289,8 +291,9 @@ export const getFilteredHistorySets = (allSets, state) => {
     return data;
 };
 
-const isValidForHistoryFilter = (set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric, startingRepRange, endingRepRange, startingDate, endingDate) => {
-    return SetUtils.checkExercise(set.exercise, exercise)
+const isValidForHistoryFilter = (set, exercise, tagsToInclude, tagsToExclude, startingRPE, endingRPE, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric, startingRepRange, endingRepRange, startingDate, endingDate, showRemoved) => {
+    return (showRemoved || !SetUtils.isDeleted(set))
+    && SetUtils.checkExercise(set.exercise, exercise)
     && SetUtils.checkIncludesTags(set.tags, tagsToInclude)
     && SetUtils.checkExcludesTags(set.tags, tagsToExclude)
     && SetUtils.checkWeightRange(set.weight, set.metric, startingWeight, startingWeightMetric, endingWeight, endingWeightMetric)

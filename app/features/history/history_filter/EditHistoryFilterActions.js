@@ -23,14 +23,19 @@ import {
 } from 'app/configs+constants/ActionTypes';
 import * as HistorySelectors from 'app/redux/selectors/HistorySelectors';
 import * as WeightConversion from 'app/utility/WeightConversion';
+import * as Analytics from 'app/services/Analytics';
 
 export const presentSelectExercise = () => ({ 
     type: PRESENT_HISTORY_FILTER_EXERCISE,
 });
 
-export const dismissHistoryFilter = () => ({
-    type: DISMISS_HISTORY_FILTER,
-});
+export const dismissHistoryFilter = () => {
+    Analytics.setCurrentScreen('history');
+
+    return {
+        type: DISMISS_HISTORY_FILTER,
+    };
+};
 
 export const presentTagsToInclude = () => ({ 
     type: PRESENT_HISTORY_FILTER_INCLUDES_TAGS, 
@@ -112,6 +117,8 @@ export const saveHistoryFilter = () => (dispatch, getState) => {
     } else if (startingReps && endingReps && startingReps > endingReps) {
         Alert.alert("Invalid Rep Range", "Please enter a minimum number of reps that is less than your maximum number of reps.");
     } else {
+        Analytics.setCurrentScreen('history');
+
         dispatch({
             type: SAVE_HISTORY_FILTER,
         });

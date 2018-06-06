@@ -34,6 +34,10 @@ export const removeRep = (setID, repIndex) => SetsActionCreators.removeHistoryRe
 
 export const restoreRep = (setID, repIndex) => SetsActionCreators.restoreHistoryRep(setID, repIndex);
 
-export const presentHistoryFilter = () => ({
-    type: PRESENT_HISTORY_FILTER,
-});
+export const presentHistoryFilter = () => {
+    Analytics.setCurrentScreen('history_filters');
+
+    return {
+        type: PRESENT_HISTORY_FILTER,
+    };
+};

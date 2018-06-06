@@ -118,7 +118,9 @@ export const saveHistoryFilter = () => (dispatch, getState) => {
         Alert.alert("Invalid Rep Range", "Please enter a minimum number of reps that is less than your maximum number of reps.");
     } else {
         Analytics.setCurrentScreen('history');
-
+        Analytics.logEventWithAppState('apply_filters', {
+        }, state);
+    
         dispatch({
             type: SAVE_HISTORY_FILTER,
         });

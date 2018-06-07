@@ -17,7 +17,8 @@ import {
     RECONNECTING_TO_DEVICE,
     DISCONNECT_DEVICE,
     CONNECT_DEVICE,
-    RECONNECT_DEVICE
+    RECONNECT_DEVICE,
+    PLAY_VELOCITY_DROP_AUDIO,
 } from 'app/configs+constants/ActionTypes';
 import * as TimerActionCreators from './TimerActionCreators';
 import * as SetsActionCreators from './SetsActionCreators';
@@ -26,6 +27,7 @@ import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as Analytics from 'app/services/Analytics';
 import * as ScannedDevicesSelectors from 'app/redux/selectors/ScannedDevicesSelectors';
+import * as RepDataMap from 'app/utility/RepDataMap';
 
 const RFDuinoLib = NativeModules.RFDuinoLib;
 
@@ -199,6 +201,17 @@ export const reconnectingToDevice = (name) => {
 
 export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, getState) => {
     const state = getState();
+    const workingSet = SetsSelectors.getWorkingSet(state);
+    const workingSetReps = workingSet.reps
+    const lastRep = workingSetReps[workingSetReps.length - 1];
+    const currentRep = RepDataMap.averageVelocity(data);
+    const lastRepVelocity = lastRep ? RepDataMap.averageVelocity(lastRep.data) : null;
+
+    if (lastRepVelocity && (lastRepVelocity * .7) > currentRep) {
+        console.tron.log(currentRep + " dropped from " + firstRepVelocity);
+        dispatch({ type: PLAY_VELOCITY_DROP_AUDIO })
+    }
+
     logAddRepAnalytics(state);
 
     dispatch(TimerActionCreators.sanityCheckTimer());
@@ -211,6 +224,7 @@ export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, g
         time: time
     });
     dispatch(TimerActionCreators.startEndSetTimer());
+
 };
 
 // ANALYTICS

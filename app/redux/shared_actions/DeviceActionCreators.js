@@ -3,7 +3,6 @@
 
 import { NativeModules } from 'react-native';
 import BackgroundTimer from 'react-native-background-timer';
-import DeviceInfo from 'react-native-device-info';
 
 import {
     START_DEVICE_SCAN,
@@ -18,16 +17,16 @@ import {
     DISCONNECT_DEVICE,
     CONNECT_DEVICE,
     RECONNECT_DEVICE,
-    PLAY_VELOCITY_DROP_AUDIO,
+    VELOCITY_DROPPED,
 } from 'app/configs+constants/ActionTypes';
 import * as TimerActionCreators from './TimerActionCreators';
-import * as SetsActionCreators from './SetsActionCreators';
 import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDeviceStatusSelectors';
 import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as Analytics from 'app/services/Analytics';
 import * as ScannedDevicesSelectors from 'app/redux/selectors/ScannedDevicesSelectors';
 import * as RepDataMap from 'app/utility/RepDataMap';
+import * as VelocityDropActionCreators from 'app/redux/shared_actions/VelocityDropActionCreators';
 
 const RFDuinoLib = NativeModules.RFDuinoLib;
 
@@ -208,8 +207,8 @@ export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, g
     const lastRepVelocity = lastRep ? RepDataMap.averageVelocity(lastRep.data) : null;
 
     if (lastRepVelocity && (lastRepVelocity * .7) > currentRep) {
-        console.tron.log(currentRep + " dropped from " + firstRepVelocity);
-        dispatch({ type: PLAY_VELOCITY_DROP_AUDIO })
+        console.tron.log(currentRep + " dropped from " + lastRepVelocity);
+        dispatch(VelocityDropActionCreators.velocityDropped())
     }
 
     logAddRepAnalytics(state);

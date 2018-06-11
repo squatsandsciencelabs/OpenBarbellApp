@@ -25,8 +25,6 @@ import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as Analytics from 'app/services/Analytics';
 import * as ScannedDevicesSelectors from 'app/redux/selectors/ScannedDevicesSelectors';
-import * as RepDataMap from 'app/utility/RepDataMap';
-import * as VelocityDropActionCreators from 'app/redux/shared_actions/VelocityDropActionCreators';
 
 const RFDuinoLib = NativeModules.RFDuinoLib;
 
@@ -200,16 +198,6 @@ export const reconnectingToDevice = (name) => {
 
 export const receivedLiftData = (isValid, data, time=new Date()) => (dispatch, getState) => {
     const state = getState();
-    const workingSet = SetsSelectors.getWorkingSet(state);
-    const workingSetReps = workingSet.reps
-    const lastRep = workingSetReps[workingSetReps.length - 1];
-    const currentRep = RepDataMap.averageVelocity(data);
-    const lastRepVelocity = lastRep ? RepDataMap.averageVelocity(lastRep.data) : null;
-
-    if (lastRepVelocity && (lastRepVelocity * .7) > currentRep) {
-        console.tron.log(currentRep + " dropped from " + lastRepVelocity);
-        dispatch(VelocityDropActionCreators.velocityDropped())
-    }
 
     logAddRepAnalytics(state);
 

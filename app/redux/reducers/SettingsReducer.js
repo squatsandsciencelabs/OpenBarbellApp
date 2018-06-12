@@ -21,7 +21,7 @@ const defaultState = {
     wasMetricEdited: false,
     isExportingCSV: false,
     lastExportCSVDate: null,
-    velocityDropThreshold: .3
+    velocityDropThreshold: .1
 };
 
 const SettingsReducer = (state = defaultState, action) => {

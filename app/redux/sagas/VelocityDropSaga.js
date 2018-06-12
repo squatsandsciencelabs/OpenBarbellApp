@@ -13,10 +13,10 @@ const VelocityDropSaga = function * VelocityDropSaga() {
 
 function* playVelocityDropAudio(action) {
     const velocityThreshold = yield select(SettingsSelectors.getVelocityDropThreshold);
-    const currentRep = RepDataMap.averageVelocity(action.data);
+    const currentRepVelocity = RepDataMap.averageVelocity(action.data);
 
-    if (currentRep < velocityThreshold) {
-        console.tron.log(currentRep + " dropped from " + lastRepVelocity);
+    if (currentRepVelocity < velocityThreshold) {
+        console.tron.log(currentRepVelocity + " dropped from " + lastRepVelocity);
         yield put(VelocityDropActionCreators.playVelocityDropAudio());
     }
 };

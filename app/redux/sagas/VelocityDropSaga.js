@@ -16,7 +16,7 @@ function* playVelocityDropAudio(action) {
     const currentRepVelocity = RepDataMap.averageVelocity(action.data);
 
     if (currentRepVelocity < velocityThreshold) {
-        console.tron.log(currentRepVelocity + " dropped from " + lastRepVelocity);
+        console.tron.log(currentRepVelocity + " less than " + velocityThreshold);
         yield put(VelocityDropActionCreators.playVelocityDropAudio());
     }
 };

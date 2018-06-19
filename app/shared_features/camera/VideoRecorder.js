@@ -109,6 +109,9 @@ class VideoRecorder extends Component {
     }
 
     _renderToggleCameraTypeButton() {
+        // TODO: enable camera after fixing Android's slow front facing camera
+        return <View></View>
+
         // need to return empty view as button remains but is not clickable if not returning anything
         if (this.props.isRecording || this.props.isSaving) {
             return <View></View>

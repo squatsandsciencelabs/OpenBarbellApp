@@ -7,19 +7,18 @@ import * as SettingsSelectors from 'app/redux/selectors/SettingsSelectors';
 import * as AudioPlayer from 'app/shared_features/audio/AudioPlayer';
 import vel_threshold from 'app/audio/vel_threshold.mp3';
 
-const VelocityDropSaga = function * VelocityDropSaga() {
-    yield takeLatest(ADD_REP_DATA, playVelocityDropAudio);
+const VelocityThresholdSaga = function * VelocityThresholdSaga() {
+    yield takeLatest(ADD_REP_DATA, playVelocityThresholdAudio);
 };
 
-function* playVelocityDropAudio(action) {
-    const velocityThreshold = yield select(SettingsSelectors.getVelocityDropThreshold);
+function* playVelocityThresholdAudio(action) {
+    const velocityThreshold = yield select(SettingsSelectors.getVelocityThreshold);
     const currentRepVelocity = RepDataMap.averageVelocity(action.data);
 
     if (currentRepVelocity < velocityThreshold) {
         console.tron.log(currentRepVelocity + " less than " + velocityThreshold);
-        // yield put(VelocityDropActionCreators.playVelocityDropAudio());
         AudioPlayer.audioPlayer(vel_threshold);
     }
 };
 
-export default VelocityDropSaga;
+export default VelocityThresholdSaga;

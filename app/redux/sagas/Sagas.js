@@ -12,7 +12,7 @@ import ReconnectSaga from './ReconnectSaga';
 import SurveySaga from './SurveySaga';
 import InitializedAnalyticsSaga from './InitializedAnalyticsSaga';
 import OneRMAnalyticsSaga from './OneRMAnalyticsSaga';
-import VelocityDropSaga from './VelocityDropSaga';
+import VelocityThresholdSaga from './VelocityThresholdSaga';
 
 const Sagas = function* Sagas() {
     yield all([
@@ -28,7 +28,7 @@ const Sagas = function* Sagas() {
         call(SurveySaga),
         call(InitializedAnalyticsSaga),
         call(OneRMAnalyticsSaga),
-        call(VelocityDropSaga),
+        call(VelocityThresholdSaga),
     ]);
 };
 

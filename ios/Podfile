@@ -25,6 +25,8 @@ target 'OBBApp' do
 
   pod 'react-native-fetch-blob', :path => '../node_modules/react-native-fetch-blob'
 
+  pod 'RNSound', :path => '../node_modules/react-native-sound'
+
   target 'OBBAppTests' do
     inherit! :search_paths
     # Pods for testing

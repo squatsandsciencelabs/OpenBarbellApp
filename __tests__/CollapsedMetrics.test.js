@@ -1167,16 +1167,28 @@ describe('collapsed metrics', () => {
             expect(actual).toBe(null);
         });
 
-        test('return null if RPE below 6.5', () => {
+        test('return null if RPE below 6', () => {
             const set = {
                 weight: 345,
                 reps: [validRep, validRep, validRep, validRep,],
-                rpe: '5',
+                rpe: '5.5',
             };
     
             const actual = sut.getRPE1RM(set);
     
             expect(actual).toBe(null)
+        });
+
+        test('return nonnull if RPE is 6', () => {
+            const set = {
+                weight: 345,
+                reps: [validRep, validRep, validRep, validRep,],
+                rpe: '6',
+            };
+    
+            const actual = sut.getRPE1RM(set);
+    
+            expect(actual).not.toBe(null)
         });
 
         test('return RPE 1rm if rpe has comma instead of decimal', () => {
@@ -1188,7 +1200,7 @@ describe('collapsed metrics', () => {
 
             const actual = sut.getRPE1RM(set);
 
-            expect(actual).toBe(431);
+            expect(actual).toBe(443);
         });
 
         test('return null when rpe undefined', () => {
@@ -1246,7 +1258,7 @@ describe('collapsed metrics', () => {
     
             const actual = sut.getRPE1RM(set);
     
-            expect(actual).toBe(489);
+            expect(actual).toBe(495);
         });
 
         test('return correct 1rm value for only 2 valid reps based on RPE', () => {
@@ -1258,7 +1270,7 @@ describe('collapsed metrics', () => {
     
             const actual = sut.getRPE1RM(set);
     
-            expect(actual).toBe(473);
+            expect(actual).toBe(467);
         });
 
         test('return correct 1rm value for 10 valid reps based on RPE', () => {
@@ -1270,7 +1282,7 @@ describe('collapsed metrics', () => {
     
             const actual = sut.getRPE1RM(set);
     
-            expect(actual).toBe(640);
+            expect(actual).toBe(642);
         });
     
         test('return correct 1rm value for mixed valid invalid+removed 3 reps based on RPE', () => {
@@ -1282,7 +1294,7 @@ describe('collapsed metrics', () => {
     
             const actual = sut.getRPE1RM(set);
     
-            expect(actual).toBe(482);
+            expect(actual).toBe(491);
         });
 
         test('return correct 1rm value for mixed valid invalid removed 7 reps based on RPE', () => {
@@ -1294,7 +1306,7 @@ describe('collapsed metrics', () => {
     
             const actual = sut.getRPE1RM(set);
     
-            expect(actual).toBe(438);
+            expect(actual).toBe(451);
         });
 
         test('return null if 11 valid reps', () => {

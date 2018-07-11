@@ -28,7 +28,7 @@ const Sagas = function* Sagas() {
         call(SurveySaga),
         call(InitializedAnalyticsSaga),
         call(OneRMAnalyticsSaga),
-        call(VelocityThresholdSaga),
+        // call(VelocityThresholdSaga),
     ]);
 };
 

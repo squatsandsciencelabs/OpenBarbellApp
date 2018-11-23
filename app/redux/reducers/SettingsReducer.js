@@ -10,6 +10,7 @@ import {
     UPDATE_SYNC_DATE,
     EXPORTING_CSV,
     TOGGLE_VELOCITY_THRESHOLD,
+    SAVE_VELOCITY_THRESHOLD
 } from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
@@ -68,6 +69,11 @@ const SettingsReducer = (state = defaultState, action) => {
             return {
                 ...state,
                 velocityThresholdEnabled: !state.velocityThresholdEnabled
+            }
+        case SAVE_VELOCITY_THRESHOLD:
+            return {
+                ...state,
+                velocityThreshold: action.velocityThreshold
             }
         default:
             return state;

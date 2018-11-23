@@ -1,7 +1,8 @@
 import {
     PRESENT_END_SET_TIMER,
     PRESENT_DEFAULT_METRIC,
-    TOGGLE_VELOCITY_THRESHOLD
+    TOGGLE_VELOCITY_THRESHOLD,
+    SAVE_VELOCITY_THRESHOLD
 } from 'app/configs+constants/ActionTypes';
 import * as Analytics from 'app/services/Analytics';
 
@@ -24,5 +25,12 @@ export const presentSetMetric = () => {
 export const toggleVelocityThreshold = () => {
     return {
         type: TOGGLE_VELOCITY_THRESHOLD
+    }
+}
+
+export const onChangeVelocityThreshold = (velocityThreshold) => {
+    return {
+        type: SAVE_VELOCITY_THRESHOLD,
+        velocityThreshold: parseFloat(velocityThreshold)
     }
 }

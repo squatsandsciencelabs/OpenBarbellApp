@@ -16,7 +16,8 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({
         tapEndSetTimer: Actions.presentEndSetTimer,
         tapDefaultMetric: Actions.presentSetMetric,
-        toggleVelocityThreshold: Actions.toggleVelocityThreshold
+        toggleVelocityThreshold: Actions.toggleVelocityThreshold,
+        onChangeVelocityThreshold: Actions.onChangeVelocityThreshold
     }, dispatch);
 };
 

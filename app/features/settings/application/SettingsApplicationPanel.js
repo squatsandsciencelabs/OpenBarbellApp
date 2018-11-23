@@ -5,6 +5,7 @@ import {
     TouchableOpacity,
     Picker,
     Platform,
+    Switch,
     StyleSheet
 } from 'react-native';
 
@@ -23,6 +24,30 @@ class SettingsApplicationPanel extends Component {
 
     _tapDefaultMetric() {
         this.props.tapDefaultMetric()
+    }
+
+    _renderVelSwitch() {
+        if (Platform.OS === 'ios') {
+            console.tron.log(this.props.velocityThresholdEnabled)
+            return (
+                <Switch
+                    style={{backgroundColor: 'white', marginRight: 5}}
+                    value={this.props.velocityThresholdEnabled}
+                    onValueChange={(isSwitchOn) => this.props.toggleVelocityThreshold()}
+                    onTintColor='rgba(47, 128, 237, 1)'
+                    thumbTintColor='#e0e0e0'
+                    tintColor='rgba(47, 128, 237, 1)'/>
+            );
+        } else {
+            return (
+                <Switch
+                    value={this.props.velocityThresholdEnabled}
+                    onValueChange={(isSwitchOn) => this.props.toggleVelocityThreshold()}
+                    onTintColor='rgba(47, 128, 237, 1)'
+                    thumbTintColor='#e0e0e0'
+                    tintColor='rgba(47, 128, 237, 1)'/>
+            );
+        }
     }
 
     // RENDER
@@ -54,6 +79,10 @@ class SettingsApplicationPanel extends Component {
                         </TouchableOpacity>
                     </View>
                     <SettingsMetric />
+                    <View style={{marginBottom: 15}}>
+                        <Text style={[styles.labelText, { paddingTop: 10 }]}>Velocity Threshold</Text>
+                        <View style={{padding: 5}}>{this._renderVelSwitch()}</View>
+                    </View>
                 </View>
             );
         } else {

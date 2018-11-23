@@ -9,6 +9,7 @@ import {
     DISMISS_DEFAULT_METRIC,
     UPDATE_SYNC_DATE,
     EXPORTING_CSV,
+    TOGGLE_VELOCITY_THRESHOLD,
 } from 'app/configs+constants/ActionTypes';
 
 const defaultState = {
@@ -21,6 +22,7 @@ const defaultState = {
     wasMetricEdited: false,
     isExportingCSV: false,
     lastExportCSVDate: null,
+    velocityThresholdEnabled: false,
     velocityThreshold: .1
 };
 
@@ -62,6 +64,11 @@ const SettingsReducer = (state = defaultState, action) => {
                 isExportingCSV: action.isExportingCSV,
                 lastExportCSVDate: new Date()
             });
+        case TOGGLE_VELOCITY_THRESHOLD:
+            return {
+                ...state,
+                velocityThresholdEnabled: !state.velocityThresholdEnabled
+            }
         default:
             return state;
     }

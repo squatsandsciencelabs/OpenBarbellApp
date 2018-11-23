@@ -20,4 +20,6 @@ export const getEndSetTimeLeft = (state) => {
 
 export const getLastExportCSVDate = (state) => stateRoot(state).lastExportCSVDate;
 
+export const getVelocityThresholdEnabled = (state) => stateRoot(state).velocityThresholdEnabled;
+
 export const getVelocityThreshold = (state) => stateRoot(state).velocityThreshold;

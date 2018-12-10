@@ -31,6 +31,6 @@ export const toggleVelocityThreshold = () => {
 export const onChangeVelocityThreshold = (velocityThreshold) => {
     return {
         type: SAVE_VELOCITY_THRESHOLD,
-        velocityThreshold: parseFloat(velocityThreshold)
+        velocityThreshold: velocityThreshold
     }
 }

@@ -24,7 +24,7 @@ const defaultState = {
     isExportingCSV: false,
     lastExportCSVDate: null,
     velocityThresholdEnabled: false,
-    velocityThreshold: .1
+    velocityThreshold: ".1"
 };
 
 const SettingsReducer = (state = defaultState, action) => {

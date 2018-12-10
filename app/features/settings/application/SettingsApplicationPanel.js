@@ -53,7 +53,7 @@ class SettingsApplicationPanel extends Component {
 
     _renderVelThreshold() {
         const width = Device.isSmallDevice() ? 50 : 75;
-        const velocityThreshold = this.props.velocityThreshold ? String(this.props.velocityThreshold) : "";
+        const velocityThreshold = this.props.velocityThreshold ? this.props.velocityThreshold : "";
         const fieldTextColor = this.props.velocityThresholdEnabled ? 'rgba(77, 77, 77, 1)' : 'rgba(189, 189, 189, 1)';
         return (
                 <View style={[styles.field, { width: width, marginLeft: 5 }]}>
@@ -64,7 +64,7 @@ class SettingsApplicationPanel extends Component {
                         editable = {this.props.velocityThresholdEnabled}
                         placeholder={"VT"}
                         placeholderTextColor={'rgba(189, 189, 189, 1)'}
-                        value = {String(velocityThreshold)}
+                        value = {velocityThreshold}
                         onChangeText={(text) => this.props.onChangeVelocityThreshold(text)}
                     />
                 </View>

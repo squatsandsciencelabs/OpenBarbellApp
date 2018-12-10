@@ -16,7 +16,7 @@ function* playVelocityThresholdAudio(action) {
     const velocityThresholdEnabled = yield select(SettingsSelectors.getVelocityThresholdEnabled);
     const currentRepVelocity = RepDataMap.averageVelocity(action.data);
 
-    if (velocityThresholdEnabled && currentRepVelocity < velocityThreshold) {
+    if (velocityThresholdEnabled && velocityThreshold && currentRepVelocity < parseFloat(velocityThreshold)) {
         console.tron.log(currentRepVelocity + " less than " + velocityThreshold);
         AudioPlayer.audioPlayer(vel_threshold);
     }

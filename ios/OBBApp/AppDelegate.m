@@ -15,10 +15,13 @@
 #import <Firebase.h>
 #import "RNFirebaseMessaging.h"
 
+#import "DeviceUID.h"
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  NSLog(@"%@", [DeviceUID uid]);
   [FIRApp configure];
   [[UNUserNotificationCenter currentNotificationCenter] setDelegate:self];
 

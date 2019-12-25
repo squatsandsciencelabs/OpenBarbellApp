@@ -5,6 +5,7 @@ import android.app.Application;
 import com.brentvatne.react.ReactVideoPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.facebook.react.ReactApplication;
+import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 import com.zmxv.RNSound.RNSoundPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.corbt.keepawake.KCKeepAwakePackage;
@@ -22,7 +23,6 @@ import io.invertase.firebase.config.RNFirebaseRemoteConfigPackage;
 import io.invertase.firebase.fabric.crashlytics.RNFirebaseCrashlyticsPackage;
 import io.invertase.firebase.messaging.RNFirebaseMessagingPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
-import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,7 +39,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
               new MainReactPackage(),
-            new RNSoundPackage(),
+              new RNSoundPackage(),
               new RNFetchBlobPackage(),
               new KCKeepAwakePackage(),
               new RNGoogleSigninPackage(),

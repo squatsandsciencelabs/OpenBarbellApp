@@ -1,5 +1,6 @@
 # Uncomment the next line to define a global platform for your project
 platform :ios, '9.0'
+use_modular_headers!
 
 target 'OBBApp' do
   # Do not use use_frameworks!, instead Swift packages should go through Carthage
@@ -11,6 +12,7 @@ target 'OBBApp' do
   pod 'Firebase/Crash'
   pod 'Firebase/RemoteConfig'
   pod 'Firebase/Messaging'
+  pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
   pod 'Fabric', '1.7.2'
   pod 'Crashlytics', '3.9.3'
   pod 'GoogleIDFASupport', '3.14.0'

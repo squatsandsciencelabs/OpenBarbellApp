@@ -167,6 +167,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-charts-wrapper')
     compile project(':react-native-sound')
     compile project(':react-native-fetch-blob')
     compile project(':react-native-keep-awake')
@@ -183,7 +184,6 @@ dependencies {
     compile(project(':react-native-google-signin')){         
         exclude group: "com.google.android.gms" // very important
     }
-    compile project(':react-native-charts-wrapper')
     // RNFirebase required dependencies
     compile(project(':react-native-firebase')) {
         transitive = false

@@ -23,8 +23,6 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		1699B4F2203A8A9000DA925C /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1699B4F0203A8A9000DA925C /* Charts.framework */; };
-		1699B4F3203A8A9000DA925C /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1699B4F1203A8A9000DA925C /* SwiftyJSON.framework */; };
 		16EE3658203A7B5E00F0652C /* BalloonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EE361C203A7B5E00F0652C /* BalloonMarker.swift */; };
 		16EE3659203A7B5E00F0652C /* BarDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EE361E203A7B5E00F0652C /* BarDataExtract.swift */; };
 		16EE365A203A7B5E00F0652C /* RNBarChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EE361F203A7B5E00F0652C /* RNBarChartManager.swift */; };
@@ -643,8 +641,6 @@
 			files = (
 				C307DCFA1EA4496A00C9A644 /* libRCTAnimation.a in Frameworks */,
 				B10B36751DA691B10007E30E /* CoreBluetooth.framework in Frameworks */,
-				1699B4F2203A8A9000DA925C /* Charts.framework in Frameworks */,
-				1699B4F3203A8A9000DA925C /* SwiftyJSON.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -1326,6 +1322,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -2153,7 +2150,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "OBBApp-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -2199,7 +2196,7 @@
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "OBBApp-Bridging-Header.h";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

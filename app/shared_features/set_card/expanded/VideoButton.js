@@ -55,21 +55,30 @@ class VideoButton extends Component {
                 // TODO: see if can make this a true image preview instead of a full video
                 // probably requires RCTCameraRoll
                 if (Platform.OS === 'ios') {
-                    return (
-                        <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo() }>
-                            <View style={[{flex: 1}, styles.button, styles.blackButton]}>
-                                <Video
-                                    ref={(ref) => {
-                                        this.player = ref
-                                    }}
-                                    style={styles.button}
-                                    source={{uri: this.props.videoFileURL}}
-                                    paused={true}
-                                    repeat={true}
-                                />
-                            </View>
-                        </TouchableOpacity>
-                    );
+                    if (!this.props.videoFileURL) {
+                        return (
+                            <TouchableOpacity style={styles.videoButtonContainer} onPress={()=> this.props.tappedWatch(this.props.setID, this.props.videoFileURL) }>
+                                <View style={styles.videoButton}>
+                                </View>
+                            </TouchableOpacity>
+                        );
+                    } else {
+                        return (
+                            <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo() }>
+                                <View style={[{flex: 1}, styles.button, styles.blackButton]}>
+                                    <Video
+                                        ref={(ref) => {
+                                            this.player = ref
+                                        }}
+                                        style={styles.button}
+                                        source={{uri: this.props.videoFileURL}}
+                                        paused={true}
+                                        repeat={true}
+                                    />
+                                </View>
+                            </TouchableOpacity>
+                        );
+                    }
                 } else {
                     return (
                         <TouchableOpacity style={{paddingLeft: 5}} onPress={()=> this._tappedWatchVideo() }>

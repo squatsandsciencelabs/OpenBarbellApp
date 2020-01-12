@@ -74,8 +74,10 @@ export const saveSet = (setID, weight = null, metric = null, rpe = null) => {
     return SetsActionCreators.saveWorkoutForm(setID, weight, metric, rpe);
 };
 
-export const presentRecordVideo = (setID) => (dispatch, getState) => {
-    VideoPermissionsUtils.checkRecordingPermissions().then(() => {        
+export const presentRecordVideo = (setID) => async (dispatch, getState) => {
+    try {
+        await VideoPermissionsUtils.checkRecordingPermissions();
+
         const state = getState();
         Analytics.setCurrentScreen('workout_record_video');
         logVideoRecorderAnalytics(setID, state);
@@ -85,7 +87,9 @@ export const presentRecordVideo = (setID) => (dispatch, getState) => {
             setID: setID,
             isCommentary: false,
         });
-    }).catch(() => {});
+    } catch(err) {
+        console.tron.log(`present record video error ${JSON.stringify(err)}`);
+    }
 };
 
 export const presentRecordCommentary = (setID) => (dispatch, getState) => {

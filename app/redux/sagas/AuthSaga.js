@@ -11,7 +11,7 @@ import {
     select,
 } from 'redux-saga/effects';
 import { Alert, Platform } from 'react-native';
-import { GoogleSignin } from 'react-native-google-signin';
+import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 
 import {
     STORE_INITIALIZED,
@@ -29,6 +29,9 @@ import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 const AuthSaga = function * AuthSaga() {
     // handle anonymous logins
     yield fork(executeAnonymousLogin);
+
+    // handle initial authentication
+    yield call(executeInitialAuthentication);
     
     while (true) {
         // login
@@ -42,7 +45,7 @@ const AuthSaga = function * AuthSaga() {
         try {
             // reset and logout
             Analytics.setUserID();
-            const user = yield apply(GoogleSignin, GoogleSignin.currentUserAsync);
+            yield apply(GoogleSignin, GoogleSignin.revokeAccess);
             yield apply(GoogleSignin, GoogleSignin.signOut);
 
             // analytics
@@ -79,6 +82,28 @@ function* executeAnonymousLogin() {
     }
 }
 
+function *executeInitialAuthentication() {
+    yield take(STORE_INITIALIZED);
+    const isLoggedIn = yield select(AuthSelectors.getIsLoggedIn);
+    if (!isLoggedIn) {
+        return;
+    }
+
+    try {
+        const isSignedIn = yield apply(GoogleSignin, GoogleSignin.isSignedIn);
+        if (isSignedIn) {
+            // normal silent sign in
+            yield apply(GoogleSignin, GoogleSignin.signInSilently);
+        } else {
+            console.tron.log(`Error, redux says you're signed in but google does not agree, calling full reauthentication process`);
+            yield call(executeReauthenticateLoggedInUser);
+        }
+    } catch (err) {
+        console.tron.log(`ERROR INITIAL AUTH, not sure what to do so reauthenticating to be safe ${err}`);
+        yield call(executeReauthenticateLoggedInUser);
+    }
+}
+
 function* executeLogin() {
     try {
         yield take(LOGIN_REQUEST);
@@ -86,29 +111,30 @@ function* executeLogin() {
         // sign into google
         let state = yield select();
         logAttemptLoginGoogleAnalytics(state);
-        const user = yield apply(GoogleSignin, GoogleSignin.signIn);
+        yield apply(GoogleSignin, GoogleSignin.hasPlayServices);
+        const userInfo = yield apply(GoogleSignin, GoogleSignin.signIn);
 
         // sign into our servers
-        Analytics.setUserID(user.id);
+        Analytics.setUserID(userInfo.user.id);
         state = yield select();
         logAttemptLoginOpenBarbellAnalytics(state);
-        let json = yield call(API.login, user.idToken);
+        let json = yield call(API.login, userInfo.idToken);
 
         // success
-        yield put(AuthActionCreators.loginSucceeded(json.accessToken, json.refreshToken, user.email, new Date(), json.revision, json.sets));
+        yield put(AuthActionCreators.loginSucceeded(json.accessToken, json.refreshToken, userInfo.user.email, new Date(), json.revision, json.sets));
         state = yield select();
         logLoginAnalytics(state);
     } catch(error) {
         console.tron.log("ERROR CODE " + error.code + " ERROR " + error);
         let state = yield select();
-        if (error.code === -5 || error.code === 12501) {
-            // -5 is when the user cancels the sign in on iOS
-            // 12501 is when the user cancels the sign in on Android
+        if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+            // previously -5 is iOS cancel and 12501 is Android cancel
             logCancelLoginAnalytics(state);
         } else {
             showSignInErrorAlert();
             logLoginErrorAnalytics(state, error);
         }
+        // TODO: consider adding "in progress" error and play services not available specific error
         yield put(AuthActionCreators.logout());
     } finally {
         if (yield cancelled()) {
@@ -144,39 +170,45 @@ function* executeReauthenticateLoggedInUser() {
         // sign into google
         let state = yield select();
         logAttemptReauthenticateGoogleAnalytics(state);
-        const user = yield apply(GoogleSignin, GoogleSignin.signIn);
+        yield apply(GoogleSignin, GoogleSignin.hasPlayServices);
+        const isSignedIn = yield apply(GoogleSignin, GoogleSignin.isSignedIn);
+        let userInfo = null;
+        if (isSignedIn) {
+            userInfo = yield apply(GoogleSignin, GoogleSignin.signInSilently);
+        } else {
+            userInfo = yield apply(GoogleSignin, GoogleSignin.signIn);
+        }
 
         // sign into our servers
-        Analytics.setUserID(user.id);
+        Analytics.setUserID(userInfo.user.id);
         state = yield select();
         logAttemptReauthenticateOpenBarbellAnalytics(state);
-        let json = yield call(API.login, user.idToken);
+        let json = yield call(API.login, userInfo.idToken);
 
         const origEmail = yield select(AuthSelectors.getEmail);
-        const isDifferentUser = origEmail !== user.email;
+        const isDifferentUser = origEmail !== userInfo.user.email;
         if (isDifferentUser) {
             // switch accounts, aka lose everything
-            yield put(AuthActionCreators.loginSucceeded(json.accessToken, json.refreshToken, user.email, new Date(), json.revision, json.sets));
+            yield put(AuthActionCreators.loginSucceeded(json.accessToken, json.refreshToken, userInfo.user.email, new Date(), json.revision, json.sets));
         } else {
             // success
             // note that we do not utilize the revisions or the set data
             // reason being that we only want to exchange our google token for access and refresh tokens
             // data cannot be pulled yet as they might have data waiting to go to the server first
-            yield put(AuthActionCreators.reauthenticateSucceeded(json.accessToken, json.refreshToken, user.email, new Date()));
+            yield put(AuthActionCreators.reauthenticateSucceeded(json.accessToken, json.refreshToken, userInfo.user.email, new Date()));
         }
         state = yield select();
         logReauthenticatedAnalytics(state, isDifferentUser);
     } catch(error) {
         console.tron.log("ERROR CODE " + error.code + " ERROR " + error);
         let state = yield select();
-        if (error.code === -5 || error.code === 12501) {
-            // -5 is when the user cancels the sign in on iOS
-            // 12501 is when the user cancels the sign in on Android
+        if (error.code === statusCodes.SIGN_IN_CANCELLED || error.code === statusCodes.SIGN_IN_REQUIRED) {
+            // previously -5 is iOS cancel and 12501 is Android cancel
             logCancelReauthenticateAnalytics(state);
             yield put(AuthActionCreators.logout(true)); // this will pop the alert
         } else {
             // actual error
-            logReauthenticateErrorAnalytics(state, error);
+            logReauthenticateErrorAnalytics(state, JSON.stringify(error));
             if (error.type === "401") {
                 // server rejected, NOW logout
                 yield put(AuthActionCreators.logout(true)); // this will pop the alert

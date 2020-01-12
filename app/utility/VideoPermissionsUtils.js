@@ -1,14 +1,22 @@
 import {
     Alert,
-    Platform
+    Platform,
 } from 'react-native';
-import Permissions from 'react-native-permissions';
+import {check, PERMISSIONS} from 'react-native-permissions';
 import * as Analytics from 'app/services/Analytics';
 
 export const checkWatchVideoPermissions = () => {
     return new Promise(async (resolve, reject) => {
-        Permissions.check('photo').then(response => {
-            if (response === 'authorized') {
+        try {
+            let response = null;
+            if (Platform.OS === 'ios') {
+                response = await check(PERMISSIONS.IOS.PHOTO_LIBRARY);
+            } else {
+                response = await check(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE);
+            }
+
+            if (response === 'granted') {
+                console.tron.log(`granted watch video`);
                 resolve();
             } else {
                 if (Platform.OS === 'ios') {
@@ -22,24 +30,48 @@ export const checkWatchVideoPermissions = () => {
                     [{text: 'OK'}],
                     { cancelable: false }
                 );
-                // TODO: should put it in the catch so can pass in state
                 Analytics.logEvent('watch_video_permissions_warning', {});
                 reject();
             };
-        });
+        } catch (err) {
+            // TODO: proper analytics for straight up failure, might be crashlytics?
+            console.tron.log(`Error checking storage permissions ${err}`);
+            Alert.alert(
+                'Additional Permissions Required',
+                'There was an error accessing your photo storage to play videos',
+                [{text: 'OK'}],
+                { cancelable: false }
+            );
+            reject();
+        }
     });
 };
 
 export const checkRecordingPermissions = () => {
     return new Promise(async (resolve, reject) => {
-        Permissions.checkMultiple(['camera', 'photo', 'microphone']).then(response => {
-            // Response is one of: 'authorized', 'denied', 'restricted', or 'undetermined'
-            const isCameraAuthorized = response.camera === 'authorized';
-            const isMicrophoneAuthorized = response.microphone === 'authorized';
-            const isStorageAuthorized = response.photo === 'authorized';
+        try {
+            let response = null;
+            if (Platform.OS === 'ios') {
+                response = await Promise.all([
+                    check(PERMISSIONS.IOS.PHOTO_LIBRARY),
+                    check(PERMISSIONS.IOS.MICROPHONE),
+                    check(PERMISSIONS.IOS.CAMERA),
+                ]);
+            } else {
+                response = await Promise.all([
+                    check(PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE),
+                    check(PERMISSIONS.ANDROID.RECORD_AUDIO),
+                    check(PERMISSIONS.ANDROID.CAMERA),
+                ]);
+            }
+            const isStorageAuthorized = response[0] === 'granted';
+            const isMicrophoneAuthorized = response[1] === 'granted';
+            const isCameraAuthorized = response[2] === 'granted';
             if (isCameraAuthorized && isMicrophoneAuthorized && isStorageAuthorized) {
+                console.tron.log(`granted record`);
                 resolve();
             } else {
+                console.tron.log(`wtf ${JSON.stringify(response)}`);
                 Alert.alert(
                     'Additional Permissions Required',
                     recordingPermissionsErrorMessage(isCameraAuthorized, isMicrophoneAuthorized, isStorageAuthorized),
@@ -50,9 +82,11 @@ export const checkRecordingPermissions = () => {
                 Analytics.logEvent('record_video_permissions_warning', {});
                 reject();
             };
-        }).catch((error) => {
+        } catch (err) {
+            // TODO: proper analytics for straight up failure, might be crashlytics?
+            console.tron.log(`Error checking recording permissions ${err}`);
             reject();
-        });
+        }
     });
 };
 

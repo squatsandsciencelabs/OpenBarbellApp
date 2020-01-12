@@ -8,14 +8,14 @@ import {
     TouchableHighlight,
     Image,
 } from 'react-native';
-import { Slider } from 'react-native';
+import Slider from '@react-native-community/slider';
+
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 import ExercisePicker from './exercise/ExercisePicker';
 import EditAnalysisTagsToIncludeScreen from './tags/tagsToInclude/EditAnalysisTagsToIncludeScreen';
 import EditAnalysisTagsToExcludeScreen from './tags/tagsToExclude/EditAnalysisTagsToExcludeScreen';
 import Pill from 'app/shared_features/pill/Pill';
 import WhatIsOneRMScreen from './whatis/WhatIsOneRMScreen';
-import * as Device from 'app/utility/Device';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class OneRMView extends Component {

@@ -1,8 +1,7 @@
 import { Alert, Linking } from 'react-native';
-import { GoogleSignin } from 'react-native-google-signin';
+import { GoogleSignin } from '@react-native-community/google-signin';
 
 import {
-    ATTEMPT_EXPORTING_CSV,
     EXPORTING_CSV,
     CANCEL_LOGOUT,
     EXPORTING_CSV_ERROR,
@@ -38,7 +37,7 @@ export const cancelSignOut = () => (dispatch, getState) => {
 };
 
 // TODO: refactor this into a saga
-export const exportCSV = () => (dispatch, getState) => {
+export const exportCSV = () => async (dispatch, getState) => {
     // logged in check
     let state = getState();
     if (state.auth.email === null) {
@@ -46,8 +45,12 @@ export const exportCSV = () => (dispatch, getState) => {
         return;
     }
 
-    GoogleSignin.currentUserAsync().then(async (user) => {
-        if (user === null) {
+    try {
+        const user = await GoogleSignin.getCurrentUser();
+        console.tron.log(`user is ${JSON.stringify(user)}`);
+        const result = await GoogleSignin.getTokens();
+        console.tron.log(`creds is ${JSON.stringify(result)}`);
+        if (result === null) {
             dispatch({ type: EXPORTING_CSV_ERROR });
             Alert.alert('Error Exporting CSV', 'Tip: Is your internet connection working?\n\nTip: Try Logging out then logging in again as this feature may require updated Google Drive permissions.');
         } else {
@@ -64,8 +67,7 @@ export const exportCSV = () => (dispatch, getState) => {
                 let state = getState();
                 let sets = SetsSelectors.getHistorySetsChronological(state);
                 let csv = CSVConverter.convert(sets);
-                console.tron.log("google access token " + user.accessToken);
-                await GoogleDriveUploader.upload(user.accessToken, name, csv, (fileID) => {
+                await GoogleDriveUploader.upload(result.accessToken, name, csv, (fileID) => {
                     dispatch(updateIsExportingCSV(false));
                     Linking.openURL('https://drive.google.com/open?id=' + fileID).catch(err => {
                         Alert.alert('Upload Succeeded', 'CSV uploaded to your Google Drive!');
@@ -84,12 +86,10 @@ export const exportCSV = () => (dispatch, getState) => {
                 logExportCSVErrorAnalytics(state, err);
             }
         }
-    })
-    .catch((err) => {
+    } catch(err) {
         // error here
         console.tron.log("EXPORT CSV ERROR " + err);
-    })
-    .done();
+    }
 };
 
 const updateIsExportingCSV = (isExportingCSV) => ({ type: EXPORTING_CSV, isExportingCSV: isExportingCSV });

@@ -29,8 +29,9 @@ export default initializeStore = () => {
             thunk,
             sagaMiddleware
         );
-        const enhancers = compose(middlewares, autoRehydrate());        
-        var store = Reactotron.createStore(reducers, enhancers);
+        const enhancers = compose(middlewares, Reactotron.createEnhancer(), autoRehydrate());
+        var store = createStore(reducers, enhancers);
+        Reactotron.setReduxStore(store);
     } else {
         // release mode
         var sagaMiddleware = createSagaMiddleware();
@@ -43,7 +44,7 @@ export default initializeStore = () => {
     }
 
     // run sagas
-    sagaMiddleware.run(Sagas);
+    sagaMiddleware.run(Sagas, store.dispatch);
     
     // load previous
     if (Platform.OS === 'ios') {

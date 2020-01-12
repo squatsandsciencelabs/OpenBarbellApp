@@ -55,7 +55,7 @@ const ConnectedDeviceReducer = ( state = defaultState, action) => {
                 status: 'DISCONNECTED',
                 deviceName: null,
                 deviceIdentifier: null,
-                numDisconnects: action.device ? state.numDisconnects + 1 : state.numDisconnects, // TODO: need to test this
+                numDisconnects: action.deviceName ? state.numDisconnects + 1 : state.numDisconnects, // TODO: need to test this
             });
         case STOP_RECONNECT:
             return Object.assign({}, state, {
@@ -65,11 +65,12 @@ const ConnectedDeviceReducer = ( state = defaultState, action) => {
                 isReconnecting: false
             });
         case CONNECTING_TO_DEVICE:
-            return Object.assign({}, state, {
+            return {
+                ...state,
                 status: 'CONNECTING',
                 deviceName: action.deviceName,
                 deviceIdentifier: action.deviceIdentifier
-            });
+            };
         case CONNECTED_TO_DEVICE:
             return Object.assign({}, state, {
                 status: 'CONNECTED',

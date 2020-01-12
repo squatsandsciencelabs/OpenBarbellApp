@@ -1,7 +1,7 @@
 import { Platform } from 'react-native';
 import { take, put, call, apply } from 'redux-saga/effects';
 import semver from 'semver';
-import DeviceInfo from 'react-native-device-info';
+import { getVersion } from 'react-native-device-info';
 
 import OpenBarbellConfig from 'app/configs+constants/OpenBarbellConfig.json';
 import * as KillSwitchActionCreators from 'app/redux/shared_actions/KillSwitchActionCreators';
@@ -16,7 +16,7 @@ const KillSwitchSaga = function * KillSwitchSaga() {
     yield take(FETCH_VERSION);
     try {
         const fetchedVersion = yield call(fetchVersion);
-        const currentVersion = yield apply(DeviceInfo, DeviceInfo.getVersion);        
+        const currentVersion = yield call(getVersion);
         if (semver.lt(currentVersion, fetchedVersion)) {
             yield put(KillSwitchActionCreators.versionKilled(currentVersion, fetchedVersion));
         } else {

@@ -12,13 +12,10 @@ import {
     Switch,
     ScrollView,
 } from 'react-native';
-import { Slider } from 'react-native';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 import EditHistoryFilterTagsToIncludeScreen from './tags/tagsToInclude/EditHistoryFilterTagsToIncludeScreen';
 import EditHistoryFilterTagsToExcludeScreen from './tags/tagsToExclude/EditHistoryFilterTagsToExcludeScreen';
 import EditHistoryFilterExerciseScreen from './exercise_name/EditHistoryFilterExerciseScreen';
-import EditFilterStartDateScreen from './dateRange/startDate/EditHistoryFilterStartScreen';
-import EditFilterEndDateScreen from './dateRange/endDate/EditHistoryFilterEndScreen';
 import Pill from 'app/shared_features/pill/Pill';
 import * as Device from 'app/utility/Device';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -276,18 +273,16 @@ class EditHistoryFilterView extends Component {
                     style={{backgroundColor: 'white', marginLeft: 20, marginRight: 5}}
                     value={this.props.showRemoved}
                     onValueChange={(isSwitchOn) => this.props.toggleShowRemoved()}
-                    onTintColor='rgba(47, 128, 237, 1)'
-                    thumbTintColor='#e0e0e0'
-                    tintColor='rgba(47, 128, 237, 1)'/>
+                    trackColor='rgba(47, 128, 237, 1)'
+                    thumbColor='#e0e0e0'/>
             );
         } else {
             return (
                 <Switch
                     value={this.props.showRemoved}
                     onValueChange={(isSwitchOn) => this.props.toggleShowRemoved()}
-                    onTintColor='rgba(47, 128, 237, 1)'
-                    thumbTintColor='#e0e0e0'
-                    tintColor='rgba(47, 128, 237, 1)'/>
+                    trackColor='rgba(47, 128, 237, 1)'
+                    thumbColor='#e0e0e0'/>
             );
         }
     }

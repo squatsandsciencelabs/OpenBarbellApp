@@ -1,31 +1,18 @@
-// this is the thing that listens to the bluetooth device and spams out actions, it is one directional
-// TODO: replace this with a full on React Native bluetooth library
+// TODO: saga-fy this up
 
 import {
     NativeModules,
     NativeEventEmitter,
-    Alert
 } from 'react-native';
-import BackgroundTimer from 'react-native-background-timer';
-
-import {
-    FOUND_DEVICE,
-    BLUETOOTH_OFF,
-    DISCONNECTED_FROM_DEVICE,
-    CONNECTING_TO_DEVICE,
-    CONNECTED_TO_DEVICE,
-    ADD_REP_DATA
-} from 'app/configs+constants/ActionTypes';
+import BleManager  from 'react-native-ble-manager';
 
 import * as RepDataMap from 'app/utility/RepDataMap';
 import * as DeviceActionCreators from 'app/redux/shared_actions/DeviceActionCreators';
 import * as ConnectedDeviceStatusSelectors from 'app/redux/selectors/ConnectedDeviceStatusSelectors';
 
 export default function (store) {
-
     //native bluetooth
-    const RFDuinoLib = NativeModules.RFDuinoLib;
-    const Emitter = new NativeEventEmitter(RFDuinoLib);
+    const Emitter = new NativeEventEmitter(NativeModules.BleManager);
 
     //data
     var repData = [];
@@ -38,32 +25,52 @@ export default function (store) {
     }
 
     // scanning
-    Emitter.addListener('Found', (data) => {
-        store.dispatch(DeviceActionCreators.foundDevice(data.name, data.identifier));
+    Emitter.addListener('BleManagerDiscoverPeripheral', (args) => {
+        store.dispatch(DeviceActionCreators.foundDevice(args.name, args.id));
     });
 
     // connection status
-    Emitter.addListener('BluetoothOff', (data) => {
-        store.dispatch(DeviceActionCreators.bluetoothIsOff());
+    Emitter.addListener('BleManagerDidUpdateState', (args) => {
+        if (args.state !== 'on') {
+            store.dispatch(DeviceActionCreators.bluetoothIsOff());
+        } else {
+            // TODO: clearn this up by having a bluetooth on action instead of disconnected
+            // should have sagas listening to it
+            // note that this is basically the same code as the disconnect listener below
+            const state = store.getState();
+            const name = ConnectedDeviceStatusSelectors.getConnectedDeviceName(state);
+            const identifier = ConnectedDeviceStatusSelectors.getConnectedDeviceIdentifier(state);
+            store.dispatch(DeviceActionCreators.disconnectedFromDevice(name, identifier));
+        }
     });
 
-    Emitter.addListener('Disconnected', (data) => {
+    Emitter.addListener('BleManagerDisconnectPeripheral', (args) => {
         const state = store.getState();
         const name = ConnectedDeviceStatusSelectors.getConnectedDeviceName(state);
         const identifier = ConnectedDeviceStatusSelectors.getConnectedDeviceIdentifier(state);
         store.dispatch(DeviceActionCreators.disconnectedFromDevice(name, identifier));
     });
 
-    Emitter.addListener('Connecting', (data) => {
-        store.dispatch(DeviceActionCreators.connectingToDevice(data.name, data.identifier));
-    });
+    // NOTE: this does not exist in the ble-manager, so doing it in device action creators instead
+    // Emitter.addListener('Connecting', (data) => {
+    //     store.dispatch(DeviceActionCreators.connectingToDevice(data.name, data.identifier));
+    // });
 
-    Emitter.addListener('Connected', (data) => {
-        store.dispatch(DeviceActionCreators.connectedToDevice(data.name, data.identifier));
+    Emitter.addListener('BleManagerConnectPeripheral', async (args) => {
+        // observe reps
+        try {
+            await BleManager.retrieveServices(args.peripheral);
+            await BleManager.startNotification(args.peripheral, '2220', '2221');
+            store.dispatch(DeviceActionCreators.connectedToDevice(args.peripheral));
+        } catch (err) {
+            // TODO: add error logging here
+            console.tron.log(`Error setting up service after connecting to peripheral ${err}`);
+        }
     });
 
     // data
-    Emitter.addListener('Data', (data) => {
+    Emitter.addListener('BleManagerDidUpdateValueForCharacteristic', (args) => {
+        const data = new Float32Array(new Uint8Array(args.value).buffer)[0];
         console.tron.log("REACT NATIVE LAYER -> RECEIVED DATA " + data);
 
         // invalid rep data
@@ -93,7 +100,17 @@ export default function (store) {
         }
     });
 
-    RFDuinoLib.start();
+    try {
+        // start the manager
+        BleManager.start({
+            showAlert: false,
+            // disabled for now, more useful for individual mode not kiosk mode
+            // restoreIdentifierKey: 'RepOneKioskRestoreIdentifier',
+        });
+    } catch(err) {
+        // TODO: add error logging here
+        console.tron.log(`BluetoothSaga error ${JSON.stringify(err)}`);
+    }
 }
 
 const queuedDataIsCorrupted = (repData) => {

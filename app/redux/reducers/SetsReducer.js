@@ -27,7 +27,7 @@ import {
     TEST_1RM,
 } from 'app/configs+constants/ActionTypes';
 import uuidV4 from 'uuid/v4';
-import DeviceInfo from 'react-native-device-info';
+import { getVersion } from 'react-native-device-info';
 import { Platform } from 'react-native';
 import * as SetUtils from 'app/utility/SetUtils';
 
@@ -339,7 +339,7 @@ const addRepData = (state, action) => {
         isValid: action.isValid,
         removed: false,
         hardware: Platform.OS,
-        appVersion: DeviceInfo.getVersion(),
+        appVersion: getVersion(),
         deviceName: action.deviceName,
         deviceIdentifier: action.deviceIdentifier,
         time: action.time,

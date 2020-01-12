@@ -6,14 +6,16 @@ import {
     Modal,
     StyleSheet,
     Alert,
-    Platform
+    Platform,
 }  from 'react-native';
-import Camera from 'react-native-camera';
+import { RNCamera } from 'react-native-camera';
+import CameraRoll from "@react-native-community/cameraroll";
 import KeepAwake from 'react-native-keep-awake';
 import * as Device from 'app/utility/Device';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class VideoRecorder extends Component {
+    
     componentDidUpdate(prevProps) {
         if (prevProps.isRecording !== this.props.isRecording) {
             if (this.props.isRecording) {
@@ -46,20 +48,41 @@ class VideoRecorder extends Component {
 
     // record
 
-    _record() {
-        this.camera.capture({
-            mode: Camera.constants.CaptureMode.video,
-            audio: true
-        }).then((data) => {
+    async _record() {
+        try {
+            // record
+            const data = await this.camera.recordAsync({
+                mute: false,
+                mirrorVideo: this.props.cameraType === 'front',
+                // quality: RNCamera.Constants.VideoQuality['288p'],
+                // quality?: keyof VideoQuality;
+                // orientation?: keyof Orientation | OrientationNumber;
+                // maxDuration?: number;
+                // maxFileSize?: number;
+                // mute?: boolean;
+                // mirrorVideo?: boolean;
+                // path?: string;
+                // videoBitrate?: number;
+            
+                // /** iOS only */
+                // codec?: keyof VideoCodec | VideoCodec[keyof VideoCodec];          
+            });
+
+            // save to gallery
+            console.tron.log(`have data, what do with it? ${JSON.stringify(data)}`);
+            const uri = await CameraRoll.saveToCameraRoll(data.uri);
+
+            // dispatch information
             if (this.props.setID) {
-                this.props.saveVideo(this.props.setID, data.path, this.props.videoType);
+                console.tron.log(`should be saving to ${uri}`);
+                this.props.saveVideo(this.props.setID, uri, this.props.videoType);
             }
             // TODO: share options can be here, but for now just finish
-        }).catch((err) => {
+        } catch (err) {
             console.tron.log("ERROR " + err);
             this.props.saveVideoError(this.props.setID, err);
             Alert.alert('There was an issue saving your video. Please try again');
-        });
+        }
     }
 
     _stopRecording() {
@@ -71,12 +94,12 @@ class VideoRecorder extends Component {
         if (Platform.OS === 'ios') {
             // TODO: remove timer hack, this was necessary to prevent weird behavior when ending too quickly
             this.timer = setTimeout(() => {
-                this.camera.stopCapture();
+                this.camera.stopRecording();
                 clearTimeout(this.timer);
                 this.timer = null;    
             }, 1000);
         } else {
-            this.camera.stopCapture();
+            this.camera.stopRecording();
         }
     }
 
@@ -132,11 +155,10 @@ class VideoRecorder extends Component {
         if (this.props.isModalShowing) {
             return (
                 <View style={[{flex: 1}, styles.container]}>                
-                    <Camera
+                    <RNCamera
                         ref={(cam) => {this.camera = cam}}
                         style={{flex: 1}}
                         type={this.props.cameraType}
-                        aspect={Camera.constants.Aspect.fit}
                     >
                         <View style={styles.cancelButton}>
                             <View>
@@ -152,7 +174,7 @@ class VideoRecorder extends Component {
 
                         {this._renderToggleCameraTypeButton()}
 
-                    </Camera>
+                    </RNCamera>
                     <KeepAwake />
                 </View>
             );

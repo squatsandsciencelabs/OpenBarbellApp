@@ -100,17 +100,20 @@ class SettingsDevicePanelDisconnected extends Component {
             );
         }
 
-        const deviceRows = this.props.scannedDevices.devices.map((device) => this._renderDeviceRow(device));
+        let deviceRows = [];
+        for (let i=0; i<this.props.scannedDevices.devices.length; i++) {
+            deviceRows.push(this._renderDeviceRow(this.props.scannedDevices.devices[i], this.props.scannedDevices.deviceIds[i]));
+        }
         return (
             <View style={{flex: 1, flexDirection: 'column'}}>{deviceRows}</View>
         );
     }
 
-    _renderDeviceRow(device) {
+    _renderDeviceRow(device, deviceIdentifier) {
         return (
             <TouchableOpacity key={device} style={[{flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}, styles.deviceRow]}
                 alphaOpactity={1}
-                onPress={ () => this.props.connectDevice(device) }>
+                onPress={ () => this.props.connectDevice(device, deviceIdentifier) }>
                     <View><Text style={styles.deviceRowText}>{ device }</Text></View>
                     <Image source={require('app/appearance/images/icon_bluetooth_available.png')}/>
             </TouchableOpacity>

@@ -18,8 +18,8 @@ export const stopDeviceScan = () => {
     return DeviceActionCreators.stopDeviceScan();
 };
 
-export const connectDevice = (device) => {
-    return DeviceActionCreators.connectDevice(device);
+export const connectDevice = (device, deviceIdentifier) => {
+    return DeviceActionCreators.connectDevice(device, deviceIdentifier);
 };
 
 export const disconnectDevice = () => (dispatch, getState) => {

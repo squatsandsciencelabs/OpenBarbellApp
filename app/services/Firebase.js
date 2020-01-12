@@ -10,8 +10,7 @@ export const configure = () => {
         survey_url: '',
     });
 
-    // firebase.fabric.crashlytics().crash();
-
+    // firebase.crashlytics().crash();
 };
 
 let app = firebase.app();

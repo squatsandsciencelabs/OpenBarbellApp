@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { AppRegistry, Text, TextInput } from 'react-native';
-Text.defaultProps.allowFontScaling = false;
-TextInput.defaultProps.allowFontScaling = false;
 import { Provider } from 'react-redux';
 
 import 'app/configs+constants/ReactotronConfig';
@@ -13,6 +11,12 @@ import Bluetooth from 'app/services/Bluetooth';
 import AppState from 'app/services/AppState';
 import * as Analytics from 'app/services/Analytics';
 import Permissions from 'app/services/Permissions';
+
+// TODO: confirm font scaling disabled
+Text.defaultProps = Text.defaultProps || {};
+Text.defaultProps.allowFontScaling = false;
+TextInput.defaultProps = TextInput.defaultProps || {};
+TextInput.defaultProps.allowFontScaling = false;
 
 // initialize the store
 var store = Store();
@@ -36,7 +40,7 @@ Bluetooth(store);
 AppState(store);
 
 // render
-class OBBApp extends Component {
+class OpenBarbellApp extends Component {
 
     render() {
         return (
@@ -49,5 +53,5 @@ class OBBApp extends Component {
 
 // begin application
 export default function () {
-    AppRegistry.registerComponent('OBBApp', () => OBBApp);
+    AppRegistry.registerComponent('OpenBarbellApp', () => OpenBarbellApp);
 }

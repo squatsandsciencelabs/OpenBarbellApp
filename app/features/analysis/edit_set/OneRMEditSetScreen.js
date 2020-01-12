@@ -1,5 +1,6 @@
 // TODO: use selectors to cache things rather than doing the manual caching by hand that I do here
 
+import { Platform } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -132,6 +133,25 @@ const createRestoreViewModel = (set) => {
     };
 };
 
+// TODO: remove hack fix, see https://github.com/react-native-community/react-native-video/issues/1572
+const getVideoFileURL = (set) => {
+    // Android
+    if (Platform.OS !== 'ios') {
+        return set.videoFileURL;
+    }
+
+    // iOS Hack Fix
+    if (!set.videoFileURL) {
+        return null;
+    }
+    if (!set.videoFileURL.startsWith('ph://')) {
+        return set.videoFileURL;
+    }
+    const appleId = set.videoFileURL.substring(5, 41);
+    const ext = 'mov';
+    return `assets-library://asset/asset.${ext}?id=${appleId}&ext=${ext}`;
+};
+
 const createTitleViewModel = (state, set, setNumber) => ({
     type: 'title',
     key: set.setID+'title',
@@ -140,7 +160,7 @@ const createTitleViewModel = (state, set, setNumber) => ({
     setID: set.setID,
     isCollapsed: false,
     removed: false,
-    videoFileURL: set.videoFileURL,
+    videoFileURL: getVideoFileURL(set),
 });
 
 const createFormViewModel = (set, setNumber) => ({
@@ -154,7 +174,7 @@ const createFormViewModel = (set, setNumber) => ({
     weight: set.weight,
     metric: set.metric,
     rpe: set.rpe,
-    videoFileURL: set.videoFileURL,
+    videoFileURL: getVideoFileURL(set),
     videoType: set.videoType,
 });
 

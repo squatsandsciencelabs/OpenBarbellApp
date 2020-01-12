@@ -3,6 +3,7 @@
 
 import { NativeModules } from 'react-native';
 import BackgroundTimer from 'react-native-background-timer';
+import BleManager  from 'react-native-ble-manager';
 
 import {
     START_DEVICE_SCAN,
@@ -26,8 +27,6 @@ import * as SetsSelectors from 'app/redux/selectors/SetsSelectors';
 import * as Analytics from 'app/services/Analytics';
 import * as ScannedDevicesSelectors from 'app/redux/selectors/ScannedDevicesSelectors';
 
-const RFDuinoLib = NativeModules.RFDuinoLib;
-
 var connectTimeoutTimer = null;
 var reconnectTimeoutTimer = null;
 var reconnectTimer = null;
@@ -43,7 +42,8 @@ const clearTimers = () => {
 // SCANNING
 
 export const startDeviceScan = (isManualScan = false) => (dispatch, getState) => {
-    RFDuinoLib.startScan();
+    BleManager.scan(['2220'], 99999, false);
+
     const state = getState();
     logAttemptScanAnalytics(state, isManualScan);
 
@@ -54,7 +54,8 @@ export const startDeviceScan = (isManualScan = false) => (dispatch, getState) =>
 };
 
 export const stopDeviceScan = () => (dispatch, getState) => {
-    RFDuinoLib.stopScan();
+    BleManager.stopScan();
+
     const state = getState();
     logCompletedScanAnalytics(state);
 
@@ -63,18 +64,19 @@ export const stopDeviceScan = () => (dispatch, getState) => {
     });
 };
 
-export const foundDevice = (name, identifier) => ({
+export const foundDevice = (deviceName, deviceIdentifier) => ({
     type: FOUND_DEVICE,
-    device: name,
-    deviceIdentifier: identifier
+    deviceName,
+    deviceIdentifier, 
 });
 
 // DEVICE
 
-export const connectDevice = (device) => (dispatch, getState) => {
-    RFDuinoLib.connectDevice(device);
+export const connectDevice = (deviceName, deviceIdentifier) => (dispatch, getState) => {
+    BleManager.connect(deviceIdentifier); // TODO: should this be device?
     const state = getState();
     logAttemptConnectDeviceAnalytics(false, state);
+    dispatch(connectingToDevice(deviceName, deviceIdentifier));
 
     // HACK: ideally this is a connect timeout saga
     // but it requires both background timer and access to actions
@@ -93,17 +95,20 @@ export const connectDevice = (device) => (dispatch, getState) => {
 
     dispatch({
         type: CONNECT_DEVICE,
-        device: device
+        deviceName,
+        deviceIdentifier,
     });
 };
 
-export const reconnectDevice = (device, identifier) => (dispatch, getState) => {
+export const reconnectDevice = (deviceName, deviceIdentifier) => (dispatch, getState) => {
     const state = getState();
     logAttemptConnectDeviceAnalytics(true, state);
 
     // reconnect after a second as V2s have issues
     reconnectTimer = BackgroundTimer.setTimeout(() => {
-        RFDuinoLib.connectDevice(device);
+        BleManager.connect(deviceIdentifier); // TODO: should this be device?
+        console.tron.log(`reconnect device called with ${deviceName} and ${deviceIdentifier}`);
+        dispatch(connectingToDevice(deviceName, deviceIdentifier));
     }, 2000);
 
     // HACK: ideally this is a connect timeout saga
@@ -116,23 +121,39 @@ export const reconnectDevice = (device, identifier) => (dispatch, getState) => {
         if (status !== 'CONNECTED') {
             // disconnect
             dispatch(disconnectDevice(false)); // in case it's trying to connect, ensure it's actually disconnecting
-            dispatch(disconnectedFromDevice(device, identifier)); // in case it can never find it, visually update and trigger another reconnect
+            dispatch(disconnectedFromDevice(deviceName, deviceIdentifier)); // in case it can never find it, visually update and trigger another reconnect
             logConnectedToDeviceTimedOutAnalytics(true, state);
         }
     }, 7000);
 
     dispatch({
         type: RECONNECT_DEVICE,
-        device: device
+        deviceName,
+        deviceIdentifier,
     });
 };
 
-export const disconnectDevice = (performAction=true) => (dispatch) => {
-    RFDuinoLib.disconnectDevice();
+export const disconnectDevice = (performAction=true) => (dispatch, getState) => {
+    const state = getState();
+    const deviceId = ConnectedDeviceStatusSelectors.getConnectedDeviceIdentifier(state);
+    if (!deviceId) {
+        // TODO: error handling
+        // TODO: confirm this, it might clear the reducer too fast, and if so I'll need another way to grab the id to disconnect from the peripheral
+        // places to check are:
+        // 1. reconnect canceling
+        // 2. settings cancel connecting
+        // 3. settings cancel after connecdted
+        // 4. turning off power should not call this
+        console.tron.log(`unable to disconnect device as no device id saved in reducer`);
+        return;
+    }
+
+    BleManager.disconnect(deviceId);
 
     if (performAction) {
         dispatch({
-            type: DISCONNECT_DEVICE
+            type: DISCONNECT_DEVICE,
+            deviceId,
         });
     }
 };
@@ -143,7 +164,7 @@ export const bluetoothIsOff = () => ({
     type: BLUETOOTH_OFF
 });
 
-export const disconnectedFromDevice = (name=null, identifier=null) => (dispatch, getState) => {
+export const disconnectedFromDevice = (name=null, deviceIdentifier=null) => (dispatch, getState) => {
     clearTimers();
 
     Analytics.setUserProp('connected_device_id', null);
@@ -158,30 +179,34 @@ export const disconnectedFromDevice = (name=null, identifier=null) => (dispatch,
 
     dispatch({
         type: DISCONNECTED_FROM_DEVICE,
-        device: name,
-        deviceIdentifier: identifier
+        deviceName: name,
+        deviceIdentifier, 
     });
 };
 
-export const connectingToDevice = (name, identifier) => ({
+// TODO: i need to ensure identifier is passed in, right now it's just the name
+export const connectingToDevice = (name, deviceIdentifier) => ({
     type: CONNECTING_TO_DEVICE,
     deviceName: name,
-    deviceIdentifier: identifier
+    deviceIdentifier, 
 });
 
-export const connectedToDevice = (name, identifier) => (dispatch, getState) => {
+// TODO: this may not be able to receive the name, may want to pull from selector and just live with that for analytics??
+export const connectedToDevice = (deviceIdentifier) => (dispatch, getState) => {
     clearTimers();
 
     // analytics
+    const state = getState();
+    const name = ConnectedDeviceStatusSelectors.getConnectedDeviceName(state); // rely on name from "connecting" 
+    console.tron.log(`got name ${name} and trying to set user prop with it`);
     Analytics.setUserProp('connected_device_id', name);
     checkOBVersion(name);
-    const state = getState();
     logConnectedToDeviceAnalytics(state);
 
     dispatch({
         type: CONNECTED_TO_DEVICE,
         deviceName: name,
-        deviceIdentifier: identifier
+        deviceIdentifier, 
     });
 };
 

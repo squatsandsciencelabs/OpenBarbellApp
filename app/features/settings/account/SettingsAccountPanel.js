@@ -6,7 +6,7 @@ import {
     Text,
     ActivityIndicator
 } from 'react-native';
-import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
+import { GoogleSigninButton } from '@react-native-community/google-signin';
 import { SETTINGS_PANEL_STYLES } from 'app/appearance/styles/GlobalStyles';
 
 class SettingsAccountPanel extends Component {
@@ -43,11 +43,12 @@ class SettingsAccountPanel extends Component {
         return (
             <View style={ [SETTINGS_PANEL_STYLES.panel, { flex: 1 }] }>
                 <Text style={{color:'rgba(77, 77, 77, 1)', marginBottom: 15, textAlign: 'center'}}>Sign in to sync data to the cloud</Text>
-                <TouchableOpacity onPress={ () => this.props.signIn() }>
-                    <View pointerEvents="none" style={{alignItems:'center'}}>
-                        <GoogleSigninButton style={{width: 212, height: 48}} size={GoogleSigninButton.Size.Standard} color={GoogleSigninButton.Color.Light} />
-                    </View>
-                </TouchableOpacity>
+                    <GoogleSigninButton
+                        style={{width: 212, height: 48}}
+                        size={GoogleSigninButton.Size.Standard}
+                        color={GoogleSigninButton.Color.Light}
+                        onPress={this.props.signIn}
+                        disabled={this.props.isLoggingIn}/>
             </View>
         );
     }

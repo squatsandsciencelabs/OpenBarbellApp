@@ -28,7 +28,7 @@ function* executeReconnect() {
         let reconnectDevice = null;
         while (reconnectDevice === null || reconnectDevice === undefined) {
             const action = yield take(DISCONNECTED_FROM_DEVICE);
-            reconnectDevice = action.device;
+            reconnectDevice = action.deviceName;
         }
 
         // alert
@@ -48,7 +48,7 @@ function* executeReconnect() {
         let foundIdentifier = null;
         while (foundDevice !== reconnectDevice) {
             const scanAction = yield take(FOUND_DEVICE);
-            foundDevice = scanAction.device;
+            foundDevice = scanAction.deviceName;
             foundIdentifier = scanAction.deviceIdentifier;
         }
         yield cancel(restartReconnectTask);        

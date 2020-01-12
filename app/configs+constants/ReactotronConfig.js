@@ -5,7 +5,10 @@ import sagaPlugin from 'reactotron-redux-saga';
 if (__DEV__) {
     // development, enable reactotron
     Reactotron
-    .configure({name: 'OpenBarbell'}) // controls connection & communication settings
+    .configure({
+        name: 'OpenBarbell',
+        host: '192.168.1.142',
+    }) // controls connection & communication settings
     .use(sagaPlugin()) // add all built-in react native plugins
     .use(reactotronRedux()) // add all built-in react native plugins
     .connect() // let's connect!

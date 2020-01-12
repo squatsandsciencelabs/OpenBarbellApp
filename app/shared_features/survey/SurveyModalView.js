@@ -6,9 +6,9 @@ import {
     Modal,
     TouchableOpacity,
     Platform,
-    WebView,
     StyleSheet,
  }  from 'react-native';
+ import WebView from 'react-native-webview';
  import Icon from 'react-native-vector-icons/FontAwesome';
  import * as Device from 'app/utility/Device';
 

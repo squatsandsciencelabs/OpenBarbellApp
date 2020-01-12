@@ -1,4 +1,4 @@
-import { takeEvery, select, put, call, all } from 'redux-saga/effects';
+import { takeEvery, select, put, call, apply, all } from 'redux-saga/effects';
 
 import {
     CHANGE_TAB,

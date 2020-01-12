@@ -16,7 +16,7 @@ import {
     Alert,
     Platform
 } from 'react-native';
-import { TabViewAnimated, TabBar } from 'react-native-tab-view';
+import { TabView, TabBar } from 'react-native-tab-view';
 import * as Device from 'app/utility/Device';
 import * as NavigationConfig from 'app/configs+constants/NavigationConfig';
 import SurveyModalScreen from 'app/shared_features/survey/SurveyModalScreen';
@@ -97,12 +97,11 @@ class ApplicationView extends Component {
                     barStyle="light-content"
                 />
                 { statusBarBG }
-
-                <TabViewAnimated
+                <TabView
                     style={{flex: 1}}
                     navigationState={this.state}
                     renderScene={NavigationConfig.sceneMap}
-                    renderHeader={this._renderHeader}
+                    renderTabBar={this._renderHeader}
                     onIndexChange={(index) => this.props.changeTab(index) }
                 />
 

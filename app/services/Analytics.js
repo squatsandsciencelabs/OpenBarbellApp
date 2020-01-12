@@ -12,7 +12,7 @@ import DeviceInfo from 'react-native-device-info';
 //initial analytics and initial screen
 
 export const setInitialAnalytics = () => {
-    const mobileID = DeviceInfo.getUniqueID();
+    const mobileID = DeviceInfo.getUniqueId();
     // set initial user props analytics
     setUserProp('connected_device_id', null);
     setUserProp('mobile_identifier', mobileID);
@@ -23,9 +23,9 @@ export const setInitialAnalytics = () => {
 // User ID
 
 // user ID defaults to the mobile identifier for anonymous users
-export const setUserID = (userID=DeviceInfo.getUniqueID()) => {
+export const setUserID = (userID=DeviceInfo.getUniqueId()) => {
     firebase.app().analytics().setUserId(userID);
-    firebase.fabric.crashlytics().setUserIdentifier(userID);
+    firebase.crashlytics().setUserIdentifier(userID);
 
     console.tron.display({
         name: 'UserID',
@@ -156,8 +156,8 @@ const getErrorCode = (error) => {
 
 const logCrashlyticsError = (code, event, params) => {
     let message = JSON.stringify(params);
-    firebase.fabric.crashlytics().setStringValue("error_params", message);
-    firebase.fabric.crashlytics().recordError(code, event);
+    firebase.crashlytics().setStringValue("error_params", message);
+    firebase.crashlytics().recordError(code, JSON.stringify(event));
 };
 
 export const logError = (error, event, params) => {

@@ -1,50 +1,104 @@
-# Uncomment the next line to define a global platform for your project
 platform :ios, '9.0'
-use_modular_headers!
+require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-target 'OBBApp' do
-  # Do not use use_frameworks!, instead Swift packages should go through Carthage
+target 'OpenBarbellApp' do
+  # Firebase Pods
+ pod 'Firebase/Core', '~> 6.3.0'
+ pod 'Firebase/Messaging', '~> 6.3.0'
+ pod 'Firebase/Analytics', '~> 6.3.0'
+ pod 'Firebase/RemoteConfig', '~> 6.3.0'
 
-  # Pods for OBBApp
-  pod 'Firebase', '4.8.0'
-  pod 'Firebase/Core'
-  pod 'Firebase/Analytics'
-  pod 'Firebase/Crash'
-  pod 'Firebase/RemoteConfig'
-  pod 'Firebase/Messaging'
+  # Somehow these are automatically installed already, unlike the above ones, I don't know why
+  # pod 'Firebase/Crash', '~> 6.3.0' # not sure if still needed, does it fight crashlytics or fabric or work with it? also can't find it when i run it
+  # pod 'Fabric', '1.9.0' # used to be 1.7.2, not sure if still needed
+  # pod 'Crashlytics', '3.14.0' # used to be 3.9.3, not sure if still needed
+
+  pod 'GoogleIDFASupport' # for firebase analytics audience
+
+  # Permissions
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'Permission-BluetoothPeripheral', :path => "#{permissions_path}/BluetoothPeripheral.podspec"
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera.podspec"
+  pod 'Permission-Microphone', :path => "#{permissions_path}/Microphone.podspec"
+  pod 'Permission-Notifications', :path => "#{permissions_path}/Notifications.podspec"
+  pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary.podspec"
+
+  # Pods for OpenBarbellApp
+  pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
+  pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
+  pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
+  pod 'RCTTypeSafety', :path => "../node_modules/react-native/Libraries/TypeSafety"
+  pod 'React', :path => '../node_modules/react-native/'
+  pod 'React-Core', :path => '../node_modules/react-native/'
+  pod 'React-CoreModules', :path => '../node_modules/react-native/React/CoreModules'
+  pod 'React-Core/DevSupport', :path => '../node_modules/react-native/'
+  pod 'React-RCTActionSheet', :path => '../node_modules/react-native/Libraries/ActionSheetIOS'
+  pod 'React-RCTAnimation', :path => '../node_modules/react-native/Libraries/NativeAnimation'
+  pod 'React-RCTBlob', :path => '../node_modules/react-native/Libraries/Blob'
+  pod 'React-RCTImage', :path => '../node_modules/react-native/Libraries/Image'
+  pod 'React-RCTLinking', :path => '../node_modules/react-native/Libraries/LinkingIOS'
+  pod 'React-RCTNetwork', :path => '../node_modules/react-native/Libraries/Network'
+  pod 'React-RCTSettings', :path => '../node_modules/react-native/Libraries/Settings'
+  pod 'React-RCTText', :path => '../node_modules/react-native/Libraries/Text'
+  pod 'React-RCTVibration', :path => '../node_modules/react-native/Libraries/Vibration'
+  pod 'React-Core/RCTWebSocket', :path => '../node_modules/react-native/'
+
+  pod 'React-cxxreact', :path => '../node_modules/react-native/ReactCommon/cxxreact'
+  pod 'React-jsi', :path => '../node_modules/react-native/ReactCommon/jsi'
+  pod 'React-jsiexecutor', :path => '../node_modules/react-native/ReactCommon/jsiexecutor'
+  pod 'React-jsinspector', :path => '../node_modules/react-native/ReactCommon/jsinspector'
+  pod 'ReactCommon/jscallinvoker', :path => "../node_modules/react-native/ReactCommon"
+  pod 'ReactCommon/turbomodule/core', :path => "../node_modules/react-native/ReactCommon"
+  pod 'Yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+
+  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
+  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+
+  pod 'react-native-camera', :path => '../node_modules/react-native-camera'
+
+  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+
   pod 'RNCharts', :path => '../node_modules/react-native-charts-wrapper'
-  pod 'Fabric', '1.7.2'
-  pod 'Crashlytics', '3.9.3'
-  pod 'GoogleIDFASupport', '3.14.0'
-  pod "yoga", :path => "../node_modules/react-native/ReactCommon/yoga"
-  pod 'React', :path => '../node_modules/react-native', :subspecs => [
-    'BatchedBridge', # Required For React Native 0.45.0+
-    'Core',
-    # Add any other subspecs you want to use in your project
-  ]
 
-  pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
+  pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
 
-  pod 'react-native-fetch-blob', :path => '../node_modules/react-native-fetch-blob'
+  pod 'RNFirebase/Crashlytics', :path => '../node_modules/react-native-firebase/ios'
+
+  pod 'react-native-keep-awake', :path => '../node_modules/react-native-keep-awake'
+
+  pod 'RNPermissions', :path => '../node_modules/react-native-permissions'
 
   pod 'RNSound', :path => '../node_modules/react-native-sound'
 
-  target 'OBBAppTests' do
+
+  pod 'react-native-video', :path => '../node_modules/react-native-video'
+
+  pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
+
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
+  pod 'react-native-ble-manager', :path => '../node_modules/react-native-ble-manager'
+
+  pod 'RNGoogleSignin', :path => '../node_modules/@react-native-community/google-signin'
+
+  pod 'rn-fetch-blob', :path => '../node_modules/rn-fetch-blob'
+
+  pod 'react-native-webview', :path => '../node_modules/react-native-webview'
+
+  pod 'react-native-cameraroll', :path => '../node_modules/@react-native-community/cameraroll'
+
+  pod 'react-native-slider', :path => '../node_modules/@react-native-community/slider'
+
+  pod 'react-native-background-timer', :path => '../node_modules/react-native-background-timer'
+
+
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  target 'OpenBarbellAppTests' do
     inherit! :search_paths
     # Pods for testing
   end
 
-end
-
-target 'OBBApp-tvOS' do
-  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
-  # use_frameworks!
-
-  # Pods for OBBApp-tvOS
-
-  target 'OBBApp-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
+  use_native_modules!
 end

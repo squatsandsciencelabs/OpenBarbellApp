@@ -39,21 +39,30 @@ class SetTitleRowCollapsed extends Component {
         }
 
         if (Platform.OS === 'ios') {
-            return (
-                <TouchableOpacity style={styles.videoButtonContainer} onPress={()=> this.props.tappedWatch(this.props.setID, this.props.videoFileURL) }>
-                    <View style={styles.videoButton}>
-                        <Video
-                            ref={(ref) => {
-                                this.player = ref
-                            }}
-                            style={styles.videoPlayer}
-                            source={{uri: this.props.videoFileURL}}
-                            paused={true}
-                            repeat={true}
-                        />
-                    </View>
-                </TouchableOpacity>
-            );
+            if (!this.props.videoFileURL) {
+                return (
+                    <TouchableOpacity style={styles.videoButtonContainer} onPress={()=> this.props.tappedWatch(this.props.setID, this.props.videoFileURL) }>
+                        <View style={styles.videoButton}>
+                        </View>
+                    </TouchableOpacity>
+                );
+            } else {
+                return (
+                    <TouchableOpacity style={styles.videoButtonContainer} onPress={()=> this.props.tappedWatch(this.props.setID, this.props.videoFileURL) }>
+                        <View style={styles.videoButton}>
+                            <Video
+                                ref={(ref) => {
+                                    this.player = ref
+                                }}
+                                style={styles.videoPlayer}
+                                source={{uri: this.props.videoFileURL}}
+                                paused={true}
+                                repeat={true}
+                            />
+                        </View>
+                    </TouchableOpacity>
+                );
+            }
         } else {
             return (
                 <TouchableOpacity style={styles.videoButtonContainer} onPress={()=> this.props.tappedWatch(this.props.setID, this.props.videoFileURL) }>

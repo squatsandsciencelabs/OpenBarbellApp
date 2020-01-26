@@ -10,6 +10,7 @@ import {
 }  from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import CameraRoll from "@react-native-community/cameraroll";
+import RNFetchBlob from 'rn-fetch-blob';
 import KeepAwake from 'react-native-keep-awake';
 import * as Device from 'app/utility/Device';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -71,6 +72,9 @@ class VideoRecorder extends Component {
             // save to gallery
             console.tron.log(`have data, what do with it? ${JSON.stringify(data)}`);
             const uri = await CameraRoll.saveToCameraRoll(data.uri);
+
+            // delete from cache
+            await RNFetchBlob.fs.unlink(data.uri);
 
             // dispatch information
             if (this.props.setID) {

@@ -23,7 +23,7 @@ class TimerProgressBar extends Component {
 
         if (differentProjectedEndSetTime || differentTimerDuration || differentTimerRemaining || differentTimerStatus) {
             // set initial position
-            const value = (nextProps.timerDuration-nextProps.timerRemaining)/nextProps.timerDuration;
+            const value = nextProps.timerDuration === null ? 0 : (nextProps.timerDuration-nextProps.timerRemaining)/nextProps.timerDuration;
             this.state.barAnimations.setValue(value);
 
             if (nextProps.timerStatus === 'stopped' || nextProps.timerStatus === 'paused') {
@@ -47,7 +47,7 @@ class TimerProgressBar extends Component {
     }
 
     render() {
-        const barAnimation = this.props.timerStatus === 'stopped' ? 0 : this.state.barAnimations;
+        const barAnimation = this.props.timerStatus === 'stopped' || this.props.timerStatus === 'inactive' ? 0 : this.state.barAnimations;
 
         return (
             <View style={[{flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'#e0e0e0'}]}>

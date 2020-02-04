@@ -47,11 +47,11 @@ class TimerProgressBar extends Component {
     }
 
     render() {
-        const barAnimation = this.state.barAnimations;
+        const barAnimation = this.props.timerStatus === 'stopped' ? 0 : this.state.barAnimations;
 
         return (
             <View style={[{flex:1, flexDirection: 'row', alignItems:'stretch', backgroundColor:'#e0e0e0'}]}>
-                <Animated.View style={{flex: barAnimation || 'none', height: 1, backgroundColor: 'green'}}></Animated.View>
+                <Animated.View style={{flex: barAnimation, height: 1, backgroundColor: 'green'}}></Animated.View>
             </View>
         );
     }

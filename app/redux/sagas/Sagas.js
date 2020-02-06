@@ -14,21 +14,21 @@ import InitializedAnalyticsSaga from './InitializedAnalyticsSaga';
 import OneRMAnalyticsSaga from './OneRMAnalyticsSaga';
 import VelocityThresholdSaga from './VelocityThresholdSaga';
 
-const Sagas = function* Sagas() {
+const Sagas = function* Sagas(dispatch) {
     yield all([
-        call(KillSwitchSaga),
-        call(TokenSaga),
-        call(AuthSaga),
-        call(SuggestionsSaga),
-        call(SyncSaga),
-        call(TimerSaga),
-        call(TimerUnlockSaga),
-        call(EndOldWorkoutSaga),
-        call(ReconnectSaga),
-        call(SurveySaga),
-        call(InitializedAnalyticsSaga),
-        call(OneRMAnalyticsSaga),
-        // call(VelocityThresholdSaga),
+        KillSwitchSaga(),
+        TokenSaga(),
+        AuthSaga(),
+        SuggestionsSaga(),
+        SyncSaga(),
+        TimerSaga(),
+        TimerUnlockSaga(),
+        EndOldWorkoutSaga(),
+        ReconnectSaga(),
+        SurveySaga(),
+        InitializedAnalyticsSaga(),
+        OneRMAnalyticsSaga(),
+        // VelocityThresholdSaga(),
     ]);
 };
 

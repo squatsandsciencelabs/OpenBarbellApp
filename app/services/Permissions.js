@@ -14,7 +14,8 @@ export default async function() {
             PermissionsAndroid.PERMISSIONS.ACCESS_COARSE_LOCATION,
             PermissionsAndroid.PERMISSIONS.CAMERA,
             PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
-            PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE
+            PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
         ]);
     } else {
         // TODO: analytics as a user prop

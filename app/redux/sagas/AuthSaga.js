@@ -45,8 +45,11 @@ const AuthSaga = function * AuthSaga() {
         try {
             // reset and logout
             Analytics.setUserID();
-            yield apply(GoogleSignin, GoogleSignin.revokeAccess);
-            yield apply(GoogleSignin, GoogleSignin.signOut);
+            const isSignedIn = yield apply(GoogleSignin, GoogleSignin.isSignedIn);
+            if (isSignedIn) {
+                yield apply(GoogleSignin, GoogleSignin.revokeAccess);
+                yield apply(GoogleSignin, GoogleSignin.signOut);
+            }
 
             // analytics
             const state = yield select();

@@ -15,7 +15,7 @@
     "@react-native-community/google-signin": "^3.0.3",
     "@react-native-community/slider": "^2.0.8",
     "core-js": "^3",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "patch-package": "^6.2.0",
     "postinstall-postinstall": "^2.0.0",

@@ -21,7 +21,7 @@
     "postinstall-postinstall": "^2.0.0",
     "prop-types": "^15.7.2",
     "react": "16.9.0",
-    "react-native": "0.61.5",
+    "react-native": "0.62.3",
     "react-native-background-timer": "^2.1.1",
     "react-native-ble-manager": "^6.7.0",
     "react-native-camera": "^3.15.0",

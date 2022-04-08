@@ -16,7 +16,7 @@
     "@react-native-community/slider": "^2.0.8",
     "core-js": "^3",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "patch-package": "^6.2.0",
     "postinstall-postinstall": "^2.0.0",
     "prop-types": "^15.7.2",

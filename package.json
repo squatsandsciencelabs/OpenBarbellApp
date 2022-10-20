@@ -32,7 +32,7 @@
     "react-native-keep-awake": "^4.0.0",
     "react-native-modal-datetime-picker": "^7.6.1",
     "react-native-permissions": "^2.0.8",
-    "react-native-reanimated": "^1.4.0",
+    "react-native-reanimated": "^2.10.0",
     "react-native-sound": "^0.11.0",
     "react-native-tab-view": "^2.11.0",
     "react-native-vector-icons": "^6.6.0",
